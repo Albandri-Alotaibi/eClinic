@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html class="eClinic" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title class="homepage">Add new semester</title>
+   
+</head>
+
+<body>
+
+          
+  <!-- ******** RETREIVING ALL CATEGORIES FROM DATABASE *************** -->
+            <div id="div1"></div>
+         <!-- ////////////////// -->
+         
+          <label>Enter a category :</label>
+              <input id ="topicTitle" type="text"> 
+          <button id="addBtn">Add</button>
+      <!-- ////////////////// -->
+
+          
+
+      <br>
+  <!-- ************* UPDATING CATEGORY ***************** -->
+      <label>Update a category :</label>
+      <input type="text" id="box">
+      <button  id="updatebtn">update</button>
+      <!-- ////////////////// -->
+
+
+
+
+
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+        import { getFirestore ,doc , collection , getDocs, getDoc, setDoc, addDoc, updateDoc} from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyD6JcSscRU6XaF3SaCF_U3ggXAFYUnKKq8",
+          authDomain: "eclinic-d5dec.firebaseapp.com",
+          projectId: "eclinic-d5dec",
+          storageBucket: "eclinic-d5dec.appspot.com",
+          messagingSenderId: "148819771062",
+          appId: "1:148819771062:web:44c6a3f963095275247017"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore();
+
+
+
+
+
+
+//********************* RETREIVING ALL CATEGORIES FROM DATABASE *****************************************************
+
+const querySnapshot = await getDocs(collection(db, "fcategory"));
+querySnapshot.forEach((doc) => {
+  // doc.data() is never undefined for query doc snapshots
+console.log(doc.id, " => ", doc.data());
+const paragraph = document.createElement("p");
+const node = document.createTextNode(doc.data().fcategoryname);
+paragraph.appendChild(node);
+
+let Updatebtn1 = document.createElement("button");
+// Updatebtn1.type="button";
+// Updatebtn1.value = "update";
+
+Updatebtn1.innerHTML = "update";
+//var facegoryid= doc.id;
+Updatebtn1.id=doc.id;
+//Updatebtn1.onclick = Fillbox();
+Updatebtn1.addEventListener("click",Fillbox);
+//btn.href="update.html?facegoryid="+doc.id;
+//Updatebtn1.onclick = Fillbox(doc.id);
+//Updatebtn1.addEventListener("click", Fillbox(facegoryid));
+
+// btn.onclick = function () {
+//   //alert("Button is clicked");
+//   //location.href = 'update.html'; 
+//   window.location.href = "update.html";
+// };
+// btn.id=doc.id;
+//alert(btn.id);
+//alert(doc.id);
+
+paragraph.appendChild(Updatebtn1);
+
+const element = document.getElementById("div1");
+element.appendChild(paragraph);
+
+});
+      
+      
+      
+
+//********************* ADD TO DATABASE *****************************************************
+
+
+let btn=document.getElementById("addBtn");
+var box= document.getElementById("topicTitle");      
+
+async function AddDocument_AutoID(){
+                if(box.value=="" || box.value==null){
+                 alert("Please fill in the category name");
+                }
+                let BV=box.value;
+                     let BVs=String(BV);
+                     var arabic = /[\u0600-\u06FF\u0750-\u077F]/;
+                     let resultArabic = arabic.test(BVs);
+                     //alert(resultArabic);
+                     
+                     if(resultArabic==true){
+                     alert("Only English is allowed");
+                     }    
+ 
+                   var found=false;
+                   let BVnospace=box.value.split(" ").join("");
+                   let BVnospaselowercase= BVnospace.toLowerCase();
+                   const querySnapshot = await getDocs(collection(db, "fcategory"));
+                     querySnapshot.forEach((doc) => {
+                    // doc.data() is never undefined for query doc snapshots
+                     console.log(doc.id, " => ", doc.data());
+                     //const node = document.createTextNode(doc.data().fcategoryname);
+                     let dbname=doc.data().fcategoryname;
+                    let dbnamenospace= dbname.split(" ").join("");
+                      let dbnamenospacelowercase=dbnamenospace.toLowerCase();
+                     if(BVnospaselowercase==dbnamenospacelowercase){
+                        found=true;
+                     }});
+                       
+                    if (found==true) {
+                     alert("this category is already added");
+                     }else if(resultArabic==false && found==false && box.value!="" ){
+                            var ref= collection(db,"fcategory");
+                            const decRef= await addDoc(
+                            ref,{
+                                fcategoryname:box.value
+                            }).then(()=>{
+                                alert("category added successfully");
+                                })
+                            .catch((error)=>{
+                            alert("Unsuccessful operation, error:"+error);
+                            });
+                      
+                      }
+
+
+}
+
+btn.addEventListener("click",AddDocument_AutoID);
+let updbtn2=document.getElementById("updatebtn");
+updbtn2.addEventListener("click",updateDocument);
+      
+      
+    //********************* UPDATE DATABASE *****************************************************
+    async function Fillbox(){
+      //alert("in")
+      //alert(this.id)
+      var categoryid=this.id;
+      let box2=document.getElementById("box");
+           const docRef = doc(db, "fcategory", categoryid);
+           const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+          
+            box2.value=docSnap.data().fcategoryname;
+             } else {
+            // doc.data() will be undefined in this case
+             console.log("No such document!");
+             }
+
+
+            //  let updbtn2=document.getElementById("updatebtn");
+            //  updbtn2.addEventListener("click",updateDocument(categoryid));
+            
+            box2.setAttribute('name', categoryid );
+
+     }
+ 
+     async function updateDocument(){
+      let box22=document.getElementById("box");      
+      //alert(box22.getAttribute('name'));
+      var categoryid= box22.getAttribute('name');
+      //alert(categoryid);
+      
+                   var found=false;
+                   let BVnospace=box22.value.split(" ").join("");
+                   let BVnospaselowercase= BVnospace.toLowerCase();
+                   const querySnapshot = await getDocs(collection(db, "fcategory"));
+                   querySnapshot.forEach((doc) => {
+                    // doc.data() is never undefined for query doc snapshots
+                    console.log(doc.id, " => ", doc.data());
+                    //const node = document.createTextNode(doc.data().fcategoryname);
+                    let dbname=doc.data().fcategoryname;
+                    let dbnamenospace= dbname.split(" ").join("");
+                    let dbnamenospacelowercase=dbnamenospace.toLowerCase();
+                    if(BVnospaselowercase==dbnamenospacelowercase){
+                        found=true;
+                    }});
+
+                     if(box22.value=="" || box22.value==null){
+                     alert("Please fill in the category name");
+                     } else if (found==true) {
+                     alert("this category is already in the system");
+                     } else{
+                      //alert("yes");
+                      var ref= doc(db,"fcategory",categoryid);
+                        await updateDoc(
+                        ref,{
+                            fcategoryname:box22.value
+                        })                     
+                     
+                      alert("category updated successfully");
+                }
+
+}
+
+
+
+
+
+
+
+      
+      
+      </script> 
+
+
+
+
+
+
+</body>
+</html>
