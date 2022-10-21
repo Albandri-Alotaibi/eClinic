@@ -75,6 +75,12 @@
 
 
                 </div>
+                <div id="show-past-dates" style="display: none; ">
+                    <label>start date</label>
+                    <pre id="stord-start"></pre>
+                    <label>end date</label>
+                    <pre id="stord-end"></pre>
+                </div>
             </div>
         </form>
 
@@ -121,6 +127,9 @@
         let endDatecal = document.getElementById("end-date");
         let addbtn = document.getElementById("add");
         let updatebtn = document.getElementById("update");
+        let showdatesdiv = document.getElementById("show-past-dates");
+        let stordstart = document.getElementById("stord-start");
+        let stordend = document.getElementById("stord-end");
         var start = 0;
         var end = 0;
 
@@ -138,6 +147,7 @@
         }
         semesterSelect.addEventListener("change", function () { // if the admin choose another semester the add-update disaper
             divAddUpdate.style.display = "none";
+            showdatesdiv.style.display = "none";
             addbtn.style.display = "none";
             updatebtn.style.display = "none";
             divselect.style.marginLeft = "30%";
@@ -164,7 +174,7 @@
                 divAddUpdate.style.marginLeft = "3%";
                 divAddUpdate.style.marginTop = "5%";
                 divAddUpdate.style.height = "50%";
-                divAddUpdate.style.display = "block"; // to show the add/update section
+                
                 //-----------end of fis the style--------------
 
 
@@ -175,41 +185,62 @@
 
                 if (docSnap.data().timeframe == false) {//this semester does not have a timeftame
                     addbtn.style.display = "block";
-
-
-
+                    divAddUpdate.style.display = "block";
+                    showdatesdiv.style.display = "none";
                 } else {// if the semester had time frame
 
-                    updatebtn.style.display = "block";//we show the update btn
-                    //in her we get the stord date in firestore and converted to js object and store show it in the input date value
+                    if (new Date (docSnap.data().enddate.toDate()) < new Date()) {//ckeck if the semester in the past only show whit out add\update
+                        showdatesdiv.style.display = "block";
+                        let startDateMillSec = docSnap.data().startdate.toDate();//to get an js date obj  
+                        let startdateobj = new Date(startDateMillSec);
+                        let day = startdateobj.getDate();
+                        let month = startdateobj.getMonth() + 1; //jan 0 not 1
+                        let year = startdateobj.getFullYear();
+                        let dateString = day + "-" + month + "-" + year;// to match the format yyy-mm-dd
 
-                    // let startDateMillSec = docSnap.data().startdate.seconds * 1000;//get the date in milliseconds
-                    let startDateMillSec = docSnap.data().startdate.toDate();//to get an js date obj  
-                    let startdateobj = new Date(startDateMillSec);
-                    let day = startdateobj.getDate();
-                    let month = startdateobj.getMonth() + 1; //jan 0 not 1
-                    let year = startdateobj.getFullYear();
-                    if (day < 10)//to add 0 at the beginning of the number to match the js format yyy-mm-dd
-                        day = "0" + day;
-                    if (month < 10)
-                        month = "0" + month;
-                    let dateString = year + "-" + month + "-" + day;// to match the format yyy-mm-dd
-                    startDatecal.value = dateString;
+                        stordstart.innerHTML = dateString;
 
-                    let endDateMillSec = docSnap.data().enddate.toDate();//to get an js date obj  
-                    let endDateobj = new Date(endDateMillSec);
-                    let day2 = endDateobj.getDate();
-                    let month2 = endDateobj.getMonth() + 1; //jan 0 not 1
-                    let year2 = endDateobj.getFullYear();
-                    if (day2 < 10)
-                        day2 = "0" + day2;
-                    if (month2 < 10)
-                        month2 = "0" + month2;
-                    let dateString2 = year2 + "-" + month2 + "-" + day2;
-                    endDatecal.value = dateString2;
+                        let endDateMillSec = docSnap.data().enddate.toDate();//to get an js date obj  
+                        let endDateobj = new Date(endDateMillSec);
+                        let day2 = endDateobj.getDate();
+                        let month2 = endDateobj.getMonth() + 1; //jan 0 not 1
+                        let year2 = endDateobj.getFullYear();
+                        let dateString2 = day2 + "-" + month2 + "-" + year2;
 
-                    //var flag = false;
+                        stordend.innerHTML = dateString2;
+                    } else {//if the semester did not end
+                        showdatesdiv.style.display = "none";
+                        divAddUpdate.style.display = "block"; // to show the add/update section
+                        updatebtn.style.display = "block";//we show the update btn
+                        //in her we get the stord date in firestore and converted to js object and store show it in the input date value
 
+                        // let startDateMillSec = docSnap.data().startdate.seconds * 1000;//get the date in milliseconds
+                        let startDateMillSec = docSnap.data().startdate.toDate();//to get an js date obj  
+                        let startdateobj = new Date(startDateMillSec);
+                        let day = startdateobj.getDate();
+                        let month = startdateobj.getMonth() + 1; //jan 0 not 1
+                        let year = startdateobj.getFullYear();
+                        if (day < 10)//to add 0 at the beginning of the number to match the js format yyy-mm-dd
+                            day = "0" + day;
+                        if (month < 10)
+                            month = "0" + month;
+                        let dateString = year + "-" + month + "-" + day;// to match the format yyy-mm-dd
+                        startDatecal.value = dateString;
+
+                        let endDateMillSec = docSnap.data().enddate.toDate();//to get an js date obj  
+                        let endDateobj = new Date(endDateMillSec);
+                        let day2 = endDateobj.getDate();
+                        let month2 = endDateobj.getMonth() + 1; //jan 0 not 1
+                        let year2 = endDateobj.getFullYear();
+                        if (day2 < 10)
+                            day2 = "0" + day2;
+                        if (month2 < 10)
+                            month2 = "0" + month2;
+                        let dateString2 = year2 + "-" + month2 + "-" + day2;
+                        endDatecal.value = dateString2;
+
+                        //var flag = false;
+                    }
 
                 }
 
@@ -229,7 +260,7 @@
                 alert("please choose a start and an end date");
             else {//if the admin chooses a start and end dates
                 var today = new Date();
-                
+
                 if (new Date(start) < today) {//alert if the start date in the past
                     alert("please choose a starting day in the future");
                 } else if (start > end) {
