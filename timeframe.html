@@ -174,7 +174,7 @@
                 divAddUpdate.style.marginLeft = "3%";
                 divAddUpdate.style.marginTop = "5%";
                 divAddUpdate.style.height = "50%";
-                
+
                 //-----------end of fis the style--------------
 
 
@@ -189,7 +189,7 @@
                     showdatesdiv.style.display = "none";
                 } else {// if the semester had time frame
 
-                    if (new Date (docSnap.data().enddate.toDate()) < new Date()) {//ckeck if the semester in the past only show whit out add\update
+                    if (new Date(docSnap.data().enddate.toDate()) < new Date()) {//ckeck if the semester in the past only show whit out add\update
                         showdatesdiv.style.display = "block";
                         let startDateMillSec = docSnap.data().startdate.toDate();//to get an js date obj  
                         let startdateobj = new Date(startDateMillSec);
@@ -284,15 +284,23 @@
             const docSnapup = await getDoc(docRefup);//get the info of the doc?
             start = startDatecal.value;
             end = endDatecal.value;
+            var today = new Date();
 
-            await updateDoc(docRefup, { // we update the time to a smester 
-                startdate: Timestamp.fromDate(new Date(start + "T00:00:00")),
-                enddate: Timestamp.fromDate(new Date(end + "T23:59:59")),
-                timeframe: true
-            });
+            if (new Date(start) < today) {//alert if the start date in the past
+                alert("please choose a starting day in the future");
+            } else if (start > end) {
+                alert("please choose a start day that is before the end date");
+            } else {
 
-            alert("your work has been updated successfully");
-            window.location.replace("index.html");
+                await updateDoc(docRefup, { // we update the time to a smester 
+                    startdate: Timestamp.fromDate(new Date(start + "T00:00:00")),
+                    enddate: Timestamp.fromDate(new Date(end + "T23:59:59")),
+                    timeframe: true
+                });
+
+                alert("your work has been updated successfully");
+                window.location.replace("index.html");
+            }
         })
 
     </script>
