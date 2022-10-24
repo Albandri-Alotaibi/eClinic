@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="login.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<header class="header_eClinic">
+    <div class="img1">
+        <a href="index.html"> <img class="logo" src="images/logo5.png" alt="logo"></a>
+    </div>
+    <div class="container blue topBotomBordersOut">
+    </div>
+</header>
+<body class="Site">
+    <main class="site-wrapper">
+
+        <div class="center">
+            <h1>Reset Your Password</h1>
+            <form class="resetform">
+                <br>
+                <p>Enter the email associated with your account and we'll send an email to reset your password</p>
+                <div class="txt_field">
+                    <input type="text" name="email" placeholder="Enter your email" class="effect-8">
+                    <span class="focus-border">
+                    </span>
+                </div>
+                <a href="index.html" class="foget">Return to homepage</a>
+                <button class="resetbut">Send</button>
+                <br>
+            </form>
+        </div>
+        <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+            import { getFirestore, doc, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+            // Your web app's Firebase configuration
+            import { getAuth, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"; //import for authentication +signout
+            const firebaseConfig = {
+                apiKey: "AIzaSyD6JcSscRU6XaF3SaCF_U3ggXAFYUnKKq8",
+                authDomain: "eclinic-d5dec.firebaseapp.com",
+                projectId: "eclinic-d5dec",
+                storageBucket: "eclinic-d5dec.appspot.com",
+                messagingSenderId: "148819771062",
+                appId: "1:148819771062:web:f66c9a362b2fc34f247017"
+            };
+
+            // Initialize Firebase services 
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore()
+            const auth = getAuth()
+
+//////////////////////////////////reset password //////////////////////////////////
+
+            const resetform = document.querySelector('.resetform')
+            resetform.addEventListener('submit', (e) => {
+                e.preventDefault()
+                //extract admin input 
+                const email = resetform.email.value
+
+                if(email.length<1)
+                {
+                    alert("Please enter your email")
+                }
+                else
+                {//send email to admin so he can reset his password
+                sendPasswordResetEmail(auth, email)
+                    .then(() => {
+                        alert("Sent successfully, go and check your email")
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        alert("Invalid email")
+                    });
+                }
+
+            })
+
+
+
+            ///////  ///////////////////there is no authentication for each page in reset password /////////////////////////
+  
+
+        </script>
+    </main>
+</body>
+
+</html>
