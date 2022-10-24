@@ -1,0 +1,337 @@
+/* to make underline on hovor of the navbar */
+.navbar .navbar-nav .nav-link {
+  color: #ffffff;
+  font-size: 1.1em;
+}
+
+.navbar .navbar-nav .nav-item {
+  position: relative;
+}
+
+.navbar .navbar-nav .nav-item::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background-color: #0084BD;
+  width: 0%;
+  content: "";
+  height: 4px;
+  transition: all 0.5s;
+
+}
+
+.navbar .navbar-nav .nav-item:hover::after {
+  width: 100%;
+  float: right;
+}
+
+/* end of underline on hovor of the navbar */
+
+/* hiding scrollbar */
+body {
+  overflow-y:hidden;
+}
+
+/* end of hiding scrollbar */
+
+/* style for the text */
+h1 h5 {
+  font-family: 'Nunito', sans-serif;
+
+}
+
+/* end of style for the text */
+
+/* star profile icons */
+
+.action {
+
+  position: fixed;
+
+  top: 20px;
+
+  right: 30px;
+
+
+}
+
+
+
+.action .profile {
+
+  position: relative;
+
+  width: 40px;
+
+  height: 40px;
+
+  border-radius: 50%;
+
+  overflow: hidden;
+
+  cursor: pointer;
+
+
+}
+
+
+
+.action .profile img {
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+}
+
+
+
+.action .menu {
+
+  position: absolute;
+
+  top: 30px;
+
+  right: -10px;
+
+  padding: 0px 15px;
+
+  background: #fff;
+
+  width: 200px;
+
+  box-sizing: 0 5px 25px rgba(0, 0, 0, 0.1);
+
+  border-radius: 15px;
+
+  transition: 0.5s;
+
+  visibility: hidden;
+
+  opacity: 0;
+
+
+}
+
+
+
+.action .menu.active {
+
+  top: 80px;
+
+  visibility: visible;
+
+  opacity: 1;
+
+}
+
+
+
+.action .menu::before {
+
+  content: "";
+
+  position: absolute;
+
+  top: -5px;
+
+  right: 28px;
+
+  width: 20px;
+
+  height: 20px;
+
+  background: #fff;
+
+  transform: rotate(45deg);
+
+}
+
+
+
+
+.action .menu ul li {
+
+  list-style: none;
+
+  padding: 16px 0;
+
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+
+  display: flex;
+
+  align-items: center;
+
+}
+
+
+
+.action .menu ul li img {
+
+  max-width: 20px;
+
+  margin-right: 10px;
+
+  opacity: 0.5;
+
+  transition: 0.5s;
+
+}
+
+
+
+.action .menu ul li:hover img {
+
+  opacity: 1;
+
+}
+
+
+
+.action .menu ul li a {
+
+  display: inline-block;
+
+  text-decoration: none;
+
+  color: #555;
+
+  font-weight: 500;
+
+  transition: 0.5s;
+
+}
+
+
+
+.action .menu ul li:hover a {
+
+  color: #0084BD;
+
+}
+
+.sidebar{
+  overflow: hidden;
+}
+/* End profile icons */
+
+
+/* home boxes style */
+.col-md-2 {
+  
+  height: 200px;
+  width: 200px;
+  justify-content: center;
+  align-items: center;
+  background-color: #0084BD;
+  margin-right: 4%;
+
+}
+
+/* end of home boxes style */
+
+
+/* fonts style and type */
+h1 {
+  font-family: 'Nunito', sans-serif;
+}
+
+h5 {
+  font-family: 'Nunito', sans-serif;
+}
+
+p {
+  font-family: 'Nunito', sans-serif;
+  text-align: center;
+}
+
+/*end of fonts style and type */
+
+
+
+
+/* If the screen size is 1200px wide or more, set the font-size to 80px */
+@media (min-width: 1200px) {
+  .responsive-font-example {
+    font-size: 15px;
+  }
+}
+/* If the screen size is smaller than 1200px, set the font-size to 80px */
+@media (max-width: 1199.98px) {
+  .responsive-font-example {
+    font-size: 12px;
+  }
+}
+
+
+
+/* start side mnue */
+.logo{
+  margin-left: 64px ;
+}
+
+.sidebar {
+  height: 100%;
+  width: 360px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #0084BD;
+  overflow-x: hidden;
+  padding-top: 16px;
+}
+
+
+.sidebar a {
+  padding: 1px 1px 6px 5px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #ffffff;
+  display: block;
+  margin-top: 30px ;
+  margin-left: 20px ;
+  background: linear-gradient(#ffffff 0 0) var(--p, 0) / var(--p, 0) no-repeat;
+  transition: .4s, background-position 0s;
+
+}
+
+.sidebar a.active_semester{
+  --p: 100%;
+  color:#0084BD
+}
+.sidebar a:hover  {
+  --p: 100%;
+  color:#0084BD
+}
+
+/* Same as the width of the sidenav */
+.warp {
+  margin-left: 360px; 
+  padding: -10px -20px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
+
+
+.footer_eClinic{
+  margin-top: 400px;
+  margin-left: -10px;
+  color: white;;
+
+}
+/*  end mnue */
+
