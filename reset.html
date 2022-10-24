@@ -85,23 +85,8 @@
 
 
 
-            /////// new ///////////////////authentication for each page/////////////////////////
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    console.log("the same user")
-                }
-                else {
-                    signOut(auth)
-                    window.location.replace("login.html")
-                        .then(() => {
-                            //console.log("user log out")
-                        })
-                        .catch((err) => {
-                            console.log(err.message)
-                        })
-                }
-                console.log("the user status change :", user)
-            })
+            ///////  ///////////////////there is no authentication for each page in reset password /////////////////////////
+  
 
         </script>
     </main>
