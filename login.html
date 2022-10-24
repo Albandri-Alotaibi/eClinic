@@ -75,7 +75,7 @@
         const email = loginform.email.value
         const password = loginform.password.value
         if (email.length < 1 || password.length < 1) {
-          alert('Please fill all fileds')
+          alert('Please fill all fields')
         }
         else {
           //buldin function: we send the admin info to authenticate 
@@ -89,7 +89,7 @@
               const error = err.message
               const errorcode =err.code
              //error meassage(wrong email or password)
-              if (error === "Firebase: Error (auth/user-not-found)." || error === "Firebase: Error (auth/wrong-password)." || error ==="Firebase: Error (auth/invalid-email).")
+             if (error === "Firebase: Error (auth/user-not-found)." || error === "Firebase: Error (auth/wrong-password)." || error ==="Firebase: Error (auth/invalid-email).")
                 alert("Invalid Email or Password")
                
             })
