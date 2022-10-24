@@ -82,7 +82,7 @@
           signInWithEmailAndPassword(auth, email, password)
             .then((cred) => {
               console.log("user logged in:")
-              window.location.replace("semesters.html")
+              window.location.replace("index.html")//return tohomepage
             })
             .catch((err) => {
               console.log(err.message)
