@@ -1,133 +1,48 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Poppins:wght@400;500;600&display=swap');
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
-
-.center{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 400px;
-  background: white;
-  border-radius: 15px;
-  box-shadow: 10px 10px 15px rgba(0,0,0,0.05);
-}
-.center h1{
-  text-align: center;
-  padding: 20px 0;
-  border-bottom: 1px solid silver;
-  font-size: 1.2rem;
-  font-weight: 700;
-}
-.center form{
-  padding: 0 40px;
-  box-sizing: border-box;
-}
-form .txt_field{
-  position: relative;
-  display: flex;
-  justify-content: center;
-  margin: 30px 0;
-}
-.loginform
-{
-    box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
-    background: hsl(0 0% 100%);
-    color: hsl(200 50% 20%);
-    font-size: 1.5rem;
-    font-weight: 300;
-
+body {
+  padding: 3;
+  background: #e5e5e5;
+  font: 13px/1.4 Geneva, 'Lucida Sans', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
+  overflow-y: hidden;
 }
 
 
-input .logbut :hover{
-  border-color: #2691d9;
-  transition: .5s;
-}
-
-
-.logbut{
-    background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
-    border-radius: .5rem;
-    box-sizing: border-box;
-    color: #FFFFFF;
-    font-size: 15px;
-    display: flex;
-    justify-content: center;
-    place-items: center;
-    text-align: center;
-    padding: 0.5rem 3rem;
-    text-decoration: none;
-    width: 15%;
-    height: 8% ;
-    border: 0;
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    margin-left: 35%;
-
-  }
-
-  .resetbut{
-    background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
-    border-radius: .5rem;
-    box-sizing: border-box;
-    color: #FFFFFF;
-    font-size: 15px;
-    display: flex;
-    justify-content: center;
-    place-items: center;
-    text-align: center;
-    padding: 0.5rem 3rem;
-    text-decoration: none;
-    width: 15%;
-    height: 8% ;
-    border: 0;
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    margin-left: 35%;
-
-  }
+ .logbut{
+  background-image: linear-gradient( #0084BD 0%, #0084BD 100%);
   
-  .logbut :hover {
-    background-image: linear-gradient(-180deg, #1D95C9 0%, #17759C 100%);
-  }
 
-  .resetbut :hover {
-    background-image: linear-gradient(-180deg, #1D95C9 0%, #17759C 100%);
-  }
-  
-  @media (min-width: 768px) {
-    .logbut {
-      padding: -20% -20%;
-      justify-content: center;
-    }
-  }
-
-  @media (min-width: 768px) {
-    .resetbut {
-      padding: -20% -20%;
-      justify-content: center;
-    }
-  }
-
-a 
-{
-margin-top: 100%;
-margin-left: 65%;
-font-size: 12px;
 }
 
-p
-{
-font-size: 13px ;
-color: gray;
-text-align: left;
+
+
+.logbut :hover {
+  background-image: linear-gradient( #bb1b86 0%, #bb1b86 100%);
+  
+  
+}
+
+
+
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
+}
+.h-custom {
+height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+.h-custom {
+height: 100%;
+}
+}
+
+.py-4{
+  background-color: #0084BD;
+}
+
+.foget{
+  color: #0084BD;
 }
