@@ -23,13 +23,14 @@
             <h1>Reset Your Password</h1>
             <form class="resetform">
                 <br>
-                <p>Enter the email associated with your account and we'll send an email to reset your password</p>
+                <p id ="resetguied">Enter the email associated with your account and we'll send an email to reset your password</p>
+                <p id="aftersend" style="display: none;"> We have sent you the reset link on this email </p>
                 <div class="txt_field">
-                    <input type="text" name="email" placeholder="Enter your email" class="effect-8">
+                    <input type="text" name="email" placeholder="Enter your email" id="emailbox">
                     <span class="focus-border">
                     </span>
                 </div>
-                <a href="login.html" class="foget">Return to login</a>
+                <a href="login.html" class="foget" style="display: none;" id="relog">Return to login</a>
                 <button class="resetbut">Send</button>
                 <br>
             </form>
@@ -63,16 +64,28 @@
                 e.preventDefault()
                 //extract admin input 
                 const email = resetform.email.value
+                const box = document.getElementById("emailbox")
+                const guide=document.getElementById("resetguied")
+                const after=document.getElementById("aftersend")
+                const returnlog=document.getElementById("relog")
+               // const afterclicksend=document.getElementById("afterclick")
 
                 if(email.length<1)
                 {
                     alert("Please enter your email")
                 }
+                
                 else
                 {//send email to admin so he can reset his password
                 sendPasswordResetEmail(auth, email)
                     .then(() => {
+                        
                         alert("Sent successfully, go and check your email")
+                        box.style.display="none";
+                        guide.style.display="none";
+                        after.style.display="block";
+                        returnlog.style.display="block";
+                       // afterclicksend.style.display="none";
                     })
                     .catch((error) => {
                         const errorCode = error.code;
@@ -82,10 +95,8 @@
                 }
 
             })
-
-
-
-            ///////  ///////////////////there is no authentication for each page in reset password /////////////////////////
+           
+            /////////////////////////there is no authentication for each page in reset password /////////////////////////
   
 
         </script>
