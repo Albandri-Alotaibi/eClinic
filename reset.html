@@ -90,7 +90,7 @@
           
                     <div class="text-center text-lg-start mt-4 pt-2">
                       <button class="resetbut btn btn-primary btn-lg"
-                        style="padding-left: 2.5rem; padding-right: 2.5rem;">Send</button>
+                        style="padding-left: 2.5rem; padding-right: 2.5rem;" id="afterclick">Send</button>
                       
                     </div>
           
@@ -175,8 +175,9 @@
                 const guide=document.getElementById("resetguied")
                 const after=document.getElementById("aftersend")
                 const returnlog=document.getElementById("relog")
-               // const afterclicksend=document.getElementById("afterclick")
-
+                const afterclicksend=document.getElementById("afterclick")
+                const connect= after + email
+                alert
                 if(email.length<1)
                 {
                     alert("Please enter your email")
@@ -190,9 +191,10 @@
                         alert("Sent successfully, go and check your email")
                         box.style.display="none";
                         guide.style.display="none";
+                        afterclicksend.style.display="none";
                         after.style.display="block";
                         returnlog.style.display="block";
-                       // afterclicksend.style.display="none";
+                        
                     })
                     .catch((error) => {
                         const errorCode = error.code;
