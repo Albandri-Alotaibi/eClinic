@@ -174,6 +174,7 @@
         // https://firebase.google.com/docs/web/setup#available-libraries
         import { getFirestore, doc, collection, getDocs, getDoc, Timestamp, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
         // Your web app's Firebase configuration
+        import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"; //import for authentication 
         const firebaseConfig = {
             apiKey: "AIzaSyD6JcSscRU6XaF3SaCF_U3ggXAFYUnKKq8",
             authDomain: "eclinic-d5dec.firebaseapp.com",
@@ -186,6 +187,7 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore()
+        const auth = getAuth()
 
 
 
@@ -385,6 +387,24 @@
             }
         })
 
+        //////////////////////////Authentication between pages/////////////////////////
+        onAuthStateChanged(auth, (user) => {
+        if(user){
+          console.log("the same user") 
+        }
+        else
+        {
+            signOut(auth)
+            window.location.replace("login.html")
+                    .then(() => {
+                        //console.log("user log out")
+                    })
+                    .catch((err) => {
+                        console.log(err.message)
+                    })
+        }
+        console.log("the user status change :", user)
+      })
 
 
 
