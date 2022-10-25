@@ -51,7 +51,7 @@
                     <div class="align-items-center justify-content-center ">
                       <p class="lead fw-normal display-6">Reset Your Password</p><br>
                       <p id ="resetguied" class="lead fw-normal display-7 ">Enter the email associated with your account and we'll send an email to reset your password</p>
-                      <p id="aftersend" class="lead fw-normal display-7 text-danger" style="display: none;"> We have sent you the reset link on this email </p>
+                      <p id="aftersend" class="lead fw-normal display-7 text-danger" style="display: none;">  </p>
                     </div>
           
                     <div class="divider d-flex align-items-center my-4">  
@@ -169,7 +169,7 @@
                 {//send email to admin so he can reset his password
                 sendPasswordResetEmail(auth, email)
                     .then(() => {
-                        
+                      after.innerHTML ="We have sent you the reset link on this email " +email;
                         alert("Sent successfully, go and check your email")
                         box.style.display="none";
                         guide.style.display="none";
