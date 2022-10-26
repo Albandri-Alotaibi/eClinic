@@ -123,7 +123,7 @@
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
       // TODO: Add SDKs for Firebase products that you want to use
       // https://firebase.google.com/docs/web/setup#available-libraries
-      import { getFirestore, doc, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+      import { getFirestore, doc, collection, getDocs, getDoc} from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
       // Your web app's Firebase configuration
       import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"; //import for authentication 
       const firebaseConfig = {
@@ -150,14 +150,18 @@
         //extract admin input 
         
         const email = loginform.email.value
+
         const password = loginform.password.value
         if (email.length < 1 || password.length < 1) {
           alert('Please fill all fields')
         }
         else {
+
+          
           //buldin function: we send the admin info to authenticate 
           signInWithEmailAndPassword(auth, email, password)
             .then((cred) => {
+              
               console.log("user logged in:")
               window.location.replace("index.html")//return tohomepage
             })
@@ -172,7 +176,7 @@
             })
         } //else close
       })
-
+    
       ///////////////////////////there is no Auth for each of your app's pages in login////////////////////////////
 
 
