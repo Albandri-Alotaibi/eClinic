@@ -38,6 +38,14 @@
 <body class="Site">
     <main>
 
+        <!-- <nav aria-label="breadcrumb" class="breadcrumb d-flex justify-content-between">
+            <ol class="breadcrumb justify-content-center">
+              <li class="breadcrumb-item ml-auto"><a href="#">Home</a></li>
+              <li class="breadcrumb-item ml-auto">help desk timeframe</li>
+              
+            </ol>
+          </nav> -->
+
         <!-- Start profil icons  -->
         <div class="action">
 
@@ -59,7 +67,7 @@
 
                     <li>
 
-                        <img src="img/lock.png" /><a href="#">Reset password</a>
+                        <img src="img/lock.png" /><a href="resetinner.html">Reset password</a>
 
                     </li>
 
@@ -121,8 +129,13 @@
             </div>
         </form>
 
+        
+
         <!-- Start side Mnue  -->
+        
+            
         <div class="sidebar ">
+            
             <img class="logo" src="img/logo.png" alt="logo brand" height="50px" width="170px">
             <a href="index.html"><i class="fa fa-fw fa-home"></i>Home</a>
             <a href="someSection"><i class="fa fa-calendar"></i> Semester/years</a>
@@ -130,10 +143,12 @@
             <a href="#id_name"><i class="fa fa-graduation-cap"></i> Graduation projects </a>
             <a href="#id_name" class="active_semester"><i class="fa fa-clock-o"></i> Help desk timeframe</a>
             <footer class="footer_eClinic">
-                <p class="text-white text-justify position-absolute bottom-0 display-10"> Copyright &copy; All Rights Reserved to
+                <p class="text-white text-justify position-absolute bottom-0 display-10"> Copyright &copy; All Rights
+                    Reserved to
                     King Saud University.Made by eClinic Teams</p>
             </footer>
         </div>
+    
         <!-- End side Mnue  -->
 
 
@@ -141,24 +156,24 @@
 
 
 
-   
 
 
-        <!-- MDB -->
-        <script type="text/javascript" src="js/mdb.min.js"></script>
-        <!-- Custom scripts -->
-        <script type="text/javascript"></script>
-        <!-- JavaScript Bundle with Popper -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-            crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-            crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
-            integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
-            crossorigin="anonymous"></script>
-    
+
+    <!-- MDB -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+    <!-- Custom scripts -->
+    <script type="text/javascript"></script>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+        integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+        crossorigin="anonymous"></script>
+
 
     <script type="module">
 
@@ -389,22 +404,21 @@
 
         //////////////////////////Authentication between pages/////////////////////////
         onAuthStateChanged(auth, (user) => {
-        if(user){
-          console.log("the same user") 
-        }
-        else
-        {
-            signOut(auth)
-            window.location.replace("login.html")
+            if (user) {
+                console.log("the same user")
+            }
+            else {
+                signOut(auth)
+                window.location.replace("login.html")
                     .then(() => {
                         //console.log("user log out")
                     })
                     .catch((err) => {
                         console.log(err.message)
                     })
-        }
-        console.log("the user status change :", user)
-      })
+            }
+            console.log("the user status change :", user)
+        })
 
 
 
