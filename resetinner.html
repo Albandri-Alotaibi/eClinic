@@ -135,57 +135,37 @@
             const app = initializeApp(firebaseConfig);
             const db = getFirestore()
             const auth = getAuth()
-            var email =""
-
+        
+      
+           var email=""
+           var uid =""
+           
           //////get admin email from firestore to send it in reset password function/////
 
-           const docRef = doc(db, "admin","GimM2OZk69OOq7U32DIz");
-           const docSnap = await getDoc(docRef); 
-           if (docSnap.exists()) { 
-                 email=docSnap.data().email
+        //    const docRef = doc(db, "admin","GimM2OZk69OOq7U32DIz");
+        //    const docSnap = await getDoc(docRef); 
+        //    if (docSnap.exists()) { 
+        //          email=docSnap.data().email
          
           
-         } else {
-         // doc.data() will be undefined in this case
-             console.log("No such document!"); 
-            } 
+        //  } else {
+        //  // doc.data() will be undefined in this case
+        //      console.log("No such document!"); 
+        //     } 
 
           
      
    
-//////////////////////////////////reset password //////////////////////////////////
 
-           const resetform = document.querySelector('.resetform')
-         
-            resetform.addEventListener('submit', (e) => {
-                e.preventDefault()
-                const after=document.getElementById("aftersend")
-                const returnhome=document.getElementById("rehome")
-                const afterclicksend=document.getElementById("afterclick")
-                
-
-              //send email to admin so he can reset his password
-                sendPasswordResetEmail(auth, email)
-                    .then(() => {
-                      after.innerHTML ="We have sent you the reset link on this email " +email;
-                        afterclicksend.style.display="none";
-                        after.style.display="block";
-                        returnhome.style.display="block";
-                        
-                    })
-                    .catch((error) => {
-                        const errorCode = error.code;
-                        const errorMessage = error.message;
-                        alert("something wrong")
-                    });
-                }
-
-            ) 
            
             /////////////////////////there is authentication for each page in inner reset password /////////////////////////
             onAuthStateChanged(auth, (user) => {
         if(user){
-          console.log("the same user") 
+          console.log("the same user")
+          email = user.email; //to reset password on admin email
+          uid =user.uid;
+         
+          
         }
         else
         {
@@ -200,6 +180,35 @@
         }
         console.log("the user status change :", user)
       })
+
+      //////////////////////////////////reset password //////////////////////////////////
+
+      const resetform = document.querySelector('.resetform')
+         
+         resetform.addEventListener('submit', (e) => {
+             e.preventDefault()
+             const after=document.getElementById("aftersend")
+             const returnhome=document.getElementById("rehome")
+             const afterclicksend=document.getElementById("afterclick")
+             
+
+           //send email to admin so he can reset his password
+             sendPasswordResetEmail(auth, email)
+                 .then(() => {
+                   after.innerHTML ="We have sent you the reset link on this email " +email;
+                     afterclicksend.style.display="none";
+                     after.style.display="block";
+                     returnhome.style.display="block";
+                     
+                 })
+                 .catch((error) => {
+                     const errorCode = error.code;
+                     const errorMessage = error.message;
+                     alert("something wrong")
+                 });
+             }
+
+         ) 
 
         </script>
     </main>
