@@ -27,6 +27,12 @@
   float: right;
 }
 
+.navbar .navbar-nav .nav-item a.active{
+  --p: 100%;
+  color:#0084BD;
+  
+}
+
 /* end of underline on hovor of the navbar */
 
 /* hiding scrollbar */
