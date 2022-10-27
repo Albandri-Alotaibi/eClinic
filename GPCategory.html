@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title class="homepage">Faculty Speciality</title>
+    <title class="homepage">GP Category</title>
    
 
     <style>
@@ -30,11 +30,11 @@
 <!-- ********************* RETRIEVE ********************************************************* -->
 
 <div class="box1_Albandri">
-  <input type="button" value="Add new speciality" id="add">
+  <input type="button" value="Add new GP Category" id="add">
   <table class="show_info">
 
     <thead>
-      <th> Speciality</th>
+      <th> GP Category</th>
       <th></th>
     </thead>
     <tbody id="show_data">
@@ -99,16 +99,16 @@
 //********************* RETREIVING ALL CATEGORIES FROM DATABASE *****************************************************
 
 let box = document.getElementById("show_data");
-const q = query(collection(db, "facultyspeciality"));
+const q = query(collection(db, "gpcategory"));
       const querySnapshot = await getDocs(q);
 querySnapshot.forEach((doc) => {
-  box.innerHTML += '<tr>' + '<td><span id="' + doc.id + '">' + doc.data().specialityname + '</span></td>' 
+  box.innerHTML += '<tr>' + '<td><span id="' + doc.id + '">' + doc.data().gpcategoryname + '</span></td>' 
           +'<td>' +
           '<input type="button" value="edit" class="update" data-ref="' + doc.id + '">' +
           '</td>' + '</tr>';
 
 });
- // *********************************FOR CLEAR TEXT BOX WHEN WE WANT TO (ADD NEW speciality)****************  
+ // *********************************FOR CLEAR TEXT BOX WHEN WE WANT TO (ADD NEW GP Category)****************  
 const resetForm = () => {
   inputfield.value = ""
        
@@ -140,14 +140,14 @@ const resetForm = () => {
         resetForm();
       })
 ////////////////////////********************* METHOD FOUND SEARCH ************************************************************
-const docExistsOrNot = async (specialityenteredname) => {
+const docExistsOrNot = async (GPCategoryenteredname) => {
          var found = false;
-        let BVnospace=specialityenteredname.split(" ").join("");
+        let BVnospace=GPCategoryenteredname.split(" ").join("");
         let BVnospaselowercase= BVnospace.toLowerCase();
-        const qadd = query(collection(db, "facultyspeciality"));
+        const qadd = query(collection(db, "gpcategory"));
         const querySnapshotadd = await getDocs(qadd);
         querySnapshotadd.forEach((doc) => {
-          let dbname=doc.data().specialityname;
+          let dbname=doc.data().gpcategoryname;
           let dbnamenospace= dbname.split(" ").join("");
           let dbnamenospacelowercase=dbnamenospace.toLowerCase();
           if(BVnospaselowercase==dbnamenospacelowercase){
@@ -167,30 +167,30 @@ var inputfield= document.getElementById("inputfield");
 addbtn.addEventListener("click",async function (){ 
                  let BV = inputfield.value;
                 if(BV=="" || BV==null){
-                 alert("Please fill in the speciality name");
+                 alert("Please fill in the GP category name");
                  return;
                 }else if(/[\u0600-\u06FF\u0750-\u077F]/.test(BV)){
                     alert("Only English is allowed");
                     return;
                 }else if(/^\d+$/.test(BV)){
-                    alert("Speciality name cannot contain only digits");
+                    alert("GP category name cannot contain only digits");
                     return;
                    }else if(/^[^a-zA-Z0-9]+$/.test(BV)){
-                    alert("Speciality name cannot contain only special characters");
+                    alert("GP category name cannot contain only special characters");
                     return;
                    }else if(/^[`!@#$%^&*()_+\-=\[\]{};':"\\|,.< >\/?~\d]*$/g.test(BV)){
-                    alert("Speciality name cannot contain only digits and special characters");
+                    alert("GP category name cannot contain only digits and special characters");
                     return;
                    }
                    
                     let found = await docExistsOrNot(BV);
                     if (found==true) {
-                     alert("this speciality is already added");
+                     alert("this GP category is already added");
                      }else{
-                            var ref= collection(db,"facultyspeciality");
+                            var ref= collection(db,"gpcategory");
                             const docRef= await addDoc(
                             ref,{
-                                specialityname:BV
+                                gpcategoryname:BV
                             });
                       
               box.innerHTML += '<tr>' + '<td><span id="' + docRef.id + '">' + BV + '</span></td>' 
@@ -198,7 +198,7 @@ addbtn.addEventListener("click",async function (){
               '<input type="button" value="edit" class="update" data-ref="' + docRef.id + '">' +
               '</td>' + '</tr>';
               divtext.style.display = "none";   
-             alert("speciality added successfully");
+             alert("GP category added successfully");
                  
              addUpdateEvents();        
                       
@@ -229,13 +229,13 @@ var StoringInputFliedValueToCompareIfItsChanngedWhenClickingUpdateButton="";
 
             var categoryid=event.target.getAttribute('data-ref');
             let inputfield=document.getElementById("inputfield");
-           const docRef = doc(db, "facultyspeciality", categoryid);
+           const docRef = doc(db, "gpcategory", categoryid);
            const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
              
               updatebtn.setAttribute('data-ref', categoryid);
-              inputfield.value=docSnap.data().specialityname;
-              StoringInputFliedValueToCompareIfItsChanngedWhenClickingUpdateButton=docSnap.data().specialityname;
+              inputfield.value=docSnap.data().gpcategoryname;
+              StoringInputFliedValueToCompareIfItsChanngedWhenClickingUpdateButton=docSnap.data().gpcategoryname;
              } else {
             // doc.data() will be undefined in this case
              console.log("No such document!");
@@ -254,29 +254,29 @@ var StoringInputFliedValueToCompareIfItsChanngedWhenClickingUpdateButton="";
 
                    let BV2= inputfield.value;
                   if(BV2=="" || BV2==null){
-                   alert("Please fill in the speciality name");
+                   alert("Please fill in the GP category name");
                    return;
                    }else if(/[\u0600-\u06FF\u0750-\u077F]/.test(BV2)){
                     alert("Only English is allowed");
                     return;
                    }else if(/^\d+$/.test(BV2)){
-                    alert("Speciality name cannot contain only digits");
+                    alert("GP category name cannot contain only digits");
                     return;
                    }else if(/^[^a-zA-Z0-9]+$/.test(BV2)){
-                    alert("Speciality name cannot contain only special characters");
+                    alert("GP category name cannot contain only special characters");
                     return;
                    }else if(/^[`!@#$%^&*()_+\-=\[\]{};':"\\|,.< >\/?~\d]*$/g.test(BV2)){
-                    alert("Speciality name cannot contain only digits and special characters");
+                    alert("GP category name cannot contain only digits and special characters");
                     return;
                    }else if(StoringInputFliedValueToCompareIfItsChanngedWhenClickingUpdateButton==BV2){//if its exactly the same with capital and small and space layout(it will NOT be updated)
-                   alert("You did not change the speciality name");
+                   alert("You did not change the GP category name");
                    return;
                     }else if(StoringInputFliedValueToCompareIfItsChanngedWhenClickingUpdateButton.split(" ").join("").toLowerCase()==BV2.split(" ").join("").toLowerCase()){//if its the same with different capital or small or space layout(it will be updated)
                       try {
-                        var ref= doc(db,"facultyspeciality",categoryid);
+                        var ref= doc(db,"gpcategory",categoryid);
                         await updateDoc(
                         ref,{
-                            specialityname:BV2
+                            gpcategoryname:BV2
                         })                     
                      
                    } catch (e) {
@@ -288,7 +288,7 @@ var StoringInputFliedValueToCompareIfItsChanngedWhenClickingUpdateButton="";
                       //updatepage
                       document.getElementById(categoryid).innerHTML = BV2;
                      divtext.style.display = "none";
-                     alert("Speciality has been updated successfully");
+                     alert("GP category has been updated successfully");
                      return;
                     }//end else if its the same with different capital and small and space layout(it will be updated)
                
@@ -297,14 +297,14 @@ var StoringInputFliedValueToCompareIfItsChanngedWhenClickingUpdateButton="";
                     //Checking if its already in the database
                      let found = await docExistsOrNot(BV2);
                      if (found==true) {
-                     alert("This speciality is already in the system");
+                     alert("This GP category is already in the system");
                      return;
                      }else{
                       try {
-                        var ref= doc(db,"facultyspeciality",categoryid);
+                        var ref= doc(db,"gpcategory",categoryid);
                         await updateDoc(
                         ref,{
-                            specialityname:BV2
+                            gpcategoryname:BV2
                         })                     
                      
                    } catch (e) {
@@ -316,14 +316,14 @@ var StoringInputFliedValueToCompareIfItsChanngedWhenClickingUpdateButton="";
                 //updatepage
                 document.getElementById(categoryid).innerHTML = BV2;
                 divtext.style.display = "none";
-                alert("speciality updated successfully");
+                alert("GP category updated successfully");
                }
     });
 
         
     const samevalue = async (categoryid, BV2) => {
     var same= false;
-    const docRef = doc(db, "facultyspeciality", categoryid);
+    const docRef = doc(db, "gpcategory", categoryid);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
      same=true;
