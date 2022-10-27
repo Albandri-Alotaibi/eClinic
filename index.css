@@ -27,12 +27,24 @@
   float: right;
 }
 
-.navbar .navbar-nav .nav-item a.active{
-  --p: 100%;
-  color:#0084BD;
-  
+.navbar-toggler{
+  background-color: #0084BD;
+  border: none;
+  padding: 10px 6px;
+  outline: none;
 }
 
+.navbar-toggler span{
+  display: block;
+  width: 22px;
+  height: 2ps;
+  border: 1px;
+}
+
+
+/* @media screen and (min-width 390px) {
+  
+} */
 /* end of underline on hovor of the navbar */
 
 /* hiding scrollbar */
@@ -340,4 +352,6 @@ p {
 
 }
 /*  end mnue */
+
+
 
