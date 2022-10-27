@@ -213,25 +213,10 @@
             const app = initializeApp(firebaseConfig);
             const db = getFirestore()
             const auth = getAuth()
-        
-      
-           var email=""
-           var uid =""
+            var email=""
+            var uid =""
            
-          //////get admin email from firestore to send it in reset password function/////
-
-        //    const docRef = doc(db, "admin","GimM2OZk69OOq7U32DIz");
-        //    const docSnap = await getDoc(docRef); 
-        //    if (docSnap.exists()) { 
-        //          email=docSnap.data().email
          
-          
-        //  } else {
-        //  // doc.data() will be undefined in this case
-        //      console.log("No such document!"); 
-        //     } 
-
-          
      
    
 
@@ -287,6 +272,27 @@
                 }
 
          ) 
+
+         ///////////////////////////////logout//////////////////////////
+         const logout = document.querySelector('.logout')
+        logout.addEventListener("click", () => {
+            const conf = confirm("are you sure to log out?")
+
+            if (conf === true) {
+                signOut(auth)
+                    .then(() => {
+                        //console.log("user log out")
+                    })
+                    .catch((err) => {
+                        console.log(err.message)
+                    })
+
+                window.location.replace("login.html")
+            }
+          
+
+        });
+        
 
         </script>
     </main>
