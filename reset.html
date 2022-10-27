@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Reset password</title>
 
   <link rel="icon" type="image/x-icon" href="images/logo5.png" sizes=" 16x16">
   <link href="/favicon.ico" type="image/x-icon" rel="icon" />
@@ -69,28 +69,29 @@
               <div class="d-flex justify-content-between align-items-center">
                 <!-- Simple link -->
 
-                <a href="login.html" class="foget" style="display: none;" id="relog">Return to login</a>
+                <a href="login.html" class="foget"  id="relog">Return to login</a>
 
               </div>
 
-              <div class="text-center text-lg-start mt-4 pt-2">
+
+              
+
+
+              <div class="text-center text-lg-start mt-lg-4 pt-lg-2 ">
                 <button class="resetbut btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;"
                   id="afterclick">Send</button>
 
 
 
-                <!-- <button class="resetbut btn btn-primary btn-lg"
-                        style="padding-left: 2.5rem; padding-right: 2.5rem; " id="return">Return</button>
-                       -->
               </div>
 
             </form>
           </div>
         </div>
       </div>
-      <div class="text-center text-md-start  py-4 px-4 px-xl-5 ">
+      <div class="footer_eClinic text-center text-md-start  py-4 px-4 px-xl-5 ">
         <!-- Copyright -->
-        <footer class="footer_eClinic mt-auto">
+        <footer class=" mt-auto ">
           <p class="text-white" style="text-align: center;">Copyright &copy; All rights reserved to King Saud
             University. This website made with 🤍 by eClinic teams.
           </p>
@@ -153,7 +154,7 @@
       const app = initializeApp(firebaseConfig);
       const db = getFirestore()
       const auth = getAuth()
-
+      
       //////////////////////////////////reset password //////////////////////////////////
 
       const resetform = document.querySelector('.resetform')
@@ -164,7 +165,6 @@
         const box = document.getElementById("emailbox")
         const guide = document.getElementById("resetguied")
         const after = document.getElementById("aftersend")
-        const returnlog = document.getElementById("relog")
         const afterclicksend = document.getElementById("afterclick")
         const returnE = document.getElementById("return");
         const here = document.getElementById("here");
@@ -183,14 +183,13 @@
               guide.style.display = "none";
               afterclicksend.style.display = "none";
               after.style.display = "block";
-              returnlog.style.display = "block";
               returnE.style.display = "block";
 
             })
             .catch((error) => {
               const errorCode = error.code;
               const errorMessage = error.message;
-              alert("Invalid email")
+              alert("something wrong")
             });
         }
 
@@ -199,7 +198,6 @@
           guide.style.display = "block";
           afterclicksend.style.display = "block";
           after.style.display = "none";
-          returnlog.style.display = "none";
           returnE.style.display = "none";
         })
 
