@@ -9,15 +9,15 @@
   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-  
+
 
   <!-- jQuery library -->
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
 
   <!-- Latest compiled JavaScript -->
-  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
   <title>eClinic</title>
   <!-- MDB icon -->
@@ -33,9 +33,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap" rel="stylesheet">
   <!--end of fonts for h1 from google -->
 
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
   <!-- MDB -->
   <link rel="stylesheet" href="css/mdb.min.css" />
 
+
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
@@ -44,14 +49,16 @@
 
       <img src="img/logo.png" width="10%" height="30%" alt="Logo" loading="lazy" />
 
-      <button class="navbar-toggler ms-lg-0" type="button" data-bs-toggle="collapse"
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-        aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        aria-label="Toggle navigation" >
+        <i class='bx bx-menu' style='color:#ffffff'  ></i>
+        
       </button>
+     
 
       <div class="collapse navbar-collapse justify-content-center mt-2" id="navbarSupportedContent">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav ml-auto">
           <li class="nav-item ">
             <a class="text-white nav-link active " aria-current="page" href="#">Home</a>
           </li>
@@ -67,12 +74,13 @@
           <li class="nav-item">
             <a class="text-white nav-link" href="timeframe.html">Help Desk timeframe</a>
           </li>
+
         </ul>
       </div>
 
 
       <!-- Start profil icons  -->
-      <div class="action">
+      <div class="action ml-auto">
 
         <div class="profile" onclick="menuToggle();">
 
@@ -86,7 +94,7 @@
 
             <li>
 
-              <img src="img/logout.png" /><a href="#" class="logout">Log Out</a>
+              <img src="img/logout.png" /><a href="#">Log Out</a>
 
             </li>
 
@@ -124,16 +132,17 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-2 col-xs-push-6 p-3 mb-2 text-white rounded-8 " style="margin-left: -14%;">
+            <div class="col-md-2 col-xs-1 p-3 mb-2 text-white rounded-8 " style="margin-left: -14%;">
               <img src="img/faculty.png" class="mx-auto d-block" style="height: 40%; padding-top: 0%;">
-              <p class="responsive-font-example">catogrize faculty member and their common issues based on their spieciality</p>
+              <p class="responsive-font-example">catogrize faculty member and their common issues based on their
+                spieciality</p>
             </div>
             <div class="col-md-2 col-xs-1 p-3 mb-2 text-white rounded-8">
               <img src="img/calender.png" class="mx-auto d-block">
               <p class="responsive-font-example">manage semesters and their help desk timeframe</p>
             </div>
             <div class="col-md-2 col-xs-1 p-3 mb-2 text-white rounded-8">
-              <img src="img/graduation.png" class="mx-auto d-block"  style="height: 50%;">
+              <img src="img/graduation.png" class="mx-auto d-block" style="height: 50%;">
               <p class="responsive-font-example">arrange the graduation projects library</p>
             </div>
 
@@ -172,7 +181,10 @@
     integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
     crossorigin="anonymous"></script>
 
-    <!-- <script src=”https://code.jquery.com/jquery-3.2.1.slim.min.js”
+    
+    
+
+  <!-- <script src=”https://code.jquery.com/jquery-3.2.1.slim.min.js”
     integrity=”sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN” crossorigin=”anonymous”>
     </script>
   <script src=”https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js”
@@ -191,70 +203,9 @@
       toggleMenu.classList.toggle("active");
 
     }
-     
+
 // End: java sript for profile icons
-  </script>
- 
-  <script type="module"> 
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-        import { getFirestore, doc, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
-        // Your web app's Firebase configuration
-        import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"; //import for authentication +signout
-        const firebaseConfig = {
-            apiKey: "AIzaSyD6JcSscRU6XaF3SaCF_U3ggXAFYUnKKq8",
-            authDomain: "eclinic-d5dec.firebaseapp.com",
-            projectId: "eclinic-d5dec",
-            storageBucket: "eclinic-d5dec.appspot.com",
-            messagingSenderId: "148819771062",
-            appId: "1:148819771062:web:f66c9a362b2fc34f247017"
-        };
 
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore()
-        const auth = getAuth()
-
-
-        ///////////////////logout/////////////////     
-        const logout = document.querySelector('.logout')
-        logout.addEventListener("click", () => {
-            const conf = confirm("are you sure to log out?")
-
-            if (conf === true) {
-                signOut(auth)
-                    .then(() => {
-                        console.log("user log out")
-                    })
-                    .catch((err) => {
-                        console.log(err.message)
-                    })
-
-                window.location.replace("login.html")
-            }
-          
-
-        });
-           //////////////////////////Authentication between pages/////////////////////////
-        onAuthStateChanged(auth, (user) => {
-        if(user){
-          console.log("the same user") 
-        }
-        else
-        {
-            signOut(auth)
-            window.location.replace("login.html")
-                    .then(() => {
-                        //console.log("user log out")
-                    })
-                    .catch((err) => {
-                        console.log(err.message)
-                    })
-        }
-        console.log("the user status change :", user)
-      })
 
 
   </script>

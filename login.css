@@ -7,21 +7,26 @@ body {
 }
 
 
- .logbut{
+.logbut{
   background-image: linear-gradient( #0084BD 0%, #0084BD 100%);
   
 
 }
 
 
+.logbut:hover {
+  background-image: linear-gradient( #037caf 0%, #037caf 100%);
 
-.logbut :hover {
-  background-image: linear-gradient( #bb1b86 0%, #bb1b86 100%);
-  
-  
 }
 
+.resetbut{
+  background-image: linear-gradient( #0084BD 0%, #0084BD 100%);
+}
 
+.resetbut:hover {
+  background-image: linear-gradient( #037caf 0%, #037caf 100%);
+
+}
 
 .divider:after,
 .divider:before {
@@ -37,6 +42,15 @@ height: calc(100% - 73px);
 .h-custom {
 height: 100%;
 }
+body {
+  overflow-y:auto;
+}
+.footer_eClinic{
+  height:min-content;
+  bottom: 0;
+  font-size: smaller;
+}
+
 }
 
 .py-4{
