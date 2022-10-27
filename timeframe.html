@@ -126,9 +126,9 @@
                                 <hr>
                                 <label>end date</label><br>
                                 <pre id="stord-end"></pre>
-                                
+
                                 <input type="button" id="ok" value="ok" style="display: none;">
-                                
+
                             </div>
                         </div>
                     </div>
@@ -256,7 +256,7 @@
         let stordstart = document.getElementById("stord-start");
         let stordend = document.getElementById("stord-end");
         let okbtn = document.getElementById("ok");
-        
+
         var start = 0;
         var end = 0;
 
@@ -353,7 +353,7 @@
                         dateString2 = day2 + "-" + month2 + "-" + year2;
 
                         stordend.innerHTML = dateString2;
-                    }  else {//if the semester did not end
+                    } else {//if the semester did not end
                         showdatesdiv.style.display = "none";
                         divAddUpdate.style.display = "block"; // to show the add/update section
                         updatebtn.style.display = "block";//we show the update btn
@@ -408,7 +408,7 @@
 
                 if (new Date(start).getDate() < today.getDate() && new Date(start).getMonth() <= today.getMonth() && new Date(start).getFullYear() <= today.getFullYear()) {//alert if the start date in the past
                     alert("Please choose a starting day in the future");
-                } else if (start > end) {
+                } else if (start >= end) {
                     alert("Please choose a start day that is before the end date");
                 } else {
                     await updateDoc(docRefadd, { // we add the new time to a smester that dosenot have a time frame
@@ -430,10 +430,12 @@
             start = startDatecal.value;
             end = endDatecal.value;
             var today = new Date();
-            var todayM = today.getMonth() +1;
-            if (day <= today.getDate() && month <= todayM && year <= today.getFullYear() && start != dateString) {//alert if the start date in the past
+            var todayM = today.getMonth() + 1;
+            if (day <= today.getDate() && month <= todayM && year <= today.getFullYear() && start != dateString) {
                 alert("Start date connot be changed for a date that has been reached");
-            } else if (start > end) {
+            } else if (new Date(start).getDate() < today.getDate() && new Date(start).getMonth() <= today.getMonth() && new Date(start).getFullYear() <= today.getFullYear()  && start != dateString) {//alert if the start date in the past
+                alert("Please choose a starting day in the future");
+            }else if (start >= end) {
                 alert("Please choose a start day that is before the end date");
             } else if (start == dateString && end == dateString2) {
                 alert("You did not change the start date or the end date");
@@ -469,25 +471,25 @@
         })
 
 
-      /////////////////////////////log out ///////////////////////////////////////
-      const logout = document.querySelector('.logout')
-  logout.addEventListener("click", () => {
-      const conf = confirm("are you sure to log out?")
+        /////////////////////////////log out ///////////////////////////////////////
+        const logout = document.querySelector('.logout')
+        logout.addEventListener("click", () => {
+            const conf = confirm("are you sure to log out?")
 
-      if (conf === true) {
-          signOut(auth)
-              .then(() => {
-                  //console.log("user log out")
-              })
-              .catch((err) => {
-                  console.log(err.message)
-              })
+            if (conf === true) {
+                signOut(auth)
+                    .then(() => {
+                        //console.log("user log out")
+                    })
+                    .catch((err) => {
+                        console.log(err.message)
+                    })
 
-          window.location.replace("login.html")
-      }
-    
+                window.location.replace("login.html")
+            }
 
-  });
+
+        });
     </script>
     <script>
         // start: java sript for profile icons 
