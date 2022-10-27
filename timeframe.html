@@ -432,7 +432,7 @@
             var today = new Date();
             var todayM = today.getMonth() +1;
             if (day <= today.getDate() && month <= todayM && year <= today.getFullYear() && start != dateString) {//alert if the start date in the past
-                alert("Start date connot be changed for a date that has reached");
+                alert("Start date connot be changed for a date that has been reached");
             } else if (start > end) {
                 alert("Please choose a start day that is before the end date");
             } else if (start == dateString && end == dateString2) {
