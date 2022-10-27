@@ -2,152 +2,151 @@
 <html lang="en">
 
 <head>
-    
-    <link rel="stylesheet" href="login.css">
-    <link rel="stylesheet" href="index.css">
 
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>reset password</title>
+  <link rel="stylesheet" href="login.css">
+  <link rel="stylesheet" href="index.css">
 
-    <link rel="icon" type="image/x-icon" href="images/logo5.png" sizes=" 16x16">
-    <link href="/favicon.ico" type="image/x-icon" rel="icon" />
-  
-  
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <link href='https://fonts.googleapis.com/css?family=Oswald:300' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Familjen Grotesk' rel='stylesheet'>
-  
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>reset password</title>
+
+  <link rel="icon" type="image/x-icon" href="images/logo5.png" sizes=" 16x16">
+  <link href="/favicon.ico" type="image/x-icon" rel="icon" />
+
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <link href='https://fonts.googleapis.com/css?family=Oswald:300' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Familjen Grotesk' rel='stylesheet'>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
   <!-- MDB -->
   <link rel="stylesheet" href="css/mdb.min.css" />
   <!-- MDB icon -->
   <link rel="icon" href="img/logo.png" type="image/x-icon" />
-  </head>
-  
+</head>
+
 
 
 </head>
 
 <body class="Site d-flex flex-column min-vh-100">
-    <main class="site-wrapper">
+  <main class="site-wrapper">
 
-      <nav class="navbar navbar-expand-sm fixed-top navbar-light " style="box-shadow: none; ">
-        <div class="container-fluid">
-    
-         
-          <button class="navbar-toggler ms-lg-0" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-    
-          <div class="collapse navbar-collapse justify-content-center mt-2" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-              <li class="nav-item ">
-                <a class="nav-link" aria-current="page" href="index.html">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class=" nav-link" href="#"> faculty member speciality</a>
-              </li>
-              <li class="nav-item">
-                <a class=" nav-link" href="#">Graduation projects</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Semester/year</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="timeframe.html">Help Desk timeframe</a>
-              </li>
-            </ul>
-            <!-- Start profil icons  -->
-      <div class="action">
+    <nav class="navbar navbar-expand-sm fixed-top navbar-light " style="box-shadow: none; ">
+      <div class="container-fluid">
 
-        <div class="profile" onclick="menuToggle();">
 
-          <img src="img/user.png" />
+        <button class="navbar-toggler ms-lg-0" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-        </div>
-
-        <div class="menu">
-
-          <ul>
-
-            <li>
-
-              <img src="img/logout.png" /><a href="#" class="logout">Log Out</a>
-
+        <div class="collapse navbar-collapse justify-content-center mt-2" id="navbarSupportedContent">
+          <ul class="navbar-nav">
+            <li class="nav-item ">
+              <a class="nav-link" aria-current="page" href="index.html">Home</a>
             </li>
-
-            <li>
-
-              <img src="img/lock.png" /><a href="resetinner.html">Reset password</a>
-
+            <li class="nav-item">
+              <a class=" nav-link" href="#"> faculty member speciality</a>
             </li>
-
+            <li class="nav-item">
+              <a class=" nav-link" href="#">Graduation projects</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Semester/year</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="timeframe.html">Help Desk timeframe</a>
+            </li>
           </ul>
+          <!-- Start profil icons  -->
+          <div class="action">
 
-        </div>
+            <div class="profile" onclick="menuToggle();">
 
-      </div>
-      <!-- end profil icons  -->
+              <img src="img/user.png" />
+
+            </div>
+
+            <div class="menu">
+
+              <ul>
+
+                <li>
+
+                  <img src="img/logout.png" /><a href="#" class="logout">Log Out</a>
+
+                </li>
+
+                <li>
+
+                  <img src="img/lock.png" /><a href="resetinner.html">Reset password</a>
+
+                </li>
+
+              </ul>
+
+            </div>
 
           </div>
-    
-    
+          <!-- end profil icons  -->
+
         </div>
-      </nav>
+
+
+      </div>
+    </nav>
 
 
 
 
 
-        <section class="vh-100">
-            <div class="container-fluid h-custom">
-              <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-md-9 col-lg-6 col-xl-5">
-                  <img src="img/eClinicLogo-blue.png"
-                    class="img-fluid" alt="Sample image">
-                </div>
-                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                  <form class="resetform">
-                    <div class="align-items-center justify-content-center ">
-                      <p class="lead fw-normal display-6">Reset Your Password</p><br>
-                      
-                      <p id="aftersend" class="lead fw-normal display-7 text-danger" style="display: none;">  </p>
-                    </div>
-          
-                    <div class="divider d-flex align-items-center my-4">  
-                    </div>
-          
-                  
-                 
-          
-                    <div class="col-md-12 text-center">
-                      <button class="resetbut btn btn-primary btn-lg "
-                        style="padding-left: 2.5rem; padding-right: 2.5rem;" id="afterclick">Send reset password link </button>
-                      
-                    </div>
-                    <!-- <a href="index.html" class="foget" style="display: none;" id="rehome"> Return to homepage</a> -->
-                  </form>
-                </div>
+    <section class="vh-100">
+      <div class="container-fluid h-custom">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-md-9 col-lg-6 col-xl-5">
+            <img src="img/eClinicLogo-blue.png" class="img-fluid" alt="Sample image">
+          </div>
+          <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+            <form class="resetform">
+              <div class="align-items-center justify-content-center ">
+                <p class="lead fw-normal display-6">Reset Your Password</p><br>
+
+                <p id="aftersend" class="lead fw-normal display-7 text-danger" style="display: none;"> </p>
               </div>
-            </div>
-            <div
-              class="text-center text-md-start  py-4 px-4 px-xl-5 ">
-              <!-- Copyright -->
-              <footer class="footer_eClinic mt-auto">
-                <p class="text-white" style="text-align: center;">Copyright &copy; All rights reserved to King Saud University. This website made with 🤍 by eClinic teams.
-                </p>
-              </footer>
-              <!-- Copyright -->
-          
-              
-            </div>
-          </section>
+
+              <div class="divider d-flex align-items-center my-4">
+              </div>
+
+
+
+
+              <div class="col-md-12 text-center">
+                <button class="resetbut btn btn-primary btn-lg " style="padding-left: 2.5rem; padding-right: 2.5rem;"
+                  id="afterclick">Send reset password link </button>
+
+              </div>
+              <!-- <a href="index.html" class="foget" style="display: none;" id="rehome"> Return to homepage</a> -->
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="text-center text-md-start  py-4 px-4 px-xl-5 ">
+        <!-- Copyright -->
+        <footer class="footer_eClinic mt-auto">
+          <p class="text-white" style="text-align: center;">Copyright &copy; All rights reserved to King Saud
+            University. This website made with 🤍 by eClinic teams.
+          </p>
+        </footer>
+        <!-- Copyright -->
+
+
+      </div>
+    </section>
 
 
 
@@ -155,20 +154,20 @@
 
 
 
-  <!-- MDB -->
-  <script type="text/javascript" src="js/mdb.min.js"></script>
-  <!-- Custom scripts -->
-  <script type="text/javascript"></script>
-  <!-- JavaScript Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
-    integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
-    crossorigin="anonymous"></script>
+    <!-- MDB -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+    <!-- Custom scripts -->
+    <script type="text/javascript"></script>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+      integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+      crossorigin="anonymous"></script>
 
 
 
@@ -176,15 +175,15 @@
 
     <script>
       // start: java sript for profile icons
-  
+
       function menuToggle() {
-  
+
         const toggleMenu = document.querySelector(".menu");
-  
+
         toggleMenu.classList.toggle("active");
-  
+
       }
-       
+
   // End: java sript for profile icons
     </script>
 
@@ -192,54 +191,53 @@
 
 
 
-        <script type="module">
-            // Import the functions you need from the SDKs you need
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
-            // TODO: Add SDKs for Firebase products that you want to use
-            // https://firebase.google.com/docs/web/setup#available-libraries
-            import { getFirestore, doc, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
-            // Your web app's Firebase configuration
-            import { getAuth, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"; //import for authentication +signout
-            const firebaseConfig = {
-                apiKey: "AIzaSyD6JcSscRU6XaF3SaCF_U3ggXAFYUnKKq8",
-                authDomain: "eclinic-d5dec.firebaseapp.com",
-                projectId: "eclinic-d5dec",
-                storageBucket: "eclinic-d5dec.appspot.com",
-                messagingSenderId: "148819771062",
-                appId: "1:148819771062:web:f66c9a362b2fc34f247017"
-            };
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+      import { getFirestore, doc, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+      // Your web app's Firebase configuration
+      import { getAuth, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"; //import for authentication +signout
+      const firebaseConfig = {
+        apiKey: "AIzaSyD6JcSscRU6XaF3SaCF_U3ggXAFYUnKKq8",
+        authDomain: "eclinic-d5dec.firebaseapp.com",
+        projectId: "eclinic-d5dec",
+        storageBucket: "eclinic-d5dec.appspot.com",
+        messagingSenderId: "148819771062",
+        appId: "1:148819771062:web:f66c9a362b2fc34f247017"
+      };
 
-            // Initialize Firebase services 
-            const app = initializeApp(firebaseConfig);
-            const db = getFirestore()
-            const auth = getAuth()
-            var email=""
-            var uid =""
-           
-         
-     
-   
+      // Initialize Firebase services 
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore()
+      const auth = getAuth()
+      var email = ""
+      var uid = ""
 
-           
-            /////////////////////////there is authentication for each page in inner reset password /////////////////////////
-            onAuthStateChanged(auth, (user) => {
-        if(user){
+
+
+
+
+
+      /////////////////////////there is authentication for each page in inner reset password /////////////////////////
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
           console.log("the same user")
           email = user.email; //to reset password on admin email
-          uid =user.uid;
-         
-          
+          uid = user.uid;
+
+
         }
-        else
-        {
-            signOut(auth)
-            window.location.replace("login.html")
-                    .then(() => {
-                        //console.log("user log out")
-                    })
-                    .catch((err) => {
-                        console.log(err.message)
-                    })
+        else {
+          signOut(auth)
+          window.location.replace("login.html")
+            .then(() => {
+              console.log("user log out")
+            })
+            .catch((err) => {
+              console.log(err.message)
+            })
         }
         console.log("the user status change :", user)
       })
@@ -247,55 +245,58 @@
       //////////////////////////////////reset password //////////////////////////////////
 
       const resetform = document.querySelector('.resetform')
-         
-            resetform.addEventListener('submit', (e) => {
-                e.preventDefault()
-                const after=document.getElementById("aftersend")
-              //  const returnhome=document.getElementById("rehome")
-                const afterclicksend=document.getElementById("afterclick")
-                
 
-              //send email to admin so he can reset his password
-                sendPasswordResetEmail(auth, email)
-                    .then(() => {
-                      after.innerHTML ="We have sent you the reset link on this email " +email;
-                        afterclicksend.style.display="none";
-                        after.style.display="block";
-                       // returnhome.style.display="block";
-                        
-                    })
-                    .catch((error) => {
-                        const errorCode = error.code;
-                        const errorMessage = error.message;
-                        alert("something wrong")
-                    });
-                }
+      resetform.addEventListener('submit', (e) => {
+        e.preventDefault()
+        const after = document.getElementById("aftersend")
+        //  const returnhome=document.getElementById("rehome")
+        const afterclicksend = document.getElementById("afterclick")
 
-         ) 
 
-         ///////////////////////////////logout//////////////////////////
-         const logout = document.querySelector('.logout')
-        logout.addEventListener("click", () => {
-            const conf = confirm("are you sure to log out?")
+        //send email to admin so he can reset his password
+        sendPasswordResetEmail(auth, email)
+          .then(() => {
+            after.innerHTML = "We have sent you the reset link on this email " + email;
+            afterclicksend.style.display = "none";
+            after.style.display = "block";
+            // returnhome.style.display="block";
 
-            if (conf === true) {
-                signOut(auth)
-                    .then(() => {
-                        //console.log("user log out")
-                    })
-                    .catch((err) => {
-                        console.log(err.message)
-                    })
-
-                window.location.replace("login.html")
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            if (errorMessage === "Firebase: Error (auth/too-many-requests).") {
+              alert("We have sent the reset password link multiple time , Please make sure your email is correct")
             }
-          
+            
+          });
+      }
 
-        });
-        
+      )
 
-        </script>
-    </main>
+      ///////////////////////////////logout//////////////////////////
+      const logout = document.querySelector('.logout')
+      logout.addEventListener("click", () => {
+        const conf = confirm("are you sure to log out?")
+
+        if (conf === true) {
+          signOut(auth)
+            .then(() => {
+              //console.log("user log out")
+            })
+            .catch((err) => {
+              console.log(err.message)
+            })
+
+          window.location.replace("login.html")
+        }
+
+
+      });
+
+
+    </script>
+  </main>
 </body>
 
 </html>
