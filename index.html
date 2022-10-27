@@ -94,7 +94,7 @@
 
             <li>
 
-              <img src="img/logout.png" /><a href="#">Log Out</a>
+              <img src="img/logout.png" /><a href="#" class="logout" >Log Out</a>
 
             </li>
 
@@ -209,6 +209,69 @@
 
 
   </script>
+ <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+  import { getFirestore, doc, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+  // Your web app's Firebase configuration
+  import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"; //import for authentication +signout
+  const firebaseConfig = {
+      apiKey: "AIzaSyD6JcSscRU6XaF3SaCF_U3ggXAFYUnKKq8",
+      authDomain: "eclinic-d5dec.firebaseapp.com",
+      projectId: "eclinic-d5dec",
+      storageBucket: "eclinic-d5dec.appspot.com",
+      messagingSenderId: "148819771062",
+      appId: "1:148819771062:web:f66c9a362b2fc34f247017"
+  };
+
+  // Initialize Firebase services 
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore()
+  const auth = getAuth()
+
+
+  ///////////////////logout/////////////////     
+  const logout = document.querySelector('.logout')
+  logout.addEventListener("click", () => {
+      const conf = confirm("are you sure to log out?")
+
+      if (conf === true) {
+          signOut(auth)
+              .then(() => {
+                  //console.log("user log out")
+              })
+              .catch((err) => {
+                  console.log(err.message)
+              })
+
+          window.location.replace("login.html")
+      }
+    
+
+  });
+
+onAuthStateChanged(auth, (user) => {
+  if(user){
+    console.log("the same user") 
+  }
+  else
+  {
+      signOut(auth)
+      window.location.replace("login.html")
+              .then(() => {
+                  //console.log("user log out")
+              })
+              .catch((err) => {
+                  console.log(err.message)
+              })
+    //window.location.replace("login.html")
+  }
+  console.log("the user status change :", user)
+})
+
+</script>
 </body>
 
 </html>
