@@ -184,12 +184,21 @@
               afterclicksend.style.display = "none";
               after.style.display = "block";
               returnE.style.display = "block";
-
+             
             })
             .catch((error) => {
               const errorCode = error.code;
               const errorMessage = error.message;
-              alert("something wrong")
+             
+              if (errorMessage === "Firebase: Error (auth/user-not-found)."|| errorMessage ==="Firebase: Error (auth/invalid-email).")
+              {
+              alert("invalid email")
+              }
+              else 
+              if(errorMessage === "Firebase: Error (auth/too-many-requests)."){
+              alert("We have sent the reset password link multiple time , Please make sure your email is correct")
+            }
+              
             });
         }
 
