@@ -266,7 +266,7 @@
             resetform.addEventListener('submit', (e) => {
                 e.preventDefault()
                 const after=document.getElementById("aftersend")
-                const returnhome=document.getElementById("rehome")
+              //  const returnhome=document.getElementById("rehome")
                 const afterclicksend=document.getElementById("afterclick")
                 
 
@@ -276,7 +276,7 @@
                       after.innerHTML ="We have sent you the reset link on this email " +email;
                         afterclicksend.style.display="none";
                         after.style.display="block";
-                        returnhome.style.display="block";
+                       // returnhome.style.display="block";
                         
                     })
                     .catch((error) => {
