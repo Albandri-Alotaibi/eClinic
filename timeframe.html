@@ -55,7 +55,7 @@
 
                         <li>
 
-                            <img src="img/logout.png" /><a href="#">Log Out</a>
+                            <img src="img/logout.png" /><a href="#" class="logout">Log Out</a>
 
                         </li>
 
@@ -455,7 +455,25 @@
         })
 
 
+      /////////////////////////////log out ///////////////////////////////////////
+      const logout = document.querySelector('.logout')
+  logout.addEventListener("click", () => {
+      const conf = confirm("are you sure to log out?")
 
+      if (conf === true) {
+          signOut(auth)
+              .then(() => {
+                  //console.log("user log out")
+              })
+              .catch((err) => {
+                  console.log(err.message)
+              })
+
+          window.location.replace("login.html")
+      }
+    
+
+  });
     </script>
     <script>
         // start: java sript for profile icons 
