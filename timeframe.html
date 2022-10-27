@@ -121,12 +121,14 @@
                             </div>
 
                             <div id="show-past-dates" style="display: none; ">
-                                <label>start date</label>
+                                <label>start date</label><br>
                                 <pre id="stord-start"></pre>
                                 <hr>
-                                <label>end date</label>
+                                <label>end date</label><br>
                                 <pre id="stord-end"></pre>
+                                
                                 <input type="button" id="ok" value="ok" style="display: none;">
+                                
                             </div>
                         </div>
                     </div>
@@ -142,7 +144,7 @@
 
                 <img class="logo" src="img/logo.png" alt="logo brand" height="50px" width="170px">
                 <a href="index.html"><i class="fa fa-fw fa-home"></i>Home</a>
-                <a href="someSection"><i class="fa fa-calendar"></i> Semester</a>
+                <a href="semesters.html"><i class="fa fa-calendar"></i> Semester</a>
                 <a href="#id_name"><i class="fa fa-group"></i> Faculty Members Speciality </a>
                 <a href="#id_name"><i class="fa fa-graduation-cap"></i> Graduation projects </a>
                 <a href="#id_name" class="active_semester"><i class="fa fa-clock-o"></i> Help desk timeframe</a>
@@ -179,7 +181,7 @@
         integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
         crossorigin="anonymous"></script>
 
-<!-- 
+    <!-- 
     <script>
         $(document).ready(function () {
             bindEventToNavigation();
@@ -254,8 +256,18 @@
         let stordstart = document.getElementById("stord-start");
         let stordend = document.getElementById("stord-end");
         let okbtn = document.getElementById("ok");
+        
         var start = 0;
         var end = 0;
+
+        let day = "";
+        let month = "";
+        let year = "";
+        let day2 = "";
+        let month2 = "";
+        let year2 = "";
+        let dateString = "";
+        let dateString2 = "";
 
         //-------------------------------get the semesters and add them in the drop down menu-------------------
         async function getSemesters() {
@@ -326,22 +338,22 @@
                         okbtn.style.display = "block";
                         let startDateMillSec = docSnap.data().startdate.toDate();//to get an js date obj  
                         let startdateobj = new Date(startDateMillSec);
-                        let day = startdateobj.getDate();
-                        let month = startdateobj.getMonth() + 1; //jan 0 not 1
-                        let year = startdateobj.getFullYear();
-                        let dateString = day + "-" + month + "-" + year;// to match the format yyy-mm-dd
+                        day = startdateobj.getDate();
+                        month = startdateobj.getMonth() + 1; //jan 0 not 1
+                        year = startdateobj.getFullYear();
+                        dateString = day + "-" + month + "-" + year;// to match the format yyy-mm-dd
 
                         stordstart.innerHTML = dateString;
 
                         let endDateMillSec = docSnap.data().enddate.toDate();//to get an js date obj  
                         let endDateobj = new Date(endDateMillSec);
-                        let day2 = endDateobj.getDate();
-                        let month2 = endDateobj.getMonth() + 1; //jan 0 not 1
-                        let year2 = endDateobj.getFullYear();
-                        let dateString2 = day2 + "-" + month2 + "-" + year2;
+                        day2 = endDateobj.getDate();
+                        month2 = endDateobj.getMonth() + 1; //jan 0 not 1
+                        year2 = endDateobj.getFullYear();
+                        dateString2 = day2 + "-" + month2 + "-" + year2;
 
                         stordend.innerHTML = dateString2;
-                    } else {//if the semester did not end
+                    }  else {//if the semester did not end
                         showdatesdiv.style.display = "none";
                         divAddUpdate.style.display = "block"; // to show the add/update section
                         updatebtn.style.display = "block";//we show the update btn
@@ -350,26 +362,26 @@
                         // let startDateMillSec = docSnap.data().startdate.seconds * 1000;//get the date in milliseconds
                         let startDateMillSec = docSnap.data().startdate.toDate();//to get an js date obj  
                         let startdateobj = new Date(startDateMillSec);
-                        let day = startdateobj.getDate();
-                        let month = startdateobj.getMonth() + 1; //jan 0 not 1
-                        let year = startdateobj.getFullYear();
+                        day = startdateobj.getDate();
+                        month = startdateobj.getMonth() + 1; //jan 0 not 1
+                        year = startdateobj.getFullYear();
                         if (day < 10)//to add 0 at the beginning of the number to match the js format yyy-mm-dd
                             day = "0" + day;
                         if (month < 10)
                             month = "0" + month;
-                        let dateString = year + "-" + month + "-" + day;// to match the format yyy-mm-dd
+                        dateString = year + "-" + month + "-" + day;// to match the format yyy-mm-dd
                         startDatecal.value = dateString;
 
                         let endDateMillSec = docSnap.data().enddate.toDate();//to get an js date obj  
                         let endDateobj = new Date(endDateMillSec);
-                        let day2 = endDateobj.getDate();
-                        let month2 = endDateobj.getMonth() + 1; //jan 0 not 1
-                        let year2 = endDateobj.getFullYear();
+                        day2 = endDateobj.getDate();
+                        month2 = endDateobj.getMonth() + 1; //jan 0 not 1
+                        year2 = endDateobj.getFullYear();
                         if (day2 < 10)
                             day2 = "0" + day2;
                         if (month2 < 10)
                             month2 = "0" + month2;
-                        let dateString2 = year2 + "-" + month2 + "-" + day2;
+                        dateString2 = year2 + "-" + month2 + "-" + day2;
                         endDatecal.value = dateString2;
 
                         //var flag = false;
@@ -390,14 +402,14 @@
             start = startDatecal.value;
             end = endDatecal.value;
             if (start == "" || end == "")//if the admin did not choose a start or end date
-                alert("please choose a start and an end date");
+                alert("Please choose a start and an end date");
             else {//if the admin chooses a start and end dates
                 var today = new Date();
 
-                if (new Date(start) < today) {//alert if the start date in the past
-                    alert("please choose a starting day in the future");
+                if (new Date(start).getDate() < today.getDate() && new Date(start).getMonth() <= today.getMonth() && new Date(start).getFullYear() <= today.getFullYear()) {//alert if the start date in the past
+                    alert("Please choose a starting day in the future");
                 } else if (start > end) {
-                    alert("please choose a start day that is before the end date");
+                    alert("Please choose a start day that is before the end date");
                 } else {
                     await updateDoc(docRefadd, { // we add the new time to a smester that dosenot have a time frame
                         startdate: Timestamp.fromDate(new Date(start + "T00:00:00")),
@@ -405,7 +417,7 @@
                         timeframe: true
 
                     });
-                    alert("your work has been added successfully")
+                    alert("Your work has been added successfully")
                     window.location.replace("index.html");
                 }
             }
@@ -418,11 +430,13 @@
             start = startDatecal.value;
             end = endDatecal.value;
             var today = new Date();
-
-            if (new Date(start) < today) {//alert if the start date in the past
-                alert("please choose a starting day in the future");
+            var todayM = today.getMonth() +1;
+            if (day <= today.getDate() && month <= todayM && year <= today.getFullYear() && start != dateString) {//alert if the start date in the past
+                alert("Start date connot be changed for a date that has reached");
             } else if (start > end) {
-                alert("please choose a start day that is before the end date");
+                alert("Please choose a start day that is before the end date");
+            } else if (start == dateString && end == dateString2) {
+                alert("You did not change the start date or the end date");
             } else {
 
                 await updateDoc(docRefup, { // we update the time to a smester 
@@ -431,7 +445,7 @@
                     timeframe: true
                 });
 
-                alert("your work has been updated successfully");
+                alert("Your work has been updated successfully");
                 window.location.replace("index.html");
             }
         })
@@ -455,25 +469,25 @@
         })
 
 
-      /////////////////////////////log out ///////////////////////////////////////
-      const logout = document.querySelector('.logout')
-  logout.addEventListener("click", () => {
-      const conf = confirm("are you sure to log out?")
+        /////////////////////////////log out ///////////////////////////////////////
+        const logout = document.querySelector('.logout')
+        logout.addEventListener("click", () => {
+            const conf = confirm("are you sure to log out?")
 
-      if (conf === true) {
-          signOut(auth)
-              .then(() => {
-                  //console.log("user log out")
-              })
-              .catch((err) => {
-                  console.log(err.message)
-              })
+            if (conf === true) {
+                signOut(auth)
+                    .then(() => {
+                        //console.log("user log out")
+                    })
+                    .catch((err) => {
+                        console.log(err.message)
+                    })
 
-          window.location.replace("login.html")
-      }
-    
+                window.location.replace("login.html")
+            }
 
-  });
+
+        });
     </script>
     <script>
         // start: java sript for profile icons 
