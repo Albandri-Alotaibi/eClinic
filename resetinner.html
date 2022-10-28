@@ -259,14 +259,14 @@
             after.innerHTML = "We have sent you the reset link on this email " + email;
             afterclicksend.style.display = "none";
             after.style.display = "block";
-            // returnhome.style.display="block";
+           
 
           })
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             if (errorMessage === "Firebase: Error (auth/too-many-requests).") {
-              alert("We have sent the reset password link multiple time , Please make sure your email is correct")
+              alert("We have sent the reset password link multiple time , Please check your email")//maybechange it
             }
             
           });
