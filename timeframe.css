@@ -56,8 +56,8 @@
     border-radius: 2ch;
     border: 1px solid hsl(0 0% 83%);
     /* margin-top: 50% ; */
-    /* margin-left: 30%;
-    margin-bottom: 50%; */
+    margin-left: 30%;
+    /* margin-bottom: 50%;  */
 
 }
 
@@ -86,7 +86,7 @@
     text-align: center;
 }
 
-.button-next-Deem {
+/* .button-next-Deem {
     background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
     border-radius: .5rem;
     box-sizing: border-box;
@@ -190,7 +190,20 @@
 
     background-image: linear-gradient(-180deg, #1D95C9 0%, #17759C 100%);
 
-}
+} */
+
+
+.button{
+    background-image: linear-gradient( #0084BD 0%, #0084BD 100%);
+    text-align: center;
+    justify-content: center;
+  }
+  
+  
+  .button:hover {
+    background-image: linear-gradient( #037caf 0%, #037caf 100%);
+  
+  }
 
 
 select {
@@ -235,7 +248,20 @@ select:after {
     background: #fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png) 97% 50% no-repeat;
     position: relative;
     font-size: medium;
+    background-color: rgb(243, 243, 243);
+    border: none;
+    box-shadow: 1px 1px #e3e3eb;
+  
 }
+
+[type="date"]:active,
+[type="date"]:focus,
+[type="date"]:hover {
+    outline: none;
+    box-shadow: #0084BD 0 0 0 3px, transparent 0 0 0 0;
+
+}
+
 
 [type="date"]::-webkit-inner-spin-button {
     display: none;
