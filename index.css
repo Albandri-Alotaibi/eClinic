@@ -294,6 +294,11 @@ p {
   body {
     overflow-y:auto;
   }
+
+  .col-md-2 {
+    width: 10%;
+    height: 1%;
+  }
 }
 
 
