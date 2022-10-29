@@ -295,6 +295,7 @@ body {
 label {
     display: block;
     font-size: 90%;
+    font-weight: bold;
 }
 
 input {
@@ -347,3 +348,4 @@ input {
     
     
     }
+
