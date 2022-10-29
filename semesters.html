@@ -27,7 +27,7 @@
   <main>
     <div class="conterer ">
 
-      <!-- Start profil icons  -->
+      <!-- Start profile icons  -->
       <div class="action" style="z-index: 99999; font-size: 14px;">
         <div class=" profile" onclick="menuToggle();">
 
@@ -35,7 +35,7 @@
 
         </div>
 
-        <div class="menu" >
+        <div class="menu">
 
           <ul>
 
@@ -58,7 +58,7 @@
       </div>
       <!-- end profil icons  -->
 
-      
+
 
 
       <!--***************************************** SHOW DATA IN HERE AFTER RETRIVING****************************************  -->
@@ -66,7 +66,7 @@
       <div class="row" style="margin-top: 4%;">
 
         <!-- side menu -->
-        <div class="col-md-3" style="display: block;" >
+        <div class="col-md-3" style="display: block;">
           <nav class="sidebar ">
             <img class="logo" src="img/logo.png" alt="logo brand" height="10%" width="50%">
             <a href="index.html"><i class="fa fa-fw fa-home"></i>Home</a>
@@ -83,20 +83,20 @@
           </nav>
         </div>
 
-        <div class="col mt-3 card p-2 " style="display: block; margin-left: 0.5%;" >
+        <div class="col mt-3 card p-2 " style="display: block; margin-left: 0.5%;">
           <div class="d-flex justify-content-end">
             <input type="button" value="Add New Semster" id="add" class=" logbut btn btn-primary btn-lg"
               style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px;">
           </div>
           <!-- class="btn btn-primary" -->
-          <table class="show_info card-body table" id="mytable" >
+          <table class="show_info card-body table" id="mytable">
             <h4 class="">Semesters</h4>
             <thead>
-              <th > Semester</th>
-              <th > Year</th>
+              <th> Semester</th>
+              <th> Year</th>
               <th></th>
             </thead>
-            <tbody id="show_data" >
+            <tbody id="show_data">
 
             </tbody>
 
@@ -105,6 +105,8 @@
 
         <!-- right form -->
         <div class="col-md-3 ms-auto mt-3 card">
+          <div style="display: none;" class="card border-success mt-5 m-3 p-2 text-success" id="message"></div>
+
           <form id="semester-year" class="col" style="display: none;">
             <div class="my-3">
               <label class="form-label">Choose a semester</label>
@@ -134,7 +136,7 @@
               <input type="button" value="update" id="updatetodb" class="mt-3 logbut btn btn-primary btn-lg"
                 style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px;"
                 style="display: none;" data-ref="">
-              <input type="button"  value="cancle" id="cancle" class="mt-3 btn btn-secondary" style="display: none; ">
+              <input type="button" value="cancle" id="cancle" class="mt-3 btn btn-secondary" style="display: none; ">
             </div>
           </form>
         </div>
@@ -265,18 +267,33 @@
       // ********************** CLICK CANCLE BUTTON WITH VALUE(CANCLE)****************************************************
 
       canclebtn.addEventListener('click', function () {
-       {
-          if (confirm("Are you sure to want to cancle your work?") == true){
+        {
+          if (confirm("Are you sure to want to cancle your work?") == true) {
             addUpdatediv.style.display = "none";
-        resetForm();
+            resetForm();
           }
           else
-              return false;
-      
-  }
+            return false;
+
+        }
       })
 
-      function checkSemesterDates() {
+
+      function successMessage (message) {
+        document.getElementById('message').innerHTML = message;
+        document.getElementById('message').style.display = "block";
+
+        setTimeout(() => {
+          var elems = document.querySelectorAll("tr.table-success");
+
+          [].forEach.call(elems, function (el) {
+            el.classList.remove("table-success");
+          });
+          document.getElementById('message').style.display = "none";
+        }, 10000);
+      }
+
+      function checkSemesterDates () {
         if (semesterDropdown.value == "choose a semester") {
           alert("please choose a semester");
           return '';
@@ -300,7 +317,7 @@
 
         if (dateDropdown2.value != "choose a year") {
           if (dateDropdown2.value - 1 != dateDropdown1.value) {
-            alert("The duration between first year and the second year should be one year");
+            alert("The duration between the first year and the second year should be one year");
             return '';
           }
 
@@ -349,15 +366,16 @@
 
             const myArray = semesteryearname.split(" ");
 
-            box.innerHTML += '<tr>' + '<td><span id="semester-' + docRef.id + '">' + myArray[0] + '</span></td>' + '<td><span id="year-' + docRef.id + '"">' + myArray[1] + '</span></td>' +
+            box.innerHTML += '<tr class="table-success">' + '<td><span id="semester-' + docRef.id + '">' + myArray[0] + '</span></td>' + '<td><span id="year-' + docRef.id + '"">' + myArray[1] + '</span></td>' +
               '<td>' +
               '<input type="button" value="✎" class="update logbut btn btn-primary btn-lg"  style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px; left:100%;" data-ref="' + docRef.id + '">' +
               '</td>' + '</tr>';
 
+            successMessage('Semester/Year added successfully');
 
             addUpdateEvents();
             addUpdatediv.style.display = "none";
-            alert('New item has been added...');
+            // alert('New item has been added...');
           }
         }
       })
@@ -445,57 +463,58 @@
         document.getElementById('semester-' + docRef).innerHTML = myArray[0];
         document.getElementById('year-' + docRef).innerHTML = myArray[1];
         addUpdatediv.style.display = "none";
-        alert('This semester/year has been updated.');
+
+        document.getElementById('semester-' + docRef).parentNode.parentElement.classList.add('table-success');
+
+        successMessage('This semester/year has been updated.');
       });
 
 
     };
-////////////////////////////////////////logout/////////////////////////////////
+    ////////////////////////////////////////logout/////////////////////////////////
     const logout = document.querySelector('.logout')
-      logout.addEventListener("click", () => {
-        const conf = confirm("are you sure to log out?")
+    logout.addEventListener("click", () => {
+      const conf = confirm("are you sure to log out?")
 
-        if (conf === true) {
-          signOut(auth)
-            .then(() => {
-              //console.log("user log out")
-            })
-            .catch((err) => {
-              console.log(err.message)
-            })
+      if (conf === true) {
+        signOut(auth)
+          .then(() => {
+            console.log("user log out")
+          })
+          .catch((err) => {
+            console.log(err.message)
+          })
 
-          window.location.replace("login.html")
-        }
+        window.location.replace("login.html")
+      }
 
 
-      });
+    });
 
     /////////////////////////there is authentication for each page  /////////////////////////
     onAuthStateChanged(auth, (user) => {
-        if (user) {
-          console.log("the same user")
-         
+      if (user) {
+        // console.log("the same user")
 
-
-        }
-        else {
-          signOut(auth)
+      }
+      else {
+        signOut(auth)
           window.location.replace("login.html")
-            .then(() => {
-              console.log("user log out")
-            })
-            .catch((err) => {
-              console.log(err.message)
-            })
-        }
-        console.log("the user status change :", user)
-      })
+          .then(() => {
+            console.log("user log out")
+          })
+          .catch((err) => {
+            console.log(err.message)
+          })
+      }
+      console.log("the user status change :", user)
+    })
 
 
   </script>
   <script>
     // start: java sript for profile icons 
-    function menuToggle() {
+    function menuToggle () {
       const toggleMenu = document.querySelector(".menu");
       toggleMenu.classList.toggle("active");
     }
