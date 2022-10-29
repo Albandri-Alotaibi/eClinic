@@ -531,8 +531,14 @@
 
             // alert(document.getElementById("add-update-timeframe").style.display == 'block');
            
-                if (confirm("Are you sure to want to cancle your work?") == true)
-                    return window.location.replace("index.html");
+                if (confirm("Are you sure to want to cancle your work?") == true){
+                    document.getElementById("add-update-timeframe").style.display = "none";
+                    document.getElementById("show-past-dates").style.display = "none";
+                    document.getElementById("add").style.display = "none";
+                    document.getElementById("update").style.display = "none";
+                    document.getElementById("cancle").style.display = "none";
+                    document.getElementById("selection-deem").style.marginLeft = "50%";
+                }
                 else
                     return false;
             
