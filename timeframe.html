@@ -62,11 +62,9 @@
 
             <li>
 
-<<<<<<< Updated upstream
+
               <img src="img/logout.png" /><a href="#" class="logout">Log Out</a>
-=======
-                            <img src="img/logout.png" /><a href="#" class="logout">Log Out</a>
->>>>>>> Stashed changes
+
 
             </li>
 
@@ -164,19 +162,10 @@
 
             <nav class="sidebar ">
 
-<<<<<<< Updated upstream
+
                 <img class="logo" src="img/logo.png" alt="logo brand" height="10%" width="50%">
-                <a href="index.html" ><i class="fa fa-fw fa-home"></i>Home</a>
-                <a href="semesters.html"><i class="fa fa-calendar"></i> Semester</a>
-=======
-                <img class="logo" src="img/logo.png" alt="logo brand" height="50px" width="170px">
                 <a href="index.html"><i class="fa fa-fw fa-home"></i>Home</a>
-<<<<<<< HEAD
-                <a href="semesters.html"><i class="fa fa-calendar"></i> Semester/years</a>
-=======
                 <a href="someSection"><i class="fa fa-calendar"></i> Semester</a>
->>>>>>> e15a408dc1e212f8b6ae4d656ee803061a4dd6c5
->>>>>>> Stashed changes
                 <a href="#id_name"><i class="fa fa-group"></i> Faculty Members Speciality </a>
                 <a href="#id_name"><i class="fa fa-graduation-cap"></i> Graduation projects </a>
                 <a href="timeframe.html" class="active_semester"><i class="fa fa-clock-o"></i> Help desk timeframe</a>
@@ -504,7 +493,7 @@
         })
 
 
-<<<<<<< Updated upstream
+
         /////////////////////////////log out ///////////////////////////////////////
         const logout = document.querySelector('.logout')
         logout.addEventListener("click", () => {
@@ -524,27 +513,9 @@
 
 
         });
-=======
-      /////////////////////////////log out ///////////////////////////////////////
-      const logout = document.querySelector('.logout')
-  logout.addEventListener("click", () => {
-      const conf = confirm("are you sure to log out?")
 
-      if (conf === true) {
-          signOut(auth)
-              .then(() => {
-                  //console.log("user log out")
-              })
-              .catch((err) => {
-                  console.log(err.message)
-              })
+     
 
-          window.location.replace("login.html")
-      }
-    
-
-  });
->>>>>>> Stashed changes
     </script>
     <script>
         // start: java sript for profile icons 
