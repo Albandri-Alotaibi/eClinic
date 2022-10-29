@@ -289,7 +289,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 body {
     padding: 3;
     background: #e5e5e5;
-    font: 13px/1.4 Geneva, 'Lucida Sans', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
+    font: 13px/1.4 Geneva, "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", Verdana, sans-serif;
 }
 
 label {
