@@ -203,10 +203,17 @@
       });
 
       // *********************************cancle btn*********************************************************************************
+    
       canclebtn.addEventListener('click', function () {
-        alert('are you sure? You will lose your edits');
-        divtext.style.display = "none";
+       {
+          if (confirm("Are you sure to want to cancle your work?") == true){
+            divtext.style.display = "none";
         resetForm();
+          }
+          else
+              return false;
+      
+  }
       })
       ////////////////////////********************* METHOD FOUND SEARCH ************************************************************
       const docExistsOrNot = async (specialityenteredname) => {

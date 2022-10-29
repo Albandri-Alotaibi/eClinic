@@ -134,7 +134,7 @@
               <input type="button" value="update" id="updatetodb" class="mt-3 logbut btn btn-primary btn-lg"
                 style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px;"
                 style="display: none;" data-ref="">
-              <input type="button" value="cancle" id="cancle" class="mt-3 btn btn-secondary" style="display: none; ">
+              <input type="button"  value="cancle" id="cancle" class="mt-3 btn btn-secondary" style="display: none; ">
             </div>
           </form>
         </div>
@@ -265,9 +265,15 @@
       // ********************** CLICK CANCLE BUTTON WITH VALUE(CANCLE)****************************************************
 
       canclebtn.addEventListener('click', function () {
-        alert('are you sure? You will lose your edits');
-        addUpdatediv.style.display = "none";
+       {
+          if (confirm("Are you sure to want to cancle your work?") == true){
+            addUpdatediv.style.display = "none";
         resetForm();
+          }
+          else
+              return false;
+      
+  }
       })
 
       function checkSemesterDates() {
@@ -413,7 +419,7 @@
 
         let found = await docExistsOrNot(semesteryearname);
         if (found) {
-          alert('this semester/year is already added!');
+          alert("You did not change the symester/year");
           return;
         }
 
@@ -495,6 +501,8 @@
     }
         // End: java sript for profile icons
   </script>
+
+
 </body>
 
 </html>
