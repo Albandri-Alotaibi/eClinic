@@ -27,7 +27,7 @@
     <div class="conterer">
 
       <!-- Start profil icons  -->
-      <div class="action">
+      <div class="action" style="z-index: 99999; font-size: 14px;">
         <div class=" profile" onclick="menuToggle();">
 
           <img src="img/user.png" />
@@ -56,6 +56,20 @@
 
       </div>
       <!-- end profil icons  -->
+
+
+      <div class="conatainer-fluid mt-3">
+        <ol class="breadcrumb" id="navigation_links"
+            style="display:flex; width:100%; padding: 0rem 1rem 0rem; background-color: transparent">
+            <li class="" style="margin-left:27%;"></li>
+            <li class="breadcrumb-item pull-right"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item pull-right" aria-current="page">GP category</li>
+
+        </ol>
+    </div>
+
+
+
 <!-- ********************* RETRIEVE ********************************************************* -->
 
 <div class="row">
@@ -83,8 +97,8 @@
   <div class="col mt-5 card p-2 " style="display: block; ">
     <div class="d-flex justify-content-end">
 <input type="button" value="Add new GP Category" id="add" class=" logbut btn btn-primary btn-lg" style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px;">
-</div>
-<table class="show_info card-body" id="mytable">
+</div><br>
+<table class="show_info card-body table" id="mytable">
   <thead>
     <th> GP Category</th>
     <th></th>
