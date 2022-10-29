@@ -10,7 +10,7 @@
 
     <link href='https://fonts.googleapis.com/css?family=Oswald:300' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Familjen Grotesk' rel='stylesheet'>
-   
+
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
     <meta charset="UTF-8">
@@ -34,10 +34,10 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-  <link href='https://fonts.googleapis.com/css?family=Oswald:300' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Familjen Grotesk' rel='stylesheet'>
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href='https://fonts.googleapis.com/css?family=Oswald:300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Familjen Grotesk' rel='stylesheet'>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 </head>
 
@@ -50,39 +50,39 @@
 
 
             <!-- Start profil icons  -->
-      <div class="action" style="z-index: 99999; font-size: 14px;">
-        <div class=" profile" onclick="menuToggle();">
+            <div class="action" style="z-index: 99999; font-size: 14px;">
+                <div class=" profile" onclick="menuToggle();">
 
-          <img src="img/user.png" />
+                    <img src="img/user.png" />
 
-        </div>
+                </div>
 
-        <div class="menu" >
+                <div class="menu">
 
-          <ul>
+                    <ul>
 
-            <li>
-
-
-              <img src="img/logout.png" /><a href="#" class="logout">Log Out</a>
+                        <li>
 
 
-            </li>
+                            <img src="img/logout.png" /><a href="#" class="logout">Log Out</a>
 
-            <li>
 
-              <img src="img/lock.png" /><a href="resetinner.html">Reset password</a>
+                        </li>
 
-            </li>
+                        <li>
 
-          </ul>
+                            <img src="img/lock.png" /><a href="resetinner.html">Reset password</a>
 
-        </div>
+                        </li>
 
-      </div>
-      <!-- end profil icons  -->
+                    </ul>
 
-            
+                </div>
+
+            </div>
+            <!-- end profil icons  -->
+
+
 
 
             <form style="margin-top: 1.5%;">
@@ -115,18 +115,21 @@
                             <div id="add-update-timeframe" style="display: none; ">
 
 
-                                <label >choose a start date</label><br>
+                                <label>choose a start date</label><br>
                                 <input type="date" id="start-date"><br>
                                 <label>choose an end date</label><br>
                                 <input type="date" id="end-date"><br>
-                                <div class="text-center">
+                                <div class="text-center d-inline-flex">
                                     <!-- <input type="button" id="add" value="add" style="display: none;"> -->
                                     <button type="button" id="add" value="add" class="button btn btn-primary btn-lg"
-                                        style="display: none; margin-left: 39%; margin-top: 3%; padding: 7px 16px; font-size: medium;">Add</button>
+                                        style="display: none; margin-left: 4%; margin-top: 3%; padding: 7px 16px; font-size: medium;">Add</button>
                                     <!-- <input type="button" id="update" value="update" style="display: none;"> -->
                                     <button type="button" id="update" value="update"
                                         class="button btn btn-primary btn-lg"
-                                        style="display: none;  margin-left: 36%;  margin-top: 3%; padding: 7px 16px; font-size: medium;">Update</button><br>
+                                        style="display: none;  margin-left: 4%;  margin-top: 3%; padding: 7px 16px; font-size: medium;">Update</button>
+                                    <button type="button" id="cancle" value="cancle" class="btn btn-secondary "
+                                        onclick='Confirm();'
+                                        style="display: none;  margin-left: 1%;  margin-top: 3%; padding: 7px 16px; font-size: medium;">Cancle</button><br>
                                 </div>
 
                             </div>
@@ -270,7 +273,7 @@
         let stordstart = document.getElementById("stord-start");
         let stordend = document.getElementById("stord-end");
         let okbtn = document.getElementById("ok");
-
+        let canclebtn = document.getElementById("cancle");
 
         var start = 0;
         var end = 0;
@@ -301,6 +304,7 @@
             showdatesdiv.style.display = "none";
             addbtn.style.display = "none";
             updatebtn.style.display = "none";
+            canclebtn.style.display = "none";
             divselect.style.marginLeft = "50%";
         })
         //--------------------------call the getSemesters function onload of the page -----------------------------------
@@ -339,6 +343,7 @@
 
                 if (docSnap.data().timeframe == false) {//this semester does not have a timeftame
                     addbtn.style.display = "block";
+                    canclebtn.style.display = "block";
                     divAddUpdate.style.display = "block";
                     showdatesdiv.style.display = "none";
                     okbtn.style.display = "none";
@@ -372,6 +377,7 @@
                         showdatesdiv.style.display = "none";
                         divAddUpdate.style.display = "block"; // to show the add/update section
                         updatebtn.style.display = "block";//we show the update btn
+                        canclebtn.style.display = "block";
                         //in her we get the stord date in firestore and converted to js object and store show it in the input date value
 
                         // let startDateMillSec = docSnap.data().startdate.seconds * 1000;//get the date in milliseconds
@@ -507,7 +513,7 @@
 
         });
 
-     
+
 
     </script>
     <script>
@@ -519,20 +525,19 @@
         // End: java sript for profile icons
     </script>
 
-    <!-- <script type="text/javascript">
-        function ConfirmDelete() {
-            //put this in the link  onclick='ConfirmDelete();'
-           
+    <script type="text/javascript">
+        function Confirm() {
+            //put this in the link  onclick='Confirm();'
+
             // alert(document.getElementById("add-update-timeframe").style.display == 'block');
-            if (document.getElementById("add-update-timeframe").style.display == 'block') {
-                if (confirm("Are you sure to want to Delete?") == true)
+           
+                if (confirm("Are you sure to want to cancle your work?") == true)
                     return window.location.replace("index.html");
                 else
                     return false;
-            } else
-                return window.location.replace("index.html");
+            
         }
-    </script> -->
+    </script>
 </body>
 
 </html>
