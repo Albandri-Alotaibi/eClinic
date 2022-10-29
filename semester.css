@@ -17,6 +17,7 @@ body {
     padding: 3;
     background: #e5e5e5;
     font: 13px/1.4 Geneva, "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", Verdana, sans-serif;
+    overflow-x: hidden;
 }
 
 .box1_Albandri {
@@ -45,13 +46,14 @@ body {
 #mytable {
     border-collapse: collapse;
     width: -10%;
+    text-align:center;
     
 }
 
 #mytable td,
 #mytable th {
     border: 1px solid #ddd;
-    padding: 2px 90px;
+    /* padding: 2px 90px; */
 }
 
 #mytable tr:nth-child(even) {
@@ -63,9 +65,9 @@ body {
 }
 
 #mytable th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
+    /* padding-top: 12px;
+    padding-bottom: 12px; */
+    text-align:center;
     background-color: #0084bd;
     color: white;
 }

@@ -48,7 +48,7 @@
 /* end of underline on hovor of the navbar */
 
 /* hiding scrollbar */
-body {
+#index {
   overflow-y:hidden;
 }
 

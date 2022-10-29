@@ -73,42 +73,43 @@
       <div class="row">
 
         <!-- side menu -->
-        <div class="col-md-3" style="display: block; ">
+        <div class="col-md-3" style="display: block;" >
           <nav class="sidebar ">
-            <img class="logo" src="img/logo.png" alt="logo brand" height="50px" width="170px">
+            <img class="logo" src="img/logo.png" alt="logo brand" height="10%" width="50%">
             <a href="index.html"><i class="fa fa-fw fa-home"></i>Home</a>
             <a href="semesters.html" class="active_semester"><i class="fa fa-calendar"></i> Semesters</a>
             <a href="#id_name"><i class="fa fa-group"></i> Faculty Members Speciality </a>
             <a href="#id_name"><i class="fa fa-graduation-cap"></i> Graduation projects </a>
             <a href="timeframe.html"><i class="fa fa-clock-o"></i> Help desk timeframe</a>
             <footer class="footer_eClinic">
-              <p class="text-white text-justify position-absolute bottom-0 display-10">    Copyright &copy; All
+              <p class="text-white text-justify position-absolute bottom-0 display-10"> Copyright &copy; All
                 Rights
                 Reserved to
                 King Saud University.Made by eClinic Teams</p>
             </footer>
           </nav>
         </div>
-        <div class="col mt-3 card p-2 " style="display: block; ">
+        <div class="col mt-3 card p-2 " style="display: block; margin-left: 0.5%;" >
           <div class="d-flex justify-content-end">
-            <input type="button" value="Add New Semster" id="add"  class=" logbut btn btn-primary btn-lg" style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px;" >
+            <input type="button" value="Add New Semster" id="add" class=" logbut btn btn-primary btn-lg"
+              style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px;">
           </div>
           <!-- class="btn btn-primary" -->
-          <table class="show_info card-body" id="mytable">
+          <table class="show_info card-body table" id="mytable" >
             <h2 class="">Semesters/Years</h2>
             <thead>
-              <th> Semester</th>
-              <th> Year</th>
+              <th > Semester</th>
+              <th > Year</th>
               <th></th>
             </thead>
-            <tbody id="show_data">
+            <tbody id="show_data" >
 
             </tbody>
 
           </table>
         </div>
         <!-- right form -->
-        <div class="col-md-3 ms-auto mt-3 card" >
+        <div class="col-md-3 ms-auto mt-3 card">
           <form id="semester-year" class="col" style="display: none;">
             <div class="my-3">
               <label class="form-label">Choose a semester</label>
@@ -122,7 +123,7 @@
 
             <label class="form-label">Choose year</label>
             <div class="input-group mb-0">
-              <select class="years form-select" name="year" id="firstyear" >
+              <select class="years form-select" name="year" id="firstyear">
                 <option selected disabled>choose a year</option>
               </select>
               <span class="input-group-text">/</span>
@@ -132,8 +133,12 @@
             </div>
 
             <div class="d-flex justify-content-evenly">
-              <input type="button" value="Add" id="addtodb" class="mt-3 logbut btn btn-primary btn-lg" style="padding-left: 1.2rem; padding-right: 1.4rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px;" style="display: none; ">
-              <input type="button" value="update" id="updatetodb" class="mt-3 logbut btn btn-primary btn-lg" style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px;" style="display: none;" data-ref="">
+              <input type="button" value="Add" id="addtodb" class="mt-3 logbut btn btn-primary btn-lg"
+                style="padding-left: 1.2rem; padding-right: 1.4rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px;"
+                style="display: none; ">
+              <input type="button" value="update" id="updatetodb" class="mt-3 logbut btn btn-primary btn-lg"
+                style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px;"
+                style="display: none;" data-ref="">
               <input type="button" value="cancle" id="cancle" class="mt-3 btn btn-secondary" style="display: none; ">
             </div>
           </form>
@@ -269,7 +274,7 @@
         resetForm();
       })
 
-      function checkSemesterDates () {
+      function checkSemesterDates() {
         if (semesterDropdown.value == "choose a semester") {
           alert("please choose a semester");
           return '';
@@ -292,7 +297,7 @@
         }
 
         if (dateDropdown2.value != "choose a year") {
-          if (dateDropdown2.value-1 != dateDropdown1.value) {
+          if (dateDropdown2.value - 1 != dateDropdown1.value) {
             alert("The difference between the first year and the second year is one year");
             return '';
           }
@@ -446,7 +451,7 @@
   </script>
   <script>
     // start: java sript for profile icons 
-    function menuToggle () {
+    function menuToggle() {
       const toggleMenu = document.querySelector(".menu");
       toggleMenu.classList.toggle("active");
     }
