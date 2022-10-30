@@ -163,7 +163,7 @@
                 <a href="index.html"><i class="fa fa-fw fa-home"></i>Home</a>
                 <a href="semesters.html"><i class="fa fa-calendar"></i> Semesters</a>
                 <a href="faculty.html"><i class="fa fa-group"></i> Faculty Members Speciality </a>
-                <a href="GPCategory.html"><i class="fa fa-graduation-cap"></i> Graduation projects </a>
+                <a href="GPCategory.html"><i class="fa fa-graduation-cap"></i> Graduation projects category</a>
                 <a href="timeframe.html" class="active_semester"><i class="fa fa-clock-o"></i> Help desk timeframe</a>
                 <footer class="footer_eClinic">
                     <p class="text-white text-justify position-absolute bottom-0 display-10"> Copyright &copy; All
@@ -422,18 +422,41 @@
             const docSnapadd = await getDoc(docRefadd);//get the info of the doc?
             start = startDatecal.value;
             end = endDatecal.value;
-            // var year= docSnapadd.data().semestername;
-            //const myArray = text.split(" ");
+            var text = docSnapadd.data().semestername;
+            var years = [];
+            const myArray = text.split(" ");
+            var flag = true;
             if (start == "" || end == "")//if the admin did not choose a start or end date
                 alert("Please choose a start and an end date");
             else {//if the admin chooses a start and end dates
                 var today = new Date();
 
                 if (new Date(start).getDate() < today.getDate() && new Date(start).getMonth() <= today.getMonth() && new Date(start).getFullYear() <= today.getFullYear()) {//alert if the start date in the past
-                    alert("Please choose a starting day in the future");
+                    alert("Please choose dates in the future");
+                    flag = false;
                 } else if (start >= end) {
                     alert("Please choose a start day that is before the end date");
-                } else {
+                    flag = false;
+                } else if (myArray[1].length == 9) {
+                    years = myArray[1].split("/");
+
+                    if ((new Date(start).getFullYear() != years[0] && new Date(start).getFullYear() != years[1]) || (new Date(end).getFullYear() != years[0] && new Date(end).getFullYear() != years[1])) {
+                        alert("chosen dates must be in the same year of the chosen semester");
+                        flag = false;
+                    }
+
+
+                } else if (myArray[1].length == 4) {
+                    years = myArray[1];
+                    if (new Date(start).getFullYear() != years || new Date(end).getFullYear() != years) {
+                        alert("chosen dates must be in the same year of the chosen semester2");
+                        flag = false;
+                    }
+
+
+                }
+                if (flag) {
+
                     await updateDoc(docRefadd, { // we add the new time to a smester that dosenot have a time frame
                         startdate: Timestamp.fromDate(new Date(start + "T00:00:00")),
                         enddate: Timestamp.fromDate(new Date(end + "T23:59:59")),
@@ -454,6 +477,12 @@
             end = endDatecal.value;
             var today = new Date();
             var todayM = today.getMonth() + 1;
+
+            var text = docSnapup.data().semestername;
+            var years = [];
+            const myArray = text.split(" ");
+            var flag = true;
+
             if (day <= today.getDate() && month <= todayM && year <= today.getFullYear() && start != dateString) {
                 alert("Start date connot be changed for a date that has been reached");
             } else if (new Date(start).getDate() < today.getDate() && new Date(start).getMonth() <= today.getMonth() && new Date(start).getFullYear() <= today.getFullYear() && start != dateString) {//alert if the start date in the past
@@ -462,7 +491,25 @@
                 alert("Please choose a start day that is before the end date");
             } else if (start == dateString && end == dateString2) {
                 alert("You did not change the start date or the end date");
-            } else {
+            } else if (myArray[1].length == 9) {
+                years = myArray[1].split("/");
+
+                if ((new Date(start).getFullYear() != years[0] && new Date(start).getFullYear() != years[1]) || (new Date(end).getFullYear() != years[0] && new Date(end).getFullYear() != years[1])) {
+                    alert("chosen dates must be in the same year of the chosen semester");
+                    flag = false;
+                }
+
+
+            } else if (myArray[1].length == 4) {
+                years = myArray[1];
+                if (new Date(start).getFullYear() != years || new Date(end).getFullYear() != years) {
+                    alert("chosen dates must be in the same year of the chosen semester2");
+                    flag = false;
+                }
+
+
+            }
+            if (flag) {
 
                 await updateDoc(docRefup, { // we update the time to a smester 
                     startdate: Timestamp.fromDate(new Date(start + "T00:00:00")),
@@ -532,18 +579,18 @@
             //put this in the link  onclick='Confirm();'
 
             // alert(document.getElementById("add-update-timeframe").style.display == 'block');
-           
-                if (confirm("Are you sure to want to cancle your work?") == true){
-                    document.getElementById("add-update-timeframe").style.display = "none";
-                    document.getElementById("show-past-dates").style.display = "none";
-                    document.getElementById("add").style.display = "none";
-                    document.getElementById("update").style.display = "none";
-                    document.getElementById("cancle").style.display = "none";
-                    document.getElementById("selection-deem").style.marginLeft = "50%";
-                }
-                else
-                    return false;
-            
+
+            if (confirm("Are you sure to want to cancle your work?") == true) {
+                document.getElementById("add-update-timeframe").style.display = "none";
+                document.getElementById("show-past-dates").style.display = "none";
+                document.getElementById("add").style.display = "none";
+                document.getElementById("update").style.display = "none";
+                document.getElementById("cancle").style.display = "none";
+                document.getElementById("selection-deem").style.marginLeft = "50%";
+            }
+            else
+                return false;
+
         }
     </script>
 </body>
