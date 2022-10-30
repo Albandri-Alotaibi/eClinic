@@ -16,7 +16,7 @@
   <!-- <link rel="stylesheet" href="css/mdb.min.css" /> -->
   <!-- for the logos in the sidebar -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <title>GP Category</title>
+  <title>Graduation Project Category</title>
   <!--********************************************* STYLE THE TABLE**************************************************** -->
 </head>
 
@@ -74,9 +74,9 @@
               <a href="index.html"><i class="fa fa-fw fa-home"></i>Home</a>
               <a href="semesters.html"><i class="fa fa-calendar"></i> Semesters</a>
               <a href="faculty.html"><i class="fa fa-group"></i> Faculty Members Speciality </a>
-              <a href="GPCategory.html" class="active_semester"><i class="fa fa-graduation-cap"></i> Graduation projects category
+              <a href="GPCategory.html" class="active_semester"><i class="fa fa-graduation-cap"></i> Graduation Projects Category
               </a>
-              <a href="timeframe.html"><i class="fa fa-clock-o"></i> Help desk timeframe</a>
+              <a href="timeframe.html"><i class="fa fa-clock-o"></i> Help Desk Timeframe</a>
               <footer class="footer_eClinic">
                 <p class="text-white text-justify position-absolute bottom-0 display-10"> Copyright &copy; All
                   Rights
@@ -88,39 +88,32 @@
 
 
           <!-- side menu -->
+
+          <!-- left side -->
           <div class="col mt-5 card p-2 " style="display: block; ">
             <div class="d-flex justify-content-end">
               <input type="button" value="Add new GP Category" id="add" class=" logbut btn btn-primary btn-lg"
                 style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px;">
             </div><br>
-            <h4 class="">Graduation projects category</h4>
+            <h4 class="">Graduation Projects Category</h4>
             
           <div style="display: none;" class="card border-warning mt-5 m-3 p-2 text-bg-warning" id="noItems">
-            There are no items curretnly, You can add items to this page by clicking "Add New GP Category" to hide this
+            There are no GP category curretnly, You can add GP category to this page by clicking "Add New GP Category" to hide this
             message.
           </div>
-            <table class="show_info card-body table" id="mytable">
+            <table class="show_info card-body table" style="width:100%" id="mytable">
              
               <thead>
-                <th> GP Category</th>
-                <th></th>
+                <th style="width:80%"> GP Category</th>
+                <th style="width:10%"></th>
               </thead>
               <tbody id="show_data">
 
               </tbody>
             </table>
           </div>
-
-          <!-- ********************* END RETRIEVE ********************************************************* -->
-
-          <!-- ********************* END RETRIEVE ********************************************************* -->
-
-
-
-          <!-- ********************* START section to be hidden ********************************************************* -->
-
-
-          <!-- ********************* START section to be hidden ********************************************************* -->
+ <!-- left side -->
+         
 
           <!-- right form -->
           <div class="col-md-3 ms-auto mt-5 card">
@@ -148,7 +141,7 @@
         </div>
       </div>
     </main>
-    <!-- ********************* END section to be hidden ********************************************************* -->
+    <!-- ********************* END front end ********************************************************* -->
 
 
 
@@ -180,10 +173,18 @@
       // alert( /^\d+$/.test(" 3"));
 
 
-
+  
+        // *********************************INITIALIZE ALL VARIBALES*********************************************
       document.onreadystatechange = async function () {
 
-
+        let newaddbtn = document.getElementById("add");
+        let addbtn = document.getElementById("addtodb");
+        let editbtn = document.getElementsByClassName("update");
+        let updatebtn = document.getElementById("updatebotn");
+        let divtext = document.getElementById("fa-text");
+        let canclebtn = document.getElementById("cancle");
+        
+        let hasNoItems = true;
 
         //********************* RETREIVING ALL CATEGORIES FROM DATABASE *****************************************************
 
@@ -191,28 +192,36 @@
         const q = query(collection(db, "gpcategory"));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
+          hasNoItems = false;
           box.innerHTML += '<tr >' + '<td><span id="' + doc.id + '">' + doc.data().gpcategoryname + '</span></td>'
             + '<td>' +
             '<input type="button" value="✎" class="update logbut btn btn-primary btn-lg" style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px; left:100%;" data-ref="' + doc.id + '">' +
             '</td>' + '</tr>';
 
         });
+       
+              hasItemsCheck();
         // *********************************FOR CLEAR TEXT BOX WHEN WE WANT TO (ADD NEW GP Category)****************  
         const resetForm = () => {
           inputfield.value = ""
 
         }
 
-        // *********************************INITIALIZE ALL VARIBALES*********************************************
-        let newaddbtn = document.getElementById("add");
-        let addbtn = document.getElementById("addtodb");
-        let editbtn = document.getElementsByClassName("update");
-        let updatebtn = document.getElementById("updatebotn");
-        let divtext = document.getElementById("fa-text");
-        let canclebtn = document.getElementById("cancle");
-        let hasNoItems = true;
+        
+        // *********************************for yallow alert*********************************************
+       
 
+        function hasItemsCheck () {
+        if (hasNoItems) {
+          document.getElementById('noItems').style.display = 'block';
+          document.getElementById('mytable').style.display = 'none';
+        } else {
+          document.getElementById('mytable').style.display = 'block';
+          document.getElementById('noItems').style.display = 'none';
+        }
+      }
 
+       // *********************************when click add new GP category button *********************************************
         newaddbtn.addEventListener('click', function () {
           resetForm();
           newaddbtn.style.display = "block";
@@ -238,16 +247,8 @@
         })
 
 
-        function hasItemsCheck () {
-        if (hasNoItems) {
-          document.getElementById('noItems').style.display = 'block';
-          document.getElementById('mytable').style.display = 'none';
-        } else {
-          document.getElementById('mytable').style.display = 'block';
-          document.getElementById('noItems').style.display = 'none';
-        }
-      }
-
+       
+ // *********************************for green alert*********************************************
         function successMessage (message) {
           document.getElementById('message').innerHTML = message;
           document.getElementById('message').style.display = "block";
@@ -259,7 +260,7 @@
               el.classList.remove("table-success");
             });
             document.getElementById('message').style.display = "none";
-          }, 4000);
+          }, 5000);
         }
         ////////////////////////********************* METHOD FOUND SEARCH ************************************************************
         const docExistsOrNot = async (GPCategoryenteredname) => {
@@ -321,7 +322,9 @@
               '<input type="button" value="✎" class="update logbut btn btn-primary btn-lg" style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px; left:100%;" data-ref="' + docRef.id + '">' +
               '</td>' + '</tr>';
 
-            successMessage("GP category has been added successfully");
+              hasNoItems = false;
+              hasItemsCheck();
+            successMessage("GP category has ben added successfully");
 
             addUpdateEvents();
             divtext.style.display = "none";
@@ -355,7 +358,6 @@
               const docRef = doc(db, "gpcategory", categoryid);
               const docSnap = await getDoc(docRef);
               if (docSnap.exists()) {
-hasNoItems = false;
                 updatebtn.setAttribute('data-ref', categoryid);
                 inputfield.value = docSnap.data().gpcategoryname;
                 StoringInputFliedValueToCompareIfItsChanngedWhenClickingUpdateButton = docSnap.data().gpcategoryname;
@@ -363,12 +365,14 @@ hasNoItems = false;
                 // doc.data() will be undefined in this case
                 console.log("No such document!");
               }
+              
+             
             })
           }
         };
-        hasItemsCheck();
+        
         addUpdateEvents();
-
+    // ********************************when click update btn *********************************
         updatebtn.addEventListener('click', async function () {
           let inputfield = document.getElementById("inputfield");
           var categoryid = updatebtn.getAttribute('data-ref');
@@ -411,7 +415,7 @@ hasNoItems = false;
             //updatepage
             document.getElementById(categoryid).innerHTML = BV2;
             divtext.style.display = "none";
-            successMessage("GP category has been updated successfully");
+            successMessage("GP category updated successfully");
             document.getElementById(categoryid).parentNode.parentElement.classList.add('table-success');
             return;
           }//end else if its the same with different capital and small and space layout(it will be updated)
