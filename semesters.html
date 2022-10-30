@@ -92,8 +92,7 @@
           <h4 class="">Semesters</h4>
 
           <div style="display: none;" class="card border-warning mt-5 m-3 p-2 text-bg-warning" id="noItems">
-            There are no items curretnly, You can add items to this page by clicking "Add New Semester" to hide this
-            message.
+          There are no semesters added yat.
           </div>
 
           <table class="show_info card-body table" id="mytable">
@@ -392,6 +391,7 @@
             hasNoItems = false;
             hasItemsCheck();
             successMessage('Semester/Year added successfully');
+            // alert('Semester/Year added successfully');
 
             addUpdateEvents();
             addUpdatediv.style.display = "none";
@@ -487,6 +487,7 @@
         document.getElementById('semester-' + docRef).parentNode.parentElement.classList.add('table-success');
 
         successMessage('This semester/year has been updated.');
+        // alert('This semester/year has been updated.');
       });
 
 
