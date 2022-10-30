@@ -422,6 +422,8 @@
             const docSnapadd = await getDoc(docRefadd);//get the info of the doc?
             start = startDatecal.value;
             end = endDatecal.value;
+            // var year= docSnapadd.data().semestername;
+            //const myArray = text.split(" ");
             if (start == "" || end == "")//if the admin did not choose a start or end date
                 alert("Please choose a start and an end date");
             else {//if the admin chooses a start and end dates
