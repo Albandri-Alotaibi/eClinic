@@ -44,7 +44,7 @@
 
             <li>
 
-              <img src="img/lock.png" /><a href="resetinner.html">Reset password</a>
+              <img src="img/lock.png" /><a href="resetinner.html">Reset Password</a>
 
             </li>
 
@@ -72,8 +72,8 @@
             <a href="index.html"><i class="fa fa-fw fa-home"></i>Home</a>
             <a href="semesters.html"><i class="fa fa-calendar"></i> Semesters</a>
             <a href="faculty.html" class="active_semester"><i class="fa fa-group"></i> Faculty Members Speciality </a>
-            <a href="GPCategory.html"><i class="fa fa-graduation-cap"></i> Graduation projects category </a>
-            <a href="timeframe.html"><i class="fa fa-clock-o"></i> Help desk timeframe</a>
+            <a href="GPCategory.html"><i class="fa fa-graduation-cap"></i> Graduation Projects Category </a>
+            <a href="timeframe.html"><i class="fa fa-clock-o"></i> Help Desk Timeframe</a>
             <footer class="footer_eClinic">
               <p class="text-white text-justify position-absolute bottom-0 display-10"> Copyright &copy; All
                 Rights
@@ -87,14 +87,18 @@
 
         <div class="col mt-5 card p-2 " style="display: block; margin-left: 0.5%; ">
           <div class="d-flex justify-content-end">
-            <input type="button" value="Add new speciality" id="add" class=" logbut btn btn-primary btn-lg"
+            <input type="button" value="Add New Speciality" id="add" class=" logbut btn btn-primary btn-lg"
               style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px;">
           </div><br>
-          <table class="show_info card-body table" id="mytable">
-            <h4 class="">Faculty Members Speciality</h4>
+          <h4 class="">Faculty Members Speciality</h4>
+          <div style="display: none;" class="card border-warning mt-5 m-3 p-2 text-bg-warning" id="noItems">
+            There are no Faculty Speciality curretnly, You can add Faculty Speciality to this page by clicking "Add New Speciality" to hide this
+            message.
+          </div>
+          <table class="show_info card-body table" style="width:100%" id="mytable">
             <thead>
-              <th> Speciality Name</th>
-              <th></th>
+              <th style="width:80%"> Speciality Name</th>
+              <th style="width:10%"></th>
             </thead>
             <tbody id="show_data">
 
@@ -123,10 +127,10 @@
               <input type="button" value="Add" id="addtodb" class="mt-3 logbut btn btn-primary btn-lg"
                 style="padding-left: 1.2rem; padding-right: 1.4rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px;"
                 style="display: none;">
-              <input type="button" value="update" id="updatebotn" class="mt-3 logbut btn btn-primary btn-lg"
+              <input type="button" value="Update" id="updatebotn" class="mt-3 logbut btn btn-primary btn-lg"
                 style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px;"
                 style="display: none; ">
-              <input type="button" value="cancle" id="cancle" class="mt-3 btn btn-secondary" style="display: none; ">
+              <input type="button" value="Cancle" id="cancle" class="mt-3 btn btn-secondary" style="display: none; ">
             </div>
           </form>
         </div>
@@ -164,20 +168,29 @@
 
     document.onreadystatechange = async function () {
 
-
+      let newaddbtn = document.getElementById("add");
+        let addbtn = document.getElementById("addtodb");
+        let editbtn = document.getElementsByClassName("update");
+        let updatebtn = document.getElementById("updatebotn");
+        let divtext = document.getElementById("fa-text");
+        let canclebtn = document.getElementById("cancle");
+        
+        let hasNoItems = true;
 
       //********************* RETREIVING ALL CATEGORIES FROM DATABASE *****************************************************
-
       let box = document.getElementById("show_data");
+    
       const q = query(collection(db, "facultyspeciality"));
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
+        hasNoItems = false;
         box.innerHTML += '<tr>' + '<td><span id="' + doc.id + '">' + doc.data().specialityname + '</span></td>'
           + '<td>' +
           '<input type="button" value="✎" class="update logbut btn btn-primary btn-lg" style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px; left:100%;" data-ref="' + doc.id + '">' +
           '</td>' + '</tr>';
 
       });
+      hasItemsCheck();
       // *********************************FOR CLEAR TEXT BOX WHEN WE WANT TO (ADD NEW speciality)****************  
       const resetForm = () => {
         inputfield.value = ""
@@ -185,13 +198,16 @@
       }
 
       // *********************************INITIALIZE ALL VARIBALES*********************************************
-      let newaddbtn = document.getElementById("add");
-      let addbtn = document.getElementById("addtodb");
-      let editbtn = document.getElementsByClassName("update");
-      let updatebtn = document.getElementById("updatebotn");
-      let divtext = document.getElementById("fa-text");
-      let canclebtn = document.getElementById("cancle");
-
+ 
+      function hasItemsCheck () {
+        if (hasNoItems) {
+          document.getElementById('noItems').style.display = 'block';
+          document.getElementById('mytable').style.display = 'none';
+        } else {
+          document.getElementById('mytable').style.display = 'block';
+          document.getElementById('noItems').style.display = 'none';
+        }
+      }
 
       newaddbtn.addEventListener('click', function () {
         resetForm();
@@ -289,8 +305,10 @@
             + '<td>' +
             '<input type="button" value="✎" class="update logbut btn btn-primary btn-lg" style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px; left:100%;" data-ref="' + docRef.id + '">' +
             '</td>' + '</tr>';
+            hasNoItems = false;
+              hasItemsCheck();
           
-          successMessage("speciality added successfully");
+          successMessage("speciality has been added successfully");
 
           addUpdateEvents();
           divtext.style.display = "none";
@@ -390,7 +408,8 @@
         //Checking if its already in the database
         let found = await docExistsOrNot(BV2);
         if (found == true) {
-          alert("This speciality is already in the system");
+          alert("This speciality is already added");
+          
           return;
         } else {
           try {

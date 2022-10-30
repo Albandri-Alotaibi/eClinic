@@ -48,7 +48,7 @@
 
               <li>
 
-                <img src="img/lock.png" /><a href="resetinner.html">Reset password</a>
+                <img src="img/lock.png" /><a href="resetinner.html">Reset Password</a>
 
               </li>
 
@@ -130,10 +130,10 @@
                 <input type="button" value="Add" id="addtodb" class="mt-3 logbut btn btn-primary btn-lg"
                   style="padding-left: 1.2rem; padding-right: 1.4rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px;"
                   style="display: none;">
-                <input type="button" value="update" id="updatebotn" class="mt-3 logbut btn btn-primary btn-lg"
+                <input type="button" value="Update" id="updatebotn" class="mt-3 logbut btn btn-primary btn-lg"
                   style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px;"
                   style="display: none; ">
-                <input type="button" value="cancle" id="cancle" class="mt-3 btn btn-secondary" style="display: none; ">
+                <input type="button" value="Cancle" id="cancle" class="mt-3 btn btn-secondary" style="display: none; ">
               </div>
             </form>
           </div>
@@ -324,7 +324,7 @@
 
               hasNoItems = false;
               hasItemsCheck();
-            successMessage("GP category has ben added successfully");
+            successMessage("GP category has been added successfully");
 
             addUpdateEvents();
             divtext.style.display = "none";
@@ -415,7 +415,7 @@
             //updatepage
             document.getElementById(categoryid).innerHTML = BV2;
             divtext.style.display = "none";
-            successMessage("GP category updated successfully");
+            successMessage("GP category has been updated successfully");
             document.getElementById(categoryid).parentNode.parentElement.classList.add('table-success');
             return;
           }//end else if its the same with different capital and small and space layout(it will be updated)
@@ -425,7 +425,7 @@
           //Checking if its already in the database
           let found = await docExistsOrNot(BV2);
           if (found == true) {
-            alert("This GP category is already in the system");
+            alert("This GP category is already added");
             return;
           } else {
             try {
