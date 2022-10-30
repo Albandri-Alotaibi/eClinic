@@ -97,7 +97,8 @@
                                         <label>Please choose a semester/year</label><br><br>
                                         <div id="deem-menu">
                                             <select id="selectsemester" class="sem">
-                                                <option selected disabled>Please choose a semester</option>
+                                                <option value="default" selected disabled>Please choose a semester
+                                                </option>
                                             </select>
                                         </div><br>
                                         <!-- <input type="button" id="next" value="next"
@@ -123,14 +124,14 @@
                                     <div class="text-center d-inline-flex">
                                         <!-- <input type="button" id="add" value="add" style="display: none;"> -->
                                         <button type="button" id="add" value="add" class="button btn btn-primary btn-lg"
-                                            style="display: none; margin-left: 4%; margin-top: 3%; padding: 7px 16px; font-size: medium;">Add</button>
+                                            style="display: none; margin-left: 4%; margin-top: 3%; padding: 6px 12px; font-size: medium;">Add</button>
                                         <!-- <input type="button" id="update" value="update" style="display: none;"> -->
                                         <button type="button" id="update" value="update"
                                             class="button btn btn-primary btn-lg"
-                                            style="display: none;  margin-left: 4%;  margin-top: 3%; padding: 7px 16px; font-size: medium;">Update</button>
+                                            style="display: none;  margin-left: 4%;  margin-top: 3%; padding: 6px 12px; font-size: medium;">Update</button>
                                         <button type="button" id="cancle" value="cancle"
                                             class="btn btn-secondary text-white" onclick='Confirm();'
-                                            style="display: none;  margin-left: 1%;  margin-top: 3%; padding: 7px 16px; font-size: medium; background-image: linear-gradient( #6C757D 0%, #6C757D 100%);">Cancle</button><br>
+                                            style="display: none;  margin-left: 1%;  margin-top: 3%; padding: 6px 12px; font-size: medium; background-image: linear-gradient( #6C757D 0%, #6C757D 100%);">Cancle</button><br>
                                     </div>
                                 </div>
                             </div>
@@ -164,8 +165,8 @@
                 <a href="index.html"><i class="fa fa-fw fa-home"></i>Home</a>
                 <a href="semesters.html"><i class="fa fa-calendar"></i> Semesters</a>
                 <a href="faculty.html"><i class="fa fa-group"></i> Faculty Members Speciality </a>
-                <a href="GPCategory.html"><i class="fa fa-graduation-cap"></i> Graduation projects category</a>
-                <a href="timeframe.html" class="active_semester"><i class="fa fa-clock-o"></i> Help desk timeframe</a>
+                <a href="GPCategory.html"><i class="fa fa-graduation-cap"></i> Graduation Projects Category</a>
+                <a href="timeframe.html" class="active_semester"><i class="fa fa-clock-o"></i> Help Desk Timeframe</a>
                 <footer class="footer_eClinic">
                     <p class="text-white text-justify position-absolute bottom-0 display-10"> Copyright &copy; All
                         Rights
@@ -575,9 +576,12 @@
 
         function successMessage(message) {
             document.getElementById("Mycontent").style.display = "none";
-            document.getElementById("add").style.display = "none";
-            document.getElementById("update").style.display = "none";
-            document.getElementById("cancle").style.display = "none";
+            addbtn.style.display = "none";
+            updatebtn.style.display = "none";
+            canclebtn.style.display = "none";
+
+
+
             document.getElementById('message').innerHTML = message;
             document.getElementById('message').style.display = "block";
 
@@ -587,10 +591,12 @@
                 [].forEach.call(elems, function (el) {
                     el.classList.remove("table-success");
                 });
+                semesterSelect.value = "default";
                 document.getElementById('message').style.display = "none";
-                document.getElementById("add-update-timeframe").style.display = "none";
-                document.getElementById("show-past-dates").style.display = "none";
-                document.getElementById("selection-deem").style.marginLeft = "50%";
+
+                divAddUpdate.style.display = "none";
+                showdatesdiv.style.display = "none";
+                divselect.style.marginLeft = "50%";
             }, 4000);
         }
 
@@ -613,6 +619,7 @@
             // alert(document.getElementById("add-update-timeframe").style.display == 'block');
 
             if (confirm("Are you sure to want to cancle your work?") == true) {
+                document.getElementById("selectsemester").value = "default";
                 document.getElementById("add-update-timeframe").style.display = "none";
                 document.getElementById("show-past-dates").style.display = "none";
                 document.getElementById("add").style.display = "none";
