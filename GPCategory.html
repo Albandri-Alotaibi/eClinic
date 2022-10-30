@@ -302,7 +302,7 @@
               '<input type="button" value="✎" class="update logbut btn btn-primary btn-lg" style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px; left:100%;" data-ref="' + docRef.id + '">' +
               '</td>' + '</tr>';
 
-            successMessage("GP category added successfully");
+            successMessage("GP category has been added successfully");
 
             addUpdateEvents();
             divtext.style.display = "none";
@@ -392,7 +392,7 @@
             //updatepage
             document.getElementById(categoryid).innerHTML = BV2;
             divtext.style.display = "none";
-            successMessage("GP category updated successfully");
+            successMessage("GP category has been updated successfully");
             document.getElementById(categoryid).parentNode.parentElement.classList.add('table-success');
             return;
           }//end else if its the same with different capital and small and space layout(it will be updated)
@@ -421,7 +421,7 @@
             //updatepage
             document.getElementById(categoryid).innerHTML = BV2;
             divtext.style.display = "none";
-            successMessage("GP category updated successfully");
+            successMessage("GP category has been updated successfully");
             document.getElementById(categoryid).parentNode.parentElement.classList.add('table-success');
           }
         });
