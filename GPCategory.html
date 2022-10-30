@@ -74,7 +74,7 @@
               <a href="index.html"><i class="fa fa-fw fa-home"></i>Home</a>
               <a href="semesters.html"><i class="fa fa-calendar"></i> Semesters</a>
               <a href="faculty.html"><i class="fa fa-group"></i> Faculty Members Speciality </a>
-              <a href="GPCategory.html" class="active_semester"><i class="fa fa-graduation-cap"></i> Graduation projects
+              <a href="GPCategory.html" class="active_semester"><i class="fa fa-graduation-cap"></i> Graduation projects category
               </a>
               <a href="timeframe.html"><i class="fa fa-clock-o"></i> Help desk timeframe</a>
               <footer class="footer_eClinic">
@@ -93,8 +93,14 @@
               <input type="button" value="Add new GP Category" id="add" class=" logbut btn btn-primary btn-lg"
                 style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px;">
             </div><br>
+            <h4 class="">Graduation projects category</h4>
+            
+          <div style="display: none;" class="card border-warning mt-5 m-3 p-2 text-bg-warning" id="noItems">
+            There are no items curretnly, You can add items to this page by clicking "Add New GP Category" to hide this
+            message.
+          </div>
             <table class="show_info card-body table" id="mytable">
-              <h4 class="">Graduation projects</h4>
+             
               <thead>
                 <th> GP Category</th>
                 <th></th>
@@ -204,6 +210,7 @@
         let updatebtn = document.getElementById("updatebotn");
         let divtext = document.getElementById("fa-text");
         let canclebtn = document.getElementById("cancle");
+        let hasNoItems = true;
 
 
         newaddbtn.addEventListener('click', function () {
@@ -230,6 +237,17 @@
           }
         })
 
+
+        function hasItemsCheck () {
+        if (hasNoItems) {
+          document.getElementById('noItems').style.display = 'block';
+          document.getElementById('mytable').style.display = 'none';
+        } else {
+          document.getElementById('mytable').style.display = 'block';
+          document.getElementById('noItems').style.display = 'none';
+        }
+      }
+
         function successMessage (message) {
           document.getElementById('message').innerHTML = message;
           document.getElementById('message').style.display = "block";
@@ -251,6 +269,7 @@
           const qadd = query(collection(db, "gpcategory"));
           const querySnapshotadd = await getDocs(qadd);
           querySnapshotadd.forEach((doc) => {
+           
             let dbname = doc.data().gpcategoryname;
             let dbnamenospace = dbname.split(" ").join("");
             let dbnamenospacelowercase = dbnamenospace.toLowerCase();
@@ -336,7 +355,7 @@
               const docRef = doc(db, "gpcategory", categoryid);
               const docSnap = await getDoc(docRef);
               if (docSnap.exists()) {
-
+hasNoItems = false;
                 updatebtn.setAttribute('data-ref', categoryid);
                 inputfield.value = docSnap.data().gpcategoryname;
                 StoringInputFliedValueToCompareIfItsChanngedWhenClickingUpdateButton = docSnap.data().gpcategoryname;
@@ -347,7 +366,7 @@
             })
           }
         };
-
+        hasItemsCheck();
         addUpdateEvents();
 
         updatebtn.addEventListener('click', async function () {
