@@ -94,10 +94,10 @@
                             <div class="col">
                                 <div id="selection-deem">
                                     <div>
-                                        <label>Please choose a semester/year</label><br><br>
+                                        <label>Please choose a semester</label><br><br>
                                         <div id="deem-menu">
                                             <select id="selectsemester" class="sem">
-                                                <option value="default" selected disabled>Please choose a semester
+                                                <option value="default" selected disabled>Choose a semester
                                                 </option>
                                             </select>
                                         </div><br>
@@ -324,7 +324,7 @@
             inputID = semesterSelect.value;
             // alert(inputID);
             if (inputID == 'default')  // if the admin did not choose a semester
-                alert("Please choose a semester/year");
+                alert("Please choose a semester");
             else { // if the admin chooses a semester
                 //---------------fix the style----------------
                 divselect.style.marginLeft = "35%";
