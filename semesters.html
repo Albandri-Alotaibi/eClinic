@@ -89,8 +89,14 @@
               style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px;">
           </div>
           <!-- class="btn btn-primary" -->
+          <h4 class="">Semesters</h4>
+
+          <div style="display: none;" class="card border-warning mt-5 m-3 p-2 text-bg-warning" id="noItems">
+            There are no items curretnly, You can add items to this page by clicking "Add New Semester" to hide this
+            message.
+          </div>
+
           <table class="show_info card-body table" id="mytable">
-            <h4 class="">Semesters</h4>
             <thead>
               <th> Semester</th>
               <th> Year</th>
@@ -211,12 +217,14 @@
       let dateDropdown1 = document.getElementById("firstyear");
       let dateDropdown2 = document.getElementById("secondyear");
       let box = document.getElementById("show_data");
-
+      let hasNoItems = true;
 
       //get all docs
       const q = query(collection(db, "semester"));
       const querySnapshot = await getDocs(q);
+
       querySnapshot.forEach((doc) => {
+        hasNoItems = false;
         // doc.data() is never undefined for query doc snapshots
         let detail = doc.data();
         let text = detail.semestername;
@@ -227,6 +235,7 @@
           '</td>' + '</tr>';
       });
 
+      hasItemsCheck();
 
 
       //set years
@@ -279,6 +288,15 @@
       })
 
 
+      function hasItemsCheck () {
+        if (hasNoItems) {
+          document.getElementById('noItems').style.display = 'block';
+          document.getElementById('mytable').style.display = 'none';
+        } else {
+          document.getElementById('mytable').style.display = 'block';
+          document.getElementById('noItems').style.display = 'none';
+        }
+      }
       function successMessage (message) {
         document.getElementById('message').innerHTML = message;
         document.getElementById('message').style.display = "block";
@@ -371,6 +389,8 @@
               '<input type="button" value="✎" class="update logbut btn btn-primary btn-lg"  style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px; left:100%;" data-ref="' + docRef.id + '">' +
               '</td>' + '</tr>';
 
+            hasNoItems = false;
+            hasItemsCheck();
             successMessage('Semester/Year added successfully');
 
             addUpdateEvents();
@@ -499,7 +519,7 @@
       }
       else {
         signOut(auth)
-          window.location.replace("login.html")
+        window.location.replace("login.html")
           .then(() => {
             console.log("user log out")
           })
