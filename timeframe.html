@@ -113,25 +113,26 @@
 
 
                             <div id="add-update-timeframe" style="display: none; ">
-
-
-                                <label>choose a start date</label><br>
-                                <input type="date" id="start-date"><br>
-                                <label>choose an end date</label><br>
-                                <input type="date" id="end-date"><br>
-                                <div class="text-center d-inline-flex">
-                                    <!-- <input type="button" id="add" value="add" style="display: none;"> -->
-                                    <button type="button" id="add" value="add" class="button btn btn-primary btn-lg"
-                                        style="display: none; margin-left: 4%; margin-top: 3%; padding: 7px 16px; font-size: medium;">Add</button>
-                                    <!-- <input type="button" id="update" value="update" style="display: none;"> -->
-                                    <button type="button" id="update" value="update"
-                                        class="button btn btn-primary btn-lg"
-                                        style="display: none;  margin-left: 4%;  margin-top: 3%; padding: 7px 16px; font-size: medium;">Update</button>
-                                    <button type="button" id="cancle" value="cancle" class="btn btn-secondary text-white"
-                                        onclick='Confirm();'
-                                        style="display: none;  margin-left: 1%;  margin-top: 3%; padding: 7px 16px; font-size: medium; background-image: linear-gradient( #6C757D 0%, #6C757D 100%);">Cancle</button><br>
+                                <div style="display: none;" class="card border-success mt-5 m-3 p-2 text-success"
+                                    id="message"></div>
+                                <div id="Mycontent">
+                                    <label>choose a start date</label><br>
+                                    <input type="date" id="start-date"><br>
+                                    <label>choose an end date</label><br>
+                                    <input type="date" id="end-date"><br>
+                                    <div class="text-center d-inline-flex">
+                                        <!-- <input type="button" id="add" value="add" style="display: none;"> -->
+                                        <button type="button" id="add" value="add" class="button btn btn-primary btn-lg"
+                                            style="display: none; margin-left: 4%; margin-top: 3%; padding: 7px 16px; font-size: medium;">Add</button>
+                                        <!-- <input type="button" id="update" value="update" style="display: none;"> -->
+                                        <button type="button" id="update" value="update"
+                                            class="button btn btn-primary btn-lg"
+                                            style="display: none;  margin-left: 4%;  margin-top: 3%; padding: 7px 16px; font-size: medium;">Update</button>
+                                        <button type="button" id="cancle" value="cancle"
+                                            class="btn btn-secondary text-white" onclick='Confirm();'
+                                            style="display: none;  margin-left: 1%;  margin-top: 3%; padding: 7px 16px; font-size: medium; background-image: linear-gradient( #6C757D 0%, #6C757D 100%);">Cancle</button><br>
+                                    </div>
                                 </div>
-
                             </div>
 
                             <div id="show-past-dates" style="display: none; ">
@@ -342,6 +343,7 @@
 
 
                 if (docSnap.data().timeframe == false) {//this semester does not have a timeftame
+                    document.getElementById("Mycontent").style.display = "block";
                     addbtn.style.display = "block";
                     canclebtn.style.display = "block";
                     divAddUpdate.style.display = "block";
@@ -374,6 +376,7 @@
 
                         stordend.innerHTML = dateString2;
                     } else {//if the semester did not end
+                        document.getElementById("Mycontent").style.display = "block";
                         showdatesdiv.style.display = "none";
                         divAddUpdate.style.display = "block"; // to show the add/update section
                         updatebtn.style.display = "block";//we show the update btn
@@ -463,8 +466,9 @@
                         timeframe: true
 
                     });
-                    alert("Your work has been added successfully")
-                    window.location.replace("index.html");
+                    // alert("Your work has been added successfully")
+                    // window.location.replace("index.html");
+                    successMessage('Your work has been added successfully.');
                 }
             }
         })
@@ -485,12 +489,16 @@
 
             if (day <= today.getDate() && month <= todayM && year <= today.getFullYear() && start != dateString) {
                 alert("Start date connot be changed for a date that has been reached");
+                flag = false;
             } else if (new Date(start).getDate() < today.getDate() && new Date(start).getMonth() <= today.getMonth() && new Date(start).getFullYear() <= today.getFullYear() && start != dateString) {//alert if the start date in the past
                 alert("Please choose a starting day in the future");
+                flag = false;
             } else if (start >= end) {
                 alert("Please choose a start day that is before the end date");
+                flag = false;
             } else if (start == dateString && end == dateString2) {
                 alert("You did not change the start date or the end date");
+                flag = false;
             } else if (myArray[1].length == 9) {
                 years = myArray[1].split("/");
 
@@ -517,8 +525,9 @@
                     timeframe: true
                 });
 
-                alert("Your work has been updated successfully");
-                window.location.replace("index.html");
+                // alert("Your work has been updated successfully");
+                // window.location.replace("index.html");
+                successMessage('Your work has been updated successfully.');
             }
         })
 
@@ -561,6 +570,29 @@
 
 
         });
+
+
+
+        function successMessage(message) {
+            document.getElementById("Mycontent").style.display = "none";
+            document.getElementById("add").style.display = "none";
+            document.getElementById("update").style.display = "none";
+            document.getElementById("cancle").style.display = "none";
+            document.getElementById('message').innerHTML = message;
+            document.getElementById('message').style.display = "block";
+
+            setTimeout(() => {
+                var elems = document.querySelectorAll("tr.table-success");
+
+                [].forEach.call(elems, function (el) {
+                    el.classList.remove("table-success");
+                });
+                document.getElementById('message').style.display = "none";
+                document.getElementById("add-update-timeframe").style.display = "none";
+                document.getElementById("show-past-dates").style.display = "none";
+                document.getElementById("selection-deem").style.marginLeft = "50%";
+            }, 4000);
+        }
 
 
 
