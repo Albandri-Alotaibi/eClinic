@@ -362,13 +362,14 @@
         if (semesteryearname == '') {
           return;
         }
-
+        addDBbtn.setAttribute("disabled","disabled");
 
         // ********************** 3-CHECK IF THE SEMESTER ADDED BEFORE************************************
         let found = await docExistsOrNot(semesteryearname);
         if (found) {
           alert("This semester is already added");
         } else {
+         
           if (semesteryearname != "") {
             const docRef = await addDoc(collection(db, "semester"), {
               semestername: semesteryearname,
@@ -389,9 +390,10 @@
             successMessage('Semester has been added successfully');
             addUpdateEvents();
             addUpdatediv.style.display = "none";
-
+          
           }
         }
+        addDBbtn.removeAttribute("disabled");
       })
 
       // ********************** CLICK UPDATE BUTTON WITH VALUE(edit) WITH UNIQUE ID**********************
@@ -459,7 +461,7 @@
 
         let docRef = updateDBbtn.getAttribute('data-ref');
         console.log('docRef:updateDBbtn.even: ' + docRef);
-
+        updateDBbtn.setAttribute("disabled","disabled");
         try {
           await updateDoc(doc(db, "semester", docRef), {
             semestername: semesteryearname
@@ -481,7 +483,7 @@
         document.getElementById('semester-' + docRef).parentNode.parentElement.classList.add('table-success');
 
         successMessage('This semester has been updated successfully');
-
+        updateDBbtn.removeAttribute("disabled");
       });
 
 

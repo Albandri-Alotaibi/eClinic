@@ -294,31 +294,31 @@
 
       addbtn.addEventListener("click", async function () {
         //addbtn.setAttribute("value","Please wait ..." );
-        addbtn.setAttribute("disabled","disabled");
+       
         let BV = inputfield.value;
         if (BV == "" || BV == null) {
           alert("Please fill in the speciality name");
-          addbtn.removeAttribute("disabled");
+          
           return;
         } else if (/[\u0600-\u06FF\u0750-\u077F]/.test(BV)) {
 
           alert("Only English is allowed");
-          addbtn.removeAttribute("disabled");
+          
           return;
         } else if (/^\d+$/.test(BV)) {
           alert("Speciality name cannot contain only digits");
-          addbtn.removeAttribute("disabled");
+         
           return;
         } else if (/^[^a-zA-Z0-9]+$/.test(BV)) {
           alert("Speciality name cannot contain only special characters");
-          addbtn.removeAttribute("disabled");
+          
           return;
         } else if (/^[`!@#$%^&*()_+\-=\[\]{};':"\\|,.< >\/?~\d]*$/g.test(BV)) {
           alert("Speciality name cannot contain only digits and special characters");
-          addbtn.removeAttribute("disabled");
+          
           return;
         }
-
+        addbtn.setAttribute("disabled","disabled");
         let found = await docExistsOrNot(BV);
         if (found == true) {
           alert("this speciality is already added");
@@ -340,6 +340,7 @@
 
           addUpdateEvents();
           divtext.style.display = "none";
+        
           
         }
         addbtn.removeAttribute("disabled");
@@ -435,6 +436,7 @@
 
 
         //Checking if its already in the database
+        updatebtn.setAttribute("disabled","disabled");
         let found = await docExistsOrNot(BV2);
         if (found == true) {
           alert("This speciality is already added");
@@ -460,6 +462,7 @@
           successMessage("speciality has been updated successfully");
           document.getElementById(categoryid).parentNode.parentElement.classList.add('table-success');
         }
+        updatebtn.removeAttribute("disabled");
       });
 
 

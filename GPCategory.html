@@ -311,7 +311,7 @@
             alert("GP category name cannot contain only digits and special characters");
             return;
           }
-
+          addbtn.setAttribute("disabled","disabled");
           let found = await docExistsOrNot(BV);
           if (found == true) {
             alert("this GP category is already added");
@@ -334,8 +334,7 @@
             addUpdateEvents();
             divtext.style.display = "none";
           }
-
-
+          addbtn.removeAttribute("disabled");
         });
         // ******************************************YOUR CODE (YOU can remove it)************************************************
         // addbtn.addEventListener("click",AddDocument_AutoID);    
@@ -426,7 +425,7 @@
           }//end else if its the same with different capital and small and space layout(it will be updated)
 
 
-
+          updatebtn.setAttribute("disabled","disabled");
           //Checking if its already in the database
           let found = await docExistsOrNot(BV2);
           if (found == true) {
@@ -452,6 +451,7 @@
             successMessage("GP category has been updated successfully");
             document.getElementById(categoryid).parentNode.parentElement.classList.add('table-success');
           }
+          updatebtn.removeAttribute("disabled");
         });
 
 
