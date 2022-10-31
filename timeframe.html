@@ -436,7 +436,7 @@
                 var today = new Date();
 
                 if (new Date(start).getDate() < today.getDate() && new Date(start).getMonth() <= today.getMonth() && new Date(start).getFullYear() <= today.getFullYear()) {//alert if the start date in the past
-                    alert("Please choose dates in the future");
+                    alert("Please choose dates that is in the future");
                     flag = false;
                 } else if (start >= end) {
                     alert("Please choose a start day that is before the end date");
