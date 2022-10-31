@@ -116,7 +116,8 @@
 
           <form id="semester-year" class="col" style="display: none;">
             <div class="my-3">
-              <label class="form-label">Semester</label>
+              <label class="form-label"  style="margin-bottom: 0.2px;">Semester</label><br>
+              <small style="color: red;">*</small>
               <select class="semester form-select" name="semester" id="semester">
                 <option selected disabled>choose a semester</option>
                 <option value="1st">1st</option>
@@ -125,8 +126,11 @@
               </select>
             </div>
 
-            <label class="form-label"> Year</label>
+            <label class="form-label" style="margin-bottom: 0.2px;"> Year</label><br>
+            <small style="color: red">*</small>
+            <small style="color: red; margin-left: 53%;">optional</small>
             <div class="input-group mb-0">
+              
               <select class="years form-select" name="year" id="firstyear">
                 <option selected disabled>choose a year</option>
               </select>
