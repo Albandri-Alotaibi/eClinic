@@ -38,7 +38,7 @@
 
             <li>
 
-              <img src="img/logout.png" /><a href="#">Log Out</a>
+              <img src="img/logout.png" /><a href="#" class="logout">Log Out</a>
 
             </li>
 
@@ -146,6 +146,7 @@
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
     import { getFirestore, doc, collection, query, where, getDocs, getDoc, addDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+    import { getAuth, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"; //import for authentication +signout
     // Your web app's Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyD6JcSscRU6XaF3SaCF_U3ggXAFYUnKKq8",
@@ -159,7 +160,7 @@
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const db = getFirestore();
-
+    const auth = getAuth()
 
     //alert(/^[`!@#$%^&*()_+\-=\[\]{};':"\\|,.< >\/?~\d]*$/g.test(" *"));
     // alert( /^\d+$/.test(" 3"));
@@ -447,7 +448,44 @@
 
 
     }//end all js
+       ////////////////////////////////////////logout/////////////////////////////////
+       const logout = document.querySelector('.logout')
+    logout.addEventListener("click", () => {
+      const conf = confirm("are you sure to log out?")
 
+      if (conf === true) {
+        signOut(auth)
+          .then(() => {
+            console.log("user log out")
+          })
+          .catch((err) => {
+            console.log(err.message)
+          })
+
+        window.location.replace("login.html")
+      }
+
+
+    });
+
+    /////////////////////////there is authentication for each page  /////////////////////////
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // console.log("the same user")
+
+      }
+      else {
+        signOut(auth)
+        window.location.replace("login.html")
+          .then(() => {
+            console.log("user log out")
+          })
+          .catch((err) => {
+            console.log(err.message)
+          })
+      }
+      console.log("the user status change :", user)
+    })
 
 
 
