@@ -74,7 +74,8 @@
               <a href="index.html"><i class="fa fa-fw fa-home"></i>Home</a>
               <a href="semesters.html"><i class="fa fa-calendar"></i> Semesters</a>
               <a href="faculty.html"><i class="fa fa-group"></i> Faculty Members Speciality </a>
-              <a href="GPCategory.html" class="active_semester"><i class="fa fa-graduation-cap"></i> Graduation Projects Category
+              <a href="GPCategory.html" class="active_semester"><i class="fa fa-graduation-cap"></i> Graduation Projects
+                Category
               </a>
               <a href="timeframe.html"><i class="fa fa-clock-o"></i> Help Desk Timeframe</a>
               <footer class="footer_eClinic">
@@ -96,13 +97,12 @@
                 style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px;">
             </div><br>
             <h4 class="">Graduation Projects Category</h4>
-            
-          <div style="display: none;" class="card border-warning mt-5 m-3 p-2 text-bg-warning" id="noItems">
-            There are no GP category curretnly, You can add GP category to this page by clicking "Add New GP Category" to hide this
-            message.
-          </div>
+
+            <div style="display: none;" class="card border-warning mt-5 m-3 p-2 text-bg-warning" id="noItems">
+              There is curretnly no GP categoryy.
+            </div>
             <table class="show_info card-body table" style="width:100%; display: none;" id="mytable">
-             
+
               <thead>
                 <th style="width:80%"> GP Category</th>
                 <th style="width:10%"></th>
@@ -112,8 +112,8 @@
               </tbody>
             </table>
           </div>
- <!-- left side -->
-         
+          <!-- left side -->
+
 
           <!-- right form -->
           <div class="col-md-3 ms-auto mt-5 card">
@@ -174,12 +174,12 @@
       //alert(/^[`!@#$%^&*()_+\-=\[\]{};':"\\|,.< >\/?~\d]*$/g.test(" *"));
       // alert( /^\d+$/.test(" 3"));
       setTimeout(() => {
-      if (document.getElementById("noItems").style.display == "none")
-        document.getElementById("mytable").style.display = "block";
-    }, 2000);
+        if (document.getElementById("noItems").style.display == "none")
+          document.getElementById("mytable").style.display = "block";
+      }, 2000);
 
-  
-        // *********************************INITIALIZE ALL VARIBALES*********************************************
+
+      // *********************************INITIALIZE ALL VARIBALES*********************************************
       document.onreadystatechange = async function () {
 
         let newaddbtn = document.getElementById("add");
@@ -188,7 +188,7 @@
         let updatebtn = document.getElementById("updatebotn");
         let divtext = document.getElementById("fa-text");
         let canclebtn = document.getElementById("cancle");
-        
+
         let hasNoItems = true;
 
         //********************* RETREIVING ALL CATEGORIES FROM DATABASE *****************************************************
@@ -204,29 +204,29 @@
             '</td>' + '</tr>';
 
         });
-       
-              hasItemsCheck();
+
+        hasItemsCheck();
         // *********************************FOR CLEAR TEXT BOX WHEN WE WANT TO (ADD NEW GP Category)****************  
         const resetForm = () => {
           inputfield.value = ""
 
         }
 
-        
+
         // *********************************for yallow alert*********************************************
-       
 
-        function hasItemsCheck () {
-        if (hasNoItems) {
-          document.getElementById('noItems').style.display = 'block';
-          document.getElementById('mytable').style.display = 'none';
-        } else {
-          document.getElementById('mytable').style.display = 'block';
-          document.getElementById('noItems').style.display = 'none';
+
+        function hasItemsCheck() {
+          if (hasNoItems) {
+            document.getElementById('noItems').style.display = 'block';
+            document.getElementById('mytable').style.display = 'none';
+          } else {
+            document.getElementById('mytable').style.display = 'block';
+            document.getElementById('noItems').style.display = 'none';
+          }
         }
-      }
 
-       // *********************************when click add new GP category button *********************************************
+        // *********************************when click add new GP category button *********************************************
         newaddbtn.addEventListener('click', function () {
           resetForm();
           newaddbtn.style.display = "block";
@@ -252,9 +252,9 @@
         })
 
 
-       
- // *********************************for green alert*********************************************
-        function successMessage (message) {
+
+        // *********************************for green alert*********************************************
+        function successMessage(message) {
           document.getElementById('message').innerHTML = message;
           document.getElementById('message').style.display = "block";
 
@@ -275,7 +275,7 @@
           const qadd = query(collection(db, "gpcategory"));
           const querySnapshotadd = await getDocs(qadd);
           querySnapshotadd.forEach((doc) => {
-           
+
             let dbname = doc.data().gpcategoryname;
             let dbnamenospace = dbname.split(" ").join("");
             let dbnamenospacelowercase = dbnamenospace.toLowerCase();
@@ -327,8 +327,8 @@
               '<input type="button" value="✎" class="update logbut btn btn-primary btn-lg" style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px; left:100%;" data-ref="' + docRef.id + '">' +
               '</td>' + '</tr>';
 
-              hasNoItems = false;
-              hasItemsCheck();
+            hasNoItems = false;
+            hasItemsCheck();
             successMessage("GP category has been added successfully");
 
             addUpdateEvents();
@@ -370,14 +370,14 @@
                 // doc.data() will be undefined in this case
                 console.log("No such document!");
               }
-              
-             
+
+
             })
           }
         };
-        
+
         addUpdateEvents();
-    // ********************************when click update btn *********************************
+        // ********************************when click update btn *********************************
         updatebtn.addEventListener('click', async function () {
           let inputfield = document.getElementById("inputfield");
           var categoryid = updatebtn.getAttribute('data-ref');
@@ -469,44 +469,44 @@
 
       }//end all js
 
-         ////////////////////////////////////////logout/////////////////////////////////
-    const logout = document.querySelector('.logout')
-    logout.addEventListener("click", () => {
-      const conf = confirm("Are you sure you want to log out?")
+      ////////////////////////////////////////logout/////////////////////////////////
+      const logout = document.querySelector('.logout')
+      logout.addEventListener("click", () => {
+        const conf = confirm("Are you sure you want to log out?")
 
-      if (conf === true) {
-        signOut(auth)
-          .then(() => {
-            console.log("user log out")
-          })
-          .catch((err) => {
-            console.log(err.message)
-          })
+        if (conf === true) {
+          signOut(auth)
+            .then(() => {
+              console.log("user log out")
+            })
+            .catch((err) => {
+              console.log(err.message)
+            })
 
-        window.location.replace("login.html")
-      }
+          window.location.replace("login.html")
+        }
 
 
-    });
+      });
 
-    /////////////////////////there is authentication for each page  /////////////////////////
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // console.log("the same user")
+      /////////////////////////there is authentication for each page  /////////////////////////
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // console.log("the same user")
 
-      }
-      else {
-        signOut(auth)
-        window.location.replace("login.html")
-          .then(() => {
-            console.log("user log out")
-          })
-          .catch((err) => {
-            console.log(err.message)
-          })
-      }
-      console.log("the user status change :", user)
-    })
+        }
+        else {
+          signOut(auth)
+          window.location.replace("login.html")
+            .then(() => {
+              console.log("user log out")
+            })
+            .catch((err) => {
+              console.log(err.message)
+            })
+        }
+        console.log("the user status change :", user)
+      })
 
 
     </script>
@@ -514,7 +514,7 @@
 
     <script>
       // start: java sript for profile icons 
-      function menuToggle () {
+      function menuToggle() {
         const toggleMenu = document.querySelector(".menu");
         toggleMenu.classList.toggle("active");
       }
