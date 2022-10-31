@@ -82,7 +82,7 @@
             </footer>
           </nav>
         </div>
-<!-- side menu -->
+        <!-- side menu -->
         <div class="col mt-3 card p-2 " style="display: block; margin-left: 0.5%;">
           <div class="d-flex justify-content-end">
             <input type="button" value="Add New Semester" id="add" class=" logbut btn btn-primary btn-lg"
@@ -92,12 +92,13 @@
           <h4 class="">Semesters</h4>
 
           <div style="display: none;" class="card border-warning mt-5 m-3 p-2 text-bg-warning" id="noItems">
-            There are no semester curretnly, You can add semester to this page by clicking "Add New Semester" to hide this
+            There are no semester curretnly, You can add semester to this page by clicking "Add New Semester" to hide
+            this
             message.
           </div>
 
-          <table class="show_info card-body table" style="width:100%" id="mytable">
-            
+          <table class="show_info card-body table" style="width:100%; display: none;" id="mytable">
+
             <thead>
               <th style="width:50%"> Semester</th>
               <th style="width:70%"> Year</th>
@@ -116,7 +117,7 @@
 
           <form id="semester-year" class="col" style="display: none;">
             <div class="my-3">
-              <label class="form-label"  style="margin-bottom: 0.2px;">Semester</label><br>
+              <label class="form-label" style="margin-bottom: 0.2px;">Semester</label><br>
               <small style="color: red;">*</small>
               <select class="semester form-select" name="semester" id="semester">
                 <option selected disabled>choose a semester</option>
@@ -130,7 +131,7 @@
             <small style="color: red">*</small>
             <small style="color: red; margin-left: 53%;">optional</small>
             <div class="input-group mb-0">
-              
+
               <select class="years form-select" name="year" id="firstyear">
                 <option selected disabled>choose a year</option>
               </select>
@@ -158,7 +159,7 @@
 
 
   <!-- ****************************************End FrontEnd ***********************************************************  -->
-   
+
 
 
 
@@ -191,7 +192,13 @@
     const db = getFirestore();
     const auth = getAuth()
 
-  
+
+    setTimeout(() => {
+      if (document.getElementById("noItems").style.display == "none")
+        document.getElementById("mytable").style.display = "block";
+    }, 1500);
+
+
     // *********************************INITIALIZE ALL VARIBALES*********************************************
     document.onreadystatechange = async function () {
       let addnewbtn = document.getElementById("add");
@@ -208,7 +215,7 @@
       let box = document.getElementById("show_data");
       let hasNoItems = true;
       // ********************** get all docs********************************************************************
-    
+
       const q = query(collection(db, "semester"));
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
@@ -225,8 +232,8 @@
 
       hasItemsCheck();
 
- // ********************** set years********************************************************************
-      
+      // ********************** set years********************************************************************
+
       let earliestYear = 2050;
       let currentYear1 = new Date().getFullYear();
       while (currentYear1 <= earliestYear) {
@@ -245,7 +252,7 @@
         dateDropdown2.add(dateOption);
         currentYear2 += 1;
       }
- // ********************** reset function********************************************************************
+      // ********************** reset function********************************************************************
       const resetForm = () => {
         semesterDropdown.value = "choose a semester"
         dateDropdown1.value = "choose a year"
@@ -274,9 +281,9 @@
 
         }
       })
-// ********************** for yallow alert ****************************************************
+      // ********************** for yallow alert ****************************************************
 
-      function hasItemsCheck () {
+      function hasItemsCheck() {
         if (hasNoItems) {
           document.getElementById('noItems').style.display = 'block';
           document.getElementById('mytable').style.display = 'none';
@@ -286,7 +293,7 @@
         }
       }
       // ********************** for green alert ****************************************************
-      function successMessage (message) {
+      function successMessage(message) {
         document.getElementById('message').innerHTML = message;
         document.getElementById('message').style.display = "block";
 
@@ -299,8 +306,8 @@
           document.getElementById('message').style.display = "none";
         }, 5000);
       }
- // ********************** for checking drop down ****************************************************
-      function checkSemesterDates () {
+      // ********************** for checking drop down ****************************************************
+      function checkSemesterDates() {
         if (semesterDropdown.value == "choose a semester") {
           alert("please choose a semester");
           return '';
@@ -384,7 +391,7 @@
             successMessage('Semester has been added successfully');
             addUpdateEvents();
             addUpdatediv.style.display = "none";
-          
+
           }
         }
       })
@@ -476,7 +483,7 @@
         document.getElementById('semester-' + docRef).parentNode.parentElement.classList.add('table-success');
 
         successMessage('This semester has been updated successfully');
-        
+
       });
 
 
@@ -524,7 +531,7 @@
   </script>
   <script>
     // start: java sript for profile icons 
-    function menuToggle () {
+    function menuToggle() {
       const toggleMenu = document.querySelector(".menu");
       toggleMenu.classList.toggle("active");
     }

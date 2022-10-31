@@ -101,7 +101,7 @@
             There are no GP category curretnly, You can add GP category to this page by clicking "Add New GP Category" to hide this
             message.
           </div>
-            <table class="show_info card-body table" style="width:100%" id="mytable">
+            <table class="show_info card-body table" style="width:100%; display: none;" id="mytable">
              
               <thead>
                 <th style="width:80%"> GP Category</th>
@@ -173,7 +173,10 @@
 
       //alert(/^[`!@#$%^&*()_+\-=\[\]{};':"\\|,.< >\/?~\d]*$/g.test(" *"));
       // alert( /^\d+$/.test(" 3"));
-
+      setTimeout(() => {
+      if (document.getElementById("noItems").style.display == "none")
+        document.getElementById("mytable").style.display = "block";
+    }, 1500);
 
   
         // *********************************INITIALIZE ALL VARIBALES*********************************************
