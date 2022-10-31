@@ -430,7 +430,6 @@
           let found = await docExistsOrNot(BV2);
           if (found == true) {
             alert("This GP category is already added");
-            return;
           } else {
             try {
               var ref = doc(db, "gpcategory", categoryid);
