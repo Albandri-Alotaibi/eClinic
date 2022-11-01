@@ -343,7 +343,7 @@
                 const docSnap = await getDoc(docRef);//get the info of the doc?
 
 
-                if (docSnap.data().timeframe == false) {//this semester does not have a timeftame
+                if (docSnap.data().startdate == null) {//this semester does not have a timeftame
                     document.getElementById("Mycontent").style.display = "block";
                     addbtn.style.display = "block";
                     canclebtn.style.display = "block";
@@ -464,7 +464,7 @@
                     await updateDoc(docRefadd, { // we add the new time to a smester that dosenot have a time frame
                         startdate: Timestamp.fromDate(new Date(start + "T00:00:00")),
                         enddate: Timestamp.fromDate(new Date(end + "T23:59:59")),
-                        timeframe: true
+                        // timeframe: true
 
                     });
                     // alert("Your work has been added successfully")
@@ -523,7 +523,7 @@
                 await updateDoc(docRefup, { // we update the time to a smester 
                     startdate: Timestamp.fromDate(new Date(start + "T00:00:00")),
                     enddate: Timestamp.fromDate(new Date(end + "T23:59:59")),
-                    timeframe: true
+                    // timeframe: true
                 });
 
                 // alert("Your work has been updated successfully");
