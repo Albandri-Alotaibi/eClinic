@@ -47,20 +47,19 @@
   <nav class="navbar navbar-expand-sm fixed-top navbar-light " style="box-shadow: none; ">
     <div class="container-fluid">
 
-   <img src="img/logo.png"  width="10%" height="30%" alt="Logo" loading="lazy" />
+      <img src="img/logo.png" width="10%" height="30%" alt="Logo" loading="lazy" />
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-        aria-label="Toggle navigation" >
-        <i class='bx bx-menu' style='color:#ffffff'  ></i>
-        
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class='bx bx-menu' style='color:#ffffff'></i>
+
       </button>
-     
+
 
       <div class="collapse navbar-collapse justify-content-center mt-2" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item ">
-            <a class="text-white nav-link active " aria-current="page" href="#" >Home</a>
+            <a class="text-white nav-link active " aria-current="page" href="#">Home</a>
           </li>
           <li class="nav-item">
             <a class="text-white nav-link" href="semesters.html" accesskey="s">Semesters</a>
@@ -94,7 +93,7 @@
 
             <li>
 
-              <img src="img/logout.png" /><a href="#" class="logout" >Log Out</a>
+              <img src="img/logout.png" /><a href="#" class="logout">Log Out</a>
 
             </li>
 
@@ -120,7 +119,7 @@
       <div class="d-flex align-items-center h-100 m-lg-5">
         <div class="container">
           <div class="row">
-            <div class="col-6">
+            <div class="col-5">
               <div class="row">
                 <div class="col-md-auto">
                   <h1 class="text-white display-1">eClinic</h1>
@@ -132,17 +131,28 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-2 col-xs-push-1 p-3 mb-2 text-white rounded-8 " style="margin-left: -14%;" >
-              <img src="img/faculty.png" class="mx-auto d-block" style="height: 45%; padding-top: 0%;">
-              <p class="responsive-font-example">Catogrize Faculty Member and Their Common Issues Based on Their Speciality</p>
-            </div>
-            <div class="col-md-2 col-xs-1 p-3 mb-2 text-white rounded-8">
-              <img src="img/calender.png" class="mx-auto d-block"  style="height: 40%; margin-top: 12%;">
-              <p class="responsive-font-example">Manage Semesters and Their Help Desk Dates</p>
-            </div>
-            <div class="col-md-2 col-xs-1 p-3 mb-2 text-white rounded-8">
-              <img src="img/graduation.png" class="mx-auto d-block"  style="height: 50%;">
-              <p class="responsive-font-example">Arrange The Graduation Projects Library</p>
+            <div id="onebox" class="col-7 rounded-8">
+              
+                <div class="col-3  text-white " style="margin-left: 3.5%; margin-right: 3.5%;">
+                  <img src="img/faculty.png" class="mx-auto d-block" style="height: 10%; width: 40%; ">
+                  <p class="responsive-font-example">Catogrize Faculty Member and Their Common Issues Based on Their
+                    Speciality</p>
+                </div>
+
+                <div class="vr" style="height: 80%;"></div>
+                
+                <div class="col-3 text-white " style="margin-left: 3.5%; margin-right: 3.5%;">
+                  <img src="img/calender.png" class="mx-auto d-block" style="height: 10%; width: 40%; ">
+                  <p class="responsive-font-example">Manage Semesters <br>and Their Help Desk Dates</p>
+                </div>
+                
+                <div class="vr" style="height: 80%;"></div>
+
+                <div class="col-3 text-white " style="margin-left: 3.5%; margin-right: 3%;">
+                  <img src="img/graduation.png" class="mx-auto d-block" style="height: 10%; width: 40%">
+                  <p class="responsive-font-example">Arrange The Graduation Projects Library</p>
+                </div>
+              
             </div>
 
 
@@ -180,8 +190,8 @@
     integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
     crossorigin="anonymous"></script>
 
-    
-    
+
+
 
   <!-- <script src=”https://code.jquery.com/jquery-3.2.1.slim.min.js”
     integrity=”sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN” crossorigin=”anonymous”>
@@ -208,71 +218,70 @@
 
 
   </script>
- <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-  import { getFirestore, doc, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
-  // Your web app's Firebase configuration
-  import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"; //import for authentication +signout
-  const firebaseConfig = {
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+    import { getFirestore, doc, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+    // Your web app's Firebase configuration
+    import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"; //import for authentication +signout
+    const firebaseConfig = {
       apiKey: "AIzaSyD6JcSscRU6XaF3SaCF_U3ggXAFYUnKKq8",
       authDomain: "eclinic-d5dec.firebaseapp.com",
       projectId: "eclinic-d5dec",
       storageBucket: "eclinic-d5dec.appspot.com",
       messagingSenderId: "148819771062",
       appId: "1:148819771062:web:f66c9a362b2fc34f247017"
-  };
+    };
 
-  // Initialize Firebase services 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore()
-  const auth = getAuth()
+    // Initialize Firebase services 
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore()
+    const auth = getAuth()
 
 
-  ///////////////////logout/////////////////     
-  const logout = document.querySelector('.logout')
-  logout.addEventListener("click", () => {
+    ///////////////////logout/////////////////     
+    const logout = document.querySelector('.logout')
+    logout.addEventListener("click", () => {
       const conf = confirm("Are you sure you want to log out?")
 
       if (conf === true) {
-          signOut(auth)
-              .then(() => {
-                  //console.log("user log out")
-              })
-              .catch((err) => {
-                  console.log(err.message)
-              })
+        signOut(auth)
+          .then(() => {
+            //console.log("user log out")
+          })
+          .catch((err) => {
+            console.log(err.message)
+          })
 
-          window.location.replace("login.html")
+        window.location.replace("login.html")
       }
-    
 
-  });
 
-  
+    });
 
-onAuthStateChanged(auth, (user) => {
-  if(user){
-    console.log("the same user") 
-  }
-  else
-  {
-      signOut(auth)
-      window.location.replace("login.html")
-              .then(() => {
-                  //console.log("user log out")
-              })
-              .catch((err) => {
-                  console.log(err.message)
-              })
-    //window.location.replace("login.html")
-  }
-  console.log("the user status change :", user)
-})
 
-</script>
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("the same user")
+      }
+      else {
+        signOut(auth)
+        window.location.replace("login.html")
+          .then(() => {
+            //console.log("user log out")
+          })
+          .catch((err) => {
+            console.log(err.message)
+          })
+        //window.location.replace("login.html")
+      }
+      console.log("the user status change :", user)
+    })
+
+  </script>
 </body>
 
 </html>
