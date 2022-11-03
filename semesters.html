@@ -131,7 +131,7 @@
             <small style="color: red; margin-left: 53%;">optional</small>
             <div class="input-group mb-0">
 
-              <select class="years form-select" name="year" id="firstyear">
+              <select class="years form-select" sname="year" id="firstyear">
                 <option selected disabled>choose a year</option>
               </select>
               <span class="input-group-text">/</span>
@@ -243,14 +243,35 @@
         currentYear1 += 1;
       }
 
-      let currentYear2 = new Date().getFullYear()+1;
-      while (currentYear2 <= earliestYear) {
+      dateDropdown1.addEventListener('change', (event) => {
+        // console.log(event.target.value);
+        let year = parseInt(event.target.value) + 1;
+        generateDropDownYear2(year);
+      });
+
+      function generateDropDownYear2(year) {
+        dateDropdown2.innerHTML = "";
+
+        let option1 = document.createElement("option");
+        option1.value = "choose a year";
+        option1.text = "choose a year";
+        dateDropdown2.add(option1);
         var dateOption = document.createElement("option");
-        dateOption.text = currentYear2;
-        dateOption.value = currentYear2;
+        dateOption.text = year;
+        dateOption.value = year;
         dateDropdown2.add(dateOption);
-        currentYear2 += 1;
+        // let currentYear2 = new Date().getFullYear();
+        // while (currentYear2 <= earliestYear) {
+        //   var dateOption = document.createElement("option");
+        //   dateOption.text = currentYear2;
+        //   dateOption.value = currentYear2;
+        //   dateDropdown2.add(dateOption);
+        //   currentYear2 += 1;
+
+        // }
       }
+
+
       // ********************** reset function********************************************************************
       const resetForm = () => {
         semesterDropdown.value = "choose a semester"
@@ -282,7 +303,7 @@
       })
       // ********************** for yallow alert ****************************************************
 
-      function hasItemsCheck () {
+      function hasItemsCheck() {
         if (hasNoItems) {
           document.getElementById('noItems').style.display = 'block';
           document.getElementById('mytable').style.display = 'none';
@@ -292,7 +313,7 @@
         }
       }
       // ********************** for green alert ****************************************************
-      function successMessage (message) {
+      function successMessage(message) {
         document.getElementById('message').innerHTML = message;
         document.getElementById('message').style.display = "block";
 
@@ -306,7 +327,7 @@
         }, 5000);
       }
       // ********************** for checking drop down ****************************************************
-      function checkSemesterDates () {
+      function checkSemesterDates() {
         if (semesterDropdown.value == "choose a semester") {
           alert("please choose a semester");
           return '';
@@ -426,10 +447,13 @@
               if (semester[1].indexOf('/') != -1) {
                 const dates = semester[1].split("/");
                 dateDropdown1.value = dates[0];
-                dateDropdown2.value = dates[1];
+                let y2 = parseInt(dates[0]);
+                generateDropDownYear2(y2 + 1);
+                dateDropdown2.value = y2 + 1;
               } else {
                 dateDropdown1.value = semester[1];
                 dateDropdown2.value = 'choose a year';
+                generateDropDownYear2(parseInt(semester[1]) + 1);
               }
 
               semesterDropdown.value = semester[0];
@@ -546,7 +570,7 @@
   </script>
   <script>
     // start: java sript for profile icons 
-    function menuToggle () {
+    function menuToggle() {
       const toggleMenu = document.querySelector(".menu");
       toggleMenu.classList.toggle("active");
     }
