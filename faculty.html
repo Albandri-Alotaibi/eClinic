@@ -44,7 +44,7 @@
 
       <!-- Start profil icons  -->
       <div class="action" style="z-index: 99999; font-size: 14px;">
-        <div class=" profile" onclick="menuToggle();" >
+        <div class=" profile" onclick="menuToggle();">
 
           <img src="img/user.png" />
 
@@ -75,7 +75,7 @@
 
 
 
-    
+
 
 
 
@@ -89,8 +89,10 @@
             <img class="logo" src="img/logo.png" alt="logo brand" height="10%" width="50%">
             <a href="index.html" accesskey="h"><i class="fa fa-fw fa-home"></i>Home</a>
             <a href="semesters.html" accesskey="s"><i class="fa fa-calendar"></i> Semesters</a>
-            <a href="faculty.html" accesskey="m" class="active_semester"><i class="fa fa-group"></i> Faculty Members Speciality </a>
-            <a href="GPCategory.html" accesskey="g"><i class="fa fa-graduation-cap"></i> Graduation Projects Category </a>
+            <a href="faculty.html" accesskey="m" class="active_semester"><i class="fa fa-group"></i> Faculty Members
+              Speciality </a>
+            <a href="GPCategory.html" accesskey="g"><i class="fa fa-graduation-cap"></i> Graduation Projects Category
+            </a>
             <a href="timeframe.html" accesskey="p"><i class="fa fa-clock-o"></i> Help Desk Dates</a>
             <footer class="footer_eClinic">
               <p class="text-white text-justify position-absolute bottom-0 display-10"> Copyright &copy; All
@@ -110,7 +112,7 @@
           </div><br>
           <h4 class="">Faculty Members Speciality</h4>
           <div style="display: none;" class="card border-warning mt-5 m-3 p-2 text-bg-warning" id="noItems">
-           There is currently no faculty speciality.
+            There is currently no faculty speciality.
           </div>
           <table class="show_info card-body table" style="width:100%; display: none;" id="mytable">
             <thead>
@@ -162,7 +164,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
-    import { getFirestore, doc, collection, query, where, getDocs, getDoc, addDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+    import { getFirestore, doc, collection, query, where, getDocs, getDoc, addDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
     import { getAuth, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"; //import for authentication +signout
     // Your web app's Firebase configuration
     const firebaseConfig = {
@@ -177,7 +179,8 @@
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const db = getFirestore();
-    const auth = getAuth()
+    const auth = getAuth();
+    var uid="";
 
     //alert(/^[`!@#$%^&*()_+\-=\[\]{};':"\\|,.< >\/?~\d]*$/g.test(" *"));
     // alert( /^\d+$/.test(" 3"));
@@ -190,17 +193,17 @@
     document.onreadystatechange = async function () {
 
       let newaddbtn = document.getElementById("add");
-        let addbtn = document.getElementById("addtodb");
-        let editbtn = document.getElementsByClassName("update");
-        let updatebtn = document.getElementById("updatebotn");
-        let divtext = document.getElementById("fa-text");
-        let canclebtn = document.getElementById("cancle");
-        
-        let hasNoItems = true;
+      let addbtn = document.getElementById("addtodb");
+      let editbtn = document.getElementsByClassName("update");
+      let updatebtn = document.getElementById("updatebotn");
+      let divtext = document.getElementById("fa-text");
+      let canclebtn = document.getElementById("cancle");
+
+      let hasNoItems = true;
 
       //********************* RETREIVING ALL CATEGORIES FROM DATABASE *****************************************************
       let box = document.getElementById("show_data");
-    
+
       const q = query(collection(db, "facultyspeciality"));
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
@@ -219,8 +222,8 @@
       }
 
       // *********************************INITIALIZE ALL VARIBALES*********************************************
- 
-      function hasItemsCheck () {
+
+      function hasItemsCheck() {
         if (hasNoItems) {
           document.getElementById('noItems').style.display = 'block';
           document.getElementById('mytable').style.display = 'none';
@@ -241,33 +244,33 @@
       });
 
       // *********************************cancle btn*********************************************************************************
-    
+
       canclebtn.addEventListener('click', function () {
-       {
-          if (confirm("Are you sure to want to cancle your work?") == true){
+        {
+          if (confirm("Are you sure to want to cancle your work?") == true) {
             divtext.style.display = "none";
-        resetForm();
+            resetForm();
           }
           else
-              return false;
-      
-  }
+            return false;
+
+        }
       })
 
 
-      function successMessage (message) {
-          document.getElementById('message').innerHTML = message;
-          document.getElementById('message').style.display = "block";
+      function successMessage(message) {
+        document.getElementById('message').innerHTML = message;
+        document.getElementById('message').style.display = "block";
 
-          setTimeout(() => {
-            var elems = document.querySelectorAll("tr.table-success");
+        setTimeout(() => {
+          var elems = document.querySelectorAll("tr.table-success");
 
-            [].forEach.call(elems, function (el) {
-              el.classList.remove("table-success");
-            });
-            document.getElementById('message').style.display = "none";
-          }, 4000);
-        }
+          [].forEach.call(elems, function (el) {
+            el.classList.remove("table-success");
+          });
+          document.getElementById('message').style.display = "none";
+        }, 4000);
+      }
       ////////////////////////********************* METHOD FOUND SEARCH ************************************************************
       const docExistsOrNot = async (specialityenteredname) => {
         var found = false;
@@ -295,31 +298,31 @@
 
       addbtn.addEventListener("click", async function () {
         //addbtn.setAttribute("value","Please wait ..." );
-       
+
         let BV = inputfield.value;
         if (BV == "" || BV == null) {
           alert("Please fill in the speciality name");
-          
+
           return;
         } else if (/[\u0600-\u06FF\u0750-\u077F]/.test(BV)) {
 
           alert("Only English is allowed");
-          
+
           return;
         } else if (/^\d+$/.test(BV)) {
           alert("Speciality name cannot contain only digits");
-         
+
           return;
         } else if (/^[^a-zA-Z0-9]+$/.test(BV)) {
           alert("Speciality name cannot contain only special characters");
-          
+
           return;
         } else if (/^[`!@#$%^&*()_+\-=\[\]{};':"\\|,.< >\/?~\d]*$/g.test(BV)) {
           alert("Speciality name cannot contain only digits and special characters");
-          
+
           return;
         }
-        addbtn.setAttribute("disabled","disabled");
+        addbtn.setAttribute("disabled", "disabled");
         let found = await docExistsOrNot(BV);
         if (found == true) {
           alert("this speciality is already added");
@@ -329,20 +332,25 @@
             ref, {
             specialityname: BV
           });
+    
+          const AdminDocRef = doc(db, "admin", uid);
+          // Atomically add a new field to the array field.
+          await updateDoc(AdminDocRef, {
+            facultyspeciality: arrayUnion(docRef)
+          });
 
           box.innerHTML += '<tr class="table-success">' + '<td><span id="' + docRef.id + '">' + BV + '</span></td>'
             + '<td>' +
             '<input type="button" value="✎" class="update logbut btn btn-primary btn-lg" style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px; left:100%;" data-ref="' + docRef.id + '">' +
             '</td>' + '</tr>';
-            hasNoItems = false;
-              hasItemsCheck();
-          
+          hasNoItems = false;
+          hasItemsCheck();
           successMessage("speciality has been added successfully");
 
           addUpdateEvents();
           divtext.style.display = "none";
-        
-          
+
+
         }
         addbtn.removeAttribute("disabled");
 
@@ -437,11 +445,11 @@
 
 
         //Checking if its already in the database
-        updatebtn.setAttribute("disabled","disabled");
+        updatebtn.setAttribute("disabled", "disabled");
         let found = await docExistsOrNot(BV2);
         if (found == true) {
           alert("This speciality is already added");
-          
+
         } else {
           try {
             var ref = doc(db, "facultyspeciality", categoryid);
@@ -479,8 +487,8 @@
 
 
     }//end all js
-       ////////////////////////////////////////logout/////////////////////////////////
-       const logout = document.querySelector('.logout')
+    ////////////////////////////////////////logout/////////////////////////////////
+    const logout = document.querySelector('.logout')
     logout.addEventListener("click", () => {
       const conf = confirm("Are you sure you want to log out?")
 
@@ -503,6 +511,7 @@
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // console.log("the same user")
+        uid=user.uid;
 
       }
       else {

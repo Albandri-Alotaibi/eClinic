@@ -154,7 +154,7 @@
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
       // TODO: Add SDKs for Firebase products that you want to use
       // https://firebase.google.com/docs/web/setup#available-libraries
-      import { getFirestore, doc, collection, query, where, getDocs, getDoc, addDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+      import { getFirestore, doc, collection, query, where, getDocs, getDoc, addDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
       import { getAuth, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"; //import for authentication +signout
       // Your web app's Firebase configuration
       const firebaseConfig = {
@@ -169,8 +169,8 @@
       // Initialize Firebase
       const app = initializeApp(firebaseConfig);
       const db = getFirestore();
-      const auth = getAuth()
-
+      const auth = getAuth();
+      var uid="";
 
       //alert(/^[`!@#$%^&*()_+\-=\[\]{};':"\\|,.< >\/?~\d]*$/g.test(" *"));
       // alert( /^\d+$/.test(" 3"));
@@ -322,6 +322,13 @@
               ref, {
               gpcategoryname: BV
             });
+          
+            const AdminDocRef = doc(db, "admin", uid);
+           // Atomically add a new field to the array field.
+            await updateDoc(AdminDocRef, {
+              GPcatecory: arrayUnion(docRef)
+              });
+
 
             box.innerHTML += '<tr class="table-success">' + '<td><span id="' + docRef.id + '">' + BV + '</span></td>'
               + '<td>' +
@@ -493,7 +500,7 @@
       onAuthStateChanged(auth, (user) => {
         if (user) {
           // console.log("the same user")
-
+          uid=user.uid;
         }
         else {
           signOut(auth)
