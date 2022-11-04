@@ -81,7 +81,8 @@
             <a href="index.html" accesskey="h"><i class="fa fa-fw fa-home"></i> Home</a>
             <a href="semesters.html" accesskey="s" class="active_semester"><i class="fa fa-calendar"></i> Semesters</a>
             <a href="faculty.html" accesskey="m"><i class="fa fa-group"></i> Faculty Members Speciality </a>
-            <a href="GPCategory.html" accesskey="g"><i class="fa fa-graduation-cap"></i> Graduation Projects Category</a>
+            <a href="GPCategory.html" accesskey="g"><i class="fa fa-graduation-cap"></i> Graduation Projects
+              Category</a>
             <a href="timeframe.html" accesskey="p"><i class="fa fa-clock-o"></i> Help Desk Dates</a>
             <footer class="footer_eClinic">
               <p class="text-white text-justify position-absolute bottom-0 display-10"> Copyright &copy; All
@@ -124,7 +125,8 @@
 
           <form id="semester-year" class="col" style="display: none;">
             <div class="my-3">
-              <label class="form-label" style="margin-bottom: 0.2px;">Semester</label> <small style="color: red;"> required</small><br>
+              <label class="form-label" style="margin-bottom: 0.2px;">Semester</label> <small style="color: red;">
+                required</small><br>
               <!-- <small style="color: red;">required</small> -->
               <select class="semester form-select" name="semester" id="semester">
                 <option selected disabled>choose a semester</option>
@@ -182,7 +184,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
-    import { getFirestore, doc, collection, query, where, getDocs, getDoc, addDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+    import { getFirestore, doc, collection, query, where, getDocs, getDoc, addDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
     import { getAuth, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"; //import for authentication +signout
     // Your web app's Firebase configuration
     const firebaseConfig = {
@@ -200,7 +202,7 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore();
     const auth = getAuth()
-
+    var uid = "";
 
     setTimeout(() => {
       if (document.getElementById("noItems").style.display == "none")
@@ -222,7 +224,7 @@
       let dateDropdown1 = document.getElementById("firstyear");
       let dateDropdown2 = document.getElementById("secondyear");
       let box = document.getElementById("show_data");
-      let hide= dateDropdown2.setAttribute("disabled", "disabled");
+      let hide = dateDropdown2.setAttribute("disabled", "disabled");
       let hasNoItems = true;
       // ********************** get all docs********************************************************************
 
@@ -263,7 +265,7 @@
 
       });
 
-     
+
       function generateDropDownYear2(year) {
         dateDropdown2.removeAttribute("disabled");
         dateDropdown2.innerHTML = "";
@@ -310,10 +312,10 @@
       });
 
       document.getElementById('d2-cont').addEventListener('click', function () {
-      if (dateDropdown1.value == "choose a year")
-         alert("Choose the first year first ")
-        
-      
+        if (dateDropdown1.value == "choose a year")
+          alert("Choose the first year first ")
+
+
       })
       // ********************** CLICK CANCLE BUTTON WITH VALUE(CANCLE)****************************************************
 
@@ -425,6 +427,12 @@
               enddate: null,
               startdate: null
               // timeframe: false
+            });
+
+            const AdminDocRef = doc(db, "admin", uid);
+            // Atomically add a new field to the array field.
+            await updateDoc(AdminDocRef, {
+              semester: arrayUnion(docRef)
             });
 
             const myArray = semesteryearname.split(" ");
@@ -578,7 +586,7 @@
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // console.log("the same user")
-
+        uid = user.uid;
       }
       else {
         signOut(auth)
