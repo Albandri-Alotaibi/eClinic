@@ -5,13 +5,8 @@
   <link rel="stylesheet" href="index.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-  <!-- <link href='https://fonts.googleapis.com/css?family=Oswald:300' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Familjen Grotesk' rel='stylesheet'> -->
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-
+  <link href='https://fonts.googleapis.com/css?family=Oswald:300' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Familjen Grotesk' rel='stylesheet'>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -75,10 +70,10 @@
         <div class="col-md-3" style="display: block;">
           <nav class="sidebar ">
             <img class="logo" src="img/logo.png" alt="logo brand" height="10%" width="50%">
-            <a href="index.html" accesskey="h"><i class="fa fa-fw fa-home"></i> Home</a>
+            <a href="index.html" accesskey="h"><i class="fa fa-fw fa-home"></i>Home</a>
             <a href="semesters.html" accesskey="s" class="active_semester"><i class="fa fa-calendar"></i> Semesters</a>
             <a href="faculty.html" accesskey="m"><i class="fa fa-group"></i> Faculty Members Speciality </a>
-            <a href="GPCategory.html" accesskey="g"><i class="fa fa-graduation-cap"></i> Graduation Projects Category</a>
+            <a href="GPCategory.html" accesskey="g"><i class="fa fa-graduation-cap"></i>Graduation Projects Category</a>
             <a href="timeframe.html" accesskey="p"><i class="fa fa-clock-o"></i> Help Desk Dates</a>
             <footer class="footer_eClinic">
               <p class="text-white text-justify position-absolute bottom-0 display-10"> Copyright &copy; All
@@ -121,8 +116,8 @@
 
           <form id="semester-year" class="col" style="display: none;">
             <div class="my-3">
-              <label class="form-label" style="margin-bottom: 0.2px;">Semester</label><br>
-              <small style="color: red;">*</small>
+              <label class="form-label" style="margin-bottom: 0.2px;">Semester</label> <small style="color: red;"> required</small><br>
+              <!-- <small style="color: red;">required</small> -->
               <select class="semester form-select" name="semester" id="semester">
                 <option selected disabled>choose a semester</option>
                 <option value="1st">1st</option>
@@ -132,17 +127,19 @@
             </div>
 
             <label class="form-label" style="margin-bottom: 0.2px;"> Year</label><br>
-            <small style="color: red">*</small>
-            <small style="color: red; margin-left: 53%;">optional</small>
+            <small style="color: red">required</small>
+            <small style="color: red; margin-left: 39%;">optional</small>
             <div class="input-group mb-0">
 
               <select class="years form-select" sname="year" id="firstyear">
                 <option selected disabled>choose a year</option>
               </select>
               <span class="input-group-text">/</span>
-              <select class="form-select" name="year" id="secondyear">
-                <option selected value="choose a year">choose a year</option>
-              </select>
+              <span id="d2-cont">
+                <select class="form-select" name="year" id="secondyear">
+                  <option selected value="choose a year">choose a year</option>
+                </select>
+              </span>
             </div>
 
             <div class="d-flex justify-content-evenly">
@@ -217,6 +214,7 @@
       let dateDropdown1 = document.getElementById("firstyear");
       let dateDropdown2 = document.getElementById("secondyear");
       let box = document.getElementById("show_data");
+      let hide= dateDropdown2.setAttribute("disabled", "disabled");
       let hasNoItems = true;
       // ********************** get all docs********************************************************************
 
@@ -246,15 +244,20 @@
         dateOption.value = currentYear1;
         dateDropdown1.add(dateOption);
         currentYear1 += 1;
+        dateDropdown2.setAttribute("disabled", "disabled");
       }
 
       dateDropdown1.addEventListener('change', (event) => {
         // console.log(event.target.value);
+
         let year = parseInt(event.target.value) + 1;
         generateDropDownYear2(year);
+
       });
 
+     
       function generateDropDownYear2(year) {
+        dateDropdown2.removeAttribute("disabled");
         dateDropdown2.innerHTML = "";
 
         let option1 = document.createElement("option");
@@ -286,6 +289,7 @@
 
       // ********************** 1-CLICK ADD BUTTON WITH VALUE(ADD NEW SEMESTER/YEAR)************************************
       addnewbtn.addEventListener('click', function () {
+        dateDropdown2.setAttribute("disabled", "disabled");
         resetForm();
         addUpdatediv.style.display = "block";
         addDBbtn.style.display = "block";
@@ -293,6 +297,16 @@
         canclebtn.style.display = "block";
       });
 
+      dateDropdown2.addEventListener('click', function () {
+
+      });
+
+      document.getElementById('d2-cont').addEventListener('click', function () {
+      if (dateDropdown1.value == "choose a year")
+         alert("Choose the first year first ")
+        
+      
+      })
       // ********************** CLICK CANCLE BUTTON WITH VALUE(CANCLE)****************************************************
 
       canclebtn.addEventListener('click', function () {
