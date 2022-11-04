@@ -132,27 +132,27 @@
               </div>
             </div>
             <div id="onebox" class="col-7 rounded-8">
-              
-                <div class="col-3  text-white " style="margin-left: 3.5%; margin-right: 3.5%;">
-                  <img src="img/faculty.png" class="mx-auto d-block" style="height: 10%; width: 40%; ">
-                  <p class="responsive-font-example">Catogrize Faculty Member and Their Common Issues Based on Their
-                    Speciality</p>
-                </div>
 
-                <div class="vr" style="height: 80%;"></div>
-                
-                <div class="col-3 text-white " style="margin-left: 3.5%; margin-right: 3.5%;">
-                  <img src="img/calender.png" class="mx-auto d-block" style="height: 10%; width: 40%; ">
-                  <p class="responsive-font-example">Manage Semesters <br>and Their Help Desk Dates</p>
-                </div>
-                
-                <div class="vr" style="height: 80%;"></div>
+              <div class="col-3  text-white " style="margin-left: 3.5%; margin-right: 3.5%;">
+                <img src="img/faculty.png" class="mx-auto d-block" style="height: 10%; width: 40%; ">
+                <p class="responsive-font-example">Catogrize Faculty Member and Their Common Issues Based on Their
+                  Speciality</p>
+              </div>
 
-                <div class="col-3 text-white " style="margin-left: 3.5%; margin-right: 3%;">
-                  <img src="img/graduation.png" class="mx-auto d-block" style="height: 10%; width: 40%">
-                  <p class="responsive-font-example">Arrange The Graduation Projects Library</p>
-                </div>
-              
+              <div class="vr" style="height: 80%;"></div>
+
+              <div class="col-3 text-white " style="margin-left: 3.5%; margin-right: 3.5%;">
+                <img src="img/calender.png" class="mx-auto d-block" style="height: 10%; width: 40%; ">
+                <p class="responsive-font-example">Manage Semesters <br>and Their Help Desk Dates</p>
+              </div>
+
+              <div class="vr" style="height: 80%;"></div>
+
+              <div class="col-3 text-white " style="margin-left: 3.5%; margin-right: 3%;">
+                <img src="img/graduation.png" class="mx-auto d-block" style="height: 10%; width: 40%">
+                <p class="responsive-font-example">Arrange The Graduation Projects Library</p>
+              </div>
+
             </div>
 
 
@@ -223,7 +223,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
-    import { getFirestore, doc, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+    import { getFirestore, doc, collection, getDocs, getDoc, addDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
     // Your web app's Firebase configuration
     import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"; //import for authentication +signout
     const firebaseConfig = {
@@ -280,6 +280,26 @@
       }
       console.log("the user status change :", user)
     })
+
+    window.onload = async function () {
+      // var found = false;
+      // const querySnapshot = await getDocs(collection(db, "admin"));
+      // querySnapshot.forEach((doc) => { //loop for all doc in the collection
+      //   // doc.data() is never undefined for query doc snapshots
+      //   if (doc.id == userid) {
+      //     found = true;
+      //   }
+      // });
+
+      const docRef = doc(db, "admin", adminid);
+      const docSnap = await getDoc(docRef);
+      if (!docSnap.exists()) {
+        await addDoc(collection(db, "admin"), {
+          email: ""
+        });
+      }
+
+    };
 
   </script>
 </body>
