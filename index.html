@@ -239,7 +239,8 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore()
     const auth = getAuth()
-
+    var email = "";
+      var uid = "";
 
     ///////////////////logout/////////////////     
     const logout = document.querySelector('.logout')
@@ -262,10 +263,12 @@
     });
 
 
-
+///////////////////////////////////////////authentication for each page ///////////////////////////////
     onAuthStateChanged(auth, (user) => {
       if (user) {
         console.log("the same user")
+        email = user.email; 
+          uid = user.uid;
       }
       else {
         signOut(auth)
@@ -281,26 +284,16 @@
       console.log("the user status change :", user)
     })
 
-    window.onload = async function () {
-      // var found = false;
-      // const querySnapshot = await getDocs(collection(db, "admin"));
-      // querySnapshot.forEach((doc) => { //loop for all doc in the collection
-      //   // doc.data() is never undefined for query doc snapshots
-      //   if (doc.id == userid) {
-      //     found = true;
-      //   }
-      // });
-
-      const docRef = doc(db, "admin", adminid);
+    
+     
+    
+      const docRef = doc(db, "admin2", uid);
       const docSnap = await getDoc(docRef);
       if (!docSnap.exists()) {
-        await addDoc(collection(db, "admin"), {
-          email: ""
-        });
+      alert(uid);
+       // await setDoc(doc(db, "admin2",uid ), email);
+      
       }
-
-    };
-
   </script>
 </body>
 

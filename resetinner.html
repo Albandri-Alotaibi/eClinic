@@ -127,7 +127,7 @@
 
 
               <div class="col-md-12 text-center">
-                <button class="resetbut btn btn-primary btn-lg " 
+                <button class="resetbut btn btn-primary btn-lg " style="padding-left: 2.5rem; padding-right: 2.5rem;"
                   id="afterclick">Send reset password link </button>
 
               </div>
@@ -220,7 +220,7 @@
 
 
 
-
+      
       /////////////////////////there is authentication for each page in inner reset password /////////////////////////
       onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -242,6 +242,8 @@
         }
         console.log("the user status change :", user)
       })
+
+     
 
       //////////////////////////////////reset password //////////////////////////////////
 
