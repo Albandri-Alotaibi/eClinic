@@ -112,85 +112,6 @@
 
 .button-next-Deem:hover {
     background-image: linear-gradient(-180deg, #1D95C9 0%, #17759C 100%);
-}
-
-#add {
-    background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
-    border-radius: .5rem;
-    box-sizing: border-box;
-    color: #FFFFFF;
-    display: flex;
-    font-size: 15px;
-    justify-content: center;
-
-    text-decoration: none;
-    width: 20%;
-    height: 25%;
-    border: 0;
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    margin-top: -1%;
-    margin-left: 40%;
-    margin-bottom: -60%;
-}
-
-#add:hover {
-    background-image: linear-gradient(-180deg, #1D95C9 0%, #17759C 100%);
-}
-
-#update {
-    background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
-    border-radius: .5rem;
-    box-sizing: border-box;
-    color: #FFFFFF;
-    display: flex;
-    font-size: 15px;
-    justify-content: center;
-
-    text-decoration: none;
-    width: 20%;
-    height: 25%;
-    border: 0;
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    margin-top: -1%;
-    margin-left: 40%;
-    margin-bottom: 1%;
-}
-
-#update:hover {
-    background-image: linear-gradient(-180deg, #1D95C9 0%, #17759C 100%);
-}
-
-#ok {
-    background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
-    border-radius: .5rem;
-    box-sizing: border-box;
-    color: #FFFFFF;
-    display: flex;
-    font-size: 15px;
-    justify-content: center;
-    text-decoration: none;
-    width: 20%;
-    height: 24%;
-    border: 0;
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    margin-top: -1%;
-    margin-left: 40%;
-    margin-bottom: 10%;
-}
-
-#ok:hover {
-
-    background-image: linear-gradient(-180deg, #1D95C9 0%, #17759C 100%);
-
 } */
 
 
@@ -290,13 +211,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 body {
     padding: 3;
     background: #e5e5e5;
-    font: 13px/1.4 Geneva, "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", Verdana, sans-serif;
+    /* font: 13px/1.4 Geneva, "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", Verdana, sans-serif; */
 }
 
 label {
-    display: block;
-    font-size: 90%;
-    font-weight: bold;
+   font-weight: 400;
+    color: black;
 }
 
 input {

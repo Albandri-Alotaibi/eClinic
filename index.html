@@ -132,27 +132,27 @@
               </div>
             </div>
             <div id="onebox" class="col-7 rounded-8">
-              
-                <div class="col-3  text-white " style="margin-left: 3.5%; margin-right: 3.5%;">
-                  <img src="img/faculty.png" class="mx-auto d-block" style="height: 10%; width: 40%; ">
-                  <p class="responsive-font-example">Catogrize Faculty Member and Their Common Issues Based on Their
-                    Speciality</p>
-                </div>
 
-                <div class="vr" style="height: 80%;"></div>
-                
-                <div class="col-3 text-white " style="margin-left: 3.5%; margin-right: 3.5%;">
-                  <img src="img/calender.png" class="mx-auto d-block" style="height: 10%; width: 40%; ">
-                  <p class="responsive-font-example">Manage Semesters <br>and Their Help Desk Dates</p>
-                </div>
-                
-                <div class="vr" style="height: 80%;"></div>
+              <div class="col-3  text-white " style="margin-left: 3.5%; margin-right: 3.5%;">
+                <img src="img/faculty.png" class="mx-auto d-block" style="height: 10%; width: 40%; ">
+                <p class="responsive-font-example">Catogrize Faculty Member and Their Common Issues Based on Their
+                  Speciality</p>
+              </div>
 
-                <div class="col-3 text-white " style="margin-left: 3.5%; margin-right: 3%;">
-                  <img src="img/graduation.png" class="mx-auto d-block" style="height: 10%; width: 40%">
-                  <p class="responsive-font-example">Arrange The Graduation Projects Library</p>
-                </div>
-              
+              <div class="vr" style="height: 80%;"></div>
+
+              <div class="col-3 text-white " style="margin-left: 3.5%; margin-right: 3.5%;">
+                <img src="img/calender.png" class="mx-auto d-block" style="height: 10%; width: 40%; ">
+                <p class="responsive-font-example">Manage Semesters <br>and Their Help Desk Dates</p>
+              </div>
+
+              <div class="vr" style="height: 80%;"></div>
+
+              <div class="col-3 text-white " style="margin-left: 3.5%; margin-right: 3%;">
+                <img src="img/graduation.png" class="mx-auto d-block" style="height: 10%; width: 40%">
+                <p class="responsive-font-example">Arrange The Graduation Projects Library</p>
+              </div>
+
             </div>
 
 
@@ -223,7 +223,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
-    import { getFirestore, doc, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+    import { getFirestore, doc, collection, getDocs, getDoc, addDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
     // Your web app's Firebase configuration
     import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"; //import for authentication +signout
     const firebaseConfig = {
@@ -239,7 +239,8 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore()
     const auth = getAuth()
-
+    var email = "";
+      var uid = "";
 
     ///////////////////logout/////////////////     
     const logout = document.querySelector('.logout')
@@ -262,10 +263,12 @@
     });
 
 
-
+///////////////////////////////////////////authentication for each page ///////////////////////////////
     onAuthStateChanged(auth, (user) => {
       if (user) {
         console.log("the same user")
+        email = user.email; 
+          uid = user.uid;
       }
       else {
         signOut(auth)
@@ -281,6 +284,16 @@
       console.log("the user status change :", user)
     })
 
+    
+     
+    
+      const docRef = doc(db, "admin2", uid);
+      const docSnap = await getDoc(docRef);
+      if (!docSnap.exists()) {
+      alert(uid);
+       // await setDoc(doc(db, "admin2",uid ), email);
+      
+      }
   </script>
 </body>
 
