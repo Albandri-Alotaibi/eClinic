@@ -223,7 +223,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
-    import { getFirestore, doc, collection, getDocs, getDoc, addDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+    import { getFirestore, doc, collection, getDocs, getDoc, addDoc , setDoc} from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
     // Your web app's Firebase configuration
     import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"; //import for authentication +signout
     const firebaseConfig = {
@@ -240,7 +240,7 @@
     const db = getFirestore()
     const auth = getAuth()
     var email = "";
-      var uid = "";
+    var uid = "";
 
     ///////////////////logout/////////////////     
     const logout = document.querySelector('.logout')
@@ -263,12 +263,12 @@
     });
 
 
-///////////////////////////////////////////authentication for each page ///////////////////////////////
+    ///////////////////////////////////////////authentication for each page ///////////////////////////////
     onAuthStateChanged(auth, (user) => {
       if (user) {
         console.log("the same user")
-        email = user.email; 
-          uid = user.uid;
+        email = user.email;
+        uid = user.uid;
       }
       else {
         signOut(auth)
@@ -284,16 +284,19 @@
       console.log("the user status change :", user)
     })
 
-    
-     
-    
-      const docRef = doc(db, "admin2", uid);
-      const docSnap = await getDoc(docRef);
-      if (!docSnap.exists()) {
-      alert(uid);
-       // await setDoc(doc(db, "admin2",uid ), email);
-      
+    var found = false;
+    const querySnapshot = await getDocs(collection(db, "admin"));
+    querySnapshot.forEach((doc) => { //loop for all doc in the collection
+      if (uid == doc.id) {
+        found = true;
       }
+    });
+    
+    if (!found) {
+      await setDoc(doc(db, "admin", uid), {
+        email: email
+      });
+    }
   </script>
 </body>
 
