@@ -432,7 +432,7 @@
             const AdminDocRef = doc(db, "admin", uid);
             // Atomically add a new field to the array field.
             await updateDoc(AdminDocRef, {
-              semester: arrayUnion(docRef)
+              ArrayOfSemesterID: arrayUnion(docRef)
             });
 
             const myArray = semesteryearname.split(" ");

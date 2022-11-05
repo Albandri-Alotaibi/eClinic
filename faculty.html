@@ -327,7 +327,7 @@
           const AdminDocRef = doc(db, "admin", uid);
           // Atomically add a new field to the array field.
           await updateDoc(AdminDocRef, {
-            facultyspeciality: arrayUnion(docRef)
+            ArrayOfSpecialityID: arrayUnion(docRef)
           });
 
           box.innerHTML += '<tr class="table-success">' + '<td><span id="' + docRef.id + '">' + BV + '</span></td>'
