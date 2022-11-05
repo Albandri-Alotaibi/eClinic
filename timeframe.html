@@ -30,18 +30,18 @@
     <title>Help Desk Dates</title>
 
 
-   
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    
+
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-<!-- 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <!-- 
     <link href='https://fonts.googleapis.com/css?family=Oswald:300' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Familjen Grotesk' rel='stylesheet'> -->
 
@@ -59,7 +59,7 @@
             <div class="action" style="z-index: 99999; font-size: 14px;">
                 <div class=" profile" onclick="menuToggle();">
 
-                    <img src="img/user.png"  />
+                    <img src="img/user.png" />
 
                 </div>
 
@@ -171,8 +171,10 @@
                 <a href="index.html" accesskey="h"><i class="fa fa-fw fa-home"></i> Home</a>
                 <a href="semesters.html" accesskey="s"><i class="fa fa-calendar"></i> Semesters</a>
                 <a href="faculty.html" accesskey="m"><i class="fa fa-group"></i> Faculty Members Speciality </a>
-                <a href="GPCategory.html" accesskey="g"><i class="fa fa-graduation-cap"></i> Graduation Projects Category</a>
-                <a href="timeframe.html" accesskey="p" class="active_semester"><i class="fa fa-clock-o"></i> Help Desk Dates</a>
+                <a href="GPCategory.html" accesskey="g"><i class="fa fa-graduation-cap"></i> Graduation Projects
+                    Category</a>
+                <a href="timeframe.html" accesskey="p" class="active_semester"><i class="fa fa-clock-o"></i> Help Desk
+                    Dates</a>
                 <footer class="footer_eClinic">
                     <p class="text-white text-justify position-absolute bottom-0 display-10"> Copyright &copy; All
                         Rights
@@ -239,7 +241,9 @@
     <script type="module">
 
         document.getElementById("ok").onclick = function () {
-            window.location.replace("index.html");
+            semesterSelect.value = "default";
+            showdatesdiv.style.display = "none";
+            divselect.style.marginLeft = "50%";
         };
 
 
@@ -441,7 +445,13 @@
             else {//if the admin chooses a start and end dates
                 var today = new Date();
 
-                if (new Date(start).getDate() < today.getDate() && new Date(start).getMonth() <= today.getMonth() && new Date(start).getFullYear() <= today.getFullYear()) {//alert if the start date in the past
+                if (new Date(start).getFullYear() < today.getFullYear()) {//alert if the start date in the past
+                    alert("Please choose dates that is in the future");
+                    flag = false;
+                } else if (new Date(start).getFullYear() == today.getFullYear() && new Date(start).getMonth() < today.getMonth()) {
+                    alert("Please choose dates that is in the future");
+                    flag = false;
+                } else if (new Date(start).getFullYear() == today.getFullYear() && new Date(start).getMonth() == today.getMonth() && new Date(start).getDate() < today.getDate()) {
                     alert("Please choose dates that is in the future");
                     flag = false;
                 } else if (start >= end) {
@@ -497,8 +507,14 @@
             if (day <= today.getDate() && month <= todayM && year <= today.getFullYear() && start != dateString) {
                 alert("Start date connot be changed for a date that has been reached");
                 flag = false;
-            } else if (new Date(start).getDate() < today.getDate() && new Date(start).getMonth() <= today.getMonth() && new Date(start).getFullYear() <= today.getFullYear() && start != dateString) {//alert if the start date in the past
-                alert("Please choose a starting day in the future");
+            } else if (new Date(start).getFullYear() < today.getFullYear()) {//alert if the start date in the past
+                alert("Please choose dates that is in the future");
+                flag = false;
+            } else if (new Date(start).getFullYear() == today.getFullYear() && new Date(start).getMonth() < today.getMonth()) {
+                alert("Please choose dates that is in the future");
+                flag = false;
+            } else if (new Date(start).getFullYear() == today.getFullYear() && new Date(start).getMonth() == today.getMonth() && new Date(start).getDate() < today.getDate()) {
+                alert("Please choose dates that is in the future");
                 flag = false;
             } else if (start >= end) {
                 alert("Please choose a start day that is before the end date");
