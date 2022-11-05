@@ -318,7 +318,7 @@
         if (found == true) {
           alert("this speciality is already added");
         } else {
-          var ref = collection(db, "speciality");
+          var ref = collection(db, "facultyspeciality");
           const docRef = await addDoc(
             ref, {
             specialityname: BV
