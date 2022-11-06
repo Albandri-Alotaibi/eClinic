@@ -59,7 +59,7 @@ The aim of the eClinic system is to have a technological system that enhances th
 ### Installation
 to be able to open and view the code you should download a code editor like VS code.
 
-1. Get VS code from her [visualstudio.com](https://code.visualstudio.com/download)
+1. Get VS code from her [https://code.visualstudio.com](https://code.visualstudio.com/download)
 2. Download [live server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) from VS code extensions (if needed).
 3. Download the code zip folder and open it in VS code
 
