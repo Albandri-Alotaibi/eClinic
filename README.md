@@ -34,7 +34,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-The aim of the eClinic system is to have a technological system that enhances the guidance process for both students and faculty members in CCIS at KSU to resolve the graduation project issues more efficiently and effectively.
+The eClinic system's goal is to create a technological system that improves guidance for both students and faculty members in CCIS at KSU in order to address graduation project concerns more speedily and successfully.
 <!-- <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
 
