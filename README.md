@@ -69,7 +69,7 @@ After that you will be able so view the code and the web portal !!.
 
 1. Make sure you've downloaded all eClinic files
 2. You can just double click on the html file, it will open in the browsers, BUT we recommend you to run the file on the local host or the live server. 
-3. Start run with login file.
+3. Start run with login.html file.
 
 
 
