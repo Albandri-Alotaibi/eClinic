@@ -474,8 +474,8 @@
             var years = [];
             const myArray = text.split(" ");
             var flag = true;
-
-            if (day <= today.getDate() && month <= todayM && year <= today.getFullYear() && start != dateString) {
+            
+            if ( new Date(dateString) < today && start != dateString) {
                 alert("Start date connot be changed for a date that has been reached");
                 flag = false;
             } else if (new Date(start).getFullYear() < today.getFullYear()) {//alert if the start date in the past
@@ -510,7 +510,7 @@
                 }
 
 
-            }
+            } 
             if (flag) {
 
                 await updateDoc(docRefup, { // we update the time to a smester 
