@@ -225,7 +225,7 @@
       onAuthStateChanged(auth, (user) => {
         if (user) {
           console.log("the same user")
-          email = user.email; //to reset password on admin email
+          email = user.email; 
           uid = user.uid;
 
 
@@ -269,7 +269,7 @@
             const errorCode = error.code;
             const errorMessage = error.message;
             if (errorMessage === "Firebase: Error (auth/too-many-requests).") {
-              alert("We have sent the reset password link multiple time , Please check your email")//maybechange it
+              alert("We have sent the reset password link multiple time , Please check your email")
             }
             
           });
