@@ -1,11 +1,9 @@
 #index {
     height: 100%;
     width: 100%;
-    /* Hide horizontal scrollbar */
     overflow-x: hidden;
     margin: 0;
     padding: 0;
-    /* Hide vertical scrollbar */
     overflow-y: hidden;
     background: #e5e5e5;
 }
@@ -87,32 +85,6 @@
     text-align: center;
 }
 
-/* .button-next-Deem {
-    background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
-    border-radius: .5rem;
-    box-sizing: border-box;
-    color: #FFFFFF;
-    display: flex;
-    font-size: 15px;
-    justify-content: center;
-    padding: 0.7rem 0rem;
-    text-decoration: none;
-    width: 25%;
-    height: 10%;
-    border: 0;
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    margin-top: 1%;
-    margin-left: 40%;
-    
-
-}
-
-.button-next-Deem:hover {
-    background-image: linear-gradient(-180deg, #1D95C9 0%, #17759C 100%);
-} */
 
 
 .button{
@@ -191,9 +163,7 @@ select:after {
 
 }
 
-/* [type="date"]::-webkit-calendar-picker-indicator {
-    opacity: 0;
-  } */
+
 input[type="date"]::-webkit-calendar-picker-indicator {
     position: absolute;
     top: 0;
@@ -211,7 +181,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 body {
     padding: 3;
     background: #e5e5e5;
-    /* font: 13px/1.4 Geneva, "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", Verdana, sans-serif; */
+   
 }
 
 label {
@@ -241,10 +211,7 @@ input {
         font-weight: 300;
         width: 30%;
         height: 100%;
-      
         margin-top: 70% ;
-        /* margin-left: 30%; */
-        /* margin-bottom: 50%;  */
     
     }
     
@@ -257,9 +224,6 @@ input {
         font-weight: 300;
         width: 30%;
         height: 100%;
-        /* display: flex; */
-        /* display: inline-block;
-        vertical-align: middle; */
         place-items: center;
         text-align: center;
         padding: 3ch;

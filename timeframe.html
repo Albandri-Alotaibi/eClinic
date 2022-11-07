@@ -208,33 +208,6 @@
         integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
         crossorigin="anonymous"></script>
 
-    <!-- 
-    <script>
-        $(document).ready(function () {
-            bindEventToNavigation();
-            showBreadCrumb(); //Show the breadcrumb when you arrive on the new page
-        });
-
-        function bindEventToNavigation() {
-            $.each($("#navigation_links > li > a"), function (index, element) {
-                $(element).click(function (event) {
-                    breadcrumbStateSaver($(this).attr('href'), $(this).text());
-                    showBreadCrumb();
-                });
-            });
-        }
-
-        function breadcrumbStateSaver(link, text) {
-            if (typeof (Storage) != "undefined") {
-                if (sessionStorage.breadcrumb) {
-                    var breadcrumb = sessionStorage.breadcrumb;
-                    sessionStorage.breadcrumb = breadcrumb + " >> <a href='" + link + "'>" + text + "</a>";
-                } else {
-                    sessionStorage.breadcrumb = "<a href='" + link + "'>" + text + "</a>";
-                }
-            }
-        }
-    </script> -->
 
 
 
@@ -480,11 +453,9 @@
                     await updateDoc(docRefadd, { // we add the new time to a smester that dosenot have a time frame
                         startdate: Timestamp.fromDate(new Date(start + "T00:00:00")),
                         enddate: Timestamp.fromDate(new Date(end + "T23:59:59")),
-                        // timeframe: true
 
                     });
-                    // alert("Your work has been added successfully")
-                    // window.location.replace("index.html");
+                   
                     successMessage('Dates has been added successfully.');
                 }
             }
@@ -545,11 +516,10 @@
                 await updateDoc(docRefup, { // we update the time to a smester 
                     startdate: Timestamp.fromDate(new Date(start + "T00:00:00")),
                     enddate: Timestamp.fromDate(new Date(end + "T23:59:59")),
-                    // timeframe: true
+                    
                 });
 
-                // alert("Your work has been updated successfully");
-                // window.location.replace("index.html");
+                
                 successMessage('Dates has been updated successfully.');
             }
         })
@@ -638,7 +608,7 @@
         function Confirm() {
             //put this in the link  onclick='Confirm();'
 
-            // alert(document.getElementById("add-update-timeframe").style.display == 'block');
+           
 
             if (confirm("Are you sure to want to cancle your work?") == true) {
                 document.getElementById("selectsemester").value = "default";
