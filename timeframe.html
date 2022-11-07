@@ -497,7 +497,7 @@
                 years = myArray[1].split("/");
 
                 if ((new Date(start).getFullYear() != years[0] && new Date(start).getFullYear() != years[1]) || (new Date(end).getFullYear() != years[0] && new Date(end).getFullYear() != years[1])) {
-                    alert("chosen dates must be in the same year of the chosen semester");
+                    alert("Chosen dates must be in the same year of the chosen semester");
                     flag = false;
                 }
 
@@ -505,7 +505,7 @@
             } else if (myArray[1].length == 4) {
                 years = myArray[1];
                 if (new Date(start).getFullYear() != years || new Date(end).getFullYear() != years) {
-                    alert("chosen dates must be in the same year of the chosen semester2");
+                    alert("Chosen dates must be in the same year of the chosen semester");
                     flag = false;
                 }
 
