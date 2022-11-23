@@ -439,15 +439,16 @@
                     }
 
 
-                } else if (myArray[1].length == 4) {
-                    years = myArray[1];
-                    if (new Date(start).getFullYear() != years || new Date(end).getFullYear() != years) {
-                        alert("chosen dates must be in the same year of the chosen semester");
-                        flag = false;
-                    }
+                } 
+                // else if (myArray[1].length == 4) {
+                //     years = myArray[1];
+                //     if (new Date(start).getFullYear() != years || new Date(end).getFullYear() != years) {
+                //         alert("chosen dates must be in the same year of the chosen semester");
+                //         flag = false;
+                //     }
 
 
-                }
+                // }
                 if (flag) {
 
                     await updateDoc(docRefadd, { // we add the new time to a smester that dosenot have a time frame
@@ -502,15 +503,16 @@
                 }
 
 
-            } else if (myArray[1].length == 4) {
-                years = myArray[1];
-                if (new Date(start).getFullYear() != years || new Date(end).getFullYear() != years) {
-                    alert("Chosen dates must be in the same year of the chosen semester");
-                    flag = false;
-                }
-
-
             } 
+            // else if (myArray[1].length == 4) {
+            //     years = myArray[1];
+            //     if (new Date(start).getFullYear() != years || new Date(end).getFullYear() != years) {
+            //         alert("Chosen dates must be in the same year of the chosen semester");
+            //         flag = false;
+            //     }
+
+
+            // } 
             if (flag) {
 
                 await updateDoc(docRefup, { // we update the time to a smester 
