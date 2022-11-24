@@ -56,7 +56,8 @@
                 <p id="resetguied" class="lead fw-normal display-7 ">Enter the email associated with your account and
                   we'll send an email to reset your password</p>
                 <p id="aftersend" class="lead fw-normal display-7 text-danger" style="display: none;"> </p>
-               
+               <p id="return" class="display-9text-dark" style="display:none; font-weight: bold;">If you want 
+                to re-enter your email click <a href="#" id="here">here</a> </p>
               </div>
 
               <div class="divider d-flex align-items-center my-4">
@@ -175,13 +176,13 @@
 
         if (email.length < 1) {
           alert("Please enter your email")
+          
         }
 
         else {//send email to admin so he can reset his password
           sendPasswordResetEmail(auth, email)
             .then(() => {
               after.innerHTML = "We have sent you the reset link on this email " + email;
-              //alert("Sent successfully, go and check your email")
               box.style.display = "none";
               guide.style.display = "none";
               afterclicksend.style.display = "none";
@@ -193,9 +194,20 @@
               const errorCode = error.code;
               const errorMessage = error.message;
              
-              if (errorMessage === "Firebase: Error (auth/user-not-found)."|| errorMessage ==="Firebase: Error (auth/invalid-email).")
+              if ( errorMessage ==="Firebase: Error (auth/invalid-email).")
               {
-              alert("Invalid email")
+              alert("Please check the email format")
+              }
+
+
+
+              else if(errorMessage === "Firebase: Error (auth/user-not-found)."){
+                after.innerHTML = "If you enter the email correctly then the reset link will be sent,Note the email you entered is" + email;
+              box.style.display = "none";
+              guide.style.display = "none";
+              afterclicksend.style.display = "none";
+              after.style.display = "block";
+              returnE.style.display = "block";
               }
               else 
               if(errorMessage === "Firebase: Error (auth/too-many-requests)."){
@@ -205,6 +217,15 @@
             });
         }
         
+
+            here.addEventListener("click", function(){
+              box.style.display = "block";
+              guide.style.display = "block";
+              afterclicksend.style.display = "block";
+              after.style.display = "none";
+              returnE.style.display = "none";
+
+       })
 
        
 
