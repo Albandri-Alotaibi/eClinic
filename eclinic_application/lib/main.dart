@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:myapp/deem.dart';
 import 'package:myapp/facultyhome.dart';
 import 'package:myapp/home.dart';
+import 'package:myapp/reusable.dart';
 import 'package:myapp/studenthome.dart';
 import 'package:myapp/facultysignup.dart';
 
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         'facultyhome': (context) => facultyhome(),
         'studenthome': (context) => studenthome(),
         'facultysignup': (context) => facultysignup(),
+        'reusable': (context) => reusable(),
       },
     );
   }
