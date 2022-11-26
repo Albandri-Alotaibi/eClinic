@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 
-class home extends StatefulWidget {
+
+
+class facultyhome extends StatefulWidget {
   // This class is the configuration for the state.
   // It holds the values (in this case nothing) provided
   // by the parent and used by the build  method of the
   // State. Fields in a Widget subclass are always marked
   // "final".
 
-  const home({super.key});
+  const facultyhome({super.key});
 
   @override
-  State<home> createState() => _homeState();
+  State<facultyhome> createState() => _fState();
 }
 
-class _homeState extends State<home> {
+class _fState extends State<facultyhome> {
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called,
@@ -22,22 +24,19 @@ class _homeState extends State<home> {
     // rerunning build methods fast, so that you can just
     // rebuild anything that needs updating rather than
     // having to individually changes instances of widgets.
+    
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         ElevatedButton(
           onPressed: () {
-            Navigator.pushNamed(context, 'facultyhome');
+            Navigator.pushNamed(context, 'deem');
           },
-          child: Text('faculty'),
+          child: Text('deem'),
         ),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, 'studenthome');
-          },
-          child: Text('student'),
-        ),
+        
         const SizedBox(width: 16),
+        
       ],
     );
   }
