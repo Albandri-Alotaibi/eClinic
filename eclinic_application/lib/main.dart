@@ -6,6 +6,7 @@ import 'package:myapp/deem.dart';
 import 'package:myapp/facultyhome.dart';
 import 'package:myapp/home.dart';
 import 'package:myapp/studenthome.dart';
+import 'package:myapp/facultysignup.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
         'deem': (context) => deem(),
         'facultyhome': (context) => facultyhome(),
         'studenthome': (context) => studenthome(),
-        
+        'facultysignup': (context) => facultysignup(),
       },
     );
   }
