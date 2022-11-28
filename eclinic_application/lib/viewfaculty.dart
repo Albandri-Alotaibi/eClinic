@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class deem extends StatelessWidget {
+class viewfaculty extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

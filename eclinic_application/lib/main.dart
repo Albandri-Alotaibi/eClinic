@@ -9,6 +9,7 @@ import 'package:myapp/reusable.dart';
 import 'package:myapp/studenthome.dart';
 import 'package:myapp/facultysignup.dart';
 import 'package:myapp/viewfaculty.dart';
+// import 'package:myapp/viewfaculty.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
         'studenthome': (context) => studenthome(),
         'facultysignup': (context) => facultysignup(),
         'reusable': (context) => reusable(),
-        // 'viewfaculty': (context) => viewfaculty(),
+        'viewfaculty': (context) => viewfaculty(),
       },
     );
   }
