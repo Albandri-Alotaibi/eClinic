@@ -29,7 +29,7 @@ class _sState extends State<studenthome> {
           onPressed: () {
             Navigator.pushNamed(context, 'deem');
           },
-          child: Text('view'),
+          child: Text('Schdule consultation'),
         ),
         const SizedBox(width: 16),
       ],
