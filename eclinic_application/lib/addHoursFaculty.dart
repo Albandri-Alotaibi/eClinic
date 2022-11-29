@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:simple_time_range_picker/simple_time_range_picker.dart';
 import 'model/checkbox_state.dart';
 import 'model/startEnd.dart';
@@ -338,6 +339,13 @@ class _AddHourState extends State<addHoursFaculty> {
 //Sunday
   OneDayGenerating(String day, List<dynamic> ArrayOfAllTheDayRanges) {
     var AllActualDatesWithRanges = <timesWithDates>[];
+    Timestamp startdate;
+    Timestamp enddate;
+    // final semesterRef = FirebaseFirestore.instance
+    //     .collection('semester')
+    //     .where('semestername', isEqualTo: '3rd 2023/2023')
+    //     .get()
+    //     .then((value) => startdate = value as Timestamp) as Stream<Timestamp>;
 
     DateTime startingDate = DateTime(2022, 11, 25); //admin start date or today
     DateTime endDate = DateTime(2022, 12, 7); //admin end date
