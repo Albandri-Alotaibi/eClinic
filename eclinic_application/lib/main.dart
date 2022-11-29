@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:myapp/deem.dart';
+import 'package:myapp/addHoursFaculty.dart';
 import 'package:myapp/facultyhome.dart';
 import 'package:myapp/home.dart';
 import 'package:myapp/reusable.dart';
 import 'package:myapp/studenthome.dart';
 import 'package:myapp/facultysignup.dart';
 import 'package:myapp/viewfaculty.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +30,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => home(),
-        'deem': (context) => deem(),
+        'addHoursFaculty': (context) => addHoursFaculty(),
         'facultyhome': (context) => facultyhome(),
         'studenthome': (context) => studenthome(),
         'facultysignup': (context) => facultysignup(),
