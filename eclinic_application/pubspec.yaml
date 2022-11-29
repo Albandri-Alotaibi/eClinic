@@ -44,6 +44,7 @@ dependencies:
   simple_time_range_picker: ^0.0.5
   dropdown_search: ^5.0.3
   jiffy: ^5.0.0
+  fluttertoast: ^8.1.1
   
 
 dev_dependencies:
