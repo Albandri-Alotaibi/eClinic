@@ -9,7 +9,7 @@ import 'package:myapp/reusable.dart';
 import 'package:myapp/studenthome.dart';
 import 'package:myapp/facultysignup.dart';
 import 'package:myapp/viewfaculty.dart';
-// import 'package:myapp/viewfaculty.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
