@@ -340,11 +340,15 @@ class _AddHourState extends State<addHoursFaculty> {
     var AllActualDatesWithRanges = <timesWithDates>[];
     Timestamp startdate;
     Timestamp enddate;
-    // final semesterRef = FirebaseFirestore.instance
-    //     .collection('semester')
-    //     .where('semestername', isEqualTo: '3rd 2023/2023')
-    //     .get()
-    //     .then((QuerySnapshot value) => print(value));
+
+    final semesterRef = FirebaseFirestore.instance
+        .collection('semester')
+        .get()
+        .then((QuerySnapshot snapshot) {
+      snapshot.docs.forEach((DocumentSnapshot doc) {
+        print(doc.data());
+      });
+    });
 
     DateTime startingDate = DateTime(2022, 11, 25); //admin start date or today
     DateTime endDate = DateTime(2022, 12, 7); //admin end date
