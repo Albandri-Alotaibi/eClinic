@@ -33,11 +33,17 @@ class _homeState extends State<home> {
         ),
         ElevatedButton(
           onPressed: () {
-            Navigator.pushNamed(context, 'studenthome');
+            Navigator.pushNamed(context, 'facultysignup');
           },
-          child: Text('student'),
+          child: Text('Signup'),
         ),
         const SizedBox(width: 16),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, 'login');
+          },
+          child: Text('login'),
+        ),
       ],
     );
   }
