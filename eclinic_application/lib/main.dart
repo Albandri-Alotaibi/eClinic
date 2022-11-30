@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/addHoursFaculty.dart';
 import 'package:myapp/facultyhome.dart';
 import 'package:myapp/home.dart';
+import 'package:myapp/login.dart';
 import 'package:myapp/reusable.dart';
 import 'package:myapp/studenthome.dart';
 import 'package:myapp/facultysignup.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         'facultysignup': (context) => facultysignup(),
         'reusable': (context) => reusable(),
         'viewfaculty': (context) => viewfaculty(),
+        'login': (context) => login(),
       },
     );
   }

@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp/login.dart';
 
 class facultyhome extends StatefulWidget {
   // This class is the configuration for the state.
@@ -14,8 +16,25 @@ class facultyhome extends StatefulWidget {
 }
 
 class _fState extends State<facultyhome> {
+  String? email = '';
+  String? userid = '';
+
   @override
   Widget build(BuildContext context) {
+    body:
+    StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: ((context, snapshot) {
+          if (snapshot.hasData) {
+            return facultyhome();
+          } else {
+            return login();
+          }
+        }));
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    userid = user!.uid;
+    email = user.email!;
     // This method is rerun every time setState is called,
     // for instance, as done by the _increment method above.
     // The Flutter framework has been optimized to make
