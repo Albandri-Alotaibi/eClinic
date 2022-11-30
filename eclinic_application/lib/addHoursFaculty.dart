@@ -133,7 +133,6 @@ class _AddHourState extends State<addHoursFaculty> {
 
     daysOfHelp[x].hours.add(startEnd(start: Stime, end: Etime));
     //ArrayOfTimesOfDays.add(startEnd(start: _startTime, end: _endTime));
-    //print(daysOfHelp[0].hours[1].start);
   }
 
   selectTime1(int x) {
