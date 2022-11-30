@@ -31,10 +31,10 @@ class _fState extends State<facultyhome> {
             return login();
           }
         }));
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final User? user = auth.currentUser;
-    userid = user!.uid;
-    email = user.email!;
+    // final FirebaseAuth auth = FirebaseAuth.instance;
+    // final User? user = auth.currentUser;
+    // userid = user!.uid;
+    // email = user.email!;
     // This method is rerun every time setState is called,
     // for instance, as done by the _increment method above.
     // The Flutter framework has been optimized to make
