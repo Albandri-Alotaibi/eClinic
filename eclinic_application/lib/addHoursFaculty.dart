@@ -345,7 +345,7 @@ class _AddHourState extends State<addHoursFaculty> {
     //     .collection('semester')
     //     .where('semestername', isEqualTo: '3rd 2023/2023')
     //     .get()
-    //     .then((value) => startdate = value as Timestamp) as Stream<Timestamp>;
+    //     .then((QuerySnapshot value) => print(value));
 
     DateTime startingDate = DateTime(2022, 11, 25); //admin start date or today
     DateTime endDate = DateTime(2022, 12, 7); //admin end date
