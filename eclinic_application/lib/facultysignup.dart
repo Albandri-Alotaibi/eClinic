@@ -6,6 +6,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
+import 'package:multiselect/multiselect.dart';
 
 class facultysignup extends StatefulWidget {
   const facultysignup({super.key});
@@ -16,6 +19,9 @@ class facultysignup extends StatefulWidget {
 
 class _facultysignupState extends State<facultysignup> {
   final formkey = GlobalKey<FormState>();
+  List<String> options = ["software analysis", "database"];
+  Rx<List<String>> selectedoptionlist = Rx<List<String>>([]);
+  var selectedoption = "".obs;
   //to get user input
   var fname = '';
   var lname = '';
@@ -179,13 +185,29 @@ class _facultysignupState extends State<facultysignup> {
                   SizedBox(
                     height: 15,
                   ),
-                  TextField(
-                    controller: _meetingmethodcontroller,
-                    decoration: InputDecoration(
-                        // labelText: 'Meetting method',
-                        labelText:
-                            "Enter your metting method(office number or Zoom link )",
-                        border: OutlineInputBorder()),
+                  // TextField(
+                  //   controller: _meetingmethodcontroller,
+                  //   decoration: InputDecoration(
+                  //       // labelText: 'Meetting method',
+                  //       labelText:
+                  //           "Enter your metting method(office number or Zoom link )",
+                  //       border: OutlineInputBorder()),
+                  // ),
+                  // SizedBox(
+                  //   height: 15,
+                  // ),
+                  DropDownMultiSelect(
+                    options: options,
+                    whenEmpty: "select your specialty",
+                    onChanged: (value) {
+                      selectedoptionlist.value = value;
+                      selectedoption.value = "";
+                      selectedoptionlist.value.forEach((element) {
+                        selectedoption.value =
+                            selectedoption.value + " " + element;
+                      });
+                    },
+                    selectedValues: selectedoptionlist.value,
                   ),
                   SizedBox(
                     height: 15,
@@ -218,6 +240,7 @@ class _facultysignupState extends State<facultysignup> {
                             'department': departmentselectedvalue,
                             'collage': collageselectedvalue,
                             'semester': semesterselectedvalue,
+                            'specialty': selectedoptionlist.value,
                           });
                         });
                       } on FirebaseAuthException catch (error) {
