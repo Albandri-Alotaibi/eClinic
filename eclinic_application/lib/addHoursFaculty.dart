@@ -340,8 +340,8 @@ class _AddHourState extends State<addHoursFaculty> {
     var AllActualDatesWithRanges = <timesWithDates>[];
     Timestamp? startdate;
     Timestamp? enddate;
-    DateTime? startdateINDate;
-    DateTime? enddateINDate;
+    DateTime startdateINDate = DateTime(1990, 1, 1);
+    DateTime enddateINDate = DateTime(1990, 1, 20);
     final semesterRef = FirebaseFirestore.instance
         .collection('semester')
         .get()
@@ -351,8 +351,8 @@ class _AddHourState extends State<addHoursFaculty> {
         if (doc['semestername'] == '1st 2022/2023') {
           startdate = doc['startdate'];
           enddate = doc['enddate'];
-          // print(startdate);
-          // print(enddate);
+          print(startdate);
+          print(enddate);
           startdateINDate = startdate!.toDate();
           enddateINDate = enddate!.toDate();
           print("new start date${startdateINDate}");
@@ -360,9 +360,9 @@ class _AddHourState extends State<addHoursFaculty> {
       });
     });
 
-    DateTime startingDate = startdateINDate!; //admin start date or today
+    DateTime startingDate = startdateINDate; //admin start date or today
     //print("old start date${startingDate}");
-    DateTime endDate = enddateINDate!; //admin end date
+    DateTime endDate = enddateINDate; //admin end date
 
     int diff = endDate.difference(startingDate).inDays;
 
