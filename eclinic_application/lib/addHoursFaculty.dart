@@ -140,7 +140,7 @@ class _AddHourState extends State<addHoursFaculty> {
             ListTile(
               title: ElevatedButton(
                   child: Text("Confirm"),
-                  onPressed: () => {showAlertDialog(context)}),
+                  onPressed: () => {showConfirmationDialog(context)}),
             ),
           ],
         ));
@@ -299,7 +299,7 @@ class _AddHourState extends State<addHoursFaculty> {
     });
   } //end delete function
 
-  showAlertDialog(BuildContext context) {
+  showConfirmationDialog(BuildContext context) {
     // set up the buttons
     Widget cancelButton = ElevatedButton(
       child: Text("Cancel"),
