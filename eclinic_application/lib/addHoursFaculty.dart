@@ -307,7 +307,12 @@ getusers();
 
             ListTile(
               title: ElevatedButton(
+<<<<<<< HEAD
                   child: Text("Confirm"), onPressed: () => {Confirm()}),
+=======
+                  child: Text("Confirm"),
+                  onPressed: () => {showConfirmationDialog(context)}),
+>>>>>>> d61d7e6a1d3aea8ce860a8b022dc7ffdc22ef683
             ),
           ],
         ));
@@ -466,6 +471,43 @@ getusers();
     });
   } //end delete function
 
+<<<<<<< HEAD
+=======
+  showConfirmationDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = ElevatedButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = ElevatedButton(
+      child: Text("Confirm"),
+      onPressed: () {
+        Confirm();
+        Navigator.pushNamed(context, 'facultyhome');
+      },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("warning"),
+      content: Text(
+          "if you press on confirm that means you approved on the entered hours and you know that you CANNOT updated later"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+>>>>>>> d61d7e6a1d3aea8ce860a8b022dc7ffdc22ef683
   Confirm() {
     for (var k = 0; k < daysOfHelp.length; k++) {
       if (daysOfHelp[k].value == true) {
