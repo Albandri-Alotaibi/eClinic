@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/route_manager.dart';
 import 'package:simple_time_range_picker/simple_time_range_picker.dart';
 import 'model/checkbox_state.dart';
 import 'model/startEnd.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:intl/intl.dart';
 import 'model/timesWithDates.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:myapp/login.dart';
+
+
 
 class addHoursFaculty extends StatefulWidget {
   // const deem({super.key});
@@ -16,6 +19,15 @@ class addHoursFaculty extends StatefulWidget {
 }
 
 class _AddHourState extends State<addHoursFaculty> {
+
+ @override
+initState() {
+  super.initState();
+getusers();
+
+}
+
+
   TimeOfDay _startTime = TimeOfDay.now();
   TimeOfDay _endTime = TimeOfDay.now();
   TimeOfDay initime = TimeOfDay.now();
@@ -28,26 +40,182 @@ class _AddHourState extends State<addHoursFaculty> {
     CheckBoxState(title: 'Thursday', hours: ['un']),
   ];
 
-  DateTime startingDate = DateTime.now(); //admin start date or today
-  DateTime endDate = DateTime.now(); //admin end date
+DateTime startingDate =DateTime.now(); //admin start date or today
+DateTime endDate = DateTime.now(); //admin end date
+ String? email = '';
+  String? userid = '';
+
+
+
+
+getusers() async{
+
+final FirebaseAuth auth = await FirebaseAuth.instance;
+    final User? user = await auth.currentUser;
+    userid = user!.uid;
+    email = user.email!;
+   print('****************************************************');
+   print(userid);
+
+//var semester;  
+
+final DocumentSnapshot docRef = await FirebaseFirestore.instance.collection("faculty").doc(userid).get();
+
+var semester= await docRef['semester'];
+print(semester);
+
+final DocumentSnapshot docRef2 = await semester.get();
+ startingDate=docRef2['startdate'].toDate();
+  endDate=docRef2['enddate'].toDate();
+
+
+
+// semester.get().then(
+//     (DocumentSnapshot doc2) {
+      
+//       startingDate=doc2['startdate'].toDate();
+//       endDate=doc2['enddate'].toDate();
+//       print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+//           print(startingDate);
+//           print(endDate);
+//      }
+//    );
+
+
+
+
+
+//print(docRef['semester']);
+//semester= docRef['semester'];
+
+
+//  print('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
+//   print(docRef);
+//    docRef.get().then(
+//     (DocumentSnapshot doc) {
+//      //semester1 = doc.data()!.semester;
+//      //final data = doc.data() as Map<String, dynamic>;
+   
+//      semester=doc['semester'];
+
+//     print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+//     print(semester);
+//     //print(semester['semestername']);
+//      },
+//    onError: (e) => print("Error getting document: $e"),
+//    );
+
+
+
+// //  setState(() {          
+// // if(semester != null){
+ 
+// // }
+// //  });
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
-    final semesterRef = FirebaseFirestore.instance
-        .collection('semester')
-        .get()
-        .then((QuerySnapshot snapshot) {
-      snapshot.docs.forEach((DocumentSnapshot doc) {
-        //print(doc['semestername']);
-        if (doc['semestername'] == '1st 2022/2023') {
-          print('doc id ${doc.id}');
-          startingDate = doc['startdate'].toDate();
-          endDate = doc['enddate'].toDate();
-          print(startingDate);
-          print(endDate);
-        }
-      });
-    });
+getusers();
+//     final FirebaseAuth auth = FirebaseAuth.instance;
+//     final User? user = auth.currentUser;
+//     userid = user!.uid;
+//     email = user.email!;
+//    print('****************************************************');
+//    print(userid);
+
+// var semester;  
+
+// final docRef = FirebaseFirestore.instance.collection("faculty").doc(userid);
+//  print('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
+//   print(docRef);
+//    docRef.get().then(
+//     (DocumentSnapshot doc) {
+//      //semester1 = doc.data()!.semester;
+//      //final data = doc.data() as Map<String, dynamic>;
+   
+//      semester=doc['semester'];
+
+//     print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+//     print(semester);
+//     //print(semester['semestername']);
+//      },
+//    onError: (e) => print("Error getting document: $e"),
+//    );
+
+
+//  setState(() {          
+// if(semester != null){
+//  semester.get().then(
+//     (DocumentSnapshot doc2) {
+      
+//       startingDate=doc2['startdate'].toDate();
+//       endDate=doc2['enddate'].toDate();
+//       print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+//           print(startingDate);
+//           print(endDate);
+//      }
+//    );
+// }
+//  });
+
+
+
+     //print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
+     //print(semester);
+
+
+// Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+
+
+    // final semesterRef = FirebaseFirestore.instance
+    //     .collection('semester')
+    //     .get()
+    //     .then((QuerySnapshot snapshot) {
+    //   snapshot.docs.forEach((DocumentSnapshot doc) {
+    //     //print(doc['semestername']);
+    //     if (doc['semestername'] == '1st 2022/2023') {
+    //       //print('doc id ${doc.id}');
+    //       startingDate=doc['startdate'].toDate();
+    //       endDate=doc['enddate'].toDate();
+    //        print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+    //       print(startingDate);
+    //       print(endDate);
+    //     }
+    //   });
+    // });
+    //      print('#####################################################');
+    //       print(startingDate);
+    //       print(endDate);
+
     return Scaffold(
         appBar: AppBar(
           title: Text('Add hours'),
@@ -139,12 +307,11 @@ class _AddHourState extends State<addHoursFaculty> {
 
             ListTile(
               title: ElevatedButton(
-                  child: Text("Confirm"),
-                  onPressed: () => {showAlertDialog(context)}),
+                  child: Text("Confirm"), onPressed: () => {Confirm()}),
             ),
           ],
         ));
-  }
+  }//end build 
 
   _timeFormated(TimeOfDay Stime, TimeOfDay Etime, int x) {
     if (Stime == null || Etime == null) {}
@@ -298,40 +465,6 @@ class _AddHourState extends State<addHoursFaculty> {
       }
     });
   } //end delete function
-
-  showAlertDialog(BuildContext context) {
-    // set up the buttons
-    Widget cancelButton = ElevatedButton(
-      child: Text("Cancel"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
-    Widget continueButton = ElevatedButton(
-      child: Text("Confirm"),
-      onPressed: () {
-        Confirm();
-        Navigator.pushNamed(context, 'facultyhome');
-      },
-    );
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("warning"),
-      content: Text(
-          "if you press on confirm that means you approved on the entered hours and you know that you CANNOT updated later"),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
 
   Confirm() {
     for (var k = 0; k < daysOfHelp.length; k++) {
