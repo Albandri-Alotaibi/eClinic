@@ -427,19 +427,19 @@ class _AddHourState extends State<addHoursFaculty> {
         Navigator.of(context).pop();
       },
     );
-    Widget continueButton = ElevatedButton(
-      child: Text("Confirm"),
-      onPressed: () {
-        Confirm();
-        Navigator.pushNamed(context, 'facultyhome');
-      },
-    );
+
     // set up the AlertDialog
     if (daysOfHelp[0].value == false &&
         daysOfHelp[1].value == false &&
         daysOfHelp[2].value == false &&
         daysOfHelp[3].value == false &&
         daysOfHelp[4].value == false) {
+      Widget continueButton = ElevatedButton(
+        child: Text("Confirm"),
+        onPressed: () {
+          Navigator.pushNamed(context, 'facultyhome');
+        },
+      );
       AlertDialog alert = AlertDialog(
         title: Text("Note"),
         content: Text(
@@ -456,6 +456,13 @@ class _AddHourState extends State<addHoursFaculty> {
         },
       );
     } else {
+      Widget continueButton = ElevatedButton(
+        child: Text("Confirm"),
+        onPressed: () {
+          Confirm();
+          Navigator.pushNamed(context, 'facultyhome');
+        },
+      );
       AlertDialog alert = AlertDialog(
         title: Text("warning"),
         content: Text(
