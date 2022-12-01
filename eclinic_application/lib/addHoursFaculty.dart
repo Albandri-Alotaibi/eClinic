@@ -360,7 +360,7 @@ class _AddHourState extends State<addHoursFaculty> {
         }
       });
     });
-
+    print("out of the firstore code start date${startdateINDate}");
     DateTime startingDate = startdateINDate; //admin start date or today
     //print("old start date${startingDate}");
     DateTime endDate = enddateINDate; //admin end date
