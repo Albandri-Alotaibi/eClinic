@@ -28,9 +28,31 @@ class _AddHourState extends State<addHoursFaculty> {
   ];
 
   List<startEnd> ArrayOfTimesOfDays = [];
+  Timestamp? startdate;
+  Timestamp? enddate;
+  DateTime startdateINDate = DateTime(1990, 1, 1);
+  DateTime enddateINDate = DateTime(1990, 1, 20);
 
   @override
   Widget build(BuildContext context) {
+    final semesterRef = FirebaseFirestore.instance
+        .collection('semester')
+        .get()
+        .then((QuerySnapshot snapshot) {
+      snapshot.docs.forEach((DocumentSnapshot doc) {
+        //print(doc['semestername']);
+        if (doc['semestername'] == '1st 2022/2023') {
+          startdate = doc['startdate'];
+          enddate = doc['enddate'];
+          print('doc id ${doc.id}');
+          print(startdate);
+          print(enddate);
+          startdateINDate = startdate!.toDate();
+          enddateINDate = enddate!.toDate();
+          print("new start date${startdateINDate}");
+        }
+      });
+    });
     return Scaffold(
         appBar: AppBar(
           title: Text('Add hours'),
@@ -338,28 +360,7 @@ class _AddHourState extends State<addHoursFaculty> {
 //Sunday
   OneDayGenerating(String day, List<dynamic> ArrayOfAllTheDayRanges) {
     var AllActualDatesWithRanges = <timesWithDates>[];
-    Timestamp? startdate;
-    Timestamp? enddate;
-    DateTime startdateINDate = DateTime(1990, 1, 1);
-    DateTime enddateINDate = DateTime(1990, 1, 20);
-    final semesterRef = FirebaseFirestore.instance
-        .collection('semester')
-        .get()
-        .then((QuerySnapshot snapshot) {
-      snapshot.docs.forEach((DocumentSnapshot doc) {
-        //print(doc['semestername']);
-        if (doc['semestername'] == '1st 2022/2023') {
-          startdate = doc['startdate'];
-          enddate = doc['enddate'];
-          print('doc id ${doc.id}');
-          print(startdate);
-          print(enddate);
-          startdateINDate = startdate!.toDate();
-          enddateINDate = enddate!.toDate();
-          print("new start date${startdateINDate}");
-        }
-      });
-    });
+
     print("out of the firstore code start date${startdateINDate}");
     DateTime startingDate = startdateINDate; //admin start date or today
     //print("old start date${startingDate}");
