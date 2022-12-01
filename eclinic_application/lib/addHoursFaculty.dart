@@ -9,8 +9,6 @@ import 'model/timesWithDates.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:myapp/login.dart';
 
-
-
 class addHoursFaculty extends StatefulWidget {
   // const deem({super.key});
 
@@ -19,14 +17,11 @@ class addHoursFaculty extends StatefulWidget {
 }
 
 class _AddHourState extends State<addHoursFaculty> {
-
- @override
-initState() {
-  super.initState();
-getusers();
-
-}
-
+  @override
+  initState() {
+    super.initState();
+    getusers();
+  }
 
   TimeOfDay _startTime = TimeOfDay.now();
   TimeOfDay _endTime = TimeOfDay.now();
@@ -40,39 +35,36 @@ getusers();
     CheckBoxState(title: 'Thursday', hours: ['un']),
   ];
 
-DateTime startingDate =DateTime.now(); //admin start date or today
-DateTime endDate = DateTime.now(); //admin end date
- String? email = '';
+  DateTime startingDate = DateTime.now(); //admin start date or today
+  DateTime endDate = DateTime.now(); //admin end date
+  String? email = '';
   String? userid = '';
 
-
-
-
-getusers() async{
-
-final FirebaseAuth auth = await FirebaseAuth.instance;
+  getusers() async {
+    final FirebaseAuth auth = await FirebaseAuth.instance;
     final User? user = await auth.currentUser;
     userid = user!.uid;
     email = user.email!;
-   print('****************************************************');
-   print(userid);
+    print('****************************************************');
+    print(userid);
 
-//var semester;  
+//var semester;
 
-final DocumentSnapshot docRef = await FirebaseFirestore.instance.collection("faculty").doc(userid).get();
+    final DocumentSnapshot docRef = await FirebaseFirestore.instance
+        .collection("faculty")
+        .doc(userid)
+        .get();
 
-var semester= await docRef['semester'];
-print(semester);
+    var semester = await docRef['semester'];
+    print(semester);
 
-final DocumentSnapshot docRef2 = await semester.get();
- startingDate=docRef2['startdate'].toDate();
-  endDate=docRef2['enddate'].toDate();
-
-
+    final DocumentSnapshot docRef2 = await semester.get();
+    startingDate = docRef2['startdate'].toDate();
+    endDate = docRef2['enddate'].toDate();
 
 // semester.get().then(
 //     (DocumentSnapshot doc2) {
-      
+
 //       startingDate=doc2['startdate'].toDate();
 //       endDate=doc2['enddate'].toDate();
 //       print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
@@ -81,13 +73,8 @@ final DocumentSnapshot docRef2 = await semester.get();
 //      }
 //    );
 
-
-
-
-
 //print(docRef['semester']);
 //semester= docRef['semester'];
-
 
 //  print('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
 //   print(docRef);
@@ -95,7 +82,7 @@ final DocumentSnapshot docRef2 = await semester.get();
 //     (DocumentSnapshot doc) {
 //      //semester1 = doc.data()!.semester;
 //      //final data = doc.data() as Map<String, dynamic>;
-   
+
 //      semester=doc['semester'];
 
 //     print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
@@ -105,46 +92,16 @@ final DocumentSnapshot docRef2 = await semester.get();
 //    onError: (e) => print("Error getting document: $e"),
 //    );
 
-
-
-// //  setState(() {          
+// //  setState(() {
 // // if(semester != null){
- 
+
 // // }
 // //  });
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  }
 
   @override
   Widget build(BuildContext context) {
-getusers();
+    getusers();
 //     final FirebaseAuth auth = FirebaseAuth.instance;
 //     final User? user = auth.currentUser;
 //     userid = user!.uid;
@@ -152,7 +109,7 @@ getusers();
 //    print('****************************************************');
 //    print(userid);
 
-// var semester;  
+// var semester;
 
 // final docRef = FirebaseFirestore.instance.collection("faculty").doc(userid);
 //  print('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
@@ -161,7 +118,7 @@ getusers();
 //     (DocumentSnapshot doc) {
 //      //semester1 = doc.data()!.semester;
 //      //final data = doc.data() as Map<String, dynamic>;
-   
+
 //      semester=doc['semester'];
 
 //     print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
@@ -171,12 +128,11 @@ getusers();
 //    onError: (e) => print("Error getting document: $e"),
 //    );
 
-
-//  setState(() {          
+//  setState(() {
 // if(semester != null){
 //  semester.get().then(
 //     (DocumentSnapshot doc2) {
-      
+
 //       startingDate=doc2['startdate'].toDate();
 //       endDate=doc2['enddate'].toDate();
 //       print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
@@ -187,14 +143,10 @@ getusers();
 // }
 //  });
 
-
-
-     //print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
-     //print(semester);
-
+    //print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
+    //print(semester);
 
 // Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-
 
     // final semesterRef = FirebaseFirestore.instance
     //     .collection('semester')
@@ -307,16 +259,12 @@ getusers();
 
             ListTile(
               title: ElevatedButton(
-<<<<<<< HEAD
-                  child: Text("Confirm"), onPressed: () => {Confirm()}),
-=======
                   child: Text("Confirm"),
                   onPressed: () => {showConfirmationDialog(context)}),
->>>>>>> d61d7e6a1d3aea8ce860a8b022dc7ffdc22ef683
             ),
           ],
         ));
-  }//end build 
+  } //end build
 
   _timeFormated(TimeOfDay Stime, TimeOfDay Etime, int x) {
     if (Stime == null || Etime == null) {}
@@ -471,8 +419,6 @@ getusers();
     });
   } //end delete function
 
-<<<<<<< HEAD
-=======
   showConfirmationDialog(BuildContext context) {
     // set up the buttons
     Widget cancelButton = ElevatedButton(
@@ -507,7 +453,6 @@ getusers();
     );
   }
 
->>>>>>> d61d7e6a1d3aea8ce860a8b022dc7ffdc22ef683
   Confirm() {
     for (var k = 0; k < daysOfHelp.length; k++) {
       if (daysOfHelp[k].value == true) {
