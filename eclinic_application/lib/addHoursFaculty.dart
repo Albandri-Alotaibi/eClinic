@@ -27,11 +27,8 @@ class _AddHourState extends State<addHoursFaculty> {
     CheckBoxState(title: 'Thursday', hours: ['un']),
   ];
 
-  List<startEnd> ArrayOfTimesOfDays = [];
-  Timestamp? startdate;
-  Timestamp? enddate;
-  DateTime startdateINDate = DateTime(1990, 1, 1);
-  DateTime enddateINDate = DateTime(1990, 1, 20);
+DateTime startingDate =DateTime.now(); //admin start date or today
+DateTime endDate = DateTime.now(); //admin end date
 
   @override
   Widget build(BuildContext context) {
@@ -42,14 +39,11 @@ class _AddHourState extends State<addHoursFaculty> {
       snapshot.docs.forEach((DocumentSnapshot doc) {
         //print(doc['semestername']);
         if (doc['semestername'] == '1st 2022/2023') {
-          startdate = doc['startdate'];
-          enddate = doc['enddate'];
           print('doc id ${doc.id}');
-          print(startdate);
-          print(enddate);
-          startdateINDate = startdate!.toDate();
-          enddateINDate = enddate!.toDate();
-          print("new start date${startdateINDate}");
+          startingDate=doc['startdate'].toDate();
+          endDate=doc['enddate'].toDate();
+          print(startingDate);
+          print(endDate);
         }
       });
     });
@@ -361,14 +355,14 @@ class _AddHourState extends State<addHoursFaculty> {
   OneDayGenerating(String day, List<dynamic> ArrayOfAllTheDayRanges) {
     var AllActualDatesWithRanges = <timesWithDates>[];
 
-    print("out of the firstore code start date${startdateINDate}");
-    DateTime startingDate = startdateINDate; //admin start date or today
+    //print("out of the firstore code start date${startdateINDate}");
+    //DateTime startingDate = startdateINDate; //admin start date or today
     //print("old start date${startingDate}");
-    DateTime endDate = enddateINDate; //admin end date
+    //DateTime endDate = enddateINDate; //admin end date
 
     int diff = endDate.difference(startingDate).inDays;
 
-    for (var i = 1; i <= diff; i++) {
+    for (var i = 0; i <= diff; i++) {
       DateTime newDate =
           DateTime(startingDate.year, startingDate.month, startingDate.day + i);
 
