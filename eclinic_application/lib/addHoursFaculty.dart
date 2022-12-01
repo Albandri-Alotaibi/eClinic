@@ -18,10 +18,10 @@ class addHoursFaculty extends StatefulWidget {
 
 class _AddHourState extends State<addHoursFaculty> {
   @override
-  initState() {
-    super.initState();
-    getusers();
-  }
+  // initState() {
+  //   super.initState();
+  //   getusers();
+  // }
 
   TimeOfDay _startTime = TimeOfDay.now();
   TimeOfDay _endTime = TimeOfDay.now();
@@ -54,14 +54,23 @@ class _AddHourState extends State<addHoursFaculty> {
         .collection("faculty")
         .doc(userid)
         .get();
-
+    print(docRef);
     var semester = await docRef['semester'];
     print(semester);
 
     final DocumentSnapshot docRef2 = await semester.get();
+    //String id = docRef2.id.substring(1);
+    // final DocumentSnapshot docForSem = await FirebaseFirestore.instance
+    //     .collection("semester")
+    //     .doc(docRef2.id)
+    //     .get();
+    print(docRef2.exists);
+    print('***********************print dates***********************');
+    print(docRef2['startdate']);
     startingDate = docRef2['startdate'].toDate();
     endDate = docRef2['enddate'].toDate();
-
+    print('***********************print dates***********************');
+    print(startingDate);
 // semester.get().then(
 //     (DocumentSnapshot doc2) {
 
