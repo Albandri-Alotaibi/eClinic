@@ -338,20 +338,31 @@ class _AddHourState extends State<addHoursFaculty> {
 //Sunday
   OneDayGenerating(String day, List<dynamic> ArrayOfAllTheDayRanges) {
     var AllActualDatesWithRanges = <timesWithDates>[];
-    Timestamp startdate;
-    Timestamp enddate;
-
+    Timestamp? startdate;
+    Timestamp? enddate;
+    DateTime? startdateINDate;
+    DateTime? enddateINDate;
     final semesterRef = FirebaseFirestore.instance
         .collection('semester')
         .get()
         .then((QuerySnapshot snapshot) {
       snapshot.docs.forEach((DocumentSnapshot doc) {
-        print(doc.data());
+        //print(doc['semestername']);
+        if (doc['semestername'] == '1st 2022/2023') {
+          startdate = doc['startdate'];
+          enddate = doc['enddate'];
+          // print(startdate);
+          // print(enddate);
+          startdateINDate = startdate!.toDate();
+          enddateINDate = enddate!.toDate();
+          print("new start date${startdateINDate}");
+        }
       });
     });
 
-    DateTime startingDate = DateTime(2022, 11, 25); //admin start date or today
-    DateTime endDate = DateTime(2022, 12, 7); //admin end date
+    DateTime startingDate = startdateINDate!; //admin start date or today
+    //print("old start date${startingDate}");
+    DateTime endDate = enddateINDate!; //admin end date
 
     int diff = endDate.difference(startingDate).inDays;
 
