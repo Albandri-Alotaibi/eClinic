@@ -435,22 +435,44 @@ class _AddHourState extends State<addHoursFaculty> {
       },
     );
     // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("warning"),
-      content: Text(
-          "if you press on confirm that means you approved on the entered hours and you know that you CANNOT updated later"),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
+    if (daysOfHelp[0].value == false &&
+        daysOfHelp[1].value == false &&
+        daysOfHelp[2].value == false &&
+        daysOfHelp[3].value == false &&
+        daysOfHelp[4].value == false) {
+      AlertDialog alert = AlertDialog(
+        title: Text("Note"),
+        content: Text(
+            "you did not choose any hour do you want to return to the home page?"),
+        actions: [
+          cancelButton,
+          continueButton,
+        ],
+      );
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    } else {
+      AlertDialog alert = AlertDialog(
+        title: Text("warning"),
+        content: Text(
+            "if you press on confirm that means you approved on the entered hours and you know that you CANNOT updated later"),
+        actions: [
+          cancelButton,
+          continueButton,
+        ],
+      );
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
     // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
   }
 
   Confirm() {
