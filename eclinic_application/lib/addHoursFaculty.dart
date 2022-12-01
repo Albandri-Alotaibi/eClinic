@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/route_manager.dart';
 import 'package:simple_time_range_picker/simple_time_range_picker.dart';
 import 'model/checkbox_state.dart';
 import 'model/startEnd.dart';
@@ -27,8 +28,8 @@ class _AddHourState extends State<addHoursFaculty> {
     CheckBoxState(title: 'Thursday', hours: ['un']),
   ];
 
-DateTime startingDate =DateTime.now(); //admin start date or today
-DateTime endDate = DateTime.now(); //admin end date
+  DateTime startingDate = DateTime.now(); //admin start date or today
+  DateTime endDate = DateTime.now(); //admin end date
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +41,8 @@ DateTime endDate = DateTime.now(); //admin end date
         //print(doc['semestername']);
         if (doc['semestername'] == '1st 2022/2023') {
           print('doc id ${doc.id}');
-          startingDate=doc['startdate'].toDate();
-          endDate=doc['enddate'].toDate();
+          startingDate = doc['startdate'].toDate();
+          endDate = doc['enddate'].toDate();
           print(startingDate);
           print(endDate);
         }
@@ -138,7 +139,8 @@ DateTime endDate = DateTime.now(); //admin end date
 
             ListTile(
               title: ElevatedButton(
-                  child: Text("Confirm"), onPressed: () => {Confirm()}),
+                  child: Text("Confirm"),
+                  onPressed: () => {showAlertDialog(context)}),
             ),
           ],
         ));
@@ -296,6 +298,40 @@ DateTime endDate = DateTime.now(); //admin end date
       }
     });
   } //end delete function
+
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = ElevatedButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = ElevatedButton(
+      child: Text("Confirm"),
+      onPressed: () {
+        Confirm();
+        Navigator.pushNamed(context, 'facultyhome');
+      },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("warning"),
+      content: Text(
+          "if you press on confirm that means you approved on the entered hours and you know that you CANNOT updated later"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
   Confirm() {
     for (var k = 0; k < daysOfHelp.length; k++) {
