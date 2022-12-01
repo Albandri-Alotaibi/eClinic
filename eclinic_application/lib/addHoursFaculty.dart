@@ -351,6 +351,7 @@ class _AddHourState extends State<addHoursFaculty> {
         if (doc['semestername'] == '1st 2022/2023') {
           startdate = doc['startdate'];
           enddate = doc['enddate'];
+          print('doc id ${doc.id}');
           print(startdate);
           print(enddate);
           startdateINDate = startdate!.toDate();
