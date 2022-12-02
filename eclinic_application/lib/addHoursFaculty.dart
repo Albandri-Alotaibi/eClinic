@@ -770,7 +770,6 @@ class _AddHourState extends State<addHoursFaculty> {
     }
 
 
-<<<<<<< Updated upstream
 //start*************************************************************************************
         for (var i = 0; i < AllActualDatesWithRanges.length; i++) {
           Timestamp StartInTimestamp = Timestamp.fromDate(DateTime(
@@ -794,37 +793,6 @@ class _AddHourState extends State<addHoursFaculty> {
                 "${AllActualDatesWithRanges[i].StartOfRange.hour}:${AllActualDatesWithRanges[i].StartOfRange.minute} - ${AllActualDatesWithRanges[i].EndOfRange.hour}:${AllActualDatesWithRanges[i].EndOfRange.minute}", //string
           });
         } //end for loop for one day
-=======
-for (var i = 0; i < AllActualDatesWithRanges.length; i++) {
-  Timestamp StartInTimestamp = Timestamp.fromDate(DateTime(
-          AllActualDatesWithRanges[i].StartOfRange.year,
-          AllActualDatesWithRanges[i].StartOfRange.month,
-          AllActualDatesWithRanges[i].StartOfRange.day,
-          AllActualDatesWithRanges[i].StartOfRange.hour,
-          AllActualDatesWithRanges[i].StartOfRange.minute));
-
-FirebaseFirestore.instance
-        .collection("faculty")
-        .doc(userid)
-        .collection('appointment')
-        .doc()//Is there a specific id i should put for the appointments 
-        .set({
-      'Day': day,//string
-      'starttime': StartInTimestamp,//timestamp
-      'Booked': false,//string if booked then it should have a student refrence 
-      'timeRange': "${AllActualDatesWithRanges[i].StartOfRange.hour}:${AllActualDatesWithRanges[i].StartOfRange.minute} - ${AllActualDatesWithRanges[i].EndOfRange.hour}:${AllActualDatesWithRanges[i].EndOfRange.minute}" ,//string
-    });
-
-
-
-
-
-}//end for loop for one day 
-
-
-
-
->>>>>>> Stashed changes
 
     print(day);
     print(AllActualDatesWithRanges.toString());
