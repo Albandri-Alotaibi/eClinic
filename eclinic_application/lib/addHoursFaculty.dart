@@ -72,6 +72,8 @@ class _AddHourState extends State<addHoursFaculty> {
     endDate = docRef2['enddate'].toDate();
     print('***********************print dates***********************');
     print(startingDate);
+    //print('***********************tttiimmmmmeeees***********************');
+    //print(new TimeOfDay(hour: 13, minute: 0));
 // semester.get().then(
 //     (DocumentSnapshot doc2) {
 
