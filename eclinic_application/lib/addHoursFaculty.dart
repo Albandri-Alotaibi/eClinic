@@ -538,12 +538,27 @@ class _AddHourState extends State<addHoursFaculty> {
     } //end for loop
 
     for (int i = 1; i < daysOfHelp[x].hours.length; i++) {
+      // Timestamp StartInTimestamp = Timestamp.fromDate(DateTime(
+      //     1990,
+      //     1,
+      //     1,
+      //     daysOfHelp[x].hours[i].start.hour,
+      //     daysOfHelp[x].hours[i].start.minute));
+
+      // Timestamp EndInTimestamp = Timestamp.fromDate(DateTime(1990, 1, 1,
+      //     daysOfHelp[x].hours[i].end.hour, daysOfHelp[x].hours[i].end.minute));
       FirebaseFirestore.instance
           .collection("faculty")
           .doc(userid)
           .collection('availableHours')
           .doc(daysOfHelp[x].title)
           .update({
+        // "HoursString2": FieldValue.arrayUnion([
+        //   {
+        //     'starttime': StartInTimestamp,
+        //     'endtime': EndInTimestamp,
+        //   }
+        // ]),
         "HoursString2": FieldValue.arrayUnion([
           {
             'starttime':
