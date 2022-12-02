@@ -154,6 +154,7 @@ class _AddHourState extends State<addHoursFaculty> {
     }
   }
 
+  int? numOfDaysOfHelp;
   Future getavailableHours() async {
     final FirebaseAuth auth = await FirebaseAuth.instance;
     final User? user = await auth.currentUser;
@@ -170,6 +171,7 @@ class _AddHourState extends State<addHoursFaculty> {
         .then((QuerySnapshot snapshot) {
       print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
       print(snapshot.size);
+      numOfDaysOfHelp = snapshot.size;
       snapshot.docs.forEach((DocumentSnapshot doc) {
         // for (int i = 0; i < availableHours.length; i++) {
         //  if (doc['Day'] != availableHours[i].title) {
@@ -357,13 +359,12 @@ class _AddHourState extends State<addHoursFaculty> {
             future: getavailableHours(),
             builder: (context, snapshot) {
               return ListView.builder(
-                itemCount: availableHours.length,
+                itemCount: numOfDaysOfHelp,
                 itemBuilder: ((context, index) {
                   return Card(
-                    child: ListTile(
-                      title: Text(availableHours[index].title),
-                    ),
-                  );
+                      child: ListTile(
+                    title: Text(availableHours[index].title),
+                  ));
                 }),
               );
             },
