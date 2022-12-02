@@ -154,7 +154,8 @@ class _AddHourState extends State<addHoursFaculty> {
     }
   }
 
-  int? numOfDaysOfHelp;
+  int numOfDaysOfHelp = 0;
+
   Future getavailableHours() async {
     final FirebaseAuth auth = await FirebaseAuth.instance;
     final User? user = await auth.currentUser;
@@ -181,13 +182,36 @@ class _AddHourState extends State<addHoursFaculty> {
         // }// end for
       });
     });
-    // print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-    // print(availableHours.length);
+    print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+    print(availableHours.length);
+  }
+
+  PrintViewHours() {
+    String string = "";
+    for (int i = 0; i < availableHours.length; i++) {
+      for (int j = 0; j < availableHours[i].hours.length; j++) {
+        string = string +
+            "\n start: " +
+            availableHours[i].hours[j]['starttime'] +
+            " - end: " +
+            availableHours[i].hours[j]['endtime'];
+      }
+      print("(((((((((())))))))))))))))))))))))");
+      print(availableHours[i].title);
+      print(string);
+      availableHours[i].allhours =
+          string; //store the value of all the hours in a string in the array
+      string = ""; //to delete old values of the previos day
+    }
+
+    print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+    print(string);
   }
 
   @override
   Widget build(BuildContext context) {
     getusers();
+    PrintViewHours();
 //     final FirebaseAuth auth = FirebaseAuth.instance;
 //     final User? user = auth.currentUser;
 //     userid = user!.uid;
@@ -364,6 +388,7 @@ class _AddHourState extends State<addHoursFaculty> {
                   return Card(
                       child: ListTile(
                     title: Text(availableHours[index].title),
+                    subtitle: Text(availableHours[index].allhours),
                   ));
                 }),
               );
@@ -769,30 +794,29 @@ class _AddHourState extends State<addHoursFaculty> {
 
     }
 
-
 //start*************************************************************************************
-        for (var i = 0; i < AllActualDatesWithRanges.length; i++) {
-          Timestamp StartInTimestamp = Timestamp.fromDate(DateTime(
-              AllActualDatesWithRanges[i].StartOfRange.year,
-              AllActualDatesWithRanges[i].StartOfRange.month,
-              AllActualDatesWithRanges[i].StartOfRange.day,
-              AllActualDatesWithRanges[i].StartOfRange.hour,
-              AllActualDatesWithRanges[i].StartOfRange.minute));
+    for (var i = 0; i < AllActualDatesWithRanges.length; i++) {
+      Timestamp StartInTimestamp = Timestamp.fromDate(DateTime(
+          AllActualDatesWithRanges[i].StartOfRange.year,
+          AllActualDatesWithRanges[i].StartOfRange.month,
+          AllActualDatesWithRanges[i].StartOfRange.day,
+          AllActualDatesWithRanges[i].StartOfRange.hour,
+          AllActualDatesWithRanges[i].StartOfRange.minute));
 
-          FirebaseFirestore.instance
-              .collection("faculty")
-              .doc(userid)
-              .collection('appointment')
-              .doc() //Is there a specific id i should put for the appointments
-              .set({
-            'Day': day, //string
-            'starttime': StartInTimestamp, //timestamp
-            'Booked':
-                false, //string if booked then it should have a student refrence
-            'timeRange':
-                "${AllActualDatesWithRanges[i].StartOfRange.hour}:${AllActualDatesWithRanges[i].StartOfRange.minute} - ${AllActualDatesWithRanges[i].EndOfRange.hour}:${AllActualDatesWithRanges[i].EndOfRange.minute}", //string
-          });
-        } //end for loop for one day
+      FirebaseFirestore.instance
+          .collection("faculty")
+          .doc(userid)
+          .collection('appointment')
+          .doc() //Is there a specific id i should put for the appointments
+          .set({
+        'Day': day, //string
+        'starttime': StartInTimestamp, //timestamp
+        'Booked':
+            false, //string if booked then it should have a student refrence
+        'timeRange':
+            "${AllActualDatesWithRanges[i].StartOfRange.hour}:${AllActualDatesWithRanges[i].StartOfRange.minute} - ${AllActualDatesWithRanges[i].EndOfRange.hour}:${AllActualDatesWithRanges[i].EndOfRange.minute}", //string
+      });
+    } //end for loop for one day
 
     print(day);
     print(AllActualDatesWithRanges.toString());
