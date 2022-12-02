@@ -377,13 +377,13 @@ class _AddHourState extends State<addHoursFaculty> {
                   }
 
                   //-----------------------------the new start time > old start time------------------------------
-                  else if (_startTime.hour < startend.start.hour) {
-                    showerror(
-                        context,
-                        "the new start time must start after the the prevrios period of times",
-                        x);
-                    flag = false;
-                  }
+                  // else if (_startTime.hour < startend.start.hour) {
+                  //   showerror(
+                  //       context,
+                  //       "the new start time must start after the the prevrios period of times",
+                  //       x);
+                  //   flag = false;
+                  // }
                   //------------------------new time connot be inside the old time-----------------------
                   else if (_startTime.hour >= startend.start.hour &&
                       _startTime.hour < startend.end.hour &&
@@ -514,82 +514,63 @@ class _AddHourState extends State<addHoursFaculty> {
     } //loop on each day
   } //end confirm
 
-
-
- addAvailableHoursToDB(int x) async{
-
-  //await
-   FirebaseFirestore.instance
+  addAvailableHoursToDB(int x) async {
+    //await
+    FirebaseFirestore.instance
         .collection("faculty")
-        .doc(userid).collection('availableHours').doc(daysOfHelp[x].title).set({
-          'Day': daysOfHelp[x].title,
-    
-        });
+        .doc(userid)
+        .collection('availableHours')
+        .doc(daysOfHelp[x].title)
+        .set({
+      'Day': daysOfHelp[x].title,
+    });
 
- for(int i=1;i<daysOfHelp[x].hours.length; i++){
+    for (int i = 1; i < daysOfHelp[x].hours.length; i++) {
+      FirebaseFirestore.instance
+          .collection("faculty")
+          .doc(userid)
+          .collection('availableHours')
+          .doc(daysOfHelp[x].title)
+          .update({
+        "HoursToString":
+            FieldValue.arrayUnion([daysOfHelp[x].hours[i].toString()]),
+      });
+    } //end for loop
 
- FirebaseFirestore.instance
-        .collection("faculty")
-        .doc(userid).collection('availableHours').doc(daysOfHelp[x].title).update({
-  "HoursToString": FieldValue.arrayUnion([daysOfHelp[x].hours[i].toString()]),
-});
-        }//end for loop
+    for (int i = 1; i < daysOfHelp[x].hours.length; i++) {
+      FirebaseFirestore.instance
+          .collection("faculty")
+          .doc(userid)
+          .collection('availableHours')
+          .doc(daysOfHelp[x].title)
+          .update({
+        "HoursString2": FieldValue.arrayUnion([
+          {
+            'starttime':
+                "${daysOfHelp[x].hours[i].start.hour}:${daysOfHelp[x].hours[i].start.minute}",
+            'endtime':
+                "${daysOfHelp[x].hours[i].end.hour}:${daysOfHelp[x].hours[i].end.minute}",
+          }
+        ]),
+      });
+    }
 
- for(int i=1;i<daysOfHelp[x].hours.length; i++){
-
- FirebaseFirestore.instance
-        .collection("faculty")
-        .doc(userid).collection('availableHours').doc(daysOfHelp[x].title).update({
-  "HoursString2": FieldValue.arrayUnion([{
-'starttime': "${daysOfHelp[x].hours[i].start.hour}:${daysOfHelp[x].hours[i].start.minute}",
-
-'endtime': "${daysOfHelp[x].hours[i].end.hour}:${daysOfHelp[x].hours[i].end.minute}",
-
-
-  }]),
-});
- }
-
- for(int i=1;i<daysOfHelp[x].hours.length; i++){
-
- FirebaseFirestore.instance
-        .collection("faculty")
-        .doc(userid).collection('availableHours').doc(daysOfHelp[x].title).update({
-  "HoursTime": FieldValue.arrayUnion([{
-'starttime': daysOfHelp[x].hours[i].start,
-'endtime': daysOfHelp[x].hours[i].end,
-
-  }]),
-});
- }
-
-
-
-        }//end method add hours to db
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    for (int i = 1; i < daysOfHelp[x].hours.length; i++) {
+      FirebaseFirestore.instance
+          .collection("faculty")
+          .doc(userid)
+          .collection('availableHours')
+          .doc(daysOfHelp[x].title)
+          .update({
+        "HoursTime": FieldValue.arrayUnion([
+          {
+            'starttime': daysOfHelp[x].hours[i].start,
+            'endtime': daysOfHelp[x].hours[i].end,
+          }
+        ]),
+      });
+    }
+  } //end method add hours to db
 
   hourDivision(TimeOfDay starttime, TimeOfDay endtime) {
 //loop on days or deal with each day alone?
@@ -670,8 +651,6 @@ class _AddHourState extends State<addHoursFaculty> {
         //AllActualDatesWithRanges
         //HERE STORING IN DATABASE *****************************************
 
-
-       
         //day
         //date
         //time
