@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:simple_time_range_picker/simple_time_range_picker.dart';
+import 'model/availableHoursArray.dart';
 import 'model/checkbox_state.dart';
 import 'model/startEnd.dart';
 import 'package:jiffy/jiffy.dart';
@@ -27,6 +28,8 @@ class _AddHourState extends State<addHoursFaculty> {
   TimeOfDay _endTime = TimeOfDay.now();
   TimeOfDay initime = TimeOfDay.now();
 
+  bool? isExists;
+
   final daysOfHelp = [
     CheckBoxState(title: 'Sunday', hours: ['un']),
     CheckBoxState(title: 'Monday', hours: ['un']),
@@ -34,6 +37,8 @@ class _AddHourState extends State<addHoursFaculty> {
     CheckBoxState(title: 'Wednesday', hours: ['un']),
     CheckBoxState(title: 'Thursday', hours: ['un']),
   ];
+
+  List availableHours = [];
 
   DateTime startingDate = DateTime.now(); //admin start date or today
   DateTime endDate = DateTime.now(); //admin end date
@@ -112,6 +117,73 @@ class _AddHourState extends State<addHoursFaculty> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    IsHoursExists(); // use a helper method because initState() cannot be async
+  }
+
+  Future<bool?> IsHoursExists() async {
+    final FirebaseAuth auth = await FirebaseAuth.instance;
+    final User? user = await auth.currentUser;
+    userid = user!.uid;
+    email = user.email!;
+    // print('******************');
+    // print(userid);
+
+    final snap = await FirebaseFirestore.instance
+        .collection("faculty")
+        .doc(userid)
+        .collection('availableHours')
+        .get();
+    if (snap.size == 0) {
+      print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
+      print("empty");
+      setState(() {
+        isExists = false;
+      });
+
+      return isExists;
+    } else {
+      print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
+      print("full");
+      setState(() {
+        isExists = true;
+      });
+
+      return isExists;
+    }
+  }
+
+  Future getavailableHours() async {
+    final FirebaseAuth auth = await FirebaseAuth.instance;
+    final User? user = await auth.currentUser;
+    userid = user!.uid;
+    email = user.email!;
+    // print('******************');
+    // print(userid);
+
+    final snap = await FirebaseFirestore.instance
+        .collection("faculty")
+        .doc(userid)
+        .collection('availableHours')
+        .get()
+        .then((QuerySnapshot snapshot) {
+      print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+      print(snapshot.size);
+      snapshot.docs.forEach((DocumentSnapshot doc) {
+        // for (int i = 0; i < availableHours.length; i++) {
+        //  if (doc['Day'] != availableHours[i].title) {
+        availableHours.add(
+            availableHoursArray(title: doc['Day'], hours: doc['HoursString2']));
+        // }//end of if
+        // }// end for
+      });
+    });
+    // print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+    // print(availableHours.length);
+  }
+
+  @override
   Widget build(BuildContext context) {
     getusers();
 //     final FirebaseAuth auth = FirebaseAuth.instance;
@@ -179,103 +251,124 @@ class _AddHourState extends State<addHoursFaculty> {
     //      print('#####################################################');
     //       print(startingDate);
     //       print(endDate);
+    if (isExists == false) {
+      return Scaffold(
+          appBar: AppBar(
+            title: Text('Add hours'),
+          ),
+          body: ListView(
+            children: [
+              // ...daysOfHelp.map(buildSingleCheckbox).toList(),
 
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Add hours'),
-        ),
-        body: ListView(
-          children: [
-            // ...daysOfHelp.map(buildSingleCheckbox).toList(),
+              CheckboxListTile(
+                controlAffinity: ListTileControlAffinity.leading,
+                title: Text(daysOfHelp[0].title),
+                value: daysOfHelp[0].value,
+                onChanged: (newvalue) {
+                  setState(() {
+                    daysOfHelp[0].value = newvalue!;
+                  });
+                  selectTime1(0);
+                  // if (newvalue == false) {
+                  //   deleteHours(0);
 
-            CheckboxListTile(
-              controlAffinity: ListTileControlAffinity.leading,
-              title: Text(daysOfHelp[0].title),
-              value: daysOfHelp[0].value,
-              onChanged: (newvalue) {
-                setState(() {
-                  daysOfHelp[0].value = newvalue!;
-                });
-                selectTime1(0);
-                // if (newvalue == false) {
-                //   deleteHours(0);
+                  // }
+                },
+                subtitle: subtitleForEachDay(0),
+              ),
 
-                // }
-              },
-              subtitle: subtitleForEachDay(0),
-            ),
+              CheckboxListTile(
+                controlAffinity: ListTileControlAffinity.leading,
+                title: Text(daysOfHelp[1].title),
+                value: daysOfHelp[1].value,
+                onChanged: (newvalue) {
+                  setState(() {
+                    daysOfHelp[1].value = newvalue!;
+                  });
+                  selectTime1(1);
+                  // if (newvalue == false) {
+                  //   daysOfHelp[1].hours[0] = "un";
+                  // }
+                },
+                subtitle: subtitleForEachDay(1),
+              ),
 
-            CheckboxListTile(
-              controlAffinity: ListTileControlAffinity.leading,
-              title: Text(daysOfHelp[1].title),
-              value: daysOfHelp[1].value,
-              onChanged: (newvalue) {
-                setState(() {
-                  daysOfHelp[1].value = newvalue!;
-                });
-                selectTime1(1);
-                // if (newvalue == false) {
-                //   daysOfHelp[1].hours[0] = "un";
-                // }
-              },
-              subtitle: subtitleForEachDay(1),
-            ),
+              CheckboxListTile(
+                controlAffinity: ListTileControlAffinity.leading,
+                title: Text(daysOfHelp[2].title),
+                value: daysOfHelp[2].value,
+                onChanged: (newvalue) {
+                  setState(() {
+                    daysOfHelp[2].value = newvalue!;
+                  });
+                  selectTime1(2);
+                  // if (newvalue == false) {
+                  //   daysOfHelp[1].hours[0] = "un";
+                  // }
+                },
+                subtitle: subtitleForEachDay(2),
+              ),
 
-            CheckboxListTile(
-              controlAffinity: ListTileControlAffinity.leading,
-              title: Text(daysOfHelp[2].title),
-              value: daysOfHelp[2].value,
-              onChanged: (newvalue) {
-                setState(() {
-                  daysOfHelp[2].value = newvalue!;
-                });
-                selectTime1(2);
-                // if (newvalue == false) {
-                //   daysOfHelp[1].hours[0] = "un";
-                // }
-              },
-              subtitle: subtitleForEachDay(2),
-            ),
+              CheckboxListTile(
+                controlAffinity: ListTileControlAffinity.leading,
+                title: Text(daysOfHelp[3].title),
+                value: daysOfHelp[3].value,
+                onChanged: (newvalue) {
+                  setState(() {
+                    daysOfHelp[3].value = newvalue!;
+                  });
+                  selectTime1(3);
+                  // if (newvalue == false) {
+                  //   daysOfHelp[1].hours[0] = "un";
+                  // }
+                },
+                subtitle: subtitleForEachDay(3),
+              ),
 
-            CheckboxListTile(
-              controlAffinity: ListTileControlAffinity.leading,
-              title: Text(daysOfHelp[3].title),
-              value: daysOfHelp[3].value,
-              onChanged: (newvalue) {
-                setState(() {
-                  daysOfHelp[3].value = newvalue!;
-                });
-                selectTime1(3);
-                // if (newvalue == false) {
-                //   daysOfHelp[1].hours[0] = "un";
-                // }
-              },
-              subtitle: subtitleForEachDay(3),
-            ),
+              CheckboxListTile(
+                controlAffinity: ListTileControlAffinity.leading,
+                title: Text(daysOfHelp[4].title),
+                value: daysOfHelp[4].value,
+                onChanged: (newvalue) {
+                  setState(() {
+                    daysOfHelp[4].value = newvalue!;
+                  });
+                  selectTime1(4);
+                  // if (newvalue == false) {
+                  //   daysOfHelp[1].hours[0] = "un";
+                  // }
+                },
+                subtitle: subtitleForEachDay(4),
+              ),
 
-            CheckboxListTile(
-              controlAffinity: ListTileControlAffinity.leading,
-              title: Text(daysOfHelp[4].title),
-              value: daysOfHelp[4].value,
-              onChanged: (newvalue) {
-                setState(() {
-                  daysOfHelp[4].value = newvalue!;
-                });
-                selectTime1(4);
-                // if (newvalue == false) {
-                //   daysOfHelp[1].hours[0] = "un";
-                // }
-              },
-              subtitle: subtitleForEachDay(4),
-            ),
-
-            ListTile(
-              title: ElevatedButton(
-                  child: Text("Confirm"),
-                  onPressed: () => {showConfirmationDialog(context)}),
-            ),
-          ],
-        ));
+              ListTile(
+                title: ElevatedButton(
+                    child: Text("Confirm"),
+                    onPressed: () => {showConfirmationDialog(context)}),
+              ),
+            ],
+          ));
+    } else {
+      return Scaffold(
+          appBar: AppBar(
+            title: Text('View hours'),
+          ),
+          body: FutureBuilder(
+            future: getavailableHours(),
+            builder: (context, snapshot) {
+              return ListView.builder(
+                itemCount: availableHours.length,
+                itemBuilder: ((context, index) {
+                  return Card(
+                    child: ListTile(
+                      title: Text(availableHours[index].title),
+                    ),
+                  );
+                }),
+              );
+            },
+          ));
+    }
   } //end build
 
   _timeFormated(TimeOfDay Stime, TimeOfDay Etime, int x) {
@@ -587,9 +680,6 @@ class _AddHourState extends State<addHoursFaculty> {
         ]),
       });
     }
-    
-
-
   } //end method add hours to db
 
   hourDivision(TimeOfDay starttime, TimeOfDay endtime) {
@@ -676,35 +766,28 @@ class _AddHourState extends State<addHoursFaculty> {
         //time
 
 //start*************************************************************************************
-for (var i = 0; i < AllActualDatesWithRanges.length; i++) {
-  Timestamp StartInTimestamp = Timestamp.fromDate(DateTime(
-          AllActualDatesWithRanges[i].StartOfRange.year,
-          AllActualDatesWithRanges[i].StartOfRange.month,
-          AllActualDatesWithRanges[i].StartOfRange.day,
-          AllActualDatesWithRanges[i].StartOfRange.hour,
-          AllActualDatesWithRanges[i].StartOfRange.minute));
+        for (var i = 0; i < AllActualDatesWithRanges.length; i++) {
+          Timestamp StartInTimestamp = Timestamp.fromDate(DateTime(
+              AllActualDatesWithRanges[i].StartOfRange.year,
+              AllActualDatesWithRanges[i].StartOfRange.month,
+              AllActualDatesWithRanges[i].StartOfRange.day,
+              AllActualDatesWithRanges[i].StartOfRange.hour,
+              AllActualDatesWithRanges[i].StartOfRange.minute));
 
-FirebaseFirestore.instance
-        .collection("faculty")
-        .doc(userid)
-        .collection('appointment')
-        .doc()//Is there a specific id i should put for the appointments 
-        .set({
-      'Day': day,//string
-      'starttime': StartInTimestamp,//timestamp
-      'Booked': false,//string if booked then it should have a student refrence 
-      'timeRange': "${AllActualDatesWithRanges[i].StartOfRange.hour}:${AllActualDatesWithRanges[i].StartOfRange.minute} - ${AllActualDatesWithRanges[i].EndOfRange.hour}:${AllActualDatesWithRanges[i].EndOfRange.minute}" ,//string
-    });
-
-
-
-
-
-}//end for loop for one day 
-
-
-
-
+          FirebaseFirestore.instance
+              .collection("faculty")
+              .doc(userid)
+              .collection('appointment')
+              .doc() //Is there a specific id i should put for the appointments
+              .set({
+            'Day': day, //string
+            'starttime': StartInTimestamp, //timestamp
+            'Booked':
+                false, //string if booked then it should have a student refrence
+            'timeRange':
+                "${AllActualDatesWithRanges[i].StartOfRange.hour}:${AllActualDatesWithRanges[i].StartOfRange.minute} - ${AllActualDatesWithRanges[i].EndOfRange.hour}:${AllActualDatesWithRanges[i].EndOfRange.minute}", //string
+          });
+        } //end for loop for one day
 
 //end*****************************************************************************************
 
