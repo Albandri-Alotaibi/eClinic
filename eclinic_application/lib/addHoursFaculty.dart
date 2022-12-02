@@ -39,6 +39,7 @@ class _AddHourState extends State<addHoursFaculty> {
   DateTime endDate = DateTime.now(); //admin end date
   String? email = '';
   String? userid = '';
+  bool? isExists;
 
   getusers() async {
     final FirebaseAuth auth = await FirebaseAuth.instance;
@@ -112,8 +113,49 @@ class _AddHourState extends State<addHoursFaculty> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    IsHoursExists(); // use a helper method because initState() cannot be async
+  }
+
+  Future<bool?> IsHoursExists() async {
+    final FirebaseAuth auth = await FirebaseAuth.instance;
+    final User? user = await auth.currentUser;
+    userid = user!.uid;
+    email = user.email!;
+    // print('****************************************************');
+    // print(userid);
+
+    final snap = await FirebaseFirestore.instance
+        .collection("faculty")
+        .doc(userid)
+        .collection('availableHours')
+        .get();
+    if (snap.size == 0) {
+      print("*****************&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
+      print("empty");
+      setState(() {
+        isExists = false;
+      });
+
+      return isExists;
+    } else {
+      print("*****************&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
+      print("full");
+      setState(() {
+        isExists = true;
+      });
+
+      return isExists;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     getusers();
+    // IsHoursExists();
+    print("*****************&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
+
 //     final FirebaseAuth auth = FirebaseAuth.instance;
 //     final User? user = auth.currentUser;
 //     userid = user!.uid;
@@ -179,103 +221,117 @@ class _AddHourState extends State<addHoursFaculty> {
     //      print('#####################################################');
     //       print(startingDate);
     //       print(endDate);
+    if (isExists == false) {
+      return Scaffold(
+          appBar: AppBar(
+            title: Text('Add hours'),
+          ),
+          body: ListView(
+            children: [
+              // ...daysOfHelp.map(buildSingleCheckbox).toList(),
 
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Add hours'),
-        ),
-        body: ListView(
-          children: [
-            // ...daysOfHelp.map(buildSingleCheckbox).toList(),
+              CheckboxListTile(
+                controlAffinity: ListTileControlAffinity.leading,
+                title: Text(daysOfHelp[0].title),
+                value: daysOfHelp[0].value,
+                onChanged: (newvalue) {
+                  setState(() {
+                    daysOfHelp[0].value = newvalue!;
+                  });
+                  selectTime1(0);
+                  // if (newvalue == false) {
+                  //   deleteHours(0);
 
-            CheckboxListTile(
-              controlAffinity: ListTileControlAffinity.leading,
-              title: Text(daysOfHelp[0].title),
-              value: daysOfHelp[0].value,
-              onChanged: (newvalue) {
-                setState(() {
-                  daysOfHelp[0].value = newvalue!;
-                });
-                selectTime1(0);
-                // if (newvalue == false) {
-                //   deleteHours(0);
+                  // }
+                },
+                subtitle: subtitleForEachDay(0),
+              ),
 
-                // }
-              },
-              subtitle: subtitleForEachDay(0),
-            ),
+              CheckboxListTile(
+                controlAffinity: ListTileControlAffinity.leading,
+                title: Text(daysOfHelp[1].title),
+                value: daysOfHelp[1].value,
+                onChanged: (newvalue) {
+                  setState(() {
+                    daysOfHelp[1].value = newvalue!;
+                  });
+                  selectTime1(1);
+                  // if (newvalue == false) {
+                  //   daysOfHelp[1].hours[0] = "un";
+                  // }
+                },
+                subtitle: subtitleForEachDay(1),
+              ),
 
-            CheckboxListTile(
-              controlAffinity: ListTileControlAffinity.leading,
-              title: Text(daysOfHelp[1].title),
-              value: daysOfHelp[1].value,
-              onChanged: (newvalue) {
-                setState(() {
-                  daysOfHelp[1].value = newvalue!;
-                });
-                selectTime1(1);
-                // if (newvalue == false) {
-                //   daysOfHelp[1].hours[0] = "un";
-                // }
-              },
-              subtitle: subtitleForEachDay(1),
-            ),
+              CheckboxListTile(
+                controlAffinity: ListTileControlAffinity.leading,
+                title: Text(daysOfHelp[2].title),
+                value: daysOfHelp[2].value,
+                onChanged: (newvalue) {
+                  setState(() {
+                    daysOfHelp[2].value = newvalue!;
+                  });
+                  selectTime1(2);
+                  // if (newvalue == false) {
+                  //   daysOfHelp[1].hours[0] = "un";
+                  // }
+                },
+                subtitle: subtitleForEachDay(2),
+              ),
 
-            CheckboxListTile(
-              controlAffinity: ListTileControlAffinity.leading,
-              title: Text(daysOfHelp[2].title),
-              value: daysOfHelp[2].value,
-              onChanged: (newvalue) {
-                setState(() {
-                  daysOfHelp[2].value = newvalue!;
-                });
-                selectTime1(2);
-                // if (newvalue == false) {
-                //   daysOfHelp[1].hours[0] = "un";
-                // }
-              },
-              subtitle: subtitleForEachDay(2),
-            ),
+              CheckboxListTile(
+                controlAffinity: ListTileControlAffinity.leading,
+                title: Text(daysOfHelp[3].title),
+                value: daysOfHelp[3].value,
+                onChanged: (newvalue) {
+                  setState(() {
+                    daysOfHelp[3].value = newvalue!;
+                  });
+                  selectTime1(3);
+                  // if (newvalue == false) {
+                  //   daysOfHelp[1].hours[0] = "un";
+                  // }
+                },
+                subtitle: subtitleForEachDay(3),
+              ),
 
-            CheckboxListTile(
-              controlAffinity: ListTileControlAffinity.leading,
-              title: Text(daysOfHelp[3].title),
-              value: daysOfHelp[3].value,
-              onChanged: (newvalue) {
-                setState(() {
-                  daysOfHelp[3].value = newvalue!;
-                });
-                selectTime1(3);
-                // if (newvalue == false) {
-                //   daysOfHelp[1].hours[0] = "un";
-                // }
-              },
-              subtitle: subtitleForEachDay(3),
-            ),
+              CheckboxListTile(
+                controlAffinity: ListTileControlAffinity.leading,
+                title: Text(daysOfHelp[4].title),
+                value: daysOfHelp[4].value,
+                onChanged: (newvalue) {
+                  setState(() {
+                    daysOfHelp[4].value = newvalue!;
+                  });
+                  selectTime1(4);
+                  // if (newvalue == false) {
+                  //   daysOfHelp[1].hours[0] = "un";
+                  // }
+                },
+                subtitle: subtitleForEachDay(4),
+              ),
 
-            CheckboxListTile(
-              controlAffinity: ListTileControlAffinity.leading,
-              title: Text(daysOfHelp[4].title),
-              value: daysOfHelp[4].value,
-              onChanged: (newvalue) {
-                setState(() {
-                  daysOfHelp[4].value = newvalue!;
-                });
-                selectTime1(4);
-                // if (newvalue == false) {
-                //   daysOfHelp[1].hours[0] = "un";
-                // }
-              },
-              subtitle: subtitleForEachDay(4),
-            ),
-
-            ListTile(
-              title: ElevatedButton(
-                  child: Text("Confirm"),
-                  onPressed: () => {showConfirmationDialog(context)}),
-            ),
-          ],
-        ));
+              ListTile(
+                title: ElevatedButton(
+                    child: Text("Confirm"),
+                    onPressed: () => {showConfirmationDialog(context)}),
+              ),
+            ],
+          ));
+    } //end of if
+    else {
+      print(isExists);
+      return Scaffold(
+          appBar: AppBar(
+            title: Text('View hours'),
+          ),
+          body: ListView.builder(
+            itemCount: daysOfHelp.length,
+            itemBuilder: ((context, index) {
+              return Card();
+            }),
+          ));
+    }
   } //end build
 
   _timeFormated(TimeOfDay Stime, TimeOfDay Etime, int x) {
