@@ -643,6 +643,9 @@ class _AddHourState extends State<addHoursFaculty> {
         ]),
       });
     }
+    
+
+    
   } //end method add hours to db
 
   hourDivision(TimeOfDay starttime, TimeOfDay endtime) {
