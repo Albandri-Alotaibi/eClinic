@@ -26,29 +26,38 @@ class _homeState extends State<home> {
       appBar: AppBar(
         title: Text('Home'),
       ),
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, 'facultyhome');
-            },
-            child: Text('faculty'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, 'facultysignup');
-            },
-            child: Text('Signup'),
-          ),
-          const SizedBox(width: 16),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, 'login');
-            },
-            child: Text('Faculty Login'),
-          ),
-        ],
+      body: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            // ElevatedButton(
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, 'facultyhome');
+            //   },
+            //   child: Text('faculty'),
+            // ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, 'facultysignup');
+            //   },
+            //   child: Text('Signup'),
+            // ),
+            // const SizedBox(width: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, 'login');
+              },
+              child: Text('Faculty Login'),
+            ),
+            const SizedBox(width: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, 'studenthome');
+              },
+              child: Text('student home (bcz login student not exist)'),
+            ),
+          ],
+        ),
       ),
     );
   }
