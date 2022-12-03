@@ -803,6 +803,15 @@ class _AddHourState extends State<addHoursFaculty> {
           AllActualDatesWithRanges[i].StartOfRange.hour,
           AllActualDatesWithRanges[i].StartOfRange.minute));
 
+ Timestamp EndInTimestamp = Timestamp.fromDate(DateTime(
+          AllActualDatesWithRanges[i].EndOfRange.year,
+          AllActualDatesWithRanges[i].EndOfRange.month,
+          AllActualDatesWithRanges[i].EndOfRange.day,
+          AllActualDatesWithRanges[i].EndOfRange.hour,
+          AllActualDatesWithRanges[i].EndOfRange.minute));
+
+
+
       FirebaseFirestore.instance
           .collection("faculty")
           .doc(userid)
@@ -810,12 +819,11 @@ class _AddHourState extends State<addHoursFaculty> {
           .doc() //Is there a specific id i should put for the appointments
           .set({
         'Day': day, //string
-        'starttime': StartInTimestamp, //timestamp
-        'Booked':
-            false, //string if booked then it should have a student refrence
-        'timeRange':
-            "${AllActualDatesWithRanges[i].StartOfRange.hour}:${AllActualDatesWithRanges[i].StartOfRange.minute} - ${AllActualDatesWithRanges[i].EndOfRange.hour}:${AllActualDatesWithRanges[i].EndOfRange.minute}", //string
-      });
+        'starttime': StartInTimestamp, //Start timestamp
+        'endtime': EndInTimestamp,
+        'Booked': false, //string if booked then it should have a student refrence
+        });
+        
     } //end for loop for one day
 
     print(day);
