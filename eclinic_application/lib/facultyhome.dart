@@ -41,25 +41,35 @@ class _fState extends State<facultyhome> {
     // rerunning build methods fast, so that you can just
     // rebuild anything that needs updating rather than
     // having to individually changes instances of widgets.
+    final ButtonStyle style =
+        ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, 'addHoursFaculty');
-          },
-          child: Text('addHoursFaculty'),
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Home'),
         ),
-        //const SizedBox(width: 16),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, 'FacultyViewBookedAppointment');
-          },
-          child: Text('BookedAppointment'),
-        ),
-        //const SizedBox(width: 16),
-      ],
-    );
+        body: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              ElevatedButton(
+                style: style,
+                onPressed: () {
+                  Navigator.pushNamed(context, 'addHoursFaculty');
+                },
+                child: Text('addHoursFaculty'),
+              ),
+              //const SizedBox(width: 16),
+              ElevatedButton(
+                style: style,
+                onPressed: () {
+                  Navigator.pushNamed(context, 'FacultyViewBookedAppointment');
+                },
+                child: Text('BookedAppointment'),
+              ),
+              //const SizedBox(width: 16),
+            ],
+          ),
+        ));
   }
 }
