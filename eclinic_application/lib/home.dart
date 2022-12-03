@@ -22,29 +22,34 @@ class _homeState extends State<home> {
     // rerunning build methods fast, so that you can just
     // rebuild anything that needs updating rather than
     // having to individually changes instances of widgets.
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, 'facultyhome');
-          },
-          child: Text('faculty'),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, 'facultysignup');
-          },
-          child: Text('Signup'),
-        ),
-        const SizedBox(width: 16),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, 'login');
-          },
-          child: Text('login'),
-        ),
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home'),
+      ),
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, 'facultyhome');
+            },
+            child: Text('faculty'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, 'facultysignup');
+            },
+            child: Text('Signup'),
+          ),
+          const SizedBox(width: 16),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, 'login');
+            },
+            child: Text('Faculty Login'),
+          ),
+        ],
+      ),
     );
   }
 }

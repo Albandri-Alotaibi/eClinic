@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:myapp/addHoursFaculty.dart';
+import 'package:myapp/FacultyViewBookedAppointment.dart';
 import 'package:myapp/facultyhome.dart';
 import 'package:myapp/home.dart';
 import 'package:myapp/login.dart';
@@ -42,6 +43,8 @@ class MyApp extends StatelessWidget {
         'reusable': (context) => reusable(),
         'viewfaculty': (context) => viewfaculty(),
         'login': (context) => login(),
+        'FacultyViewBookedAppointment': (context) =>
+            FacultyViewBookedAppointment(),
       },
     );
   }

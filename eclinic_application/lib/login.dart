@@ -117,6 +117,13 @@ class _loginState extends State<login> {
                   },
                   child: Text('login'),
                 ),
+                Text("You don't have an account?"),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'facultysignup');
+                  },
+                  child: Text('Signup'),
+                ),
               ],
             ),
           ),

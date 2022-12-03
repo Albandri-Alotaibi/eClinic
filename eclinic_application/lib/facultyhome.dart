@@ -51,18 +51,14 @@ class _fState extends State<facultyhome> {
           },
           child: Text('addHoursFaculty'),
         ),
-        const SizedBox(width: 16),
+        //const SizedBox(width: 16),
         ElevatedButton(
           onPressed: () {
-            Navigator.pushNamed(context, 'FacultyVievBookedAppointment');
+            Navigator.pushNamed(context, 'FacultyViewBookedAppointment');
           },
           child: Text('BookedAppointment'),
         ),
-        const SizedBox(width: 16),
-
-
-
-
+        //const SizedBox(width: 16),
       ],
     );
   }
