@@ -175,9 +175,41 @@ Future getBookedappointments() async {
                     title: Text(BookedAppointments[index].Day),
                     //subtitle: Text("Date : "+ BookedAppointments[index].StringDate()+"\n Time : "+BookedAppointments[index].StringTimeRange()),
                   children: [
-                    Text("Date : "+ BookedAppointments[index].StringDate()),
-                    Text("Time : "+BookedAppointments[index].StringTimeRange())
-                  ],
+                    Row(
+                      children: <Widget>[
+                        Column(
+                          children: <Widget>[
+                    Text("   Date : "+ BookedAppointments[index].StringDate()),
+                    Text("   Time : "+BookedAppointments[index].StringTimeRange()),
+                          ]),
+                    //crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                       mainAxisAlignment : MainAxisAlignment.end,
+                       verticalDirection : VerticalDirection.up,
+
+                      children: <Widget>[
+                   IconButton(
+                    icon: Icon(Icons.cancel),
+                    onPressed: () => {},
+                     ),
+                      ]
+                    )
+
+
+                  ])
+                    
+                   ],
+                  
+
+
+
+
+
+
+
+
+
                   
                   
                   ));
