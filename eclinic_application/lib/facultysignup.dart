@@ -107,196 +107,195 @@ class _facultysignupState extends State<facultysignup> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextFormField(
-                    controller: _fnameController,
-                    decoration: InputDecoration(
-                        labelText: 'Frist Name',
-                        hintText: "Enter your first name",
-                        border: OutlineInputBorder()),
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value!.isEmpty || _fnameController.text == "") {
-                        return 'Please enter your frist name ';
-                      } else {
-                        if (nameRegExp.hasMatch(_fnameController.text)) {
-                          return 'Please frist name only letters accepted ';
-                        }
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  TextFormField(
-                    controller: _lnameController,
-                    decoration: InputDecoration(
-                        labelText: 'Last Name',
-                        hintText: "Enter your last name",
-                        border: OutlineInputBorder()),
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value!.isEmpty || _lnameController.text == "") {
-                        return 'Please enter your last name ';
-                      } else {
-                        if (nameRegExp.hasMatch(_lnameController.text)) {
-                          return 'Please last name only letters accepted ';
-                        }
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                        hintText: "Enter your KSU email",
-                        labelText: 'KSU Email',
-                        border: OutlineInputBorder()),
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value!.isEmpty || _emailController.text == "") {
-                        return 'Please enter your KSU email ';
-                      } else {
-                        if (!(emailRegExp.hasMatch(_emailController.text))) {
-                          return 'Please write email format correctly ';
-                        }
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  TextFormField(
-                      controller: _passwordController,
-                      decoration: InputDecoration(
-                          labelText: 'Password',
-                          hintText: "Enter your Password",
-                          border: OutlineInputBorder()),
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (value) {
-                        if (value!.isEmpty || _passwordController.text == "") {
-                          return 'Please enter your password';
-                        } else {
-                          if (value.length < 8 &&
-                              !uperRegExp.hasMatch(value) &&
-                              !numbRegExp.hasMatch(value) &&
-                              !smallRegExp.hasMatch(value)) {
-                            return "Your password must be at least 8 characters and contain both uppercase and lowercase letters";
-                          } else if (value.length < 8 &&
-                              !uperRegExp.hasMatch(value)) {
-                            return "Your password must be at least 8 characters and contain uppercase letters";
-                          } else if (value.length < 8 &&
-                              !smallRegExp.hasMatch(value)) {
-                            return "Your password must be at least 8 characters and contain lowercase letters";
-                          } else if (!uperRegExp.hasMatch(value) &&
-                              !smallRegExp.hasMatch(value)) {
-                            return "Your password must be contain both uppercase and lowercase letters";
-                          } else if (value.length < 8) {
-                            return "Your password must be at least 8 characters";
-                          } else if (!uperRegExp.hasMatch(value)) {
-                            return "Your password must be contain uppercase letters";
-                          } else if (!smallRegExp.hasMatch(value)) {
-                            return "Your password must be contain lowercase letters";
-                          } else if (!numbRegExp.hasMatch(value)) {
-                            return "Your password must be contain number";
-                          }
-                        }
-                      }),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  DropdownButtonFormField(
-                    decoration: InputDecoration(
-                      // labelText: "Department",
-                      hintText: 'choose your department',
-                      border: OutlineInputBorder(),
-                    ),
-                    items: const [
-                      DropdownMenuItem<String>(child: Text('IT'), value: 'IT'),
-                      DropdownMenuItem<String>(child: Text('CS'), value: 'CS'),
-                      DropdownMenuItem<String>(child: Text('SE'), value: 'SE'),
-                      DropdownMenuItem<String>(child: Text('IS'), value: 'IS')
-                    ],
-                    onChanged: (value) {
-                      setState(() {
-                        departmentselectedvalue = value;
-                      });
-                    },
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value == null ||
-                          departmentselectedvalue!.isEmpty ||
-                          departmentselectedvalue == null) {
-                        return 'Please choose your department';
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  DropdownButtonFormField(
-                    decoration: InputDecoration(
-                      // labelText: "collage",
-                      hintText: 'choose your collage',
-                      border: OutlineInputBorder(),
-                    ),
-                    items: const [
-                      DropdownMenuItem<String>(
-                          child: Text('CCIS'), value: 'CCIS'),
-                    ],
-                    onChanged: (value) {
-                      setState(() {
-                        collageselectedvalue = value;
-                      });
-                    },
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value == null ||
-                          collageselectedvalue!.isEmpty ||
-                          collageselectedvalue == null) {
-                        return 'Please choose your collage';
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  //
-                  DropdownButtonFormField<String>(
-                    decoration: InputDecoration(
-                      hintText: 'choose a semester',
-                      border: OutlineInputBorder(),
-                    ),
-                    isExpanded: true,
-                    items: semester.map((String dropdownitems) {
-                      return DropdownMenuItem<String>(
-                        value: dropdownitems,
-                        child: Text(dropdownitems),
-                      );
-                    }).toList(),
-                    onChanged: (String? newselect) {
-                      setState(() {
-                        semesterselectedvalue = newselect;
-                      });
-                    },
-                    value: semesterselectedvalue,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value == null ||
-                          semesterselectedvalue!.isEmpty ||
-                          semesterselectedvalue == null) {
-                        return 'Please choose a semester';
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
+                  // TextFormField(
+                  //   controller: _fnameController,
+                  //   decoration: InputDecoration(
+                  //       labelText: 'Frist Name',
+                  //       hintText: "Enter your first name",
+                  //       border: OutlineInputBorder()),
+                  //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //   validator: (value) {
+                  //     if (value!.isEmpty || _fnameController.text == "") {
+                  //       return 'Please enter your frist name ';
+                  //     } else {
+                  //       if (nameRegExp.hasMatch(_fnameController.text)) {
+                  //         return 'Please frist name only letters accepted ';
+                  //       }
+                  //     }
+                  //   },
+                  // ),
+                  // SizedBox(
+                  //   height: 8,
+                  // ),
+                  // TextFormField(
+                  //   controller: _lnameController,
+                  //   decoration: InputDecoration(
+                  //       labelText: 'Last Name',
+                  //       hintText: "Enter your last name",
+                  //       border: OutlineInputBorder()),
+                  //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //   validator: (value) {
+                  //     if (value!.isEmpty || _lnameController.text == "") {
+                  //       return 'Please enter your last name ';
+                  //     } else {
+                  //       if (nameRegExp.hasMatch(_lnameController.text)) {
+                  //         return 'Please last name only letters accepted ';
+                  //       }
+                  //     }
+                  //   },
+                  // ),
+                  // SizedBox(
+                  //   height: 8,
+                  // ),
+                  // TextFormField(
+                  //   controller: _emailController,
+                  //   decoration: InputDecoration(
+                  //       hintText: "Enter your KSU email",
+                  //       labelText: 'KSU Email',
+                  //       border: OutlineInputBorder()),
+                  //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //   validator: (value) {
+                  //     if (value!.isEmpty || _emailController.text == "") {
+                  //       return 'Please enter your KSU email ';
+                  //     } else {
+                  //       if (!(emailRegExp.hasMatch(_emailController.text))) {
+                  //         return 'Please write email format correctly ';
+                  //       }
+                  //     }
+                  //   },
+                  // ),
+                  // SizedBox(
+                  //   height: 8,
+                  // ),
+                  // TextFormField(
+                  //     controller: _passwordController,
+                  //     decoration: InputDecoration(
+                  //         labelText: 'Password',
+                  //         hintText: "Enter your Password",
+                  //         border: OutlineInputBorder()),
+                  //     autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //     validator: (value) {
+                  //       if (value!.isEmpty || _passwordController.text == "") {
+                  //         return 'Please enter your password';
+                  //       } else {
+                  //         if (value.length < 8 &&
+                  //             !uperRegExp.hasMatch(value) &&
+                  //             !numbRegExp.hasMatch(value) &&
+                  //             !smallRegExp.hasMatch(value)) {
+                  //           return "Your password must be at least 8 characters and contain both uppercase and lowercase letters";
+                  //         } else if (value.length < 8 &&
+                  //             !uperRegExp.hasMatch(value)) {
+                  //           return "Your password must be at least 8 characters and contain uppercase letters";
+                  //         } else if (value.length < 8 &&
+                  //             !smallRegExp.hasMatch(value)) {
+                  //           return "Your password must be at least 8 characters and contain lowercase letters";
+                  //         } else if (!uperRegExp.hasMatch(value) &&
+                  //             !smallRegExp.hasMatch(value)) {
+                  //           return "Your password must be contain both uppercase and lowercase letters";
+                  //         } else if (value.length < 8) {
+                  //           return "Your password must be at least 8 characters";
+                  //         } else if (!uperRegExp.hasMatch(value)) {
+                  //           return "Your password must be contain uppercase letters";
+                  //         } else if (!smallRegExp.hasMatch(value)) {
+                  //           return "Your password must be contain lowercase letters";
+                  //         } else if (!numbRegExp.hasMatch(value)) {
+                  //           return "Your password must be contain number";
+                  //         }
+                  //       }
+                  //     }),
+                  // SizedBox(
+                  //   height: 8,
+                  // ),
+                  // DropdownButtonFormField(
+                  //   decoration: InputDecoration(
+                  //     // labelText: "Department",
+                  //     hintText: 'choose your department',
+                  //     border: OutlineInputBorder(),
+                  //   ),
+                  //   items: const [
+                  //     DropdownMenuItem<String>(child: Text('IT'), value: 'IT'),
+                  //     DropdownMenuItem<String>(child: Text('CS'), value: 'CS'),
+                  //     DropdownMenuItem<String>(child: Text('SE'), value: 'SE'),
+                  //     DropdownMenuItem<String>(child: Text('IS'), value: 'IS')
+                  //   ],
+                  //   onChanged: (value) {
+                  //     setState(() {
+                  //       departmentselectedvalue = value;
+                  //     });
+                  //   },
+                  //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //   validator: (value) {
+                  //     if (value == null ||
+                  //         departmentselectedvalue!.isEmpty ||
+                  //         departmentselectedvalue == null) {
+                  //       return 'Please choose your department';
+                  //     }
+                  //   },
+                  // ),
+                  // SizedBox(
+                  //   height: 8,
+                  // ),
+                  // DropdownButtonFormField(
+                  //   decoration: InputDecoration(
+                  //     // labelText: "collage",
+                  //     hintText: 'choose your collage',
+                  //     border: OutlineInputBorder(),
+                  //   ),
+                  //   items: const [
+                  //     DropdownMenuItem<String>(
+                  //         child: Text('CCIS'), value: 'CCIS'),
+                  //   ],
+                  //   onChanged: (value) {
+                  //     setState(() {
+                  //       collageselectedvalue = value;
+                  //     });
+                  //   },
+                  //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //   validator: (value) {
+                  //     if (value == null ||
+                  //         collageselectedvalue!.isEmpty ||
+                  //         collageselectedvalue == null) {
+                  //       return 'Please choose your collage';
+                  //     }
+                  //   },
+                  // ),
+                  // SizedBox(
+                  //   height: 8,
+                  // ),
+                  // //
+                  // DropdownButtonFormField<String>(
+                  //   decoration: InputDecoration(
+                  //     hintText: 'choose a semester',
+                  //     border: OutlineInputBorder(),
+                  //   ),
+                  //   isExpanded: true,
+                  //   items: semester.map((String dropdownitems) {
+                  //     return DropdownMenuItem<String>(
+                  //       value: dropdownitems,
+                  //       child: Text(dropdownitems),
+                  //     );
+                  //   }).toList(),
+                  //   onChanged: (String? newselect) {
+                  //     setState(() {
+                  //       semesterselectedvalue = newselect;
+                  //     });
+                  //   },
+                  //   value: semesterselectedvalue,
+                  //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //   validator: (value) {
+                  //     if (value == null ||
+                  //         semesterselectedvalue!.isEmpty ||
+                  //         semesterselectedvalue == null) {
+                  //       return 'Please choose a semester';
+                  //     }
+                  //   },
+                  // ),
+                  // SizedBox(
+                  //   height: 8,
+                  // ),
                   TextFormField(
                       controller: _meetingmethodcontroller,
                       decoration: InputDecoration(
-                          // labelText: 'Meetting method',
                           labelText:
                               "Enter your metting method(office number or Zoom link )",
                           border: OutlineInputBorder()),
@@ -313,7 +312,7 @@ class _facultysignupState extends State<facultysignup> {
 
                   DropDownMultiSelect(
                     decoration: InputDecoration(
-                        hintText: "please select your speciality",
+                        hintText: "select your speciality",
                         border: OutlineInputBorder()),
                     options: options,
                     whenEmpty: "",
@@ -329,8 +328,8 @@ class _facultysignupState extends State<facultysignup> {
                       validator:
                       (value) {
                         if (value == null ||
-                            collageselectedvalue!.isEmpty ||
-                            collageselectedvalue == null) {
+                            selectedoption.value.isEmpty ||
+                            selectedoption.value == null) {
                           return 'please enter your speciality';
                         }
                       };
