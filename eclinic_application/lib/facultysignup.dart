@@ -22,6 +22,11 @@ class _facultysignupState extends State<facultysignup> {
   List<String> options = [];
   List<String> semester = [];
   late String docsforsemestername;
+  late String? departmentselectedvalue;
+  late String? collageselectedvalue;
+  var semesterselectedvalue;
+  var year;
+  late String semstername;
   Rx<List<String>> selectedoptionlist = Rx<List<String>>([]);
   var selectedoption = "".obs;
   void initState() {
@@ -56,7 +61,14 @@ class _facultysignupState extends State<facultysignup> {
           .then((querySnapshot) {
         querySnapshot.docs.forEach((element) {
           setState(() {
-            semester.add(element['semestername']);
+            DateTime now = DateTime.now();
+            year = now.year;
+            String s = year.toString();
+            String sn = element['semestername'];
+            if ((sn.contains(s))) {
+              semester.add(element['semestername']);
+            }
+            ;
           });
         });
       });
@@ -76,7 +88,6 @@ class _facultysignupState extends State<facultysignup> {
           setState(() {
             if (semstername == element['semestername']) {
               docsforsemestername = element.id;
-              print(docsforsemestername);
             }
           });
         });
@@ -95,14 +106,9 @@ class _facultysignupState extends State<facultysignup> {
   var meetingmethod = '';
   var dep = '';
   var spec = '';
-  var year = '';
+  //var year = '';
   var collage = '';
   var userid = "";
-
-  late String? departmentselectedvalue;
-  late String? collageselectedvalue;
-  late String? semesterselectedvalue;
-  late String semstername;
 
   final _fnameController = TextEditingController();
   final _lnameController = TextEditingController();
@@ -285,7 +291,6 @@ class _facultysignupState extends State<facultysignup> {
                   SizedBox(
                     height: 8,
                   ),
-                  //
                   DropdownButtonFormField<String>(
                     decoration: InputDecoration(
                       hintText: 'choose a semester',
@@ -333,10 +338,9 @@ class _facultysignupState extends State<facultysignup> {
                   SizedBox(
                     height: 8,
                   ),
-
                   DropDownMultiSelect(
                     decoration: InputDecoration(
-                        labelText: " select your speciality",
+                        labelText: "select your speciality",
                         border: OutlineInputBorder()),
                     options: options,
                     whenEmpty: "",
@@ -346,17 +350,16 @@ class _facultysignupState extends State<facultysignup> {
                       selectedoptionlist.value.forEach((element) {
                         selectedoption.value =
                             selectedoption.value + " " + element;
-                        ////////////////not work
-                        (value) {
-                          if (value == null ||
-                              selectedoptionlist.value.isEmpty ||
-                              selectedoptionlist.value == null) {
-                            return 'please enter your speciality';
-                          }
-                        };
                       });
                     },
                     selectedValues: selectedoptionlist.value,
+                    validator: ((selectedOptions) {
+                      if (selectedOptions == null) {
+                        return "Please select your speciality";
+                      } else {
+                        return "";
+                      }
+                    }),
                   ),
                   SizedBox(
                     height: 8,
@@ -384,6 +387,22 @@ class _facultysignupState extends State<facultysignup> {
                             try {
                               if (!(user.emailVerified)) {
                                 user.sendEmailVerification();
+                                Fluttertoast.showToast(
+                                  msg:
+                                      "We send a verfication link on your email ",
+                                  gravity: ToastGravity.TOP,
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  timeInSecForIosWeb: 2,
+                                  backgroundColor:
+                                      Color.fromARGB(255, 239, 91, 91),
+                                  textColor: Color.fromARGB(255, 250, 248, 248),
+                                  fontSize: 18.0,
+                                );
+                              } else {
+                                if (user.emailVerified) {
+                                  Navigator.pushNamed(
+                                      context, 'addHoursFaculty');
+                                }
                               }
                             } catch (error) {
                               print(error);
