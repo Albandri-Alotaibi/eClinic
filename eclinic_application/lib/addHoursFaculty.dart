@@ -386,9 +386,9 @@ class _AddHourState extends State<addHoursFaculty> {
                 itemCount: numOfDaysOfHelp,
                 itemBuilder: ((context, index) {
                   return Card(
-                      child: ListTile(
+                      child: ExpansionTile(
                     title: Text(availableHours[index].title),
-                    subtitle: Text(availableHours[index].allhours),
+                    children: [Text(availableHours[index].allhours)],
                   ));
                 }),
               );
@@ -803,14 +803,12 @@ class _AddHourState extends State<addHoursFaculty> {
           AllActualDatesWithRanges[i].StartOfRange.hour,
           AllActualDatesWithRanges[i].StartOfRange.minute));
 
- Timestamp EndInTimestamp = Timestamp.fromDate(DateTime(
+      Timestamp EndInTimestamp = Timestamp.fromDate(DateTime(
           AllActualDatesWithRanges[i].EndOfRange.year,
           AllActualDatesWithRanges[i].EndOfRange.month,
           AllActualDatesWithRanges[i].EndOfRange.day,
           AllActualDatesWithRanges[i].EndOfRange.hour,
           AllActualDatesWithRanges[i].EndOfRange.minute));
-
-
 
       FirebaseFirestore.instance
           .collection("faculty")
@@ -821,9 +819,9 @@ class _AddHourState extends State<addHoursFaculty> {
         'Day': day, //string
         'starttime': StartInTimestamp, //Start timestamp
         'endtime': EndInTimestamp,
-        'Booked': false, //string if booked then it should have a student refrence
-        });
-        
+        'Booked':
+            false, //string if booked then it should have a student refrence
+      });
     } //end for loop for one day
 
     print(day);
