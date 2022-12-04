@@ -345,21 +345,23 @@ class _facultysignupState extends State<facultysignup> {
                     options: options,
                     whenEmpty: "",
                     onChanged: (value) {
-                      selectedoptionlist.value = value;
-                      selectedoption.value = "";
-                      selectedoptionlist.value.forEach((element) {
-                        selectedoption.value =
-                            selectedoption.value + " " + element;
+                      setState(() {
+                        selectedoptionlist.value = value;
+                        selectedoption.value = "";
+                        selectedoptionlist.value.forEach((element) {
+                          selectedoption.value =
+                              selectedoption.value + " " + element;
+                        });
                       });
                     },
+                    // validator: ((selectedOptions) {
+                    //   if (selectedOptions == "" || selectedOptions == null) {
+                    //     return "Please select your speciality";
+                    //   } else {
+                    //     return "";
+                    //   }
+                    // }),
                     selectedValues: selectedoptionlist.value,
-                    validator: ((selectedOptions) {
-                      if (selectedOptions == null) {
-                        return "Please select your speciality";
-                      } else {
-                        return "";
-                      }
-                    }),
                   ),
                   SizedBox(
                     height: 8,
@@ -398,11 +400,7 @@ class _facultysignupState extends State<facultysignup> {
                                   textColor: Color.fromARGB(255, 250, 248, 248),
                                   fontSize: 18.0,
                                 );
-                              } else {
-                                if (user.emailVerified) {
-                                  Navigator.pushNamed(
-                                      context, 'addHoursFaculty');
-                                }
+                                Navigator.pushNamed(context, 'addHoursFaculty');
                               }
                             } catch (error) {
                               print(error);
