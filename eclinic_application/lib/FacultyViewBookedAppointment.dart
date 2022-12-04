@@ -27,6 +27,10 @@ class _sState extends State<FacultyViewBookedAppointment> {
   List<Appointment> BookedAppointments = [];//availableHours
   bool? isExists;
 int numOfDaysOfHelp = 0;
+var studentsArrayOfRef;
+List students=[];
+String projectname="";
+
 
 @override
   void initState() {
@@ -98,7 +102,7 @@ Future getBookedappointments() async {
       
      numOfDaysOfHelp = snapshot.size;
 
-      snapshot.docs.forEach((DocumentSnapshot doc) {
+      snapshot.docs.forEach((DocumentSnapshot doc) async {
        //if(doc['Booked']==true){
         
         // numOfDaysOfHelp=numOfDaysOfHelp+1; 
@@ -108,8 +112,22 @@ Future getBookedappointments() async {
        
        Timestamp t2= doc['endtime'] as Timestamp;
        DateTime EndTimeDate=t2.toDate();
+
+       studentsArrayOfRef=doc['students'];
+      print("######################################");
+       print(studentsArrayOfRef);
+       print(studentsArrayOfRef.length);
+      int len =studentsArrayOfRef.length;
+
+      for (var i = 0; i < len; i++) {
+    final DocumentSnapshot docRef2 = await studentsArrayOfRef[i].get();
+     print(docRef2['Name']);
+     students.add(docRef2['Name']);
+     projectname=docRef2['ProjectName'];
+      }
+
        setState(() {
-        BookedAppointments.add(new Appointment(id: doc.id, Day: doc['Day'], startTime: StartTimeDate, endTime: EndTimeDate));
+        BookedAppointments.add(new Appointment(id: doc.id, Day: doc['Day'], startTime: StartTimeDate, endTime: EndTimeDate,projectName:projectname, students:  students));
         });
         
       // }
@@ -180,8 +198,10 @@ Future getBookedappointments() async {
                       children: <Widget>[
                         Column(
                           children: <Widget>[
-                    Text("   Date : "+ BookedAppointments[index].StringDate()),
-                    Text("   Time : "+BookedAppointments[index].StringTimeRange()),
+                    Text("  Date : "+ BookedAppointments[index].StringDate()),
+                    Text("  Time : "+BookedAppointments[index].StringTimeRange()),
+                    Text("  Project : "+BookedAppointments[index].projectName+"\n"),
+                     Text("  Students : "+BookedAppointments[index].StringStudents())     
                           ]),
                     //crossAxisAlignment: CrossAxisAlignment.start,
                     Row(
