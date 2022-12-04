@@ -108,8 +108,9 @@ Future getBookedappointments() async {
        
        Timestamp t2= doc['endtime'] as Timestamp;
        DateTime EndTimeDate=t2.toDate();
-
-        BookedAppointments.add(new Appointment(Day: doc['Day'], startTime: StartTimeDate, endTime: EndTimeDate));
+       setState(() {
+        BookedAppointments.add(new Appointment(id: doc.id, Day: doc['Day'], startTime: StartTimeDate, endTime: EndTimeDate));
+        });
         
       // }
       });
@@ -142,7 +143,7 @@ Future getBookedappointments() async {
   Widget build(BuildContext context) {
   //getBookedappointments();
 
-    if (isExists == false) {
+    if (isExists == false || numOfDaysOfHelp==0) {
         return Scaffold(
           appBar: AppBar(
             title: Text('View hours'),
@@ -191,7 +192,7 @@ Future getBookedappointments() async {
                       children: <Widget>[
                    IconButton(
                     icon: Icon(Icons.cancel),
-                    onPressed: () => {},
+                    onPressed: () => {CancelAppointment(index)},
                      ),
                       ]
                     )
@@ -223,6 +224,32 @@ Future getBookedappointments() async {
           );
      //}
     }//end else there is booked appointments
+
+
+
+  }
+
+
+
+  CancelAppointment(int index) async{//async
+// final FirebaseAuth auth = await FirebaseAuth.instance;
+//     final User? user = await auth.currentUser;
+//     userid = user!.uid;
+//     email = user.email!;
+    print(index);
+          await FirebaseFirestore.instance
+          .collection("faculty")
+          .doc(userid)
+          .collection('appointment')
+          .doc(BookedAppointments[index].id) //Is there a specific id i should put for the appointments
+          .update({
+        'Booked': false, //string if booked then it should have a student refrence
+        });
+
+    setState(() {
+     dynamic res = BookedAppointments.removeAt(index);
+     numOfDaysOfHelp=numOfDaysOfHelp-1;
+    });
 
   }
 }
