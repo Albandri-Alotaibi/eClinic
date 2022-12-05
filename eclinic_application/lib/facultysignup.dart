@@ -1,6 +1,3 @@
-import 'dart:ffi';
-import 'dart:math';
-
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +23,7 @@ class _facultysignupState extends State<facultysignup> {
   List<String> semester = [];
   List<String> collage = [];
   List<String> department = [];
-  List<String> speciality = [];
+  List speciality = [];
   late String docsforsemestername;
   late String docsforcollage;
   late String docfordepatment;
@@ -190,7 +187,10 @@ class _facultysignupState extends State<facultysignup> {
 
   checkidspecialty(List<String?> specialityoption) async {
     speciality.length = 0;
-    String col = "facultyspeciality/";
+    print(specialityoption);
+    print(speciality.length);
+    print(speciality);
+
     try {
       await FirebaseFirestore.instance
           .collection('facultyspeciality')
@@ -200,10 +200,11 @@ class _facultysignupState extends State<facultysignup> {
           setState(() {
             for (var i = 0; i < specialityoption.length; i++) {
               if (element['specialityname'] == specialityoption[i]) {
-                String idstring = element.id;
-                String concatnate = col + idstring;
-                print(concatnate);
-                speciality.add(concatnate);
+                final ref = FirebaseFirestore.instance
+                    .collection("facultyspeciality")
+                    .doc(element.id);
+                speciality.add(ref);
+                print(speciality);
               }
             }
           });
@@ -472,10 +473,9 @@ class _facultysignupState extends State<facultysignup> {
                         selectedoptionlist.value.forEach((element) {
                           selectedoption.value =
                               selectedoption.value + " " + element;
-                          checkidspecialty(selectedoptionlist.value);
                         });
                       });
-                      // checkidspecialty(selectedoptionlist.value);
+                      checkidspecialty(selectedoptionlist.value);
                     },
                     selectedValues: selectedoptionlist.value,
 
