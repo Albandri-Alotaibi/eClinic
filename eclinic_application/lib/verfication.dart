@@ -15,15 +15,20 @@ class verfication extends StatefulWidget {
 
 class _verficationState extends State<verfication> {
   @override
-  // late bool verfiy;
-  // void initState() {
-  //   final FirebaseAuth auth = FirebaseAuth.instance;
-  //   final User? user = auth.currentUser;
-  //   if (user!.emailVerified) {
-  //     verfiy = true;
-  //   }
-  //   super.initState();
-  // }
+  bool verfiy = false;
+  void initState() {
+    checkverfication();
+    super.initState();
+  }
+
+  checkverfication() async {
+    final User? user = await FirebaseAuth.instance.currentUser;
+
+    if (user!.emailVerified) {
+      verfiy = true;
+      print("verfiy");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +43,11 @@ class _verficationState extends State<verfication> {
                 "We sent a verfication link on your email please verfiy your account"),
             ElevatedButton(
               onPressed: () async {
+                checkverfication();
                 try {
                   final User? user = await FirebaseAuth.instance.currentUser;
-                  if (user!.emailVerified) {
+                  checkverfication();
+                  if (verfiy) {
                     Navigator.pushNamed(context, 'facultyhome');
                   }
                 } catch (error) {
