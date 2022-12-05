@@ -190,6 +190,7 @@ class _facultysignupState extends State<facultysignup> {
 
   checkidspecialty(List<String?> specialityoption) async {
     speciality.length = 0;
+    String col = "facultyspeciality/";
     try {
       await FirebaseFirestore.instance
           .collection('facultyspeciality')
@@ -199,7 +200,10 @@ class _facultysignupState extends State<facultysignup> {
           setState(() {
             for (var i = 0; i < specialityoption.length; i++) {
               if (element['specialityname'] == specialityoption[i]) {
-                speciality.add(element.id);
+                String idstring = element.id;
+                String concatnate = col + idstring;
+                print(concatnate);
+                speciality.add(concatnate);
               }
             }
           });
