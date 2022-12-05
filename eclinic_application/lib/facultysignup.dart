@@ -338,31 +338,30 @@ class _facultysignupState extends State<facultysignup> {
                   SizedBox(
                     height: 8,
                   ),
-                  DropDownMultiSelect(
-                    decoration: InputDecoration(
-                        labelText: "select your speciality",
-                        border: OutlineInputBorder()),
-                    options: options,
-                    whenEmpty: "",
-                    onChanged: (value) {
-                      setState(() {
-                        selectedoptionlist.value = value;
-                        selectedoption.value = "";
-                        selectedoptionlist.value.forEach((element) {
-                          selectedoption.value =
-                              selectedoption.value + " " + element;
-                        });
-                      });
-                    },
-                    // validator: ((selectedOptions) {
-                    //   if (selectedOptions == "" || selectedOptions == null) {
-                    //     return "Please select your speciality";
-                    //   } else {
-                    //     return "";
-                    //   }
-                    // }),
-                    selectedValues: selectedoptionlist.value,
-                  ),
+                  // DropDownMultiSelect(
+                  //   decoration: InputDecoration(
+                  //       labelText: "select your speciality",
+                  //       border: OutlineInputBorder()),
+                  //   options: options,
+                  //   whenEmpty: "",
+                  //   onChanged: (value) {
+                  //     setState(() {
+                  //       selectedoptionlist.value = value;
+                  //       selectedoption.value = "";
+                  //       selectedoptionlist.value.forEach((element) {
+                  //         selectedoption.value =
+                  //             selectedoption.value + " " + element;
+                  //       });
+                  //     });
+                  //   },
+                  //   selectedValues: selectedoptionlist.value,
+                  //   validator: ((selectedOptions) {
+                  //     if (selectedOptions == "" || selectedOptions == null) {
+                  //       return "Please select your speciality";
+                  //     }
+                  //     return "";
+                  //   }),
+                  // ),
                   SizedBox(
                     height: 8,
                   ),
@@ -389,18 +388,7 @@ class _facultysignupState extends State<facultysignup> {
                             try {
                               if (!(user.emailVerified)) {
                                 user.sendEmailVerification();
-                                Fluttertoast.showToast(
-                                  msg:
-                                      "We send a verfication link on your email ",
-                                  gravity: ToastGravity.TOP,
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  timeInSecForIosWeb: 2,
-                                  backgroundColor:
-                                      Color.fromARGB(255, 239, 91, 91),
-                                  textColor: Color.fromARGB(255, 250, 248, 248),
-                                  fontSize: 18.0,
-                                );
-                                Navigator.pushNamed(context, 'addHoursFaculty');
+                                Navigator.pushNamed(context, 'verfication');
                               }
                             } catch (error) {
                               print(error);
@@ -417,7 +405,7 @@ class _facultysignupState extends State<facultysignup> {
                               'department': departmentselectedvalue,
                               'collage': collageselectedvalue,
                               'semester': docsforsemestername,
-                              'specialty': selectedoptionlist.value,
+                              //'specialty': selectedoptionlist.value,
                             });
                           });
                         }

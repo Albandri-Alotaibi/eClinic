@@ -12,6 +12,7 @@ import 'package:myapp/login.dart';
 import 'package:myapp/reusable.dart';
 import 'package:myapp/studenthome.dart';
 import 'package:myapp/facultysignup.dart';
+import 'package:myapp/verfication.dart';
 import 'package:myapp/viewfaculty.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multiselect/multiselect.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
         'login': (context) => login(),
         'FacultyViewBookedAppointment': (context) =>
             FacultyViewBookedAppointment(),
+        'verfication': (context) => verfication(),
       },
     );
   }
