@@ -187,9 +187,9 @@ class _facultysignupState extends State<facultysignup> {
 
   checkidspecialty(List<String?> specialityoption) async {
     speciality.length = 0;
-    print(specialityoption);
-    print(speciality.length);
-    print(speciality);
+    // print(specialityoption);
+    // print(speciality.length);
+    // print(speciality);
 
     try {
       await FirebaseFirestore.instance
