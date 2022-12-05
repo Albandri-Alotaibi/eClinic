@@ -1,3 +1,6 @@
+import 'dart:ffi';
+import 'dart:math';
+
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
@@ -21,9 +24,14 @@ class _facultysignupState extends State<facultysignup> {
   final formkey = GlobalKey<FormState>();
   List<String> options = [];
   List<String> semester = [];
+  List<String> collage = [];
+  List<String> department = [];
+  List<String> speciality = [];
   late String docsforsemestername;
-  late String? departmentselectedvalue;
-  late String? collageselectedvalue;
+  late String docsforcollage;
+  late String docfordepatment;
+  var departmentselectedvalue;
+  var collageselectedvalue;
   var semesterselectedvalue;
   var year;
   late String semstername;
@@ -32,6 +40,8 @@ class _facultysignupState extends State<facultysignup> {
   void initState() {
     retrivespecilty();
     retrievesemester();
+    retrivecollage();
+    retrivedepartment();
     super.initState();
   }
 
@@ -78,7 +88,45 @@ class _facultysignupState extends State<facultysignup> {
     }
   }
 
-  Future checkid(String? semstername) async {
+  retrivecollage() async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('collage')
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          setState(() {
+            collage.add(element['collagename']);
+          });
+        });
+      });
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  retrivedepartment() async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('collage')
+          .doc("CCIS")
+          .collection("department")
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          setState(() {
+            department.add(element['departmentname']);
+          });
+        });
+      });
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future checkids(String? semstername) async {
     try {
       await FirebaseFirestore.instance
           .collection('semester')
@@ -98,6 +146,71 @@ class _facultysignupState extends State<facultysignup> {
     }
   }
 
+  Future checkidc(String? collagename) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('collage')
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          setState(() {
+            if (collagename == element['collagename']) {
+              docsforcollage = element.id;
+            }
+          });
+        });
+      });
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future checkidd(String? departmentename) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('collage')
+          .doc("CCIS")
+          .collection("department")
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          setState(() {
+            if (departmentename == element['departmentname']) {
+              docfordepatment = element.id;
+            }
+          });
+        });
+      });
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  checkidspecialty(List<String?> specialityoption) async {
+    speciality.length = 0;
+    try {
+      await FirebaseFirestore.instance
+          .collection('facultyspeciality')
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          setState(() {
+            for (var i = 0; i < specialityoption.length; i++) {
+              if (element['specialityname'] == specialityoption[i]) {
+                speciality.add(element.id);
+              }
+            }
+          });
+        });
+      });
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
   //to get user input
   var fname = '';
   var lname = '';
@@ -106,8 +219,6 @@ class _facultysignupState extends State<facultysignup> {
   var meetingmethod = '';
   var dep = '';
   var spec = '';
-  //var year = '';
-  var collage = '';
   var userid = "";
 
   final _fnameController = TextEditingController();
@@ -235,56 +346,62 @@ class _facultysignupState extends State<facultysignup> {
                   SizedBox(
                     height: 8,
                   ),
-                  DropdownButtonFormField(
+                  DropdownButtonFormField<String>(
                     decoration: InputDecoration(
-                      // labelText: "Department",
-                      hintText: 'choose your department',
-                      border: OutlineInputBorder(),
-                    ),
-                    items: const [
-                      DropdownMenuItem<String>(child: Text('IT'), value: 'IT'),
-                      DropdownMenuItem<String>(child: Text('CS'), value: 'CS'),
-                      DropdownMenuItem<String>(child: Text('SE'), value: 'SE'),
-                      DropdownMenuItem<String>(child: Text('IS'), value: 'IS')
-                    ],
-                    onChanged: (value) {
-                      setState(() {
-                        departmentselectedvalue = value;
-                      });
-                    },
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value == null ||
-                          departmentselectedvalue!.isEmpty ||
-                          departmentselectedvalue == null) {
-                        return 'Please choose your department';
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  DropdownButtonFormField(
-                    decoration: InputDecoration(
-                      // labelText: "collage",
                       hintText: 'choose your collage',
                       border: OutlineInputBorder(),
                     ),
-                    items: const [
-                      DropdownMenuItem<String>(
-                          child: Text('CCIS'), value: 'CCIS'),
-                    ],
-                    onChanged: (value) {
+                    isExpanded: true,
+                    items: collage.map((String dropdownitems) {
+                      return DropdownMenuItem<String>(
+                        value: dropdownitems,
+                        child: Text(dropdownitems),
+                      );
+                    }).toList(),
+                    onChanged: (String? newselect) {
                       setState(() {
-                        collageselectedvalue = value;
+                        collageselectedvalue = newselect;
+                        checkidc(collageselectedvalue);
                       });
                     },
+                    value: collageselectedvalue,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value == null ||
                           collageselectedvalue!.isEmpty ||
                           collageselectedvalue == null) {
                         return 'Please choose your collage';
+                      }
+                    },
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  DropdownButtonFormField<String>(
+                    decoration: InputDecoration(
+                      hintText: 'choose your department',
+                      border: OutlineInputBorder(),
+                    ),
+                    isExpanded: true,
+                    items: department.map((String dropdownitems) {
+                      return DropdownMenuItem<String>(
+                        value: dropdownitems,
+                        child: Text(dropdownitems),
+                      );
+                    }).toList(),
+                    onChanged: (String? newselect) {
+                      setState(() {
+                        departmentselectedvalue = newselect;
+                        checkidd(departmentselectedvalue);
+                      });
+                    },
+                    value: departmentselectedvalue,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value) {
+                      if (value == null ||
+                          departmentselectedvalue!.isEmpty ||
+                          departmentselectedvalue == null) {
+                        return 'Please choose your department';
                       }
                     },
                   ),
@@ -306,7 +423,7 @@ class _facultysignupState extends State<facultysignup> {
                     onChanged: (String? newselect) {
                       setState(() {
                         semesterselectedvalue = newselect;
-                        checkid(semesterselectedvalue);
+                        checkids(semesterselectedvalue);
                       });
                     },
                     value: semesterselectedvalue,
@@ -338,30 +455,33 @@ class _facultysignupState extends State<facultysignup> {
                   SizedBox(
                     height: 8,
                   ),
-                  // DropDownMultiSelect(
-                  //   decoration: InputDecoration(
-                  //       labelText: "select your speciality",
-                  //       border: OutlineInputBorder()),
-                  //   options: options,
-                  //   whenEmpty: "",
-                  //   onChanged: (value) {
-                  //     setState(() {
-                  //       selectedoptionlist.value = value;
-                  //       selectedoption.value = "";
-                  //       selectedoptionlist.value.forEach((element) {
-                  //         selectedoption.value =
-                  //             selectedoption.value + " " + element;
-                  //       });
-                  //     });
-                  //   },
-                  //   selectedValues: selectedoptionlist.value,
-                  //   validator: ((selectedOptions) {
-                  //     if (selectedOptions == "" || selectedOptions == null) {
-                  //       return "Please select your speciality";
-                  //     }
-                  //     return "";
-                  //   }),
-                  // ),
+                  DropDownMultiSelect(
+                    decoration: InputDecoration(
+                        labelText: "select your speciality",
+                        border: OutlineInputBorder()),
+                    options: options,
+                    whenEmpty: "",
+                    onChanged: (value) {
+                      setState(() {
+                        selectedoptionlist.value = value;
+                        selectedoption.value = "";
+                        selectedoptionlist.value.forEach((element) {
+                          selectedoption.value =
+                              selectedoption.value + " " + element;
+                          checkidspecialty(selectedoptionlist.value);
+                        });
+                      });
+                      // checkidspecialty(selectedoptionlist.value);
+                    },
+                    selectedValues: selectedoptionlist.value,
+
+                    // validator: ((selectedOptions) {
+                    //   if (selectedOptions == "" || selectedOptions == null) {
+                    //     return "Please select your speciality";
+                    //   }
+                    //   return "";
+                    // }),
+                  ),
                   SizedBox(
                     height: 8,
                   ),
@@ -402,10 +522,18 @@ class _facultysignupState extends State<facultysignup> {
                               'lastname': lname,
                               'ksuemail': email,
                               'meetingmethod': meetingmethod,
-                              'department': departmentselectedvalue,
-                              'collage': collageselectedvalue,
-                              'semester': docsforsemestername,
-                              //'specialty': selectedoptionlist.value,
+                              'department': FirebaseFirestore.instance
+                                  .collection("collage")
+                                  .doc(docsforcollage)
+                                  .collection("department")
+                                  .doc(docfordepatment),
+                              'collage': FirebaseFirestore.instance
+                                  .collection("collage")
+                                  .doc(docsforcollage),
+                              'semester': FirebaseFirestore.instance
+                                  .collection("semester")
+                                  .doc(docsforsemestername),
+                              'specialty': speciality,
                             });
                           });
                         }
@@ -446,12 +574,5 @@ class _facultysignupState extends State<facultysignup> {
             ),
           ),
         ));
-    // void verfityemail() {
-    //   final FirebaseAuth auth = FirebaseAuth.instance;
-    //   final User? user = auth.currentUser;
-    //   if (!(user!.emailVerified)) {
-    //     user.sendEmailVerification();
-    //   }
-    // }
   }
 }
