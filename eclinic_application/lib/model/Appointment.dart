@@ -27,13 +27,13 @@ class Appointment {
 
 String StringDate() {
     // TODO: implement toString
-      String srting = "${startTime.year}/${startTime.month}/${startTime.day}\n";
+      String srting = "${startTime.day}/${startTime.month}/${startTime.year}";
     return srting;
   }
 
 String StringTimeRange() {
     // TODO: implement toString
-    String srting = "${startTime.hour}:${startTime.minute} - ${endTime.hour}:${endTime.minute}\n";
+    String srting = "${startTime.hour}:${startTime.minute} - ${endTime.hour}:${endTime.minute}";
     return srting;
   }
 
