@@ -31,6 +31,12 @@ class _sState extends State<studenthome> {
           },
           child: Text('Schdule consultation'),
         ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, 'studentsignup');
+          },
+          child: Text('student signup'),
+        ),
         const SizedBox(width: 16),
       ],
     );

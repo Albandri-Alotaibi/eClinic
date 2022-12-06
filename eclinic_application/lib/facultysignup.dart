@@ -232,11 +232,12 @@ class _facultysignupState extends State<facultysignup> {
   final _passwordController = TextEditingController();
   final _meetingmethodcontroller = TextEditingController();
   static final RegExp nameRegExp = RegExp(r'[!@#<>?":_`~;[\]\\|=+)(*&^%0-9-]');
-  static final RegExp emailRegExp = RegExp(
-      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
   RegExp uperRegExp = RegExp(r"(?=.*[A-Z])");
   RegExp numbRegExp = RegExp(r"[0-9]");
   RegExp smallRegExp = RegExp(r"(?=.*[a-z])");
+  RegExp ksuEmailRegEx = new RegExp(r'^([a-z\d\._]+)@ksu.edu.sa$',
+      multiLine: false, caseSensitive: false);
+  RegExp english = RegExp("^[\u0000-\u007F]+\$");
 
   @override
   Widget build(BuildContext context) {
@@ -265,6 +266,10 @@ class _facultysignupState extends State<facultysignup> {
                       } else {
                         if (nameRegExp.hasMatch(_fnameController.text)) {
                           return 'Please frist name only letters accepted ';
+                        } else {
+                          if (!(english.hasMatch(_fnameController.text))) {
+                            return "only english is allowed";
+                          }
                         }
                       }
                     },
@@ -285,6 +290,10 @@ class _facultysignupState extends State<facultysignup> {
                       } else {
                         if (nameRegExp.hasMatch(_lnameController.text)) {
                           return 'Please last name only letters accepted ';
+                        } else {
+                          if (!(english.hasMatch(_lnameController.text))) {
+                            return "only english is allowed";
+                          }
                         }
                       }
                     },
@@ -303,8 +312,8 @@ class _facultysignupState extends State<facultysignup> {
                       if (value!.isEmpty || _emailController.text == "") {
                         return 'Please enter your KSU email ';
                       } else {
-                        if (!(emailRegExp.hasMatch(_emailController.text))) {
-                          return 'Please write email format correctly ';
+                        if (!(ksuEmailRegEx.hasMatch(_emailController.text))) {
+                          return 'Please write email format correctly, example@ksu.edu.sa ';
                         }
                       }
                     },
@@ -323,28 +332,32 @@ class _facultysignupState extends State<facultysignup> {
                         if (value!.isEmpty || _passwordController.text == "") {
                           return 'Please enter your password';
                         } else {
-                          if (value.length < 8 &&
-                              !uperRegExp.hasMatch(value) &&
-                              !numbRegExp.hasMatch(value) &&
-                              !smallRegExp.hasMatch(value)) {
-                            return "Your password must be at least 8 characters and contain both uppercase and lowercase letters";
-                          } else if (value.length < 8 &&
-                              !uperRegExp.hasMatch(value)) {
-                            return "Your password must be at least 8 characters and contain uppercase letters";
-                          } else if (value.length < 8 &&
-                              !smallRegExp.hasMatch(value)) {
-                            return "Your password must be at least 8 characters and contain lowercase letters";
-                          } else if (!uperRegExp.hasMatch(value) &&
-                              !smallRegExp.hasMatch(value)) {
-                            return "Your password must be contain both uppercase and lowercase letters";
-                          } else if (value.length < 8) {
-                            return "Your password must be at least 8 characters";
-                          } else if (!uperRegExp.hasMatch(value)) {
-                            return "Your password must be contain uppercase letters";
-                          } else if (!smallRegExp.hasMatch(value)) {
-                            return "Your password must be contain lowercase letters";
-                          } else if (!numbRegExp.hasMatch(value)) {
-                            return "Your password must be contain number";
+                          if (!(english.hasMatch(_passwordController.text))) {
+                            return "only english is allowed";
+                          } else {
+                            if (value.length < 8 &&
+                                !uperRegExp.hasMatch(value) &&
+                                !numbRegExp.hasMatch(value) &&
+                                !smallRegExp.hasMatch(value)) {
+                              return "Your password must be at least 8 characters and contain both uppercase and lowercase letters";
+                            } else if (value.length < 8 &&
+                                !uperRegExp.hasMatch(value)) {
+                              return "Your password must be at least 8 characters and contain uppercase letters";
+                            } else if (value.length < 8 &&
+                                !smallRegExp.hasMatch(value)) {
+                              return "Your password must be at least 8 characters and contain lowercase letters";
+                            } else if (!uperRegExp.hasMatch(value) &&
+                                !smallRegExp.hasMatch(value)) {
+                              return "Your password must be contain both uppercase and lowercase letters";
+                            } else if (value.length < 8) {
+                              return "Your password must be at least 8 characters";
+                            } else if (!uperRegExp.hasMatch(value)) {
+                              return "Your password must be contain uppercase letters";
+                            } else if (!smallRegExp.hasMatch(value)) {
+                              return "Your password must be contain lowercase letters";
+                            } else if (!numbRegExp.hasMatch(value)) {
+                              return "Your password must be contain number";
+                            }
                           }
                         }
                       }),
@@ -455,6 +468,10 @@ class _facultysignupState extends State<facultysignup> {
                         if (value!.isEmpty ||
                             _meetingmethodcontroller.text == "") {
                           return 'Please enter your metting method';
+                        } else {
+                          if (!(english.hasMatch(_passwordController.text))) {
+                            return "only english is allowed";
+                          }
                         }
                       }),
                   SizedBox(
