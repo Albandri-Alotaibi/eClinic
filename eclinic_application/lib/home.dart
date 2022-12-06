@@ -52,15 +52,9 @@ class _homeState extends State<home> {
             const SizedBox(width: 16),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, 'studenthome');
+                Navigator.pushNamed(context, 'studentlogin');
               },
-              child: Text('student home (bcz login student not exist)'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, 'check');
-              },
-              child: Text('check)'),
+              child: Text('student login'),
             ),
           ],
         ),

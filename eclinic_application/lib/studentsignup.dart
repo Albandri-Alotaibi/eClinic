@@ -500,9 +500,7 @@ class _studentsignupState extends State<studentsignup> {
                               validator: ((selectedOptions) {
                                 if (selectedoptionlist.value.length < 1)
                                   return "Please select your graduation project category";
-                                else {
-                                  return "";
-                                }
+                                return "";
                               }),
                             ),
                             SizedBox(

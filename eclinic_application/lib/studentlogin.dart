@@ -133,7 +133,7 @@ class _studentloginState extends State<studentlogin> {
                 Text("You don't have an account?"),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, 'facultysignup');
+                    Navigator.pushNamed(context, 'studentsignup');
                   },
                   child: Text('Signup'),
                 ),
