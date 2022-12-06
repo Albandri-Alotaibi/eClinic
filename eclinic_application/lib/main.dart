@@ -18,10 +18,15 @@ import 'package:myapp/viewfaculty.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multiselect/multiselect.dart';
 
+Future<void> _firebaseMsgBackgroundHanler(RemoteMessage message) async {
+  print("handling msg ${message.messageId}");
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await FirebaseMessaging.instance.getInitialMessage();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMsgBackgroundHanler);
   runApp(const MyApp());
 }
 
