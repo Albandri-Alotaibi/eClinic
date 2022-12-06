@@ -13,6 +13,7 @@ import 'package:myapp/login.dart';
 import 'package:myapp/reusable.dart';
 import 'package:myapp/studenthome.dart';
 import 'package:myapp/facultysignup.dart';
+import 'package:myapp/studentlogin.dart';
 import 'package:myapp/studentsignup.dart';
 import 'package:myapp/verfication.dart';
 import 'package:myapp/viewfaculty.dart';
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
             FacultyViewBookedAppointment(),
         'verfication': (context) => verfication(),
         'studentsignup': (context) => studentsignup(),
+        'studentlogin': (context) => studentlogin(),
       },
     );
   }

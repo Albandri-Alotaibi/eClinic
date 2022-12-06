@@ -56,6 +56,12 @@ class _homeState extends State<home> {
               },
               child: Text('student home (bcz login student not exist)'),
             ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, 'check');
+              },
+              child: Text('check)'),
+            ),
           ],
         ),
       ),

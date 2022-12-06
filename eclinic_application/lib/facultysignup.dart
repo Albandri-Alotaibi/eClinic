@@ -495,13 +495,11 @@ class _facultysignupState extends State<facultysignup> {
                       checkidspecialty(selectedoptionlist.value);
                     },
                     selectedValues: selectedoptionlist.value,
-
-                    // validator: ((selectedOptions) {
-                    //   if (selectedOptions == "" || selectedOptions == null) {
-                    //     return "Please select your speciality";
-                    //   }
-                    //   return "";
-                    // }),
+                    validator: ((selectedOptions) {
+                      if (selectedoptionlist.value.length < 1)
+                        return "Please select your speciality";
+                      return "";
+                    }),
                   ),
                   SizedBox(
                     height: 8,

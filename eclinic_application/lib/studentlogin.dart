@@ -6,14 +6,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class login extends StatefulWidget {
-  const login({super.key});
+class studentlogin extends StatefulWidget {
+  const studentlogin({super.key});
 
   @override
-  State<login> createState() => _loginState();
+  State<studentlogin> createState() => _studentloginState();
 }
 
-class _loginState extends State<login> {
+class _studentloginState extends State<studentlogin> {
+  @override
   var email = '';
   var password = '';
   final formkey = GlobalKey<FormState>();
