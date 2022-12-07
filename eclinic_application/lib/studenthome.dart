@@ -106,7 +106,7 @@ class _sState extends State<studenthome> {
     //++++++++++++++++++++++++++DEEM++++++++++++++++++++++++++++++++
     requestPremission();
     getToken();
-    // initInfo();
+    initInfo();
   }
 
   String? mtoken = " ";
@@ -132,76 +132,76 @@ class _sState extends State<studenthome> {
         .update({'token': token});
   }
 
-  // initInfo() {
-  //   var androidInitialize =
-  //       const AndroidInitializationSettings("@mipmap/ic_launcher");
-  //   var initializationSettings =
-  //       InitializationSettings(android: androidInitialize);
+  initInfo() {
+    var androidInitialize =
+        const AndroidInitializationSettings("@mipmap/ic_launcher");
+    var initializationSettings =
+        InitializationSettings(android: androidInitialize);
 
-  //   flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
-  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-  //     print("...................onMessage................");
-  //     print(
-  //         "onMessage: ${message.notification?.title}/${message.notification?.body}");
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      print("...................onMessage................");
+      print(
+          "onMessage: ${message.notification?.title}/${message.notification?.body}");
 
-  //     BigTextStyleInformation bigTextStyleInformation = BigTextStyleInformation(
-  //         message.notification!.body.toString(),
-  //         htmlFormatBigText: true,
-  //         contentTitle: message.notification!.title.toString(),
-  //         htmlFormatContentTitle: true);
+      BigTextStyleInformation bigTextStyleInformation = BigTextStyleInformation(
+          message.notification!.body.toString(),
+          htmlFormatBigText: true,
+          contentTitle: message.notification!.title.toString(),
+          htmlFormatContentTitle: true);
 
-  //     AndroidNotificationDetails androidPlatformChannelSpecifics =
-  //         AndroidNotificationDetails(
-  //       "dbfood",
-  //       "dbfood",
-  //       importance: Importance.high,
-  //       styleInformation: bigTextStyleInformation,
-  //       priority: Priority.high,
-  //       playSound: true,
-  //     );
+      AndroidNotificationDetails androidPlatformChannelSpecifics =
+          AndroidNotificationDetails(
+        "dbfood",
+        "dbfood",
+        importance: Importance.high,
+        styleInformation: bigTextStyleInformation,
+        priority: Priority.high,
+        playSound: true,
+      );
 
-  //     NotificationDetails platformChannelSpecifics =
-  //         NotificationDetails(android: androidPlatformChannelSpecifics);
-  //     await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
-  //         message.notification?.body, platformChannelSpecifics,
-  //         payload: message.data['body']);
-  //   });
-  // }
+      NotificationDetails platformChannelSpecifics =
+          NotificationDetails(android: androidPlatformChannelSpecifics);
+      await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
+          message.notification?.body, platformChannelSpecifics,
+          payload: message.data['body']);
+    });
+  }
 
-  // void sendPushMessege(String token) async {
-  //   try {
-  //     await http.post(
-  //       Uri.parse('https://fcm.googleapis.com/fcm/send'),
-  //       headers: <String, String>{
-  //         'Content-Type': 'application/json',
-  //         'Authorization':
-  //             'key=AAAAIqZZfrY:APA91bGmyg-TtTdQSaXgauRdN1LmyCWHL18IWSzI5UxqHk3TYdCFegHCDysMhyEvEYFBi9o7ofyiAQE-HZOG_TGH9AnfknXWUZmZpbKvBJ0Wx4zsQ8BJPx21NDiZloaCoyfetjjPkRP4'
-  //       },
-  //       body: jsonEncode(
-  //         <String, dynamic>{
-  //           'priority': 'high',
-  //           'data': <String, dynamic>{
-  //             'click_action': 'FLUTTER_NOTIFICATION_CLICK',
-  //             'status': 'done',
-  //             'body': 'your appointment has been canceled',
-  //             'title': 'appointment cancelation',
-  //           },
-  //           "notification": <String, dynamic>{
-  //             "title": "appointment cancelation",
-  //             "body": "your appointment has been canceled",
-  //             "android_channel_id": "dbfood",
-  //           },
-  //           "to": token,
-  //         },
-  //       ),
-  //     );
-  //   } catch (e) {
-  //     if (kDebugMode) {
-  //       print("Error push notifcathion");
-  //     }
-  //   }
-  // }
+  void sendPushMessege(String token) async {
+    try {
+      await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization':
+              'key=AAAAIqZZfrY:APA91bGmyg-TtTdQSaXgauRdN1LmyCWHL18IWSzI5UxqHk3TYdCFegHCDysMhyEvEYFBi9o7ofyiAQE-HZOG_TGH9AnfknXWUZmZpbKvBJ0Wx4zsQ8BJPx21NDiZloaCoyfetjjPkRP4'
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'status': 'done',
+              'body': 'your appointment has been canceled',
+              'title': 'appointment cancelation',
+            },
+            "notification": <String, dynamic>{
+              "title": "appointment cancelation",
+              "body": "your appointment has been canceled",
+              "android_channel_id": "dbfood",
+            },
+            "to": token,
+          },
+        ),
+      );
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error push notifcathion");
+      }
+    }
+  }
 
 //+++++++++++++++++++++++++++++++++++++++++DEEM+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
