@@ -5,6 +5,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:myapp/login.dart';
 
 class studenthome extends StatefulWidget {
   // This class is the configuration for the state.
@@ -20,8 +22,23 @@ class studenthome extends StatefulWidget {
 }
 
 class _sState extends State<studenthome> {
+  String? email = '';
+  String? userid = '';
   @override
   Widget build(BuildContext context) {
+    StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: ((context, snapshot) {
+          if (snapshot.hasData) {
+            return studenthome();
+          } else {
+            return login();
+          }
+        }));
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    userid = user!.uid;
+    email = user.email!;
     // This method is rerun every time setState is called,
     // for instance, as done by the _increment method above.
     // The Flutter framework has been optimized to make
