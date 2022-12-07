@@ -122,9 +122,13 @@ class _sState extends State<studenthome> {
   }
 
   void saveToken(String token) async {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    userid = user!.uid;
+    email = user.email!;
     await FirebaseFirestore.instance
         .collection("student")
-        .doc("8aeGvoqjmTtCYhVcaLBm")
+        .doc(userid)
         .update({'token': token});
   }
 
