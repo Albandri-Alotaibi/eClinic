@@ -29,7 +29,7 @@ class _AddHourState extends State<addHoursFaculty> {
   TimeOfDay initime = TimeOfDay.now();
 
   bool? isExists;
-
+  bool? isSemesterDateExists;
   final daysOfHelp = [
     CheckBoxState(title: 'Sunday', hours: ['un']),
     CheckBoxState(title: 'Monday', hours: ['un']),
@@ -120,6 +120,40 @@ class _AddHourState extends State<addHoursFaculty> {
   void initState() {
     super.initState();
     IsHoursExists(); // use a helper method because initState() cannot be async
+    IsSemesterDatesExists();
+  }
+
+  Future<bool?> IsSemesterDatesExists() async {
+    final FirebaseAuth auth = await FirebaseAuth.instance;
+    final User? user = await auth.currentUser;
+    userid = user!.uid;
+    email = user.email!;
+
+    final snap = await FirebaseFirestore.instance
+        .collection("faculty")
+        .doc(userid)
+        .get();
+    print("D------------------print semester-----------------");
+    print(snap['semester']);
+    var semester = snap['semester'];
+
+    final DocumentSnapshot docRef2 = await semester.get();
+    print("-------------------print doc-----------------");
+    try {
+      print(docRef2['startdate']);
+      setState(() {
+        isSemesterDateExists = true;
+      });
+
+      print(isSemesterDateExists);
+    } catch (e) {
+      setState(() {
+        isSemesterDateExists = false;
+      });
+
+      print(isSemesterDateExists);
+      print("no");
+    }
   }
 
   Future<bool?> IsHoursExists() async {
@@ -212,6 +246,7 @@ class _AddHourState extends State<addHoursFaculty> {
   Widget build(BuildContext context) {
     getusers();
     PrintViewHours();
+    // IsSemesterDatesExists();
 //     final FirebaseAuth auth = FirebaseAuth.instance;
 //     final User? user = auth.currentUser;
 //     userid = user!.uid;
@@ -277,7 +312,21 @@ class _AddHourState extends State<addHoursFaculty> {
     //      print('#####################################################');
     //       print(startingDate);
     //       print(endDate);
-    if (isExists == false) {
+    if (isSemesterDateExists == false) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Add hours'),
+        ),
+        body: FutureBuilder(
+          future: IsSemesterDatesExists(),
+          builder: (context, snapshot) {
+            return Text(
+                "The admin did not add the start and end dates for the help desk dates yet, please try later",
+                overflow: TextOverflow.clip);
+          },
+        ),
+      );
+    } else if (isExists == false && isSemesterDateExists == true) {
       return Scaffold(
           appBar: AppBar(
             title: Text('Add hours'),
