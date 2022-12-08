@@ -151,17 +151,19 @@ class _sState extends State<studenthome> {
           MaterialPageRoute<void>(builder: (context) => studenthome()),
         );
       },
-      // onDidReceiveBackgroundNotificationResponse:
-      //     (NotificationResponse notificationResponse) async {
-      //   final String? payload = notificationResponse.payload;
-      //   if (notificationResponse.payload != null) {
-      //     debugPrint('notification payload: $payload');
-      //   }
-      //   await Navigator.push(
-      //     context,
-      //     MaterialPageRoute<void>(builder: (context) => studenthome()),
-      //   );
-      // },
+      onDidReceiveBackgroundNotificationResponse:
+          (NotificationResponse notificationResponse) async {
+        final String? payload = notificationResponse.payload;
+        //   //   if (notificationResponse.payload != null) {
+        //   //     debugPrint('notification payload: $payload');
+        //   //   }
+        //
+        //
+        await Navigator.push(
+          context,
+          MaterialPageRoute<void>(builder: (context) => studenthome()),
+        );
+      },
     );
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
