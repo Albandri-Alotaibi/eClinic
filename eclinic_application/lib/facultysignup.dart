@@ -225,6 +225,10 @@ class _facultysignupState extends State<facultysignup> {
   var dep = '';
   var spec = '';
   var userid = "";
+  var zag = 0;
+  bool isshow = false;
+  //final red = Color.fromARGB(255, 211, 56, 45);
+  Color _color = Colors.red;
 
   final _fnameController = TextEditingController();
   final _lnameController = TextEditingController();
@@ -246,349 +250,410 @@ class _facultysignupState extends State<facultysignup> {
           title: const Text('signup'),
         ),
         body: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Form(
-              key: formkey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextFormField(
-                    controller: _fnameController,
-                    decoration: InputDecoration(
-                        labelText: 'Frist Name',
-                        hintText: "Enter your first name",
-                        border: OutlineInputBorder()),
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value!.isEmpty || _fnameController.text == "") {
-                        return 'Please enter your frist name ';
-                      } else {
-                        if (nameRegExp.hasMatch(_fnameController.text)) {
-                          return 'Please frist name only letters accepted ';
-                        } else {
-                          if (!(english.hasMatch(_fnameController.text))) {
-                            return "only english is allowed";
-                          }
-                        }
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  TextFormField(
-                    controller: _lnameController,
-                    decoration: InputDecoration(
-                        labelText: 'Last Name',
-                        hintText: "Enter your last name",
-                        border: OutlineInputBorder()),
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value!.isEmpty || _lnameController.text == "") {
-                        return 'Please enter your last name ';
-                      } else {
-                        if (nameRegExp.hasMatch(_lnameController.text)) {
-                          return 'Please last name only letters accepted ';
-                        } else {
-                          if (!(english.hasMatch(_lnameController.text))) {
-                            return "only english is allowed";
-                          }
-                        }
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                        hintText: "Enter your KSU email",
-                        labelText: 'KSU Email',
-                        border: OutlineInputBorder()),
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value!.isEmpty || _emailController.text == "") {
-                        return 'Please enter your KSU email ';
-                      } else {
-                        if (!(ksuEmailRegEx.hasMatch(_emailController.text))) {
-                          return 'Please write email format correctly, example@ksu.edu.sa ';
-                        }
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  TextFormField(
-                      controller: _passwordController,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Form(
+                key: formkey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextFormField(
+                      controller: _fnameController,
                       decoration: InputDecoration(
-                          labelText: 'Password',
-                          hintText: "Enter your Password",
+                          labelText: 'Frist Name',
+                          hintText: "Enter your first name",
                           border: OutlineInputBorder()),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
-                        if (value!.isEmpty || _passwordController.text == "") {
-                          return 'Please enter your password';
+                        if (value!.isEmpty || _fnameController.text == "") {
+                          return 'Please enter your frist name ';
                         } else {
-                          if (!(english.hasMatch(_passwordController.text))) {
-                            return "only english is allowed";
+                          if (nameRegExp.hasMatch(_fnameController.text)) {
+                            return 'Please frist name only letters accepted ';
                           } else {
-                            if (value.length < 8 &&
-                                !uperRegExp.hasMatch(value) &&
-                                !numbRegExp.hasMatch(value) &&
-                                !smallRegExp.hasMatch(value)) {
-                              return "Your password must be at least 8 characters and contain both uppercase and lowercase letters";
-                            } else if (value.length < 8 &&
-                                !uperRegExp.hasMatch(value)) {
-                              return "Your password must be at least 8 characters and contain uppercase letters";
-                            } else if (value.length < 8 &&
-                                !smallRegExp.hasMatch(value)) {
-                              return "Your password must be at least 8 characters and contain lowercase letters";
-                            } else if (!uperRegExp.hasMatch(value) &&
-                                !smallRegExp.hasMatch(value)) {
-                              return "Your password must be contain both uppercase and lowercase letters";
-                            } else if (value.length < 8) {
-                              return "Your password must be at least 8 characters";
-                            } else if (!uperRegExp.hasMatch(value)) {
-                              return "Your password must be contain uppercase letters";
-                            } else if (!smallRegExp.hasMatch(value)) {
-                              return "Your password must be contain lowercase letters";
-                            } else if (!numbRegExp.hasMatch(value)) {
-                              return "Your password must be contain number";
+                            if (!(english.hasMatch(_fnameController.text))) {
+                              return "only english is allowed";
                             }
                           }
                         }
-                      }),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  DropdownButtonFormField<String>(
-                    decoration: InputDecoration(
-                      hintText: 'choose your collage',
-                      border: OutlineInputBorder(),
+                      },
                     ),
-                    isExpanded: true,
-                    items: collage.map((String dropdownitems) {
-                      return DropdownMenuItem<String>(
-                        value: dropdownitems,
-                        child: Text(dropdownitems),
-                      );
-                    }).toList(),
-                    onChanged: (String? newselect) {
-                      setState(() {
-                        collageselectedvalue = newselect;
-                        checkidc(collageselectedvalue);
-                      });
-                    },
-                    value: collageselectedvalue,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value == null ||
-                          collageselectedvalue!.isEmpty ||
-                          collageselectedvalue == null) {
-                        return 'Please choose your collage';
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  DropdownButtonFormField<String>(
-                    decoration: InputDecoration(
-                      hintText: 'choose your department',
-                      border: OutlineInputBorder(),
+                    SizedBox(
+                      height: 8,
                     ),
-                    isExpanded: true,
-                    items: department.map((String dropdownitems) {
-                      return DropdownMenuItem<String>(
-                        value: dropdownitems,
-                        child: Text(dropdownitems),
-                      );
-                    }).toList(),
-                    onChanged: (String? newselect) {
-                      setState(() {
-                        departmentselectedvalue = newselect;
-                        checkidd(departmentselectedvalue);
-                      });
-                    },
-                    value: departmentselectedvalue,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value == null ||
-                          departmentselectedvalue!.isEmpty ||
-                          departmentselectedvalue == null) {
-                        return 'Please choose your department';
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  DropdownButtonFormField<String>(
-                    decoration: InputDecoration(
-                      hintText: 'choose a semester',
-                      border: OutlineInputBorder(),
-                    ),
-                    isExpanded: true,
-                    items: semester.map((String dropdownitems) {
-                      return DropdownMenuItem<String>(
-                        value: dropdownitems,
-                        child: Text(dropdownitems),
-                      );
-                    }).toList(),
-                    onChanged: (String? newselect) {
-                      setState(() {
-                        semesterselectedvalue = newselect;
-                        checkids(semesterselectedvalue);
-                      });
-                    },
-                    value: semesterselectedvalue,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value == null ||
-                          semesterselectedvalue!.isEmpty ||
-                          semesterselectedvalue == null) {
-                        return 'Please choose a semester';
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  TextFormField(
-                      controller: _meetingmethodcontroller,
+                    TextFormField(
+                      controller: _lnameController,
                       decoration: InputDecoration(
-                          labelText:
-                              "Enter your metting method(office number or Zoom link )",
+                          labelText: 'Last Name',
+                          hintText: "Enter your last name",
                           border: OutlineInputBorder()),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
-                        if (value!.isEmpty ||
-                            _meetingmethodcontroller.text == "") {
-                          return 'Please enter your metting method';
+                        if (value!.isEmpty || _lnameController.text == "") {
+                          return 'Please enter your last name ';
                         } else {
-                          if (!(english.hasMatch(_passwordController.text))) {
-                            return "only english is allowed";
+                          if (nameRegExp.hasMatch(_lnameController.text)) {
+                            return 'Please last name only letters accepted ';
+                          } else {
+                            if (!(english.hasMatch(_lnameController.text))) {
+                              return "only english is allowed";
+                            }
                           }
                         }
-                      }),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  DropDownMultiSelect(
-                    decoration: InputDecoration(
-                        labelText: "select your speciality",
-                        border: OutlineInputBorder()),
-                    options: options,
-                    whenEmpty: "",
-                    onChanged: (value) {
-                      setState(() {
-                        selectedoptionlist.value = value;
-                        selectedoption.value = "";
-                        selectedoptionlist.value.forEach((element) {
-                          selectedoption.value =
-                              selectedoption.value + " " + element;
-                        });
-                      });
-                      checkidspecialty(selectedoptionlist.value);
-                    },
-                    selectedValues: selectedoptionlist.value,
-                    validator: ((selectedOptions) {
-                      if (selectedoptionlist.value.length < 1)
-                        return "Please select your speciality";
-                      return "";
-                    }),
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      setState(() {
-                        fname = _fnameController.text;
-                        lname = _lnameController.text;
-                        email = _emailController.text;
-                        password = _passwordController.text;
-                        meetingmethod = _meetingmethodcontroller.text;
-                      });
-
-                      try {
-                        if (formkey.currentState!.validate()) {
-                          await FirebaseAuth.instance
-                              .createUserWithEmailAndPassword(
-                                  email: email, password: password)
-                              .then((value) async {
-                            final FirebaseAuth auth = FirebaseAuth.instance;
-                            final User? user = auth.currentUser;
-                            final Uid = user!.uid;
-
-                            try {
-                              if (!(user.emailVerified)) {
-                                user.sendEmailVerification();
-                                Navigator.pushNamed(context, 'verfication');
+                      },
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    TextFormField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                          hintText: "Enter your KSU email",
+                          labelText: 'KSU Email',
+                          border: OutlineInputBorder()),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value!.isEmpty || _emailController.text == "") {
+                          return 'Please enter your KSU email ';
+                        } else {
+                          if (!(ksuEmailRegEx
+                              .hasMatch(_emailController.text))) {
+                            return 'Please write email format correctly, example@ksu.edu.sa ';
+                          }
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    TextFormField(
+                        controller: _passwordController,
+                        decoration: InputDecoration(
+                            labelText: 'Password',
+                            hintText: "Enter your Password",
+                            border: OutlineInputBorder()),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) {
+                          if (value!.isEmpty ||
+                              _passwordController.text == "") {
+                            return 'Please enter your password';
+                          } else {
+                            if (!(english.hasMatch(_passwordController.text))) {
+                              return "only english is allowed";
+                            } else {
+                              if (value.length < 8 &&
+                                  !uperRegExp.hasMatch(value) &&
+                                  !numbRegExp.hasMatch(value) &&
+                                  !smallRegExp.hasMatch(value)) {
+                                return "Your password must be at least 8 characters and contain both uppercase and lowercase letters";
+                              } else if (value.length < 8 &&
+                                  !uperRegExp.hasMatch(value)) {
+                                return "Your password must be at least 8 characters and contain uppercase letters";
+                              } else if (value.length < 8 &&
+                                  !smallRegExp.hasMatch(value)) {
+                                return "Your password must be at least 8 characters and contain lowercase letters";
+                              } else if (!uperRegExp.hasMatch(value) &&
+                                  !smallRegExp.hasMatch(value)) {
+                                return "Your password must be contain both uppercase and lowercase letters";
+                              } else if (value.length < 8) {
+                                return "Your password must be at least 8 characters";
+                              } else if (!uperRegExp.hasMatch(value)) {
+                                return "Your password must be contain uppercase letters";
+                              } else if (!smallRegExp.hasMatch(value)) {
+                                return "Your password must be contain lowercase letters";
+                              } else if (!numbRegExp.hasMatch(value)) {
+                                return "Your password must be contain number";
                               }
-                            } catch (error) {
-                              print(error);
                             }
+                          }
+                        }),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        hintText: 'choose your collage',
+                        border: OutlineInputBorder(),
+                      ),
+                      isExpanded: true,
+                      items: collage.map((String dropdownitems) {
+                        return DropdownMenuItem<String>(
+                          value: dropdownitems,
+                          child: Text(dropdownitems),
+                        );
+                      }).toList(),
+                      onChanged: (String? newselect) {
+                        setState(() {
+                          collageselectedvalue = newselect;
+                          checkidc(collageselectedvalue);
+                        });
+                      },
+                      value: collageselectedvalue,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value == null ||
+                            collageselectedvalue!.isEmpty ||
+                            collageselectedvalue == null) {
+                          return 'Please choose your collage';
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        hintText: 'choose your department',
+                        border: OutlineInputBorder(),
+                      ),
+                      isExpanded: true,
+                      items: department.map((String dropdownitems) {
+                        return DropdownMenuItem<String>(
+                          value: dropdownitems,
+                          child: Text(dropdownitems),
+                        );
+                      }).toList(),
+                      onChanged: (String? newselect) {
+                        setState(() {
+                          departmentselectedvalue = newselect;
+                          checkidd(departmentselectedvalue);
+                        });
+                      },
+                      value: departmentselectedvalue,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value == null ||
+                            departmentselectedvalue!.isEmpty ||
+                            departmentselectedvalue == null) {
+                          return 'Please choose your department';
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        hintText: 'choose a semester',
+                        border: OutlineInputBorder(),
+                      ),
+                      isExpanded: true,
+                      items: semester.map((String dropdownitems) {
+                        return DropdownMenuItem<String>(
+                          value: dropdownitems,
+                          child: Text(dropdownitems),
+                        );
+                      }).toList(),
+                      onChanged: (String? newselect) {
+                        setState(() {
+                          semesterselectedvalue = newselect;
+                          checkids(semesterselectedvalue);
+                        });
+                      },
+                      value: semesterselectedvalue,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value == null ||
+                            semesterselectedvalue!.isEmpty ||
+                            semesterselectedvalue == null) {
+                          return 'Please choose a semester';
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    TextFormField(
+                        controller: _meetingmethodcontroller,
+                        decoration: InputDecoration(
+                            labelText:
+                                "Enter your metting method(office number or Zoom link )",
+                            border: OutlineInputBorder()),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) {
+                          if (value!.isEmpty ||
+                              _meetingmethodcontroller.text == "") {
+                            return 'Please enter your metting method';
+                          } else {
+                            if (!(english
+                                .hasMatch(_meetingmethodcontroller.text))) {
+                              return "only english is allowed";
+                            }
+                          }
+                        }),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    DropDownMultiSelect(
+                      decoration: InputDecoration(
+                          // labelText: "select your speciality",
+                          hintText: "select your speciality",
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: isshow ? Colors.red : Colors.grey)),
+                          errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color:
+                                      isshow ? Colors.red : Colors.blueAccent)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color:
+                                      isshow ? Colors.red : Colors.blueAccent))
+                          // border: OutlineInputBorder(
+                          //     borderSide: BorderSide(
+                          //         color: isshow ? Colors.red : Colors.grey)
+                          ),
 
-                            await FirebaseFirestore.instance
-                                .collection('faculty')
-                                .doc(Uid)
-                                .set({
-                              'firstname': fname,
-                              'lastname': lname,
-                              'ksuemail': email,
-                              'meetingmethod': meetingmethod,
-                              'department': FirebaseFirestore.instance
-                                  .collection("collage")
-                                  .doc(docsforcollage)
-                                  .collection("department")
-                                  .doc(docfordepatment),
-                              'collage': FirebaseFirestore.instance
-                                  .collection("collage")
-                                  .doc(docsforcollage),
-                              'semester': FirebaseFirestore.instance
-                                  .collection("semester")
-                                  .doc(docsforsemestername),
-                              'specialty': speciality,
-                            });
+                      options: options,
+                      whenEmpty: "",
+                      onChanged: (value) {
+                        setState(() {
+                          selectedoptionlist.value = value;
+                          selectedoption.value = "";
+                          selectedoptionlist.value.forEach((element) {
+                            selectedoption.value =
+                                selectedoption.value + " " + element;
+                            zag = selectedoptionlist.value.length;
+                            isshow = selectedoption.value.isEmpty;
+
+                            if (zag < 1) {
+                              isshow = true;
+                              // _color = Colors.red;
+                            }
+                            if (zag > 0 ||
+                                selectedoption.value.isEmpty ||
+                                selectedoption.value == null) {
+                              isshow = false;
+                              // _color = Colors.blue;
+                            }
                           });
-                        }
-                      } on FirebaseAuthException catch (error) {
-                        print(error.message);
-                        if (error.message ==
-                            "The email address is badly formatted.") {
-                          Fluttertoast.showToast(
-                            msg: "check the email format",
-                            gravity: ToastGravity.TOP,
-                            toastLength: Toast.LENGTH_SHORT,
-                            timeInSecForIosWeb: 2,
-                            backgroundColor: Color.fromARGB(255, 239, 91, 91),
-                            textColor: Color.fromARGB(255, 250, 248, 248),
-                            fontSize: 18.0,
-                          );
-                        }
+                        });
+                        checkidspecialty(selectedoptionlist.value);
+                        isshow = selectedoptionlist.value.isEmpty;
+                      },
+                      selectedValues: selectedoptionlist.value,
 
-                        if (error.message ==
-                            "The email address is already in use by another account.") {
-                          Fluttertoast.showToast(
-                            msg:
-                                "The email address is already in use by another account",
-                            gravity: ToastGravity.TOP,
-                            toastLength: Toast.LENGTH_SHORT,
-                            timeInSecForIosWeb: 2,
-                            backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                            textColor: Color.fromARGB(255, 248, 249, 250),
-                            fontSize: 18.0,
-                          );
+                      // validator: ((selectedOptions) {
+                      //   if (selectedoptionlist.value.length < 1)
+                      //     return "Please select your speciality";
+                      //   return "";
+                      // }),
+                    ),
+                    SizedBox(
+                      height: 2,
+                    ),
+                    Visibility(
+                      visible: isshow,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Please choose your specialty",
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 211, 56, 45)),
+                              textAlign: TextAlign.left,
+                            ),
+                          ]),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        setState(() {
+                          fname = _fnameController.text;
+                          lname = _lnameController.text;
+                          email = _emailController.text;
+                          password = _passwordController.text;
+                          meetingmethod = _meetingmethodcontroller.text;
+                          if (zag < 1 || isshow == false) {
+                            isshow = true;
+                            // _color = Colors.red;
+                          }
+                          if (zag > 0) {
+                            isshow = false;
+                            // _color = Colors.grey;
+                          }
+                        });
+
+                        try {
+                          if (formkey.currentState!.validate() && zag > 0) {
+                            await FirebaseAuth.instance
+                                .createUserWithEmailAndPassword(
+                                    email: email, password: password)
+                                .then((value) async {
+                              final FirebaseAuth auth = FirebaseAuth.instance;
+                              final User? user = auth.currentUser;
+                              final Uid = user!.uid;
+
+                              try {
+                                if (!(user.emailVerified)) {
+                                  user.sendEmailVerification();
+                                  Navigator.pushNamed(context, 'verfication');
+                                }
+                              } catch (error) {
+                                print(error);
+                              }
+
+                              await FirebaseFirestore.instance
+                                  .collection('faculty')
+                                  .doc(Uid)
+                                  .set({
+                                'firstname': fname,
+                                'lastname': lname,
+                                'ksuemail': email,
+                                'meetingmethod': meetingmethod,
+                                'department': FirebaseFirestore.instance
+                                    .collection("collage")
+                                    .doc(docsforcollage)
+                                    .collection("department")
+                                    .doc(docfordepatment),
+                                'collage': FirebaseFirestore.instance
+                                    .collection("collage")
+                                    .doc(docsforcollage),
+                                'semester': FirebaseFirestore.instance
+                                    .collection("semester")
+                                    .doc(docsforsemestername),
+                                'specialty': speciality,
+                              });
+                            });
+                          }
+                        } on FirebaseAuthException catch (error) {
+                          print(error.message);
+                          if (error.message ==
+                              "The email address is badly formatted.") {
+                            Fluttertoast.showToast(
+                              msg: "check the email format",
+                              gravity: ToastGravity.TOP,
+                              toastLength: Toast.LENGTH_SHORT,
+                              timeInSecForIosWeb: 2,
+                              backgroundColor: Color.fromARGB(255, 239, 91, 91),
+                              textColor: Color.fromARGB(255, 250, 248, 248),
+                              fontSize: 18.0,
+                            );
+                          }
+
+                          if (error.message ==
+                              "The email address is already in use by another account.") {
+                            Fluttertoast.showToast(
+                              msg:
+                                  "The email address is already in use by another account",
+                              gravity: ToastGravity.TOP,
+                              toastLength: Toast.LENGTH_SHORT,
+                              timeInSecForIosWeb: 2,
+                              backgroundColor:
+                                  Color.fromARGB(255, 127, 166, 233),
+                              textColor: Color.fromARGB(255, 248, 249, 250),
+                              fontSize: 18.0,
+                            );
+                          }
                         }
-                      }
-                    },
-                    child: Text('Signup'),
-                  ),
-                ],
+                      },
+                      child: Text('Signup'),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

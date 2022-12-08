@@ -39,26 +39,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'main',
-      theme: ThemeData(
-        primaryColor: Color(0xFF55C1EF),
-      ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => home(),
-        'addHoursFaculty': (context) => addHoursFaculty(),
-        'facultyhome': (context) => facultyhome(),
-        'studenthome': (context) => studenthome(),
-        'facultysignup': (context) => facultysignup(),
-        'reusable': (context) => reusable(),
-        'viewfaculty': (context) => viewfaculty(),
-        'login': (context) => login(),
-        'FacultyViewBookedAppointment': (context) =>
-            FacultyViewBookedAppointment(),
-        'verfication': (context) => verfication(),
-        'studentsignup': (context) => studentsignup(),
-        'studentlogin': (context) => studentlogin(),
-      },
-    );
+        title: 'main',
+        theme: ThemeData(
+          primaryColor: Color(0xFF55C1EF),
+        ),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => home(),
+          'addHoursFaculty': (context) => addHoursFaculty(),
+          'facultyhome': (context) => facultyhome(),
+          'studenthome': (context) => studenthome(),
+          'facultysignup': (context) => facultysignup(),
+          'reusable': (context) => reusable(),
+          'viewfaculty': (context) => viewfaculty(),
+          'login': (context) => login(),
+          'FacultyViewBookedAppointment': (context) =>
+              FacultyViewBookedAppointment(),
+          'verfication': (context) => verfication(),
+          'studentsignup': (context) => studentsignup(),
+          'studentlogin': (context) => studentlogin(),
+        });
   }
 }
