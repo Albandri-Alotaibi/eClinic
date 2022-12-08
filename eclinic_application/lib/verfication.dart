@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/facultyhome.dart';
+import 'package:myapp/login.dart';
+import 'package:myapp/addHoursFaculty.dart';
+import 'dart:async';
 
 class verfication extends StatefulWidget {
   const verfication({super.key});
@@ -15,19 +19,34 @@ class verfication extends StatefulWidget {
 }
 
 class _verficationState extends State<verfication> {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  String? email = '';
+  String? userid = '';
+  User? user;
+  Timer timer = Timer.periodic(Duration(seconds: 3), (timer) {});
   @override
-  bool verfiy = false;
   void initState() {
-    checkverfication();
+    final User? user = auth.currentUser;
+    userid = user!.uid;
+    email = user.email!;
+    user.sendEmailVerification();
+    Timer timer = Timer.periodic(Duration(seconds: 1), (timer) {});
+    checkemailverfication();
     super.initState();
   }
 
-  checkverfication() async {
-    final User? user = await FirebaseAuth.instance.currentUser;
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
 
+  Future<void> checkemailverfication() async {
+    user = auth.currentUser;
+    await user!.reload();
     if (user!.emailVerified) {
-      verfiy = true;
-      print("verfiy");
+      timer.cancel();
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => addHoursFaculty()));
     }
   }
 
@@ -41,21 +60,12 @@ class _verficationState extends State<verfication> {
         child: Column(
           children: [
             Text(
-                "We sent a verfication link on your email please verfiy your account"),
+                "A verfication link has been sent to ${email} Please verfiy your account"),
             ElevatedButton(
-              onPressed: () async {
-                checkverfication();
-                try {
-                  final User? user = await FirebaseAuth.instance.currentUser;
-                  checkverfication();
-                  if (verfiy) {
-                    Navigator.pushNamed(context, 'facultyhome');
-                  }
-                } catch (error) {
-                  print(error);
-                }
+              onPressed: () {
+                checkemailverfication();
               },
-              child: Text("I verfiy my email"),
+              child: Text('يارب'),
             ),
           ],
         ),

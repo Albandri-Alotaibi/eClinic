@@ -590,15 +590,7 @@ class _facultysignupState extends State<facultysignup> {
                               final FirebaseAuth auth = FirebaseAuth.instance;
                               final User? user = auth.currentUser;
                               final Uid = user!.uid;
-
-                              try {
-                                if (!(user.emailVerified)) {
-                                  user.sendEmailVerification();
-                                  Navigator.pushNamed(context, 'verfication');
-                                }
-                              } catch (error) {
-                                print(error);
-                              }
+                              Navigator.pushNamed(context, 'verfication');
 
                               await FirebaseFirestore.instance
                                   .collection('faculty')
