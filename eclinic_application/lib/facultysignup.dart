@@ -9,6 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multiselect/multiselect.dart';
+import 'package:intl/intl.dart';
 
 class facultysignup extends StatefulWidget {
   const facultysignup({super.key});
@@ -31,6 +32,8 @@ class _facultysignupState extends State<facultysignup> {
   var collageselectedvalue;
   var semesterselectedvalue;
   var year;
+  var monthe;
+  var day;
   late String semstername;
   Rx<List<String>> selectedoptionlist = Rx<List<String>>([]);
   var selectedoption = "".obs;
@@ -61,6 +64,7 @@ class _facultysignupState extends State<facultysignup> {
   }
 
   retrievesemester() async {
+    bool past = true;
     try {
       await FirebaseFirestore.instance
           .collection('semester')
@@ -70,14 +74,30 @@ class _facultysignupState extends State<facultysignup> {
           setState(() {
             DateTime now = DateTime.now();
             year = now.year;
+            DateTime Dateoftoday = DateTime.now();
+
             String s = year.toString();
             String sn = element['semestername'];
+            var startdate = element['startdate'];
+            startdate.toString();
+
             if ((sn.contains(s))) {
+              print(sn);
               semester.add(element['semestername']);
             }
-            ;
+
+            if (startdate != null) {
+              Timestamp t = element['enddate'];
+              DateTime enddate = t.toDate();
+
+              if (Dateoftoday.month > enddate.month ||
+                  Dateoftoday.day > enddate.day) {
+                semester.remove(element['semestername']);
+              }
+            }
           });
         });
+        print(semester);
       });
     } catch (e) {
       print(e.toString());
@@ -227,8 +247,6 @@ class _facultysignupState extends State<facultysignup> {
   var userid = "";
   var zag = 0;
   bool isshow = false;
-  //final red = Color.fromARGB(255, 211, 56, 45);
-  Color _color = Colors.red;
 
   final _fnameController = TextEditingController();
   final _lnameController = TextEditingController();
@@ -488,7 +506,7 @@ class _facultysignupState extends State<facultysignup> {
                     DropDownMultiSelect(
                       decoration: InputDecoration(
                           // labelText: "select your speciality",
-                          hintText: "select your speciality",
+                          hintText: "select your specialty",
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                   color: isshow ? Colors.red : Colors.grey)),
@@ -498,13 +516,9 @@ class _facultysignupState extends State<facultysignup> {
                                       isshow ? Colors.red : Colors.blueAccent)),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                  color:
-                                      isshow ? Colors.red : Colors.blueAccent))
-                          // border: OutlineInputBorder(
-                          //     borderSide: BorderSide(
-                          //         color: isshow ? Colors.red : Colors.grey)
-                          ),
-
+                                  color: isshow
+                                      ? Colors.red
+                                      : Colors.blueAccent))),
                       options: options,
                       whenEmpty: "",
                       onChanged: (value) {
@@ -519,13 +533,11 @@ class _facultysignupState extends State<facultysignup> {
 
                             if (zag < 1) {
                               isshow = true;
-                              // _color = Colors.red;
                             }
                             if (zag > 0 ||
                                 selectedoption.value.isEmpty ||
                                 selectedoption.value == null) {
                               isshow = false;
-                              // _color = Colors.blue;
                             }
                           });
                         });
@@ -533,12 +545,6 @@ class _facultysignupState extends State<facultysignup> {
                         isshow = selectedoptionlist.value.isEmpty;
                       },
                       selectedValues: selectedoptionlist.value,
-
-                      // validator: ((selectedOptions) {
-                      //   if (selectedoptionlist.value.length < 1)
-                      //     return "Please select your speciality";
-                      //   return "";
-                      // }),
                     ),
                     SizedBox(
                       height: 2,
@@ -569,11 +575,9 @@ class _facultysignupState extends State<facultysignup> {
                           meetingmethod = _meetingmethodcontroller.text;
                           if (zag < 1 || isshow == false) {
                             isshow = true;
-                            // _color = Colors.red;
                           }
                           if (zag > 0) {
                             isshow = false;
-                            // _color = Colors.grey;
                           }
                         });
 

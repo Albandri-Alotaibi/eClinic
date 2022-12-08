@@ -42,6 +42,8 @@ class _studentsignupState extends State<studentsignup> {
   var account;
   var phonenumber;
   var socialmediaaccount;
+  var zag = 0;
+  bool isshow = false;
 
   late String semstername;
   Rx<List<String>> selectedoptionlist = Rx<List<String>>([]);
@@ -200,6 +202,7 @@ class _studentsignupState extends State<studentsignup> {
   final _projecttitle = TextEditingController();
   final _socialmedialink1 = TextEditingController();
   final _socialmedialink2 = TextEditingController();
+  final _gpcategory = TextEditingController();
 
   final _date = TextEditingController();
 
@@ -447,9 +450,10 @@ class _studentsignupState extends State<studentsignup> {
                                 }
                               },
                               validator: ((value) {
-                                if (value!.isEmpty || _date.text == "") {
+                                if (_date.text == "" || date == null)
                                   return 'Please enter your graduation date ';
-                                }
+
+                                return null;
                               }),
                             ),
                             SizedBox(
@@ -458,16 +462,16 @@ class _studentsignupState extends State<studentsignup> {
                             TextFormField(
                                 controller: _projecttitle,
                                 decoration: InputDecoration(
-                                    labelText: 'Graduation project title',
+                                    labelText: 'Graduation project name',
                                     hintText:
-                                        "Enter your Graduation project title",
+                                        "Enter your Graduation project name",
                                     border: OutlineInputBorder()),
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) {
                                   if (value!.isEmpty ||
                                       _projecttitle.text == "") {
-                                    return 'Please enter Graduation project title ';
+                                    return 'Please enter Graduation project name ';
                                   } else {
                                     if (!(english
                                         .hasMatch(_projecttitle.text))) {
@@ -481,8 +485,26 @@ class _studentsignupState extends State<studentsignup> {
                             DropDownMultiSelect(
                               decoration: InputDecoration(
                                   hintText:
-                                      "Select your graduation project category",
-                                  border: OutlineInputBorder()),
+                                      "select your graduation project category",
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: isshow
+                                              ? Colors.red
+                                              : Colors.grey)),
+                                  errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: isshow
+                                              ? Colors.red
+                                              : Colors.blueAccent)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: isshow
+                                              ? Colors.red
+                                              : Colors.blueAccent))
+                                  // border: OutlineInputBorder(
+                                  //     borderSide: BorderSide(
+                                  //         color: isshow ? Colors.red : Colors.grey)
+                                  ),
                               options: options,
                               whenEmpty: "",
                               onChanged: (value) {
@@ -492,16 +514,40 @@ class _studentsignupState extends State<studentsignup> {
                                   selectedoptionlist.value.forEach((element) {
                                     selectedoption.value =
                                         selectedoption.value + " " + element;
+                                    zag = selectedoptionlist.value.length;
+                                    isshow = selectedoption.value.isEmpty;
+
+                                    if (zag < 1) {
+                                      isshow = true;
+                                    }
+                                    if (zag > 0 ||
+                                        selectedoption.value.isEmpty ||
+                                        selectedoption.value == null) {
+                                      isshow = false;
+                                    }
                                   });
                                 });
                                 checkidcategory(selectedoptionlist.value);
+                                isshow = selectedoptionlist.value.isEmpty;
                               },
                               selectedValues: selectedoptionlist.value,
-                              validator: ((selectedOptions) {
-                                if (selectedoptionlist.value.length < 1)
-                                  return "Please select your graduation project category";
-                                return "";
-                              }),
+                            ),
+                            SizedBox(
+                              height: 2,
+                            ),
+                            Visibility(
+                              visible: isshow,
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Please choose your graduation project category",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 211, 56, 45)),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ]),
                             ),
                             SizedBox(
                               height: 8,
@@ -594,12 +640,19 @@ class _studentsignupState extends State<studentsignup> {
                                   socialmedia = social;
                                   account = _socialmedialink2.text;
                                   phonenumber = _socialmedialink1.text;
+                                  if (zag < 1 || isshow == false) {
+                                    isshow = true;
+                                  }
+                                  if (zag > 0) {
+                                    isshow = false;
+                                  }
                                 });
 
                                 check(social);
 
                                 try {
-                                  if (formkey.currentState!.validate()) {
+                                  if (formkey.currentState!.validate() &&
+                                      zag > 0) {
                                     await FirebaseAuth.instance
                                         .createUserWithEmailAndPassword(
                                             email: email, password: password)
