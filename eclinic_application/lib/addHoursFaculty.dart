@@ -504,11 +504,22 @@ class _AddHourState extends State<addHoursFaculty> {
         children: <Widget>[
           for (int i = 1; i < daysOfHelp[x].hours.length; i++)
             ListTile(
-              title: Text(daysOfHelp[x].hours[i].toString()),
-              subtitle: IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () => {deleteHour(x, i)},
+              title: Row(
+                children: [
+                  Text(daysOfHelp[x].hours[i].toString()),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 13.0),
+                    child: IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () => {deleteHour(x, i)},
+                    ),
+                  ),
+                ],
               ),
+              // subtitle: IconButton(
+              //   icon: Icon(Icons.delete),
+              //   onPressed: () => {deleteHour(x, i)},
+              // ),
             ),
           ElevatedButton(
             child: Text("add"),
