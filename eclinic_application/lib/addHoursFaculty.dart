@@ -576,24 +576,24 @@ class _AddHourState extends State<addHoursFaculty> {
                   else if (_startTime.hour > startend.start.hour &&
                       _endTime.hour <= startend.end.hour) {
                     showerror(context,
-                        "the new time must be out of the prevrios period1 ", x);
+                        "the new time must be out of the prevrios period ", x);
                     flag = false;
                   } else if (_startTime.hour == startend.end.hour &&
                       _startTime.minute < startend.end.minute) {
                     showerror(context,
-                        "the new time must be out of the prevrios period 2", x);
+                        "the new time must be out of the prevrios period", x);
                     flag = false;
                   } else if (_startTime.hour <= startend.start.hour &&
                       _startTime.minute <= startend.start.minute &&
                       _endTime.hour >= startend.end.hour &&
                       _endTime.minute >= startend.end.minute) {
                     showerror(context,
-                        "the new time must be out of the prevrios period 3", x);
+                        "the new time must be out of the prevrios period", x);
                     flag = false;
                   } else if (_startTime.hour < startend.end.hour &&
                       _endTime.hour > startend.start.hour) {
                     showerror(context,
-                        "the new time must be out of the prevrios period 4", x);
+                        "the new time must be out of the prevrios period", x);
                     flag = false;
                   }
                   //------------------------time must be in working hours(7-4)-------------------------
