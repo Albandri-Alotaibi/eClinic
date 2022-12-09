@@ -556,6 +556,13 @@ class _AddHourState extends State<addHoursFaculty> {
                         "the start time connot be equal to the end time", x);
                     flag = false;
                   }
+                  //----------------------------the start time > to the end time-------------------------------------
+                  else if (_startTime.hour == _endTime.hour &&
+                      _startTime.minute >= _endTime.minute) {
+                    showerror(
+                        context, "the end time must be after the end time", x);
+                    flag = false;
+                  }
 
                   //-----------------------------the new start time > old start time------------------------------
                   // else if (_startTime.hour < startend.start.hour) {
@@ -566,12 +573,27 @@ class _AddHourState extends State<addHoursFaculty> {
                   //   flag = false;
                   // }
                   //------------------------new time connot be inside the old time-----------------------
-                  else if (_startTime.hour >= startend.start.hour &&
-                      _startTime.hour < startend.end.hour &&
-                      (_endTime.hour >= startend.end.hour ||
-                          _endTime.hour < startend.end.hour)) {
+                  else if (_startTime.hour > startend.start.hour &&
+                      _endTime.hour <= startend.end.hour) {
                     showerror(context,
-                        "the new time must be out of the prevrios period ", x);
+                        "the new time must be out of the prevrios period1 ", x);
+                    flag = false;
+                  } else if (_startTime.hour == startend.end.hour &&
+                      _startTime.minute < startend.end.minute) {
+                    showerror(context,
+                        "the new time must be out of the prevrios period 2", x);
+                    flag = false;
+                  } else if (_startTime.hour <= startend.start.hour &&
+                      _startTime.minute <= startend.start.minute &&
+                      _endTime.hour >= startend.end.hour &&
+                      _endTime.minute >= startend.end.minute) {
+                    showerror(context,
+                        "the new time must be out of the prevrios period 3", x);
+                    flag = false;
+                  } else if (_startTime.hour < startend.end.hour &&
+                      _endTime.hour > startend.start.hour) {
+                    showerror(context,
+                        "the new time must be out of the prevrios period 4", x);
                     flag = false;
                   }
                   //------------------------time must be in working hours(7-4)-------------------------
