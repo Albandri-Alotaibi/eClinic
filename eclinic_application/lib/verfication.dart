@@ -65,7 +65,7 @@ class _verficationState extends State<verfication> {
               onPressed: () {
                 checkemailverfication();
               },
-              child: Text('يارب'),
+              child: Text("I verified my email "),
             ),
           ],
         ),
