@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:simple_time_range_picker/simple_time_range_picker.dart';
 import 'model/availableHoursArray.dart';
+import 'style/Mycolors.dart';
 import 'model/checkbox_state.dart';
 import 'model/startEnd.dart';
 import 'package:jiffy/jiffy.dart';
@@ -314,6 +315,7 @@ class _AddHourState extends State<addHoursFaculty> {
     //       print(endDate);
     if (isSemesterDateExists == false) {
       return Scaffold(
+        backgroundColor: Mycolors.BackgroundColor,
         appBar: AppBar(
           title: Text('Add hours'),
         ),
@@ -328,6 +330,7 @@ class _AddHourState extends State<addHoursFaculty> {
       );
     } else if (isExists == false && isSemesterDateExists == true) {
       return Scaffold(
+          backgroundColor: Mycolors.BackgroundColor,
           appBar: AppBar(
             title: Text('Add hours'),
           ),
@@ -425,6 +428,7 @@ class _AddHourState extends State<addHoursFaculty> {
           ));
     } else {
       return Scaffold(
+          backgroundColor: Mycolors.BackgroundColor,
           appBar: AppBar(
             title: Text('View hours'),
           ),
