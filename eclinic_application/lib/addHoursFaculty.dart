@@ -440,7 +440,12 @@ class _AddHourState extends State<addHoursFaculty> {
                 itemBuilder: ((context, index) {
                   return Card(
                       child: ExpansionTile(
-                    title: Text(availableHours[index].title),
+                    title: Text(
+                      availableHours[index].title,
+                      style: TextStyle(
+                        fontFamily: 'Semibold',
+                      ),
+                    ),
                     children: [Text(availableHours[index].allhours)],
                   ));
                 }),
