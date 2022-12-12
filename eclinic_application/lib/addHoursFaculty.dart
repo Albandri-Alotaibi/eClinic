@@ -428,30 +428,32 @@ class _AddHourState extends State<addHoursFaculty> {
           ));
     } else {
       return Scaffold(
-          backgroundColor: Mycolors.BackgroundColor,
-          appBar: AppBar(
-            title: Text('View hours'),
-          ),
-          body: FutureBuilder(
-            future: getavailableHours(),
-            builder: (context, snapshot) {
-              return ListView.builder(
-                itemCount: numOfDaysOfHelp,
-                itemBuilder: ((context, index) {
-                  return Card(
-                      child: ExpansionTile(
-                    title: Text(
-                      availableHours[index].title,
-                      style: TextStyle(
-                        fontFamily: 'Semibold',
-                      ),
+        backgroundColor: Mycolors.BackgroundColor,
+        appBar: AppBar(
+          title: Text('View hours'),
+        ),
+        body: FutureBuilder(
+          future: getavailableHours(),
+          builder: (context, snapshot) {
+            return ListView.builder(
+              itemCount: numOfDaysOfHelp,
+              itemBuilder: ((context, index) {
+                return Card(
+                    child: ExpansionTile(
+                  title: Text(
+                    availableHours[index].title,
+                    style: TextStyle(
+                      fontFamily: 'Semibold',
                     ),
-                    children: [Text(availableHours[index].allhours)],
-                  ));
-                }),
-              );
-            },
-          ));
+                  ),
+                  children: [Text(availableHours[index].allhours)],
+                ));
+              }),
+            );
+          },
+        ),
+        
+      );
     }
   } //end build
 
