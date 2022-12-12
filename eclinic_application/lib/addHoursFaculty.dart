@@ -911,7 +911,7 @@ class _AddHourState extends State<addHoursFaculty> {
           .collection('appointment')
           .doc() //Is there a specific id i should put for the appointments
           .set({
-        'Day': day, //string
+       // 'Day': day, //string
         'starttime': StartInTimestamp, //Start timestamp
         'endtime': EndInTimestamp,
         'Booked':
