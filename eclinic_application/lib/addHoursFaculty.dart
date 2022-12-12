@@ -317,6 +317,7 @@ class _AddHourState extends State<addHoursFaculty> {
       return Scaffold(
         backgroundColor: Mycolors.BackgroundColor,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text('Add hours'),
         ),
         body: FutureBuilder(
@@ -332,6 +333,7 @@ class _AddHourState extends State<addHoursFaculty> {
       return Scaffold(
           backgroundColor: Mycolors.BackgroundColor,
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             title: Text('Add hours'),
           ),
           body: ListView(
@@ -430,6 +432,7 @@ class _AddHourState extends State<addHoursFaculty> {
       return Scaffold(
         backgroundColor: Mycolors.BackgroundColor,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text('View hours'),
         ),
         body: FutureBuilder(
@@ -452,7 +455,6 @@ class _AddHourState extends State<addHoursFaculty> {
             );
           },
         ),
-        
       );
     }
   } //end build

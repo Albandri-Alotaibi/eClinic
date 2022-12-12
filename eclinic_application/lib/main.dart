@@ -20,6 +20,7 @@ import 'package:myapp/verfication.dart';
 import 'package:myapp/viewfaculty.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multiselect/multiselect.dart';
+import 'package:myapp/facultyFAQ.dart';
 
 Future<void> _firebaseMsgBackgroundHanler(RemoteMessage message) async {
   print("handling msg ${message.messageId}");
@@ -60,6 +61,7 @@ class MyApp extends StatelessWidget {
           'studentsignup': (context) => studentsignup(),
           'studentlogin': (context) => studentlogin(),
           'facultyviewprofile': (context) => facultyviewprofile(),
+          'facultyFAQ': (context) => facultyFAQ(),
         });
   }
 }
