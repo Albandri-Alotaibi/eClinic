@@ -333,103 +333,61 @@ class _AddHourState extends State<addHoursFaculty> {
         ),
       );
     } else if (isExists == false && isSemesterDateExists == true) {
-      return Scaffold(
-        backgroundColor: Mycolors.BackgroundColor,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text('Add hours'),
-        ),
-        body: ListView(
-          children: [
-            // ...daysOfHelp.map(buildSingleCheckbox).toList(),
-
-            CheckboxListTile(
-              controlAffinity: ListTileControlAffinity.leading,
-              title: Text(daysOfHelp[0].title),
-              value: daysOfHelp[0].value,
-              onChanged: (newvalue) {
-                setState(() {
-                  daysOfHelp[0].value = newvalue!;
-                });
-                selectTime1(0);
-                // if (newvalue == false) {
-                //   deleteHours(0);
-
-                // }
-              },
-              subtitle: subtitleForEachDay(0),
+      return SafeArea(
+        child: Scaffold(
+          backgroundColor: Mycolors.BackgroundColor,
+          // appBar: AppBar(
+          //   backgroundColor: Mycolors.BackgroundColor,
+          //   automaticallyImplyLeading: false,
+          //   title: Text('Add hours',),
+          // ),
+          body: Column(children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 30, bottom: 10),
+              child: Text(
+                "Add Hours",
+                style: TextStyle(
+                    color: Mycolors.mainColorBlack,
+                    fontFamily: 'main',
+                    fontSize: 20),
+              ),
             ),
-
-            CheckboxListTile(
-              controlAffinity: ListTileControlAffinity.leading,
-              title: Text(daysOfHelp[1].title),
-              value: daysOfHelp[1].value,
-              onChanged: (newvalue) {
-                setState(() {
-                  daysOfHelp[1].value = newvalue!;
-                });
-                selectTime1(1);
-                // if (newvalue == false) {
-                //   daysOfHelp[1].hours[0] = "un";
-                // }
-              },
-              subtitle: subtitleForEachDay(1),
+            Expanded(
+              child: SizedBox(
+                height: 200.0,
+                child: ListView.builder(
+                  itemCount: daysOfHelp.length,
+                  itemBuilder: ((context, index) {
+                    return Card(
+                      shadowColor: Mycolors.mainColorShadow,
+                      elevation: 4,
+                      child: ListTile(
+                        title: Text(daysOfHelp[index].title),
+                        leading: Checkbox(
+                            value: daysOfHelp[index].value,
+                            onChanged: (newvalue) {
+                              setState(() {
+                                daysOfHelp[index].value = newvalue!;
+                              });
+                              selectTime1(index);
+                            }),
+                        subtitle: subtitleForEachDay(index),
+                      ),
+                    );
+                  }),
+                ),
+              ),
             ),
-
-            CheckboxListTile(
-              controlAffinity: ListTileControlAffinity.leading,
-              title: Text(daysOfHelp[2].title),
-              value: daysOfHelp[2].value,
-              onChanged: (newvalue) {
-                setState(() {
-                  daysOfHelp[2].value = newvalue!;
-                });
-                selectTime1(2);
-                // if (newvalue == false) {
-                //   daysOfHelp[1].hours[0] = "un";
-                // }
-              },
-              subtitle: subtitleForEachDay(2),
-            ),
-
-            CheckboxListTile(
-              controlAffinity: ListTileControlAffinity.leading,
-              title: Text(daysOfHelp[3].title),
-              value: daysOfHelp[3].value,
-              onChanged: (newvalue) {
-                setState(() {
-                  daysOfHelp[3].value = newvalue!;
-                });
-                selectTime1(3);
-                // if (newvalue == false) {
-                //   daysOfHelp[1].hours[0] = "un";
-                // }
-              },
-              subtitle: subtitleForEachDay(3),
-            ),
-
-            CheckboxListTile(
-              controlAffinity: ListTileControlAffinity.leading,
-              title: Text(daysOfHelp[4].title),
-              value: daysOfHelp[4].value,
-              onChanged: (newvalue) {
-                setState(() {
-                  daysOfHelp[4].value = newvalue!;
-                });
-                selectTime1(4);
-                // if (newvalue == false) {
-                //   daysOfHelp[1].hours[0] = "un";
-                // }
-              },
-              subtitle: subtitleForEachDay(4),
-            ),
-
             ListTile(
               title: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Mycolors.mainShadedColorBlue),
+                  ),
                   child: Text("Confirm"),
                   onPressed: () => {showConfirmationDialog(context)}),
             ),
-          ],
+          ]),
         ),
       );
     } else {
