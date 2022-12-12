@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:myapp/addHoursFaculty.dart';
 import 'package:myapp/FacultyViewBookedAppointment.dart';
 import 'package:myapp/facultyhome.dart';
+import 'package:myapp/facultyviewprofile.dart';
 import 'package:myapp/home.dart';
 import 'package:myapp/login.dart';
 import 'package:myapp/reusable.dart';
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
           'verfication': (context) => verfication(),
           'studentsignup': (context) => studentsignup(),
           'studentlogin': (context) => studentlogin(),
+          'facultyviewprofile': (context) => facultyviewprofile(),
         });
   }
 }
