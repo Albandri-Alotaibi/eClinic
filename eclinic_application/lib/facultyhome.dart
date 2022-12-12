@@ -14,8 +14,10 @@ class facultyhome extends StatefulWidget {
   // State. Fields in a Widget subclass are always marked
   // "final".
 
-  const facultyhome({super.key});
+  //const facultyhome({super.key});
 
+  int selectedIndex;
+  facultyhome(this.selectedIndex);
   @override
   State<facultyhome> createState() => _fState();
 }
@@ -23,7 +25,7 @@ class facultyhome extends StatefulWidget {
 class _fState extends State<facultyhome> {
   String? email = '';
   String? userid = '';
-  int _selectedIndex = 0;
+  //int selectedIndex = 0;
   final List<Widget> _pages = [
     FacultyViewBookedAppointment(),
     addHoursFaculty(),
@@ -36,7 +38,7 @@ class _fState extends State<facultyhome> {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: ((context, snapshot) {
           if (snapshot.hasData) {
-            return facultyhome();
+            return facultyhome(0);
           } else {
             return login();
           }
@@ -53,7 +55,7 @@ class _fState extends State<facultyhome> {
       // appBar: AppBar(
       //   title: Text('Home'),
       // ),
-      body: _pages[_selectedIndex],
+      body: _pages[widget.selectedIndex],
       //-------------------------Nav Bar------------------------------
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
@@ -76,11 +78,11 @@ class _fState extends State<facultyhome> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           child: GNav(
-            selectedIndex: _selectedIndex,
+            selectedIndex: widget.selectedIndex,
             onTabChange: (index) {
               print(index);
               setState(() {
-                _selectedIndex = index;
+                widget.selectedIndex = index;
               });
             },
 

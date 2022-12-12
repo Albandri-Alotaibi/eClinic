@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => home(),
           'addHoursFaculty': (context) => addHoursFaculty(),
-          'facultyhome': (context) => facultyhome(),
+          'facultyhome': (context) => facultyhome(0),
           'studenthome': (context) => studenthome(),
           'facultysignup': (context) => facultysignup(),
           'reusable': (context) => reusable(),

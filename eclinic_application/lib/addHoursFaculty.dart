@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:myapp/facultyhome.dart';
 import 'package:simple_time_range_picker/simple_time_range_picker.dart';
 import 'model/availableHoursArray.dart';
 import 'style/Mycolors.dart';
@@ -12,6 +13,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:myapp/login.dart';
 
 class addHoursFaculty extends StatefulWidget {
+  const addHoursFaculty({super.key});
+
   // const deem({super.key});
 
   @override
@@ -24,7 +27,7 @@ class _AddHourState extends State<addHoursFaculty> {
   //   super.initState();
   //   getusers();
   // }
-
+  int _selectedIndex = 1;
   TimeOfDay _startTime = TimeOfDay.now();
   TimeOfDay _endTime = TimeOfDay.now();
   TimeOfDay initime = TimeOfDay.now();
@@ -331,103 +334,104 @@ class _AddHourState extends State<addHoursFaculty> {
       );
     } else if (isExists == false && isSemesterDateExists == true) {
       return Scaffold(
-          backgroundColor: Mycolors.BackgroundColor,
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            title: Text('Add hours'),
-          ),
-          body: ListView(
-            children: [
-              // ...daysOfHelp.map(buildSingleCheckbox).toList(),
+        backgroundColor: Mycolors.BackgroundColor,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: Text('Add hours'),
+        ),
+        body: ListView(
+          children: [
+            // ...daysOfHelp.map(buildSingleCheckbox).toList(),
 
-              CheckboxListTile(
-                controlAffinity: ListTileControlAffinity.leading,
-                title: Text(daysOfHelp[0].title),
-                value: daysOfHelp[0].value,
-                onChanged: (newvalue) {
-                  setState(() {
-                    daysOfHelp[0].value = newvalue!;
-                  });
-                  selectTime1(0);
-                  // if (newvalue == false) {
-                  //   deleteHours(0);
+            CheckboxListTile(
+              controlAffinity: ListTileControlAffinity.leading,
+              title: Text(daysOfHelp[0].title),
+              value: daysOfHelp[0].value,
+              onChanged: (newvalue) {
+                setState(() {
+                  daysOfHelp[0].value = newvalue!;
+                });
+                selectTime1(0);
+                // if (newvalue == false) {
+                //   deleteHours(0);
 
-                  // }
-                },
-                subtitle: subtitleForEachDay(0),
-              ),
+                // }
+              },
+              subtitle: subtitleForEachDay(0),
+            ),
 
-              CheckboxListTile(
-                controlAffinity: ListTileControlAffinity.leading,
-                title: Text(daysOfHelp[1].title),
-                value: daysOfHelp[1].value,
-                onChanged: (newvalue) {
-                  setState(() {
-                    daysOfHelp[1].value = newvalue!;
-                  });
-                  selectTime1(1);
-                  // if (newvalue == false) {
-                  //   daysOfHelp[1].hours[0] = "un";
-                  // }
-                },
-                subtitle: subtitleForEachDay(1),
-              ),
+            CheckboxListTile(
+              controlAffinity: ListTileControlAffinity.leading,
+              title: Text(daysOfHelp[1].title),
+              value: daysOfHelp[1].value,
+              onChanged: (newvalue) {
+                setState(() {
+                  daysOfHelp[1].value = newvalue!;
+                });
+                selectTime1(1);
+                // if (newvalue == false) {
+                //   daysOfHelp[1].hours[0] = "un";
+                // }
+              },
+              subtitle: subtitleForEachDay(1),
+            ),
 
-              CheckboxListTile(
-                controlAffinity: ListTileControlAffinity.leading,
-                title: Text(daysOfHelp[2].title),
-                value: daysOfHelp[2].value,
-                onChanged: (newvalue) {
-                  setState(() {
-                    daysOfHelp[2].value = newvalue!;
-                  });
-                  selectTime1(2);
-                  // if (newvalue == false) {
-                  //   daysOfHelp[1].hours[0] = "un";
-                  // }
-                },
-                subtitle: subtitleForEachDay(2),
-              ),
+            CheckboxListTile(
+              controlAffinity: ListTileControlAffinity.leading,
+              title: Text(daysOfHelp[2].title),
+              value: daysOfHelp[2].value,
+              onChanged: (newvalue) {
+                setState(() {
+                  daysOfHelp[2].value = newvalue!;
+                });
+                selectTime1(2);
+                // if (newvalue == false) {
+                //   daysOfHelp[1].hours[0] = "un";
+                // }
+              },
+              subtitle: subtitleForEachDay(2),
+            ),
 
-              CheckboxListTile(
-                controlAffinity: ListTileControlAffinity.leading,
-                title: Text(daysOfHelp[3].title),
-                value: daysOfHelp[3].value,
-                onChanged: (newvalue) {
-                  setState(() {
-                    daysOfHelp[3].value = newvalue!;
-                  });
-                  selectTime1(3);
-                  // if (newvalue == false) {
-                  //   daysOfHelp[1].hours[0] = "un";
-                  // }
-                },
-                subtitle: subtitleForEachDay(3),
-              ),
+            CheckboxListTile(
+              controlAffinity: ListTileControlAffinity.leading,
+              title: Text(daysOfHelp[3].title),
+              value: daysOfHelp[3].value,
+              onChanged: (newvalue) {
+                setState(() {
+                  daysOfHelp[3].value = newvalue!;
+                });
+                selectTime1(3);
+                // if (newvalue == false) {
+                //   daysOfHelp[1].hours[0] = "un";
+                // }
+              },
+              subtitle: subtitleForEachDay(3),
+            ),
 
-              CheckboxListTile(
-                controlAffinity: ListTileControlAffinity.leading,
-                title: Text(daysOfHelp[4].title),
-                value: daysOfHelp[4].value,
-                onChanged: (newvalue) {
-                  setState(() {
-                    daysOfHelp[4].value = newvalue!;
-                  });
-                  selectTime1(4);
-                  // if (newvalue == false) {
-                  //   daysOfHelp[1].hours[0] = "un";
-                  // }
-                },
-                subtitle: subtitleForEachDay(4),
-              ),
+            CheckboxListTile(
+              controlAffinity: ListTileControlAffinity.leading,
+              title: Text(daysOfHelp[4].title),
+              value: daysOfHelp[4].value,
+              onChanged: (newvalue) {
+                setState(() {
+                  daysOfHelp[4].value = newvalue!;
+                });
+                selectTime1(4);
+                // if (newvalue == false) {
+                //   daysOfHelp[1].hours[0] = "un";
+                // }
+              },
+              subtitle: subtitleForEachDay(4),
+            ),
 
-              ListTile(
-                title: ElevatedButton(
-                    child: Text("Confirm"),
-                    onPressed: () => {showConfirmationDialog(context)}),
-              ),
-            ],
-          ));
+            ListTile(
+              title: ElevatedButton(
+                  child: Text("Confirm"),
+                  onPressed: () => {showConfirmationDialog(context)}),
+            ),
+          ],
+        ),
+      );
     } else {
       return Scaffold(
         backgroundColor: Mycolors.BackgroundColor,
@@ -608,6 +612,11 @@ class _AddHourState extends State<addHoursFaculty> {
                     showerror(context,
                         "the new time must be out of the prevrios period", x);
                     flag = false;
+                  } else if (_startTime.hour == startend.end.hour &&
+                      _startTime.minute == startend.end.minute) {
+                    showerror(context,
+                        "the start time must be out of the prevrios period", x);
+                    flag = false;
                   }
                   //------------------------time must be in working hours(7-4)-------------------------
                   else if (_startTime.hour < 7 ||
@@ -686,7 +695,12 @@ class _AddHourState extends State<addHoursFaculty> {
         child: Text("Confirm"),
         onPressed: () {
           Confirm();
-          Navigator.pushNamed(context, 'facultyhome');
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => facultyhome(_selectedIndex),
+            ),
+          );
         },
       );
       AlertDialog alert = AlertDialog(
@@ -911,7 +925,7 @@ class _AddHourState extends State<addHoursFaculty> {
           .collection('appointment')
           .doc() //Is there a specific id i should put for the appointments
           .set({
-       // 'Day': day, //string
+        // 'Day': day, //string
         'starttime': StartInTimestamp, //Start timestamp
         'endtime': EndInTimestamp,
         'Booked':
