@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:myapp/facultyhome.dart';
-import 'package:simple_time_range_picker/simple_time_range_picker.dart';
+//import 'package:simple_time_range_picker/simple_time_range_picker.dart';
+import 'TimeFiles/simple_time_range_picker.dart';
 import 'model/availableHoursArray.dart';
 import 'style/Mycolors.dart';
 import 'model/checkbox_state.dart';
