@@ -35,12 +35,17 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
   }
 
   List<String> specality = [];
+  List specalityid = [];
   String? email = '';
   String? userid = '';
   String? fname;
   String? lname;
   String? mettingmethod;
   String? ksuemail;
+  var zag = 0;
+  bool isshow = false;
+  Rx<List<String>> selectedoptionlist = Rx<List<String>>([]);
+  var selectedoption = "".obs;
   // final fnameController = TextEditingController();
   // final _lnameController = TextEditingController();
   // final _emailController = TextEditingController();
@@ -67,8 +72,11 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
     for (var i = 0; i < facultyspecialityRef.length; i++) {
       final DocumentSnapshot docRef = await facultyspecialityRef[i].get();
       specality.add(docRef["specialityname"]);
-      print(docRef["specialityname"]);
+      // print("///////////////////////////////////////");
+      // print(specality);
+
     }
+
     fname = snap["firstname"];
     lname = snap["lastname"];
     mettingmethod = snap["meetingmethod"];
@@ -128,16 +136,36 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                       print(snapshot);
                       final cuser =
                           snapshot.data!.data() as Map<String, dynamic>;
-                      final fn = cuser['firstname'];
-                      final ln = cuser['lastname'];
-                      final fnameController = TextEditingController(text: fn);
 
-                      print(fn);
-                      print(ln);
-                      print(
-                          "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+                      final fname = cuser['firstname'];
+                      final lname = cuser['lastname'];
+                      final ksuemail = cuser['ksuemail'];
+                      final mettingmethod = cuser['meetingmethod'];
+                      final _fnameController =
+                          TextEditingController(text: fname);
+                      final _lnameController =
+                          TextEditingController(text: lname);
+                      final _emailController =
+                          TextEditingController(text: ksuemail);
+                      final _meetingmethodcontroller =
+                          TextEditingController(text: mettingmethod);
+                      // final sp = cuser["specialty"];
 
-                      //    final _lnameController = TextEditingController(text: ln);
+                      // for (var i = 0; i < sp.length; i++) {
+                      //   final DocumentSnapshot docRef = sp[i].get();
+                      //   print(docRef["specialityname"]);
+
+                      //   //final DocumentSnapshot specialitywitoutrefrance = docRef("specialityname");
+                      //   print("1111111111111111111111111111111111111111");
+                      //   print(sp);
+                      //   // print(
+                      //   //     "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+                      //   // print(docRef.toString());
+
+                      //   //  selectedoptionlist.value = docRef["specialityname"];
+                      // }
+
+                      // final _lnameController = TextEditingController(text: ln);
                       // final _emailController =
                       //     TextEditingController(text: cuser['ksuemail']);
                       // final _meetingmethodcontroller =
@@ -154,32 +182,155 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                             height: 15,
                           ),
                           TextFormField(
-                            controller: fnameController,
+                            controller: _fnameController,
                             decoration: InputDecoration(
-                                // labelText: 'Frist Name',
+                                labelText: 'Frist Name',
                                 // hintText: "Enter your first name",
+                                suffixIcon: Icon(Icons.edit),
                                 border: OutlineInputBorder()),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             validator: (value) {
                               if (value!.isEmpty ||
-                                  fnameController.text == "") {
+                                  _fnameController.text == "") {
                                 return 'Please enter your frist name ';
                               } else {
-                                if (nameRegExp.hasMatch(fnameController.text)) {
+                                if (nameRegExp
+                                    .hasMatch(_fnameController.text)) {
                                   return 'Please frist name only letters accepted ';
                                 } else {
                                   if (!(english
-                                      .hasMatch(fnameController.text))) {
+                                      .hasMatch(_fnameController.text))) {
                                     return "only english is allowed";
                                   }
-                                  // ;
-                                  // setState(() {
-                                  //   fnameController.text = fname;
-                                  // });
                                 }
                               }
                             },
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          TextFormField(
+                            controller: _lnameController,
+                            decoration: InputDecoration(
+                                labelText: 'Last Name',
+                                // hintText: "Enter your last name",
+                                suffixIcon: Icon(Icons.edit),
+                                border: OutlineInputBorder()),
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (value) {
+                              if (value!.isEmpty ||
+                                  _lnameController.text == "") {
+                                return 'Please enter your last name ';
+                              } else {
+                                if (nameRegExp
+                                    .hasMatch(_lnameController.text)) {
+                                  return 'Please last name only letters accepted ';
+                                } else {
+                                  if (!(english
+                                      .hasMatch(_lnameController.text))) {
+                                    return "only english is allowed";
+                                  }
+                                }
+                              }
+                            },
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          TextFormField(
+                            controller: _emailController,
+                            readOnly: true,
+                            decoration: InputDecoration(
+                                // hintText: "Enter your KSU email",
+                                labelText: 'KSU Email',
+                                border: OutlineInputBorder()),
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (value) {
+                              if (value!.isEmpty ||
+                                  _emailController.text == "") {
+                                return 'Please enter your KSU email ';
+                              } else {
+                                if (!(ksuEmailRegEx
+                                    .hasMatch(_emailController.text))) {
+                                  return 'Please write email format correctly, example@ksu.edu.sa ';
+                                }
+                              }
+                            },
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          DropDownMultiSelect(
+                            decoration: InputDecoration(
+                                suffixIcon: Icon(Icons.edit),
+                                labelText: " speciality",
+                                // hintText: "select your specialty",
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color:
+                                            isshow ? Colors.red : Colors.grey)),
+                                errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: isshow
+                                            ? Colors.red
+                                            : Colors.blueAccent)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: isshow
+                                            ? Colors.red
+                                            : Colors.blueAccent))),
+                            options: specality,
+                            whenEmpty: "",
+                            onChanged: (value) {
+                              setState(() {
+                                selectedoptionlist.value = value;
+                                selectedoption.value = "";
+                                selectedoptionlist.value.forEach((element) {
+                                  selectedoption.value =
+                                      selectedoption.value + " " + element;
+                                  zag = selectedoptionlist.value.length;
+                                  isshow = selectedoption.value.isEmpty;
+
+                                  if (zag < 1) {
+                                    isshow = true;
+                                  }
+                                  if (zag > 0 ||
+                                      selectedoption.value.isEmpty ||
+                                      selectedoption.value == null) {
+                                    isshow = false;
+                                  }
+                                  print(
+                                      "////////////////////////////at selection");
+                                  print(specality);
+                                });
+                              });
+                              checkidspecialty(selectedoptionlist.value);
+                              isshow = selectedoptionlist.value.isEmpty;
+                            },
+                            selectedValues: selectedoptionlist.value,
+                          ),
+                          SizedBox(
+                            height: 2,
+                          ),
+                          Visibility(
+                            visible: isshow,
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Please choose your specialty",
+                                    style: TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 211, 56, 45)),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ]),
+                          ),
+                          SizedBox(
+                            height: 8,
                           ),
                         ],
                       );
@@ -212,4 +363,34 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
         backgroundColor: Colors.grey.shade800,
         backgroundImage: AssetImage('assets/images/woman.png'),
       );
+  checkidspecialty(List<String?> specialityoption) async {
+    specalityid.length = 0;
+    // print(specialityoption);
+    // print(speciality.length);
+    // print(speciality);
+
+    try {
+      await FirebaseFirestore.instance
+          .collection('facultyspeciality')
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          setState(() {
+            for (var i = 0; i < specialityoption.length; i++) {
+              if (element['specialityname'] == specialityoption[i]) {
+                final ref = FirebaseFirestore.instance
+                    .collection("facultyspeciality")
+                    .doc(element.id);
+                specalityid.add(ref);
+                print(specalityid);
+              }
+            }
+          });
+        });
+      });
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 }
