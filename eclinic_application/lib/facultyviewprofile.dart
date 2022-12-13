@@ -21,37 +21,75 @@ class facultyviewprofile extends StatefulWidget {
 }
 
 class _facultyviewprofileState extends State<facultyviewprofile> {
-  List<String> specality = [];
-  String? email = '';
-  String? userid = '';
-  final double coverheight = 280;
-  @override
   void initState() {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
     userid = user!.uid;
     email = user.email!;
     retrivespeciality();
+
+    // final _lnameController = TextEditingController();
+    // final _emailController = TextEditingController();
+    // final _meetingmethodcontroller = TextEditingController();
     super.initState();
   }
 
-//  retrivesmester() async {
-//     try {
-//       await FirebaseFirestore.instance
-//           .collection('faculty').doc(userid).collection('semester').doc().get()
+  List<String> specality = [];
+  String? email = '';
+  String? userid = '';
+  var fname;
+  var lname;
+  var mettingmethod;
+  var ksuemail;
+  // final fnameController = TextEditingController();
+  // final _lnameController = TextEditingController();
+  // final _emailController = TextEditingController();
+  // final _meetingmethodcontroller = TextEditingController();
+  final double coverheight = 280;
+  final double profileheight = 144;
+  final double top = 136 / 2; //coverheight - profileheight/2;
+  final formkey = GlobalKey<FormState>();
+  static final RegExp nameRegExp = RegExp(r'[!@#<>?":_`~;[\]\\|=+)(*&^%0-9-]');
+  RegExp uperRegExp = RegExp(r"(?=.*[A-Z])");
+  RegExp numbRegExp = RegExp(r"[0-9]");
+  RegExp smallRegExp = RegExp(r"(?=.*[a-z])");
+  RegExp ksuEmailRegEx = new RegExp(r'^([a-z\d\._]+)@ksu.edu.sa$',
+      multiLine: false, caseSensitive: false);
+  RegExp english = RegExp("^[\u0000-\u007F]+\$");
 
-//           .then((querySnapshot) {
-//         querySnapshot.get("").forEach((element) {
-//           setState(() {
-//             specality.add(element['semestername']);
-//           });
-//         });
-//       });
-//     } catch (e) {
-//       print(e.toString());
-//       return null;
-//     }
-//   }
+  @override
+  Future retrivespeciality() async {
+    final snap = await FirebaseFirestore.instance
+        .collection('faculty')
+        .doc(userid)
+        .get();
+    List facultyspecialityRef = snap["specialty"];
+    for (var i = 0; i < facultyspecialityRef.length; i++) {
+      final DocumentSnapshot docRef = await facultyspecialityRef[i].get();
+      specality.add(docRef["specialityname"]);
+      print(docRef["specialityname"]);
+    }
+    fname = snap["firstname"];
+    lname = snap["lastname"];
+    mettingmethod = snap["meetingmethod"];
+    ksuemail = snap["ksuemail"];
+    print(fname);
+    print(lname);
+    print(mettingmethod);
+    print(ksuemail);
+    // var semesterRef = snap["semester"];
+    // final DocumentSnapshot docRef2 = await semesterRef.get();
+    // print(docRef2["specialityname"]);
+  }
+
+  Future userinfo() async {
+    final snap = await FirebaseFirestore.instance
+        .collection('faculty')
+        .doc(userid)
+        .get();
+    return snap;
+  }
+
   @override
   Widget build(BuildContext context) {
     body:
@@ -66,44 +104,101 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
         }));
 
     return Scaffold(
-      body: Stack(
-        alignment: Alignment.center,
-        children: [],
+      appBar: AppBar(
+        title: const Text('view profile'),
+      ),
+      body: SingleChildScrollView(
+        clipBehavior: Clip.none,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Form(
+            key: formkey,
+            child: Column(children: [
+              FutureBuilder(
+                  future: userinfo(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    if (snapshot.hasData) {
+                      final cuser = snapshot.data!;
+                      final fn = cuser.firstname;
+                      final fnameController = TextEditingController(text: fn);
+                      print(cuser.firstname);
+                      final _lnameController =
+                          TextEditingController(text: cuser.lastname);
+                      final _emailController =
+                          TextEditingController(text: cuser.ksuemail);
+                      final _meetingmethodcontroller =
+                          TextEditingController(text: cuser.meetingmethod);
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          buildCoverImage(),
+                          Positioned(
+                            top: top,
+                            child: buildprofileImage(),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          TextFormField(
+                            controller: fnameController,
+                            decoration: InputDecoration(
+                                // labelText: 'Frist Name',
+                                // hintText: "Enter your first name",
+                                border: OutlineInputBorder()),
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (value) {
+                              if (value!.isEmpty ||
+                                  fnameController.text == "") {
+                                return 'Please enter your frist name ';
+                              } else {
+                                if (nameRegExp.hasMatch(fnameController.text)) {
+                                  return 'Please frist name only letters accepted ';
+                                } else {
+                                  if (!(english
+                                      .hasMatch(fnameController.text))) {
+                                    return "only english is allowed";
+                                  }
+                                  // ;
+                                  // setState(() {
+                                  //   fnameController.text = fname;
+                                  // });
+                                }
+                              }
+                            },
+                          ),
+                        ],
+                      );
+                    }
+                    return Center(child: CircularProgressIndicator());
+                  }),
+              ElevatedButton(
+                onPressed: () {},
+                child: Text("Log out"),
+              ),
+            ]),
+          ),
+        ),
       ),
     );
   }
 
   Widget buildCoverImage() => Container(
         color: Colors.grey,
-        child: Image.asset(
-          "images/profilebackground",
-          width: double.infinity,
-          height: coverheight,
-          fit: BoxFit.cover,
-        ),
+        // child: Image.asset(
+        //   'assets/images/profilebackground.png.png',
+        //   width: double.infinity,
+        //   height: coverheight,
+        //   fit: BoxFit.cover,
+        // ),
       );
 
-  retrivespeciality() async {
-    final snap = await FirebaseFirestore.instance
-        .collection('faculty')
-        .doc(userid)
-        .get();
-    List facultyspecialityRef = snap["specialty"];
-    for (var i = 0; i < facultyspecialityRef.length; i++) {
-      final DocumentSnapshot docRef = await facultyspecialityRef[i].get();
-      specality.add(docRef["specialityname"]);
-      print(docRef["specialityname"]);
-    }
-    var fname = snap["firstname"];
-    var lname = snap["lastname"];
-    var mettingmethod = snap["meetingmethod"];
-    var ksuemail = snap["ksuemail"];
-    print(fname);
-    print(lname);
-    print(mettingmethod);
-    print(ksuemail);
-    // var semesterRef = snap["semester"];
-    // final DocumentSnapshot docRef2 = await semesterRef.get();
-    // print(docRef2["specialityname"]);
-  }
+  Widget buildprofileImage() => CircleAvatar(
+        radius: profileheight / 2,
+        backgroundColor: Colors.grey.shade800,
+        backgroundImage: AssetImage('assets/images/woman.png'),
+      );
 }
