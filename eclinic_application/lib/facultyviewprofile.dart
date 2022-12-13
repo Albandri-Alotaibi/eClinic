@@ -37,10 +37,10 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
   List<String> specality = [];
   String? email = '';
   String? userid = '';
-  var fname;
-  var lname;
-  var mettingmethod;
-  var ksuemail;
+  String? fname;
+  String? lname;
+  String? mettingmethod;
+  String? ksuemail;
   // final fnameController = TextEditingController();
   // final _lnameController = TextEditingController();
   // final _emailController = TextEditingController();
@@ -115,22 +115,33 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
             key: formkey,
             child: Column(children: [
               FutureBuilder(
-                  future: userinfo(),
+                  future: FirebaseFirestore.instance
+                      .collection('faculty')
+                      .doc(userid)
+                      .get(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(child: CircularProgressIndicator());
                     }
                     if (snapshot.hasData) {
-                      final cuser = snapshot.data!;
-                      final fn = cuser.firstname;
+                      print("snapshot");
+                      print(snapshot);
+                      final cuser =
+                          snapshot.data!.data() as Map<String, dynamic>;
+                      final fn = cuser['firstname'];
+                      final ln = cuser['lastname'];
                       final fnameController = TextEditingController(text: fn);
-                      print(cuser.firstname);
-                      final _lnameController =
-                          TextEditingController(text: cuser.lastname);
-                      final _emailController =
-                          TextEditingController(text: cuser.ksuemail);
-                      final _meetingmethodcontroller =
-                          TextEditingController(text: cuser.meetingmethod);
+
+                      print(fn);
+                      print(ln);
+                      print(
+                          "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+
+                      //    final _lnameController = TextEditingController(text: ln);
+                      // final _emailController =
+                      //     TextEditingController(text: cuser['ksuemail']);
+                      // final _meetingmethodcontroller =
+                      //     TextEditingController(text: cuser['meetingmethod']);
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
