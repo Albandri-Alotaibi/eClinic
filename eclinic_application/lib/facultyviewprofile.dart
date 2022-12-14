@@ -21,17 +21,23 @@ class facultyviewprofile extends StatefulWidget {
 }
 
 class _facultyviewprofileState extends State<facultyviewprofile> {
+  var collageselectedvalue;
+  var departmentselectedvalue;
+  var semesterselectedvalue;
   void initState() {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
     userid = user!.uid;
     email = user.email!;
     retriveAllspecilty();
-    retrivespeciality();
+    retrivesuserinfo();
     retrievesemester();
     retrivecollage();
     retrivedepartment();
-    selectedoptionlist.value = specality;
+    retrivecolldepsem();
+    // zag = 1;
+    isshow = false;
+
     super.initState();
   }
 
@@ -47,11 +53,18 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
   String? lname;
   String? mettingmethod;
   String? ksuemail;
-  var semesterselectedvalue;
+  var fn;
+  var ln;
+  var mm;
+  // var collageselectedvalue;
+  // var departmentselectedvalue;
+  // var semesterselectedvalue;
+  var semesterselectedfromDB;
+  var collageselectedfromDB;
+  var departmentselectedfromDB;
+  late String docsforsemestername;
   late String docsforcollage;
-  var collageselectedvalue;
-  var departmentselectedvalue;
-
+  late String docfordepatment;
   var year;
   var monthe;
   var day;
@@ -108,7 +121,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
   }
 
   @override
-  retrivespeciality() async {
+  retrivesuserinfo() async {
     final snap = await FirebaseFirestore.instance
         .collection('faculty')
         .doc(userid)
@@ -120,30 +133,55 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
         specality.add(docRef["specialityname"]);
       });
     }
-
-    fname = snap["firstname"];
-    lname = snap["lastname"];
-    mettingmethod = snap["meetingmethod"];
-    ksuemail = snap["ksuemail"];
-    print(fname);
-    print(lname);
-    print(mettingmethod);
-    print(ksuemail);
-    //  List semesterRef = snap["semester"];
-    //  for (var n = 0; n < semesterRef.length; n++) {
-    //  final DocumentSnapshot docRef2 = await semesterRef[n].get();
-    //  print(docRef2["specialityname"]);
+    zag = specality.length;
+    checkidspecialty(specality);
+    // var semesterRef = snap["semester"];
+    // final DocumentSnapshot docRef2 = await semesterRef.get();
+    // semesterselectedfromDB = docRef2["semestername"];
+    // // print("/////////////////////semester///////////////////////////");
+    // // print(semesterselectedfromDB);
+    // /////////////////////////////////////////////////////
+    // var collageRef = snap["collage"];
+    // final DocumentSnapshot docRef3 = await collageRef.get();
+    // collageselectedfromDB = docRef3["collagename"];
+    // // print("/////////////////////collage///////////////////////////");
+    // // print(collageselectedfromDB);
+    // /////////////////////////////////////////////////////
+    // var departmentRef = snap["department"];
+    // final DocumentSnapshot docRef4 = await departmentRef.get();
+    // departmentselectedfromDB = docRef4["departmentname"];
+    // // print("/////////////////////department///////////////////////////");
+    // // print(departmentselectedfromDB);
   }
 
-  // Future userinfo() async {
-  //   final snap = await FirebaseFirestore.instance
-  //       .collection('faculty')
-  //       .doc(userid)
-  //       .get();
-  //   return snap;
-  // }
+  retrivecolldepsem() async {
+    final snap = await FirebaseFirestore.instance
+        .collection('faculty')
+        .doc(userid)
+        .get();
+    var semesterRef = snap["semester"];
+    final DocumentSnapshot docRef2 = await semesterRef.get();
+    semesterselectedfromDB = docRef2["semestername"];
+    // print("/////////////////////semester///////////////////////////");
+    // print(semesterselectedfromDB);
+    /////////////////////////////////////////////////////
+    var collageRef = snap["collage"];
+    final DocumentSnapshot docRef3 = await collageRef.get();
+    collageselectedfromDB = docRef3["collagename"];
+    // print("/////////////////////collage///////////////////////////");
+    // print(collageselectedfromDB);
+    /////////////////////////////////////////////////////
+    var departmentRef = snap["department"];
+    final DocumentSnapshot docRef4 = await departmentRef.get();
+    departmentselectedfromDB = docRef4["departmentname"];
+    // print("/////////////////////department///////////////////////////");
+    // print(departmentselectedfromDB);
+    checkidc(collageselectedfromDB);
+    checkidd(departmentselectedfromDB);
+    checkids(semesterselectedfromDB);
+  }
+
   retrievesemester() async {
-    bool past = true;
     try {
       await FirebaseFirestore.instance
           .collection('semester')
@@ -239,9 +277,9 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                       .doc(userid)
                       .get(),
                   builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
-                    }
+                    // if (snapshot.connectionState == ConnectionState.waiting) {
+                    //   return Center(child: CircularProgressIndicator());
+                    // }
                     if (snapshot.hasData) {
                       print("snapshot");
                       print(snapshot);
@@ -260,31 +298,23 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                           TextEditingController(text: ksuemail);
                       final _meetingmethodcontroller =
                           TextEditingController(text: mettingmethod);
+                      selectedoptionlist.value = specality;
+                      collageselectedvalue = collageselectedfromDB;
+                      departmentselectedvalue = departmentselectedfromDB;
+                      semesterselectedvalue = semesterselectedfromDB;
+                      // print("/////////////////ممههههممم//////////////////");
+                      // print(departmentselectedvalue);
+                      // print("//////////////////////////////////");
+                      // print(departmentselectedfromDB);
+                      // print("/////////////////ممههههممم//////////////////");
+                      // print(semesterselectedvalue);
+                      // print("//////////////////////////////////");
+                      // print(semesterselectedfromDB);
+                      // print("/////////////////ممههههممم//////////////////");
+                      // print(collageselectedvalue);
+                      // print("//////////////////////////////////");
+                      // print(collageselectedfromDB);
 
-                      // if (specality.length > 1) {
-                      //   selectedoptionlist.value = specality;
-                      // }
-                      // final sp = cuser["specialty"];
-
-                      // for (var i = 0; i < sp.length; i++) {
-                      //   final DocumentSnapshot docRef = sp[i].get();
-                      //   print(docRef["specialityname"]);
-
-                      //   //final DocumentSnapshot specialitywitoutrefrance = docRef("specialityname");
-                      //   print("1111111111111111111111111111111111111111");
-                      //   print(sp);
-                      //   // print(
-                      //   //     "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-                      //   // print(docRef.toString());
-
-                      //   //  selectedoptionlist.value = docRef["specialityname"];
-                      // }
-
-                      // final _lnameController = TextEditingController(text: ln);
-                      // final _emailController =
-                      //     TextEditingController(text: cuser['ksuemail']);
-                      // final _meetingmethodcontroller =
-                      //     TextEditingController(text: cuser['meetingmethod']);
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -381,7 +411,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                           DropdownButtonFormField<String>(
                             decoration: InputDecoration(
                               suffixIcon: Icon(Icons.edit),
-                              labelText: 'collage',
+                              labelText: 'College',
                               border: OutlineInputBorder(),
                             ),
                             isExpanded: true,
@@ -391,22 +421,25 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                 child: Text(dropdownitems),
                               );
                             }).toList(),
+
                             onChanged: (String? newselect) {
                               setState(() {
                                 collageselectedvalue = newselect;
-                                //checkidc(collageselectedvalue);
+                                collageselectedfromDB = newselect;
+                                checkidc(collageselectedvalue);
                               });
                             },
                             value: collageselectedvalue,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            validator: (value) {
-                              if (value == null ||
-                                  collageselectedvalue!.isEmpty ||
-                                  collageselectedvalue == null) {
-                                return 'Please choose your collage';
-                              }
-                            },
+
+                            // autovalidateMode:
+                            //     AutovalidateMode.onUserInteraction,
+                            // validator: (value) {
+                            //   if (value == null ||
+                            //       collageselectedvalue!.isEmpty ||
+                            //       collageselectedvalue == null) {
+                            //     return 'Please choose your collage';
+                            //   }
+                            // },
                           ),
                           SizedBox(
                             height: 8,
@@ -417,7 +450,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                           DropdownButtonFormField<String>(
                             decoration: InputDecoration(
                               suffixIcon: Icon(Icons.edit),
-                              labelText: ' department',
+                              labelText: ' Department',
                               border: OutlineInputBorder(),
                             ),
                             isExpanded: true,
@@ -430,19 +463,24 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                             onChanged: (String? newselect) {
                               setState(() {
                                 departmentselectedvalue = newselect;
-                                //checkidd(departmentselectedvalue);
+                                departmentselectedfromDB = newselect;
+                                checkidd(departmentselectedvalue);
                               });
+                              print(
+                                  "/////////////////ممههههممم//////////////////");
+                              print(departmentselectedvalue);
                             },
                             value: departmentselectedvalue,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            validator: (value) {
-                              if (value == null ||
-                                  departmentselectedvalue!.isEmpty ||
-                                  departmentselectedvalue == null) {
-                                return 'Please choose your department';
-                              }
-                            },
+
+                            // autovalidateMode:
+                            //     AutovalidateMode.onUserInteraction,
+                            // validator: (value) {
+                            //   if (value == null ||
+                            //       departmentselectedvalue!.isEmpty ||
+                            //       departmentselectedvalue == null) {
+                            //     return 'Please choose your department';
+                            //   }
+                            // },
                           ),
                           SizedBox(
                             height: 8,
@@ -475,7 +513,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                 selectedoptionlist.value.forEach((element) {
                                   selectedoption.value =
                                       selectedoption.value + " " + element;
-
+                                  specality = selectedoptionlist.value;
                                   zag = selectedoptionlist.value.length;
                                   isshow = selectedoption.value.isEmpty;
 
@@ -488,9 +526,6 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                     isshow = false;
                                   }
                                 });
-                                print(
-                                    "/////////////////ممههههممم//////////////////");
-                                print(selectedoptionlist.value);
                               });
                               checkidspecialty(selectedoptionlist.value);
                               isshow = selectedoptionlist.value.isEmpty;
@@ -533,19 +568,20 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                             onChanged: (String? newselect) {
                               setState(() {
                                 semesterselectedvalue = newselect;
-                                // checkids(semesterselectedvalue);
+                                semesterselectedfromDB = newselect;
+                                checkids(semesterselectedvalue);
                               });
                             },
                             value: semesterselectedvalue,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            validator: (value) {
-                              if (value == null ||
-                                  semesterselectedvalue!.isEmpty ||
-                                  semesterselectedvalue == null) {
-                                return 'Please choose a semester';
-                              }
-                            },
+                            // autovalidateMode:
+                            //     AutovalidateMode.onUserInteraction,
+                            // validator: (value) {
+                            //   if (value == null ||
+                            //       semesterselectedvalue!.isEmpty ||
+                            //       semesterselectedvalue == null) {
+                            //     return 'Please choose a semester';
+                            //   }
+                            // },
                           ),
                           SizedBox(
                             height: 8,
@@ -569,17 +605,88 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                   }
                                 }
                               }),
+                          Row(
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {},
+                                child: Text("Log out"),
+                              ),
+                              ElevatedButton(
+                                onPressed: () async {
+                                  setState(() {
+                                    fn = _fnameController.text;
+                                    ln = _lnameController.text;
+                                    mm = _meetingmethodcontroller.text;
+
+                                    if (zag < 1) {
+                                      isshow = true;
+                                    }
+                                    if (zag > 0) {
+                                      isshow = false;
+                                    }
+                                  });
+                                  try {
+                                    if (formkey.currentState!.validate() &&
+                                        zag > 0) {
+                                      await FirebaseFirestore.instance
+                                          .collection('faculty')
+                                          .doc(userid)
+                                          .update({
+                                        "firstname": fn,
+                                        "lastname": ln,
+                                        "meetingmethod": mm,
+                                        'department': FirebaseFirestore.instance
+                                            .collection("collage")
+                                            .doc(docsforcollage)
+                                            .collection("department")
+                                            .doc(docfordepatment),
+                                        'collage': FirebaseFirestore.instance
+                                            .collection("collage")
+                                            .doc(docsforcollage),
+                                        'semester': FirebaseFirestore.instance
+                                            .collection("semester")
+                                            .doc(docsforsemestername),
+                                        "specialty": specalityid,
+                                      });
+
+                                      Fluttertoast.showToast(
+                                        msg:
+                                            " Your information has been updated successfully",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 2,
+                                        backgroundColor:
+                                            Color.fromARGB(255, 127, 166, 233),
+                                        textColor:
+                                            Color.fromARGB(255, 248, 249, 250),
+                                        fontSize: 18.0,
+                                      );
+                                    }
+                                  } on FirebaseAuthException catch (error) {
+                                    Fluttertoast.showToast(
+                                      msg: "Something wronge",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.CENTER,
+                                      timeInSecForIosWeb: 5,
+                                      backgroundColor:
+                                          Color.fromARGB(255, 127, 166, 233),
+                                      textColor:
+                                          Color.fromARGB(255, 252, 253, 255),
+                                      fontSize: 18.0,
+                                    );
+                                  }
+                                },
+                                child: Text("Save changes"),
+                              ),
+                            ],
+                          )
                         ],
-                      );
+                      ); //here
                     }
                     return Center(child: CircularProgressIndicator());
                   }),
-              ElevatedButton(
-                onPressed: () {},
-                child: Text("Log out"),
-              ),
             ]),
-          ),
+          ), ////here
         ),
       ),
     );
@@ -602,10 +709,6 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
       );
   checkidspecialty(List<String?> specialityoption) async {
     specalityid.length = 0;
-    // print(specialityoption);
-    // print(speciality.length);
-    // print(speciality);
-
     try {
       await FirebaseFirestore.instance
           .collection('facultyspeciality')
@@ -621,6 +724,68 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                 specalityid.add(ref);
                 print(specalityid);
               }
+            }
+          });
+        });
+      });
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  checkids(String? semstername) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('semester')
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          setState(() {
+            if (semstername == element['semestername']) {
+              docsforsemestername = element.id;
+            }
+          });
+        });
+      });
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  checkidc(String? collagename) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('collage')
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          setState(() {
+            if (collagename == element['collagename']) {
+              docsforcollage = element.id;
+            }
+          });
+        });
+      });
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  checkidd(String? departmentename) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('collage')
+          .doc("CCIS")
+          .collection("department")
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          setState(() {
+            if (departmentename == element['departmentname']) {
+              docfordepatment = element.id;
             }
           });
         });
