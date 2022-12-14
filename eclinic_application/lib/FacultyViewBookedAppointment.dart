@@ -26,6 +26,8 @@ class _sState extends State<FacultyViewBookedAppointment> {
   String? userid = '';
   List<Appointment> BookedAppointments = [];//availableHours
   bool? isExists;
+  //bool AleardyintheArray=false;
+   bool? AleardyintheArray;
 int numOfDaysOfHelp = 0;
 // var studentsArrayOfRef;
 // List students=[];
@@ -42,12 +44,46 @@ int numOfDaysOfHelp = 0;
 
 void initState() {
 super. initState();
+BookedAppointments.clear();
 //WidgetsBinding. instance. addPostFrameCallback((_) => getBookedappointments(context));
+//makeachange();
 BookedAppointmentsExists();
 getBookedappointments();
 }
 
+// makeachange() async {
+//               var exchange;
+//               var idexchange;
 
+//              //if(isExists== true){
+//                  final snap = await FirebaseFirestore.instance
+//                 .collection("faculty")
+//                 .doc(userid)
+//                 .collection('appointment')
+//               //.where("Booked", isEqualTo: true)
+//               .limit(1) .get().then((QuerySnapshot snapshot) {
+//                 snapshot.docs.forEach((DocumentSnapshot doc) async {
+//                       exchange= doc['Booked'];
+//                      idexchange = doc.id;
+                    
+//                 });
+//               });
+
+//               final snap2 = await FirebaseFirestore.instance
+//                 .collection("faculty")
+//                 .doc(userid)
+//                 .collection('appointment') .doc(idexchange).update({
+//                     'Booked': !exchange, 
+//                   });   
+
+//               final snap3 = await FirebaseFirestore.instance
+//                 .collection("faculty")
+//                 .doc(userid)
+//                 .collection('appointment') .doc(idexchange).update({
+//                     'Booked': exchange, 
+//                   });  
+
+// }
 
 
     Future<bool?> BookedAppointmentsExists() async {
@@ -55,22 +91,23 @@ getBookedappointments();
     final User? user = await auth.currentUser;
     userid = user!.uid;
     email = user.email!;
-   
 
-  final snap = await FirebaseFirestore.instance
+    final snap = await FirebaseFirestore.instance
         .collection("faculty")
         .doc(userid)
         .collection('appointment')
-        .where("Booked", isEqualTo: true).get();
+       .where("Booked", isEqualTo: true)
+       // .orderBy('starttime')
+        .snapshots().listen((event) {
 
-    if (snap.size == 0) {
+   if (event.size == 0) {
       print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
       print("No Booked Appoinyments");
       setState(() {
         isExists = false;
       });
 
-      return isExists;
+     // return isExists;
     } else {
       print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
       print("Booked Appoinyments Exist");
@@ -78,8 +115,42 @@ getBookedappointments();
         isExists = true;
       });
 
-      return isExists;
+     // return isExists;
     }
+
+
+
+    });
+    return isExists;
+
+
+  // final snap = await FirebaseFirestore.instance
+  //       .collection("faculty")
+  //       .doc(userid)
+  //       .collection('appointment')
+  //       .where("Booked", isEqualTo: true).get();
+
+  //   if (snap.size == 0) {
+  //     print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
+  //     print("No Booked Appoinyments");
+  //     setState(() {
+  //       isExists = false;
+  //     });
+
+  //     return isExists;
+  //   } else {
+  //     print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
+  //     print("Booked Appoinyments Exist");
+  //     setState(() {
+  //       isExists = true;
+  //     });
+
+  //     return isExists;
+  //   }
+
+
+
+    
   }//end function
 
 
@@ -89,39 +160,88 @@ getBookedappointments();
 
 
 
-Future getBookedappointments() async {//BuildContext context
- // BookedAppointments.clear();
+ getBookedappointments() async {//BuildContext context// Future
+BookedAppointments.clear();
+BookedAppointments.length=0;
   // numOfDaysOfHelp = 0;
   //await Future.delayed(Duration(seconds: 5));
 
-    final FirebaseAuth auth = await FirebaseAuth.instance;
+
+   final FirebaseAuth auth = await FirebaseAuth.instance;
     final User? user = await auth.currentUser;
     userid = user!.uid;
     email = user.email!;
 
      // print("yes");
 
-   final snap = await FirebaseFirestore.instance
+
+
+
+
+
+   final snap2 = await FirebaseFirestore.instance
         .collection("faculty")
         .doc(userid)
         .collection('appointment')
-        .where("Booked", isEqualTo: true)
-        //.orderBy('starttime')
-        .snapshots().listen((event) {
+       //.where("Booked", isEqualTo: true)
+       // .orderBy('starttime')
+        .snapshots().listen((event) {//event ترجع كل شي مو بس الجديد
          numOfDaysOfHelp = event.size;
           print("######################################");
-           print(event.size);
-          event.docs.forEach((element) async {
+         print(event.size);
+
+      BookedAppointments.clear();
+      //BookedAppointments.length=0;   
+     // BookedAppointments.clear();
+
+         
+       event.docs.forEach((element) async {
+       //print(element.id); 
+       print("1");
+       if(element['Booked']==true){
+     print(element.id); 
+      
+        print("2");
+
+        //  setState(() {
+        //  AleardyintheArray=false;
+        //    });
+           
+      //  String id=element.id;
+      // for (var j = 0; j < BookedAppointments.length; j++) {
+      //   print("3");
+      //    if(BookedAppointments[j].id == element.id){
+      //     print("4");
+      //      setState(() {
+      //    AleardyintheArray=true;
+      //      });
+      //   }
+      //  }
+
+    print("5");
+     //AleardyintheArray= BookedAppointments[0].id.contains(id);
+
+       // if(AleardyintheArray==false){
+        print("6");
        //students.clear(); 
         var studentsArrayOfRef;
         List students=[];
         students.clear(); 
         String projectname="";
+
+        
        Timestamp t1= element['starttime'] as Timestamp;
        DateTime StartTimeDate=t1.toDate();
        
        Timestamp t2= element['endtime'] as Timestamp;
        DateTime EndTimeDate=t2.toDate();
+
+      String dayname = DateFormat("EEE").format(StartTimeDate); //عشان يطلع اليوم الي فيه هذا التاريخ الجديد- الاحد او الاثنين... كسترنق
+    
+       print(dayname);
+
+
+
 
        studentsArrayOfRef=element['students'];
       print("**********************************************");
@@ -131,23 +251,96 @@ Future getBookedappointments() async {//BuildContext context
        print(studentsArrayOfRef.length);
       int len =studentsArrayOfRef.length;
       //DocumentSnapshot docRef2 = await studentsArrayOfRef[0].get();
-      
+      print("7");
       for (var i = 0; i < studentsArrayOfRef.length; i++) {
       final DocumentSnapshot docRef2 = await studentsArrayOfRef[i].get(); //await
-     print(docRef2['Name']);
-     students.add(docRef2['Name']);
+     print(docRef2['name']);
+     students.add(docRef2['name']);
       print(students);
-     projectname=docRef2['ProjectName'];
+     projectname=docRef2['projectTitle'];
       }
 
+      //if(AleardyintheArray==false){
        setState(() {
-        BookedAppointments.add(new Appointment(id: element.id, Day: element['Day'], startTime: StartTimeDate, endTime: EndTimeDate,projectName:projectname, students:  students));
+
+        BookedAppointments.add(new Appointment(id: element.id, Day: dayname , startTime: StartTimeDate, endTime: EndTimeDate,projectName:projectname, students:  students));
         });
-        
-    
-           });
+          
+    // }//if not AleardyintheArray
+
+
+
+           
+          }//end if booked
+
+      
+      for (int i = 0; i < BookedAppointments.length; i++) {
+        for (int j = i + 1; j < BookedAppointments.length; j++) {
+           var temp;
+           if ((BookedAppointments[i].startTime).isAfter(BookedAppointments[j].startTime)) {
+                temp = BookedAppointments[i];
+                BookedAppointments[i] = BookedAppointments[j];
+                BookedAppointments[j] = temp;
+             }
+        }
+}//end for date sorting
+      
+
+        for (int i = 0; i < BookedAppointments.length; i++) {
+          for (int j = i + 1; j < BookedAppointments.length; j++) {
+            if ((BookedAppointments[i].id == BookedAppointments[j].id)) {
+              setState(() {
+                    dynamic res = BookedAppointments.removeAt(j);
+                    });
+              }
+          }
+  }//end deleting duplicate
+      
+      
+      
+
+
+
+
+
+
+        // else{
+
+        // for (var i = 0; i < BookedAppointments.length; i++) {
+        //  if(BookedAppointments[i].id == element.id){
+        //  setState(() {
+        //  dynamic res = BookedAppointments.removeAt(i);
+        //  print(res);
+        //   //numOfDaysOfHelp=numOfDaysOfHelp-1;
+        //   //Exist=false; if event size==0 
+        //   });
+
+        //  }//end if
+
+        // }//end for
+        // }//else not booked 
+
+
+
+
+
+
+
+
+
+           });//end for each
+
+
+
+
+
+
+
 
         });
+        print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%1");
+        print(BookedAppointments.length);
+         print(BookedAppointments.toString());
          
          
          
@@ -198,11 +391,11 @@ Future getBookedappointments() async {//BuildContext context
 
 
 //numOfDaysOfHelp=BookedAppointments.length;
-    print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%1");
-     print(numOfDaysOfHelp);
-     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%2");
-     print(BookedAppointments.length);
-     print(BookedAppointments.toString());
+    // print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%1");
+    //  print(numOfDaysOfHelp);
+    //  print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%2");
+    //  print(BookedAppointments.length);
+    //  print(BookedAppointments.toString());
 
   }//end method get
 
@@ -242,7 +435,7 @@ Future getBookedappointments() async {//BuildContext context
           //   builder: (context, snapshot) {
           //     return
                ListView.builder(
-                itemCount: numOfDaysOfHelp,
+                itemCount: numOfDaysOfHelp,//BookedAppointments.length,//numOfDaysOfHelp
                 itemBuilder: ((context, index) {
                   if(index<BookedAppointments.length){
                   return Card(
@@ -273,7 +466,9 @@ Future getBookedappointments() async {//BuildContext context
                       children: <Widget>[
                    IconButton(
                     icon: Icon(Icons.cancel),
-                    onPressed: () => {CancelAppointment(index)},
+                    onPressed: () => {showConfirmationDialog(context,index)
+                      //CancelAppointment(index)
+                      },
                      ),
                       ]
                     )
@@ -311,6 +506,13 @@ Future getBookedappointments() async {//BuildContext context
                 }//index smaller than length
                 else{
                   return Row();
+                  // return Column(
+                  //         children: <Widget>[
+                  //         Text("inside else"),
+                  //         Text("${BookedAppointments.length}"),
+                  //         Text("${numOfDaysOfHelp}"),
+                          
+                  //         ]);
                 }
                 })
                 )
@@ -337,21 +539,92 @@ Future getBookedappointments() async {//BuildContext context
 //     final User? user = await auth.currentUser;
 //     userid = user!.uid;
 //     email = user.email!;
-    print(index);
-          await FirebaseFirestore.instance
+
+String id=BookedAppointments[index].id;
+    //print(id);
+    //print(index);
+    //print(BookedAppointments.toString());
+    // setState(() {
+    //  dynamic res = BookedAppointments.removeAt(index);
+    // });
+
+          //await 
+          FirebaseFirestore.instance
           .collection("faculty")
           .doc(userid)
           .collection('appointment')
-          .doc(BookedAppointments[index].id) //Is there a specific id i should put for the appointments
+          .doc(id) //Is there a specific id i should put for the appointments
           .update({
         'Booked': false, //string if booked then it should have a student refrence
         });
 
-    setState(() {
-     dynamic res = BookedAppointments.removeAt(index);
-     //numOfDaysOfHelp=numOfDaysOfHelp-1;
-    });
 
+  //print(BookedAppointments.toString());
+  
   }
+
+
+
+
+
+
+
+
+showConfirmationDialog(BuildContext context,int index) {
+    // set up the buttons
+    bool deleteappointment=false;
+    Widget dontCancelAppButton = ElevatedButton(
+      child: Text("No"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+
+   Widget YesCancelAppButton = ElevatedButton(
+        child: Text("Yes"),
+        onPressed: () {
+        Navigator.of(context).pop();
+        CancelAppointment(index);
+         //deleteappointment=true;
+         // Navigator.pushNamed(context, 'facultyhome');
+        },
+      );
+
+//   if(deleteappointment == true){
+// CancelAppointment(index);
+// deleteappointment == false;
+//   }
+
+
+
+
+       AlertDialog alert = AlertDialog(
+       // title: Text(""),
+        content: Text("Are you sure you want to cancel the appointment ?"),
+        actions: [
+          dontCancelAppButton,
+          YesCancelAppButton,
+        ],
+      );
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+
 }
+
+
+
+
+
+
+
+
+}//end class
+
+
 
