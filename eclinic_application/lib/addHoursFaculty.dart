@@ -351,7 +351,7 @@ class _AddHourState extends State<addHoursFaculty> {
                     child: Padding(
                       padding: const EdgeInsets.all(30),
                       child: Text(
-                        "The admin did not add the start and end dates for the help desk dates yet, please try later.",
+                        "The admin did not add the start and end dates for the help desk yet, please try later.",
                         overflow: TextOverflow.clip,
                         style: TextStyle(
                             color: Mycolors.mainColorWhite,
