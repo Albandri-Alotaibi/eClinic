@@ -32,7 +32,7 @@ class _AddHourState extends State<addHoursFaculty> {
   TimeOfDay _startTime = TimeOfDay.now();
   TimeOfDay _endTime = TimeOfDay.now();
   TimeOfDay initime = TimeOfDay.now();
-
+  bool Ischecked = false;
   bool? isExists;
   bool? isSemesterDateExists;
   final daysOfHelp = [
@@ -251,6 +251,7 @@ class _AddHourState extends State<addHoursFaculty> {
   Widget build(BuildContext context) {
     getusers();
     PrintViewHours();
+    IsValueChecked();
     // IsSemesterDatesExists();
 //     final FirebaseAuth auth = FirebaseAuth.instance;
 //     final User? user = auth.currentUser;
@@ -318,19 +319,51 @@ class _AddHourState extends State<addHoursFaculty> {
     //       print(startingDate);
     //       print(endDate);
     if (isSemesterDateExists == false) {
-      return Scaffold(
-        backgroundColor: Mycolors.BackgroundColor,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text('Add hours'),
-        ),
-        body: FutureBuilder(
-          future: IsSemesterDatesExists(),
-          builder: (context, snapshot) {
-            return Text(
-                "The admin did not add the start and end dates for the help desk dates yet, please try later",
-                overflow: TextOverflow.clip);
-          },
+      return SafeArea(
+        child: Scaffold(
+          backgroundColor: Mycolors.BackgroundColor,
+          // appBar: AppBar(
+          //   automaticallyImplyLeading: false,
+          //   title: Text('Add hours'),
+          // ),
+          body: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 30, bottom: 10),
+                child: Text(
+                  "Add Hours",
+                  style: TextStyle(
+                      color: Mycolors.mainColorBlack,
+                      fontFamily: 'main',
+                      fontSize: 24),
+                ),
+              ),
+              FutureBuilder(
+                future: IsSemesterDatesExists(),
+                builder: (context, snapshot) {
+                  return Card(
+                    color: Mycolors.mainColorBlue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(17), // <-- Radius
+                    ),
+                    shadowColor: Color.fromARGB(94, 114, 168, 243),
+                    elevation: 20,
+                    child: Padding(
+                      padding: const EdgeInsets.all(30),
+                      child: Text(
+                        "The admin did not add the start and end dates for the help desk dates yet, please try later.",
+                        overflow: TextOverflow.clip,
+                        style: TextStyle(
+                            color: Mycolors.mainColorWhite,
+                            fontFamily: 'main',
+                            fontSize: 17),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       );
     } else if (isExists == false && isSemesterDateExists == true) {
@@ -350,77 +383,182 @@ class _AddHourState extends State<addHoursFaculty> {
                 style: TextStyle(
                     color: Mycolors.mainColorBlack,
                     fontFamily: 'main',
-                    fontSize: 20),
+                    fontSize: 24),
               ),
             ),
             Expanded(
-              child: SizedBox(
-                height: 200.0,
-                child: ListView.builder(
-                  itemCount: daysOfHelp.length,
-                  itemBuilder: ((context, index) {
-                    return Card(
-                      shadowColor: Mycolors.mainColorShadow,
-                      elevation: 4,
-                      child: ListTile(
-                        title: Text(daysOfHelp[index].title),
-                        leading: Checkbox(
-                            value: daysOfHelp[index].value,
-                            onChanged: (newvalue) {
-                              setState(() {
-                                daysOfHelp[index].value = newvalue!;
-                              });
-                              selectTime1(index);
-                            }),
-                        subtitle: subtitleForEachDay(index),
-                      ),
-                    );
-                  }),
+              child: Container(
+                alignment: Alignment.topCenter,
+                child: SizedBox(
+                  width: 350,
+                  child: ListView.builder(
+                    itemCount: daysOfHelp.length,
+                    itemBuilder: ((context, index) {
+                      return Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(17), // <-- Radius
+                        ),
+                        shadowColor: Color.fromARGB(94, 250, 250, 250),
+                        elevation: 20,
+                        child: ListTile(
+                          title: Padding(
+                            padding: const EdgeInsets.only(top: 11.7),
+                            child: Text(
+                              daysOfHelp[index].title,
+                              style: TextStyle(
+                                  color: Mycolors.mainColorBlack,
+                                  fontFamily: 'main',
+                                  fontSize: 17),
+                            ),
+                          ),
+                          leading: Transform.scale(
+                            scale: 1.3,
+                            child: Checkbox(
+                                activeColor: Mycolors.mainColorBlue,
+                                checkColor: Mycolors.mainColorWhite,
+                                value: daysOfHelp[index].value,
+                                onChanged: (newvalue) {
+                                  setState(() {
+                                    daysOfHelp[index].value = newvalue!;
+                                  });
+                                  selectTime1(index);
+                                }),
+                          ),
+                          subtitle: subtitleForEachDay(index),
+                        ),
+                      );
+                    }),
+                  ),
                 ),
               ),
             ),
-            ListTile(
-              title: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Mycolors.mainShadedColorBlue),
+            Container(
+              padding: EdgeInsets.only(bottom: 20),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+                  shadowColor: Colors.blue[900],
+                  elevation: 20,
+                  backgroundColor: Mycolors.mainShadedColorBlue,
+                  minimumSize: Size(200, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(17), // <-- Radius
                   ),
-                  child: Text("Confirm"),
-                  onPressed: () => {showConfirmationDialog(context)}),
+                ),
+                child: Text("Confirm"),
+                onPressed: Ischecked
+                    ? () {
+                        showConfirmationDialog(context);
+                      }
+                    : null,
+              ),
             ),
           ]),
         ),
       );
     } else {
-      return Scaffold(
-        backgroundColor: Mycolors.BackgroundColor,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text('View hours'),
-        ),
-        body: FutureBuilder(
-          future: getavailableHours(),
-          builder: (context, snapshot) {
-            return ListView.builder(
-              itemCount: numOfDaysOfHelp,
-              itemBuilder: ((context, index) {
-                return Card(
-                    child: ExpansionTile(
-                  title: Text(
-                    availableHours[index].title,
-                    style: TextStyle(
-                      fontFamily: 'Semibold',
+      return SafeArea(
+        child: Scaffold(
+          backgroundColor: Mycolors.BackgroundColor,
+          // appBar: AppBar(
+          //   primary: false,
+          //   centerTitle: true,
+          //   backgroundColor: Mycolors.mainColorWhite,
+          //   shadowColor: Colors.transparent,
+          //   //foregroundColor: Mycolors.mainColorBlack,
+          //   automaticallyImplyLeading: false,
+          //   title: Padding(
+          //     padding: const EdgeInsets.only(
+          //       top: 40,
+          //     ),
+          //     child: Text('View hours'),
+          //   ),
+          //   titleTextStyle: TextStyle(
+          //     fontFamily: 'main',
+          //     fontSize: 28,
+          //     color: Mycolors.mainColorBlack,
+          //   ),
+          // ),
+          body: Center(
+            child: SizedBox(
+              width: 350,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 30, bottom: 10),
+                    child: Text(
+                      "View hours",
+                      style: TextStyle(
+                          color: Mycolors.mainColorBlack,
+                          fontFamily: 'main',
+                          fontSize: 24),
                     ),
                   ),
-                  children: [Text(availableHours[index].allhours)],
-                ));
-              }),
-            );
-          },
+                  Expanded(
+                    child: FutureBuilder(
+                      future: getavailableHours(),
+                      builder: (context, snapshot) {
+                        return ListView.builder(
+                          itemCount: numOfDaysOfHelp,
+                          itemBuilder: ((context, index) {
+                            return Card(
+                                margin: EdgeInsets.only(bottom: 20),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(17), // <-- Radius
+                                ),
+                                shadowColor: Color.fromARGB(94, 250, 250, 250),
+                                elevation: 20,
+                                child: ExpansionTile(
+                                  iconColor: Mycolors.mainShadedColorBlue,
+                                  collapsedIconColor:
+                                      Mycolors.mainShadedColorBlue,
+                                  title: Text(
+                                    availableHours[index].title,
+                                    style: TextStyle(
+                                        color: Mycolors.mainColorBlack,
+                                        fontFamily: 'main',
+                                        fontSize: 17),
+                                  ),
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 15),
+                                      child: Text(
+                                        availableHours[index].allhours,
+                                        style: TextStyle(
+                                            color: Mycolors.mainColorBlue,
+                                            fontFamily: 'main',
+                                            fontSize: 16),
+                                      ),
+                                    )
+                                  ],
+                                ));
+                          }),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       );
     }
   } //end build
+
+  IsValueChecked() {
+    if (daysOfHelp[0].value == false &&
+        daysOfHelp[1].value == false &&
+        daysOfHelp[2].value == false &&
+        daysOfHelp[3].value == false &&
+        daysOfHelp[4].value == false) {
+      Ischecked = false;
+    } else {
+      Ischecked = true;
+    }
+  }
 
   _timeFormated(TimeOfDay Stime, TimeOfDay Etime, int x) {
     if (Stime == null || Etime == null) {}
@@ -481,122 +619,149 @@ class _AddHourState extends State<addHoursFaculty> {
           for (int i = 1; i < daysOfHelp[x].hours.length; i++)
             ListTile(
               title: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(daysOfHelp[x].hours[i].toString()),
+                  Text(
+                    daysOfHelp[x].hours[i].toString(),
+                    style: TextStyle(
+                        color: Mycolors.mainColorBlack,
+                        fontFamily: 'main',
+                        fontSize: 14),
+                  ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 13.0),
+                    padding: const EdgeInsets.only(top: 0.0),
                     child: IconButton(
-                      icon: Icon(Icons.delete),
+                      icon: Icon(
+                        Icons.delete,
+                        size: 20,
+                      ),
                       onPressed: () => {deleteHour(x, i)},
                     ),
                   ),
                 ],
               ),
+
               // subtitle: IconButton(
               //   icon: Icon(Icons.delete),
               //   onPressed: () => {deleteHour(x, i)},
               // ),
             ),
-          ElevatedButton(
-            child: Text("add"),
-            onPressed: () => TimeRangePicker.show(
-              context: context,
-              unSelectedEmpty: true,
-              startTime:
-                  TimeOfDay(hour: _startTime.hour, minute: _startTime.minute),
-              endTime: TimeOfDay(hour: _endTime.hour, minute: _endTime.minute),
-              onSubmitted: (TimeRangeValue value) {
-                setState(() {
-                  _startTime = value.startTime!;
-                  _endTime = value.endTime!;
-                });
-                bool flag = true;
-                for (var i = 1; i < daysOfHelp[x].hours.length; i++) {
-                  startEnd startend = daysOfHelp[x].hours[i];
-                  //--------------the new time = to the old times----------------------
-                  if (startend.start.hour == _startTime.hour &&
-                      startend.start.minute == _startTime.minute &&
-                      startend.end.hour == _endTime.hour &&
-                      startend.end.minute == _endTime.minute) {
-                    showerror(
-                        context,
-                        "the new time you choosed is the same for the previos one",
-                        x);
-                    flag = false;
-                  }
-                  //----------------------------the start time = to the end time-------------------------------------
-                  else if (_startTime.hour == _endTime.hour &&
-                      _startTime.minute == _endTime.minute) {
-                    //can she have a period of time ends and start at the same hour???????????
-                    showerror(context,
-                        "the start time connot be equal to the end time", x);
-                    flag = false;
-                  }
-                  //----------------------------the start time > to the end time-------------------------------------
-                  else if (_startTime.hour == _endTime.hour &&
-                      _startTime.minute >= _endTime.minute) {
-                    showerror(
-                        context, "the end time must be after the end time", x);
-                    flag = false;
-                  }
+          Align(
+            alignment: Alignment.bottomRight,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  surfaceTintColor: Mycolors.mainColorWhite,
+                  backgroundColor: Mycolors.mainColorWhite,
+                  foregroundColor: Mycolors.mainColorGreen),
+              child: Text("+ Add"),
+              onPressed: () => TimeRangePicker.show(
+                context: context,
+                unSelectedEmpty: true,
+                startTime:
+                    TimeOfDay(hour: _startTime.hour, minute: _startTime.minute),
+                endTime:
+                    TimeOfDay(hour: _endTime.hour, minute: _endTime.minute),
+                onSubmitted: (TimeRangeValue value) {
+                  setState(() {
+                    _startTime = value.startTime!;
+                    _endTime = value.endTime!;
+                  });
+                  bool flag = true;
+                  for (var i = 1; i < daysOfHelp[x].hours.length; i++) {
+                    startEnd startend = daysOfHelp[x].hours[i];
+                    //--------------the new time = to the old times----------------------
+                    if (startend.start.hour == _startTime.hour &&
+                        startend.start.minute == _startTime.minute &&
+                        startend.end.hour == _endTime.hour &&
+                        startend.end.minute == _endTime.minute) {
+                      showerror(
+                          context,
+                          "the new time you choosed is the same for the previos one",
+                          x);
+                      flag = false;
+                    }
+                    //----------------------------the start time = to the end time-------------------------------------
+                    else if (_startTime.hour == _endTime.hour &&
+                        _startTime.minute == _endTime.minute) {
+                      //can she have a period of time ends and start at the same hour???????????
+                      showerror(context,
+                          "the start time connot be equal to the end time", x);
+                      flag = false;
+                    }
+                    //----------------------------the start time > to the end time-------------------------------------
+                    else if (_startTime.hour == _endTime.hour &&
+                        _startTime.minute >= _endTime.minute) {
+                      showerror(context,
+                          "the end time must be after the end time", x);
+                      flag = false;
+                    }
 
-                  //-----------------------------the new start time > old start time------------------------------
-                  // else if (_startTime.hour < startend.start.hour) {
-                  //   showerror(
-                  //       context,
-                  //       "the new start time must start after the the prevrios period of times",
-                  //       x);
-                  //   flag = false;
-                  // }
-                  //------------------------new time connot be inside the old time-----------------------
-                  else if (_startTime.hour > startend.start.hour &&
-                      _endTime.hour <= startend.end.hour) {
-                    showerror(context,
-                        "the new time must be out of the prevrios period ", x);
-                    flag = false;
-                  } else if (_startTime.hour == startend.end.hour &&
-                      _startTime.minute < startend.end.minute) {
-                    showerror(context,
-                        "the new time must be out of the prevrios period", x);
-                    flag = false;
-                  } else if (_startTime.hour <= startend.start.hour &&
-                      _startTime.minute <= startend.start.minute &&
-                      _endTime.hour >= startend.end.hour &&
-                      _endTime.minute >= startend.end.minute) {
-                    showerror(context,
-                        "the new time must be out of the prevrios period", x);
-                    flag = false;
-                  } else if (_startTime.hour < startend.end.hour &&
-                      _endTime.hour > startend.start.hour) {
-                    showerror(context,
-                        "the new time must be out of the prevrios period", x);
-                    flag = false;
-                  } else if (_startTime.hour == startend.end.hour &&
-                      _startTime.minute == startend.end.minute) {
-                    showerror(context,
-                        "the start time must be out of the prevrios period", x);
-                    flag = false;
+                    //-----------------------------the new start time > old start time------------------------------
+                    // else if (_startTime.hour < startend.start.hour) {
+                    //   showerror(
+                    //       context,
+                    //       "the new start time must start after the the prevrios period of times",
+                    //       x);
+                    //   flag = false;
+                    // }
+                    //------------------------new time connot be inside the old time-----------------------
+                    else if (_startTime.hour > startend.start.hour &&
+                        _endTime.hour <= startend.end.hour) {
+                      showerror(
+                          context,
+                          "the new time must be out of the prevrios period ",
+                          x);
+                      flag = false;
+                    } else if (_startTime.hour == startend.end.hour &&
+                        _startTime.minute < startend.end.minute) {
+                      showerror(context,
+                          "the new time must be out of the prevrios period", x);
+                      flag = false;
+                    } else if (_startTime.hour <= startend.start.hour &&
+                        _startTime.minute <= startend.start.minute &&
+                        _endTime.hour >= startend.end.hour &&
+                        _endTime.minute >= startend.end.minute) {
+                      showerror(context,
+                          "the new time must be out of the prevrios period", x);
+                      flag = false;
+                    } else if (_startTime.hour < startend.end.hour &&
+                        _endTime.hour > startend.start.hour) {
+                      showerror(context,
+                          "the new time must be out of the prevrios period", x);
+                      flag = false;
+                    } else if (_startTime.hour == startend.end.hour &&
+                        _startTime.minute == startend.end.minute) {
+                      showerror(
+                          context,
+                          "the start time must be out of the prevrios period",
+                          x);
+                      flag = false;
+                    }
+                    //------------------------time must be in working hours(7-4)-------------------------
+                    else if (_startTime.hour < 7 ||
+                        _startTime.hour > 16 ||
+                        _endTime.hour < 7 ||
+                        _endTime.hour > 16) {
+                      // print(_startTime.hour);
+                      // print(_endTime.hour);
+                      showerror(
+                          context,
+                          "the time you choosed is out of the working hours",
+                          x);
+                      flag = false;
+                    }
                   }
-                  //------------------------time must be in working hours(7-4)-------------------------
-                  else if (_startTime.hour < 7 ||
-                      _startTime.hour > 16 ||
-                      _endTime.hour < 7 ||
-                      _endTime.hour > 16) {
-                    // print(_startTime.hour);
-                    // print(_endTime.hour);
-                    showerror(context,
-                        "the time you choosed is out of the working hours", x);
-                    flag = false;
-                  }
-                }
-                if (flag) _timeFormated(_startTime, _endTime, x);
-              },
-              // onCancel: (() {
-              //   setState(() {
-              //     daysOfHelp[x].value = false;
-              //    // daysOfHelp[x].hours[0] = "un";
-              //   });
-              // })
+                  if (flag) _timeFormated(_startTime, _endTime, x);
+                },
+                // onCancel: (() {
+                //   setState(() {
+                //     daysOfHelp[x].value = false;
+                //    // daysOfHelp[x].hours[0] = "un";
+                //   });
+                // })
+              ),
             ),
           ),
         ],
@@ -616,6 +781,16 @@ class _AddHourState extends State<addHoursFaculty> {
   showConfirmationDialog(BuildContext context) {
     // set up the buttons
     Widget cancelButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
       child: Text("Cancel"),
       onPressed: () {
         Navigator.of(context).pop();
@@ -623,61 +798,39 @@ class _AddHourState extends State<addHoursFaculty> {
     );
 
     // set up the AlertDialog
-    if (daysOfHelp[0].value == false &&
-        daysOfHelp[1].value == false &&
-        daysOfHelp[2].value == false &&
-        daysOfHelp[3].value == false &&
-        daysOfHelp[4].value == false) {
-      Widget continueButton = ElevatedButton(
-        child: Text("Confirm"),
-        onPressed: () {
-          Navigator.pushNamed(context, 'facultyhome');
-        },
-      );
-      AlertDialog alert = AlertDialog(
-        title: Text("Note"),
-        content: Text(
-            "you did not choose any hour do you want to return to the home page?"),
-        actions: [
-          cancelButton,
-          continueButton,
-        ],
-      );
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        },
-      );
-    } else {
-      Widget continueButton = ElevatedButton(
-        child: Text("Confirm"),
-        onPressed: () {
-          Confirm();
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => facultyhome(_selectedIndex),
-            ),
-          );
-        },
-      );
-      AlertDialog alert = AlertDialog(
-        title: Text("warning"),
-        content: Text(
-            "if you press on confirm that means you approved on the entered hours and you know that you CANNOT updated later"),
-        actions: [
-          cancelButton,
-          continueButton,
-        ],
-      );
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        },
-      );
-    }
+
+    Widget continueButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(70, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
+      child: Text("Confirm"),
+      onPressed: () {
+        Confirm();
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      title: Text("warning"),
+      content: Text(
+          "if you press on confirm that means you approved on the entered hours and you know that you CANNOT updated later"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+
     // show the dialog
   }
 
@@ -701,6 +854,12 @@ class _AddHourState extends State<addHoursFaculty> {
         OneDayGenerating(daysOfHelp[k].title, ArrayOfAllTheDayRanges);
       } //value true
     } //loop on each day
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => facultyhome(_selectedIndex),
+      ),
+    );
   } //end confirm
 
   addAvailableHoursToDB(int x) async {
