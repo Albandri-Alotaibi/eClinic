@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:myapp/facultyhome.dart';
 import 'package:simple_time_range_picker/simple_time_range_picker.dart';
 import 'model/Appointment.dart';
 import 'model/checkbox_state.dart';
@@ -9,30 +11,29 @@ import 'package:intl/intl.dart';
 import 'model/timesWithDates.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:myapp/login.dart';
+import 'dart:convert';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class FacultyViewBookedAppointment extends StatefulWidget {
-
-
   const FacultyViewBookedAppointment({super.key});
 
   @override
   State<FacultyViewBookedAppointment> createState() => _sState();
 }
 
-
-
 class _sState extends State<FacultyViewBookedAppointment> {
- String? email = '';
+  String? email = '';
   String? userid = '';
-  List<Appointment> BookedAppointments = [];//availableHours
+  List<Appointment> BookedAppointments = []; //availableHours
   bool? isExists;
   //bool AleardyintheArray=false;
-   bool? AleardyintheArray;
-int numOfDaysOfHelp = 0;
+  bool? AleardyintheArray;
+  int numOfDaysOfHelp = 0;
 // var studentsArrayOfRef;
 // List students=[];
 // String projectname="";
-
 
 // @override
 //   void initState() {
@@ -40,16 +41,27 @@ int numOfDaysOfHelp = 0;
 //   BookedAppointmentsExists(); // use a helper method because initState() cannot be async
 //   getBookedappointments();
 //   }
+//+++++++++++++++++++++++++++++++++++++DEEM++++++++++++++++++++++++++++++++
+  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+  TextEditingController username = TextEditingController();
+  TextEditingController title = TextEditingController();
+  TextEditingController body = TextEditingController();
+  //+
 
-
-void initState() {
-super. initState();
-BookedAppointments.clear();
+  void initState() {
+    super.initState();
+    BookedAppointments.clear();
 //WidgetsBinding. instance. addPostFrameCallback((_) => getBookedappointments(context));
 //makeachange();
-BookedAppointmentsExists();
-getBookedappointments();
-}
+    BookedAppointmentsExists();
+    getBookedappointments();
+
+    //++++++++++++++++++++++++++DEEM++++++++++++++++++++++++++++++++
+    requestPremission();
+    getToken();
+    initInfo();
+  }
 
 // makeachange() async {
 //               var exchange;
@@ -65,7 +77,7 @@ getBookedappointments();
 //                 snapshot.docs.forEach((DocumentSnapshot doc) async {
 //                       exchange= doc['Booked'];
 //                      idexchange = doc.id;
-                    
+
 //                 });
 //               });
 
@@ -73,20 +85,19 @@ getBookedappointments();
 //                 .collection("faculty")
 //                 .doc(userid)
 //                 .collection('appointment') .doc(idexchange).update({
-//                     'Booked': !exchange, 
-//                   });   
+//                     'Booked': !exchange,
+//                   });
 
 //               final snap3 = await FirebaseFirestore.instance
 //                 .collection("faculty")
 //                 .doc(userid)
 //                 .collection('appointment') .doc(idexchange).update({
-//                     'Booked': exchange, 
-//                   });  
+//                     'Booked': exchange,
+//                   });
 
 // }
 
-
-    Future<bool?> BookedAppointmentsExists() async {
+  Future<bool?> BookedAppointmentsExists() async {
     final FirebaseAuth auth = await FirebaseAuth.instance;
     final User? user = await auth.currentUser;
     userid = user!.uid;
@@ -96,213 +107,185 @@ getBookedappointments();
         .collection("faculty")
         .doc(userid)
         .collection('appointment')
-       .where("Booked", isEqualTo: true)
-       // .orderBy('starttime')
-        .snapshots().listen((event) {
+        .where("Booked", isEqualTo: true)
+        // .orderBy('starttime')
+        .snapshots()
+        .listen((event) {
+      if (event.size == 0) {
+        print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
+        print("No Booked Appoinyments");
+        setState(() {
+          isExists = false;
+        });
 
-   if (event.size == 0) {
-      print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
-      print("No Booked Appoinyments");
-      setState(() {
-        isExists = false;
-      });
+        // return isExists;
+      } else {
+        print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
+        print("Booked Appoinyments Exist");
+        setState(() {
+          isExists = true;
+        });
 
-     // return isExists;
-    } else {
-      print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
-      print("Booked Appoinyments Exist");
-      setState(() {
-        isExists = true;
-      });
-
-     // return isExists;
-    }
-
-
-
+        // return isExists;
+      }
     });
     return isExists;
 
+    // final snap = await FirebaseFirestore.instance
+    //       .collection("faculty")
+    //       .doc(userid)
+    //       .collection('appointment')
+    //       .where("Booked", isEqualTo: true).get();
 
-  // final snap = await FirebaseFirestore.instance
-  //       .collection("faculty")
-  //       .doc(userid)
-  //       .collection('appointment')
-  //       .where("Booked", isEqualTo: true).get();
+    //   if (snap.size == 0) {
+    //     print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
+    //     print("No Booked Appoinyments");
+    //     setState(() {
+    //       isExists = false;
+    //     });
 
-  //   if (snap.size == 0) {
-  //     print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
-  //     print("No Booked Appoinyments");
-  //     setState(() {
-  //       isExists = false;
-  //     });
+    //     return isExists;
+    //   } else {
+    //     print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
+    //     print("Booked Appoinyments Exist");
+    //     setState(() {
+    //       isExists = true;
+    //     });
 
-  //     return isExists;
-  //   } else {
-  //     print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
-  //     print("Booked Appoinyments Exist");
-  //     setState(() {
-  //       isExists = true;
-  //     });
+    //     return isExists;
+    //   }
+  } //end function
 
-  //     return isExists;
-  //   }
+  getBookedappointments() async {
+    //BuildContext context// Future
+    BookedAppointments.clear();
+    BookedAppointments.length = 0;
+    // numOfDaysOfHelp = 0;
+    //await Future.delayed(Duration(seconds: 5));
 
-
-
-    
-  }//end function
-
-
-
-
-
-
-
-
- getBookedappointments() async {//BuildContext context// Future
-BookedAppointments.clear();
-BookedAppointments.length=0;
-  // numOfDaysOfHelp = 0;
-  //await Future.delayed(Duration(seconds: 5));
-
-
-   final FirebaseAuth auth = await FirebaseAuth.instance;
+    final FirebaseAuth auth = await FirebaseAuth.instance;
     final User? user = await auth.currentUser;
     userid = user!.uid;
     email = user.email!;
 
-     // print("yes");
+    // print("yes");
 
-
-
-
-
-
-   final snap2 = await FirebaseFirestore.instance
+    final snap2 = await FirebaseFirestore.instance
         .collection("faculty")
         .doc(userid)
         .collection('appointment')
-       //.where("Booked", isEqualTo: true)
-       // .orderBy('starttime')
-        .snapshots().listen((event) {//event ترجع كل شي مو بس الجديد
-         numOfDaysOfHelp = event.size;
-          print("######################################");
-         print(event.size);
+        //.where("Booked", isEqualTo: true)
+        // .orderBy('starttime')
+        .snapshots()
+        .listen((event) {
+      //event ترجع كل شي مو بس الجديد
+      numOfDaysOfHelp = event.size;
+      print("######################################");
+      print(event.size);
 
       BookedAppointments.clear();
-      //BookedAppointments.length=0;   
-     // BookedAppointments.clear();
+      //BookedAppointments.length=0;
+      // BookedAppointments.clear();
 
-         
-       event.docs.forEach((element) async {
-       //print(element.id); 
-       print("1");
-       if(element['Booked']==true){
-     print(element.id); 
-      
-        print("2");
+      event.docs.forEach((element) async {
+        //print(element.id);
+        print("1");
+        if (element['Booked'] == true) {
+          print(element.id);
 
-        //  setState(() {
-        //  AleardyintheArray=false;
-        //    });
-           
-      //  String id=element.id;
-      // for (var j = 0; j < BookedAppointments.length; j++) {
-      //   print("3");
-      //    if(BookedAppointments[j].id == element.id){
-      //     print("4");
-      //      setState(() {
-      //    AleardyintheArray=true;
-      //      });
-      //   }
-      //  }
+          print("2");
 
-    print("5");
-     //AleardyintheArray= BookedAppointments[0].id.contains(id);
+          //  setState(() {
+          //  AleardyintheArray=false;
+          //    });
 
-       // if(AleardyintheArray==false){
-        print("6");
-       //students.clear(); 
-        var studentsArrayOfRef;
-        List students=[];
-        students.clear(); 
-        String projectname="";
+          //  String id=element.id;
+          // for (var j = 0; j < BookedAppointments.length; j++) {
+          //   print("3");
+          //    if(BookedAppointments[j].id == element.id){
+          //     print("4");
+          //      setState(() {
+          //    AleardyintheArray=true;
+          //      });
+          //   }
+          //  }
 
-        
-       Timestamp t1= element['starttime'] as Timestamp;
-       DateTime StartTimeDate=t1.toDate();
-       
-       Timestamp t2= element['endtime'] as Timestamp;
-       DateTime EndTimeDate=t2.toDate();
+          print("5");
+          //AleardyintheArray= BookedAppointments[0].id.contains(id);
 
-      String dayname = DateFormat("EEE").format(StartTimeDate); //عشان يطلع اليوم الي فيه هذا التاريخ الجديد- الاحد او الاثنين... كسترنق
-    
-       print(dayname);
+          // if(AleardyintheArray==false){
+          print("6");
+          //students.clear();
+          var studentsArrayOfRef;
+          List students = [];
+          students.clear();
+          String projectname = "";
 
+          Timestamp t1 = element['starttime'] as Timestamp;
+          DateTime StartTimeDate = t1.toDate();
 
+          Timestamp t2 = element['endtime'] as Timestamp;
+          DateTime EndTimeDate = t2.toDate();
 
+          String dayname = DateFormat("EEE").format(
+              StartTimeDate); //عشان يطلع اليوم الي فيه هذا التاريخ الجديد- الاحد او الاثنين... كسترنق
 
-       studentsArrayOfRef=element['students'];
-      print("**********************************************");
-      print("777777777777777777777777777777777777777777777777777");
-       print(studentsArrayOfRef);
-       print("8888888888888888888888888888888888888888888888888888");
-       print(studentsArrayOfRef.length);
-      int len =studentsArrayOfRef.length;
-      //DocumentSnapshot docRef2 = await studentsArrayOfRef[0].get();
-      print("7");
-      for (var i = 0; i < studentsArrayOfRef.length; i++) {
-      final DocumentSnapshot docRef2 = await studentsArrayOfRef[i].get(); //await
-     print(docRef2['name']);
-     students.add(docRef2['name']);
-      print(students);
-     projectname=docRef2['projectTitle'];
-      }
+          print(dayname);
 
-      //if(AleardyintheArray==false){
-       setState(() {
+          studentsArrayOfRef = element['students'];
+          print("**********************************************");
+          print("777777777777777777777777777777777777777777777777777");
+          print(studentsArrayOfRef);
+          print("8888888888888888888888888888888888888888888888888888");
+          print(studentsArrayOfRef.length);
+          int len = studentsArrayOfRef.length;
+          //DocumentSnapshot docRef2 = await studentsArrayOfRef[0].get();
+          print("7");
+          for (var i = 0; i < studentsArrayOfRef.length; i++) {
+            final DocumentSnapshot docRef2 =
+                await studentsArrayOfRef[i].get(); //await
+            print(docRef2['name']);
+            students.add(docRef2['name']);
+            print(students);
+            projectname = docRef2['projectTitle'];
+          }
 
-        BookedAppointments.add(new Appointment(id: element.id, Day: dayname , startTime: StartTimeDate, endTime: EndTimeDate,projectName:projectname, students:  students));
-        });
-          
-    // }//if not AleardyintheArray
+          //if(AleardyintheArray==false){
+          setState(() {
+            BookedAppointments.add(new Appointment(
+                id: element.id,
+                Day: dayname,
+                startTime: StartTimeDate,
+                endTime: EndTimeDate,
+                projectName: projectname,
+                students: students));
+          });
 
+          // }//if not AleardyintheArray
 
+        } //end if booked
 
-           
-          }//end if booked
-
-      
-      for (int i = 0; i < BookedAppointments.length; i++) {
-        for (int j = i + 1; j < BookedAppointments.length; j++) {
-           var temp;
-           if ((BookedAppointments[i].startTime).isAfter(BookedAppointments[j].startTime)) {
-                temp = BookedAppointments[i];
-                BookedAppointments[i] = BookedAppointments[j];
-                BookedAppointments[j] = temp;
-             }
-        }
-}//end for date sorting
-      
+        for (int i = 0; i < BookedAppointments.length; i++) {
+          for (int j = i + 1; j < BookedAppointments.length; j++) {
+            var temp;
+            if ((BookedAppointments[i].startTime)
+                .isAfter(BookedAppointments[j].startTime)) {
+              temp = BookedAppointments[i];
+              BookedAppointments[i] = BookedAppointments[j];
+              BookedAppointments[j] = temp;
+            }
+          }
+        } //end for date sorting
 
         for (int i = 0; i < BookedAppointments.length; i++) {
           for (int j = i + 1; j < BookedAppointments.length; j++) {
             if ((BookedAppointments[i].id == BookedAppointments[j].id)) {
               setState(() {
-                    dynamic res = BookedAppointments.removeAt(j);
-                    });
-              }
+                dynamic res = BookedAppointments.removeAt(j);
+              });
+            }
           }
-  }//end deleting duplicate
-      
-      
-      
-
-
-
-
-
+        } //end deleting duplicate
 
         // else{
 
@@ -312,54 +295,35 @@ BookedAppointments.length=0;
         //  dynamic res = BookedAppointments.removeAt(i);
         //  print(res);
         //   //numOfDaysOfHelp=numOfDaysOfHelp-1;
-        //   //Exist=false; if event size==0 
+        //   //Exist=false; if event size==0
         //   });
 
         //  }//end if
 
         // }//end for
-        // }//else not booked 
+        // }//else not booked
+      }); //end for each
+    });
+    print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%1");
+    print(BookedAppointments.length);
+    print(BookedAppointments.toString());
 
-
-
-
-
-
-
-
-
-           });//end for each
-
-
-
-
-
-
-
-
-        });
-        print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%1");
-        print(BookedAppointments.length);
-         print(BookedAppointments.toString());
-         
-         
-         
     //      .get()
     //     .then((QuerySnapshot snapshot) {
-          
+
     //   // print("############################################");
     //    //print(snapshot.size);
-      
+
     //  numOfDaysOfHelp = snapshot.size;
 
     //   snapshot.docs.forEach((DocumentSnapshot doc) async {
     //    //if(doc['Booked']==true){
-        
-    //     // numOfDaysOfHelp=numOfDaysOfHelp+1; 
-      
+
+    //     // numOfDaysOfHelp=numOfDaysOfHelp+1;
+
     //    Timestamp t1= doc['starttime'] as Timestamp;
     //    DateTime StartTimeDate=t1.toDate();
-       
+
     //    Timestamp t2= doc['endtime'] as Timestamp;
     //    DateTime EndTimeDate=t2.toDate();
 
@@ -379,16 +343,15 @@ BookedAppointments.length=0;
     //    setState(() {
     //     BookedAppointments.add(new Appointment(id: doc.id, Day: doc['Day'], startTime: StartTimeDate, endTime: EndTimeDate,projectName:projectname, students:  students));
     //     });
-        
+
     //   // }
     //   });
-      
-    // });// end then 
+
+    // });// end then
     //for()
 //     BookedAppointments.startTime.sort((a, b){ //sorting in descending order
 //     return b.compareTo(a);
 // });
-
 
 //numOfDaysOfHelp=BookedAppointments.length;
     // print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%1");
@@ -396,151 +359,254 @@ BookedAppointments.length=0;
     //  print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%2");
     //  print(BookedAppointments.length);
     //  print(BookedAppointments.toString());
-
-  }//end method get
-
-
-
-
-
-
-
-
+  } //end method get
 
   @override
   Widget build(BuildContext context) {
-  //getBookedappointments();
+    //getBookedappointments();
 
-    if (isExists == false ) {//|| numOfDaysOfHelp==0
-        return Scaffold(
+    if (isExists == false) {
+      //|| numOfDaysOfHelp==0
+      return Scaffold(
           appBar: AppBar(
             title: Text('Booked Appointments'),
           ),
           body: Row(
-            children: <Widget>[
-        Text("No Booked Appointments**")
-      ],
-      ) 
-      );
-
-    }else{//BookedAppointments.isEmpty==false //numOfDaysOfHelp==BookedAppointments.length
-     //if(BookedAppointments.length!=0){
-    return Scaffold(
+            children: <Widget>[Text("No Booked Appointments**")],
+          ));
+    } else {
+      //BookedAppointments.isEmpty==false //numOfDaysOfHelp==BookedAppointments.length
+      //if(BookedAppointments.length!=0){
+      return Scaffold(
           appBar: AppBar(
             title: Text('Booked Appointments'),
           ),
           body: //Row()
-          //  FutureBuilder(
-          //   future: getBookedappointments(),
-          //   builder: (context, snapshot) {
-          //     return
-               ListView.builder(
-                itemCount: numOfDaysOfHelp,//BookedAppointments.length,//numOfDaysOfHelp
-                itemBuilder: ((context, index) {
-                  if(index<BookedAppointments.length){
-                  return Card(
-                      child: 
-                      ExpansionTile(
-                    title: Text(BookedAppointments[index].Day+",  "+BookedAppointments[index].StringDate() + "  " + BookedAppointments[index].StringTimeRange() ),
-                      
-                      //BookedAppointments[index].Day),
+              //  FutureBuilder(
+              //   future: getBookedappointments(),
+              //   builder: (context, snapshot) {
+              //     return
+              ListView.builder(
+                  itemCount:
+                      numOfDaysOfHelp, //BookedAppointments.length,//numOfDaysOfHelp
+                  itemBuilder: ((context, index) {
+                    if (index < BookedAppointments.length) {
+                      return Card(
+                          child: ExpansionTile(
+                        title: Text(BookedAppointments[index].Day +
+                            ",  " +
+                            BookedAppointments[index].StringDate() +
+                            "  " +
+                            BookedAppointments[index].StringTimeRange()),
 
-                    //subtitle: Text("Date : "+ BookedAppointments[index].StringDate()+"\n Time : "+BookedAppointments[index].StringTimeRange()),
-                  children: [
-                    Row(
-                      children: <Widget>[
-                        Column(
-                          children: <Widget>[
-                   // Text("  Date : "+ BookedAppointments[index].StringDate()),
-                   // Text("  Time : "+BookedAppointments[index].StringTimeRange()),
-                     Text(""),
-                    Text("  Project : "+BookedAppointments[index].projectName+"\n"),
-                     Text("  Students : "+BookedAppointments[index].StringStudents())     
-                          ]),
-                    //crossAxisAlignment: CrossAxisAlignment.start,
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                       mainAxisAlignment : MainAxisAlignment.end,
-                       verticalDirection : VerticalDirection.up,
+                        //BookedAppointments[index].Day),
 
-                      children: <Widget>[
-                   IconButton(
-                    icon: Icon(Icons.cancel),
-                    onPressed: () => {showConfirmationDialog(context,index)
-                      //CancelAppointment(index)
-                      },
-                     ),
-                      ]
-                    )
+                        //subtitle: Text("Date : "+ BookedAppointments[index].StringDate()+"\n Time : "+BookedAppointments[index].StringTimeRange()),
+                        children: [
+                          Row(children: <Widget>[
+                            Column(children: <Widget>[
+                              // Text("  Date : "+ BookedAppointments[index].StringDate()),
+                              // Text("  Time : "+BookedAppointments[index].StringTimeRange()),
+                              Text(""),
+                              Text("  Project : " +
+                                  BookedAppointments[index].projectName +
+                                  "\n"),
+                              Text("  Students : " +
+                                  BookedAppointments[index].StringStudents())
+                            ]),
+                            //crossAxisAlignment: CrossAxisAlignment.start,
+                            Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                verticalDirection: VerticalDirection.up,
+                                children: <Widget>[
+                                  IconButton(
+                                    icon: Icon(Icons.cancel),
+                                    onPressed: () => {
+                                      showConfirmationDialog(context, index)
+                                      //CancelAppointment(index)
+                                    },
+                                  ),
+                                ])
+                          ])
+                        ],
+                      ));
 
+                      //       }),
+                      //     )
+                      //     ;
+                      //   },
+                      // )
 
-                  ])
-                    
-                   ],
-                  
+                      // );
+                      //}
 
+                    } //index smaller than length
+                    else {
+                      return Row();
+                      // return Column(
+                      //         children: <Widget>[
+                      //         Text("inside else"),
+                      //         Text("${BookedAppointments.length}"),
+                      //         Text("${numOfDaysOfHelp}"),
 
+                      //         ]);
+                    }
+                  }))); //scaffold
 
+    } //end else there is booked appointments
+    //   else{
+    // return Scaffold(
+    //         appBar: AppBar(
+    //           title: Text('Booked Appointments'),
+    //         ),
+    //         body: Row()
+    // );
 
-
-
-
-
-
-                  
-                  
-                  )
-                  );
-                
-          //       }),
-          //     )
-          //     ;
-          //   },
-          // )
-
-          // );
-     //}
-
-
-
-                }//index smaller than length
-                else{
-                  return Row();
-                  // return Column(
-                  //         children: <Widget>[
-                  //         Text("inside else"),
-                  //         Text("${BookedAppointments.length}"),
-                  //         Text("${numOfDaysOfHelp}"),
-                          
-                  //         ]);
-                }
-                })
-                )
-                );//scaffold
-
-    }//end else there is booked appointments
-  //   else{
-  // return Scaffold(
-  //         appBar: AppBar(
-  //           title: Text('Booked Appointments'),
-  //         ),
-  //         body: Row()
-  // );
-
-  //   }
-
-
+    //   }
   }
 
+  //+++++++++++++++++++++++++++++++++++++++++DEEM+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  void requestPremission() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
 
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
 
-  CancelAppointment(int index) async{//async
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+      print("User granted premission");
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.provisional) {
+      print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+      print("User granted provisional permission");
+    } else {
+      print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+      print("User declined or has not accepted premission");
+    }
+  }
+
+  String? mtoken = " ";
+
+  void getToken() async {
+    await FirebaseMessaging.instance.getToken().then((token) {
+      setState(() {
+        mtoken = token;
+        print("My token is $mtoken");
+      });
+      saveToken(token!);
+    });
+  }
+
+  void saveToken(String token) async {
+    await FirebaseFirestore.instance
+        .collection("faculty")
+        .doc(userid)
+        .update({'token': token});
+  }
+
+  initInfo() async {
+    var androidInitialize =
+        const AndroidInitializationSettings("@mipmap/ic_launcher");
+    var initializationSettings =
+        InitializationSettings(android: androidInitialize);
+
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse:
+          (NotificationResponse notificationResponse) async {
+        final String? payload = notificationResponse.payload;
+        if (notificationResponse.payload != null) {
+          debugPrint('notification payload: $payload');
+        }
+        await Navigator.push(
+          context,
+          MaterialPageRoute<void>(builder: (context) => facultyhome(0)),
+        );
+      },
+    );
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      print("...................onMessage................");
+      print(
+          "onMessage: ${message.notification?.title}/${message.notification?.body}");
+
+      BigTextStyleInformation bigTextStyleInformation = BigTextStyleInformation(
+          message.notification!.body.toString(),
+          htmlFormatBigText: true,
+          contentTitle: message.notification!.title.toString(),
+          htmlFormatContentTitle: true);
+
+      AndroidNotificationDetails androidPlatformChannelSpecifics =
+          AndroidNotificationDetails(
+        "dbfood",
+        "dbfood",
+        importance: Importance.high,
+        styleInformation: bigTextStyleInformation,
+        priority: Priority.high,
+        playSound: true,
+      );
+
+      NotificationDetails platformChannelSpecifics =
+          NotificationDetails(android: androidPlatformChannelSpecifics);
+      await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
+          message.notification?.body, platformChannelSpecifics,
+          payload: message.data['body']);
+    });
+  }
+
+  void sendPushMessege(String token, String Fname) async {
+    print(token);
+    try {
+      await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization':
+              'key=AAAAIqZZfrY:APA91bGmyg-TtTdQSaXgauRdN1LmyCWHL18IWSzI5UxqHk3TYdCFegHCDysMhyEvEYFBi9o7ofyiAQE-HZOG_TGH9AnfknXWUZmZpbKvBJ0Wx4zsQ8BJPx21NDiZloaCoyfetjjPkRP4'
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'status': 'done',
+              'body': 'your appointment has been canceled with ',
+              'title': 'appointment cancelation',
+            },
+            "notification": <String, dynamic>{
+              "title": "appointment cancelation",
+              "body": "your appointment with Dr.$Fname has been canceled ",
+              "android_channel_id": "dbfood",
+            },
+            "to": token,
+          },
+        ),
+      );
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error push notifcathion");
+      }
+    }
+  }
+
+//+++++++++++++++++++++++++++++++++++++++++end DEEM+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  CancelAppointment(int index) async {
+    //async
 // final FirebaseAuth auth = await FirebaseAuth.instance;
 //     final User? user = await auth.currentUser;
 //     userid = user!.uid;
 //     email = user.email!;
 
-String id=BookedAppointments[index].id;
+    String id = BookedAppointments[index].id;
     //print(id);
     //print(index);
     //print(BookedAppointments.toString());
@@ -548,31 +614,56 @@ String id=BookedAppointments[index].id;
     //  dynamic res = BookedAppointments.removeAt(index);
     // });
 
-          //await 
-          FirebaseFirestore.instance
-          .collection("faculty")
-          .doc(userid)
-          .collection('appointment')
-          .doc(id) //Is there a specific id i should put for the appointments
-          .update({
-        'Booked': false, //string if booked then it should have a student refrence
-        });
+    //await
+    FirebaseFirestore.instance
+        .collection("faculty")
+        .doc(userid)
+        .collection('appointment')
+        .doc(id) //Is there a specific id i should put for the appointments
+        .update({
+      'Booked': false, //string if booked then it should have a student refrence
+    });
+    //+++++++++++++++++++++++++++++++start Deem+++++++++++++++++++++++++++++++++++
+    final snap = await FirebaseFirestore.instance
+        .collection("faculty")
+        .doc(userid)
+        .collection('appointment')
+        .doc(BookedAppointments[index].id)
+        .get();
 
+    List studentsArrayOfRef = snap['students'];
+    print(
+        "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    // print(snap['Day']);
+    // print(snap['students']);
+    //  print("sssssssssssssssssssssssssssssssss");
 
-  //print(BookedAppointments.toString());
-  
+    final snap2 = await FirebaseFirestore.instance
+        .collection("faculty")
+        .doc(userid)
+        .get();
+    String Fname = snap2['firstname'] + ' ' + snap2['lastname'];
+
+    for (var i = 0; i < studentsArrayOfRef.length; i++) {
+      final DocumentSnapshot docRef2 =
+          await studentsArrayOfRef[i].get(); //await
+      print(
+          "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+      print(docRef2['token']);
+      String st = docRef2['token'];
+      sendPushMessege(st, Fname);
+      print('++++++++++++++++++++++++++++++++++++++++++++++++++++');
+    }
+    // sendPushMessege(
+    //     "f2Fy3zYaR-OqtIsht7D3L3:APA91bHihw83eQLNqgFpIOLHcQ2XzCX7JOJLK9IyMrc8XHcssBaKoga3mMAWEMwEY_i5kxbgLiJuHHj-PdPESVtuqryHUWspyFsXUnJHWvHAWsnrw1n4IipbLUsAdbo2ESLiPs5y6nY9");
+    //+++++++++++++++++++++++++++++++end Deem+++++++++++++++++++++++++++++++++++
+
+    //print(BookedAppointments.toString());
   }
 
-
-
-
-
-
-
-
-showConfirmationDialog(BuildContext context,int index) {
+  showConfirmationDialog(BuildContext context, int index) {
     // set up the buttons
-    bool deleteappointment=false;
+    bool deleteappointment = false;
     Widget dontCancelAppButton = ElevatedButton(
       child: Text("No"),
       onPressed: () {
@@ -580,51 +671,35 @@ showConfirmationDialog(BuildContext context,int index) {
       },
     );
 
-
-   Widget YesCancelAppButton = ElevatedButton(
-        child: Text("Yes"),
-        onPressed: () {
+    Widget YesCancelAppButton = ElevatedButton(
+      child: Text("Yes"),
+      onPressed: () {
         Navigator.of(context).pop();
         CancelAppointment(index);
-         //deleteappointment=true;
-         // Navigator.pushNamed(context, 'facultyhome');
-        },
-      );
+        //deleteappointment=true;
+        // Navigator.pushNamed(context, 'facultyhome');
+      },
+    );
 
 //   if(deleteappointment == true){
 // CancelAppointment(index);
 // deleteappointment == false;
 //   }
 
+    AlertDialog alert = AlertDialog(
+      // title: Text(""),
+      content: Text("Are you sure you want to cancel the appointment ?"),
+      actions: [
+        dontCancelAppButton,
+        YesCancelAppButton,
+      ],
+    );
 
-
-
-       AlertDialog alert = AlertDialog(
-       // title: Text(""),
-        content: Text("Are you sure you want to cancel the appointment ?"),
-        actions: [
-          dontCancelAppButton,
-          YesCancelAppButton,
-        ],
-      );
-
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        },
-      );
-
-}
-
-
-
-
-
-
-
-
-}//end class
-
-
-
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+} //end class
