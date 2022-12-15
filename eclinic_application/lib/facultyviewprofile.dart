@@ -53,12 +53,12 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
   String? lname;
   String? mettingmethod;
   String? ksuemail;
+  var _fnameController;
+  var _lnameController;
+  var _meetingmethodcontroller;
   var fn;
   var ln;
   var mm;
-  // var collageselectedvalue;
-  // var departmentselectedvalue;
-  // var semesterselectedvalue;
   var semesterselectedfromDB;
   var collageselectedfromDB;
   var departmentselectedfromDB;
@@ -290,13 +290,11 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                       final lname = cuser['lastname'];
                       final ksuemail = cuser['ksuemail'];
                       final mettingmethod = cuser['meetingmethod'];
-                      final _fnameController =
-                          TextEditingController(text: fname);
-                      final _lnameController =
-                          TextEditingController(text: lname);
+                      _fnameController = TextEditingController(text: fname);
+                      _lnameController = TextEditingController(text: lname);
                       final _emailController =
                           TextEditingController(text: ksuemail);
-                      final _meetingmethodcontroller =
+                      _meetingmethodcontroller =
                           TextEditingController(text: mettingmethod);
                       selectedoptionlist.value = specality;
                       collageselectedvalue = collageselectedfromDB;
@@ -605,86 +603,83 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                   }
                                 }
                               }),
-                          Row(
-                            children: [
-                              ElevatedButton(
-                                onPressed: () {},
-                                child: Text("Log out"),
-                              ),
-                              ElevatedButton(
-                                onPressed: () async {
-                                  setState(() {
-                                    fn = _fnameController.text;
-                                    ln = _lnameController.text;
-                                    mm = _meetingmethodcontroller.text;
-
-                                    if (zag < 1) {
-                                      isshow = true;
-                                    }
-                                    if (zag > 0) {
-                                      isshow = false;
-                                    }
-                                  });
-                                  try {
-                                    if (formkey.currentState!.validate() &&
-                                        zag > 0) {
-                                      await FirebaseFirestore.instance
-                                          .collection('faculty')
-                                          .doc(userid)
-                                          .update({
-                                        "firstname": fn,
-                                        "lastname": ln,
-                                        "meetingmethod": mm,
-                                        'department': FirebaseFirestore.instance
-                                            .collection("collage")
-                                            .doc(docsforcollage)
-                                            .collection("department")
-                                            .doc(docfordepatment),
-                                        'collage': FirebaseFirestore.instance
-                                            .collection("collage")
-                                            .doc(docsforcollage),
-                                        'semester': FirebaseFirestore.instance
-                                            .collection("semester")
-                                            .doc(docsforsemestername),
-                                        "specialty": specalityid,
-                                      });
-
-                                      Fluttertoast.showToast(
-                                        msg:
-                                            " Your information has been updated successfully",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 2,
-                                        backgroundColor:
-                                            Color.fromARGB(255, 127, 166, 233),
-                                        textColor:
-                                            Color.fromARGB(255, 248, 249, 250),
-                                        fontSize: 18.0,
-                                      );
-                                    }
-                                  } on FirebaseAuthException catch (error) {
-                                    Fluttertoast.showToast(
-                                      msg: "Something wronge",
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.CENTER,
-                                      timeInSecForIosWeb: 5,
-                                      backgroundColor:
-                                          Color.fromARGB(255, 127, 166, 233),
-                                      textColor:
-                                          Color.fromARGB(255, 252, 253, 255),
-                                      fontSize: 18.0,
-                                    );
-                                  }
-                                },
-                                child: Text("Save changes"),
-                              ),
-                            ],
-                          )
                         ],
                       ); //here
                     }
                     return Center(child: CircularProgressIndicator());
                   }),
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      showConfirmationDialog(context);
+                    },
+                    child: Text("Log out"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      setState(() {
+                        fn = _fnameController.text;
+                        // ln = _lnameController.text;
+                        // mm = _meetingmethodcontroller.text;
+
+                        if (zag < 1) {
+                          isshow = true;
+                        }
+                        if (zag > 0) {
+                          isshow = false;
+                        }
+                      });
+                      try {
+                        if (formkey.currentState!.validate() && zag > 0) {
+                          await FirebaseFirestore.instance
+                              .collection('faculty')
+                              .doc(userid)
+                              .update({
+                            "firstname": fn,
+                            // "lastname": ln,
+                            // "meetingmethod": mm,
+                            'department': FirebaseFirestore.instance
+                                .collection("collage")
+                                .doc(docsforcollage)
+                                .collection("department")
+                                .doc(docfordepatment),
+                            'collage': FirebaseFirestore.instance
+                                .collection("collage")
+                                .doc(docsforcollage),
+                            'semester': FirebaseFirestore.instance
+                                .collection("semester")
+                                .doc(docsforsemestername),
+                            "specialty": specalityid,
+                          });
+
+                          Fluttertoast.showToast(
+                            msg:
+                                " Your information has been updated successfully",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 2,
+                            backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                            textColor: Color.fromARGB(255, 248, 249, 250),
+                            fontSize: 18.0,
+                          );
+                        }
+                      } on FirebaseAuthException catch (error) {
+                        Fluttertoast.showToast(
+                          msg: "Something wronge",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 5,
+                          backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                          textColor: Color.fromARGB(255, 252, 253, 255),
+                          fontSize: 18.0,
+                        );
+                      }
+                    },
+                    child: Text("Save changes"),
+                  ),
+                ],
+              )
             ]),
           ), ////here
         ),
@@ -794,5 +789,42 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
       print(e.toString());
       return null;
     }
+  }
+
+  showConfirmationDialog(BuildContext context) {
+    // set up the buttons
+    bool deleteappointment = false;
+    Widget dontCancelAppButton = ElevatedButton(
+      child: Text("No"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    Widget YesCancelAppButton = ElevatedButton(
+      child: Text("Yes"),
+      onPressed: () {
+        FirebaseAuth.instance.signOut().then((value) => Navigator.push(
+            context, MaterialPageRoute(builder: (context) => login())));
+
+        // Navigator.pushNamed(context, 'facultyhome');
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      // title: Text("LogOut"),
+      content: Text("Are you sure you want to logout ?"),
+      actions: [
+        dontCancelAppButton,
+        YesCancelAppButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }
