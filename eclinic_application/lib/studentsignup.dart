@@ -31,7 +31,8 @@ class _studentsignupState extends State<studentsignup> {
   var semesterselectedvalue;
   var year;
   var social;
-  var fullname;
+  var fname;
+  var lname;
   var email;
   var password;
   var studentid;
@@ -196,6 +197,7 @@ class _studentsignupState extends State<studentsignup> {
 
   final formkey = GlobalKey<FormState>();
   final _fnameController = TextEditingController();
+  final _lnamecontroller = TextEditingController();
   final _idController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -234,22 +236,50 @@ class _studentsignupState extends State<studentsignup> {
                             TextFormField(
                               controller: _fnameController,
                               decoration: InputDecoration(
-                                  labelText: 'Full Name',
-                                  hintText: "Enter your full name",
+                                  labelText: 'First Name',
+                                  hintText: "Enter your first name",
                                   border: OutlineInputBorder()),
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               validator: (value) {
                                 if (value!.isEmpty ||
                                     _fnameController.text == "") {
-                                  return 'Please enter your full name ';
+                                  return 'Please enter your first name ';
                                 } else {
                                   if (nameRegExp
                                       .hasMatch(_fnameController.text)) {
-                                    return 'Please full name only letters accepted ';
+                                    return 'Please first name only letters accepted ';
                                   } else {
                                     if (!(english
                                         .hasMatch(_fnameController.text))) {
+                                      return "only english is allowed";
+                                    }
+                                  }
+                                }
+                              },
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            TextFormField(
+                              controller: _lnamecontroller,
+                              decoration: InputDecoration(
+                                  labelText: 'Last Name',
+                                  hintText: "Enter your last name",
+                                  border: OutlineInputBorder()),
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (value) {
+                                if (value!.isEmpty ||
+                                    _lnamecontroller.text == "") {
+                                  return 'Please enter your full name ';
+                                } else {
+                                  if (nameRegExp
+                                      .hasMatch(_lnamecontroller.text)) {
+                                    return 'Please full name only letters accepted ';
+                                  } else {
+                                    if (!(english
+                                        .hasMatch(_lnamecontroller.text))) {
                                       return "only english is allowed";
                                     }
                                   }
@@ -631,7 +661,8 @@ class _studentsignupState extends State<studentsignup> {
                             ElevatedButton(
                               onPressed: () async {
                                 setState(() {
-                                  fullname = _fnameController.text;
+                                  fname = _fnameController.text;
+                                  lname = _lnamecontroller.text;
                                   email = _emailController.text;
                                   password = _passwordController.text;
                                   studentid = _idController.text;
@@ -676,7 +707,8 @@ class _studentsignupState extends State<studentsignup> {
                                           .collection('student')
                                           .doc(Uid)
                                           .set({
-                                        'name': fullname,
+                                        'firstname': fname,
+                                        "lastname": lname,
                                         'ksuemail': email,
                                         'studentId': studentid,
                                         'department': FirebaseFirestore.instance
@@ -688,7 +720,7 @@ class _studentsignupState extends State<studentsignup> {
                                             .collection("collage")
                                             .doc(docsforcollage),
                                         'projectCategory': category,
-                                        'projectTitle': GPtitle,
+                                        'projectname': GPtitle,
                                         'graduationDate': date,
                                         ' socialmedia': socialmedia,
                                         ' socialmediaaccount':

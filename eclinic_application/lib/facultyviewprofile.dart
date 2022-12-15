@@ -24,6 +24,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
   var collageselectedvalue;
   var departmentselectedvalue;
   var semesterselectedvalue;
+
   void initState() {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
@@ -35,9 +36,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
     retrivecollage();
     retrivedepartment();
     retrivecolldepsem();
-    // zag = 1;
     isshow = false;
-
     super.initState();
   }
 
@@ -53,9 +52,9 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
   String? lname;
   String? mettingmethod;
   String? ksuemail;
-  var _fnameController;
-  var _lnameController;
-  var _meetingmethodcontroller;
+  var _fnameController = TextEditingController();
+  var _lnameController = TextEditingController();
+  var _meetingmethodcontroller = TextEditingController();
   var fn;
   var ln;
   var mm;
@@ -72,7 +71,6 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
   bool isshow = false;
   Rx<List<String>> selectedoptionlist = Rx<List<String>>([]);
   var selectedoption = "".obs;
-
   final double coverheight = 280;
   final double profileheight = 144;
   final double top = 136 / 2; //coverheight - profileheight/2;
@@ -120,7 +118,6 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
     }
   }
 
-  @override
   retrivesuserinfo() async {
     final snap = await FirebaseFirestore.instance
         .collection('faculty')
@@ -249,17 +246,6 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
 
   @override
   Widget build(BuildContext context) {
-    body:
-    StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: ((context, snapshot) {
-          if (snapshot.hasData) {
-            return facultyviewprofile();
-          } else {
-            return login();
-          }
-        }));
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('view profile'),
@@ -335,7 +321,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                 AutovalidateMode.onUserInteraction,
                             validator: (value) {
                               if (value!.isEmpty ||
-                                  _fnameController.text == "") {
+                                  _fnameController.text.isEmpty) {
                                 return 'Please enter your frist name ';
                               } else {
                                 if (nameRegExp
@@ -617,11 +603,11 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                     child: Text("Log out"),
                   ),
                   ElevatedButton(
-                    onPressed: () async {
+                    onPressed: () {
                       setState(() {
                         fn = _fnameController.text;
-                        // ln = _lnameController.text;
-                        // mm = _meetingmethodcontroller.text;
+                        ln = _lnameController.text;
+                        mm = _meetingmethodcontroller.text;
 
                         if (zag < 1) {
                           isshow = true;
@@ -630,15 +616,16 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                           isshow = false;
                         }
                       });
-                      try {
-                        if (formkey.currentState!.validate() && zag > 0) {
-                          await FirebaseFirestore.instance
+
+                      if (formkey.currentState!.validate() && zag > 0) {
+                        try {
+                          FirebaseFirestore.instance
                               .collection('faculty')
                               .doc(userid)
                               .update({
                             "firstname": fn,
-                            // "lastname": ln,
-                            // "meetingmethod": mm,
+                            "lastname": ln,
+                            "meetingmethod": mm,
                             'department': FirebaseFirestore.instance
                                 .collection("collage")
                                 .doc(docsforcollage)
@@ -663,17 +650,17 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                             textColor: Color.fromARGB(255, 248, 249, 250),
                             fontSize: 18.0,
                           );
+                        } on FirebaseAuthException catch (error) {
+                          Fluttertoast.showToast(
+                            msg: "Something wronge",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 5,
+                            backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                            textColor: Color.fromARGB(255, 252, 253, 255),
+                            fontSize: 18.0,
+                          );
                         }
-                      } on FirebaseAuthException catch (error) {
-                        Fluttertoast.showToast(
-                          msg: "Something wronge",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.CENTER,
-                          timeInSecForIosWeb: 5,
-                          backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                          textColor: Color.fromARGB(255, 252, 253, 255),
-                          fontSize: 18.0,
-                        );
                       }
                     },
                     child: Text("Save changes"),
@@ -792,8 +779,6 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
   }
 
   showConfirmationDialog(BuildContext context) {
-    // set up the buttons
-    bool deleteappointment = false;
     Widget dontCancelAppButton = ElevatedButton(
       child: Text("No"),
       onPressed: () {
@@ -806,8 +791,6 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
       onPressed: () {
         FirebaseAuth.instance.signOut().then((value) => Navigator.push(
             context, MaterialPageRoute(builder: (context) => login())));
-
-        // Navigator.pushNamed(context, 'facultyhome');
       },
     );
 
