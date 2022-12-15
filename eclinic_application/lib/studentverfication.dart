@@ -11,6 +11,8 @@ import 'package:myapp/login.dart';
 import 'package:myapp/addHoursFaculty.dart';
 import 'dart:async';
 
+import 'package:myapp/studentviewprofile.dart';
+
 class studentverfication extends StatefulWidget {
   const studentverfication({super.key});
 
@@ -40,8 +42,36 @@ class _studentverficationState extends State<studentverfication> {
     super.dispose();
   }
 
+  Future<void> checkemailverfication() async {
+    user = auth.currentUser;
+    await user!.reload();
+    if (user!.emailVerified) {
+      timer.cancel();
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => studentviewprofile()));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('verfication'),
+      ),
+      body: Container(
+        child: Column(
+          children: [
+            Text(
+                "A verfication link has been sent to ${email} Please verfiy your account"),
+            ElevatedButton(
+              onPressed: () {
+                checkemailverfication();
+              },
+              child: Text("I verified my email "),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
