@@ -463,6 +463,7 @@ class _studentsignupState extends State<studentsignup> {
                               controller: _date,
                               decoration: InputDecoration(
                                 hintText: 'Enter your graduation date',
+                                labelText: "Graduation date",
                                 border: OutlineInputBorder(),
                               ),
                               onTap: () async {
@@ -692,16 +693,8 @@ class _studentsignupState extends State<studentsignup> {
                                           FirebaseAuth.instance;
                                       final User? user = auth.currentUser;
                                       final Uid = user!.uid;
-
-                                      try {
-                                        if (!(user.emailVerified)) {
-                                          user.sendEmailVerification();
-                                          Navigator.pushNamed(
-                                              context, 'verfication');
-                                        }
-                                      } catch (error) {
-                                        print(error);
-                                      }
+                                      Navigator.pushNamed(
+                                          context, 'studentverfication');
 
                                       await FirebaseFirestore.instance
                                           .collection('student')

@@ -132,23 +132,6 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
     }
     zag = specality.length;
     checkidspecialty(specality);
-    // var semesterRef = snap["semester"];
-    // final DocumentSnapshot docRef2 = await semesterRef.get();
-    // semesterselectedfromDB = docRef2["semestername"];
-    // // print("/////////////////////semester///////////////////////////");
-    // // print(semesterselectedfromDB);
-    // /////////////////////////////////////////////////////
-    // var collageRef = snap["collage"];
-    // final DocumentSnapshot docRef3 = await collageRef.get();
-    // collageselectedfromDB = docRef3["collagename"];
-    // // print("/////////////////////collage///////////////////////////");
-    // // print(collageselectedfromDB);
-    // /////////////////////////////////////////////////////
-    // var departmentRef = snap["department"];
-    // final DocumentSnapshot docRef4 = await departmentRef.get();
-    // departmentselectedfromDB = docRef4["departmentname"];
-    // // print("/////////////////////department///////////////////////////");
-    // // print(departmentselectedfromDB);
   }
 
   retrivecolldepsem() async {
@@ -302,11 +285,11 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          buildCoverImage(),
-                          Positioned(
-                            top: top,
-                            child: buildprofileImage(),
-                          ),
+                          buildprofileImage(),
+                          // Positioned(
+                          //   top: top,
+                          //   child: buildprofileImage(),
+                          // ),
                           SizedBox(
                             height: 15,
                           ),
