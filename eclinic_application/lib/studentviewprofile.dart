@@ -72,6 +72,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
     retrivecolldep();
     retrivecollage();
     super.initState();
+    bool isshow = false;
   }
 
   final double coverheight = 280;
@@ -236,7 +237,15 @@ class _studentviewprofileState extends State<studentviewprofile> {
           .collection('student')
           .doc(userid)
           .get();
+      Timestamp gd = snap["graduationDate"];
+      _date = TextEditingController(text: formatdate(gd));
+      date = gd;
 
+      final so = snap['socialmedia'];
+      if (so != "None") {
+        _socialmed = TextEditingController(text: so);
+      }
+      social = so;
       var collageRef = snap["college"];
       final DocumentSnapshot docRef1 = await collageRef.get();
       collageselectedfromDB = docRef1["collagename"];
@@ -299,11 +308,14 @@ class _studentviewprofileState extends State<studentviewprofile> {
                       final projectname = cuser['projectname'];
                       final studentid = cuser['studentId'];
                       final so = cuser['socialmedia'];
-                      final soaccount = cuser['socialmediaaccount'];
-                      Timestamp gd = cuser["graduationDate"];
-                      date = gd;
-                      formatdate(gd);
 
+                      // date = cuser["graduationDate"];
+
+                      // date = gd;
+                      // print("ggggggggggggggggggggggggggggggggggggggg");
+                      // print(cuser["graduationDate"]);
+                      //print(date);
+                      // formatdate(gd);
                       // print("//////////////////////////////////////////");
                       // print(gd);
                       // print(formatdate(gd));
@@ -313,18 +325,21 @@ class _studentviewprofileState extends State<studentviewprofile> {
                       _emailController = TextEditingController(text: ksuemail);
                       _idController = TextEditingController(text: studentid);
                       _projectname = TextEditingController(text: projectname);
-                      //  _socialmed = TextEditingController(text: so);
-                      _socialmediaccount =
-                          TextEditingController(text: soaccount);
+                      // _socialmed = TextEditingController(text: so);
+                      if (social != "None") {
+                        final soaccount = cuser['socialmediaaccount'];
+                        _socialmediaccount =
+                            TextEditingController(text: soaccount);
+                      }
 
-                      _date = TextEditingController(text: formatdate(gd));
-                      social = so;
+                      //_date = TextEditingController(text: formatdate(gd));
+                      // social = so;
                       selectedoptionlist.value = categoryfromDB;
                       collageselectedvalue = collageselectedfromDB;
                       departmentselectedvalue = departmentselectedfromDB;
 
-                      print("/////////////////ممههههممم//////////////////");
-                      print(so);
+                      // print("/////////////////ممههههممم//////////////////");
+                      // print(date);
                       // print("//////////////////////////////////");
                       // print(departmentselectedfromDB);
                       // print("/////////////////ممههههممم//////////////////");
@@ -478,7 +493,9 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                 DropdownMenuItem(
                                     child: Text("LinkedIn"), value: "LinkedIn"),
                                 DropdownMenuItem(
-                                    child: Text("WhatsApp"), value: "WhatsApp")
+                                    child: Text("WhatsApp"), value: "WhatsApp"),
+                                DropdownMenuItem(
+                                    child: Text("None"), value: "None")
                               ],
                               value: social,
                               onChanged: (value) {
@@ -492,21 +509,77 @@ class _studentviewprofileState extends State<studentviewprofile> {
                           SizedBox(
                             height: 8,
                           ),
-                          TextFormField(
+                          // if (social != "No")
+                          //   TextFormField(
+                          //       controller: _socialmediaccount,
+                          //       decoration: InputDecoration(
+                          //           labelText: 'Account',
+                          //           suffixIcon: Icon(Icons.edit),
+                          //           hintText: "Enter your account",
+                          //           border: OutlineInputBorder()),
+                          //       autovalidateMode:
+                          //           AutovalidateMode.onUserInteraction,
+                          //       validator: (value) {
+                          //         if (!(english
+                          //             .hasMatch(_socialmediaccount.text))) {
+                          //           return "only english is allowed";
+                          //         }
+                          //       }),
+                          if (social != null &&
+                              (social == "Twitter" ||
+                                  social == "LinkedIn" && social != "None"))
+                            TextFormField(
+                                controller: _socialmediaccount,
+                                decoration: InputDecoration(
+                                    labelText: 'Account',
+                                    hintText: "Enter your account",
+                                    border: OutlineInputBorder()),
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value!.isEmpty ||
+                                      _socialmediaccount.text == "") {
+                                    return 'Please enter your account';
+                                  } else {
+                                    if (!(english
+                                        .hasMatch(_socialmediaccount.text))) {
+                                      return "only english is allowed";
+                                    }
+                                  }
+                                }),
+                          if (social != null &&
+                              social == "WhatsApp" &&
+                              social != "None")
+                            TextFormField(
                               controller: _socialmediaccount,
                               decoration: InputDecoration(
-                                  labelText: 'Account',
-                                  suffixIcon: Icon(Icons.edit),
-                                  hintText: "Enter your account",
+                                  labelText: 'phone number',
+                                  hintText: "Enter your number",
                                   border: OutlineInputBorder()),
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
-                              validator: (value) {
-                                if (!(english
-                                    .hasMatch(_socialmediaccount.text))) {
-                                  return "only english is allowed";
+                              validator: ((value) {
+                                if (value!.isEmpty ||
+                                    _socialmediaccount.text == "") {
+                                  return 'Please enter your phone number';
+                                } else {
+                                  if (!(english
+                                      .hasMatch(_socialmediaccount.text))) {
+                                    return "only english is allowed";
+                                  } else {
+                                    if (!(idRegEx
+                                        .hasMatch(_socialmediaccount.text))) {
+                                      return 'Please only number allowed ';
+                                    } else {
+                                      if (!(countRegEx10
+                                          .hasMatch(_socialmediaccount.text))) {
+                                        return 'Please number must be only 10 numbers';
+                                      }
+                                    }
+                                  }
                                 }
                               }),
+                            ),
                           SizedBox(
                             height: 8,
                           ),
@@ -525,18 +598,18 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                   initialDate: DateTime.now(),
                                   firstDate: DateTime.now(),
                                   lastDate: DateTime(2100));
-                              if (pickerdate != null) {
-                                setState(() {
-                                  _date.text = DateFormat('dd-MM-yyyy')
-                                      .format(pickerdate);
-                                  date = pickerdate;
-                                });
-                              }
+
+                              setState(() {
+                                _date.text = DateFormat('dd-MM-yyyy')
+                                    .format(pickerdate!);
+                                date = pickerdate;
+                                print("ggggggggggggggggggggggggggggggggggg");
+                                print(date);
+                              });
                             },
                             validator: ((value) {
                               if (_date.text == "" || date == null)
                                 return 'Please enter your graduation date ';
-
                               return null;
                             }),
                           ),
@@ -709,10 +782,12 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                     pn = _projectname.text;
                                     gpdate = date;
                                     socialmedia = social;
+                                    socoamediaaccount = _socialmediaccount.text;
                                     print("999999999999999999999999999");
                                     print(social);
-                                    socoamediaaccount = _socialmediaccount.text;
-
+                                    if (social == "None") {
+                                      socoamediaaccount = "";
+                                    }
                                     if (zag < 1) {
                                       isshow = true;
                                     }

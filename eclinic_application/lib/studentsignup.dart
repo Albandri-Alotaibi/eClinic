@@ -602,7 +602,9 @@ class _studentsignupState extends State<studentsignup> {
                                       value: "LinkedIn"),
                                   DropdownMenuItem(
                                       child: Text("WhatsApp"),
-                                      value: "WhatsApp")
+                                      value: "WhatsApp"),
+                                  DropdownMenuItem(
+                                      child: Text("None"), value: "None")
                                 ],
                                 onChanged: (value) {
                                   setState(() {
