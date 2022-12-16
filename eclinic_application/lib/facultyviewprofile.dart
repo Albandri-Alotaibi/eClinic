@@ -495,7 +495,11 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                 });
                               });
                               checkidspecialty(selectedoptionlist.value);
-                              isshow = selectedoptionlist.value.isEmpty;
+                              //isshow = selectedoptionlist.value.isEmpty;
+                              zag = selectedoptionlist.value.length;
+                              if (zag < 1) {
+                                isshow = true;
+                              }
                             },
                             selectedValues: selectedoptionlist.value,
                           ),

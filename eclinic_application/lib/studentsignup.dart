@@ -461,6 +461,7 @@ class _studentsignupState extends State<studentsignup> {
                             ),
                             TextFormField(
                               controller: _date,
+                              readOnly: true,
                               decoration: InputDecoration(
                                 hintText: 'Enter your graduation date',
                                 labelText: "Graduation date",
@@ -559,7 +560,11 @@ class _studentsignupState extends State<studentsignup> {
                                   });
                                 });
                                 checkidcategory(selectedoptionlist.value);
-                                isshow = selectedoptionlist.value.isEmpty;
+                                // isshow = selectedoptionlist.value.isEmpty;
+                                zag = selectedoptionlist.value.length;
+                                if (zag < 1) {
+                                  isshow = true;
+                                }
                               },
                               selectedValues: selectedoptionlist.value,
                             ),
@@ -672,7 +677,7 @@ class _studentsignupState extends State<studentsignup> {
                                   socialmedia = social;
                                   account = _socialmedialink2.text;
                                   phonenumber = _socialmedialink1.text;
-                                  if (zag < 1 || isshow == false) {
+                                  if (zag < 1) {
                                     isshow = true;
                                   }
                                   if (zag > 0) {
@@ -715,8 +720,8 @@ class _studentsignupState extends State<studentsignup> {
                                         'projectCategory': category,
                                         'projectname': GPtitle,
                                         'graduationDate': date,
-                                        ' socialmedia': socialmedia,
-                                        ' socialmediaaccount':
+                                        'socialmedia': socialmedia,
+                                        'socialmediaaccount':
                                             socialmediaaccount,
                                         'uploadgp': false,
                                       });

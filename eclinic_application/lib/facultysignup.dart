@@ -536,7 +536,10 @@ class _facultysignupState extends State<facultysignup> {
                                 selectedoption.value + " " + element;
                             zag = selectedoptionlist.value.length;
                             isshow = selectedoption.value.isEmpty;
-
+                            print("////////////////during//////////////////");
+                            print(selectedoptionlist.value.length);
+                            print(zag);
+                            print(isshow);
                             if (zag < 1) {
                               isshow = true;
                             }
@@ -548,7 +551,15 @@ class _facultysignupState extends State<facultysignup> {
                           });
                         });
                         checkidspecialty(selectedoptionlist.value);
-                        isshow = selectedoptionlist.value.isEmpty;
+                        //isshow = selectedoptionlist.value.isEmpty;
+                        zag = selectedoptionlist.value.length;
+                        if (zag < 1) {
+                          isshow = true;
+                        }
+                        print(
+                            "///////////////////////////////////////////////////");
+                        print(zag);
+                        print(isshow);
                       },
                       selectedValues: selectedoptionlist.value,
                     ),
@@ -579,8 +590,9 @@ class _facultysignupState extends State<facultysignup> {
                           email = _emailController.text;
                           password = _passwordController.text;
                           meetingmethod = _meetingmethodcontroller.text;
-                          if (zag < 1 || isshow == false) {
+                          if (zag < 1) {
                             isshow = true;
+                            zag = 0;
                           }
                           if (zag > 0) {
                             isshow = false;
