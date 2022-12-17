@@ -614,44 +614,43 @@ class _studentsignupState extends State<studentsignup> {
                             SizedBox(
                               height: 8,
                             ),
-                            if (social != null && social == "WhatsApp")
-                              TextFormField(
-                                controller: _socialmedialink1,
-                                decoration: InputDecoration(
-                                    labelText: 'phone number',
-                                    hintText: "Enter your number",
-                                    border: OutlineInputBorder()),
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                validator: ((value) {
-                                  if (value!.isEmpty ||
-                                      _socialmedialink1.text == "") {
-                                    return 'Please enter your phone number';
-                                  } else {
-                                    if (!(english
-                                        .hasMatch(_socialmedialink1.text))) {
-                                      return "only english is allowed";
-                                    } else {
-                                      if (!(idRegEx
-                                          .hasMatch(_socialmedialink1.text))) {
-                                        return 'Please only number allowed ';
-                                      } else {
-                                        if (!(countRegEx10.hasMatch(
-                                            _socialmedialink1.text))) {
-                                          return 'Please number must be only 10 numbers';
-                                        }
-                                      }
-                                    }
-                                  }
-                                }),
-                              ),
-                            if (social != null &&
-                                (social == "Twitter" || social == "LinkedIn"))
+                            // if (social != null && social == "WhatsApp")
+                            //   TextFormField(
+                            //     controller: _socialmedialink1,
+                            //     decoration: InputDecoration(
+                            //         labelText: 'phone number',
+                            //         hintText: "Enter your number",
+                            //         border: OutlineInputBorder()),
+                            //     autovalidateMode:
+                            //         AutovalidateMode.onUserInteraction,
+                            //     validator: ((value) {
+                            //       if (value!.isEmpty ||
+                            //           _socialmedialink1.text == "") {
+                            //         return 'Please enter your phone number';
+                            //       } else {
+                            //         if (!(english
+                            //             .hasMatch(_socialmedialink1.text))) {
+                            //           return "only english is allowed";
+                            //         } else {
+                            //           if (!(idRegEx
+                            //               .hasMatch(_socialmedialink1.text))) {
+                            //             return 'Please only number allowed ';
+                            //           } else {
+                            //             if (!(countRegEx10.hasMatch(
+                            //                 _socialmedialink1.text))) {
+                            //               return 'Please number must be only 10 numbers';
+                            //             }
+                            //           }
+                            //         }
+                            //       }
+                            //     }),
+                            //   ),
+                            if (social != null && social != "None")
                               TextFormField(
                                   controller: _socialmedialink2,
                                   decoration: InputDecoration(
-                                      labelText: 'Account',
-                                      hintText: "Enter your account",
+                                      labelText: 'Link account',
+                                      hintText: "Enter your link account",
                                       border: OutlineInputBorder()),
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
@@ -677,8 +676,8 @@ class _studentsignupState extends State<studentsignup> {
                                   GPdate = date;
                                   GPtitle = _projecttitle.text;
                                   socialmedia = social;
-                                  account = _socialmedialink2.text;
-                                  phonenumber = _socialmedialink1.text;
+                                  socialmediaaccount = _socialmedialink2.text;
+                                  // phonenumber = _socialmedialink1.text;
                                   if (zag < 1) {
                                     isshow = true;
                                   }
@@ -687,7 +686,7 @@ class _studentsignupState extends State<studentsignup> {
                                   }
                                 });
 
-                                check(social);
+                                //check(social);
 
                                 try {
                                   if (formkey.currentState!.validate() &&

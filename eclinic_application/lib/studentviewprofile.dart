@@ -285,6 +285,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Form(
+            autovalidateMode: AutovalidateMode.always,
             key: formkey,
             child: Column(children: [
               FutureBuilder(
@@ -326,8 +327,9 @@ class _studentviewprofileState extends State<studentviewprofile> {
                       _idController = TextEditingController(text: studentid);
                       _projectname = TextEditingController(text: projectname);
                       // _socialmed = TextEditingController(text: so);
+                      final soaccount = cuser['socialmediaaccount'];
+
                       if (social != "None") {
-                        final soaccount = cuser['socialmediaaccount'];
                         _socialmediaccount =
                             TextEditingController(text: soaccount);
                       }
@@ -481,108 +483,6 @@ class _studentviewprofileState extends State<studentviewprofile> {
                           SizedBox(
                             height: 8,
                           ),
-                          DropdownButtonFormField(
-                              decoration: InputDecoration(
-                                suffixIcon: Icon(Icons.edit),
-                                labelText: "Social media contact",
-                                border: OutlineInputBorder(),
-                              ),
-                              items: const [
-                                DropdownMenuItem(
-                                    child: Text("Twitter"), value: "Twitter"),
-                                DropdownMenuItem(
-                                    child: Text("LinkedIn"), value: "LinkedIn"),
-                                DropdownMenuItem(
-                                    child: Text("WhatsApp"), value: "WhatsApp"),
-                                DropdownMenuItem(
-                                    child: Text("None"), value: "None")
-                              ],
-                              value: social,
-                              onChanged: (value) {
-                                setState(() {
-                                  social = value;
-                                  print(
-                                      "//////////////////////during///////////");
-                                  print(social);
-                                });
-                              }),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          // if (social != "No")
-                          //   TextFormField(
-                          //       controller: _socialmediaccount,
-                          //       decoration: InputDecoration(
-                          //           labelText: 'Account',
-                          //           suffixIcon: Icon(Icons.edit),
-                          //           hintText: "Enter your account",
-                          //           border: OutlineInputBorder()),
-                          //       autovalidateMode:
-                          //           AutovalidateMode.onUserInteraction,
-                          //       validator: (value) {
-                          //         if (!(english
-                          //             .hasMatch(_socialmediaccount.text))) {
-                          //           return "only english is allowed";
-                          //         }
-                          //       }),
-                          if (social != null &&
-                              (social == "Twitter" ||
-                                  social == "LinkedIn" && social != "None"))
-                            TextFormField(
-                                controller: _socialmediaccount,
-                                decoration: InputDecoration(
-                                    labelText: 'Account',
-                                    hintText: "Enter your account",
-                                    border: OutlineInputBorder()),
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                validator: (value) {
-                                  if (value!.isEmpty ||
-                                      _socialmediaccount.text == "") {
-                                    return 'Please enter your account';
-                                  } else {
-                                    if (!(english
-                                        .hasMatch(_socialmediaccount.text))) {
-                                      return "only english is allowed";
-                                    }
-                                  }
-                                }),
-                          if (social != null &&
-                              social == "WhatsApp" &&
-                              social != "None")
-                            TextFormField(
-                              controller: _socialmediaccount,
-                              decoration: InputDecoration(
-                                  labelText: 'phone number',
-                                  hintText: "Enter your number",
-                                  border: OutlineInputBorder()),
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              validator: ((value) {
-                                if (value!.isEmpty ||
-                                    _socialmediaccount.text == "") {
-                                  return 'Please enter your phone number';
-                                } else {
-                                  if (!(english
-                                      .hasMatch(_socialmediaccount.text))) {
-                                    return "only english is allowed";
-                                  } else {
-                                    if (!(idRegEx
-                                        .hasMatch(_socialmediaccount.text))) {
-                                      return 'Please only number allowed ';
-                                    } else {
-                                      if (!(countRegEx10
-                                          .hasMatch(_socialmediaccount.text))) {
-                                        return 'Please number must be only 10 numbers';
-                                      }
-                                    }
-                                  }
-                                }
-                              }),
-                            ),
-                          SizedBox(
-                            height: 8,
-                          ),
                           TextFormField(
                             controller: _date,
                             readOnly: true,
@@ -603,8 +503,6 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                 _date.text = DateFormat('dd-MM-yyyy')
                                     .format(pickerdate!);
                                 date = pickerdate;
-                                print("ggggggggggggggggggggggggggggggggggg");
-                                print(date);
                               });
                             },
                             validator: ((value) {
@@ -727,9 +625,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                           SizedBox(
                             height: 8,
                           ),
-                          SizedBox(
-                            height: 8,
-                          ),
+
                           DropdownButtonFormField<String>(
                             decoration: InputDecoration(
                               suffixIcon: Icon(Icons.edit),
@@ -765,98 +661,183 @@ class _studentviewprofileState extends State<studentviewprofile> {
                           SizedBox(
                             height: 8,
                           ),
-                          Row(
-                            children: [
-                              ElevatedButton(
-                                onPressed: () {
-                                  showConfirmationDialog(context);
-                                },
-                                child: Text("Log out"),
+                          DropdownButtonFormField(
+                              decoration: InputDecoration(
+                                suffixIcon: Icon(Icons.edit),
+                                labelText: "Social media contact",
+                                border: OutlineInputBorder(),
                               ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  setState(() {
-                                    fn = _fnameController.text;
-                                    ln = _lnamecontroller.text;
-                                    sid = _idController.text;
-                                    pn = _projectname.text;
-                                    gpdate = date;
-                                    socialmedia = social;
-                                    socoamediaaccount = _socialmediaccount.text;
-                                    print("999999999999999999999999999");
-                                    print(social);
-                                    if (social == "None") {
-                                      socoamediaaccount = "";
-                                    }
-                                    if (zag < 1) {
-                                      isshow = true;
-                                    }
-                                    if (zag > 0) {
-                                      isshow = false;
-                                    }
-                                  });
+                              items: const [
+                                DropdownMenuItem(
+                                    child: Text("Twitter"), value: "Twitter"),
+                                DropdownMenuItem(
+                                    child: Text("LinkedIn"), value: "LinkedIn"),
+                                DropdownMenuItem(
+                                    child: Text("WhatsApp"), value: "WhatsApp"),
+                                DropdownMenuItem(
+                                    child: Text("None"), value: "None")
+                              ],
+                              value: social,
+                              onChanged: (value) {
+                                setState(() {
+                                  social = value;
 
-                                  if (formkey.currentState!.validate() &&
-                                      zag > 0) {
-                                    try {
-                                      FirebaseFirestore.instance
-                                          .collection('student')
-                                          .doc(userid)
-                                          .update({
-                                        "firstname": fn,
-                                        "lastname": ln,
-                                        "studentId": sid,
-                                        "projectname": pn,
-                                        "projectCategory": category,
-                                        "socialmedia": socialmedia,
-                                        "socialmediaaccount": socoamediaaccount,
-                                        "graduationDate": gpdate,
-                                        'department': FirebaseFirestore.instance
-                                            .collection("collage")
-                                            .doc(docsforcollage)
-                                            .collection("department")
-                                            .doc(docfordepatment),
-                                        'college': FirebaseFirestore.instance
-                                            .collection("collage")
-                                            .doc(docsforcollage),
-                                      });
-
-                                      Fluttertoast.showToast(
-                                        msg:
-                                            " Your information has been updated successfully",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 2,
-                                        backgroundColor:
-                                            Color.fromARGB(255, 127, 166, 233),
-                                        textColor:
-                                            Color.fromARGB(255, 248, 249, 250),
-                                        fontSize: 18.0,
-                                      );
-                                    } on FirebaseAuthException catch (error) {
-                                      Fluttertoast.showToast(
-                                        msg: "Something wronge",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 5,
-                                        backgroundColor:
-                                            Color.fromARGB(255, 127, 166, 233),
-                                        textColor:
-                                            Color.fromARGB(255, 252, 253, 255),
-                                        fontSize: 18.0,
-                                      );
+                                  print(
+                                      "//////////////////////during///////////");
+                                  print(social);
+                                });
+                              }),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          if (social != null && social != "None")
+                            TextFormField(
+                                controller: _socialmediaccount,
+                                decoration: InputDecoration(
+                                    labelText: 'Link account',
+                                    hintText: "Enter your link account",
+                                    suffixIcon: Icon(Icons.edit),
+                                    border: OutlineInputBorder()),
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value!.isEmpty ||
+                                      _socialmediaccount.text == "") {
+                                    return 'Please enter your account';
+                                  } else {
+                                    if (!(english
+                                        .hasMatch(_socialmediaccount.text))) {
+                                      return "only english is allowed";
                                     }
                                   }
-                                },
-                                child: Text("Save changes"),
-                              ),
-                            ],
-                          )
+                                }),
+                          // if (social != null &&
+                          //     social == "WhatsApp" &&
+                          //     social != "None")
+                          //   TextFormField(
+                          //     controller: _socialmediaccount,
+                          //     decoration: InputDecoration(
+                          //         labelText: 'phone number',
+                          //         suffixIcon: Icon(Icons.edit),
+                          //         hintText: "Enter your number",
+                          //         border: OutlineInputBorder()),
+                          //     autovalidateMode:
+                          //         AutovalidateMode.onUserInteraction,
+                          //     validator: ((value) {
+                          //       if (value!.isEmpty ||
+                          //           _socialmediaccount.text == "") {
+                          //         return 'Please enter your phone number';
+                          //       } else {
+                          //         if (!(english
+                          //             .hasMatch(_socialmediaccount.text))) {
+                          //           return "only english is allowed";
+                          //         } else {
+                          //           if (!(idRegEx
+                          //               .hasMatch(_socialmediaccount.text))) {
+                          //             return 'Please only number allowed ';
+                          //           } else {
+                          //             if (!(countRegEx10
+                          //                 .hasMatch(_socialmediaccount.text))) {
+                          //               return 'Please number must be only 10 numbers';
+                          //             }
+                          //           }
+                          //         }
+                          //       }
+                          //     }),
+                          //   ),
+                          SizedBox(
+                            height: 8,
+                          ),
                         ],
                       ); //here
                     }
                     return Center(child: CircularProgressIndicator());
                   }),
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      showConfirmationDialog(context);
+                    },
+                    child: Text("Log out"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        fn = _fnameController.text;
+                        ln = _lnamecontroller.text;
+                        sid = _idController.text;
+                        pn = _projectname.text;
+                        gpdate = date;
+                        socialmedia = social;
+                        socoamediaaccount = _socialmediaccount.text;
+
+                        if (social == "None") {
+                          socoamediaaccount = "";
+                        }
+                        if (zag < 1) {
+                          isshow = true;
+                        }
+                        if (zag > 0) {
+                          isshow = false;
+                        }
+                      });
+
+                      if (formkey.currentState!.validate() && zag > 0) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => studentviewprofile()));
+                        try {
+                          FirebaseFirestore.instance
+                              .collection('student')
+                              .doc(userid)
+                              .update({
+                            "firstname": fn,
+                            "lastname": ln,
+                            "studentId": sid,
+                            "projectname": pn,
+                            "projectCategory": category,
+                            "socialmedia": socialmedia,
+                            "socialmediaaccount": socoamediaaccount,
+                            "graduationDate": gpdate,
+                            'department': FirebaseFirestore.instance
+                                .collection("collage")
+                                .doc(docsforcollage)
+                                .collection("department")
+                                .doc(docfordepatment),
+                            'college': FirebaseFirestore.instance
+                                .collection("collage")
+                                .doc(docsforcollage),
+                          });
+
+                          Fluttertoast.showToast(
+                            msg:
+                                " Your information has been updated successfully",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 2,
+                            backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                            textColor: Color.fromARGB(255, 248, 249, 250),
+                            fontSize: 18.0,
+                          );
+                        } on FirebaseAuthException catch (error) {
+                          Fluttertoast.showToast(
+                            msg: "Something wronge",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 5,
+                            backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                            textColor: Color.fromARGB(255, 252, 253, 255),
+                            fontSize: 18.0,
+                          );
+                        }
+                      }
+                    },
+                    child: Text("Save changes"),
+                  ),
+                ],
+              )
             ]),
           ), ////here
         ),

@@ -55,9 +55,12 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
   var _fnameController = TextEditingController();
   var _lnameController = TextEditingController();
   var _meetingmethodcontroller = TextEditingController();
+  var mettingmethoddrop;
+  var mettingmethodinfo;
   var fn;
   var ln;
   var mm;
+  var mmi;
   var semesterselectedfromDB;
   var collageselectedfromDB;
   var departmentselectedfromDB;
@@ -139,6 +142,13 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
         .collection('faculty')
         .doc(userid)
         .get();
+    print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+    var mm = snap['meetingmethod'];
+    mettingmethoddrop = mm;
+    print(mm);
+    var mmi = snap['mettingmethodinfo'];
+    print(mmi);
+    _meetingmethodcontroller = TextEditingController(text: mmi);
     var semesterRef = snap["semester"];
     final DocumentSnapshot docRef2 = await semesterRef.get();
     semesterselectedfromDB = docRef2["semestername"];
@@ -263,8 +273,8 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                       _lnameController = TextEditingController(text: lname);
                       final _emailController =
                           TextEditingController(text: ksuemail);
-                      _meetingmethodcontroller =
-                          TextEditingController(text: mettingmethod);
+                      // _meetingmethodcontroller =
+                      //     TextEditingController(text: mettingmethod);
                       selectedoptionlist.value = specality;
                       collageselectedvalue = collageselectedfromDB;
                       departmentselectedvalue = departmentselectedfromDB;
@@ -557,25 +567,93 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                           SizedBox(
                             height: 8,
                           ),
-                          TextFormField(
-                              controller: _meetingmethodcontroller,
+                          // TextFormField(
+                          //     controller: _meetingmethodcontroller,
+                          //     decoration: InputDecoration(
+                          //         suffixIcon: Icon(Icons.edit),
+                          //         labelText: "Metting method",
+                          //         border: OutlineInputBorder()),
+                          //     autovalidateMode:
+                          //         AutovalidateMode.onUserInteraction,
+                          //     validator: (value) {
+                          //       if (value!.isEmpty ||
+                          //           _meetingmethodcontroller.text == "") {
+                          //         return 'Please enter your metting method';
+                          //       } else {
+                          //         if (!(english.hasMatch(
+                          //             _meetingmethodcontroller.text))) {
+                          //           return "only english is allowed";
+                          //         }
+                          //       }
+                          //     }),
+                          DropdownButtonFormField(
                               decoration: InputDecoration(
-                                  suffixIcon: Icon(Icons.edit),
-                                  labelText: "Metting method",
-                                  border: OutlineInputBorder()),
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              validator: (value) {
-                                if (value!.isEmpty ||
-                                    _meetingmethodcontroller.text == "") {
-                                  return 'Please enter your metting method';
-                                } else {
-                                  if (!(english.hasMatch(
-                                      _meetingmethodcontroller.text))) {
-                                    return "only english is allowed";
-                                  }
-                                }
+                                suffixIcon: Icon(Icons.edit),
+                                hintText: "Choose meeting method",
+                                border: OutlineInputBorder(),
+                              ),
+                              items: const [
+                                DropdownMenuItem(
+                                    child: Text("In person metting"),
+                                    value: "inperson"),
+                                DropdownMenuItem(
+                                    child: Text("Online meeting "),
+                                    value: "online"),
+                              ],
+                              value: mettingmethoddrop,
+                              onChanged: (value) {
+                                setState(() {
+                                  mettingmethoddrop = value;
+                                  _meetingmethodcontroller.text = " ";
+                                });
                               }),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          if (mettingmethoddrop != null &&
+                              mettingmethoddrop == "inperson")
+                            TextFormField(
+                                controller: _meetingmethodcontroller,
+                                decoration: InputDecoration(
+                                    labelText: 'Office number',
+                                    hintText: "Enter your office number",
+                                    // suffixIcon: Icon(Icons.edit),
+                                    border: OutlineInputBorder()),
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value!.isEmpty ||
+                                      _meetingmethodcontroller.text == "") {
+                                    return 'Please enter your office number';
+                                  } else {
+                                    if (!(english.hasMatch(
+                                        _meetingmethodcontroller.text))) {
+                                      return "only english is allowed";
+                                    }
+                                  }
+                                }),
+                          if (mettingmethoddrop != null &&
+                              mettingmethoddrop == "online")
+                            TextFormField(
+                                controller: _meetingmethodcontroller,
+                                decoration: InputDecoration(
+                                    labelText: 'meeting link',
+                                    hintText: "Enter your meeting link",
+                                    suffixIcon: Icon(Icons.edit),
+                                    border: OutlineInputBorder()),
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value!.isEmpty ||
+                                      _meetingmethodcontroller.text == "") {
+                                    return 'Please enter your meeting link';
+                                  } else {
+                                    if (!(english.hasMatch(
+                                        _meetingmethodcontroller.text))) {
+                                      return "only english is allowed";
+                                    }
+                                  }
+                                }),
                         ],
                       ); //here
                     }
@@ -594,8 +672,8 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                       setState(() {
                         fn = _fnameController.text;
                         ln = _lnameController.text;
-                        mm = _meetingmethodcontroller.text;
-
+                        mm = mettingmethoddrop;
+                        mmi = _meetingmethodcontroller.text;
                         if (zag < 1) {
                           isshow = true;
                         }
@@ -613,6 +691,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                             "firstname": fn,
                             "lastname": ln,
                             "meetingmethod": mm,
+                            "mettingmethodinfo": mmi,
                             'department': FirebaseFirestore.instance
                                 .collection("collage")
                                 .doc(docsforcollage)

@@ -34,6 +34,8 @@ class _facultysignupState extends State<facultysignup> {
   var year;
   var monthe;
   var day;
+  var mettingmethoddrop;
+
   late String semstername;
   Rx<List<String>> selectedoptionlist = Rx<List<String>>([]);
   var selectedoption = "".obs;
@@ -248,6 +250,7 @@ class _facultysignupState extends State<facultysignup> {
   var email = '';
   var password = '';
   var meetingmethod = '';
+  var mettingmethodinfo = '';
   var dep = '';
   var spec = '';
   var userid = "";
@@ -488,24 +491,87 @@ class _facultysignupState extends State<facultysignup> {
                     SizedBox(
                       height: 8,
                     ),
-                    TextFormField(
-                        controller: _meetingmethodcontroller,
+                    // TextFormField(
+                    //     controller: _meetingmethodcontroller,
+                    //     decoration: InputDecoration(
+                    //         labelText:
+                    //             "Enter your metting method(office number or Zoom link )",
+                    //         border: OutlineInputBorder()),
+                    //     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    //     validator: (value) {
+                    //       if (value!.isEmpty ||
+                    //           _meetingmethodcontroller.text == "") {
+                    //         return 'Please enter your metting method';
+                    //       } else {
+                    //         if (!(english
+                    //             .hasMatch(_meetingmethodcontroller.text))) {
+                    //           return "only english is allowed";
+                    //         }
+                    //       }
+                    //     }),
+                    DropdownButtonFormField(
                         decoration: InputDecoration(
-                            labelText:
-                                "Enter your metting method(office number or Zoom link )",
-                            border: OutlineInputBorder()),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (value) {
-                          if (value!.isEmpty ||
-                              _meetingmethodcontroller.text == "") {
-                            return 'Please enter your metting method';
-                          } else {
-                            if (!(english
-                                .hasMatch(_meetingmethodcontroller.text))) {
-                              return "only english is allowed";
-                            }
-                          }
+                          // suffixIcon: Icon(Icons.edit),
+                          hintText: "Choose meeting method",
+                          border: OutlineInputBorder(),
+                        ),
+                        items: const [
+                          DropdownMenuItem(
+                              child: Text("In person metting"),
+                              value: "inperson"),
+                          DropdownMenuItem(
+                              child: Text("Online meeting "), value: "online"),
+                        ],
+                        onChanged: (value) {
+                          setState(() {
+                            mettingmethoddrop = value;
+                          });
                         }),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    if (mettingmethoddrop != null &&
+                        mettingmethoddrop == "inperson")
+                      TextFormField(
+                          controller: _meetingmethodcontroller,
+                          decoration: InputDecoration(
+                              labelText: 'Office number',
+                              hintText: "Enter your office number",
+                              // suffixIcon: Icon(Icons.edit),
+                              border: OutlineInputBorder()),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (value) {
+                            if (value!.isEmpty ||
+                                _meetingmethodcontroller.text == "") {
+                              return 'Please enter your office number';
+                            } else {
+                              if (!(english
+                                  .hasMatch(_meetingmethodcontroller.text))) {
+                                return "only english is allowed";
+                              }
+                            }
+                          }),
+                    if (mettingmethoddrop != null &&
+                        mettingmethoddrop == "online")
+                      TextFormField(
+                          controller: _meetingmethodcontroller,
+                          decoration: InputDecoration(
+                              labelText: 'meeting link',
+                              hintText: "Enter your meeting link",
+                              // suffixIcon: Icon(Icons.edit),
+                              border: OutlineInputBorder()),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (value) {
+                            if (value!.isEmpty ||
+                                _meetingmethodcontroller.text == "") {
+                              return 'Please enter your meeting link';
+                            } else {
+                              if (!(english
+                                  .hasMatch(_meetingmethodcontroller.text))) {
+                                return "only english is allowed";
+                              }
+                            }
+                          }),
                     SizedBox(
                       height: 8,
                     ),
@@ -589,7 +655,9 @@ class _facultysignupState extends State<facultysignup> {
                           lname = _lnameController.text;
                           email = _emailController.text;
                           password = _passwordController.text;
-                          meetingmethod = _meetingmethodcontroller.text;
+                          meetingmethod = mettingmethoddrop;
+                          mettingmethodinfo = _meetingmethodcontroller.text;
+
                           if (zag < 1) {
                             isshow = true;
                             zag = 0;
@@ -618,6 +686,7 @@ class _facultysignupState extends State<facultysignup> {
                                 'lastname': lname,
                                 'ksuemail': email,
                                 'meetingmethod': meetingmethod,
+                                'mettingmethodinfo': mettingmethodinfo,
                                 'department': FirebaseFirestore.instance
                                     .collection("collage")
                                     .doc(docsforcollage)
