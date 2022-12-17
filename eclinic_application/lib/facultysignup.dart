@@ -35,7 +35,6 @@ class _facultysignupState extends State<facultysignup> {
   var monthe;
   var day;
   var mettingmethoddrop;
-
   late String semstername;
   Rx<List<String>> selectedoptionlist = Rx<List<String>>([]);
   var selectedoption = "".obs;
@@ -213,7 +212,6 @@ class _facultysignupState extends State<facultysignup> {
   }
 
   checkidspecialty(List<String?> specialityoption) async {
-    // speciality.length = 0;
     speciality.clear();
     print(specialityoption);
     print(speciality.length);
@@ -249,8 +247,8 @@ class _facultysignupState extends State<facultysignup> {
   var lname = '';
   var email = '';
   var password = '';
-  var meetingmethod = '';
-  var mettingmethodinfo = '';
+  var meetingmethod;
+  var mettingmethodinfo;
   var dep = '';
   var spec = '';
   var userid = "";
@@ -510,23 +508,30 @@ class _facultysignupState extends State<facultysignup> {
                     //       }
                     //     }),
                     DropdownButtonFormField(
-                        decoration: InputDecoration(
-                          // suffixIcon: Icon(Icons.edit),
-                          hintText: "Choose meeting method",
-                          border: OutlineInputBorder(),
-                        ),
-                        items: const [
-                          DropdownMenuItem(
-                              child: Text("In person metting"),
-                              value: "inperson"),
-                          DropdownMenuItem(
-                              child: Text("Online meeting "), value: "online"),
-                        ],
-                        onChanged: (value) {
-                          setState(() {
-                            mettingmethoddrop = value;
-                          });
-                        }),
+                      decoration: InputDecoration(
+                        // suffixIcon: Icon(Icons.edit),
+                        hintText: "Choose meeting method",
+                        border: OutlineInputBorder(),
+                      ),
+                      items: const [
+                        DropdownMenuItem(
+                            child: Text("In person metting"),
+                            value: "inperson"),
+                        DropdownMenuItem(
+                            child: Text("Online meeting "), value: "online"),
+                      ],
+                      onChanged: (value) {
+                        setState(() {
+                          mettingmethoddrop = value;
+                        });
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value == null || mettingmethoddrop == null) {
+                          return 'Please Choose meeting method';
+                        }
+                      },
+                    ),
                     SizedBox(
                       height: 8,
                     ),
@@ -551,6 +556,7 @@ class _facultysignupState extends State<facultysignup> {
                               }
                             }
                           }),
+
                     if (mettingmethoddrop != null &&
                         mettingmethoddrop == "online")
                       TextFormField(

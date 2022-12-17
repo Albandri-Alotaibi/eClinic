@@ -589,28 +589,34 @@ class _studentsignupState extends State<studentsignup> {
                               height: 8,
                             ),
                             DropdownButtonFormField(
-                                decoration: InputDecoration(
-                                  hintText:
-                                      'Choose how can other communicate with you',
-                                  border: OutlineInputBorder(),
-                                ),
-                                items: const [
-                                  DropdownMenuItem(
-                                      child: Text("Twitter"), value: "Twitter"),
-                                  DropdownMenuItem(
-                                      child: Text("LinkedIn"),
-                                      value: "LinkedIn"),
-                                  DropdownMenuItem(
-                                      child: Text("WhatsApp"),
-                                      value: "WhatsApp"),
-                                  DropdownMenuItem(
-                                      child: Text("None"), value: "None")
-                                ],
-                                onChanged: (value) {
-                                  setState(() {
-                                    social = value;
-                                  });
-                                }),
+                              decoration: InputDecoration(
+                                hintText:
+                                    'Choose how can other communicate with you',
+                                border: OutlineInputBorder(),
+                              ),
+                              items: const [
+                                DropdownMenuItem(
+                                    child: Text("Twitter"), value: "Twitter"),
+                                DropdownMenuItem(
+                                    child: Text("LinkedIn"), value: "LinkedIn"),
+                                DropdownMenuItem(
+                                    child: Text("WhatsApp"), value: "WhatsApp"),
+                                DropdownMenuItem(
+                                    child: Text("None"), value: "None")
+                              ],
+                              onChanged: (value) {
+                                setState(() {
+                                  social = value;
+                                });
+                              },
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (value) {
+                                if (value == null || social == null) {
+                                  return 'Please Choose how can other communicate with you';
+                                }
+                              },
+                            ),
                             SizedBox(
                               height: 8,
                             ),
