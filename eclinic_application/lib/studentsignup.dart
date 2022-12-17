@@ -481,6 +481,8 @@ class _studentsignupState extends State<studentsignup> {
                                   });
                                 }
                               },
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               validator: ((value) {
                                 if (_date.text == "" || date == null)
                                   return 'Please enter your graduation date ';
