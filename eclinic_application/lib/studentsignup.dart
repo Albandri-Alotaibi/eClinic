@@ -360,38 +360,38 @@ class _studentsignupState extends State<studentsignup> {
                                     }
                                   }
                                 }),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            TextFormField(
-                              controller: _idController,
-                              decoration: InputDecoration(
-                                  labelText: 'Student ID',
-                                  hintText: "Enter your ID number",
-                                  border: OutlineInputBorder()),
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              validator: (value) {
-                                if (value!.isEmpty ||
-                                    _idController.text == "") {
-                                  return 'Please enter your ID  ';
-                                } else {
-                                  if (!(idRegEx.hasMatch(_idController.text))) {
-                                    return 'Please ID number only number accepted ';
-                                  } else {
-                                    if (!(countRegEx
-                                        .hasMatch(_idController.text))) {
-                                      return 'Please ID number must be only 9 numbers';
-                                    } else {
-                                      if (!(english
-                                          .hasMatch(_idController.text))) {
-                                        return "only english is allowed";
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                            ),
+                            // SizedBox(
+                            //   height: 8,
+                            // ),
+                            // TextFormField(
+                            //   controller: _idController,
+                            //   decoration: InputDecoration(
+                            //       labelText: 'Student ID',
+                            //       hintText: "Enter your ID number",
+                            //       border: OutlineInputBorder()),
+                            //   autovalidateMode:
+                            //       AutovalidateMode.onUserInteraction,
+                            //   validator: (value) {
+                            //     if (value!.isEmpty ||
+                            //         _idController.text == "") {
+                            //       return 'Please enter your ID  ';
+                            //     } else {
+                            //       if (!(idRegEx.hasMatch(_idController.text))) {
+                            //         return 'Please ID number only number accepted ';
+                            //       } else {
+                            //         if (!(countRegEx
+                            //             .hasMatch(_idController.text))) {
+                            //           return 'Please ID number must be only 9 numbers';
+                            //         } else {
+                            //           if (!(english
+                            //               .hasMatch(_idController.text))) {
+                            //             return "only english is allowed";
+                            //           }
+                            //         }
+                            //       }
+                            //     }
+                            //   },
+                            // ),
                             SizedBox(
                               height: 8,
                             ),
@@ -678,7 +678,7 @@ class _studentsignupState extends State<studentsignup> {
                                   lname = _lnamecontroller.text;
                                   email = _emailController.text;
                                   password = _passwordController.text;
-                                  studentid = _idController.text;
+                                  // studentid = _idController.text;
                                   GPdate = date;
                                   GPtitle = _projecttitle.text;
                                   socialmedia = social;
@@ -715,7 +715,7 @@ class _studentsignupState extends State<studentsignup> {
                                         'firstname': fname,
                                         "lastname": lname,
                                         'ksuemail': email,
-                                        'studentId': studentid,
+                                        // 'studentId': studentid,
                                         'department': FirebaseFirestore.instance
                                             .collection("collage")
                                             .doc(docsforcollage)

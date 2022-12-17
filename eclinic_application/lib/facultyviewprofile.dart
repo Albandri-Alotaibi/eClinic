@@ -604,7 +604,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                               onChanged: (value) {
                                 setState(() {
                                   mettingmethoddrop = value;
-                                  _meetingmethodcontroller.text = " ";
+                                  _meetingmethodcontroller.text = "";
                                 });
                               }),
                           SizedBox(

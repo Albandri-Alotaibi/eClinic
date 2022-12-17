@@ -242,6 +242,8 @@ class _studentviewprofileState extends State<studentviewprofile> {
       date = gd;
 
       final so = snap['socialmedia'];
+      final soaccount = snap['socialmediaaccount'];
+      _socialmediaccount = TextEditingController(text: soaccount);
       if (so != "None") {
         _socialmed = TextEditingController(text: so);
       }
@@ -329,10 +331,10 @@ class _studentviewprofileState extends State<studentviewprofile> {
                       // _socialmed = TextEditingController(text: so);
                       final soaccount = cuser['socialmediaaccount'];
 
-                      if (social != "None") {
-                        _socialmediaccount =
-                            TextEditingController(text: soaccount);
-                      }
+                      // if (social != "None") {
+                      //   _socialmediaccount =
+                      //       TextEditingController(text: soaccount);
+                      // }
 
                       //_date = TextEditingController(text: formatdate(gd));
                       // social = so;
@@ -429,38 +431,38 @@ class _studentviewprofileState extends State<studentviewprofile> {
                           SizedBox(
                             height: 8,
                           ),
-                          TextFormField(
-                            controller: _idController,
-                            decoration: InputDecoration(
-                                labelText: 'Student ID',
-                                hintText: "Enter your ID number",
-                                suffixIcon: Icon(Icons.edit),
-                                border: OutlineInputBorder()),
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            validator: (value) {
-                              if (value!.isEmpty || _idController.text == "") {
-                                return 'Please enter your ID  ';
-                              } else {
-                                if (!(idRegEx.hasMatch(_idController.text))) {
-                                  return 'Please ID number only number accepted ';
-                                } else {
-                                  if (!(countRegEx
-                                      .hasMatch(_idController.text))) {
-                                    return 'Please ID number must be only 9 numbers';
-                                  } else {
-                                    if (!(english
-                                        .hasMatch(_idController.text))) {
-                                      return "only english is allowed";
-                                    }
-                                  }
-                                }
-                              }
-                            },
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
+                          // TextFormField(
+                          //   controller: _idController,
+                          //   decoration: InputDecoration(
+                          //       labelText: 'Student ID',
+                          //       hintText: "Enter your ID number",
+                          //       suffixIcon: Icon(Icons.edit),
+                          //       border: OutlineInputBorder()),
+                          //   autovalidateMode:
+                          //       AutovalidateMode.onUserInteraction,
+                          //   validator: (value) {
+                          //     if (value!.isEmpty || _idController.text == "") {
+                          //       return 'Please enter your ID  ';
+                          //     } else {
+                          //       if (!(idRegEx.hasMatch(_idController.text))) {
+                          //         return 'Please ID number only number accepted ';
+                          //       } else {
+                          //         if (!(countRegEx
+                          //             .hasMatch(_idController.text))) {
+                          //           return 'Please ID number must be only 9 numbers';
+                          //         } else {
+                          //           if (!(english
+                          //               .hasMatch(_idController.text))) {
+                          //             return "only english is allowed";
+                          //           }
+                          //         }
+                          //       }
+                          //     }
+                          //   },
+                          // ),
+                          // SizedBox(
+                          //   height: 8,
+                          // ),
                           TextFormField(
                               controller: _projectname,
                               decoration: InputDecoration(
@@ -681,10 +683,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                               onChanged: (value) {
                                 setState(() {
                                   social = value;
-
-                                  print(
-                                      "//////////////////////during///////////");
-                                  print(social);
+                                  _socialmediaccount.text = "";
                                 });
                               }),
                           SizedBox(
@@ -766,7 +765,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                       setState(() {
                         fn = _fnameController.text;
                         ln = _lnamecontroller.text;
-                        sid = _idController.text;
+                        // sid = _idController.text;
                         pn = _projectname.text;
                         gpdate = date;
                         socialmedia = social;
@@ -795,7 +794,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                               .update({
                             "firstname": fn,
                             "lastname": ln,
-                            "studentId": sid,
+                            // "studentId": sid,
                             "projectname": pn,
                             "projectCategory": category,
                             "socialmedia": socialmedia,
