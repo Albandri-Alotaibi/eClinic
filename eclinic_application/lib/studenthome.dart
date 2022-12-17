@@ -25,6 +25,9 @@ class _sState extends State<studenthome> {
   String? email = '';
   String? userid = '';
   @override
+
+
+
   Widget build(BuildContext context) {
     StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
@@ -39,6 +42,11 @@ class _sState extends State<studenthome> {
     final User? user = auth.currentUser;
     userid = user!.uid;
     email = user.email!;
+    setSemester();
+  //calling the method
+ 
+
+
     // This method is rerun every time setState is called,
     // for instance, as done by the _increment method above.
     // The Flutter framework has been optimized to make
@@ -63,7 +71,46 @@ class _sState extends State<studenthome> {
         const SizedBox(width: 16),
       ],
     );
-  }
+  }//end build 
+
+
+setSemester() async {
+
+DateTime now = new DateTime.now();
+var semester=null;
+
+ final snap = await FirebaseFirestore.instance
+        .collection("semester")
+         .get()
+        .then((QuerySnapshot snapshot) {
+      snapshot.docs.forEach((DocumentSnapshot doc) async {
+
+          Timestamp t1 = doc['startdate'] as Timestamp;
+          DateTime StartTimeDate = t1.toDate();
+
+          Timestamp t2 = doc['enddate'] as Timestamp;
+          DateTime EndTimeDate = t2.toDate();
+
+
+if(now.isAfter(StartTimeDate) && now.isBefore(EndTimeDate)){
+  semester=doc.reference;
+}
+
+});
+});
+
+
+ FirebaseFirestore.instance
+        .collection("student")
+        .doc(userid)//**************************************************** */
+        .update({
+      'semester': semester,
+    });
+
+}
+
+
+
 
   //+++++++++++++++++++++++++++++++++++++++++DEEM+++++++++++++++++++++++++++++++++++++++++++++++++++++++
   void requestPremission() async {

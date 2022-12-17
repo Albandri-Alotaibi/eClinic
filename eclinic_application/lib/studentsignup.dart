@@ -733,6 +733,7 @@ class _studentsignupState extends State<studentsignup> {
                                         'socialmediaaccount':
                                             socialmediaaccount,
                                         'uploadgp': false,
+                                        'semester': null,
                                       });
                                     });
                                   }
