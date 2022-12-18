@@ -89,7 +89,7 @@ class _loginState extends State<login> {
                       if (formkey.currentState!.validate()) {
                         await FirebaseAuth.instance.signInWithEmailAndPassword(
                             email: email, password: password);
-                        Navigator.pushNamed(context, 'facultyviewprofile')
+                        Navigator.pushNamed(context, 'facultyhome')
                             .then((value) async {
                           final FirebaseAuth auth = FirebaseAuth.instance;
                           final User? user = auth.currentUser;
