@@ -53,6 +53,7 @@ class _studentsignupState extends State<studentsignup> {
     retrivecollage();
     retrivedepartment();
     retrivegpcategory();
+    genrateyear();
     super.initState();
   }
 
@@ -195,6 +196,32 @@ class _studentsignupState extends State<studentsignup> {
     }
   }
 
+  genrateyear() {
+    DateTime now = DateTime.now();
+    nowyear = now.year;
+    DateTime Dateoftoday = DateTime.now();
+
+    String s = year.toString();
+    nextyear = nowyear + 1;
+    print("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+    // print(nextyear);
+    years.add(nowyear.toString());
+    years.add(nextyear.toString());
+    print(years);
+  }
+
+  dategp(String? year, String? month) {
+    print(selctedyear);
+    print(month);
+    var gpdate = selctedyear + "-" + month + "-" + "15" + " " + "00:00:00.000";
+    DateTime dt = DateTime.parse(gpdate);
+    print(gpdate);
+    print(dt);
+    return dt;
+    //2022-12-20 00:00:00.000
+    //2023-09-15 00:00:00.000
+  }
+
   final formkey = GlobalKey<FormState>();
   final _fnameController = TextEditingController();
   final _lnamecontroller = TextEditingController();
@@ -207,7 +234,11 @@ class _studentsignupState extends State<studentsignup> {
   final _gpcategory = TextEditingController();
 
   final _date = TextEditingController();
-
+  var month;
+  var nowyear;
+  var nextyear;
+  var selctedyear;
+  List<String> years = [];
   RegExp nameRegExp = RegExp(r'[!@#<>?":_`~;[\]\\|=+)(*&^%0-9-]');
   RegExp uperRegExp = RegExp(r"(?=.*[A-Z])");
   RegExp numbRegExp = RegExp(r"[0-9]");
@@ -459,37 +490,142 @@ class _studentsignupState extends State<studentsignup> {
                             SizedBox(
                               height: 8,
                             ),
-                            TextFormField(
-                              controller: _date,
-                              readOnly: true,
+                            DropdownButtonFormField(
                               decoration: InputDecoration(
-                                hintText: 'Enter your graduation date',
-                                labelText: "Graduation date",
+                                hintText: 'Choose month',
                                 border: OutlineInputBorder(),
                               ),
-                              onTap: () async {
-                                DateTime? pickerdate = await showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime.now(),
-                                    lastDate: DateTime(2100));
-                                if (pickerdate != null) {
-                                  setState(() {
-                                    _date.text = DateFormat('dd-MM-yyyy')
-                                        .format(pickerdate);
-                                    date = pickerdate;
-                                  });
-                                }
+                              items: const [
+                                DropdownMenuItem(
+                                    child: Text("Jan"), value: "01"),
+                                DropdownMenuItem(
+                                    child: Text("Feb"), value: "02"),
+                                DropdownMenuItem(
+                                    child: Text("Mar"), value: "03"),
+                                DropdownMenuItem(
+                                    child: Text("Apr"), value: "04"),
+                                DropdownMenuItem(
+                                    child: Text("May"), value: "05"),
+                                DropdownMenuItem(
+                                    child: Text("Jun"), value: "06"),
+                                DropdownMenuItem(
+                                    child: Text("Jul"), value: "07"),
+                                DropdownMenuItem(
+                                    child: Text("Aug"), value: "08"),
+                                DropdownMenuItem(
+                                    child: Text("Sep"), value: "09"),
+                                DropdownMenuItem(
+                                    child: Text("Oct"), value: "10"),
+                                DropdownMenuItem(
+                                    child: Text("Nov"), value: "11"),
+                                DropdownMenuItem(
+                                    child: Text("Dec"), value: "12")
+                              ],
+                              onChanged: (value) {
+                                setState(() {
+                                  month = value;
+                                  print(month);
+                                });
                               },
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
-                              validator: ((value) {
-                                if (_date.text == "" || date == null)
-                                  return 'Please enter your graduation date ';
-
-                                return null;
-                              }),
+                              validator: (value) {
+                                if (value == null || month == "") {
+                                  return 'Please Choose month';
+                                }
+                              },
                             ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            DropdownButtonFormField<String>(
+                              decoration: InputDecoration(
+                                hintText: 'choose year',
+                                border: OutlineInputBorder(),
+                              ),
+                              isExpanded: true,
+                              items: years.map((String dropdownitems) {
+                                return DropdownMenuItem<String>(
+                                  value: dropdownitems,
+                                  child: Text(dropdownitems),
+                                );
+                              }).toList(),
+                              onChanged: (String? newselect) {
+                                setState(() {
+                                  selctedyear = newselect;
+                                  print(selctedyear);
+                                });
+                              },
+                              value: selctedyear,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (value) {
+                                if (value == null || selctedyear == "") {
+                                  return 'Please choose year';
+                                }
+                              },
+                            ),
+                            // DropdownButtonFormField(
+                            //   decoration: InputDecoration(
+                            //     hintText: 'Choose month',
+                            //     border: OutlineInputBorder(),
+                            //   ),
+
+                            //   items: const [
+                            //     DropdownMenuItem(
+                            //         child: Text(nowyear), value: nowyear),
+                            //     DropdownMenuItem(
+                            //         child: Text(nextyear), value: nextyear),
+                            //   ],
+                            //   onChanged: (value) {
+                            //     setState(() {
+                            //       year = value;
+                            //     });
+                            //   },
+                            //   autovalidateMode:
+                            //       AutovalidateMode.onUserInteraction,
+                            //   validator: (value) {
+                            //     if (value == null || month == "") {
+                            //       return 'Please Choose month';
+                            //     }
+                            //   },
+                            // ),
+
+                            // TextFormField(
+                            //   controller: _date,
+                            //   readOnly: true,
+                            //   decoration: InputDecoration(
+                            //     hintText: 'Enter your graduation date',
+                            //     labelText: "Graduation date",
+                            //     border: OutlineInputBorder(),
+                            //   ),
+                            //   onTap: () async {
+                            //     DateTime? pickerdate = await showDatePicker(
+                            //       context: context,
+                            //       initialDate: DateTime.now(),
+                            //       firstDate: DateTime.now(),
+                            //       lastDate: DateTime(2100),
+                            //     );
+
+                            //     if (pickerdate != null) {
+                            //       setState(() {
+                            //         _date.text = DateFormat('dd-MM-yyyy')
+                            //             .format(pickerdate);
+                            //         date = pickerdate;
+                            //         // 2022-12-20 00:00:00.000
+                            //         print(date);
+                            //       });
+                            //     }
+                            //   },
+                            //   autovalidateMode:
+                            //       AutovalidateMode.onUserInteraction,
+                            //   validator: ((value) {
+                            //     if (_date.text == "" || date == null)
+                            //       return 'Please enter your graduation date ';
+
+                            //     return null;
+                            //   }),
+                            // ),
                             SizedBox(
                               height: 8,
                             ),
@@ -681,7 +817,9 @@ class _studentsignupState extends State<studentsignup> {
                                   email = _emailController.text;
                                   password = _passwordController.text;
                                   // studentid = _idController.text;
-                                  GPdate = date;
+                                  // var sy = selctedyear;
+                                  // var sm = month;
+                                  //  GPdate = dategp(sy, sm);
                                   GPtitle = _projecttitle.text;
                                   socialmedia = social;
                                   socialmediaaccount = _socialmedialink2.text;
@@ -699,6 +837,7 @@ class _studentsignupState extends State<studentsignup> {
                                 try {
                                   if (formkey.currentState!.validate() &&
                                       zag > 0) {
+                                    GPdate = dategp(selctedyear, month);
                                     await FirebaseAuth.instance
                                         .createUserWithEmailAndPassword(
                                             email: email, password: password)
@@ -728,7 +867,7 @@ class _studentsignupState extends State<studentsignup> {
                                             .doc(docsforcollage),
                                         'projectCategory': category,
                                         'projectname': GPtitle,
-                                        'graduationDate': date,
+                                        'graduationDate': GPdate,
                                         'socialmedia': socialmedia,
                                         'socialmediaaccount':
                                             socialmediaaccount,
@@ -775,4 +914,8 @@ class _studentsignupState extends State<studentsignup> {
                           ],
                         ))))));
   }
+
+  // _studentsignupState.showDatePicker({
+  //   dateFormat: 'yyyy-mm',
+  // });
 }

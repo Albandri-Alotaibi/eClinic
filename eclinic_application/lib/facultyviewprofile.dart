@@ -617,7 +617,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                 decoration: InputDecoration(
                                     labelText: 'Office number',
                                     hintText: "Enter your office number",
-                                    // suffixIcon: Icon(Icons.edit),
+                                    suffixIcon: Icon(Icons.edit),
                                     border: OutlineInputBorder()),
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,

@@ -507,77 +507,77 @@ class _facultysignupState extends State<facultysignup> {
                     //         }
                     //       }
                     //     }),
-                    DropdownButtonFormField(
-                      decoration: InputDecoration(
-                        // suffixIcon: Icon(Icons.edit),
-                        hintText: "Choose meeting method",
-                        border: OutlineInputBorder(),
-                      ),
-                      items: const [
-                        DropdownMenuItem(
-                            child: Text("In person metting"),
-                            value: "inperson"),
-                        DropdownMenuItem(
-                            child: Text("Online meeting "), value: "online"),
-                      ],
-                      onChanged: (value) {
-                        setState(() {
-                          mettingmethoddrop = value;
-                        });
-                      },
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (value) {
-                        if (value == null || mettingmethoddrop == null) {
-                          return 'Please Choose meeting method';
-                        }
-                      },
-                    ),
+                    // DropdownButtonFormField(
+                    //   decoration: InputDecoration(
+                    //     // suffixIcon: Icon(Icons.edit),
+                    //     hintText: "Choose meeting method",
+                    //     border: OutlineInputBorder(),
+                    //   ),
+                    //   items: const [
+                    //     DropdownMenuItem(
+                    //         child: Text("In person metting"),
+                    //         value: "inperson"),
+                    //     DropdownMenuItem(
+                    //         child: Text("Online meeting "), value: "online"),
+                    //   ],
+                    //   onChanged: (value) {
+                    //     setState(() {
+                    //       mettingmethoddrop = value;
+                    //     });
+                    //   },
+                    //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                    //   validator: (value) {
+                    //     if (value == null || mettingmethoddrop == null) {
+                    //       return 'Please Choose meeting method';
+                    //     }
+                    //   },
+                    // ),
                     SizedBox(
                       height: 8,
                     ),
-                    if (mettingmethoddrop != null &&
-                        mettingmethoddrop == "inperson")
-                      TextFormField(
-                          controller: _meetingmethodcontroller,
-                          decoration: InputDecoration(
-                              labelText: 'Office number',
-                              hintText: "Enter your office number",
-                              // suffixIcon: Icon(Icons.edit),
-                              border: OutlineInputBorder()),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) {
-                            if (value!.isEmpty ||
-                                _meetingmethodcontroller.text == "") {
-                              return 'Please enter your office number';
-                            } else {
-                              if (!(english
-                                  .hasMatch(_meetingmethodcontroller.text))) {
-                                return "only english is allowed";
-                              }
-                            }
-                          }),
+                    // if (mettingmethoddrop != null &&
+                    //     mettingmethoddrop == "inperson")
+                    //   TextFormField(
+                    //       controller: _meetingmethodcontroller,
+                    //       decoration: InputDecoration(
+                    //           labelText: 'Office number',
+                    //           hintText: "Enter your office number",
+                    //           // suffixIcon: Icon(Icons.edit),
+                    //           border: OutlineInputBorder()),
+                    //       autovalidateMode: AutovalidateMode.onUserInteraction,
+                    //       validator: (value) {
+                    //         if (value!.isEmpty ||
+                    //             _meetingmethodcontroller.text == "") {
+                    //           return 'Please enter your office number';
+                    //         } else {
+                    //           if (!(english
+                    //               .hasMatch(_meetingmethodcontroller.text))) {
+                    //             return "only english is allowed";
+                    //           }
+                    //         }
+                    //       }),
 
-                    if (mettingmethoddrop != null &&
-                        mettingmethoddrop == "online")
-                      TextFormField(
-                          controller: _meetingmethodcontroller,
-                          decoration: InputDecoration(
-                              labelText: 'meeting link',
-                              hintText: "Enter your meeting link",
-                              // suffixIcon: Icon(Icons.edit),
-                              border: OutlineInputBorder()),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) {
-                            if (value!.isEmpty ||
-                                _meetingmethodcontroller.text == "") {
-                              return 'Please enter your meeting link';
-                            } else {
-                              if (!(english
-                                  .hasMatch(_meetingmethodcontroller.text))) {
-                                return "only english is allowed";
-                              }
-                            }
-                          }),
+                    // if (mettingmethoddrop != null &&
+                    //     mettingmethoddrop == "online")
+                    //   TextFormField(
+                    //       controller: _meetingmethodcontroller,
+                    //       decoration: InputDecoration(
+                    //           labelText: 'meeting link',
+                    //           hintText: "Enter your meeting link",
+                    //           // suffixIcon: Icon(Icons.edit),
+                    //           border: OutlineInputBorder()),
+                    //       autovalidateMode: AutovalidateMode.onUserInteraction,
+                    //       validator: (value) {
+                    //         if (value!.isEmpty ||
+                    //             _meetingmethodcontroller.text == "") {
+                    //           return 'Please enter your meeting link';
+                    //         } else {
+                    //           if (!(english
+                    //               .hasMatch(_meetingmethodcontroller.text))) {
+                    //             return "only english is allowed";
+                    //           }
+                    //         }
+                    //       }),
                     SizedBox(
                       height: 8,
                     ),

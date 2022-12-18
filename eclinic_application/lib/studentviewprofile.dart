@@ -46,6 +46,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
   var gpdate;
   var socialmedia;
   var socoamediaaccount;
+  List<String> years = [];
 
   String? email = '';
   String? userid = '';
@@ -60,6 +61,10 @@ class _studentviewprofileState extends State<studentviewprofile> {
   List<String> collage = [];
   var collageselectedfromDB;
   var departmentselectedfromDB;
+  var month;
+  var nowyear;
+  var nextyear;
+  var selctedyear;
 
   void initState() {
     final FirebaseAuth auth = FirebaseAuth.instance;
@@ -71,6 +76,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
     retrivedepartment();
     retrivecolldep();
     retrivecollage();
+    genrateyear();
     super.initState();
     bool isshow = false;
   }
@@ -86,7 +92,32 @@ class _studentviewprofileState extends State<studentviewprofile> {
 
   String? formatdate(Timestamp ts) {
     var datetostring = DateTime.fromMillisecondsSinceEpoch(ts.seconds * 1000);
+
     return DateFormat('dd-MM-yyyy').format(datetostring);
+  }
+
+  genrateyear() {
+    DateTime now = DateTime.now();
+    nowyear = now.year;
+    DateTime Dateoftoday = DateTime.now();
+    nextyear = nowyear + 1;
+    print("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+    // print(nextyear);
+    years.add(nowyear.toString());
+    years.add(nextyear.toString());
+    print(years);
+  }
+
+  dategp(String? year, String? month) {
+    print(selctedyear);
+    print(month);
+    var gpdate = selctedyear + "-" + month + "-" + "15" + " " + "00:00:00.000";
+    DateTime dt = DateTime.parse(gpdate);
+    print(gpdate);
+    print(dt);
+    return dt;
+    //2022-12-20 00:00:00.000
+    //2023-09-15 00:00:00.000
   }
 
   retrivegpcategory() async {
@@ -238,6 +269,20 @@ class _studentviewprofileState extends State<studentviewprofile> {
           .doc(userid)
           .get();
       Timestamp gd = snap["graduationDate"];
+      var datetostring = DateTime.fromMillisecondsSinceEpoch(gd.seconds * 1000);
+      var m = datetostring.month;
+      selctedyear = datetostring.year.toString();
+      print("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+      print(datetostring);
+      if (m >= 10) {
+        month = datetostring.month.toString();
+      }
+      if (m < 10) {
+        month = "0" + datetostring.month.toString();
+        print(month);
+      }
+      print("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
+      print(selctedyear);
       _date = TextEditingController(text: formatdate(gd));
       date = gd;
 
@@ -485,33 +530,97 @@ class _studentviewprofileState extends State<studentviewprofile> {
                           SizedBox(
                             height: 8,
                           ),
-                          TextFormField(
-                            controller: _date,
-                            readOnly: true,
+                          // TextFormField(
+                          //   controller: _date,
+                          //   readOnly: true,
+                          //   decoration: InputDecoration(
+                          //     hintText: 'Enter your graduation date',
+                          //     labelText: "Graduation date",
+                          //     suffixIcon: Icon(Icons.edit),
+                          //     border: OutlineInputBorder(),
+                          //   ),
+                          //   onTap: () async {
+                          //     DateTime? pickerdate = await showDatePicker(
+                          //         context: context,
+                          //         initialDate: DateTime.now(),
+                          //         firstDate: DateTime.now(),
+                          //         lastDate: DateTime(2100));
+
+                          //     setState(() {
+                          //       _date.text = DateFormat('dd-MM-yyyy')
+                          //           .format(pickerdate!);
+                          //       date = pickerdate;
+                          //     });
+                          //   },
+                          //   validator: ((value) {
+                          //     if (_date.text == "" || date == null)
+                          //       return 'Please enter your graduation date ';
+                          //     return null;
+                          //   }),
+                          // ),
+                          DropdownButtonFormField(
                             decoration: InputDecoration(
-                              hintText: 'Enter your graduation date',
-                              labelText: "Graduation date",
-                              suffixIcon: Icon(Icons.edit),
+                              hintText: 'Choose month',
                               border: OutlineInputBorder(),
                             ),
-                            onTap: () async {
-                              DateTime? pickerdate = await showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime.now(),
-                                  lastDate: DateTime(2100));
-
+                            items: const [
+                              DropdownMenuItem(child: Text("Jan"), value: "01"),
+                              DropdownMenuItem(child: Text("Feb"), value: "02"),
+                              DropdownMenuItem(child: Text("Mar"), value: "03"),
+                              DropdownMenuItem(child: Text("Apr"), value: "04"),
+                              DropdownMenuItem(child: Text("May"), value: "05"),
+                              DropdownMenuItem(child: Text("Jun"), value: "06"),
+                              DropdownMenuItem(child: Text("Jul"), value: "07"),
+                              DropdownMenuItem(child: Text("Aug"), value: "08"),
+                              DropdownMenuItem(child: Text("Sep"), value: "09"),
+                              DropdownMenuItem(child: Text("Oct"), value: "10"),
+                              DropdownMenuItem(child: Text("Nov"), value: "11"),
+                              DropdownMenuItem(child: Text("Dec"), value: "12")
+                            ],
+                            value: month,
+                            onChanged: (value) {
                               setState(() {
-                                _date.text = DateFormat('dd-MM-yyyy')
-                                    .format(pickerdate!);
-                                date = pickerdate;
+                                month = value;
+                                print(month);
                               });
                             },
-                            validator: ((value) {
-                              if (_date.text == "" || date == null)
-                                return 'Please enter your graduation date ';
-                              return null;
-                            }),
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (value) {
+                              if (value == null || month == "") {
+                                return 'Please Choose month';
+                              }
+                            },
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          DropdownButtonFormField<String>(
+                            decoration: InputDecoration(
+                              hintText: 'choose year',
+                              border: OutlineInputBorder(),
+                            ),
+                            isExpanded: true,
+                            items: years.map((String dropdownitems) {
+                              return DropdownMenuItem<String>(
+                                value: dropdownitems,
+                                child: Text(dropdownitems),
+                              );
+                            }).toList(),
+                            onChanged: (String? newselect) {
+                              setState(() {
+                                selctedyear = newselect;
+                                print(selctedyear);
+                              });
+                            },
+                            value: selctedyear,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (value) {
+                              if (value == null || selctedyear == "") {
+                                return 'Please choose year';
+                              }
+                            },
                           ),
                           SizedBox(
                             height: 8,
@@ -702,7 +811,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                 validator: (value) {
                                   if (value!.isEmpty ||
                                       _socialmediaccount.text == "") {
-                                    return 'Please enter your account';
+                                    return 'Please enter your link account';
                                   } else {
                                     if (!(english
                                         .hasMatch(_socialmediaccount.text))) {
@@ -710,40 +819,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                     }
                                   }
                                 }),
-                          // if (social != null &&
-                          //     social == "WhatsApp" &&
-                          //     social != "None")
-                          //   TextFormField(
-                          //     controller: _socialmediaccount,
-                          //     decoration: InputDecoration(
-                          //         labelText: 'phone number',
-                          //         suffixIcon: Icon(Icons.edit),
-                          //         hintText: "Enter your number",
-                          //         border: OutlineInputBorder()),
-                          //     autovalidateMode:
-                          //         AutovalidateMode.onUserInteraction,
-                          //     validator: ((value) {
-                          //       if (value!.isEmpty ||
-                          //           _socialmediaccount.text == "") {
-                          //         return 'Please enter your phone number';
-                          //       } else {
-                          //         if (!(english
-                          //             .hasMatch(_socialmediaccount.text))) {
-                          //           return "only english is allowed";
-                          //         } else {
-                          //           if (!(idRegEx
-                          //               .hasMatch(_socialmediaccount.text))) {
-                          //             return 'Please only number allowed ';
-                          //           } else {
-                          //             if (!(countRegEx10
-                          //                 .hasMatch(_socialmediaccount.text))) {
-                          //               return 'Please number must be only 10 numbers';
-                          //             }
-                          //           }
-                          //         }
-                          //       }
-                          //     }),
-                          //   ),
+
                           SizedBox(
                             height: 8,
                           ),
@@ -767,7 +843,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                         ln = _lnamecontroller.text;
                         // sid = _idController.text;
                         pn = _projectname.text;
-                        gpdate = date;
+                        // gpdate = date;
                         socialmedia = social;
                         socoamediaaccount = _socialmediaccount.text;
 
@@ -783,6 +859,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                       });
 
                       if (formkey.currentState!.validate() && zag > 0) {
+                        gpdate = dategp(selctedyear, month);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
