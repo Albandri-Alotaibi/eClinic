@@ -171,17 +171,9 @@ class _studentloginState extends State<studentlogin> {
                                           "The password is invalid or the user does not have a password." ||
                                       error.message ==
                                           "There is no user record corresponding to this identifier. The user may have been deleted.") {
-                                    Fluttertoast.showToast(
-                                      msg: "invalid email or password ",
-                                      gravity: ToastGravity.TOP,
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      timeInSecForIosWeb: 2,
-                                      backgroundColor:
-                                          Color.fromARGB(255, 127, 166, 233),
-                                      textColor:
-                                          Color.fromARGB(255, 248, 249, 250),
-                                      fontSize: 18.0,
-                                    );
+                                    var msg = "invalid email or password ";
+                                    ////////////////////////////not work
+                                    showerror(context, msg);
                                   }
                                 }
                               },
@@ -226,5 +218,54 @@ class _studentloginState extends State<studentlogin> {
         ),
       ),
     );
+  }
+
+  showerror(BuildContext context, String msg) {
+    return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Stack(
+        children: [
+          Container(
+            padding: EdgeInsets.all(16),
+            height: 90,
+            decoration: BoxDecoration(
+                color: Color(0xFFC72C41),
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 48,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Oh snap!",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                      ),
+                      Text(
+                        msg,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+    ));
   }
 }
