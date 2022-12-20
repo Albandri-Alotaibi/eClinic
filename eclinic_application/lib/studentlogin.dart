@@ -31,13 +31,26 @@ class _studentloginState extends State<studentlogin> {
           child: Container(
             child: Column(
               children: [
-                Image.asset(
-                  "assets/images/eClinicLogo-blue1.png",
-                  width: 300,
-                  height: 400,
+                Padding(
+                  padding: const EdgeInsets.only(top: 30),
+                  child: Text(
+                    "Welcome back",
+                    style: TextStyle(
+                        color: Mycolors.mainColorBlack,
+                        fontFamily: 'main',
+                        fontSize: 24),
+                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 0),
+                  padding: const EdgeInsets.all(11.0),
+                  child: Image.asset(
+                    "assets/images/eClinicLogo-blue1.png",
+                    width: 300,
+                    height: 250,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 40),
                   child: Form(
                     key: formkey,
                     child: Padding(

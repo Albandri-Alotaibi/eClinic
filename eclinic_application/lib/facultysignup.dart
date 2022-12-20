@@ -273,9 +273,6 @@ class _facultysignupState extends State<facultysignup> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          // appBar: AppBar(
-          //   title: const Text('signup'),
-          // ),
           body: Container(
         child: SingleChildScrollView(
           child: Column(
@@ -294,10 +291,10 @@ class _facultysignupState extends State<facultysignup> {
               Image.asset(
                 "assets/images/eClinicLogo-blue1.png",
                 width: 300,
-                height: 250,
+                height: 200,
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 0),
+                padding: const EdgeInsets.only(top: 10),
                 child: Form(
                   key: formkey,
                   child: Padding(
@@ -700,18 +697,22 @@ class _facultysignupState extends State<facultysignup> {
                         SizedBox(
                           height: 2,
                         ),
-                        Visibility(
-                          visible: isshow,
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Please choose your specialty",
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 211, 56, 45)),
-                                  textAlign: TextAlign.left,
-                                ),
-                              ]),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10, top: 7),
+                          child: Visibility(
+                            visible: isshow,
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Please choose your specialty",
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 211, 56, 45),
+                                        fontSize: 12),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ]),
+                          ),
                         ),
                         SizedBox(
                           height: 8,
