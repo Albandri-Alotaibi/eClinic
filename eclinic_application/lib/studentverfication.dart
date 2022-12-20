@@ -10,6 +10,7 @@ import 'package:myapp/facultyhome.dart';
 import 'package:myapp/login.dart';
 import 'package:myapp/addHoursFaculty.dart';
 import 'dart:async';
+import 'style/Mycolors.dart';
 
 import 'package:myapp/studentviewprofile.dart';
 
@@ -54,22 +55,61 @@ class _studentverficationState extends State<studentverfication> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('verfication'),
-      ),
-      body: Container(
-        child: Column(
-          children: [
-            Text(
-                "A verfication link has been sent to ${email} Please verfiy your account"),
-            ElevatedButton(
-              onPressed: () {
-                checkemailverfication();
-              },
-              child: Text("I verified my email "),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Mycolors.BackgroundColor,
+        appBar: AppBar(
+          title: const Text('verfication'),
+        ),
+        body: Container(
+          child: Padding(
+            padding: const EdgeInsets.all(72.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "A verfication link has been sent to :",
+                  style: TextStyle(
+                      fontFamily: 'main',
+                      fontSize: 16,
+                      color: Mycolors.mainColorBlack),
+                ),
+                Text(
+                  " ${email}",
+                  style: TextStyle(
+                      fontFamily: 'bold',
+                      fontSize: 16,
+                      color: Mycolors.mainColorBlack),
+                ),
+                Text(
+                  " please verfiy your email ",
+                  style: TextStyle(
+                      fontFamily: 'main',
+                      fontSize: 16,
+                      color: Mycolors.mainColorBlack),
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+                    shadowColor: Colors.blue[900],
+                    elevation: 16,
+                    backgroundColor: Mycolors.mainShadedColorBlue,
+                    minimumSize: Size(150, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(17), // <-- Radius
+                    ),
+                  ),
+                  onPressed: () {
+                    checkemailverfication();
+                  },
+                  child: Text("I verified my email "),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

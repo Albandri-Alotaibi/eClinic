@@ -419,24 +419,24 @@ class _facultysignupState extends State<facultysignup> {
                                           !uperRegExp.hasMatch(value) &&
                                           !numbRegExp.hasMatch(value) &&
                                           !smallRegExp.hasMatch(value)) {
-                                        return "Your password must be at least 8 characters and contain both uppercase and lowercase letters";
+                                        return "must be at least 8 characters and contain uppercase,lowercase letters";
                                       } else if (value.length < 8 &&
                                           !uperRegExp.hasMatch(value)) {
-                                        return "Your password must be at least 8 characters and contain uppercase letters";
+                                        return "must be at least 8 characters and contain uppercase letters";
                                       } else if (value.length < 8 &&
                                           !smallRegExp.hasMatch(value)) {
-                                        return "Your password must be at least 8 characters and contain lowercase letters";
+                                        return "must be at least 8 characters and contain lowercase letters";
                                       } else if (!uperRegExp.hasMatch(value) &&
                                           !smallRegExp.hasMatch(value)) {
-                                        return "Your password must be contain both uppercase and lowercase letters";
+                                        return "must be contain both uppercase and lowercase letters";
                                       } else if (value.length < 8) {
-                                        return "Your password must be at least 8 characters";
+                                        return " must be at least 8 characters";
                                       } else if (!uperRegExp.hasMatch(value)) {
-                                        return "Your password must be contain uppercase letters";
+                                        return "must be contain uppercase letters";
                                       } else if (!smallRegExp.hasMatch(value)) {
-                                        return "Your password must be contain lowercase letters";
+                                        return "must be contain lowercase letters";
                                       } else if (!numbRegExp.hasMatch(value)) {
-                                        return "Your password must be contain number";
+                                        return "must be contain number";
                                       }
                                     }
                                   }
