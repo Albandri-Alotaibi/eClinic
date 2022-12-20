@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'style/Mycolors.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
 class home extends StatefulWidget {
   // This class is the configuration for the state.
@@ -22,43 +25,77 @@ class _homeState extends State<home> {
     // rerunning build methods fast, so that you can just
     // rebuild anything that needs updating rather than
     // having to individually changes instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-      ),
+    return SafeArea(
+        child: Scaffold(
+      backgroundColor: Mycolors.BackgroundColor,
       body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            // ElevatedButton(
-            //   onPressed: () {
-            //     Navigator.pushNamed(context, 'facultyhome');
-            //   },
-            //   child: Text('faculty'),
-            // ),
-            // ElevatedButton(
-            //   onPressed: () {
-            //     Navigator.pushNamed(context, 'facultysignup');
-            //   },
-            //   child: Text('Signup'),
-            // ),
-            // const SizedBox(width: 16),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, 'login');
-              },
-              child: Text('Faculty Login'),
-            ),
-            const SizedBox(width: 16),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, 'studentlogin');
-              },
-              child: Text('student login'),
-            ),
-          ],
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("assets/images/ksu.jpg"),
+              fit: BoxFit.fill,
+              filterQuality: FilterQuality.high,
+              opacity: 0.6),
         ),
+        child: Column(children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 200, right: 120),
+            child: Text(
+              "Welcome  ",
+              style: TextStyle(fontFamily: 'bold', fontSize: 50),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10, right: 20),
+            child: Text(
+              "Join us, let's make success happen! ",
+              style: TextStyle(fontFamily: 'main', fontSize: 20),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 280,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+                    shadowColor: Colors.blue[900],
+                    elevation: 20,
+                    backgroundColor: Mycolors.mainShadedColorBlue,
+                    minimumSize: Size(150, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(17), // <-- Radius
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'studentlogin');
+                  },
+                  child: Text('Student'),
+                ),
+                const SizedBox(width: 16),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+                    shadowColor: Colors.blue[900],
+                    elevation: 20,
+                    backgroundColor: Mycolors.mainShadedColorBlue,
+                    minimumSize: Size(20, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(17), // <-- Radius
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'login');
+                  },
+                  child: Text('Faculty Member'),
+                ),
+              ],
+            ),
+          ),
+        ]),
       ),
-    );
+    ));
   }
 }
