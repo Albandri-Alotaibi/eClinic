@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:myapp/StudentViewBookedAppointment.dart';
 import 'package:myapp/addHoursFaculty.dart';
 import 'package:myapp/FacultyViewBookedAppointment.dart';
 import 'package:myapp/facultyhome.dart';
@@ -66,6 +67,8 @@ class MyApp extends StatelessWidget {
           'facultyFAQ': (context) => facultyFAQ(),
           'studentverfication': (context) => studentverfication(),
           'studentviewprofile': (context) => studentviewprofile(),
+          'StudentViewBookedAppointment': (context) =>
+              StudentViewBookedAppointment(),
         });
   }
 }

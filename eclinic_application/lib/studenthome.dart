@@ -26,6 +26,24 @@ class studenthome extends StatefulWidget {
 class _sState extends State<studenthome> {
   var fname;
   var lname;
+  void initState() {
+    super.initState();
+    // getusername();
+    //++++++++++++++++++++++++++DEEM++++++++++++++++++++++++++++++++
+    requestPremission();
+    getToken();
+    initInfo();
+  }
+
+  getusername() async {
+    final snap = await FirebaseFirestore.instance
+        .collection('student')
+        .doc(userid)
+        .get();
+    fname = snap['firstname'];
+    lname = snap['lastname'];
+  }
+
   String? email = '';
   String? userid = '';
   final double profileheight = 144;
@@ -46,6 +64,7 @@ class _sState extends State<studenthome> {
     email = user.email!;
     setSemester();
     getusername();
+
     //calling the method
     return SafeArea(
         child: Scaffold(
@@ -57,12 +76,6 @@ class _sState extends State<studenthome> {
         iconTheme: IconThemeData(
           color: Color.fromARGB(255, 12, 12, 12), //change your color here
         ),
-        // title: Text('Verfication'),
-        // titleTextStyle: TextStyle(
-        //   fontFamily: 'main',
-        //   fontSize: 24,
-        //   color: Mycolors.mainColorBlack,
-        // ),
       ),
       backgroundColor: Mycolors.BackgroundColor,
       drawer: Drawer(
@@ -166,24 +179,20 @@ class _sState extends State<studenthome> {
                 // Navigator.pushNamed(context, 'viewfaculty');
                 Navigator.pushNamed(context, 'FacultyListScreen');
               },
-              child: Text('Schdule consultation'),
+              child: Text('Schdule'),
             ),
             const SizedBox(width: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, 'StudentViewBookedAppointment');
+              },
+              child: Text('view'),
+            ),
           ],
         ),
       ),
     ));
   } //end build
-
-  getusername() async {
-    final snap = await FirebaseFirestore.instance
-        .collection('student')
-        .doc(userid)
-        .get();
-
-    fname = snap['firstname'];
-    lname = snap['lastname'];
-  }
 
   setSemester() async {
     DateTime now = new DateTime.now();
@@ -248,15 +257,6 @@ class _sState extends State<studenthome> {
   TextEditingController title = TextEditingController();
   TextEditingController body = TextEditingController();
   //+++++++++++++++++++++++++++++++++++++DEEM++++++++++++++++++++++++++++++++
-
-  void initState() {
-    super.initState();
-    getusername();
-    //++++++++++++++++++++++++++DEEM++++++++++++++++++++++++++++++++
-    requestPremission();
-    getToken();
-    initInfo();
-  }
 
   String? mtoken = " ";
 

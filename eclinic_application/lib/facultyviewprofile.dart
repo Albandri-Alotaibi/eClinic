@@ -12,6 +12,7 @@ import 'package:multiselect/multiselect.dart';
 import 'package:myapp/login.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
+import 'style/Mycolors.dart';
 
 class facultyviewprofile extends StatefulWidget {
   const facultyviewprofile({super.key});
@@ -239,516 +240,547 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('view profile'),
-      ),
-      body: SingleChildScrollView(
-        clipBehavior: Clip.none,
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Form(
-            key: formkey,
-            child: Column(children: [
-              FutureBuilder(
-                  future: FirebaseFirestore.instance
-                      .collection('faculty')
-                      .doc(userid)
-                      .get(),
-                  builder: (context, snapshot) {
-                    // if (snapshot.connectionState == ConnectionState.waiting) {
-                    //   return Center(child: CircularProgressIndicator());
-                    // }
-                    if (snapshot.hasData) {
-                      print("snapshot");
-                      print(snapshot);
-                      final cuser =
-                          snapshot.data!.data() as Map<String, dynamic>;
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          clipBehavior: Clip.none,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Form(
+              key: formkey,
+              child: Column(children: [
+                FutureBuilder(
+                    future: FirebaseFirestore.instance
+                        .collection('faculty')
+                        .doc(userid)
+                        .get(),
+                    builder: (context, snapshot) {
+                      // if (snapshot.connectionState == ConnectionState.waiting) {
+                      //   return Center(child: CircularProgressIndicator());
+                      // }
+                      if (snapshot.hasData) {
+                        print("snapshot");
+                        print(snapshot);
+                        final cuser =
+                            snapshot.data!.data() as Map<String, dynamic>;
 
-                      final fname = cuser['firstname'];
-                      final lname = cuser['lastname'];
-                      final ksuemail = cuser['ksuemail'];
-                      final mettingmethod = cuser['meetingmethod'];
-                      _fnameController = TextEditingController(text: fname);
-                      _lnameController = TextEditingController(text: lname);
-                      final _emailController =
-                          TextEditingController(text: ksuemail);
-                      // _meetingmethodcontroller =
-                      //     TextEditingController(text: mettingmethod);
-                      selectedoptionlist.value = specality;
-                      collageselectedvalue = collageselectedfromDB;
-                      departmentselectedvalue = departmentselectedfromDB;
-                      semesterselectedvalue = semesterselectedfromDB;
-                      // print("/////////////////ممههههممم//////////////////");
-                      // print(departmentselectedvalue);
-                      // print("//////////////////////////////////");
-                      // print(departmentselectedfromDB);
-                      // print("/////////////////ممههههممم//////////////////");
-                      // print(semesterselectedvalue);
-                      // print("//////////////////////////////////");
-                      // print(semesterselectedfromDB);
-                      // print("/////////////////ممههههممم//////////////////");
-                      // print(collageselectedvalue);
-                      // print("//////////////////////////////////");
-                      // print(collageselectedfromDB);
+                        final fname = cuser['firstname'];
+                        final lname = cuser['lastname'];
+                        final ksuemail = cuser['ksuemail'];
+                        final mettingmethod = cuser['meetingmethod'];
+                        _fnameController = TextEditingController(text: fname);
+                        _lnameController = TextEditingController(text: lname);
+                        final _emailController =
+                            TextEditingController(text: ksuemail);
+                        // _meetingmethodcontroller =
+                        //     TextEditingController(text: mettingmethod);
+                        selectedoptionlist.value = specality;
+                        collageselectedvalue = collageselectedfromDB;
+                        departmentselectedvalue = departmentselectedfromDB;
+                        semesterselectedvalue = semesterselectedfromDB;
+                        // print("/////////////////ممههههممم//////////////////");
+                        // print(departmentselectedvalue);
+                        // print("//////////////////////////////////");
+                        // print(departmentselectedfromDB);
+                        // print("/////////////////ممههههممم//////////////////");
+                        // print(semesterselectedvalue);
+                        // print("//////////////////////////////////");
+                        // print(semesterselectedfromDB);
+                        // print("/////////////////ممههههممم//////////////////");
+                        // print(collageselectedvalue);
+                        // print("//////////////////////////////////");
+                        // print(collageselectedfromDB);
 
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          buildprofileImage(),
-                          // Positioned(
-                          //   top: top,
-                          //   child: buildprofileImage(),
-                          // ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          TextFormField(
-                            controller: _fnameController,
-                            decoration: InputDecoration(
-                                labelText: 'Frist Name',
-                                // hintText: "Enter your first name",
-                                suffixIcon: Icon(Icons.edit),
-                                border: OutlineInputBorder()),
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            validator: (value) {
-                              if (value!.isEmpty ||
-                                  _fnameController.text.isEmpty) {
-                                return 'Please enter your frist name ';
-                              } else {
-                                if (nameRegExp
-                                    .hasMatch(_fnameController.text)) {
-                                  return 'Please frist name only letters accepted ';
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            buildprofileImage(),
+                            // Positioned(
+                            //   top: top,
+                            //   child: buildprofileImage(),
+                            // ),
+
+                            SizedBox(
+                              height: 30,
+                            ),
+                            TextFormField(
+                              controller: _fnameController,
+                              decoration: InputDecoration(
+                                  labelText: '  First Name',
+                                  // hintText: "Enter your first name",
+                                  suffixIcon: Icon(Icons.edit),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25),
+                                      borderSide: const BorderSide(
+                                        width: 0,
+                                      ))),
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (value) {
+                                if (value!.isEmpty ||
+                                    _fnameController.text.isEmpty) {
+                                  return 'Please enter your frist name ';
                                 } else {
-                                  if (!(english
-                                      .hasMatch(_fnameController.text))) {
-                                    return "only english is allowed";
+                                  if (nameRegExp
+                                      .hasMatch(_fnameController.text)) {
+                                    return 'Please frist name only letters accepted ';
+                                  } else {
+                                    if (!(english
+                                        .hasMatch(_fnameController.text))) {
+                                      return "only english is allowed";
+                                    }
                                   }
                                 }
-                              }
-                            },
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          TextFormField(
-                            controller: _lnameController,
-                            decoration: InputDecoration(
-                                labelText: 'Last Name',
-                                // hintText: "Enter your last name",
-                                suffixIcon: Icon(Icons.edit),
-                                border: OutlineInputBorder()),
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            validator: (value) {
-                              if (value!.isEmpty ||
-                                  _lnameController.text == "") {
-                                return 'Please enter your last name ';
-                              } else {
-                                if (nameRegExp
-                                    .hasMatch(_lnameController.text)) {
-                                  return 'Please last name only letters accepted ';
+                              },
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            TextFormField(
+                              controller: _lnameController,
+                              decoration: InputDecoration(
+                                  labelText: '  Last Name',
+                                  // hintText: "Enter your last name",
+                                  suffixIcon: Icon(Icons.edit),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25),
+                                      borderSide: const BorderSide(
+                                        width: 0,
+                                      ))),
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (value) {
+                                if (value!.isEmpty ||
+                                    _lnameController.text == "") {
+                                  return 'Please enter your last name ';
                                 } else {
-                                  if (!(english
-                                      .hasMatch(_lnameController.text))) {
-                                    return "only english is allowed";
+                                  if (nameRegExp
+                                      .hasMatch(_lnameController.text)) {
+                                    return 'Please last name only letters accepted ';
+                                  } else {
+                                    if (!(english
+                                        .hasMatch(_lnameController.text))) {
+                                      return "only english is allowed";
+                                    }
                                   }
                                 }
-                              }
-                            },
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          TextFormField(
-                            controller: _emailController,
-                            readOnly: true,
-                            decoration: InputDecoration(
-                                // hintText: "Enter your KSU email",
-                                labelText: 'KSU Email',
-                                border: OutlineInputBorder()),
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            validator: (value) {
-                              if (value!.isEmpty ||
-                                  _emailController.text == "") {
-                                return 'Please enter your KSU email ';
-                              } else {
-                                if (!(ksuEmailRegEx
-                                    .hasMatch(_emailController.text))) {
-                                  return 'Please write email format correctly, example@ksu.edu.sa ';
+                              },
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            TextFormField(
+                              controller: _emailController,
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                  // hintText: "Enter your KSU email",
+                                  labelText: 'KSU Email',
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25),
+                                      borderSide: const BorderSide(
+                                        width: 0,
+                                      ))),
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (value) {
+                                if (value!.isEmpty ||
+                                    _emailController.text == "") {
+                                  return 'Please enter your KSU email ';
+                                } else {
+                                  if (!(ksuEmailRegEx
+                                      .hasMatch(_emailController.text))) {
+                                    return 'Please write email format correctly, example@ksu.edu.sa ';
+                                  }
                                 }
-                              }
-                            },
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          DropdownButtonFormField<String>(
-                            decoration: InputDecoration(
-                              suffixIcon: Icon(Icons.edit),
-                              labelText: 'College',
-                              border: OutlineInputBorder(),
+                              },
                             ),
-                            isExpanded: true,
-                            items: collage.map((String dropdownitems) {
-                              return DropdownMenuItem<String>(
-                                value: dropdownitems,
-                                child: Text(dropdownitems),
-                              );
-                            }).toList(),
-
-                            onChanged: (String? newselect) {
-                              setState(() {
-                                collageselectedvalue = newselect;
-                                collageselectedfromDB = newselect;
-                                checkidc(collageselectedvalue);
-                              });
-                            },
-                            value: collageselectedvalue,
-
-                            // autovalidateMode:
-                            //     AutovalidateMode.onUserInteraction,
-                            // validator: (value) {
-                            //   if (value == null ||
-                            //       collageselectedvalue!.isEmpty ||
-                            //       collageselectedvalue == null) {
-                            //     return 'Please choose your collage';
-                            //   }
-                            // },
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          DropdownButtonFormField<String>(
-                            decoration: InputDecoration(
-                              suffixIcon: Icon(Icons.edit),
-                              labelText: ' Department',
-                              border: OutlineInputBorder(),
+                            SizedBox(
+                              height: 8,
                             ),
-                            isExpanded: true,
-                            items: department.map((String dropdownitems) {
-                              return DropdownMenuItem<String>(
-                                value: dropdownitems,
-                                child: Text(dropdownitems),
-                              );
-                            }).toList(),
-                            onChanged: (String? newselect) {
-                              setState(() {
-                                departmentselectedvalue = newselect;
-                                departmentselectedfromDB = newselect;
-                                checkidd(departmentselectedvalue);
-                              });
-                              print(
-                                  "/////////////////ممههههممم//////////////////");
-                              print(departmentselectedvalue);
-                            },
-                            value: departmentselectedvalue,
-
-                            // autovalidateMode:
-                            //     AutovalidateMode.onUserInteraction,
-                            // validator: (value) {
-                            //   if (value == null ||
-                            //       departmentselectedvalue!.isEmpty ||
-                            //       departmentselectedvalue == null) {
-                            //     return 'Please choose your department';
-                            //   }
-                            // },
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          DropDownMultiSelect(
-                            decoration: InputDecoration(
-                                suffixIcon: Icon(Icons.edit),
-                                labelText: " Speciality",
-                                // hintText: "select your specialty",
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color:
-                                            isshow ? Colors.red : Colors.grey)),
-                                errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: isshow
-                                            ? Colors.red
-                                            : Colors.blueAccent)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: isshow
-                                            ? Colors.red
-                                            : Colors.blueAccent))),
-                            options: options,
-                            whenEmpty: "",
-                            onChanged: (value) {
-                              setState(() {
-                                selectedoptionlist.value = value;
-                                selectedoption.value = "";
-                                selectedoptionlist.value.forEach((element) {
-                                  selectedoption.value =
-                                      selectedoption.value + " " + element;
-                                  specality = selectedoptionlist.value;
-                                  zag = selectedoptionlist.value.length;
-                                  isshow = selectedoption.value.isEmpty;
-
-                                  if (zag < 1) {
-                                    isshow = true;
-                                  }
-                                  if (zag > 0 ||
-                                      selectedoption.value.isEmpty ||
-                                      selectedoption.value == null) {
-                                    isshow = false;
-                                  }
-                                });
-                              });
-                              checkidspecialty(selectedoptionlist.value);
-                              //isshow = selectedoptionlist.value.isEmpty;
-                              zag = selectedoptionlist.value.length;
-                              if (zag < 1) {
-                                isshow = true;
-                              }
-                            },
-                            selectedValues: selectedoptionlist.value,
-                          ),
-                          SizedBox(
-                            height: 2,
-                          ),
-                          Visibility(
-                            visible: isshow,
-                            child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Please choose your specialty",
-                                    style: TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 211, 56, 45)),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ]),
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          DropdownButtonFormField<String>(
-                            decoration: InputDecoration(
-                              suffixIcon: Icon(Icons.edit),
-                              labelText: 'semester',
-                              border: OutlineInputBorder(),
-                            ),
-                            isExpanded: true,
-                            items: semester.map((String dropdownitems) {
-                              return DropdownMenuItem<String>(
-                                value: dropdownitems,
-                                child: Text(dropdownitems),
-                              );
-                            }).toList(),
-                            onChanged: (String? newselect) {
-                              setState(() {
-                                semesterselectedvalue = newselect;
-                                semesterselectedfromDB = newselect;
-                                checkids(semesterselectedvalue);
-                              });
-                            },
-                            value: semesterselectedvalue,
-                            // autovalidateMode:
-                            //     AutovalidateMode.onUserInteraction,
-                            // validator: (value) {
-                            //   if (value == null ||
-                            //       semesterselectedvalue!.isEmpty ||
-                            //       semesterselectedvalue == null) {
-                            //     return 'Please choose a semester';
-                            //   }
-                            // },
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          // TextFormField(
-                          //     controller: _meetingmethodcontroller,
-                          //     decoration: InputDecoration(
-                          //         suffixIcon: Icon(Icons.edit),
-                          //         labelText: "Metting method",
-                          //         border: OutlineInputBorder()),
-                          //     autovalidateMode:
-                          //         AutovalidateMode.onUserInteraction,
-                          //     validator: (value) {
-                          //       if (value!.isEmpty ||
-                          //           _meetingmethodcontroller.text == "") {
-                          //         return 'Please enter your metting method';
-                          //       } else {
-                          //         if (!(english.hasMatch(
-                          //             _meetingmethodcontroller.text))) {
-                          //           return "only english is allowed";
-                          //         }
-                          //       }
-                          //     }),
-                          DropdownButtonFormField(
+                            DropdownButtonFormField<String>(
                               decoration: InputDecoration(
                                 suffixIcon: Icon(Icons.edit),
-                                hintText: "Choose meeting method",
-                                border: OutlineInputBorder(),
+                                labelText: 'College',
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(25),
+                                    borderSide: const BorderSide(
+                                      width: 0,
+                                    )),
                               ),
-                              items: const [
-                                DropdownMenuItem(
-                                    child: Text("In person metting"),
-                                    value: "inperson"),
-                                DropdownMenuItem(
-                                    child: Text("Online meeting "),
-                                    value: "online"),
-                              ],
-                              value: mettingmethoddrop,
+                              isExpanded: true,
+                              items: collage.map((String dropdownitems) {
+                                return DropdownMenuItem<String>(
+                                  value: dropdownitems,
+                                  child: Text(dropdownitems),
+                                );
+                              }).toList(),
+
+                              onChanged: (String? newselect) {
+                                setState(() {
+                                  collageselectedvalue = newselect;
+                                  collageselectedfromDB = newselect;
+                                  checkidc(collageselectedvalue);
+                                });
+                              },
+                              value: collageselectedvalue,
+
+                              // autovalidateMode:
+                              //     AutovalidateMode.onUserInteraction,
+                              // validator: (value) {
+                              //   if (value == null ||
+                              //       collageselectedvalue!.isEmpty ||
+                              //       collageselectedvalue == null) {
+                              //     return 'Please choose your collage';
+                              //   }
+                              // },
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+
+                            DropdownButtonFormField<String>(
+                              decoration: InputDecoration(
+                                suffixIcon: Icon(Icons.edit),
+                                labelText: ' Department',
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(25),
+                                    borderSide: const BorderSide(
+                                      width: 0,
+                                    )),
+                              ),
+                              isExpanded: true,
+                              items: department.map((String dropdownitems) {
+                                return DropdownMenuItem<String>(
+                                  value: dropdownitems,
+                                  child: Text(dropdownitems),
+                                );
+                              }).toList(),
+                              onChanged: (String? newselect) {
+                                setState(() {
+                                  departmentselectedvalue = newselect;
+                                  departmentselectedfromDB = newselect;
+                                  checkidd(departmentselectedvalue);
+                                });
+                                print(
+                                    "/////////////////ممههههممم//////////////////");
+                                print(departmentselectedvalue);
+                              },
+                              value: departmentselectedvalue,
+
+                              // autovalidateMode:
+                              //     AutovalidateMode.onUserInteraction,
+                              // validator: (value) {
+                              //   if (value == null ||
+                              //       departmentselectedvalue!.isEmpty ||
+                              //       departmentselectedvalue == null) {
+                              //     return 'Please choose your department';
+                              //   }
+                              // },
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            DropDownMultiSelect(
+                              decoration: InputDecoration(
+                                  suffixIcon: Icon(Icons.edit),
+                                  labelText: " Speciality",
+                                  // hintText: "select your specialty",
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color:
+                                            isshow ? Colors.red : Colors.grey),
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: isshow
+                                            ? Colors.red
+                                            : Colors.blueAccent),
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: isshow
+                                            ? Colors.red
+                                            : Colors.blueAccent),
+                                    borderRadius: BorderRadius.circular(25),
+                                  )),
+                              options: options,
+                              whenEmpty: "",
                               onChanged: (value) {
                                 setState(() {
-                                  mettingmethoddrop = value;
-                                  _meetingmethodcontroller.text = "";
+                                  selectedoptionlist.value = value;
+                                  selectedoption.value = "";
+                                  selectedoptionlist.value.forEach((element) {
+                                    selectedoption.value =
+                                        selectedoption.value + " " + element;
+                                    specality = selectedoptionlist.value;
+                                    zag = selectedoptionlist.value.length;
+                                    isshow = selectedoption.value.isEmpty;
+
+                                    if (zag < 1) {
+                                      isshow = true;
+                                    }
+                                    if (zag > 0 ||
+                                        selectedoption.value.isEmpty ||
+                                        selectedoption.value == null) {
+                                      isshow = false;
+                                    }
+                                  });
                                 });
-                              }),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          if (mettingmethoddrop != null &&
-                              mettingmethoddrop == "inperson")
-                            TextFormField(
-                                controller: _meetingmethodcontroller,
-                                decoration: InputDecoration(
-                                    labelText: 'Office number',
-                                    hintText: "Enter your office number",
-                                    suffixIcon: Icon(Icons.edit),
-                                    border: OutlineInputBorder()),
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                validator: (value) {
-                                  if (value!.isEmpty ||
-                                      _meetingmethodcontroller.text == "") {
-                                    return 'Please enter your office number';
-                                  } else {
-                                    if (!(english.hasMatch(
-                                        _meetingmethodcontroller.text))) {
-                                      return "only english is allowed";
-                                    }
-                                  }
-                                }),
-                          if (mettingmethoddrop != null &&
-                              mettingmethoddrop == "online")
-                            TextFormField(
-                                controller: _meetingmethodcontroller,
-                                decoration: InputDecoration(
-                                    labelText: 'meeting link',
-                                    hintText: "Enter your meeting link",
-                                    suffixIcon: Icon(Icons.edit),
-                                    border: OutlineInputBorder()),
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                validator: (value) {
-                                  if (value!.isEmpty ||
-                                      _meetingmethodcontroller.text == "") {
-                                    return 'Please enter your meeting link';
-                                  } else {
-                                    if (!(english.hasMatch(
-                                        _meetingmethodcontroller.text))) {
-                                      return "only english is allowed";
-                                    }
-                                  }
-                                }),
-                        ],
-                      ); //here
-                    }
-                    return Center(child: CircularProgressIndicator());
-                  }),
-              Row(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      showConfirmationDialog(context);
-                    },
-                    child: Text("Log out"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        fn = _fnameController.text;
-                        ln = _lnameController.text;
-                        mm = mettingmethoddrop;
-                        mmi = _meetingmethodcontroller.text;
-                        if (zag < 1) {
-                          isshow = true;
-                        }
-                        if (zag > 0) {
-                          isshow = false;
-                        }
-                      });
-
-                      if (formkey.currentState!.validate() && zag > 0) {
-                        try {
-                          FirebaseFirestore.instance
-                              .collection('faculty')
-                              .doc(userid)
-                              .update({
-                            "firstname": fn,
-                            "lastname": ln,
-                            "meetingmethod": mm,
-                            "mettingmethodinfo": mmi,
-                            'department': FirebaseFirestore.instance
-                                .collection("collage")
-                                .doc(docsforcollage)
-                                .collection("department")
-                                .doc(docfordepatment),
-                            'collage': FirebaseFirestore.instance
-                                .collection("collage")
-                                .doc(docsforcollage),
-                            'semester': FirebaseFirestore.instance
-                                .collection("semester")
-                                .doc(docsforsemestername),
-                            "specialty": specalityid,
-                          });
-
-                          Fluttertoast.showToast(
-                            msg:
-                                " Your information has been updated successfully",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.CENTER,
-                            timeInSecForIosWeb: 2,
-                            backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                            textColor: Color.fromARGB(255, 248, 249, 250),
-                            fontSize: 18.0,
-                          );
-                        } on FirebaseAuthException catch (error) {
-                          Fluttertoast.showToast(
-                            msg: "Something wronge",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.CENTER,
-                            timeInSecForIosWeb: 5,
-                            backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                            textColor: Color.fromARGB(255, 252, 253, 255),
-                            fontSize: 18.0,
-                          );
-                        }
+                                checkidspecialty(selectedoptionlist.value);
+                                //isshow = selectedoptionlist.value.isEmpty;
+                                zag = selectedoptionlist.value.length;
+                                if (zag < 1) {
+                                  isshow = true;
+                                }
+                              },
+                              selectedValues: selectedoptionlist.value,
+                            ),
+                            SizedBox(
+                              height: 2,
+                            ),
+                            Visibility(
+                              visible: isshow,
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Please choose your specialty",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 211, 56, 45)),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ]),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            DropdownButtonFormField<String>(
+                              decoration: InputDecoration(
+                                suffixIcon: Icon(Icons.edit),
+                                labelText: 'semester',
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(25),
+                                    borderSide: const BorderSide(
+                                      width: 0,
+                                    )),
+                              ),
+                              isExpanded: true,
+                              items: semester.map((String dropdownitems) {
+                                return DropdownMenuItem<String>(
+                                  value: dropdownitems,
+                                  child: Text(dropdownitems),
+                                );
+                              }).toList(),
+                              onChanged: (String? newselect) {
+                                setState(() {
+                                  semesterselectedvalue = newselect;
+                                  semesterselectedfromDB = newselect;
+                                  checkids(semesterselectedvalue);
+                                });
+                              },
+                              value: semesterselectedvalue,
+                              // autovalidateMode:
+                              //     AutovalidateMode.onUserInteraction,
+                              // validator: (value) {
+                              //   if (value == null ||
+                              //       semesterselectedvalue!.isEmpty ||
+                              //       semesterselectedvalue == null) {
+                              //     return 'Please choose a semester';
+                              //   }
+                              // },
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            // TextFormField(
+                            //     controller: _meetingmethodcontroller,
+                            //     decoration: InputDecoration(
+                            //         suffixIcon: Icon(Icons.edit),
+                            //         labelText: "Metting method",
+                            //         border: OutlineInputBorder()),
+                            //     autovalidateMode:
+                            //         AutovalidateMode.onUserInteraction,
+                            //     validator: (value) {
+                            //       if (value!.isEmpty ||
+                            //           _meetingmethodcontroller.text == "") {
+                            //         return 'Please enter your metting method';
+                            //       } else {
+                            //         if (!(english.hasMatch(
+                            //             _meetingmethodcontroller.text))) {
+                            //           return "only english is allowed";
+                            //         }
+                            //       }
+                            //     }),
+                            // DropdownButtonFormField(
+                            //     decoration: InputDecoration(
+                            //       suffixIcon: Icon(Icons.edit),
+                            //       hintText: "Choose meeting method",
+                            //       border: OutlineInputBorder(),
+                            //     ),
+                            //     items: const [
+                            //       DropdownMenuItem(
+                            //           child: Text("In person metting"),
+                            //           value: "inperson"),
+                            //       DropdownMenuItem(
+                            //           child: Text("Online meeting "),
+                            //           value: "online"),
+                            //     ],
+                            //     value: mettingmethoddrop,
+                            //     onChanged: (value) {
+                            //       setState(() {
+                            //         mettingmethoddrop = value;
+                            //         _meetingmethodcontroller.text = "";
+                            //       });
+                            //     }),
+                            // SizedBox(
+                            //   height: 8,
+                            // ),
+                            // if (mettingmethoddrop != null &&
+                            //     mettingmethoddrop == "inperson")
+                            //   TextFormField(
+                            //       controller: _meetingmethodcontroller,
+                            //       decoration: InputDecoration(
+                            //           labelText: 'Office number',
+                            //           hintText: "Enter your office number",
+                            //           suffixIcon: Icon(Icons.edit),
+                            //           border: OutlineInputBorder()),
+                            //       autovalidateMode:
+                            //           AutovalidateMode.onUserInteraction,
+                            //       validator: (value) {
+                            //         if (value!.isEmpty ||
+                            //             _meetingmethodcontroller.text == "") {
+                            //           return 'Please enter your office number';
+                            //         } else {
+                            //           if (!(english.hasMatch(
+                            //               _meetingmethodcontroller.text))) {
+                            //             return "only english is allowed";
+                            //           }
+                            //         }
+                            //       }),
+                            // if (mettingmethoddrop != null &&
+                            //     mettingmethoddrop == "online")
+                            //   TextFormField(
+                            //       controller: _meetingmethodcontroller,
+                            //       decoration: InputDecoration(
+                            //           labelText: 'meeting link',
+                            //           hintText: "Enter your meeting link",
+                            //           suffixIcon: Icon(Icons.edit),
+                            //           border: OutlineInputBorder()),
+                            //       autovalidateMode:
+                            //           AutovalidateMode.onUserInteraction,
+                            //       validator: (value) {
+                            //         if (value!.isEmpty ||
+                            //             _meetingmethodcontroller.text == "") {
+                            //           return 'Please enter your meeting link';
+                            //         } else {
+                            //           if (!(english.hasMatch(
+                            //               _meetingmethodcontroller.text))) {
+                            //             return "only english is allowed";
+                            //           }
+                            //         }
+                            //       }),
+                          ],
+                        ); //here
                       }
-                    },
-                    child: Text("Save changes"),
+                      return Center(child: CircularProgressIndicator());
+                    }),
+                SizedBox(
+                  height: 12,
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+                    shadowColor: Colors.blue[900],
+                    elevation: 16,
+                    backgroundColor: Mycolors.mainShadedColorBlue,
+                    minimumSize: Size(150, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(17), // <-- Radius
+                    ),
                   ),
-                ],
-              )
-            ]),
-          ), ////here
+                  onPressed: () {
+                    setState(() {
+                      fn = _fnameController.text;
+                      ln = _lnameController.text;
+                      mm = mettingmethoddrop;
+                      mmi = _meetingmethodcontroller.text;
+                      if (zag < 1) {
+                        isshow = true;
+                      }
+                      if (zag > 0) {
+                        isshow = false;
+                      }
+                    });
+
+                    if (formkey.currentState!.validate() && zag > 0) {
+                      try {
+                        FirebaseFirestore.instance
+                            .collection('faculty')
+                            .doc(userid)
+                            .update({
+                          "firstname": fn,
+                          "lastname": ln,
+                          "meetingmethod": mm,
+                          "mettingmethodinfo": mmi,
+                          'department': FirebaseFirestore.instance
+                              .collection("collage")
+                              .doc(docsforcollage)
+                              .collection("department")
+                              .doc(docfordepatment),
+                          'collage': FirebaseFirestore.instance
+                              .collection("collage")
+                              .doc(docsforcollage),
+                          'semester': FirebaseFirestore.instance
+                              .collection("semester")
+                              .doc(docsforsemestername),
+                          "specialty": specalityid,
+                        });
+
+                        Fluttertoast.showToast(
+                          msg:
+                              " Your information has been updated successfully",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 2,
+                          backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                          textColor: Color.fromARGB(255, 248, 249, 250),
+                          fontSize: 18.0,
+                        );
+                      } on FirebaseAuthException catch (error) {
+                        Fluttertoast.showToast(
+                          msg: "Something wronge",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 5,
+                          backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                          textColor: Color.fromARGB(255, 252, 253, 255),
+                          fontSize: 18.0,
+                        );
+                      }
+                    }
+                  },
+                  child: Text("Save changes"),
+                ),
+              ]),
+            ), ////here
+          ),
         ),
       ),
     );
   }
 
-  Widget buildCoverImage() => Container(
-        color: Colors.grey,
-        // child: Image.asset(
-        //   'assets/images/profilebackground.png.png',
-        //   width: double.infinity,
-        //   height: coverheight,
-        //   fit: BoxFit.cover,
-        // ),
-      );
+  // Widget buildCoverImage() => Container(
+  //       color: Colors.grey,
+  //       // child: Image.asset(
+  //       //   'assets/images/profilebackground.png.png',
+  //       //   width: double.infinity,
+  //       //   height: coverheight,
+  //       //   fit: BoxFit.cover,
+  //       // ),
+  //     );
 
   Widget buildprofileImage() => CircleAvatar(
         radius: profileheight / 2,
@@ -842,38 +874,5 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
       print(e.toString());
       return null;
     }
-  }
-
-  showConfirmationDialog(BuildContext context) {
-    Widget dontCancelAppButton = ElevatedButton(
-      child: Text("No"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
-
-    Widget YesCancelAppButton = ElevatedButton(
-      child: Text("Yes"),
-      onPressed: () {
-        FirebaseAuth.instance.signOut().then((value) => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => login())));
-      },
-    );
-
-    AlertDialog alert = AlertDialog(
-      // title: Text("LogOut"),
-      content: Text("Are you sure you want to logout ?"),
-      actions: [
-        dontCancelAppButton,
-        YesCancelAppButton,
-      ],
-    );
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
   }
 }
