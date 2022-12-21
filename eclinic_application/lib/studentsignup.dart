@@ -259,13 +259,10 @@ class _studentsignupState extends State<studentsignup> {
             centerTitle: true,
             backgroundColor: Mycolors.mainColorWhite,
             shadowColor: Colors.transparent,
-            //foregroundColor: Mycolors.mainColorBlack,
-            // automaticallyImplyLeading: false,
             iconTheme: IconThemeData(
               color: Color.fromARGB(255, 12, 12, 12), //change your color here
             ),
             title: Text('Create account'),
-
             titleTextStyle: TextStyle(
               fontFamily: 'main',
               fontSize: 24,

@@ -55,10 +55,22 @@ class _verficationState extends State<verfication> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Mycolors.BackgroundColor,
         appBar: AppBar(
-          title: const Text('verfication'),
+          primary: false,
+          centerTitle: true,
+          backgroundColor: Mycolors.mainColorWhite,
+          shadowColor: Colors.transparent,
+          iconTheme: IconThemeData(
+            color: Color.fromARGB(255, 12, 12, 12), //change your color here
+          ),
+          title: Text('Verfication'),
+          titleTextStyle: TextStyle(
+            fontFamily: 'main',
+            fontSize: 24,
+            color: Mycolors.mainColorBlack,
+          ),
         ),
+        backgroundColor: Mycolors.BackgroundColor,
         body: Container(
           child: Padding(
             padding: const EdgeInsets.all(72.0),

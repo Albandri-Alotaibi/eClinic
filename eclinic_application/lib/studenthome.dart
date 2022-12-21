@@ -7,6 +7,8 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:myapp/login.dart';
+import 'package:myapp/studentlogin.dart';
+import 'style/Mycolors.dart';
 
 class studenthome extends StatefulWidget {
   // This class is the configuration for the state.
@@ -22,12 +24,12 @@ class studenthome extends StatefulWidget {
 }
 
 class _sState extends State<studenthome> {
+  var fname;
+  var lname;
   String? email = '';
   String? userid = '';
+  final double profileheight = 144;
   @override
-
-
-
   Widget build(BuildContext context) {
     StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
@@ -43,74 +45,173 @@ class _sState extends State<studenthome> {
     userid = user!.uid;
     email = user.email!;
     setSemester();
-  //calling the method
- 
-
-
-    // This method is rerun every time setState is called,
-    // for instance, as done by the _increment method above.
-    // The Flutter framework has been optimized to make
-    // rerunning build methods fast, so that you can just
-    // rebuild anything that needs updating rather than
-    // having to individually changes instances of widgets.
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, 'viewfaculty');
-          },
-          child: Text('Schdule consultation'),
+    getusername();
+    //calling the method
+    return SafeArea(
+        child: Scaffold(
+      appBar: AppBar(
+        primary: false,
+        centerTitle: true,
+        backgroundColor: Mycolors.mainColorWhite,
+        shadowColor: Colors.transparent,
+        iconTheme: IconThemeData(
+          color: Color.fromARGB(255, 12, 12, 12), //change your color here
         ),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, 'studentsignup');
-          },
-          child: Text('student signup'),
+        // title: Text('Verfication'),
+        // titleTextStyle: TextStyle(
+        //   fontFamily: 'main',
+        //   fontSize: 24,
+        //   color: Mycolors.mainColorBlack,
+        // ),
+      ),
+      backgroundColor: Mycolors.BackgroundColor,
+      drawer: Drawer(
+          child: ListView(children: [
+        Card(
+          shadowColor: Color.fromARGB(94, 114, 168, 243),
+          elevation: 0,
+          child: DrawerHeader(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                  bottom: 0,
+                ),
+                child: Image.asset(
+                  "assets/images/woman.png",
+                  width: 100,
+                  height: 100,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: Text("${fname} ${lname}",
+                    style: TextStyle(
+                        fontFamily: 'bold',
+                        fontSize: 16,
+                        color: Mycolors.mainColorBlack)),
+              ),
+            ],
+          )),
         ),
-        const SizedBox(width: 16),
-      ],
-    );
-  }//end build 
+        ListTile(
+          leading: Icon(Icons.edit_note),
+          title: Text(
+            "Edit profile",
+            style: TextStyle(
+                fontFamily: 'main',
+                fontSize: 16,
+                color: Mycolors.mainColorBlack),
+          ),
+          // hoverColor: Mycolors.mainColorBlue,
+          onTap: (() {
+            Navigator.pushNamed(context, 'studentviewprofile');
+          }),
+        ),
+        Divider(
+          color: Mycolors.mainColorBlue,
+          thickness: 1,
+          endIndent: 15,
+          indent: 15,
+        ),
+        ListTile(
+          leading: Icon(Icons.password),
+          title: Text(
+            "Reset password",
+            style: TextStyle(
+                fontFamily: 'main',
+                fontSize: 16,
+                color: Mycolors.mainColorBlack),
+          ),
+          onTap: (() {
+            // Navigator.pushNamed(context, 'resetpasswprd');
+          }),
+        ),
+        Divider(
+          color: Mycolors.mainColorBlue,
+          thickness: 1,
+          endIndent: 15,
+          indent: 15,
+        ),
+        ListTile(
+          leading: Icon(Icons.logout),
+          title: Text(
+            "Log out",
+            style: TextStyle(
+                fontFamily: 'main',
+                fontSize: 16,
+                color: Mycolors.mainColorBlack),
+          ),
+          onTap: (() {
+            showConfirmationDialog(context);
+          }),
+        ),
+        Divider(
+          color: Mycolors.mainColorBlue,
+          thickness: 1,
+          endIndent: 15,
+          indent: 15,
+        ),
+      ])),
+      body: Padding(
+        padding: const EdgeInsets.all(100.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, 'viewfaculty');
+              },
+              child: Text('Schdule consultation'),
+            ),
+            const SizedBox(width: 16),
+          ],
+        ),
+      ),
+    ));
+  } //end build
 
+  getusername() async {
+    final snap = await FirebaseFirestore.instance
+        .collection('student')
+        .doc(userid)
+        .get();
 
-setSemester() async {
+    fname = snap['firstname'];
+    lname = snap['lastname'];
+  }
 
-DateTime now = new DateTime.now();
-var semester=null;
+  setSemester() async {
+    DateTime now = new DateTime.now();
+    var semester = null;
 
- final snap = await FirebaseFirestore.instance
+    final snap = await FirebaseFirestore.instance
         .collection("semester")
-         .get()
+        .get()
         .then((QuerySnapshot snapshot) {
       snapshot.docs.forEach((DocumentSnapshot doc) async {
+        Timestamp t1 = doc['startdate'] as Timestamp;
+        DateTime StartTimeDate = t1.toDate();
 
-          Timestamp t1 = doc['startdate'] as Timestamp;
-          DateTime StartTimeDate = t1.toDate();
+        Timestamp t2 = doc['enddate'] as Timestamp;
+        DateTime EndTimeDate = t2.toDate();
 
-          Timestamp t2 = doc['enddate'] as Timestamp;
-          DateTime EndTimeDate = t2.toDate();
+        if (now.isAfter(StartTimeDate) && now.isBefore(EndTimeDate)) {
+          semester = doc.reference;
+        }
+      });
+    });
 
-
-if(now.isAfter(StartTimeDate) && now.isBefore(EndTimeDate)){
-  semester=doc.reference;
-}
-
-});
-});
-
-
- FirebaseFirestore.instance
+    FirebaseFirestore.instance
         .collection("student")
-        .doc(userid)//**************************************************** */
+        .doc(userid) //**************************************************** */
         .update({
       'semester': semester,
     });
-
-}
-
-
-
+  }
 
   //+++++++++++++++++++++++++++++++++++++++++DEEM+++++++++++++++++++++++++++++++++++++++++++++++++++++++
   void requestPremission() async {
@@ -149,7 +250,7 @@ if(now.isAfter(StartTimeDate) && now.isBefore(EndTimeDate)){
 
   void initState() {
     super.initState();
-
+    getusername();
     //++++++++++++++++++++++++++DEEM++++++++++++++++++++++++++++++++
     requestPremission();
     getToken();
@@ -276,6 +377,58 @@ if(now.isAfter(StartTimeDate) && now.isBefore(EndTimeDate)){
     }
   }
 
-//+++++++++++++++++++++++++++++++++++++++++DEEM+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  showConfirmationDialog(BuildContext context) {
+    Widget dontCancelAppButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
+      child: Text("No"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
 
+    Widget YesCancelAppButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
+      child: Text("Yes"),
+      onPressed: () {
+        FirebaseAuth.instance.signOut().then((value) => Navigator.push(
+            context, MaterialPageRoute(builder: (context) => studentlogin())));
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      // title: Text("LogOut"),
+      content: Text("Are you sure you want to logout ?"),
+      actions: [
+        dontCancelAppButton,
+        YesCancelAppButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+
+//+++++++++++++++++++++++++++++++++++++++++DEEM+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  }
 }
