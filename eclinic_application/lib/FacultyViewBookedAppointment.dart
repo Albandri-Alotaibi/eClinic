@@ -765,6 +765,16 @@ class _sState extends State<FacultyViewBookedAppointment> {
     // set up the buttons
     bool deleteappointment = false;
     Widget dontCancelAppButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
       child: Text("No"),
       onPressed: () {
         Navigator.of(context).pop();
@@ -772,6 +782,16 @@ class _sState extends State<FacultyViewBookedAppointment> {
     );
 
     Widget YesCancelAppButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
       child: Text("Yes"),
       onPressed: () {
         Navigator.of(context).pop();
