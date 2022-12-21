@@ -26,6 +26,24 @@ class studenthome extends StatefulWidget {
 class _sState extends State<studenthome> {
   var fname;
   var lname;
+  void initState() {
+    super.initState();
+    // getusername();
+    //++++++++++++++++++++++++++DEEM++++++++++++++++++++++++++++++++
+    requestPremission();
+    getToken();
+    initInfo();
+  }
+
+  getusername() async {
+    final snap = await FirebaseFirestore.instance
+        .collection('student')
+        .doc(userid)
+        .get();
+    fname = snap['firstname'];
+    lname = snap['lastname'];
+  }
+
   String? email = '';
   String? userid = '';
   final double profileheight = 144;
@@ -46,6 +64,7 @@ class _sState extends State<studenthome> {
     email = user.email!;
     setSemester();
     getusername();
+
     //calling the method
     return SafeArea(
         child: Scaffold(
@@ -174,16 +193,6 @@ class _sState extends State<studenthome> {
     ));
   } //end build
 
-  getusername() async {
-    final snap = await FirebaseFirestore.instance
-        .collection('student')
-        .doc(userid)
-        .get();
-
-    fname = snap['firstname'];
-    lname = snap['lastname'];
-  }
-
   setSemester() async {
     DateTime now = new DateTime.now();
     var semester = null;
@@ -247,15 +256,6 @@ class _sState extends State<studenthome> {
   TextEditingController title = TextEditingController();
   TextEditingController body = TextEditingController();
   //+++++++++++++++++++++++++++++++++++++DEEM++++++++++++++++++++++++++++++++
-
-  void initState() {
-    super.initState();
-    getusername();
-    //++++++++++++++++++++++++++DEEM++++++++++++++++++++++++++++++++
-    requestPremission();
-    getToken();
-    initInfo();
-  }
 
   String? mtoken = " ";
 
