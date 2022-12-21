@@ -28,7 +28,7 @@ class _sState extends State<studenthome> {
   var lname;
   void initState() {
     super.initState();
-    // getusername();
+    getusername();
     //++++++++++++++++++++++++++DEEM++++++++++++++++++++++++++++++++
     requestPremission();
     getToken();
@@ -40,8 +40,10 @@ class _sState extends State<studenthome> {
         .collection('student')
         .doc(userid)
         .get();
-    fname = snap['firstname'];
-    lname = snap['lastname'];
+    setState(() {
+      fname = snap['firstname'];
+      lname = snap['lastname'];
+    });
   }
 
   String? email = '';

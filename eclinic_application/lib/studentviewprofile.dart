@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multiselect/multiselect.dart';
 import 'package:myapp/login.dart';
+import 'package:myapp/studentlogin.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'style/Mycolors.dart';
@@ -338,97 +339,97 @@ class _studentviewprofileState extends State<studentviewprofile> {
           ),
         ),
         backgroundColor: Mycolors.BackgroundColor,
-        drawer: Drawer(
-            child: ListView(children: [
-          Card(
-            shadowColor: Color.fromARGB(94, 114, 168, 243),
-            elevation: 0,
-            child: DrawerHeader(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: 0,
-                  ),
-                  child: Image.asset(
-                    "assets/images/woman.png",
-                    width: 100,
-                    height: 100,
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Center(
-                  child: Text("${fnDrawer} ${lnDrawer}",
-                      style: TextStyle(
-                          fontFamily: 'bold',
-                          fontSize: 16,
-                          color: Mycolors.mainColorBlack)),
-                ),
-              ],
-            )),
-          ),
-          ListTile(
-            leading: Icon(Icons.edit_note),
-            title: Text(
-              "Edit profile",
-              style: TextStyle(
-                  fontFamily: 'main',
-                  fontSize: 16,
-                  color: Mycolors.mainColorBlack),
-            ),
-            // hoverColor: Mycolors.mainColorBlue,
-            onTap: (() {
-              Navigator.pushNamed(context, 'studentviewprofile');
-            }),
-          ),
-          Divider(
-            color: Mycolors.mainColorBlue,
-            thickness: 1,
-            endIndent: 15,
-            indent: 15,
-          ),
-          ListTile(
-            leading: Icon(Icons.password),
-            title: Text(
-              "Reset password",
-              style: TextStyle(
-                  fontFamily: 'main',
-                  fontSize: 16,
-                  color: Mycolors.mainColorBlack),
-            ),
-            onTap: (() {
-              // Navigator.pushNamed(context, 'resetpasswprd');
-            }),
-          ),
-          Divider(
-            color: Mycolors.mainColorBlue,
-            thickness: 1,
-            endIndent: 15,
-            indent: 15,
-          ),
-          ListTile(
-            leading: Icon(Icons.logout),
-            title: Text(
-              "Log out",
-              style: TextStyle(
-                  fontFamily: 'main',
-                  fontSize: 16,
-                  color: Mycolors.mainColorBlack),
-            ),
-            onTap: (() {
-              showConfirmationDialog(context);
-            }),
-          ),
-          Divider(
-            color: Mycolors.mainColorBlue,
-            thickness: 1,
-            endIndent: 15,
-            indent: 15,
-          ),
-        ])),
+        // drawer: Drawer(
+        //     child: ListView(children: [
+        //   Card(
+        //     shadowColor: Color.fromARGB(94, 114, 168, 243),
+        //     elevation: 0,
+        //     child: DrawerHeader(
+        //         child: Column(
+        //       mainAxisAlignment: MainAxisAlignment.center,
+        //       children: [
+        //         Padding(
+        //           padding: const EdgeInsets.only(
+        //             bottom: 0,
+        //           ),
+        //           child: Image.asset(
+        //             "assets/images/woman.png",
+        //             width: 100,
+        //             height: 100,
+        //           ),
+        //         ),
+        //         SizedBox(
+        //           height: 10,
+        //         ),
+        //         Center(
+        //           child: Text("${fnDrawer} ${lnDrawer}",
+        //               style: TextStyle(
+        //                   fontFamily: 'bold',
+        //                   fontSize: 16,
+        //                   color: Mycolors.mainColorBlack)),
+        //         ),
+        //       ],
+        //     )),
+        //   ),
+        //   ListTile(
+        //     leading: Icon(Icons.edit_note),
+        //     title: Text(
+        //       "Edit profile",
+        //       style: TextStyle(
+        //           fontFamily: 'main',
+        //           fontSize: 16,
+        //           color: Mycolors.mainColorBlack),
+        //     ),
+        //     // hoverColor: Mycolors.mainColorBlue,
+        //     onTap: (() {
+        //       Navigator.pushNamed(context, 'studentviewprofile');
+        //     }),
+        //   ),
+        //   Divider(
+        //     color: Mycolors.mainColorBlue,
+        //     thickness: 1,
+        //     endIndent: 15,
+        //     indent: 15,
+        //   ),
+        //   ListTile(
+        //     leading: Icon(Icons.password),
+        //     title: Text(
+        //       "Reset password",
+        //       style: TextStyle(
+        //           fontFamily: 'main',
+        //           fontSize: 16,
+        //           color: Mycolors.mainColorBlack),
+        //     ),
+        //     onTap: (() {
+        //       // Navigator.pushNamed(context, 'resetpasswprd');
+        //     }),
+        //   ),
+        //   Divider(
+        //     color: Mycolors.mainColorBlue,
+        //     thickness: 1,
+        //     endIndent: 15,
+        //     indent: 15,
+        //   ),
+        //   ListTile(
+        //     leading: Icon(Icons.logout),
+        //     title: Text(
+        //       "Log out",
+        //       style: TextStyle(
+        //           fontFamily: 'main',
+        //           fontSize: 16,
+        //           color: Mycolors.mainColorBlack),
+        //     ),
+        //     onTap: (() {
+        //       showConfirmationDialog(context);
+        //     }),
+        //   ),
+        //   Divider(
+        //     color: Mycolors.mainColorBlue,
+        //     thickness: 1,
+        //     endIndent: 15,
+        //     indent: 15,
+        //   ),
+        // ])),
         body: SingleChildScrollView(
           clipBehavior: Clip.none,
           child: Padding(
@@ -460,6 +461,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                         final so = cuser['socialmedia'];
                         fnDrawer = cuser['firstname'];
                         lnDrawer = cuser['lastname'];
+
                         // date = cuser["graduationDate"];
 
                         // date = gd;
@@ -1118,36 +1120,56 @@ class _studentviewprofileState extends State<studentviewprofile> {
         backgroundColor: Colors.grey.shade800,
         backgroundImage: AssetImage('assets/images/woman.png'),
       );
-  showConfirmationDialog(BuildContext context) {
-    Widget dontCancelAppButton = ElevatedButton(
-      child: Text("No"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
+  // showConfirmationDialog(BuildContext context) {
+  //   Widget dontCancelAppButton = ElevatedButton(
+  //     style: ElevatedButton.styleFrom(
+  //       textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+  //       shadowColor: Colors.blue[900],
+  //       elevation: 20,
+  //       backgroundColor: Mycolors.mainShadedColorBlue,
+  //       minimumSize: Size(60, 40),
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.circular(10), // <-- Radius
+  //       ),
+  //     ),
+  //     child: Text("No"),
+  //     onPressed: () {
+  //       Navigator.of(context).pop();
+  //     },
+  //   );
 
-    Widget YesCancelAppButton = ElevatedButton(
-      child: Text("Yes"),
-      onPressed: () {
-        FirebaseAuth.instance.signOut().then((value) => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => login())));
-      },
-    );
+  //   Widget YesCancelAppButton = ElevatedButton(
+  //     style: ElevatedButton.styleFrom(
+  //       textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+  //       shadowColor: Colors.blue[900],
+  //       elevation: 20,
+  //       backgroundColor: Mycolors.mainShadedColorBlue,
+  //       minimumSize: Size(60, 40),
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.circular(10), // <-- Radius
+  //       ),
+  //     ),
+  //     child: Text("Yes"),
+  //     onPressed: () {
+  //       FirebaseAuth.instance.signOut().then((value) => Navigator.push(
+  //           context, MaterialPageRoute(builder: (context) => studentlogin())));
+  //     },
+  //   );
 
-    AlertDialog alert = AlertDialog(
-      // title: Text("LogOut"),
-      content: Text("Are you sure you want to logout ?"),
-      actions: [
-        dontCancelAppButton,
-        YesCancelAppButton,
-      ],
-    );
+  //   AlertDialog alert = AlertDialog(
+  //     // title: Text("LogOut"),
+  //     content: Text("Are you sure you want to logout ?"),
+  //     actions: [
+  //       dontCancelAppButton,
+  //       YesCancelAppButton,
+  //     ],
+  //   );
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return alert;
+  //     },
+  //   );
+  // }
 }

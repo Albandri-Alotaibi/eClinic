@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class StudentAppointment {
-  final String id;
+
+  final String appointmentId;
+  final String FacultytId;
   //bool booked;
   final String Day;
   DateTime startTime;
@@ -12,7 +14,8 @@ class StudentAppointment {
 
 
   StudentAppointment({
-    required this.id,
+    required this.appointmentId,
+     required this.FacultytId,
      //required this.booked,
     required this.Day,
     required this.startTime,

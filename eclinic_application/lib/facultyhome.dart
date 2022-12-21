@@ -51,65 +51,217 @@ class _fState extends State<facultyhome> {
     // final ButtonStyle style =
     //     ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
 
-    return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Home'),
-      // ),
-      body: _pages[widget.selectedIndex],
-      //-------------------------Nav Bar------------------------------
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-              bottomLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20)),
-          boxShadow: [
-            BoxShadow(
-              // color: Colors.grey.withOpacity(0.5),
-              color: Mycolors.mainColorShadow,
-              spreadRadius: 10,
-              blurRadius: 7,
-              offset: Offset(0, 3), // changes position of shadow
-            ),
-          ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          primary: false,
+          centerTitle: true,
+          backgroundColor: Mycolors.mainColorWhite,
+          shadowColor: Colors.transparent,
+          iconTheme: IconThemeData(
+            color: Color.fromARGB(255, 12, 12, 12), //change your color here
+          ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-          child: GNav(
-            selectedIndex: widget.selectedIndex,
-            onTabChange: (index) {
-              print(index);
-              setState(() {
-                widget.selectedIndex = index;
-              });
-            },
-
-            backgroundColor: Mycolors.BackgroundColor,
-            color: Mycolors.mainColorBlack,
-            activeColor: Mycolors.mainColorWhite,
-            tabBackgroundColor: Mycolors.mainShadedColorBlue,
-            gap: 8,
-            padding: EdgeInsets.all(16),
-            //curve: Curves.easeInOut,
-            tabs: [
-              GButton(
-                icon: Icons.group,
-                text: 'Appointments',
-              ),
-              GButton(
-                icon: Icons.schedule,
-                text: 'Available Hours ',
-              ),
-              GButton(
-                icon: Icons.question_answer,
-                text: 'FAQ',
+        backgroundColor: Mycolors.BackgroundColor,
+        drawer: Drawer(
+            child: ListView(children: [
+          Card(
+            shadowColor: Color.fromARGB(94, 114, 168, 243),
+            elevation: 0,
+            child: DrawerHeader(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: 0,
+                  ),
+                  child: Image.asset(
+                    "assets/images/woman.png",
+                    width: 100,
+                    height: 100,
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: Text("",
+                      style: TextStyle(
+                          fontFamily: 'bold',
+                          fontSize: 16,
+                          color: Mycolors.mainColorBlack)),
+                ),
+              ],
+            )),
+          ),
+          ListTile(
+            leading: Icon(Icons.edit_note),
+            title: Text(
+              "Edit profile",
+              style: TextStyle(
+                  fontFamily: 'main',
+                  fontSize: 16,
+                  color: Mycolors.mainColorBlack),
+            ),
+            onTap: (() {
+              Navigator.pushNamed(context, 'facultyviewprofile');
+            }),
+          ),
+          Divider(
+            color: Mycolors.mainColorBlue,
+            thickness: 1,
+            endIndent: 15,
+            indent: 15,
+          ),
+          ListTile(
+            leading: Icon(Icons.password),
+            title: Text(
+              "Reset password",
+              style: TextStyle(
+                  fontFamily: 'main',
+                  fontSize: 16,
+                  color: Mycolors.mainColorBlack),
+            ),
+            onTap: (() {
+              // Navigator.pushNamed(context, 'resetpasswprd');
+            }),
+          ),
+          Divider(
+            color: Mycolors.mainColorBlue,
+            thickness: 1,
+            endIndent: 15,
+            indent: 15,
+          ),
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Text(
+              "Log out",
+              style: TextStyle(
+                  fontFamily: 'main',
+                  fontSize: 16,
+                  color: Mycolors.mainColorBlack),
+            ),
+            onTap: (() {
+              showConfirmationDialog(context);
+            }),
+          ),
+          Divider(
+            color: Mycolors.mainColorBlue,
+            thickness: 1,
+            endIndent: 15,
+            indent: 15,
+          ),
+        ])),
+        body: _pages[widget.selectedIndex],
+        //-------------------------Nav Bar------------------------------
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20)),
+            boxShadow: [
+              BoxShadow(
+                // color: Colors.grey.withOpacity(0.5),
+                color: Mycolors.mainColorShadow,
+                spreadRadius: 10,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes position of shadow
               ),
             ],
           ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+            child: GNav(
+              selectedIndex: widget.selectedIndex,
+              onTabChange: (index) {
+                print(index);
+                setState(() {
+                  widget.selectedIndex = index;
+                });
+              },
+
+              backgroundColor: Mycolors.BackgroundColor,
+              color: Mycolors.mainColorBlack,
+              activeColor: Mycolors.mainColorWhite,
+              tabBackgroundColor: Mycolors.mainShadedColorBlue,
+              gap: 8,
+              padding: EdgeInsets.all(16),
+              //curve: Curves.easeInOut,
+              tabs: [
+                GButton(
+                  icon: Icons.group,
+                  text: 'Appointments',
+                ),
+                GButton(
+                  icon: Icons.schedule,
+                  text: 'Available Hours ',
+                ),
+                GButton(
+                  icon: Icons.question_answer,
+                  text: 'FAQ',
+                ),
+              ],
+            ),
+          ),
         ),
       ),
+    );
+  }
+
+  showConfirmationDialog(BuildContext context) {
+    Widget dontCancelAppButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
+      child: Text("No"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    Widget YesCancelAppButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
+      child: Text("Yes"),
+      onPressed: () {
+        FirebaseAuth.instance.signOut().then((value) => Navigator.push(
+            context, MaterialPageRoute(builder: (context) => login())));
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      // title: Text("LogOut"),
+      content: Text("Are you sure you want to logout ?"),
+      actions: [
+        dontCancelAppButton,
+        YesCancelAppButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }
