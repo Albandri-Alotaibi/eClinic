@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multiselect/multiselect.dart';
 import 'package:myapp/login.dart';
+import 'package:myapp/studentlogin.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'style/Mycolors.dart';
@@ -460,6 +461,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                         final so = cuser['socialmedia'];
                         fnDrawer = cuser['firstname'];
                         lnDrawer = cuser['lastname'];
+
                         // date = cuser["graduationDate"];
 
                         // date = gd;
@@ -1120,6 +1122,16 @@ class _studentviewprofileState extends State<studentviewprofile> {
       );
   showConfirmationDialog(BuildContext context) {
     Widget dontCancelAppButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
       child: Text("No"),
       onPressed: () {
         Navigator.of(context).pop();
@@ -1127,10 +1139,20 @@ class _studentviewprofileState extends State<studentviewprofile> {
     );
 
     Widget YesCancelAppButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
       child: Text("Yes"),
       onPressed: () {
         FirebaseAuth.instance.signOut().then((value) => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => login())));
+            context, MaterialPageRoute(builder: (context) => studentlogin())));
       },
     );
 
