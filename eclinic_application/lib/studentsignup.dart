@@ -557,7 +557,7 @@ class _studentsignupState extends State<studentsignup> {
                               Padding(
                                 padding: const EdgeInsets.only(
                                     right: 170, bottom: 4),
-                                child: Text("Choose your graduation date : "),
+                                child: Text(" graduation date : "),
                               ),
                               Row(
                                 children: [
@@ -920,7 +920,7 @@ class _studentsignupState extends State<studentsignup> {
                                     validator: (value) {
                                       if (value!.isEmpty ||
                                           _socialmedialink2.text == "") {
-                                        return 'Please enter your account';
+                                        return 'Please enter your link account';
                                       } else {
                                         if (!(english.hasMatch(
                                             _socialmedialink2.text))) {
