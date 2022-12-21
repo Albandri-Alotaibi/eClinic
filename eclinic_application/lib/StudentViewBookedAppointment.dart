@@ -517,19 +517,20 @@ showConfirmationDialog(BuildContext context, int index) {
    CancelAppointment(int index) async {
   
 
-    String id = BookedAppointments[index].id;
+    String appointmentId = BookedAppointments[index].appointmentId;
+    String FacultytId = BookedAppointments[index].FacultytId;
     
     FirebaseFirestore.instance
         .collection("faculty")
-        .doc(userid)
+        .doc(FacultytId)
         .collection('appointment')
-        .doc(id) //Is there a specific id i should put for the appointments
+        .doc(appointmentId) 
         .update({
-      'Booked': false, //string if booked then it should have a student refrence
+      'Booked': false, 
     });
     
 
-    //print(BookedAppointments.toString());
+    
   }
 
 
