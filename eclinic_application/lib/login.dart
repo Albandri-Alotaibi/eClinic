@@ -162,7 +162,8 @@ class _loginState extends State<login> {
                                     await FirebaseAuth.instance
                                         .signInWithEmailAndPassword(
                                             email: email, password: password);
-                                    Navigator.pushNamed(context, 'facultyhome')
+                                    Navigator.pushNamed(
+                                            context, 'facultyviewprofile')
                                         .then((value) async {
                                       final FirebaseAuth auth =
                                           FirebaseAuth.instance;

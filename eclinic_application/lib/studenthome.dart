@@ -76,12 +76,6 @@ class _sState extends State<studenthome> {
         iconTheme: IconThemeData(
           color: Color.fromARGB(255, 12, 12, 12), //change your color here
         ),
-        // title: Text('Verfication'),
-        // titleTextStyle: TextStyle(
-        //   fontFamily: 'main',
-        //   fontSize: 24,
-        //   color: Mycolors.mainColorBlack,
-        // ),
       ),
       backgroundColor: Mycolors.BackgroundColor,
       drawer: Drawer(
@@ -184,15 +178,9 @@ class _sState extends State<studenthome> {
               onPressed: () {
                 Navigator.pushNamed(context, 'viewfaculty');
               },
-              child: Text('Schdule '),
+              child: Text('Schdule consultation'),
             ),
             const SizedBox(width: 16),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, 'StudentViewBookedAppointment');
-              },
-              child: Text('view'),
-            ),
           ],
         ),
       ),

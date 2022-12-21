@@ -12,6 +12,7 @@ import 'package:multiselect/multiselect.dart';
 import 'package:myapp/login.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
+import 'style/Mycolors.dart';
 
 class facultyviewprofile extends StatefulWidget {
   const facultyviewprofile({super.key});
@@ -298,16 +299,21 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                             //   top: top,
                             //   child: buildprofileImage(),
                             // ),
+
                             SizedBox(
-                              height: 15,
+                              height: 30,
                             ),
                             TextFormField(
                               controller: _fnameController,
                               decoration: InputDecoration(
-                                  labelText: 'Frist Name',
+                                  labelText: '  First Name',
                                   // hintText: "Enter your first name",
                                   suffixIcon: Icon(Icons.edit),
-                                  border: OutlineInputBorder()),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25),
+                                      borderSide: const BorderSide(
+                                        width: 0,
+                                      ))),
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               validator: (value) {
@@ -333,10 +339,14 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                             TextFormField(
                               controller: _lnameController,
                               decoration: InputDecoration(
-                                  labelText: 'Last Name',
+                                  labelText: '  Last Name',
                                   // hintText: "Enter your last name",
                                   suffixIcon: Icon(Icons.edit),
-                                  border: OutlineInputBorder()),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25),
+                                      borderSide: const BorderSide(
+                                        width: 0,
+                                      ))),
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               validator: (value) {
@@ -365,7 +375,11 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                               decoration: InputDecoration(
                                   // hintText: "Enter your KSU email",
                                   labelText: 'KSU Email',
-                                  border: OutlineInputBorder()),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25),
+                                      borderSide: const BorderSide(
+                                        width: 0,
+                                      ))),
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               validator: (value) {
@@ -387,7 +401,11 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                               decoration: InputDecoration(
                                 suffixIcon: Icon(Icons.edit),
                                 labelText: 'College',
-                                border: OutlineInputBorder(),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(25),
+                                    borderSide: const BorderSide(
+                                      width: 0,
+                                    )),
                               ),
                               isExpanded: true,
                               items: collage.map((String dropdownitems) {
@@ -419,14 +437,16 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                             SizedBox(
                               height: 8,
                             ),
-                            SizedBox(
-                              height: 8,
-                            ),
+
                             DropdownButtonFormField<String>(
                               decoration: InputDecoration(
                                 suffixIcon: Icon(Icons.edit),
                                 labelText: ' Department',
-                                border: OutlineInputBorder(),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(25),
+                                    borderSide: const BorderSide(
+                                      width: 0,
+                                    )),
                               ),
                               isExpanded: true,
                               items: department.map((String dropdownitems) {
@@ -466,20 +486,25 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                   labelText: " Speciality",
                                   // hintText: "select your specialty",
                                   enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: isshow
-                                              ? Colors.red
-                                              : Colors.grey)),
+                                    borderSide: BorderSide(
+                                        color:
+                                            isshow ? Colors.red : Colors.grey),
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
                                   errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: isshow
-                                              ? Colors.red
-                                              : Colors.blueAccent)),
+                                    borderSide: BorderSide(
+                                        color: isshow
+                                            ? Colors.red
+                                            : Colors.blueAccent),
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
                                   focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: isshow
-                                              ? Colors.red
-                                              : Colors.blueAccent))),
+                                    borderSide: BorderSide(
+                                        color: isshow
+                                            ? Colors.red
+                                            : Colors.blueAccent),
+                                    borderRadius: BorderRadius.circular(25),
+                                  )),
                               options: options,
                               whenEmpty: "",
                               onChanged: (value) {
@@ -536,7 +561,11 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                               decoration: InputDecoration(
                                 suffixIcon: Icon(Icons.edit),
                                 labelText: 'semester',
-                                border: OutlineInputBorder(),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(25),
+                                    borderSide: const BorderSide(
+                                      width: 0,
+                                    )),
                               ),
                               isExpanded: true,
                               items: semester.map((String dropdownitems) {
@@ -585,155 +614,156 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                             //         }
                             //       }
                             //     }),
-                            DropdownButtonFormField(
-                                decoration: InputDecoration(
-                                  suffixIcon: Icon(Icons.edit),
-                                  hintText: "Choose meeting method",
-                                  border: OutlineInputBorder(),
-                                ),
-                                items: const [
-                                  DropdownMenuItem(
-                                      child: Text("In person metting"),
-                                      value: "inperson"),
-                                  DropdownMenuItem(
-                                      child: Text("Online meeting "),
-                                      value: "online"),
-                                ],
-                                value: mettingmethoddrop,
-                                onChanged: (value) {
-                                  setState(() {
-                                    mettingmethoddrop = value;
-                                    _meetingmethodcontroller.text = "";
-                                  });
-                                }),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            if (mettingmethoddrop != null &&
-                                mettingmethoddrop == "inperson")
-                              TextFormField(
-                                  controller: _meetingmethodcontroller,
-                                  decoration: InputDecoration(
-                                      labelText: 'Office number',
-                                      hintText: "Enter your office number",
-                                      suffixIcon: Icon(Icons.edit),
-                                      border: OutlineInputBorder()),
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  validator: (value) {
-                                    if (value!.isEmpty ||
-                                        _meetingmethodcontroller.text == "") {
-                                      return 'Please enter your office number';
-                                    } else {
-                                      if (!(english.hasMatch(
-                                          _meetingmethodcontroller.text))) {
-                                        return "only english is allowed";
-                                      }
-                                    }
-                                  }),
-                            if (mettingmethoddrop != null &&
-                                mettingmethoddrop == "online")
-                              TextFormField(
-                                  controller: _meetingmethodcontroller,
-                                  decoration: InputDecoration(
-                                      labelText: 'meeting link',
-                                      hintText: "Enter your meeting link",
-                                      suffixIcon: Icon(Icons.edit),
-                                      border: OutlineInputBorder()),
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  validator: (value) {
-                                    if (value!.isEmpty ||
-                                        _meetingmethodcontroller.text == "") {
-                                      return 'Please enter your meeting link';
-                                    } else {
-                                      if (!(english.hasMatch(
-                                          _meetingmethodcontroller.text))) {
-                                        return "only english is allowed";
-                                      }
-                                    }
-                                  }),
+                            // DropdownButtonFormField(
+                            //     decoration: InputDecoration(
+                            //       suffixIcon: Icon(Icons.edit),
+                            //       hintText: "Choose meeting method",
+                            //       border: OutlineInputBorder(),
+                            //     ),
+                            //     items: const [
+                            //       DropdownMenuItem(
+                            //           child: Text("In person metting"),
+                            //           value: "inperson"),
+                            //       DropdownMenuItem(
+                            //           child: Text("Online meeting "),
+                            //           value: "online"),
+                            //     ],
+                            //     value: mettingmethoddrop,
+                            //     onChanged: (value) {
+                            //       setState(() {
+                            //         mettingmethoddrop = value;
+                            //         _meetingmethodcontroller.text = "";
+                            //       });
+                            //     }),
+                            // SizedBox(
+                            //   height: 8,
+                            // ),
+                            // if (mettingmethoddrop != null &&
+                            //     mettingmethoddrop == "inperson")
+                            //   TextFormField(
+                            //       controller: _meetingmethodcontroller,
+                            //       decoration: InputDecoration(
+                            //           labelText: 'Office number',
+                            //           hintText: "Enter your office number",
+                            //           suffixIcon: Icon(Icons.edit),
+                            //           border: OutlineInputBorder()),
+                            //       autovalidateMode:
+                            //           AutovalidateMode.onUserInteraction,
+                            //       validator: (value) {
+                            //         if (value!.isEmpty ||
+                            //             _meetingmethodcontroller.text == "") {
+                            //           return 'Please enter your office number';
+                            //         } else {
+                            //           if (!(english.hasMatch(
+                            //               _meetingmethodcontroller.text))) {
+                            //             return "only english is allowed";
+                            //           }
+                            //         }
+                            //       }),
+                            // if (mettingmethoddrop != null &&
+                            //     mettingmethoddrop == "online")
+                            //   TextFormField(
+                            //       controller: _meetingmethodcontroller,
+                            //       decoration: InputDecoration(
+                            //           labelText: 'meeting link',
+                            //           hintText: "Enter your meeting link",
+                            //           suffixIcon: Icon(Icons.edit),
+                            //           border: OutlineInputBorder()),
+                            //       autovalidateMode:
+                            //           AutovalidateMode.onUserInteraction,
+                            //       validator: (value) {
+                            //         if (value!.isEmpty ||
+                            //             _meetingmethodcontroller.text == "") {
+                            //           return 'Please enter your meeting link';
+                            //         } else {
+                            //           if (!(english.hasMatch(
+                            //               _meetingmethodcontroller.text))) {
+                            //             return "only english is allowed";
+                            //           }
+                            //         }
+                            //       }),
                           ],
                         ); //here
                       }
                       return Center(child: CircularProgressIndicator());
                     }),
-                Row(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        showConfirmationDialog(context);
-                      },
-                      child: Text("Log out"),
+                SizedBox(
+                  height: 12,
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+                    shadowColor: Colors.blue[900],
+                    elevation: 16,
+                    backgroundColor: Mycolors.mainShadedColorBlue,
+                    minimumSize: Size(150, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(17), // <-- Radius
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          fn = _fnameController.text;
-                          ln = _lnameController.text;
-                          mm = mettingmethoddrop;
-                          mmi = _meetingmethodcontroller.text;
-                          if (zag < 1) {
-                            isshow = true;
-                          }
-                          if (zag > 0) {
-                            isshow = false;
-                          }
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      fn = _fnameController.text;
+                      ln = _lnameController.text;
+                      mm = mettingmethoddrop;
+                      mmi = _meetingmethodcontroller.text;
+                      if (zag < 1) {
+                        isshow = true;
+                      }
+                      if (zag > 0) {
+                        isshow = false;
+                      }
+                    });
+
+                    if (formkey.currentState!.validate() && zag > 0) {
+                      try {
+                        FirebaseFirestore.instance
+                            .collection('faculty')
+                            .doc(userid)
+                            .update({
+                          "firstname": fn,
+                          "lastname": ln,
+                          "meetingmethod": mm,
+                          "mettingmethodinfo": mmi,
+                          'department': FirebaseFirestore.instance
+                              .collection("collage")
+                              .doc(docsforcollage)
+                              .collection("department")
+                              .doc(docfordepatment),
+                          'collage': FirebaseFirestore.instance
+                              .collection("collage")
+                              .doc(docsforcollage),
+                          'semester': FirebaseFirestore.instance
+                              .collection("semester")
+                              .doc(docsforsemestername),
+                          "specialty": specalityid,
                         });
 
-                        if (formkey.currentState!.validate() && zag > 0) {
-                          try {
-                            FirebaseFirestore.instance
-                                .collection('faculty')
-                                .doc(userid)
-                                .update({
-                              "firstname": fn,
-                              "lastname": ln,
-                              "meetingmethod": mm,
-                              "mettingmethodinfo": mmi,
-                              'department': FirebaseFirestore.instance
-                                  .collection("collage")
-                                  .doc(docsforcollage)
-                                  .collection("department")
-                                  .doc(docfordepatment),
-                              'collage': FirebaseFirestore.instance
-                                  .collection("collage")
-                                  .doc(docsforcollage),
-                              'semester': FirebaseFirestore.instance
-                                  .collection("semester")
-                                  .doc(docsforsemestername),
-                              "specialty": specalityid,
-                            });
-
-                            Fluttertoast.showToast(
-                              msg:
-                                  " Your information has been updated successfully",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.CENTER,
-                              timeInSecForIosWeb: 2,
-                              backgroundColor:
-                                  Color.fromARGB(255, 127, 166, 233),
-                              textColor: Color.fromARGB(255, 248, 249, 250),
-                              fontSize: 18.0,
-                            );
-                          } on FirebaseAuthException catch (error) {
-                            Fluttertoast.showToast(
-                              msg: "Something wronge",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.CENTER,
-                              timeInSecForIosWeb: 5,
-                              backgroundColor:
-                                  Color.fromARGB(255, 127, 166, 233),
-                              textColor: Color.fromARGB(255, 252, 253, 255),
-                              fontSize: 18.0,
-                            );
-                          }
-                        }
-                      },
-                      child: Text("Save changes"),
-                    ),
-                  ],
-                )
+                        Fluttertoast.showToast(
+                          msg:
+                              " Your information has been updated successfully",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 2,
+                          backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                          textColor: Color.fromARGB(255, 248, 249, 250),
+                          fontSize: 18.0,
+                        );
+                      } on FirebaseAuthException catch (error) {
+                        Fluttertoast.showToast(
+                          msg: "Something wronge",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 5,
+                          backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                          textColor: Color.fromARGB(255, 252, 253, 255),
+                          fontSize: 18.0,
+                        );
+                      }
+                    }
+                  },
+                  child: Text("Save changes"),
+                ),
               ]),
             ), ////here
           ),
@@ -742,15 +772,15 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
     );
   }
 
-  Widget buildCoverImage() => Container(
-        color: Colors.grey,
-        // child: Image.asset(
-        //   'assets/images/profilebackground.png.png',
-        //   width: double.infinity,
-        //   height: coverheight,
-        //   fit: BoxFit.cover,
-        // ),
-      );
+  // Widget buildCoverImage() => Container(
+  //       color: Colors.grey,
+  //       // child: Image.asset(
+  //       //   'assets/images/profilebackground.png.png',
+  //       //   width: double.infinity,
+  //       //   height: coverheight,
+  //       //   fit: BoxFit.cover,
+  //       // ),
+  //     );
 
   Widget buildprofileImage() => CircleAvatar(
         radius: profileheight / 2,
@@ -844,38 +874,5 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
       print(e.toString());
       return null;
     }
-  }
-
-  showConfirmationDialog(BuildContext context) {
-    Widget dontCancelAppButton = ElevatedButton(
-      child: Text("No"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
-
-    Widget YesCancelAppButton = ElevatedButton(
-      child: Text("Yes"),
-      onPressed: () {
-        FirebaseAuth.instance.signOut().then((value) => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => login())));
-      },
-    );
-
-    AlertDialog alert = AlertDialog(
-      // title: Text("LogOut"),
-      content: Text("Are you sure you want to logout ?"),
-      actions: [
-        dontCancelAppButton,
-        YesCancelAppButton,
-      ],
-    );
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
   }
 }
