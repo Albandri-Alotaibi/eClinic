@@ -19,7 +19,8 @@ import 'package:myapp/studentsignup.dart';
 import 'package:myapp/studentverfication.dart';
 import 'package:myapp/studentviewprofile.dart';
 import 'package:myapp/verfication.dart';
-import 'package:myapp/viewfaculty.dart';
+import 'package:myapp/FacultyViewScreen.dart';
+import 'package:myapp/FacultyListScreen.dart';
 import 'package:myapp/facultyFAQ.dart';
 
 Future<void> _firebaseMsgBackgroundHanler(RemoteMessage message) async {
@@ -54,7 +55,7 @@ class MyApp extends StatelessWidget {
           'studenthome': (context) => studenthome(),
           'facultysignup': (context) => facultysignup(),
           'reusable': (context) => reusable(),
-          'viewfaculty': (context) => viewfaculty(),
+          'FacultyListScreen': (context) => FacultyListScreen(),
           'login': (context) => login(),
           'FacultyViewBookedAppointment': (context) =>
               FacultyViewBookedAppointment(),

@@ -163,7 +163,8 @@ class _sState extends State<studenthome> {
           children: <Widget>[
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, 'viewfaculty');
+                // Navigator.pushNamed(context, 'viewfaculty');
+                Navigator.pushNamed(context, 'FacultyListScreen');
               },
               child: Text('Schdule consultation'),
             ),
