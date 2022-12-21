@@ -184,9 +184,15 @@ class _sState extends State<studenthome> {
               onPressed: () {
                 Navigator.pushNamed(context, 'viewfaculty');
               },
-              child: Text('Schdule consultation'),
+              child: Text('Schdule '),
             ),
             const SizedBox(width: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, 'StudentViewBookedAppointment');
+              },
+              child: Text('view'),
+            ),
           ],
         ),
       ),
