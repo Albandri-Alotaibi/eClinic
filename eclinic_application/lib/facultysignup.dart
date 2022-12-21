@@ -273,22 +273,40 @@ class _facultysignupState extends State<facultysignup> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+          appBar: AppBar(
+            primary: false,
+            centerTitle: true,
+            backgroundColor: Mycolors.mainColorWhite,
+            shadowColor: Colors.transparent,
+            //foregroundColor: Mycolors.mainColorBlack,
+            // automaticallyImplyLeading: false,
+            iconTheme: IconThemeData(
+              color: Color.fromARGB(255, 12, 12, 12), //change your color here
+            ),
+            title: Text('Create account'),
+
+            titleTextStyle: TextStyle(
+              fontFamily: 'main',
+              fontSize: 24,
+              color: Mycolors.mainColorBlack,
+            ),
+          ),
           backgroundColor: Mycolors.BackgroundColor,
           body: Container(
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 30, bottom: 10),
-                    child: Text(
-                      "Create account",
-                      style: TextStyle(
-                          color: Mycolors.mainColorBlack,
-                          fontFamily: 'main',
-                          fontSize: 24),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 30, bottom: 10),
+                  //   child: Text(
+                  //     "Create account",
+                  //     style: TextStyle(
+                  //         color: Mycolors.mainColorBlack,
+                  //         fontFamily: 'main',
+                  //         fontSize: 24),
+                  //   ),
+                  // ),
                   Image.asset(
                     "assets/images/eClinicLogo-blue1.png",
                     width: 300,

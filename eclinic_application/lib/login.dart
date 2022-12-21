@@ -26,22 +26,40 @@ class _loginState extends State<login> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          primary: false,
+          centerTitle: true,
+          backgroundColor: Mycolors.mainColorWhite,
+          shadowColor: Colors.transparent,
+          //foregroundColor: Mycolors.mainColorBlack,
+          // automaticallyImplyLeading: false,
+          iconTheme: IconThemeData(
+            color: Color.fromARGB(255, 12, 12, 12), //change your color here
+          ),
+          title: Text('Welcome back'),
+
+          titleTextStyle: TextStyle(
+            fontFamily: 'main',
+            fontSize: 24,
+            color: Mycolors.mainColorBlack,
+          ),
+        ),
         backgroundColor: Mycolors.BackgroundColor,
         body: SingleChildScrollView(
           child: Container(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: Text(
-                    "Welcome back",
-                    style: TextStyle(
-                        color: Mycolors.mainColorBlack,
-                        fontFamily: 'main',
-                        fontSize: 24),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 30),
+                //   child: Text(
+                //     "Welcome back",
+                //     style: TextStyle(
+                //         color: Mycolors.mainColorBlack,
+                //         fontFamily: 'main',
+                //         fontSize: 24),
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.all(11.0),
                   child: Image.asset(
