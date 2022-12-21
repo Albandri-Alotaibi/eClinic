@@ -38,7 +38,7 @@ class _FacultyListScreenState extends State<FacultyListScreen> {
 
   initStudent() async {
     CollectionReference studentCollection =
-        FirebaseFirestore.instance.collection('students');
+        FirebaseFirestore.instance.collection('student');
     DocumentSnapshot studentData = await studentCollection.doc(userid).get();
 
     if (studentData.exists) {
@@ -184,29 +184,27 @@ class _FacultyListScreenState extends State<FacultyListScreen> {
     });
 
     //show only faculty from same college and department.
-    if (facultyList.isNotEmpty) {
-      setState(() {
-      
-
-        facultyList = facultyList
-            //to get only faculty with same college as current student college
-            .where((element) =>
-                element['collage']?['id']
-                    .compareTo(student?['collage']?['id'] ?? "") ==
-                0)
-            //to get only faculty with same department as current student department
-            .where((element) =>
-                element['department']?['id']
-                    .compareTo(student?['department']?['id'] ?? "") ==
-                0)
-            //to get only faculty with same semester as current student semester
-            .where((element) =>
-                element['semester']?['id']
-                    .compareTo(student?['semester']?['id'] ?? "") ==
-                0)
-            .toList();
-      });
-    }
+    // if (facultyList.isNotEmpty) {
+    //   setState(() {
+    //     facultyList = facultyList
+    //         //to get only faculty with same college as current student college
+    //         .where((element) =>
+    //             element['collage']?['id']
+    //                 .compareTo(student?['collage']?['id'] ?? "") ==
+    //             0)
+    //         //to get only faculty with same department as current student department
+    //         .where((element) =>
+    //             element['department']?['id']
+    //                 .compareTo(student?['department']?['id'] ?? "") ==
+    //             0)
+    //         //to get only faculty with same semester as current student semester
+    //         .where((element) =>
+    //             element['semester']?['id']
+    //                 .compareTo(student?['semester']?['id'] ?? "") ==
+    //             0)
+    //         .toList();
+    //   });
+    // }
 
     loading = false;
   }

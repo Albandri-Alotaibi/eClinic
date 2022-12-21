@@ -41,7 +41,7 @@ class _AppointmentConfirmationScreenState
 
   initStudent() async {
     CollectionReference studentCollection =
-        FirebaseFirestore.instance.collection('students');
+        FirebaseFirestore.instance.collection('student');
     DocumentSnapshot studentData = await studentCollection.doc(userid).get();
 
     if (studentData.exists) {
@@ -101,7 +101,7 @@ class _AppointmentConfirmationScreenState
   void bookAnAppointment() async {
     try {
       CollectionReference studentsRef =
-          FirebaseFirestore.instance.collection('students');
+          FirebaseFirestore.instance.collection('student');
       DocumentReference? appointmentDoc = FirebaseFirestore.instance
           .collection('faculty')
           .doc(widget.faculty['id'])
@@ -119,8 +119,8 @@ class _AppointmentConfirmationScreenState
         return doc.reference;
       }).toList();
 
-      await appointmentDoc.update(
-          {'Booked': true, 'students': FieldValue.arrayUnion(students)});
+      await appointmentDoc
+          .update({'Booked': true, 'student': FieldValue.arrayUnion(students)});
     } catch (e) {
       debugPrint(e.toString());
       //show error message
