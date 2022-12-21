@@ -169,29 +169,19 @@ class _studentloginState extends State<studentlogin> {
                                     });
                                   }
                                 } on FirebaseAuthException catch (error) {
-                                  print(error.message);
-                                  if (error.message ==
-                                      "The email address is badly formatted.") {
-                                    Fluttertoast.showToast(
-                                      msg: "check the email format",
-                                      gravity: ToastGravity.TOP,
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      timeInSecForIosWeb: 2,
-                                      backgroundColor:
-                                          Color.fromARGB(255, 239, 91, 91),
-                                      textColor:
-                                          Color.fromARGB(255, 250, 248, 248),
-                                      fontSize: 18.0,
-                                    );
-                                  }
+                                  // print(error.message);
+                                  // if (error.message ==
+                                  //     "The email address is badly formatted.") {
+                                  //   showerror(
+                                  //       context, "check the email format");
+                                  // }
 
                                   if (error.message ==
                                           "The password is invalid or the user does not have a password." ||
                                       error.message ==
                                           "There is no user record corresponding to this identifier. The user may have been deleted.") {
-                                    var msg = "invalid email or password ";
-                                    ////////////////////////////not work
-                                    showerror(context, msg);
+                                    showerror(
+                                        context, "invalid email or password");
                                   }
                                 }
                               },
@@ -257,18 +247,18 @@ class _studentloginState extends State<studentlogin> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Oh snap!",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                        ),
-                      ),
+                      // Text(
+                      //   "Oh snap!",
+                      //   style: TextStyle(
+                      //     color: Colors.white,
+                      //     fontSize: 12,
+                      //   ),
+                      // ),
                       Text(
                         msg,
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 12,
+                          fontSize: 17,
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,

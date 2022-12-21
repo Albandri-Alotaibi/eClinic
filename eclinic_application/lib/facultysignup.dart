@@ -828,33 +828,14 @@ class _facultysignupState extends State<facultysignup> {
                                     print(error.message);
                                     if (error.message ==
                                         "The email address is badly formatted.") {
-                                      Fluttertoast.showToast(
-                                        msg: "check the email format",
-                                        gravity: ToastGravity.TOP,
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        timeInSecForIosWeb: 2,
-                                        backgroundColor:
-                                            Color.fromARGB(255, 239, 91, 91),
-                                        textColor:
-                                            Color.fromARGB(255, 250, 248, 248),
-                                        fontSize: 18.0,
-                                      );
+                                      showerror(
+                                          context, "check the email format");
                                     }
 
                                     if (error.message ==
                                         "The email address is already in use by another account.") {
-                                      Fluttertoast.showToast(
-                                        msg:
-                                            "The email address is already in use by another account",
-                                        gravity: ToastGravity.TOP,
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        timeInSecForIosWeb: 2,
-                                        backgroundColor:
-                                            Color.fromARGB(255, 127, 166, 233),
-                                        textColor:
-                                            Color.fromARGB(255, 248, 249, 250),
-                                        fontSize: 18.0,
-                                      );
+                                      showerror(context,
+                                          "The email address is already in use by another account");
                                     }
                                   }
                                 },
@@ -901,5 +882,57 @@ class _facultysignupState extends State<facultysignup> {
             ),
           )),
     );
+  }
+
+  showerror(BuildContext context, String msg) {
+    return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Stack(
+        children: [
+          Container(
+            padding: EdgeInsets.all(16),
+            height: 90,
+            decoration: BoxDecoration(
+                color: Color(0xFFC72C41),
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 48,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Text(
+                      //   "Oh snap!",
+                      //   style: TextStyle(
+                      //     color: Colors.white,
+                      //     fontSize: 12,
+                      //   ),
+                      // ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 12, left: 0),
+                        child: Text(
+                          msg,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                          ),
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+    ));
   }
 }

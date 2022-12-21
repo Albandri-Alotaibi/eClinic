@@ -465,7 +465,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                           DropDownMultiSelect(
                             decoration: InputDecoration(
                                 suffixIcon: Icon(Icons.edit),
-                                labelText: " speciality",
+                                labelText: " Speciality",
                                 // hintText: "select your specialty",
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(

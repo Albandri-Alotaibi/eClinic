@@ -312,15 +312,6 @@ class _studentviewprofileState extends State<studentviewprofile> {
     checkidd(departmentselectedfromDB);
   }
 
-// check(String? soc) async {
-//     if (social == "Twitter" || social == "LinkedIn") {
-//       socialmediaaccount = account;
-//     } else {
-//       if (social == "WhatsApp") {
-//         socialmediaaccount = phonenumber;
-//       }
-//     }
-//   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
