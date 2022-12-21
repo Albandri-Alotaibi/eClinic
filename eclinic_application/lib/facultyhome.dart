@@ -88,7 +88,8 @@ class _fState extends State<facultyhome> {
 
             backgroundColor: Mycolors.BackgroundColor,
             color: Mycolors.mainColorBlack,
-            activeColor: Mycolors.mainColorBlue,
+            activeColor: Mycolors.mainColorWhite,
+            tabBackgroundColor: Mycolors.mainShadedColorBlue,
             gap: 8,
             padding: EdgeInsets.all(16),
             //curve: Curves.easeInOut,

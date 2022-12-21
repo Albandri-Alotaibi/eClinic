@@ -16,6 +16,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+import 'style/Mycolors.dart';
+
 class FacultyViewBookedAppointment extends StatefulWidget {
   const FacultyViewBookedAppointment({super.key});
 
@@ -244,10 +246,11 @@ class _sState extends State<FacultyViewBookedAppointment> {
           for (var i = 0; i < studentsArrayOfRef.length; i++) {
             final DocumentSnapshot docRef2 =
                 await studentsArrayOfRef[i].get(); //await
-            print(docRef2['name']);
-            students.add(docRef2['name']);
+            print(docRef2['firstname']);
+            String name = docRef2['firstname'] + " " + docRef2['lastname'];
+            students.add(name);
             print(students);
-            projectname = docRef2['projectTitle'];
+            projectname = docRef2['projectname'];
           }
 
           //if(AleardyintheArray==false){
@@ -368,91 +371,188 @@ class _sState extends State<FacultyViewBookedAppointment> {
     if (isExists == false) {
       //|| numOfDaysOfHelp==0
       return Scaffold(
-          appBar: AppBar(
-            title: Text('Booked Appointments'),
-          ),
-          body: Row(
-            children: <Widget>[Text("No Booked Appointments**")],
-          ));
+          body: Container(
+        alignment: Alignment.topCenter,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 30, bottom: 19),
+              child: Text(
+                "Booked Appointments",
+                style: TextStyle(
+                    color: Mycolors.mainColorBlack,
+                    fontFamily: 'main',
+                    fontSize: 24),
+              ),
+            ),
+            Card(
+              color: Mycolors.mainShadedColorBlue,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(17), // <-- Radius
+              ),
+              shadowColor: Color.fromARGB(94, 114, 168, 243),
+              elevation: 20,
+              child: Padding(
+                padding: const EdgeInsets.all(30),
+                child: Text(
+                  "No Booked Appointments**",
+                  overflow: TextOverflow.clip,
+                  style: TextStyle(
+                      color: Mycolors.mainColorWhite,
+                      fontFamily: 'main',
+                      fontSize: 17),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ));
     } else {
       //BookedAppointments.isEmpty==false //numOfDaysOfHelp==BookedAppointments.length
       //if(BookedAppointments.length!=0){
       return Scaffold(
-          appBar: AppBar(
-            title: Text('Booked Appointments'),
-          ),
+          // appBar: AppBar(
+          //   title: Text('Booked Appointments'),
+          // ),
           body: //Row()
               //  FutureBuilder(
               //   future: getBookedappointments(),
               //   builder: (context, snapshot) {
               //     return
-              ListView.builder(
-                  itemCount:
-                      numOfDaysOfHelp, //BookedAppointments.length,//numOfDaysOfHelp
-                  itemBuilder: ((context, index) {
-                    if (index < BookedAppointments.length) {
-                      return Card(
-                          child: ExpansionTile(
-                        title: Text(BookedAppointments[index].Day +
-                            ",  " +
-                            BookedAppointments[index].StringDate() +
-                            "  " +
-                            BookedAppointments[index].StringTimeRange()),
-
-                        //BookedAppointments[index].Day),
-
-                        //subtitle: Text("Date : "+ BookedAppointments[index].StringDate()+"\n Time : "+BookedAppointments[index].StringTimeRange()),
-                        children: [
-                          Row(children: <Widget>[
-                            Column(children: <Widget>[
-                              // Text("  Date : "+ BookedAppointments[index].StringDate()),
-                              // Text("  Time : "+BookedAppointments[index].StringTimeRange()),
-                              Text(""),
-                              Text("  Project : " +
-                                  BookedAppointments[index].projectName +
-                                  "\n"),
-                              Text("  Students : " +
-                                  BookedAppointments[index].StringStudents())
-                            ]),
-                            //crossAxisAlignment: CrossAxisAlignment.start,
-                            Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                verticalDirection: VerticalDirection.up,
-                                children: <Widget>[
-                                  IconButton(
-                                    icon: Icon(Icons.cancel),
-                                    onPressed: () => {
-                                      showConfirmationDialog(context, index)
-                                      //CancelAppointment(index)
-                                    },
+              Column(
+        children: [
+          Expanded(
+            child: Container(
+              alignment: Alignment.topCenter,
+              child: SizedBox(
+                width: 350,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30, bottom: 10),
+                      child: Text(
+                        "Booked Appointments",
+                        style: TextStyle(
+                            color: Mycolors.mainColorBlack,
+                            fontFamily: 'main',
+                            fontSize: 24),
+                      ),
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                          itemCount:
+                              numOfDaysOfHelp, //BookedAppointments.length,//numOfDaysOfHelp
+                          itemBuilder: ((context, index) {
+                            if (index < BookedAppointments.length) {
+                              return Card(
+                                  margin: EdgeInsets.only(bottom: 20),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(17), // <-- Radius
                                   ),
-                                ])
-                          ])
-                        ],
-                      ));
+                                  shadowColor:
+                                      Color.fromARGB(94, 250, 250, 250),
+                                  elevation: 20,
+                                  child: ExpansionTile(
+                                    iconColor: Mycolors.mainShadedColorBlue,
+                                    collapsedIconColor:
+                                        Mycolors.mainShadedColorBlue,
+                                    collapsedTextColor:
+                                        Mycolors.mainShadedColorBlue,
 
-                      //       }),
-                      //     )
-                      //     ;
-                      //   },
-                      // )
+                                    title: Text(
+                                        BookedAppointments[index].Day +
+                                            ",  " +
+                                            BookedAppointments[index]
+                                                .StringDate() +
+                                            "  " +
+                                            BookedAppointments[index]
+                                                .StringTimeRange(),
+                                        style: TextStyle(
+                                            color: Mycolors.mainColorBlue,
+                                            fontFamily: 'main',
+                                            fontSize: 17)),
 
-                      // );
-                      //}
+                                    //BookedAppointments[index].Day),
 
-                    } //index smaller than length
-                    else {
-                      return Row();
-                      // return Column(
-                      //         children: <Widget>[
-                      //         Text("inside else"),
-                      //         Text("${BookedAppointments.length}"),
-                      //         Text("${numOfDaysOfHelp}"),
+                                    //subtitle: Text("Date : "+ BookedAppointments[index].StringDate()+"\n Time : "+BookedAppointments[index].StringTimeRange()),
+                                    children: [
+                                      Row(children: <Widget>[
+                                        Column(children: <Widget>[
+                                          // Text("  Date : "+ BookedAppointments[index].StringDate()),
+                                          // Text("  Time : "+BookedAppointments[index].StringTimeRange()),
+                                          Text(""),
+                                          Text(
+                                              "  Project : " +
+                                                  BookedAppointments[index]
+                                                      .projectName +
+                                                  "\n",
+                                              style: TextStyle(
+                                                  color:
+                                                      Mycolors.mainColorBlack,
+                                                  fontFamily: 'main',
+                                                  fontSize: 15)),
+                                          Text(
+                                              "  Students : " +
+                                                  BookedAppointments[index]
+                                                      .StringStudents(),
+                                              style: TextStyle(
+                                                  color:
+                                                      Mycolors.mainColorBlack,
+                                                  fontFamily: 'main',
+                                                  fontSize: 15))
+                                        ]),
+                                        //crossAxisAlignment: CrossAxisAlignment.start,
+                                        Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            verticalDirection:
+                                                VerticalDirection.up,
+                                            children: <Widget>[
+                                              IconButton(
+                                                icon: Icon(Icons.cancel),
+                                                onPressed: () => {
+                                                  showConfirmationDialog(
+                                                      context, index)
+                                                  //CancelAppointment(index)
+                                                },
+                                              ),
+                                            ])
+                                      ])
+                                    ],
+                                  ));
 
-                      //         ]);
-                    }
-                  }))); //scaffold
+                              //       }),
+                              //     )
+                              //     ;
+                              //   },
+                              // )
+
+                              // );
+                              //}
+
+                            } //index smaller than length
+                            else {
+                              return Row();
+                              // return Column(
+                              //         children: <Widget>[
+                              //         Text("inside else"),
+                              //         Text("${BookedAppointments.length}"),
+                              //         Text("${numOfDaysOfHelp}"),
+
+                              //         ]);
+                            }
+                          })),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      )); //scaffold
 
     } //end else there is booked appointments
     //   else{
