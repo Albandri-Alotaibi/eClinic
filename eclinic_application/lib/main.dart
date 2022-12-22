@@ -24,6 +24,7 @@ import 'package:myapp/FacultyViewScreen.dart';
 import 'package:myapp/FacultyListScreen.dart';
 import 'package:myapp/facultyFAQ.dart';
 
+
 Future<void> _firebaseMsgBackgroundHanler(RemoteMessage message) async {
   print("handling msg ${message.messageId}");
 }

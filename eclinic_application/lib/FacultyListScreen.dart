@@ -206,6 +206,7 @@ class _FacultyListScreenState extends State<FacultyListScreen> {
     //   });
     // }
 
+
     loading = false;
   }
 
