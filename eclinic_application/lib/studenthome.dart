@@ -33,6 +33,7 @@ class _sState extends State<studenthome> {
     requestPremission();
     getToken();
     initInfo();
+   setSemester();
   }
 
   getusername() async {
@@ -64,8 +65,8 @@ class _sState extends State<studenthome> {
     final User? user = auth.currentUser;
     userid = user!.uid;
     email = user.email!;
-    setSemester();
-    getusername();
+    // setSemester();
+    // getusername();
 
     //calling the method
     return SafeArea(
