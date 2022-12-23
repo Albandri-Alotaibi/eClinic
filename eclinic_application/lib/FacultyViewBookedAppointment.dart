@@ -29,7 +29,8 @@ class _sState extends State<FacultyViewBookedAppointment> {
   String? email = '';
   String? userid = '';
   List<Appointment> BookedAppointments = []; //availableHours
-  bool? isExists;
+  bool?  isExists;
+  //  bool  isExists=false;
   //bool AleardyintheArray=false;
   bool? AleardyintheArray;
   int numOfDaysOfHelp = 0;
@@ -65,74 +66,151 @@ class _sState extends State<FacultyViewBookedAppointment> {
     initInfo();
   }
 
-// makeachange() async {
-//               var exchange;
-//               var idexchange;
 
-//              //if(isExists== true){
-//                  final snap = await FirebaseFirestore.instance
-//                 .collection("faculty")
-//                 .doc(userid)
-//                 .collection('appointment')
-//               //.where("Booked", isEqualTo: true)
-//               .limit(1) .get().then((QuerySnapshot snapshot) {
-//                 snapshot.docs.forEach((DocumentSnapshot doc) async {
-//                       exchange= doc['Booked'];
-//                      idexchange = doc.id;
-
-//                 });
-//               });
-
-//               final snap2 = await FirebaseFirestore.instance
-//                 .collection("faculty")
-//                 .doc(userid)
-//                 .collection('appointment') .doc(idexchange).update({
-//                     'Booked': !exchange,
-//                   });
-
-//               final snap3 = await FirebaseFirestore.instance
-//                 .collection("faculty")
-//                 .doc(userid)
-//                 .collection('appointment') .doc(idexchange).update({
-//                     'Booked': exchange,
-//                   });
-
-// }
-
-  Future<bool?> BookedAppointmentsExists() async {
+  //Future<bool?> 
+BookedAppointmentsExists() async {
     final FirebaseAuth auth = await FirebaseAuth.instance;
     final User? user = await auth.currentUser;
     userid = user!.uid;
     email = user.email!;
 
-    final snap = await FirebaseFirestore.instance
+//  Timestamp timestampofnow =new Timestamp.now();
+// //as Timestamp
+//   final snap = await FirebaseFirestore.instance
+//         .collection("faculty")
+//         .doc(userid)
+//         .collection('appointment')
+//         .where("Booked", isEqualTo: true)
+//         //.where("starttime", isGreaterThanOrEqualTo: timestampofnow)
+//         .snapshots()
+//         .listen((event) {
+// if (event.size == 0) { //if no booked appointments at all
+//         print('NOT exist');
+//         }
+//         else{
+//        print(' exist');
+//         }
+//         });
+
+
+
+  final snap = await FirebaseFirestore.instance
         .collection("faculty")
         .doc(userid)
         .collection('appointment')
-        .where("Booked", isEqualTo: true)
-        // .orderBy('starttime')
         .snapshots()
         .listen((event) {
-      if (event.size == 0) {
-        print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
-        print("No Booked Appoinyments");
+          bool? found;
+if (event.size == 0) { //if no booked appointments at all
         setState(() {
           isExists = false;
         });
+      }//end if no appointments at all
 
-        // return isExists;
-      } else {
-        print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
-        print("Booked Appoinyments Exist");
-        setState(() {
+else{// else there are appointments
+
+ found=false;
+
+event.docs.forEach((element) async {
+
+    DateTime now = new DateTime.now();
+    Timestamp t = element['starttime'] as Timestamp;
+    DateTime StartTimeDateTest = t.toDate();
+    if ((element['Booked'] == true) && (now.isBefore(StartTimeDateTest))) {
+      // setState(() {
+      //     isExists = true;
+      //       });    
+    found=true;
+        }//end if
+      });//end for each appointment
+}//end else
+
+if(found==true){
+ setState(() {
           isExists = true;
-        });
+            }); 
+}
+else if(found==false){
+ setState(() {
+          isExists = false;
+            }); 
+}
 
-        // return isExists;
-      }
-    });
-    return isExists;
 
+
+
+
+
+
+});//end all event
+
+
+return isExists;
+
+
+
+
+
+
+
+
+
+
+// --------------------------START OF FIRST TRIAL TO SHOW ONLY FUTURE BOOKED----------------------------------------------------------------
+//     final snap = await FirebaseFirestore.instance
+//         .collection("faculty")
+//         .doc(userid)
+//         .collection('appointment')
+//         .where("Booked", isEqualTo: true)
+//         // .orderBy('starttime')
+//         .snapshots()
+//         .listen((event) {
+
+//       if (event.size == 0) { //if no booked appointments at all
+//         print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
+//         print("No Booked Appoinyments");
+//         print(event.size);
+//         setState(() {
+//           isExists = false;
+//           return;
+//         });
+     
+//       }
+      
+//        else { //if there are booked appointments 
+//         print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
+//         print("Booked Appoinyments Exist");
+// //bool found=false;
+// DateTime now = new DateTime.now();
+// event.docs.forEach((element) async {
+//    Timestamp t1 = await element['starttime'] as Timestamp;
+//    DateTime StartTimeDate = t1.toDate();
+//  if (now.isBefore(StartTimeDate)){//if there are booked appointments in future only
+//    print("Yes");
+//   setState(() {
+//       isExists = true;
+//         });
+//  }
+//   });
+
+//   if(isExists != true){
+//      setState(() {
+//       isExists = false;
+//         });
+//   }
+
+
+       
+//  //return isExists;
+
+//       }//end else 
+//     });
+//    return isExists;
+// --------------------------END OF FIRST TRIAL TO SHOW ONLY FUTURE BOOKED----------------------------------------------------------------
+
+
+
+// --------------------------START OLD CODE WITHOUT FILTIRING TO ONLY FUTURE APPOINTMENTS----------------------------------------------------------------
     // final snap = await FirebaseFirestore.instance
     //       .collection("faculty")
     //       .doc(userid)
@@ -156,7 +234,10 @@ class _sState extends State<FacultyViewBookedAppointment> {
 
     //     return isExists;
     //   }
+// --------------------------END OLD CODE WITHOUT FILTIRING TO ONLY FUTURE APPOINTMENTS----------------------------------------------------------------
+
   } //end function
+
 
   getBookedappointments() async {
     //BuildContext context// Future
@@ -185,14 +266,17 @@ class _sState extends State<FacultyViewBookedAppointment> {
       print("######################################");
       print(event.size);
 
-      BookedAppointments.clear();
-      //BookedAppointments.length=0;
-      // BookedAppointments.clear();
+   BookedAppointments.clear();
+    BookedAppointments.length = 0;
 
       event.docs.forEach((element) async {
         //print(element.id);
         print("1");
-        if (element['Booked'] == true) {
+        
+DateTime now = new DateTime.now();
+   Timestamp t = element['starttime'] as Timestamp;
+   DateTime StartTimeDateTest = t.toDate();
+        if ((element['Booked'] == true) && (now.isBefore(StartTimeDateTest))) {
           print(element.id);
 
           print("2");
@@ -233,25 +317,26 @@ class _sState extends State<FacultyViewBookedAppointment> {
               StartTimeDate); //عشان يطلع اليوم الي فيه هذا التاريخ الجديد- الاحد او الاثنين... كسترنق
 
           print(dayname);
-
-          studentsArrayOfRef = element['students'];
-          print("**********************************************");
-          print("777777777777777777777777777777777777777777777777777");
-          print(studentsArrayOfRef);
-          print("8888888888888888888888888888888888888888888888888888");
-          print(studentsArrayOfRef.length);
-          int len = studentsArrayOfRef.length;
-          //DocumentSnapshot docRef2 = await studentsArrayOfRef[0].get();
-          print("7");
-          for (var i = 0; i < studentsArrayOfRef.length; i++) {
-            final DocumentSnapshot docRef2 =
-                await studentsArrayOfRef[i].get(); //await
-            print(docRef2['firstname']);
-            String name = docRef2['firstname'] + " " + docRef2['lastname'];
-            students.add(name);
-            print(students);
-            projectname = docRef2['projectname'];
-          }
+// ******************************HERE START ***********************************************************
+          // studentsArrayOfRef = element['students'];
+          // print("**********************************************");
+          // print("777777777777777777777777777777777777777777777777777");
+          // print(studentsArrayOfRef);
+          // print("8888888888888888888888888888888888888888888888888888");
+          // print(studentsArrayOfRef.length);
+          // int len = studentsArrayOfRef.length;
+          // //DocumentSnapshot docRef2 = await studentsArrayOfRef[0].get();
+          // print("7");
+          // for (var i = 0; i < studentsArrayOfRef.length; i++) {
+          //   final DocumentSnapshot docRef2 =
+          //       await studentsArrayOfRef[i].get(); //await
+          //   print(docRef2['firstname']);
+          //   String name = docRef2['firstname'] + " " + docRef2['lastname'];
+          //   students.add(name);
+          //   print(students);
+          //   projectname = docRef2['projectname'];
+          // }
+// ******************************HERE END ***********************************************************
 
           //if(AleardyintheArray==false){
           setState(() {
@@ -267,6 +352,13 @@ class _sState extends State<FacultyViewBookedAppointment> {
           // }//if not AleardyintheArray
 
         } //end if booked
+//         else{
+//  setState(() {
+//       isExists = false;
+//         });
+
+
+//         }
 
         for (int i = 0; i < BookedAppointments.length; i++) {
           for (int j = i + 1; j < BookedAppointments.length; j++) {
@@ -305,6 +397,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
 
         // }//end for
         // }//else not booked
+
       }); //end for each
     });
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%1");
@@ -368,7 +461,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
   Widget build(BuildContext context) {
     //getBookedappointments();
 
-    if (isExists == false) {
+    if (isExists == false|| (BookedAppointments.length==0)) {
       //|| numOfDaysOfHelp==0
       return SafeArea(
         child: Scaffold(
@@ -396,7 +489,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
                 child: Padding(
                   padding: const EdgeInsets.all(30),
                   child: Text(
-                    "No Booked Appointments**",
+                    "No Booked Appointments",
                     overflow: TextOverflow.clip,
                     style: TextStyle(
                         color: Mycolors.mainColorWhite,
