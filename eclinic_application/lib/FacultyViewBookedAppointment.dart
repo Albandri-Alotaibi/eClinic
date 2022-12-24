@@ -29,7 +29,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
   String? email = '';
   String? userid = '';
   List<Appointment> BookedAppointments = []; //availableHours
-  bool?  isExists;
+  bool? isExists;
   //  bool  isExists=false;
   //bool AleardyintheArray=false;
   bool? AleardyintheArray;
@@ -66,9 +66,8 @@ class _sState extends State<FacultyViewBookedAppointment> {
     initInfo();
   }
 
-
-  //Future<bool?> 
-BookedAppointmentsExists() async {
+  //Future<bool?>
+  BookedAppointmentsExists() async {
     final FirebaseAuth auth = await FirebaseAuth.instance;
     final User? user = await auth.currentUser;
     userid = user!.uid;
@@ -92,69 +91,51 @@ BookedAppointmentsExists() async {
 //         }
 //         });
 
-
-
-  final snap = await FirebaseFirestore.instance
+    final snap = await FirebaseFirestore.instance
         .collection("faculty")
         .doc(userid)
         .collection('appointment')
         .snapshots()
         .listen((event) {
-          bool? found;
-if (event.size == 0) { //if no booked appointments at all
+      bool? found;
+      if (event.size == 0) {
+        //if no booked appointments at all
         setState(() {
           isExists = false;
         });
-      }//end if no appointments at all
+      } //end if no appointments at all
 
-else{// else there are appointments
+      else {
+        // else there are appointments
 
- found=false;
+        found = false;
 
-event.docs.forEach((element) async {
+        event.docs.forEach((element) async {
+          DateTime now = new DateTime.now();
+          Timestamp t = element['starttime'] as Timestamp;
+          DateTime StartTimeDateTest = t.toDate();
+          if ((element['Booked'] == true) &&
+              (now.isBefore(StartTimeDateTest))) {
+            // setState(() {
+            //     isExists = true;
+            //       });
+            found = true;
+          } //end if
+        }); //end for each appointment
+      } //end else
 
-    DateTime now = new DateTime.now();
-    Timestamp t = element['starttime'] as Timestamp;
-    DateTime StartTimeDateTest = t.toDate();
-    if ((element['Booked'] == true) && (now.isBefore(StartTimeDateTest))) {
-      // setState(() {
-      //     isExists = true;
-      //       });    
-    found=true;
-        }//end if
-      });//end for each appointment
-}//end else
-
-if(found==true){
- setState(() {
+      if (found == true) {
+        setState(() {
           isExists = true;
-            }); 
-}
-else if(found==false){
- setState(() {
+        });
+      } else if (found == false) {
+        setState(() {
           isExists = false;
-            }); 
-}
+        });
+      }
+    }); //end all event
 
-
-
-
-
-
-
-});//end all event
-
-
-return isExists;
-
-
-
-
-
-
-
-
-
+    return isExists;
 
 // --------------------------START OF FIRST TRIAL TO SHOW ONLY FUTURE BOOKED----------------------------------------------------------------
 //     final snap = await FirebaseFirestore.instance
@@ -174,10 +155,10 @@ return isExists;
 //           isExists = false;
 //           return;
 //         });
-     
+
 //       }
-      
-//        else { //if there are booked appointments 
+
+//        else { //if there are booked appointments
 //         print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
 //         print("Booked Appoinyments Exist");
 // //bool found=false;
@@ -199,16 +180,12 @@ return isExists;
 //         });
 //   }
 
-
-       
 //  //return isExists;
 
-//       }//end else 
+//       }//end else
 //     });
 //    return isExists;
 // --------------------------END OF FIRST TRIAL TO SHOW ONLY FUTURE BOOKED----------------------------------------------------------------
-
-
 
 // --------------------------START OLD CODE WITHOUT FILTIRING TO ONLY FUTURE APPOINTMENTS----------------------------------------------------------------
     // final snap = await FirebaseFirestore.instance
@@ -235,9 +212,7 @@ return isExists;
     //     return isExists;
     //   }
 // --------------------------END OLD CODE WITHOUT FILTIRING TO ONLY FUTURE APPOINTMENTS----------------------------------------------------------------
-
   } //end function
-
 
   getBookedappointments() async {
     //BuildContext context// Future
@@ -266,16 +241,16 @@ return isExists;
       print("######################################");
       print(event.size);
 
-   BookedAppointments.clear();
-    BookedAppointments.length = 0;
+      BookedAppointments.clear();
+      BookedAppointments.length = 0;
 
       event.docs.forEach((element) async {
         //print(element.id);
         print("1");
-        
-DateTime now = new DateTime.now();
-   Timestamp t = element['starttime'] as Timestamp;
-   DateTime StartTimeDateTest = t.toDate();
+
+        DateTime now = new DateTime.now();
+        Timestamp t = element['starttime'] as Timestamp;
+        DateTime StartTimeDateTest = t.toDate();
         if ((element['Booked'] == true) && (now.isBefore(StartTimeDateTest))) {
           print(element.id);
 
@@ -309,6 +284,8 @@ DateTime now = new DateTime.now();
 
           Timestamp t1 = element['starttime'] as Timestamp;
           DateTime StartTimeDate = t1.toDate();
+          print("element.reference");
+          print(element.reference);
 
           Timestamp t2 = element['endtime'] as Timestamp;
           DateTime EndTimeDate = t2.toDate();
@@ -318,29 +295,30 @@ DateTime now = new DateTime.now();
 
           print(dayname);
 // ******************************HERE START ***********************************************************
-          // studentsArrayOfRef = element['students'];
-          // print("**********************************************");
-          // print("777777777777777777777777777777777777777777777777777");
-          // print(studentsArrayOfRef);
-          // print("8888888888888888888888888888888888888888888888888888");
-          // print(studentsArrayOfRef.length);
-          // int len = studentsArrayOfRef.length;
-          // //DocumentSnapshot docRef2 = await studentsArrayOfRef[0].get();
-          // print("7");
-          // for (var i = 0; i < studentsArrayOfRef.length; i++) {
-          //   final DocumentSnapshot docRef2 =
-          //       await studentsArrayOfRef[i].get(); //await
-          //   print(docRef2['firstname']);
-          //   String name = docRef2['firstname'] + " " + docRef2['lastname'];
-          //   students.add(name);
-          //   print(students);
-          //   projectname = docRef2['projectname'];
-          // }
+          studentsArrayOfRef = element['students'];
+          print("**********************************************");
+          print("777777777777777777777777777777777777777777777777777");
+          print(studentsArrayOfRef);
+          print("8888888888888888888888888888888888888888888888888888");
+          print(studentsArrayOfRef.length);
+          int len = studentsArrayOfRef.length;
+          //DocumentSnapshot docRef2 = await studentsArrayOfRef[0].get();
+          print("7");
+          for (var i = 0; i < studentsArrayOfRef.length; i++) {
+            final DocumentSnapshot docRef2 =
+                await studentsArrayOfRef[i].get(); //await
+            print(docRef2['firstname']);
+            String name = docRef2['firstname'] + " " + docRef2['lastname'];
+            students.add(name);
+            print(students);
+            projectname = docRef2['projectname'];
+          }
 // ******************************HERE END ***********************************************************
 
           //if(AleardyintheArray==false){
           setState(() {
             BookedAppointments.add(new Appointment(
+                reference: element.reference,
                 id: element.id,
                 Day: dayname,
                 startTime: StartTimeDate,
@@ -356,7 +334,6 @@ DateTime now = new DateTime.now();
 //  setState(() {
 //       isExists = false;
 //         });
-
 
 //         }
 
@@ -397,7 +374,6 @@ DateTime now = new DateTime.now();
 
         // }//end for
         // }//else not booked
-
       }); //end for each
     });
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%1");
@@ -461,7 +437,7 @@ DateTime now = new DateTime.now();
   Widget build(BuildContext context) {
     //getBookedappointments();
 
-    if (isExists == false|| (BookedAppointments.length==0)) {
+    if (isExists == false || (BookedAppointments.length == 0)) {
       //|| numOfDaysOfHelp==0
       return SafeArea(
         child: Scaffold(
@@ -811,15 +787,6 @@ DateTime now = new DateTime.now();
     //  dynamic res = BookedAppointments.removeAt(index);
     // });
 
-    //await
-    FirebaseFirestore.instance
-        .collection("faculty")
-        .doc(userid)
-        .collection('appointment')
-        .doc(id) //Is there a specific id i should put for the appointments
-        .update({
-      'Booked': false, //string if booked then it should have a student refrence
-    });
     //+++++++++++++++++++++++++++++++start Deem+++++++++++++++++++++++++++++++++++
     final snap = await FirebaseFirestore.instance
         .collection("faculty")
@@ -848,12 +815,69 @@ DateTime now = new DateTime.now();
           "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
       print(docRef2['token']);
       String st = docRef2['token'];
+      print("element.reference");
+      print(BookedAppointments[index].reference);
+      studentsArrayOfRef[i].update({
+        "appointments":
+            FieldValue.arrayRemove([BookedAppointments[index].reference]),
+      });
       sendPushMessege(st, Fname);
       print('++++++++++++++++++++++++++++++++++++++++++++++++++++');
     }
     // sendPushMessege(
     //     "f2Fy3zYaR-OqtIsht7D3L3:APA91bHihw83eQLNqgFpIOLHcQ2XzCX7JOJLK9IyMrc8XHcssBaKoga3mMAWEMwEY_i5kxbgLiJuHHj-PdPESVtuqryHUWspyFsXUnJHWvHAWsnrw1n4IipbLUsAdbo2ESLiPs5y6nY9");
     //+++++++++++++++++++++++++++++++end Deem+++++++++++++++++++++++++++++++++++
+
+    //await
+    FirebaseFirestore.instance
+        .collection("faculty")
+        .doc(userid)
+        .collection('appointment')
+        .doc(id) //Is there a specific id i should put for the appointments
+        .update({
+      'Booked': false, //string if booked then it should have a student refrence
+      "students": FieldValue.delete(),
+    });
+    // //+++++++++++++++++++++++++++++++start Deem+++++++++++++++++++++++++++++++++++
+    // final snap = await FirebaseFirestore.instance
+    //     .collection("faculty")
+    //     .doc(userid)
+    //     .collection('appointment')
+    //     .doc(BookedAppointments[index].id)
+    //     .get();
+
+    // List studentsArrayOfRef = snap['students'];
+    // print(
+    //     "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    // // print(snap['Day']);
+    // // print(snap['students']);
+    // //  print("sssssssssssssssssssssssssssssssss");
+
+    // final snap2 = await FirebaseFirestore.instance
+    //     .collection("faculty")
+    //     .doc(userid)
+    //     .get();
+    // String Fname = snap2['firstname'] + ' ' + snap2['lastname'];
+
+    // for (var i = 0; i < studentsArrayOfRef.length; i++) {
+    //   final DocumentSnapshot docRef2 =
+    //       await studentsArrayOfRef[i].get(); //await
+    //   print(
+    //       "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    //   print(docRef2['token']);
+    //   String st = docRef2['token'];
+    //   print("element.reference");
+    //   print(BookedAppointments[index].reference);
+    //   studentsArrayOfRef[i].update({
+    //     "appointments":
+    //         FieldValue.arrayRemove([BookedAppointments[index].reference]),
+    //   });
+    //   sendPushMessege(st, Fname);
+    //   print('++++++++++++++++++++++++++++++++++++++++++++++++++++');
+    // }
+    // // sendPushMessege(
+    // //     "f2Fy3zYaR-OqtIsht7D3L3:APA91bHihw83eQLNqgFpIOLHcQ2XzCX7JOJLK9IyMrc8XHcssBaKoga3mMAWEMwEY_i5kxbgLiJuHHj-PdPESVtuqryHUWspyFsXUnJHWvHAWsnrw1n4IipbLUsAdbo2ESLiPs5y6nY9");
+    // //+++++++++++++++++++++++++++++++end Deem+++++++++++++++++++++++++++++++++++
 
     //print(BookedAppointments.toString());
   }

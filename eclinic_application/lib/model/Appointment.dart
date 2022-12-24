@@ -7,35 +7,38 @@ class Appointment {
   DateTime startTime;
   DateTime endTime;
   String projectName;
- List students ;
-
+  List students;
+  var reference;
 
   Appointment({
     required this.id,
-     //required this.booked,
+    required this.reference,
+    //required this.booked,
     required this.Day,
     required this.startTime,
     required this.endTime,
-   required this.projectName,
-   required this.students,    
+    required this.projectName,
+    required this.students,
   });
 
-@override
+  @override
   String toString() {
     // TODO: implement toString
-      String srting = "Day ${Day} Date:${startTime.year}/${startTime.month}/${startTime.day} time: ${startTime.hour}:${startTime.minute} - ${endTime.hour}:${endTime.minute} \n";
+    String srting =
+        "Day ${Day} Date:${startTime.year}/${startTime.month}/${startTime.day} time: ${startTime.hour}:${startTime.minute} - ${endTime.hour}:${endTime.minute} \n";
     return srting;
   }
 
-String StringDate() {
+  String StringDate() {
     // TODO: implement toString
-      String srting = "${startTime.day}/${startTime.month}/${startTime.year}";
+    String srting = "${startTime.day}/${startTime.month}/${startTime.year}";
     return srting;
   }
 
-String StringTimeRange() {
+  String StringTimeRange() {
     // TODO: implement toString
-    String srting = "${startTime.hour}:${startTime.minute} - ${endTime.hour}:${endTime.minute}";
+    String srting =
+        "${startTime.hour}:${startTime.minute} - ${endTime.hour}:${endTime.minute}";
     return srting;
   }
 
@@ -43,16 +46,10 @@ String StringTimeRange() {
     // TODO: implement toString
 
     String srting = "";
-   for (var i = 0; i < students.length; i++) {
-    srting= srting+ "${students[i]} - ";
-   }
-    
-    return srting+"\n";
+    for (var i = 0; i < students.length; i++) {
+      srting = srting + "${students[i]} - ";
+    }
+
+    return srting + "\n";
   }
-
-
-
-
-
-
 }
