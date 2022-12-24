@@ -586,7 +586,7 @@ class _AddHourState extends State<addHoursFaculty> {
           // ),
         ),
       );
-    } else {
+    } else if (isExists == true) {
       return SafeArea(
         child: Scaffold(
           backgroundColor: Mycolors.BackgroundColor,
@@ -909,6 +909,8 @@ class _AddHourState extends State<addHoursFaculty> {
           // ),
         ),
       );
+    } else {
+      return Center(child: CircularProgressIndicator());
     }
   } //end build
 
