@@ -295,7 +295,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
 
           print(dayname);
 // ******************************HERE START ***********************************************************
-          studentsArrayOfRef = element['students'];
+          studentsArrayOfRef = element['student'];
           print("**********************************************");
           print("777777777777777777777777777777777777777777777777777");
           print(studentsArrayOfRef);
@@ -336,6 +336,8 @@ class _sState extends State<FacultyViewBookedAppointment> {
 //         });
 
 //         }
+
+
 
         for (int i = 0; i < BookedAppointments.length; i++) {
           for (int j = i + 1; j < BookedAppointments.length; j++) {
@@ -378,7 +380,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
     });
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%1");
     print(BookedAppointments.length);
-    print(BookedAppointments.toString());
+    print(BookedAppointments.toString()); 
 
     //      .get()
     //     .then((QuerySnapshot snapshot) {
@@ -795,7 +797,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
         .doc(BookedAppointments[index].id)
         .get();
 
-    List studentsArrayOfRef = snap['students'];
+    List studentsArrayOfRef = snap['student'];
     print(
         "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     // print(snap['Day']);
@@ -836,7 +838,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
         .doc(id) //Is there a specific id i should put for the appointments
         .update({
       'Booked': false, //string if booked then it should have a student refrence
-      "students": FieldValue.delete(),
+      "student": FieldValue.delete(),
     });
     // //+++++++++++++++++++++++++++++++start Deem+++++++++++++++++++++++++++++++++++
     // final snap = await FirebaseFirestore.instance
