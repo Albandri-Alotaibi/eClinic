@@ -392,4 +392,5 @@ class _MyCustomClipper extends CustomClipper<Path> {
     return false;
   }
 }
+
 //end
