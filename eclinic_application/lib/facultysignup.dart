@@ -26,6 +26,8 @@ class _facultysignupState extends State<facultysignup> {
   List<String> collage = [];
   List<String> department = [];
   List speciality = [];
+  List spName = [];
+  List faculty = [];
   late String docsforsemestername;
   late String docsforcollage;
   late String docfordepatment;
@@ -214,6 +216,7 @@ class _facultysignupState extends State<facultysignup> {
 
   checkidspecialty(List<String?> specialityoption) async {
     speciality.clear();
+    spName.clear();
     print(specialityoption);
     print(speciality.length);
     print(speciality);
@@ -231,6 +234,9 @@ class _facultysignupState extends State<facultysignup> {
                     .collection("facultyspeciality")
                     .doc(element.id);
                 speciality.add(ref);
+                spName.add(element['specialityname']);
+                print("99999999999999999999999999999999999999999");
+                print(spName);
                 print(speciality);
               }
             }
@@ -241,6 +247,32 @@ class _facultysignupState extends State<facultysignup> {
       print(e.toString());
       return null;
     }
+  }
+
+  addfacultyRefonspeciality(List sp, uid) async {
+    print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+    print(sp);
+    final ref = FirebaseFirestore.instance.collection("faculty").doc(uid);
+    faculty.add(ref);
+    await FirebaseFirestore.instance
+        .collection('facultyspeciality')
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((element) {
+        setState(() {
+          for (var i = 0; i < sp.length; i++) {
+            if (element['specialityname'] == sp[i]) {
+              FirebaseFirestore.instance
+                  .collection('facultyspeciality')
+                  .doc(element.id)
+                  .update({
+                'faculty': FieldValue.arrayUnion(faculty),
+              });
+            }
+          }
+        });
+      });
+    });
   }
 
   //to get user input
@@ -771,9 +803,9 @@ class _facultysignupState extends State<facultysignup> {
                                     lname = _lnameController.text;
                                     email = _emailController.text;
                                     password = _passwordController.text;
-                                    meetingmethod = mettingmethoddrop;
-                                    mettingmethodinfo =
-                                        _meetingmethodcontroller.text;
+                                    // meetingmethod = mettingmethoddrop;
+                                    // mettingmethodinfo =
+                                    //     _meetingmethodcontroller.text;
 
                                     if (zag < 1) {
                                       isshow = true;
@@ -797,7 +829,7 @@ class _facultysignupState extends State<facultysignup> {
                                         final Uid = user!.uid;
                                         Navigator.pushNamed(
                                             context, 'verfication');
-
+                                        addfacultyRefonspeciality(spName, Uid);
                                         await FirebaseFirestore.instance
                                             .collection('faculty')
                                             .doc(Uid)

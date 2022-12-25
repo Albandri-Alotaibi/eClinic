@@ -524,7 +524,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),
-                              autovalidateMode: 
+                              autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               validator: (value) {
                                 if (value!.isEmpty ||

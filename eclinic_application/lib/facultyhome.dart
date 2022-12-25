@@ -6,6 +6,8 @@ import 'package:myapp/style/Mycolors.dart';
 import 'package:myapp/FacultyViewBookedAppointment.dart';
 import 'package:myapp/addHoursFaculty.dart';
 import 'package:myapp/facultyFAQ.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class facultyhome extends StatefulWidget {
   // This class is the configuration for the state.
@@ -23,9 +25,31 @@ class facultyhome extends StatefulWidget {
 }
 
 class _fState extends State<facultyhome> {
+  var fnDrawer;
+  var lnDrawer;
+  @override
+  void initState() {
+    getfacultname();
+    // TODO: implement initState
+    super.initState();
+  }
+
   String? email = '';
   String? userid = '';
   //int selectedIndex = 0;
+  getfacultname() async {
+    final snap = await FirebaseFirestore.instance
+        .collection('faculty')
+        .doc(userid)
+        .get();
+    setState(() {
+      fnDrawer = snap['firstname'];
+      lnDrawer = snap['lastname'];
+    });
+
+    print(fnDrawer);
+  }
+
   final List<Widget> _pages = [
     FacultyViewBookedAppointment(),
     addHoursFaculty(),
@@ -86,7 +110,7 @@ class _fState extends State<facultyhome> {
                   height: 10,
                 ),
                 Center(
-                  child: Text("",
+                  child: Text(" ",
                       style: TextStyle(
                           fontFamily: 'bold',
                           fontSize: 16,
