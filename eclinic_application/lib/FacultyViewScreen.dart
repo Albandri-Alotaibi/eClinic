@@ -41,6 +41,8 @@ class FacultyViewScreenState extends State<FacultyViewScreen> {
   }
 
   void initAppointments() async {
+    loading = true;
+
     CollectionReference? appointment = FirebaseFirestore.instance
         .collection('faculty')
         .doc(widget.faculty['id'])
@@ -156,55 +158,78 @@ class FacultyViewScreenState extends State<FacultyViewScreen> {
 
   Widget calendarBox() {
     return Column(children: [
-      TableCalendar<Map<String, dynamic>>(
-        headerStyle: const HeaderStyle(
-          titleCentered: true,
-          formatButtonVisible: false,
+      if (appointmentModels.isEmpty)
+        const Padding(
+          padding: EdgeInsets.all(20),
+          child: Text(
+            "No appointments available for this faculty. Go back and choose another faculty with available appointments.",
+            style: TextStyle(fontSize: 18),
+            textAlign: TextAlign.center,
+          ),
         ),
-        weekendDays: const [DateTime.friday, DateTime.saturday],
-        firstDay: kFirstDay,
-        pageAnimationEnabled: true,
-        pageJumpingEnabled: true,
-        lastDay: kLastDay,
-        focusedDay: _focusedDay,
-        selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-        calendarFormat: _calendarFormat,
-        rangeSelectionMode: RangeSelectionMode.toggledOff,
-        eventLoader: _getEventsForDay,
-        startingDayOfWeek: StartingDayOfWeek.sunday,
-        calendarStyle: const CalendarStyle(
-          outsideDaysVisible: false,
-          markerSizeScale: 0.1,
-          markersAlignment: Alignment.bottomRight,
+      if (appointmentModels.isEmpty)
+        ElevatedButton(
+            style: ButtonStyle(
+                padding: MaterialStateProperty.all(
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 16))),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text("Go Back",
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: themeData.colorScheme.onPrimary,
+                    letterSpacing: 0.5))),
+      if (appointmentModels.isNotEmpty)
+        TableCalendar<Map<String, dynamic>>(
+          headerStyle: const HeaderStyle(
+            titleCentered: true,
+            formatButtonVisible: false,
+          ),
+          weekendDays: const [DateTime.friday, DateTime.saturday],
+          firstDay: kFirstDay,
+          pageAnimationEnabled: true,
+          pageJumpingEnabled: true,
+          lastDay: kLastDay,
+          focusedDay: _focusedDay,
+          selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+          calendarFormat: _calendarFormat,
+          rangeSelectionMode: RangeSelectionMode.toggledOff,
+          eventLoader: _getEventsForDay,
+          startingDayOfWeek: StartingDayOfWeek.sunday,
+          calendarStyle: const CalendarStyle(
+            outsideDaysVisible: false,
+            markerSizeScale: 0.1,
+            markersAlignment: Alignment.bottomRight,
+          ),
+          calendarBuilders: CalendarBuilders(
+            markerBuilder: (context, day, events) => events.isNotEmpty
+                ? Container(
+                    width: 20,
+                    height: 20,
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                    ),
+                    child: Text(
+                      '${events.length}',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  )
+                : null,
+          ),
+          onDaySelected: _onDaySelected,
+          onFormatChanged: (format) {
+            if (_calendarFormat != format) {
+              setState(() {
+                _calendarFormat = format;
+              });
+            }
+          },
+          onPageChanged: (focusedDay) {
+            _focusedDay = focusedDay;
+          },
         ),
-        calendarBuilders: CalendarBuilders(
-          markerBuilder: (context, day, events) => events.isNotEmpty
-              ? Container(
-                  width: 20,
-                  height: 20,
-                  alignment: Alignment.center,
-                  decoration: const BoxDecoration(
-                    color: Colors.red,
-                  ),
-                  child: Text(
-                    '${events.length}',
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                )
-              : null,
-        ),
-        onDaySelected: _onDaySelected,
-        onFormatChanged: (format) {
-          if (_calendarFormat != format) {
-            setState(() {
-              _calendarFormat = format;
-            });
-          }
-        },
-        onPageChanged: (focusedDay) {
-          _focusedDay = focusedDay;
-        },
-      ),
       const SizedBox(height: 8.0),
       Expanded(
         child: ValueListenableBuilder<List<Map<String, dynamic>>>(
@@ -272,7 +297,7 @@ class FacultyViewScreenState extends State<FacultyViewScreen> {
       var alert = AlertDialog(
         title: const Text("Booking appointment for your group:"),
         content: Text(
-            "Faculty: (${widget.faculty['firstname']} ${widget.faculty['lastname']}). \nTime: ${formattedDate.format(appointment['starttime']?.toDate() ?? DateTime.now())} until ${formattedDateTime.format(appointment['endtime']?.toDate() ?? DateTime.now())}.\nSpeciality: ${widget.speciality['specialityname']} \nMeeting: ${meetingValues(widget.faculty['meetingmethod'])}, ${widget.faculty['mettingmethodinfo']}.   \n\nAre you sure?"),
+            "Faculty: (${widget.faculty['firstname']} ${widget.faculty['lastname']}). \nTime: ${formattedDate.format(appointment['starttime']?.toDate() ?? DateTime.now())} until ${formattedDateTime.format(appointment['endtime']?.toDate() ?? DateTime.now())}.\nSpeciality: ${widget.speciality['specialityname']} \nMeeting: ${meetingValues(widget.faculty['meetingmethod'])} (${widget.faculty['mettingmethodinfo']}).   \n\nAre you sure?"),
         actions: [
           cancelButton,
           continueButton,

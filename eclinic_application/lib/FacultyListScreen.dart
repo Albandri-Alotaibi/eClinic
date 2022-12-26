@@ -31,7 +31,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
     userid = user!.uid;
     email = user.email!;
 
-    loading = true;
+    initSpeciality();
     initStudent();
   }
 
@@ -76,6 +76,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
       student?['department'] = department;
 
       Map<String, dynamic>? semester;
+
       if (student?.containsKey("semester") ?? false) {
         DocumentReference? semesterData = studentData['semester'];
 
@@ -94,20 +95,17 @@ class FacultyListScreenState extends State<FacultyListScreen> {
       student = null;
     }
 
-    await initSpeciality();
-    setState(() {
-      loading = false;
-    });
     initFaculty();
   }
 
   Future initSpeciality() async {
     CollectionReference cats =
         FirebaseFirestore.instance.collection('facultyspeciality');
-    QuerySnapshot q = await cats.get();
+    QuerySnapshot q = await cats.get(const GetOptions(source: Source.server));
 
     specialityList = q.docs.map((doc) {
       var speciality = doc.data() as Map<String, dynamic>;
+
       speciality['id'] = doc.reference.id;
       speciality['ref'] = doc.reference;
 
@@ -118,7 +116,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
   void initFaculty() async {
     var faculty = FirebaseFirestore.instance.collection('faculty');
     var q = await faculty
-        .where('semester', isEqualTo: student?['semester']['ref'])
+        .where('semester', isEqualTo: student?['semester']?['ref'])
         .get(const GetOptions(source: Source.server));
 
     facultyList = [];
@@ -203,16 +201,15 @@ class FacultyListScreenState extends State<FacultyListScreen> {
       // }
 
       var appointmentCounts = (await FirebaseFirestore.instance
-                  .collection('faculty')
-                  .doc(faculty['id'])
-                  .collection('appointment')
-                  .where("starttime", isGreaterThan: Timestamp.now())
-                  // .where("Booked", isEqualTo: false)
-                  .get())
-              .docs
-              .where((element) => element.data()['Booked'] == false)
-              .length ??
-          0;
+              .collection('faculty')
+              .doc(faculty['id'])
+              .collection('appointment')
+              .where("starttime", isGreaterThan: Timestamp.now())
+              // .where("Booked", isEqualTo: false)
+              .get())
+          .docs
+          .where((element) => element.data()['Booked'] == false)
+          .length;
 
       faculty['appointments_count'] = appointmentCounts;
 
@@ -224,9 +221,8 @@ class FacultyListScreenState extends State<FacultyListScreen> {
         facultyList.add(faculty);
       });
     }
-    setState(() {
-      facultyLoading = false;
-    });
+
+    facultyLoading = false;
   }
 
   @override
@@ -259,8 +255,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                           ),
                           SafeArea(
                               child: Row(children: [
-                            if (specialityList.isNotEmpty &&
-                                (!facultyLoading && facultyList.isNotEmpty))
+                            if (specialityList.isNotEmpty)
                               DropdownButton<Map<String, dynamic>?>(
                                   icon: const Icon(Icons.face),
                                   disabledHint: Row(children: const [
@@ -279,7 +274,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                                         fontWeight: FontWeight.w500),
                                   ),
                                   value: dropdownvalue,
-                                  items: facultyList.isEmpty
+                                  items: !facultyLoading
                                       ? []
                                       : specialityList
                                           .map((Map<String, dynamic>? item) {
@@ -313,11 +308,13 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                                 ? Padding(
                                     padding: const EdgeInsets.all(15),
                                     child: Text(
-                                        !facultyLoading && facultyList.isEmpty
-                                            ? "No faculty found for you currently."
-                                            : (dropdownvalue == null
-                                                ? 'Please select speciality first...'
-                                                : 'There are no appointments available with the selected speciality.'),
+                                        facultyLoading
+                                            ? 'Wait...'
+                                            : (facultyList.isEmpty
+                                                ? "No faculty found for you currently."
+                                                : (dropdownvalue == null
+                                                    ? 'Please select speciality first...'
+                                                    : 'There are no appointments available with the selected speciality.')),
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
                                             fontWeight: FontWeight.w600,
@@ -364,7 +361,11 @@ class FacultyListScreenState extends State<FacultyListScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) => FacultyViewScreen(
-                    faculty: faculty, speciality: dropdownvalue!)));
+                    faculty: faculty,
+                    speciality: dropdownvalue!))).then((value) => setState(() {
+              facultyLoading = true;
+              initFaculty();
+            }));
       },
       child: Container(
         margin: const EdgeInsets.fromLTRB(0, 25, 0, 0),
