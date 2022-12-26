@@ -140,9 +140,14 @@ class AppointmentConfirmationScreenState
                   "getting student: ${doc.data()['firstname']}";
             });
             var projectname = doc.data()['projectname'] as String?;
-            projectname = projectname?.replaceAll(' ', '').toLowerCase() ?? "";
+            projectname = projectname
+                    ?.replaceAll(RegExp('[^A-Za-z0-9]'), '')
+                    .toLowerCase() ??
+                "";
             if (projectname ==
-                student?['projectname']?.replaceAll(' ', '')?.toLowerCase()) {
+                student?['projectname']
+                    ?.replaceAll(RegExp('[^A-Za-z0-9]'), '')
+                    ?.toLowerCase()) {
               return doc.reference;
             }
             return null;
@@ -178,8 +183,6 @@ class AppointmentConfirmationScreenState
       });
     } catch (e) {
       loading = false;
-      debugPrintStack();
-      debugPrint(e.toString());
       setState(() {
         currentProgressStatus = "$e";
       });
@@ -306,7 +309,7 @@ class AppointmentConfirmationScreenState
                                 maxLines: 2,
                                 minLines: 2,
                                 initialValue:
-                                    "Meeting: ${widget.faculty['meetingmethod']}\n${widget.faculty['mettingmethodinfo']}",
+                                    "Meeting: ${meetingValues(widget.faculty['meetingmethod'])}\n${widget.faculty['mettingmethodinfo'] ?? "--"}",
                                 style: TextStyle(
                                     letterSpacing: 0.1,
                                     color: themeData.colorScheme.primary,
@@ -369,6 +372,18 @@ class AppointmentConfirmationScreenState
       ],
     ));
   }
+
+  String meetingValues(String value) {
+    var items = {
+      "inperson": "In Person",
+    };
+
+    if (items.containsKey(value)) {
+      return items[value]!;
+    }
+
+    return value;
+  }
 }
 
 class _MyCustomClipper extends CustomClipper<Path> {
@@ -392,5 +407,4 @@ class _MyCustomClipper extends CustomClipper<Path> {
     return false;
   }
 }
-
 //end

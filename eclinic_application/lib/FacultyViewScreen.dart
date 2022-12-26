@@ -55,7 +55,8 @@ class FacultyViewScreenState extends State<FacultyViewScreen> {
       app['id'] = doc.reference.id;
       app['ref'] = doc.reference;
 
-      if (DateTime.now().isBefore(app['starttime'].toDate())) {
+      if (app['starttime'] != null &&
+          DateTime.now().isBefore(app['starttime']?.toDate())) {
         appointmentModels.add(app);
       }
     }
@@ -286,4 +287,3 @@ class FacultyViewScreenState extends State<FacultyViewScreen> {
     showAlertDialog(context);
   }
 }
-//end

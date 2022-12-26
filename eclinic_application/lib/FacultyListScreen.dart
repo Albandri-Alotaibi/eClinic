@@ -17,6 +17,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
   List facultyList = [];
   List<Map<String, dynamic>?> specialityList = [];
   var loading = false;
+  var facultyLoading = true;
   String? userid;
   String? email;
   Map<String, dynamic>? student;
@@ -109,7 +110,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
       var speciality = doc.data() as Map<String, dynamic>;
       speciality['id'] = doc.reference.id;
       speciality['ref'] = doc.reference;
-      debugPrint(speciality.toString());
+
       return speciality;
     }).toList();
   }
@@ -223,9 +224,11 @@ class FacultyListScreenState extends State<FacultyListScreen> {
         facultyList.add(faculty);
       });
     }
+    setState(() {
+      facultyLoading = false;
+    });
   }
 
-  void initFacultyExtraData() async {}
   @override
   Widget build(BuildContext context) {
     themeData = Theme.of(context);
@@ -256,7 +259,8 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                           ),
                           SafeArea(
                               child: Row(children: [
-                            if (specialityList.isNotEmpty)
+                            if (specialityList.isNotEmpty &&
+                                (!facultyLoading && facultyList.isNotEmpty))
                               DropdownButton<Map<String, dynamic>?>(
                                   icon: const Icon(Icons.face),
                                   disabledHint: Row(children: const [
@@ -309,9 +313,11 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                                 ? Padding(
                                     padding: const EdgeInsets.all(15),
                                     child: Text(
-                                        dropdownvalue == null
-                                            ? 'Please select speciality first...'
-                                            : 'There are no appointments available with the selected speciality.',
+                                        !facultyLoading && facultyList.isEmpty
+                                            ? "No faculty found for you currently."
+                                            : (dropdownvalue == null
+                                                ? 'Please select speciality first...'
+                                                : 'There are no appointments available with the selected speciality.'),
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
                                             fontWeight: FontWeight.w600,
@@ -443,4 +449,3 @@ class FacultyListScreenState extends State<FacultyListScreen> {
     }
   }
 }
-//end
