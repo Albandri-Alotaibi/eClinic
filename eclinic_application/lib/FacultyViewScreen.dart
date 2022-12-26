@@ -17,7 +17,7 @@ class FacultyViewScreen extends StatefulWidget {
 
 class FacultyViewScreenState extends State<FacultyViewScreen> {
   late ThemeData themeData;
-  late final ValueNotifier<List<Map<String, dynamic>>> _selectedEvents;
+  late ValueNotifier<List<Map<String, dynamic>>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.week;
   List<Map<String, dynamic>> appointmentModels = [];
 
@@ -50,6 +50,7 @@ class FacultyViewScreenState extends State<FacultyViewScreen> {
         .where('Booked', isEqualTo: false)
         .get(const GetOptions(source: Source.server));
 
+    appointmentModels = [];
     for (var doc in q.docs) {
       var app = doc.data() as Map<String, dynamic>;
       app['id'] = doc.reference.id;
@@ -255,12 +256,15 @@ class FacultyViewScreenState extends State<FacultyViewScreen> {
         onPressed: () {
           Navigator.of(context, rootNavigator: true).pop();
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => AppointmentConfirmationScreen(
-                      appointment: appointment,
-                      faculty: widget.faculty,
-                      speciality: widget.speciality)));
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AppointmentConfirmationScreen(
+                          appointment: appointment,
+                          faculty: widget.faculty,
+                          speciality: widget.speciality)))
+              .then((value) => setState(() {
+                    initAppointments();
+                  }));
         },
       );
 
@@ -268,7 +272,7 @@ class FacultyViewScreenState extends State<FacultyViewScreen> {
       var alert = AlertDialog(
         title: const Text("Booking appointment for your group:"),
         content: Text(
-            "Faculty: (${widget.faculty['firstname']} ${widget.faculty['lastname']}). \nTime: ${formattedDate.format(appointment['starttime']?.toDate() ?? DateTime.now())} until ${formattedDateTime.format(appointment['endtime']?.toDate() ?? DateTime.now())}.\nSpeciality: ${widget.speciality['specialityname']} \nMeeting: ${widget.faculty['meetingmethod']}, ${widget.faculty['mettingmethodinfo']}.   \n\nAre you sure?"),
+            "Faculty: (${widget.faculty['firstname']} ${widget.faculty['lastname']}). \nTime: ${formattedDate.format(appointment['starttime']?.toDate() ?? DateTime.now())} until ${formattedDateTime.format(appointment['endtime']?.toDate() ?? DateTime.now())}.\nSpeciality: ${widget.speciality['specialityname']} \nMeeting: ${meetingValues(widget.faculty['meetingmethod'])}, ${widget.faculty['mettingmethodinfo']}.   \n\nAre you sure?"),
         actions: [
           cancelButton,
           continueButton,
@@ -285,5 +289,17 @@ class FacultyViewScreenState extends State<FacultyViewScreen> {
     }
 
     showAlertDialog(context);
+  }
+
+  String meetingValues(String value) {
+    var items = {
+      "inperson": "In Person",
+    };
+
+    if (items.containsKey(value)) {
+      return items[value]!;
+    }
+
+    return value;
   }
 }
