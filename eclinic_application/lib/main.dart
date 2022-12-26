@@ -1,10 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
 import 'package:myapp/StudentViewBookedAppointment.dart';
 import 'package:myapp/addHoursFaculty.dart';
 import 'package:myapp/FacultyViewBookedAppointment.dart';
@@ -24,7 +21,6 @@ import 'package:myapp/FacultyViewScreen.dart';
 import 'package:myapp/FacultyListScreen.dart';
 import 'package:myapp/facultyFAQ.dart';
 
-
 Future<void> _firebaseMsgBackgroundHanler(RemoteMessage message) async {
   print("handling msg ${message.messageId}");
 }
@@ -32,8 +28,10 @@ Future<void> _firebaseMsgBackgroundHanler(RemoteMessage message) async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   await FirebaseMessaging.instance.getInitialMessage();
   FirebaseMessaging.onBackgroundMessage(_firebaseMsgBackgroundHanler);
+
   runApp(const MyApp());
 }
 
@@ -49,9 +47,11 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primaryColor: Color(0xFF55C1EF),
         ),
-        initialRoute: '/',
+        // initialRoute: '/', //<----- deleted
+        home: getLandingPage(),
+        // <--------- new
         routes: {
-          '/': (context) => home(),
+          // '/': (context) => home(), //<----- deleted
           'addHoursFaculty': (context) => addHoursFaculty(),
           'facultyhome': (context) => facultyhome(0),
           'studenthome': (context) => studenthome(),
@@ -71,5 +71,31 @@ class MyApp extends StatelessWidget {
           'StudentViewBookedAppointment': (context) =>
               StudentViewBookedAppointment(),
         });
+  }
+
+  //for auto login  <---- new
+  StreamBuilder<User?> getLandingPage() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+
+    return StreamBuilder<User?>(
+      stream: auth.userChanges(),
+      builder: (BuildContext context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.waiting) {
+          if (snapshot.hasData &&
+              (!snapshot.data!.isAnonymous) &&
+              auth.currentUser != null) {
+            if (auth.currentUser?.email?.contains("@student.ksu.edu.sa") ??
+                false) {
+              return studenthome();
+            } else if (auth.currentUser?.email?.isNotEmpty ?? false) {
+              return facultyhome(0);
+            }
+          }
+          return home();
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
+    );
   }
 }

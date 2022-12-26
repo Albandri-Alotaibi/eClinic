@@ -33,7 +33,7 @@ class _sState extends State<studenthome> {
     requestPremission();
     getToken();
     initInfo();
-   setSemester();
+    setSemester();
   }
 
   getusername() async {
@@ -52,15 +52,15 @@ class _sState extends State<studenthome> {
   final double profileheight = 144;
   @override
   Widget build(BuildContext context) {
-    StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: ((context, snapshot) {
-          if (snapshot.hasData) {
-            return studenthome();
-          } else {
-            return login();
-          }
-        }));
+    // StreamBuilder<User?>(
+    //     stream: FirebaseAuth.instance.authStateChanges(),
+    //     builder: ((context, snapshot) {
+    //       if (snapshot.hasData) {
+    //         return studenthome();
+    //       } else {
+    //         return login();
+    //       }
+    //     }));
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
     userid = user!.uid;
