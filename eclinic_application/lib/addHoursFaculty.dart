@@ -1285,6 +1285,7 @@ class _AddHourState extends State<addHoursFaculty> {
       ],
     );
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return alert;

@@ -28,6 +28,7 @@ class TimeRangePicker {
     VoidCallback? onCancel,
   }) {
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (context) {
         return _TimeRangeDialog(
@@ -96,7 +97,7 @@ class _TimeRangeDialogState extends State<_TimeRangeDialog>
   final double _kTimePickerWidthPortrait = 328.0;
   final double _kTimePickerWidthLandscape = 528.0;
   final double _kTimePickerHeightPortrait = 434.0;
-  final double _kTimePickerHeightLandscape = kIsWeb?350:316.0;
+  final double _kTimePickerHeightLandscape = kIsWeb ? 350 : 316.0;
 
   @override
   void initState() {
@@ -138,7 +139,7 @@ class _TimeRangeDialogState extends State<_TimeRangeDialog>
                 controller: _tabController,
                 tabs: [
                   Tab(
-                      text: "Start time \n ${_formatTime(_startTime)}"??
+                      text: "Start time \n ${_formatTime(_startTime)}" ??
                           widget.headerDefaultStartLabel),
                   Tab(
                       text: "End time \n ${_formatTime(_endTime)}" ??
