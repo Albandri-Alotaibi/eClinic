@@ -9,6 +9,7 @@ class Appointment {
   String projectName;
   List students;
   var reference;
+  String specialty;
 
   Appointment({
     required this.id,
@@ -19,6 +20,7 @@ class Appointment {
     required this.endTime,
     required this.projectName,
     required this.students,
+    required this.specialty,
   });
 
   @override
@@ -47,7 +49,7 @@ class Appointment {
 
     String srting = "";
     for (var i = 0; i < students.length; i++) {
-      srting = srting + "${students[i]} - ";
+      srting = srting + "${students[i]} " + "\n";
     }
 
     return srting + "\n";

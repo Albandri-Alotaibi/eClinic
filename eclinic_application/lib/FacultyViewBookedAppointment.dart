@@ -294,6 +294,10 @@ class _sState extends State<FacultyViewBookedAppointment> {
               StartTimeDate); //عشان يطلع اليوم الي فيه هذا التاريخ الجديد- الاحد او الاثنين... كسترنق
 
           print(dayname);
+          var specialtyRef = element['specialty'];
+          final DocumentSnapshot specialtyDocRef2 = await specialtyRef.get();
+          String spName = specialtyDocRef2['specialityname'];
+          print(spName);
 // ******************************HERE START ***********************************************************
           studentsArrayOfRef = element['student'];
           print("**********************************************");
@@ -324,7 +328,8 @@ class _sState extends State<FacultyViewBookedAppointment> {
                 startTime: StartTimeDate,
                 endTime: EndTimeDate,
                 projectName: projectname,
-                students: students));
+                students: students,
+                specialty: spName));
           });
 
           // }//if not AleardyintheArray
@@ -336,8 +341,6 @@ class _sState extends State<FacultyViewBookedAppointment> {
 //         });
 
 //         }
-
-
 
         for (int i = 0; i < BookedAppointments.length; i++) {
           for (int j = i + 1; j < BookedAppointments.length; j++) {
@@ -380,7 +383,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
     });
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%1");
     print(BookedAppointments.length);
-    print(BookedAppointments.toString()); 
+    print(BookedAppointments.toString());
 
     //      .get()
     //     .then((QuerySnapshot snapshot) {
@@ -557,7 +560,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
                                             // Text("  Time : "+BookedAppointments[index].StringTimeRange()),
                                             Text(""),
                                             Text(
-                                                "  Project : " +
+                                                "Project : " +
                                                     BookedAppointments[index]
                                                         .projectName +
                                                     "\n",
@@ -566,15 +569,26 @@ class _sState extends State<FacultyViewBookedAppointment> {
                                                         Mycolors.mainColorBlack,
                                                     fontFamily: 'main',
                                                     fontSize: 15)),
+
                                             Text(
-                                                "  Students : " +
+                                                "Students : " +
                                                     BookedAppointments[index]
                                                         .StringStudents(),
                                                 style: TextStyle(
                                                     color:
                                                         Mycolors.mainColorBlack,
                                                     fontFamily: 'main',
-                                                    fontSize: 15))
+                                                    fontSize: 15)),
+                                            Text(
+                                                "speciality : " +
+                                                    BookedAppointments[index]
+                                                        .specialty +
+                                                    "\n",
+                                                style: TextStyle(
+                                                    color:
+                                                        Mycolors.mainColorBlack,
+                                                    fontFamily: 'main',
+                                                    fontSize: 15)),
                                           ]),
                                           //crossAxisAlignment: CrossAxisAlignment.start,
                                           Row(
