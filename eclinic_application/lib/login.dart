@@ -23,6 +23,7 @@ class _loginState extends State<login> {
   final _passwordController = TextEditingController();
   RegExp ksuEmailRegEx = new RegExp(r'^([a-z\d\._]+)@ksu.edu.sa$',
       multiLine: false, caseSensitive: false);
+  RegExp english = RegExp("^[\u0000-\u007F]+\$");
   bool _obsecuretext = true;
   @override
   Widget build(BuildContext context) {
@@ -101,6 +102,11 @@ class _loginState extends State<login> {
                                   if (!(ksuEmailRegEx
                                       .hasMatch(_emailController.text))) {
                                     return 'Please write email format correctly, example@ksu.edu.sa ';
+                                  } else {
+                                    if (!(english
+                                        .hasMatch(_emailController.text))) {
+                                      return "only english is allowed";
+                                    }
                                   }
                                 }
                               }),
@@ -166,14 +172,21 @@ class _loginState extends State<login> {
                                   if (formkey.currentState!.validate()) {
                                     await FirebaseAuth.instance
                                         .signInWithEmailAndPassword(
-                                            email: email, password: password);
-
-                                    Navigator.pushNamed(context, 'facultyhome')
+                                            email: email, password: password)
                                         .then((value) async {
                                       final FirebaseAuth auth =
                                           FirebaseAuth.instance;
                                       final User? user = auth.currentUser;
                                       final Uid = user!.uid;
+                                      if (user.emailVerified) {
+                                        Navigator.pushNamed(
+                                            context, 'facultyhome');
+                                      } else {
+                                        if (!(user.emailVerified)) {
+                                          Navigator.pushNamed(
+                                              context, 'verfication');
+                                        }
+                                      }
                                     });
                                   }
                                 } on FirebaseAuthException catch (error) {

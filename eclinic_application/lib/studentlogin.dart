@@ -170,13 +170,19 @@ class _studentloginState extends State<studentlogin> {
                                   if (formkey.currentState!.validate()) {
                                     await FirebaseAuth.instance
                                         .signInWithEmailAndPassword(
-                                            email: email, password: password);
-                                    Navigator.pushNamed(context, 'studenthome')
+                                            email: email, password: password)
                                         .then((value) async {
                                       final FirebaseAuth auth =
                                           FirebaseAuth.instance;
                                       final User? user = auth.currentUser;
                                       final Uid = user!.uid;
+                                      if (user.emailVerified) {
+                                        Navigator.pushNamed(
+                                            context, 'studenthome');
+                                      } else {
+                                        Navigator.pushNamed(
+                                            context, 'studentverfication');
+                                      }
                                     });
                                   }
                                 } on FirebaseAuthException catch (error) {
