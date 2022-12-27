@@ -203,7 +203,7 @@ class AppointmentConfirmationScreenState
           children: [
             const Image(
               image: AssetImage('./assets/images/eClinicLogo-blue.png'),
-              height: 180,
+              height: 80,
             ),
             const Center(child: CircularProgressIndicator()),
             const SizedBox(height: 20),
@@ -309,7 +309,7 @@ class AppointmentConfirmationScreenState
                                 maxLines: 2,
                                 minLines: 2,
                                 initialValue:
-                                    "Meeting: ${meetingValues(widget.faculty['meetingmethod'])} (${widget.faculty['mettingmethodinfo'] ?? "--"})",
+                                    "Meeting: ${meetingValues(widget.faculty['meetingmethod'])} (${widget.faculty['metingmethodinfo'] ?? "--"})",
                                 style: TextStyle(
                                     letterSpacing: 0.1,
                                     color: themeData.colorScheme.primary,

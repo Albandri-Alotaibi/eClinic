@@ -117,6 +117,8 @@ class FacultyListScreenState extends State<FacultyListScreen> {
     var faculty = FirebaseFirestore.instance.collection('faculty');
     var q = await faculty
         .where('semester', isEqualTo: student?['semester']?['ref'])
+        .where('collage', isEqualTo: student?['college']?['ref'])
+        .where('department', isEqualTo: student?['department']?['ref'])
         .get(const GetOptions(source: Source.server));
 
     facultyList = [];
@@ -139,48 +141,48 @@ class FacultyListScreenState extends State<FacultyListScreen> {
       }
 
       Map<String, dynamic>? college;
-      if (faculty.containsKey("collage")) {
-        DocumentReference? collageData = doc['collage'];
-
-        if (collageData != null) {
-          var cData = await collageData.get();
-
-          if (cData.exists) {
-            college = cData.data() as Map<String, dynamic>;
-            college['id'] = cData.reference.id;
-          }
-        }
-      }
+      // if (faculty.containsKey("collage")) {
+      //   DocumentReference? collageData = doc['collage'];
+      //
+      //   if (collageData != null) {
+      //     var cData = await collageData.get();
+      //
+      //     if (cData.exists) {
+      //       college = cData.data() as Map<String, dynamic>;
+      //       college['id'] = cData.reference.id;
+      //     }
+      //   }
+      // }
       faculty['collage'] = college;
-
-      if (faculty['collage']?['id']
-              .compareTo(student?['college']?['id'] ?? "") !=
-          0) {
-        continue;
-      }
-
+      //
+      // if (faculty['collage']?['id']
+      //         .compareTo(student?['college']?['id'] ?? "") !=
+      //     0) {
+      //   continue;
+      // }
+      //
       Map<String, dynamic>? department;
-      if (faculty.containsKey("department")) {
-        DocumentReference? departmentData = doc['department'];
-
-        if (departmentData != null) {
-          var dData = await departmentData.get();
-
-          if (dData.exists) {
-            department = dData.data() as Map<String, dynamic>;
-            department['id'] = dData.reference.id;
-          }
-        }
-      }
+      // if (faculty.containsKey("department")) {
+      //   DocumentReference? departmentData = doc['department'];
+      //
+      //   if (departmentData != null) {
+      //     var dData = await departmentData.get();
+      //
+      //     if (dData.exists) {
+      //       department = dData.data() as Map<String, dynamic>;
+      //       department['id'] = dData.reference.id;
+      //     }
+      //   }
+      // }
       faculty['department'] = department;
+      //
+      // if (faculty['department']?['id']
+      //         .compareTo(student?['department']?['id'] ?? "") !=
+      //     0) {
+      //   continue;
+      // }
 
-      if (faculty['department']?['id']
-              .compareTo(student?['department']?['id'] ?? "") !=
-          0) {
-        continue;
-      }
-
-      // Map<String, dynamic>? semester;
+      Map<String, dynamic>? semester;
       // if (faculty.containsKey("semester")) {
       //   DocumentReference? semesterData = doc['semester'];
       //
@@ -193,7 +195,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
       //     }
       //   }
       // }
-      // faculty['semester'] = semester;
+      faculty['semester'] = semester;
       // if (faculty['semester']?['id']
       //         .compareTo(student?['semester']?['id'] ?? "") !=
       //     0) {
@@ -222,7 +224,9 @@ class FacultyListScreenState extends State<FacultyListScreen> {
       });
     }
 
-    facultyLoading = false;
+    setState(() {
+      facultyLoading = false;
+    });
   }
 
   @override
@@ -274,7 +278,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                                         fontWeight: FontWeight.w500),
                                   ),
                                   value: dropdownvalue,
-                                  items: !facultyLoading
+                                  items: facultyLoading
                                       ? []
                                       : specialityList
                                           .map((Map<String, dynamic>? item) {
@@ -335,7 +339,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                                             " " +
                                             getResults()[index]['lastname'],
                                         college:
-                                            "${getResults()[index]['collage']?['collagename'] ?? "--"}/${getResults()[index]['department']?['departmentname'] ?? "--"}",
+                                            "${getResults()[index]?['collage']?['collagename'] ?? "--"}/${getResults()[index]?['department']?['departmentname'] ?? "--"}",
                                         faculty: getResults()[index],
                                       );
                                     }))
@@ -403,7 +407,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                           ),
                         ),
                         const SizedBox(
-                          height: 4,
+                          height: 10,
                         ),
                         Text(
                           facultyName,
@@ -412,14 +416,14 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                               fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(
-                          height: 4,
+                          height: 12,
                         ),
-                        Text(
-                          college,
-                          style: TextStyle(
-                              color: themeData.colorScheme.primary,
-                              fontWeight: FontWeight.w500),
-                        ),
+                        // Text(
+                        //   college,
+                        //   style: TextStyle(
+                        //       color: themeData.colorScheme.primary,
+                        //       fontWeight: FontWeight.w500),
+                        // ),
                       ],
                     ),
                   )
