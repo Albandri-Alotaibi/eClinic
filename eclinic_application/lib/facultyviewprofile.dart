@@ -204,15 +204,18 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
             if (startdate != null) {
               Timestamp t = element['enddate'];
               DateTime enddate = t.toDate();
-              if (Dateoftoday.year <= enddate.year) {
-                if (Dateoftoday.month > enddate.month) {
-                  semester.remove(element['semestername']);
-                }
+              // if (Dateoftoday.year <= enddate.year) {
+              //   if (Dateoftoday.month > enddate.month) {
+              //     semester.remove(element['semestername']);
+              //   }
 
-                if (Dateoftoday.month == enddate.month &&
-                    Dateoftoday.day > enddate.day) {
-                  semester.remove(element['semestername']);
-                }
+              //   if (Dateoftoday.month == enddate.month &&
+              //       Dateoftoday.day > enddate.day) {
+              //     semester.remove(element['semestername']);
+              //   }
+              // }
+              if (Dateoftoday.isAfter(enddate)) {
+                semester.remove(element['semestername']);
               }
             }
           });
