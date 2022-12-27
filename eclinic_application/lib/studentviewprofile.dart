@@ -58,6 +58,8 @@ class _studentviewprofileState extends State<studentviewprofile> {
   var zag = 0;
   bool isshow = false;
   List category = [];
+  List gpcategorynamebaeforedit = [];
+  List newselectgpcategory = [];
   List<String> categoryfromDB = [];
   List<String> department = [];
   List<String> collage = [];
@@ -170,6 +172,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
 
   checkidcategory(List<String?> categoryoption) async {
     category.length = 0;
+    newselectgpcategory.clear();
     try {
       await FirebaseFirestore.instance
           .collection('gpcategory')
@@ -183,6 +186,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                     .collection("gpcategory")
                     .doc(element.id);
                 category.add(ref);
+                newselectgpcategory.add(element['gpcategoryname']);
                 print(category);
               }
             }
@@ -193,6 +197,52 @@ class _studentviewprofileState extends State<studentviewprofile> {
       print(e.toString());
       return null;
     }
+  }
+
+  editstudentarray(List spe) async {
+    final ref = FirebaseFirestore.instance.collection("student").doc(userid);
+    List f = [];
+    f.clear();
+    await FirebaseFirestore.instance
+        .collection('gpcategory')
+        .get()
+        .then((querySnapshot) {
+      // ignore: avoid_function_literals_in_foreach_calls
+      querySnapshot.docs.forEach((element) async {
+        for (var i = 0; i < category.length; i++) {
+          print(
+              "oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+          print(spe);
+          ///// for add
+          if (element['gpcategoryname'] == spe[i]) {
+            f = element['student'];
+            print(f);
+            if (!(f.contains(ref))) {
+              f.add(ref);
+              FirebaseFirestore.instance
+                  .collection('gpcategory')
+                  .doc(element.id)
+                  .update({
+                'student': FieldValue.arrayUnion([ref]),
+              });
+            }
+          }
+          ////////for delete
+          if (!(spe.contains(element['gpcategoryname']))) {
+            f = element['student'];
+            print(f);
+            if ((f.contains(ref))) {
+              FirebaseFirestore.instance
+                  .collection('gpcategory')
+                  .doc(element.id)
+                  .update({
+                'student': FieldValue.arrayRemove([ref]),
+              });
+            }
+          }
+        }
+      });
+    });
   }
 
   retrivecollage() async {
@@ -1041,7 +1091,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                       // gpdate = date;
                       socialmedia = social;
                       socoamediaaccount = _socialmediaccount.text;
-
+                      editstudentarray(newselectgpcategory);
                       if (social == "None") {
                         socoamediaaccount = "";
                       }

@@ -263,7 +263,6 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
     final ref = FirebaseFirestore.instance.collection("faculty").doc(userid);
     List f = [];
     f.clear();
-
     await FirebaseFirestore.instance
         .collection('facultyspeciality')
         .get()

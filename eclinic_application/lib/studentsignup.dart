@@ -25,6 +25,8 @@ class _studentsignupState extends State<studentsignup> {
   List<String> collage = [];
   List<String> department = [];
   List category = [];
+  List gpcategoryname = [];
+  List student = [];
   late String docsforcollage;
   late String docfordepatment;
   var departmentselectedvalue;
@@ -157,7 +159,8 @@ class _studentsignupState extends State<studentsignup> {
   }
 
   checkidcategory(List<String?> categoryoption) async {
-    category.length = 0;
+    category.clear();
+    gpcategoryname.clear();
     // print(specialityoption);
     // print(speciality.length);
     // print(speciality);
@@ -175,6 +178,7 @@ class _studentsignupState extends State<studentsignup> {
                     .collection("gpcategory")
                     .doc(element.id);
                 category.add(ref);
+                gpcategoryname.add(element['gpcategoryname']);
                 print(category);
               }
             }
@@ -221,6 +225,32 @@ class _studentsignupState extends State<studentsignup> {
     return dt;
     //2022-12-20 00:00:00.000
     //2023-09-15 00:00:00.000
+  }
+
+  addstudentRefongpcategory(List sp, uid) async {
+    print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+    print(sp);
+    final ref = FirebaseFirestore.instance.collection("student").doc(uid);
+    student.add(ref);
+    await FirebaseFirestore.instance
+        .collection('gpcategory')
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((element) {
+        setState(() {
+          for (var i = 0; i < sp.length; i++) {
+            if (element['gpcategoryname'] == sp[i]) {
+              FirebaseFirestore.instance
+                  .collection('gpcategory')
+                  .doc(element.id)
+                  .update({
+                'student': FieldValue.arrayUnion(student),
+              });
+            }
+          }
+        });
+      });
+    });
   }
 
   final formkey = GlobalKey<FormState>();
@@ -972,7 +1002,8 @@ class _studentsignupState extends State<studentsignup> {
                                         final Uid = user!.uid;
                                         Navigator.pushNamed(
                                             context, 'studentverfication');
-
+                                        addstudentRefongpcategory(
+                                            gpcategoryname, Uid);
                                         await FirebaseFirestore.instance
                                             .collection('student')
                                             .doc(Uid)
