@@ -309,7 +309,7 @@ class AppointmentConfirmationScreenState
                                 maxLines: 2,
                                 minLines: 2,
                                 initialValue:
-                                    "Meeting: ${meetingValues(widget.faculty['meetingmethod'])} (${widget.faculty['metingmethodinfo'] ?? "--"})",
+                                    "Meeting: ${meetingValues(widget.faculty['meetingmethod'])} (${widget.faculty['mettingmethodinfo'] ?? "--"})",
                                 style: TextStyle(
                                     letterSpacing: 0.1,
                                     color: themeData.colorScheme.primary,
