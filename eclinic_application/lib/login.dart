@@ -21,6 +21,8 @@ class _loginState extends State<login> {
   final formkey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  RegExp ksuEmailRegEx = new RegExp(r'^([a-z\d\._]+)@ksu.edu.sa$',
+      multiLine: false, caseSensitive: false);
   bool _obsecuretext = true;
   @override
   Widget build(BuildContext context) {
@@ -96,7 +98,10 @@ class _loginState extends State<login> {
                                     _emailController.text == "") {
                                   return 'Please enter your KSU email ';
                                 } else {
-                                  return null;
+                                  if (!(ksuEmailRegEx
+                                      .hasMatch(_emailController.text))) {
+                                    return 'Please write email format correctly, example@ksu.edu.sa ';
+                                  }
                                 }
                               }),
                           SizedBox(
