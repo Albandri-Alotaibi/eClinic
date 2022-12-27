@@ -278,7 +278,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                                         fontWeight: FontWeight.w500),
                                   ),
                                   value: dropdownvalue,
-                                  items: facultyLoading
+                                  items: facultyLoading && facultyList.isEmpty
                                       ? []
                                       : specialityList
                                           .map((Map<String, dynamic>? item) {
@@ -339,7 +339,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                                             " " +
                                             getResults()[index]['lastname'],
                                         college:
-                                            "${getResults()[index]?['collage']?['collagename'] ?? "--"}/${getResults()[index]?['department']?['departmentname'] ?? "--"}",
+                                            "${student?['college']?['collagename'] ?? "--"}/${student?['department']?['departmentname'] ?? "--"}",
                                         faculty: getResults()[index],
                                       );
                                     }))
@@ -367,6 +367,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                 builder: (context) => FacultyViewScreen(
                     faculty: faculty,
                     speciality: dropdownvalue!))).then((value) => setState(() {
+              facultyList = [];
               facultyLoading = true;
               initFaculty();
             }));
@@ -407,7 +408,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                           ),
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 4,
                         ),
                         Text(
                           facultyName,
@@ -416,14 +417,14 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                               fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(
-                          height: 12,
+                          height: 4,
                         ),
-                        // Text(
-                        //   college,
-                        //   style: TextStyle(
-                        //       color: themeData.colorScheme.primary,
-                        //       fontWeight: FontWeight.w500),
-                        // ),
+                        Text(
+                          college,
+                          style: TextStyle(
+                              color: themeData.colorScheme.primary,
+                              fontWeight: FontWeight.w500),
+                        ),
                       ],
                     ),
                   )
