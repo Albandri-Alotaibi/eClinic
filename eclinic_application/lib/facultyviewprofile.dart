@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multiselect/multiselect.dart';
 import 'package:myapp/login.dart';
@@ -37,6 +39,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
     retrivecollage();
     retrivedepartment();
     retrivecolldepsem();
+    specialitybeforedit();
     isshow = false;
     super.initState();
   }
@@ -44,6 +47,8 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
   List<String> options = [];
   List<String> specality = [];
   List specalityid = [];
+  List editfacultRefspecailty = [];
+  List specialitybefore = [];
   List<String> semester = [];
   List<String> collage = [];
   List<String> department = [];
@@ -238,6 +243,79 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
       print(e.toString());
       return null;
     }
+  }
+
+  specialitybeforedit() async {
+    final snap = await FirebaseFirestore.instance
+        .collection('faculty')
+        .doc(userid)
+        .get();
+    List facultyspecialityRef = snap["specialty"];
+    for (var i = 0; i < facultyspecialityRef.length; i++) {
+      final DocumentSnapshot docRef = await facultyspecialityRef[i].get();
+      setState(() {
+        specialitybefore.add(docRef["specialityname"]);
+      });
+    }
+  }
+
+  editfacultyarray(List spe) async {
+    final ref = FirebaseFirestore.instance.collection("faculty").doc(userid);
+    List f = [];
+    f.clear();
+
+    await FirebaseFirestore.instance
+        .collection('facultyspeciality')
+        .get()
+        .then((querySnapshot) {
+      // ignore: avoid_function_literals_in_foreach_calls
+      querySnapshot.docs.forEach((element) async {
+        for (var i = 0; i < specality.length; i++) {
+          print(
+              "oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+          print(spe[i]);
+          ///// for add
+          if (element['specialityname'] == spe[i]) {
+            f = element['faculty'];
+            print(f);
+            if (!(f.contains(ref))) {
+              f.add(ref);
+              FirebaseFirestore.instance
+                  .collection('facultyspeciality')
+                  .doc(element.id)
+                  .update({
+                'faculty': FieldValue.arrayUnion([ref]),
+              });
+            }
+          }
+          ////////for delete
+          if (!(spe.contains(element['specialityname']))) {
+            f = element['faculty'];
+            print(f);
+            if ((f.contains(ref))) {
+              FirebaseFirestore.instance
+                  .collection('facultyspeciality')
+                  .doc(element.id)
+                  .update({
+                'faculty': FieldValue.arrayRemove([ref]),
+              });
+            }
+          }
+          // if (element['specialityname'] != specialitybefore[i]) {
+          //   f = element['faculty'];
+          //   print(f);
+          //   if ((f.contains(ref))) {
+          //     FirebaseFirestore.instance
+          //         .collection('facultyspeciality')
+          //         .doc(element.id)
+          //         .update({
+          //       'faculty': FieldValue.arrayRemove([ref]),
+          //     });
+          //   }
+          // }
+        }
+      });
+    });
   }
 
   @override
@@ -633,8 +711,9 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                     }
                                   });
                                 });
+
                                 checkidspecialty(selectedoptionlist.value);
-                                //isshow = selectedoptionlist.value.isEmpty;
+
                                 zag = selectedoptionlist.value.length;
                                 if (zag < 1) {
                                   isshow = true;
@@ -812,6 +891,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                       ln = _lnameController.text;
                       mm = mettingmethoddrop;
                       mmi = _meetingmethodcontroller.text;
+                      editfacultyarray(editfacultRefspecailty);
                       if (zag < 1) {
                         isshow = true;
                       }
@@ -892,7 +972,9 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
         backgroundColor: Colors.grey.shade800,
         backgroundImage: AssetImage('assets/images/woman.png'),
       );
+
   checkidspecialty(List<String?> specialityoption) async {
+    editfacultRefspecailty.clear();
     specalityid.length = 0;
     try {
       await FirebaseFirestore.instance
@@ -907,6 +989,11 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                     .collection("facultyspeciality")
                     .doc(element.id);
                 specalityid.add(ref);
+                editfacultRefspecailty.add(element['specialityname']);
+                // editfacultRefspecailty.add(element['specialityname']);
+                // print("9999999999999999999999999999999999999999999999999");
+                // editfacultyarray(editfacultRefspecailty);
+
                 print(specalityid);
               }
             }
@@ -918,6 +1005,34 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
       return null;
     }
   }
+
+  // checkspecialityforfaculty(List<String?> specialityoption) async {
+  //   editfacultRefspecailty.clear();
+  //   specalityid.length = 0;
+  //   try {
+  //     await FirebaseFirestore.instance
+  //         .collection('facultyspeciality')
+  //         .get()
+  //         .then((querySnapshot) {
+  //       querySnapshot.docs.forEach((element) {
+  //         setState(() {
+  //           for (var i = 0; i < specialityoption.length; i++) {
+  //             if (element['specialityname'] == specialityoption[i]) {
+  //               final ref = FirebaseFirestore.instance
+  //                   .collection("facultyspeciality")
+  //                   .doc(element.id);
+  //               editfacultRefspecailty.add(element['specialityname']);
+  //               editfacultyarray(editfacultRefspecailty);
+  //             }
+  //           }
+  //         });
+  //       });
+  //     });
+  //   } catch (e) {
+  //     print(e.toString());
+  //     return null;
+  //   }
+  // }
 
   checkids(String? semstername) async {
     try {
