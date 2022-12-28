@@ -382,6 +382,11 @@ class _studentviewprofileState extends State<studentviewprofile> {
         appBar: AppBar(
           primary: false,
           centerTitle: true,
+          leading: BackButton(
+            onPressed: () {
+              Navigator.pushNamed(context, 'studenthome');
+            },
+          ),
           backgroundColor: Mycolors.mainColorWhite,
           shadowColor: Colors.transparent,
           iconTheme: IconThemeData(

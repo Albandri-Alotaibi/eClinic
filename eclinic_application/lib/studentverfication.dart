@@ -9,6 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/facultyhome.dart';
 import 'package:myapp/login.dart';
 import 'package:myapp/addHoursFaculty.dart';
+import 'package:myapp/studenthome.dart';
 import 'dart:async';
 import 'style/Mycolors.dart';
 
@@ -49,7 +50,7 @@ class _studentverficationState extends State<studentverfication> {
     if (user!.emailVerified) {
       timer.cancel();
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => studentviewprofile()));
+          MaterialPageRoute(builder: (context) => studenthome()));
     }
   }
 

@@ -327,6 +327,11 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
         appBar: AppBar(
           primary: false,
           centerTitle: true,
+          leading: BackButton(
+            onPressed: () {
+              Navigator.pushNamed(context, 'facultyhome');
+            },
+          ),
           backgroundColor: Mycolors.mainColorWhite,
           shadowColor: Colors.transparent,
           iconTheme: IconThemeData(
