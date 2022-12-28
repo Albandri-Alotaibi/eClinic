@@ -853,6 +853,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
         .update({
       'Booked': false, //string if booked then it should have a student refrence
       "student": FieldValue.delete(),
+      'specialty': FieldValue.delete(),
     });
     // //+++++++++++++++++++++++++++++++start Deem+++++++++++++++++++++++++++++++++++
     // final snap = await FirebaseFirestore.instance
