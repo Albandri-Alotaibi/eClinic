@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:myapp/home.dart';
 import 'package:myapp/login.dart';
 import 'package:myapp/studentlogin.dart';
 import 'style/Mycolors.dart';
@@ -413,7 +414,7 @@ class _sState extends State<studenthome> {
       child: Text("Yes"),
       onPressed: () {
         FirebaseAuth.instance.signOut().then((value) => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => studentlogin())));
+            context, MaterialPageRoute(builder: (context) => home())));
       },
     );
 

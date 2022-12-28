@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:myapp/home.dart';
 import 'package:myapp/login.dart';
 import 'package:myapp/style/Mycolors.dart';
 import 'package:myapp/FacultyViewBookedAppointment.dart';
@@ -268,7 +269,7 @@ class _fState extends State<facultyhome> {
       child: Text("Yes"),
       onPressed: () {
         FirebaseAuth.instance.signOut().then((value) => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => login())));
+            context, MaterialPageRoute(builder: (context) => home())));
       },
     );
 
