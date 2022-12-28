@@ -16,8 +16,6 @@ import 'package:flutter/services.dart';
 import 'style/Mycolors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -58,7 +56,7 @@ class _StudentViewBookedAppointmentState
     super.initState();
     BookedAppointments.clear();
     BookedAppointmentsExists();
- getBookedappointments();
+    getBookedappointments();
   }
 
   Future<bool?> BookedAppointmentsExists() async {
@@ -140,103 +138,95 @@ class _StudentViewBookedAppointmentState
         .doc(userid)
         .snapshots()
         .listen((event) async {
+      if (event.data()!.containsKey('appointments') == true) {
+        BookedAppointments.clear();
+        BookedAppointments.length = 0;
 
+        var appdbarray = event['appointments'];
+        print(appdbarray);
+        numOfDaysOfHelp = appdbarray.length;
+        print(appdbarray.length);
 
-if (event.data()!.containsKey('appointments') == true) {  
-      BookedAppointments.clear();
-      BookedAppointments.length = 0;
-
-      var appdbarray = event['appointments'];
-      print(appdbarray);
-      numOfDaysOfHelp = appdbarray.length;
-      print(appdbarray.length);
-
-      for (var i = 0; i < appdbarray.length; i++) {
-        final DocumentSnapshot docRef2 = await appdbarray[i].get();
+        for (var i = 0; i < appdbarray.length; i++) {
+          final DocumentSnapshot docRef2 = await appdbarray[i].get();
 
 // *******************CHECK IN APPOINTMENT IS IN FUTURE ****************************
 
-        Timestamp t1 = docRef2['starttime'] as Timestamp;
-        DateTime StartTimeDate = t1.toDate();
-        if ((now.isBefore(StartTimeDate))) {
-           print("22222222222222222222222222222222222222222222222222222222222222222");
-          print(docRef2.reference);
-          // if appointment is in the future
+          Timestamp t1 = docRef2['starttime'] as Timestamp;
+          DateTime StartTimeDate = t1.toDate();
+          if ((now.isBefore(StartTimeDate))) {
+            print(
+                "22222222222222222222222222222222222222222222222222222222222222222");
+            print(docRef2.reference);
+            // if appointment is in the future
 
 // *******************START APPOINTMENT INFO ****************************
-print("*****************************0");
-          String dayname = DateFormat("EEE").format(StartTimeDate);
-          Timestamp t2 = docRef2['endtime'] as Timestamp;
-          DateTime EndTimeDate = t2.toDate();
-           var studentsrefrences=docRef2['student'];
-          var specialityRef =docRef2['specialty'];
-      final DocumentSnapshot docRef4 = await specialityRef.get();
-      String specialityName= docRef4['specialityname'];//specialityname
-      print(specialityName);
+            print("*****************************0");
+            String dayname = DateFormat("EEE").format(StartTimeDate);
+            Timestamp t2 = docRef2['endtime'] as Timestamp;
+            DateTime EndTimeDate = t2.toDate();
+            var studentsrefrences = docRef2['student'];
+            var specialityRef = docRef2['specialty'];
+            final DocumentSnapshot docRef4 = await specialityRef.get();
+            String specialityName = docRef4['specialityname']; //specialityname
+            print(specialityName);
 
-
-         
 // *******************END APPOINTMENT INFO ****************************
 
 // *******************START FACULTY NEEDED INFO ****************************
-          final DocumentSnapshot docRef3 =
-              await appdbarray[i].parent.parent.get();
-          String facultyName = docRef3['firstname'] + ' ' + docRef3['lastname'];
-          String meetingMethod = docRef3['meetingmethod'];
-          String meetingInfo = docRef3['mettingmethodinfo'];
+            final DocumentSnapshot docRef3 =
+                await appdbarray[i].parent.parent.get();
+            String facultyName =
+                docRef3['firstname'] + ' ' + docRef3['lastname'];
+            String meetingMethod = docRef3['meetingmethod'];
+            String meetingInfo = docRef3['mettingmethodinfo'];
 // *******************END FACULTY NEEDED INFO ****************************
 
-          setState(() {
-            BookedAppointments.add(new StudentAppointment(
-                appointmentId: docRef2.id,
-                appointmentReference: docRef2.reference,
-                FacultytId: docRef3.id,
-                Day: dayname,
-                startTime: StartTimeDate,
-                endTime: EndTimeDate,
-                FacultyName: facultyName,
-                specialityn: specialityName,
-                meetingMethod: meetingMethod,
-                meetingInfo: meetingInfo,
-                studentsArrayOfReference:studentsrefrences
-                ));
-          });
-       
+            setState(() {
+              BookedAppointments.add(new StudentAppointment(
+                  appointmentId: docRef2.id,
+                  appointmentReference: docRef2.reference,
+                  FacultytId: docRef3.id,
+                  Day: dayname,
+                  startTime: StartTimeDate,
+                  endTime: EndTimeDate,
+                  FacultyName: facultyName,
+                  specialityn: specialityName,
+                  meetingMethod: meetingMethod,
+                  meetingInfo: meetingInfo,
+                  studentsArrayOfReference: studentsrefrences));
+            });
 
-        for (int i = 0; i < BookedAppointments.length; i++) {
-          for (int j = i + 1; j < BookedAppointments.length; j++) {
-            var temp;
-            if ((BookedAppointments[i].startTime)
-                .isAfter(BookedAppointments[j].startTime)) {
-              temp = BookedAppointments[i];
-              BookedAppointments[i] = BookedAppointments[j];
-              BookedAppointments[j] = temp;
-            }
-          }
-        } //end for date sorting
+            for (int i = 0; i < BookedAppointments.length; i++) {
+              for (int j = i + 1; j < BookedAppointments.length; j++) {
+                var temp;
+                if ((BookedAppointments[i].startTime)
+                    .isAfter(BookedAppointments[j].startTime)) {
+                  temp = BookedAppointments[i];
+                  BookedAppointments[i] = BookedAppointments[j];
+                  BookedAppointments[j] = temp;
+                }
+              }
+            } //end for date sorting
 
-        for (int i = 0; i < BookedAppointments.length; i++) {
-          for (int j = i + 1; j < BookedAppointments.length; j++) {
-            if ((BookedAppointments[i].appointmentId ==
-                BookedAppointments[j].appointmentId)) {
-              setState(() {
-                dynamic res = BookedAppointments.removeAt(j);
-              });
-            }
-          }
-        } //end deleting duplicate
+            for (int i = 0; i < BookedAppointments.length; i++) {
+              for (int j = i + 1; j < BookedAppointments.length; j++) {
+                if ((BookedAppointments[i].appointmentId ==
+                    BookedAppointments[j].appointmentId)) {
+                  setState(() {
+                    dynamic res = BookedAppointments.removeAt(j);
+                  });
+                }
+              }
+            } //end deleting duplicate
 
-      } //end for loop
-          } //end if appointment is in the future
-          }
-         else{
-          print("appointments array does not exist");
-         }
+          } //end for loop
+        } //end if appointment is in the future
+      } else {
+        print("appointments array does not exist");
+      }
     });
-
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -360,8 +350,8 @@ print("*****************************0");
                                                         Mycolors.mainColorBlack,
                                                     fontFamily: 'main',
                                                     fontSize: 15)),
-                                                     
-                                                     Text(
+
+                                            Text(
                                                 " Specialized in : " +
                                                     BookedAppointments[index]
                                                         .specialityn +
@@ -371,7 +361,6 @@ print("*****************************0");
                                                         Mycolors.mainColorBlack,
                                                     fontFamily: 'main',
                                                     fontSize: 15)),
-
 
                                             if (BookedAppointments[index]
                                                     .meetingMethod ==
@@ -423,52 +412,39 @@ print("*****************************0");
                                               //             .mainColorBlack,
                                               //         fontFamily: 'main',
                                               //         fontSize: 15)),
-                                          
-                                                                    
-                                    new RichText(
-                                      text: new TextSpan(
-                                        //text: 'Meeting Link : ',
-                                        children: [
-                                        new TextSpan(
-                                           // style: defaultText,
-                                            text: "Meeting Link : ",
-                                             style: TextStyle(
-                                                    color:
-                                                        Mycolors.mainColorBlack,
-                                                    fontFamily: 'main',
-                                                    fontSize: 15),
-                                          ),
-                                          new TextSpan(//new TextStyle(color: Colors.blue)
-                                            text: 'Click here \n',
-                                            style: TextStyle(
-                                                    color:
-                                                        Colors.blue,
-                                                    fontFamily: 'main',
-                                                    fontSize: 15),
-                                            recognizer: new TapGestureRecognizer()
-                                              ..onTap = () { launch(BookedAppointments[index].meetingInfo);//''+BookedAppointments[index].meetingInfo+''
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
+
+                                              new RichText(
+                                                text: new TextSpan(
+                                                  //text: 'Meeting Link : ',
+                                                  children: [
+                                                    new TextSpan(
+                                                      // style: defaultText,
+                                                      text: "Meeting Link : ",
+                                                      style: TextStyle(
+                                                          color: Mycolors
+                                                              .mainColorBlack,
+                                                          fontFamily: 'main',
+                                                          fontSize: 15),
+                                                    ),
+                                                    new TextSpan(
+                                                      //new TextStyle(color: Colors.blue)
+                                                      text: 'Click here \n',
+                                                      style: TextStyle(
+                                                          color: Colors.blue,
+                                                          fontFamily: 'main',
+                                                          fontSize: 15),
+                                                      recognizer:
+                                                          new TapGestureRecognizer()
+                                                            ..onTap = () {
+                                                              launch(BookedAppointments[
+                                                                      index]
+                                                                  .meetingInfo); //''+BookedAppointments[index].meetingInfo+''
+                                                            },
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                           ]),
-
-
-                       
-
-
-
-
 
                                           //crossAxisAlignment: CrossAxisAlignment.start,
                                           Row(
@@ -526,171 +502,198 @@ print("*****************************0");
     } //end els
   }
 
-  showConfirmationDialog(BuildContext context, int index) async{
+  showConfirmationDialog(BuildContext context, int index) async {
 // ---------------START OF CHECKING IF THE CANCEL IS ALLOWED----------------------------------------------------------
-   String appointmentId2 = BookedAppointments[index].appointmentId;
-  String FacultytId2 = BookedAppointments[index].FacultytId;
-  DateTime now = new DateTime.now();
+    String appointmentId2 = BookedAppointments[index].appointmentId;
+    String FacultytId2 = BookedAppointments[index].FacultytId;
+    DateTime now = new DateTime.now();
 
- final DocumentSnapshot docRef = await FirebaseFirestore.instance
+    final DocumentSnapshot docRef = await FirebaseFirestore.instance
         .collection("faculty")
         .doc(FacultytId2)
         .collection('appointment')
         .doc(appointmentId2)
         .get();
 
-      Timestamp t3 = docRef['starttime'] as Timestamp;
-      DateTime StartTimeDate = t3.toDate();
+    Timestamp t3 = docRef['starttime'] as Timestamp;
+    DateTime StartTimeDate = t3.toDate();
 
-DateTime TimeFromNowTo10Hours = now.add(Duration(hours: 10));
-print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-print(TimeFromNowTo10Hours);
+    DateTime TimeFromNowTo10Hours = now.add(Duration(hours: 10));
+    print(
+        "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    print(TimeFromNowTo10Hours);
 
-if(StartTimeDate.isAfter(TimeFromNowTo10Hours)){/////CAN CANCLE
+    if (StartTimeDate.isAfter(TimeFromNowTo10Hours)) {
+      /////CAN CANCLE
 
-
-    Widget dontCancelAppButton = ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
-        backgroundColor: Mycolors.mainShadedColorBlue,
-        minimumSize: Size(60, 40),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10), // <-- Radius
+      Widget dontCancelAppButton = ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+          shadowColor: Colors.blue[900],
+          elevation: 20,
+          backgroundColor: Mycolors.mainShadedColorBlue,
+          minimumSize: Size(60, 40),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10), // <-- Radius
+          ),
         ),
-      ),
-      child: Text("No"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
+        child: Text("No"),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      );
 
-    Widget YesCancelAppButton = ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
-        backgroundColor: Mycolors.mainShadedColorBlue,
-        minimumSize: Size(60, 40),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10), // <-- Radius
+      Widget YesCancelAppButton = ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+          shadowColor: Colors.blue[900],
+          elevation: 20,
+          backgroundColor: Mycolors.mainShadedColorBlue,
+          minimumSize: Size(60, 40),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10), // <-- Radius
+          ),
         ),
-      ),
-      child: Text("Yes"),
-      onPressed: () {
-        Navigator.of(context).pop();
-        CancelAppointment(index);
-        
-      },
-    );
+        child: Text("Yes"),
+        onPressed: () {
+          Navigator.of(context).pop();
+          CancelAppointment(index);
+        },
+      );
 
+      AlertDialog alert = AlertDialog(
+        // title: Text(""),
+        content: Text("Are you sure you want to cancel your appointment with " +
+            BookedAppointments[index].FacultyName +
+            " on " +
+            BookedAppointments[index].StringDate() +
+            " at " +
+            BookedAppointments[index].StringTimeRange() +
+            " ?"),
+        actions: [
+          dontCancelAppButton,
+          YesCancelAppButton,
+        ],
+      );
 
-    AlertDialog alert = AlertDialog(
-      // title: Text(""),
-      content: Text("Are you sure you want to cancel your appointment with "+ BookedAppointments[index].FacultyName+" on "+BookedAppointments[index].StringDate()+" at "+BookedAppointments[index].StringTimeRange()+" ?"),
-      actions: [
-        dontCancelAppButton,
-        YesCancelAppButton,
-      ],
-    );
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    } else {
+      //// CANNOT CANCLE
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-
-
-
-
-
-
-
-
-
-
-
-}
-else{//// CANNOT CANCLE
-
-
-    Widget OkButton = ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
-        backgroundColor: Mycolors.mainShadedColorBlue,
-        minimumSize: Size(60, 40),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10), // <-- Radius
+      Widget OkButton = ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+          shadowColor: Colors.blue[900],
+          elevation: 20,
+          backgroundColor: Mycolors.mainShadedColorBlue,
+          minimumSize: Size(60, 40),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10), // <-- Radius
+          ),
         ),
-      ),
-      child: Text("OK"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
+        child: Text("OK"),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      );
 
-   
+      AlertDialog alert = AlertDialog(
+        // title: Text(""),
+        content: Text("You CANNOT cancel your appointment with " +
+            BookedAppointments[index].FacultyName +
+            " on " +
+            BookedAppointments[index].StringDate() +
+            " at " +
+            BookedAppointments[index].StringTimeRange() +
+            " because it is within the next ten hours."),
+        actions: [
+          OkButton,
+        ],
+      );
 
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
+  } //END FUNCTION
 
-    AlertDialog alert = AlertDialog(
-      // title: Text(""),
-      content: Text("You CANNOT cancel your appointment with "+ BookedAppointments[index].FacultyName+" on "+BookedAppointments[index].StringDate()+" at "+BookedAppointments[index].StringTimeRange()+
-      " because it is within the next ten hours."),
-      actions: [
-        OkButton,
-      ],
-    );
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-
-}
-
-
-
-
-
-
-
-
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  }//END FUNCTION
-
-
+  void sendPushMessege(String token, String Fname) async {
+    print(token);
+    try {
+      await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization':
+              'key=AAAAIqZZfrY:APA91bGmyg-TtTdQSaXgauRdN1LmyCWHL18IWSzI5UxqHk3TYdCFegHCDysMhyEvEYFBi9o7ofyiAQE-HZOG_TGH9AnfknXWUZmZpbKvBJ0Wx4zsQ8BJPx21NDiZloaCoyfetjjPkRP4'
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'status': 'done',
+              'body': 'your appointment has been canceled with ',
+              'title': 'appointment cancelation',
+            },
+            "notification": <String, dynamic>{
+              "title": "appointment cancelation",
+              "body": "your appointment with $Fname has been canceled ",
+              "android_channel_id": "dbfood",
+            },
+            "to": token,
+          },
+        ),
+      );
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error push notifcathion");
+      }
+    }
+  }
 
   CancelAppointment(int index) async {
     String appointmentId = BookedAppointments[index].appointmentId;
     String FacultytId = BookedAppointments[index].FacultytId;
+    List studentsArrayOfRef =
+        BookedAppointments[index].studentsArrayOfReference;
+    print(
+        "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    final snap2 = await FirebaseFirestore.instance
+        .collection("faculty")
+        .doc(FacultytId) //its the faclulty doc id???????????
+        .get();
+    String Fname = "Dr." + snap2['firstname'] + ' ' + snap2['lastname'];
 
+    // a msg for the faclulty
+    final DocumentSnapshot student0ref = await studentsArrayOfRef[0].get();
+    String projectName = student0ref['projectname'];
+    sendPushMessege(snap2['token'], projectName);
+    //student notification
+    for (var i = 0; i < studentsArrayOfRef.length; i++) {
+      final DocumentSnapshot docRef2 =
+          await studentsArrayOfRef[i].get(); //await
+      print(
+          "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+      print(docRef2['token']);
+      String st = docRef2['token'];
+      print("appintment reference");
+      print(BookedAppointments[index].appointmentReference);
+      studentsArrayOfRef[i].update({
+        "appointments": FieldValue.arrayRemove(
+            [BookedAppointments[index].appointmentReference]),
+      });
+      sendPushMessege(st, Fname);
+      print('++++++++++++++++++++++++++++++++++++++++++++++++++++');
+    }
 
 //delete students array of reference in appointment and make booked false
     FirebaseFirestore.instance
@@ -700,55 +703,33 @@ else{//// CANNOT CANCLE
         .doc(appointmentId)
         .update({
       'Booked': false,
-       "student": FieldValue.delete(),
-       "specialty": FieldValue.delete()
+      "student": FieldValue.delete(),
+      "specialty": FieldValue.delete()
     });
 
+//delete the appointment in each student's appointments array
 
+    // List studentsArrayOfRef =
+    //     BookedAppointments[index].studentsArrayOfReference;
+    // print(
+    //     "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
-//delete the appointment in each student's appointments array 
+    // for (var i = 0; i < studentsArrayOfRef.length; i++) {
+    //   final DocumentSnapshot docRef2 =
+    //       await studentsArrayOfRef[i].get(); //await
+    //   print(
+    //       "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    //   //print(docRef2['token']);
+    //   // String st = docRef2['token'];
+    //   print("appintment reference");
+    //   print(BookedAppointments[index].appointmentReference);
+    //   studentsArrayOfRef[i].update({
+    //     "appointments": FieldValue.arrayRemove(
+    //         [BookedAppointments[index].appointmentReference]),
+    //   });
+    //   //sendPushMessege(st, Fname);
+    //   print('++++++++++++++++++++++++++++++++++++++++++++++++++++');
+    // }
+  } //end cancel function
 
-   List studentsArrayOfRef = BookedAppointments[index].studentsArrayOfReference;
-    print( "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-   
-    for (var i = 0; i < studentsArrayOfRef.length; i++) {
-      final DocumentSnapshot docRef2 = await studentsArrayOfRef[i].get(); //await
-      print( "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-      //print(docRef2['token']);
-     // String st = docRef2['token'];
-     print("appintment reference");
-    print(BookedAppointments[index].appointmentReference);
-      studentsArrayOfRef[i].update({
-        "appointments":
-          FieldValue.arrayRemove([BookedAppointments[index].appointmentReference]),
-      });
-      //sendPushMessege(st, Fname);
-      print('++++++++++++++++++++++++++++++++++++++++++++++++++++');
-    }
-
-
-
-
-
-
-  }//end cancel function
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}//end class
+} //end class

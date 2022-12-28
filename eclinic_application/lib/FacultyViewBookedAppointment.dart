@@ -751,7 +751,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
     });
   }
 
-  void sendPushMessege(String token, String Fname) async {
+  void sendPushMessege(String token, String Fname, String time) async {
     print(token);
     try {
       await http.post(
@@ -772,7 +772,8 @@ class _sState extends State<FacultyViewBookedAppointment> {
             },
             "notification": <String, dynamic>{
               "title": "appointment cancelation",
-              "body": "your appointment with Dr.$Fname has been canceled ",
+              "body":
+                  "your appointment with Dr.$Fname at $time has been canceled ",
               "android_channel_id": "dbfood",
             },
             "to": token,
@@ -823,7 +824,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
         .doc(userid)
         .get();
     String Fname = snap2['firstname'] + ' ' + snap2['lastname'];
-
+    String time = BookedAppointments[index].Day;
     for (var i = 0; i < studentsArrayOfRef.length; i++) {
       final DocumentSnapshot docRef2 =
           await studentsArrayOfRef[i].get(); //await
@@ -837,7 +838,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
         "appointments":
             FieldValue.arrayRemove([BookedAppointments[index].reference]),
       });
-      sendPushMessege(st, Fname);
+      sendPushMessege(st, Fname, time);
       print('++++++++++++++++++++++++++++++++++++++++++++++++++++');
     }
     // sendPushMessege(
