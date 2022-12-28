@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'model/StudentAppointment.dart';
 
@@ -10,8 +11,10 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'style/Mycolors.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 
@@ -43,21 +46,19 @@ class StudentViewBookedAppointment extends StatefulWidget {
       _StudentViewBookedAppointmentState();
 }
 
-class _StudentViewBookedAppointmentState extends State<StudentViewBookedAppointment> {
-
+class _StudentViewBookedAppointmentState
+    extends State<StudentViewBookedAppointment> {
   String? email = '';
   String? userid = '';
   List<StudentAppointment> BookedAppointments = []; //availableHours
   bool? isExists;
   int numOfDaysOfHelp = 0;
 
-
-
- void initState() {
+  void initState() {
     super.initState();
     BookedAppointments.clear();
     BookedAppointmentsExists();
-  getBookedappointments();
+ getBookedappointments();
   }
 
   Future<bool?> BookedAppointmentsExists() async {
@@ -70,174 +71,170 @@ class _StudentViewBookedAppointmentState extends State<StudentViewBookedAppointm
         .collection("student")
         .doc(userid)
         .snapshots()
-        .listen((event) {
-     
-if(event.data()!.containsKey('appointments')== true){
-  print("Booked Appoinyments Exist");
-//setState(() {
-          isExists = true;
-    //    });
+        .listen((event) async {
+      bool? found;
+      if (event.data()!.containsKey('appointments') == true) {
+        if (event['appointments'].length == 0) {
+          print("NOOO1 Future booked Appoinyments");
+          setState(() {
+            isExists = false;
+          });
+        } else {
+          found = false;
 
-} else {//or null   --- if (event.data()!.containsKey("name")==false) 
-print("No Booked Appoinyments");
-  // setState(() {
+          DateTime now = new DateTime.now();
+          var appdbarray = event['appointments'];
+          print(appdbarray.runtimeType);
+          print(appdbarray.length);
+
+          for (var i = 0; i < appdbarray.length; i++) {
+            print(appdbarray[i]);
+            print(appdbarray[i].runtimeType);
+
+            final DocumentSnapshot docRef2 = await appdbarray[i].get();
+// *******************CHECK IN APPOINTMENT IS IN FUTURE ****************************
+            Timestamp t1 = docRef2['starttime'] as Timestamp;
+            DateTime StartTimeDate = t1.toDate();
+            if ((now.isBefore(StartTimeDate))) {
+              found = true;
+            }
+          } //END FOR
+
+        } //end else array size is not zero
+      } //END IF IT CONTAIN APPOINTMENTS ARRAY
+      else {
+        //or null   --- if (event.data()!.containsKey("name")==false)
+        print("NOOO2 Future booked Appoinyments");
+        setState(() {
           isExists = false;
-       // });
+        });
+      }
+      if (found == true) {
+        print("Future booked Appoinyments Exists");
+        setState(() {
+          isExists = true;
+        });
+      } else if (found == false) {
+        print("NOOO3 Future booked Appoinyments");
+        setState(() {
+          isExists = false;
+        });
       }
     });
-    return isExists;
 
+    return isExists;
   } //end function
 
-
- getBookedappointments() async {
-    //BuildContext context// Future
+  getBookedappointments() async {
     BookedAppointments.clear();
     BookedAppointments.length = 0;
-    // numOfDaysOfHelp = 0;
-    //await Future.delayed(Duration(seconds: 5));
 
     final FirebaseAuth auth = await FirebaseAuth.instance;
     final User? user = await auth.currentUser;
     userid = user!.uid;
     email = user.email!;
+    DateTime now = new DateTime.now();
 
-
-
-  final snap =  FirebaseFirestore.instance
+    final snap2 = await FirebaseFirestore.instance
         .collection("student")
         .doc(userid)
-        .get().then(
-  (DocumentSnapshot doc) async{
-    // final data = doc.data() as Map<String, dynamic>;
-    // // ...
- var appdbarray= doc['appointments'];
- numOfDaysOfHelp = appdbarray.length;
-    print(appdbarray.length);
-   // print(appdbarray[0]);
-//print(appdbarray[0].get());
-for (var i = 0; i < appdbarray.length; i++) {
-final DocumentSnapshot docRef3 = await appdbarray[i].parent.parent.get();
-
-String facultyName= docRef3['firstname']+ ' '+ docRef3['lastname'];
-String meetingMethod=docRef3['meetingmethod'];
-String meetingInfo= docRef3['mettingmethodinfo'];
-
-// *******************END FACULTY NEEDED INFO ****************************
+        .snapshots()
+        .listen((event) async {
 
 
-  final DocumentSnapshot docRef2 =   await appdbarray[i].get();
-  Timestamp t1 = docRef2['starttime'] as Timestamp;
-  DateTime StartTimeDate = t1.toDate();
-String dayname = DateFormat("EEE").format(
-              StartTimeDate);
+if (event.data()!.containsKey('appointments') == true) {  
+      BookedAppointments.clear();
+      BookedAppointments.length = 0;
 
+      var appdbarray = event['appointments'];
+      print(appdbarray);
+      numOfDaysOfHelp = appdbarray.length;
+      print(appdbarray.length);
 
+      for (var i = 0; i < appdbarray.length; i++) {
+        final DocumentSnapshot docRef2 = await appdbarray[i].get();
+
+// *******************CHECK IN APPOINTMENT IS IN FUTURE ****************************
+
+        Timestamp t1 = docRef2['starttime'] as Timestamp;
+        DateTime StartTimeDate = t1.toDate();
+        if ((now.isBefore(StartTimeDate))) {
+           print("22222222222222222222222222222222222222222222222222222222222222222");
+          print(docRef2.reference);
+          // if appointment is in the future
+
+// *******************START APPOINTMENT INFO ****************************
+print("*****************************0");
+          String dayname = DateFormat("EEE").format(StartTimeDate);
           Timestamp t2 = docRef2['endtime'] as Timestamp;
           DateTime EndTimeDate = t2.toDate();
+           var studentsrefrences=docRef2['student'];
+          var specialityRef =docRef2['specialty'];
+      final DocumentSnapshot docRef4 = await specialityRef.get();
+      String specialityName= docRef4['specialityname'];//specialityname
+      print(specialityName);
 
 
+         
+// *******************END APPOINTMENT INFO ****************************
 
- setState(() {
-  BookedAppointments.add(new StudentAppointment(appointmentId: docRef2.id,FacultytId:docRef3.id ,Day: dayname, startTime: StartTimeDate,endTime: EndTimeDate, FacultyName: facultyName, meetingMethod: meetingMethod, meetingInfo: meetingInfo)
-       );
+// *******************START FACULTY NEEDED INFO ****************************
+          final DocumentSnapshot docRef3 =
+              await appdbarray[i].parent.parent.get();
+          String facultyName = docRef3['firstname'] + ' ' + docRef3['lastname'];
+          String meetingMethod = docRef3['meetingmethod'];
+          String meetingInfo = docRef3['mettingmethodinfo'];
+// *******************END FACULTY NEEDED INFO ****************************
+
+          setState(() {
+            BookedAppointments.add(new StudentAppointment(
+                appointmentId: docRef2.id,
+                appointmentReference: docRef2.reference,
+                FacultytId: docRef3.id,
+                Day: dayname,
+                startTime: StartTimeDate,
+                endTime: EndTimeDate,
+                FacultyName: facultyName,
+                specialityn: specialityName,
+                meetingMethod: meetingMethod,
+                meetingInfo: meetingInfo,
+                studentsArrayOfReference:studentsrefrences
+                ));
           });
+       
 
+        for (int i = 0; i < BookedAppointments.length; i++) {
+          for (int j = i + 1; j < BookedAppointments.length; j++) {
+            var temp;
+            if ((BookedAppointments[i].startTime)
+                .isAfter(BookedAppointments[j].startTime)) {
+              temp = BookedAppointments[i];
+              BookedAppointments[i] = BookedAppointments[j];
+              BookedAppointments[j] = temp;
+            }
+          }
+        } //end for date sorting
 
+        for (int i = 0; i < BookedAppointments.length; i++) {
+          for (int j = i + 1; j < BookedAppointments.length; j++) {
+            if ((BookedAppointments[i].appointmentId ==
+                BookedAppointments[j].appointmentId)) {
+              setState(() {
+                dynamic res = BookedAppointments.removeAt(j);
+              });
+            }
+          }
+        } //end deleting duplicate
 
+      } //end for loop
+          } //end if appointment is in the future
+          }
+         else{
+          print("appointments array does not exist");
+         }
+    });
 
-}
-
-
-
-
-
-
-
-
-  
-  
-  
   }
-);
-
-
-
-
-
-
-//     final snap =  FirebaseFirestore.instance
-//         .collection("student")
-//         .doc(userid)
-//         .snapshots()
-//         .listen((event) {
-//     var appdbarray= event['appointments'];
-//     print(appdbarray.length);
-//    // print(appdbarray[0]);
-// print(appdbarray[0].get());
-
-
-//  final DocumentSnapshot docRef2 =   await appdbarray[0].get(); //await
-
-
-//final Future DocumentSnapshot = appdbarray[0].get();
- 
-//print(DocumentSnapshot);
-
-  //final DocumentReference? docRef2 =  appdbarray[0].get();
- // print(docRef2);
-//   var time= await docRef2['starttime'];
-// print(time);
-
-
-// for (var i = 0; i < appdbarray.length; i++) {
-//             final DocumentSnapshot docRef2 =  await appdbarray[i].get(); //await
-        
-        
-//          Timestamp t1 = docRef2['starttime'] as Timestamp;
-//           DateTime StartTimeDate = t1.toDate();
-
-//           Timestamp t2 = docRef2['endtime'] as Timestamp;
-//           DateTime EndTimeDate = t2.toDate();
-        
-// //          var faculty=docRef2.reference.parent.parent!.get().then(
-// //   (DocumentSnapshot doc) {
-// //     //final data = doc.data() as Map<String, dynamic>;
-// //    String fname= doc['firstname'];
-// //    print(fname);
-// //   },
-// // );
-         
-         
-
-
-//           }
-
-
-
-
-
-//         }
-
-//  );
- 
- 
- }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -246,6 +243,7 @@ String dayname = DateFormat("EEE").format(
     //return Scaffold();
 
     if (isExists == false) {
+      //|| (BookedAppointments.length==0)
       //|| numOfDaysOfHelp==0
       return SafeArea(
         child: Scaffold(
@@ -291,14 +289,7 @@ String dayname = DateFormat("EEE").format(
       //if(BookedAppointments.length!=0){
       return SafeArea(
         child: Scaffold(
-            // appBar: AppBar(
-            //   title: Text('Booked Appointments'),
-            // ),
             body: //Row()
-                //  FutureBuilder(
-                //   future: getBookedappointments(),
-                //   builder: (context, snapshot) {
-                //     return
                 Column(
           children: [
             Expanded(
@@ -339,7 +330,6 @@ String dayname = DateFormat("EEE").format(
                                           Mycolors.mainShadedColorBlue,
                                       collapsedTextColor:
                                           Mycolors.mainShadedColorBlue,
-
                                       title: Text(
                                           BookedAppointments[index].Day +
                                               ",  " +
@@ -352,16 +342,14 @@ String dayname = DateFormat("EEE").format(
                                               color: Mycolors.mainColorBlue,
                                               fontFamily: 'main',
                                               fontSize: 17)),
-
-                                      //BookedAppointments[index].Day),
-
-                                      //subtitle: Text("Date : "+ BookedAppointments[index].StringDate()+"\n Time : "+BookedAppointments[index].StringTimeRange()),
                                       children: [
                                         Row(children: <Widget>[
                                           Column(children: <Widget>[
                                             // Text("  Date : "+ BookedAppointments[index].StringDate()),
                                             // Text("  Time : "+BookedAppointments[index].StringTimeRange()),
                                             Text(""),
+                                            //  Text("XXXXXXXX\n",
+                                            //         style: TextStyle(color: Colors.black,)),
                                             Text(
                                                 " With : " +
                                                     BookedAppointments[index]
@@ -372,27 +360,116 @@ String dayname = DateFormat("EEE").format(
                                                         Mycolors.mainColorBlack,
                                                     fontFamily: 'main',
                                                     fontSize: 15)),
-                                            Text(
-                                                "  Meeting type : " +
+                                                     
+                                                     Text(
+                                                " Specialized in : " +
                                                     BookedAppointments[index]
-                                                        .meetingMethod+
+                                                        .specialityn +
                                                     "\n",
                                                 style: TextStyle(
                                                     color:
                                                         Mycolors.mainColorBlack,
                                                     fontFamily: 'main',
                                                     fontSize: 15)),
-                                                    Text(
-                                                " Info : " +
-                                                    BookedAppointments[index]
-                                                        .meetingInfo+
-                                                    "\n",
-                                                style: TextStyle(
+
+
+                                            if (BookedAppointments[index]
+                                                    .meetingMethod ==
+                                                "inperson")
+                                              //{
+                                              Text(
+                                                  "  Meeting type : In-person meeting\n",
+                                                  style: TextStyle(
+                                                      color: Mycolors
+                                                          .mainColorBlack,
+                                                      fontFamily: 'main',
+                                                      fontSize: 15)),
+
+                                            if (BookedAppointments[index]
+                                                    .meetingMethod ==
+                                                "inperson")
+                                              Text(
+                                                  " office number  : " +
+                                                      BookedAppointments[index]
+                                                          .meetingInfo +
+                                                      "\n",
+                                                  style: TextStyle(
+                                                      color: Mycolors
+                                                          .mainColorBlack,
+                                                      fontFamily: 'main',
+                                                      fontSize: 15)),
+
+                                            if (BookedAppointments[index]
+                                                    .meetingMethod ==
+                                                "online")
+                                              Text(
+                                                  "  Meeting type : Online meeting \n",
+                                                  style: TextStyle(
+                                                      color: Mycolors
+                                                          .mainColorBlack,
+                                                      fontFamily: 'main',
+                                                      fontSize: 15)),
+
+                                            if (BookedAppointments[index]
+                                                    .meetingMethod ==
+                                                "online")
+                                              // Text(
+                                              //     " Meeting link  : " +
+                                              //         BookedAppointments[index]
+                                              //             .meetingInfo +
+                                              //         "\n",
+                                              //     style: TextStyle(
+                                              //         color: Mycolors
+                                              //             .mainColorBlack,
+                                              //         fontFamily: 'main',
+                                              //         fontSize: 15)),
+                                          
+                                                                    
+                                    new RichText(
+                                      text: new TextSpan(
+                                        //text: 'Meeting Link : ',
+                                        children: [
+                                        new TextSpan(
+                                           // style: defaultText,
+                                            text: "Meeting Link : ",
+                                             style: TextStyle(
                                                     color:
                                                         Mycolors.mainColorBlack,
                                                     fontFamily: 'main',
-                                                    fontSize: 15))
+                                                    fontSize: 15),
+                                          ),
+                                          new TextSpan(//new TextStyle(color: Colors.blue)
+                                            text: 'Click here \n',
+                                            style: TextStyle(
+                                                    color:
+                                                        Colors.blue,
+                                                    fontFamily: 'main',
+                                                    fontSize: 15),
+                                            recognizer: new TapGestureRecognizer()
+                                              ..onTap = () { launch(BookedAppointments[index].meetingInfo);//''+BookedAppointments[index].meetingInfo+''
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
                                           ]),
+
+
+                       
+
+
+
+
+
                                           //crossAxisAlignment: CrossAxisAlignment.start,
                                           Row(
                                               crossAxisAlignment:
@@ -405,8 +482,8 @@ String dayname = DateFormat("EEE").format(
                                                 IconButton(
                                                   icon: Icon(Icons.cancel),
                                                   onPressed: () => {
-                                                    // showConfirmationDialog(
-                                                    //     context, index)
+                                                    showConfirmationDialog(
+                                                        context, index)
                                                     //CancelAppointment(index)
                                                   },
                                                 ),
@@ -449,11 +526,29 @@ String dayname = DateFormat("EEE").format(
     } //end els
   }
 
+  showConfirmationDialog(BuildContext context, int index) async{
+// ---------------START OF CHECKING IF THE CANCEL IS ALLOWED----------------------------------------------------------
+   String appointmentId2 = BookedAppointments[index].appointmentId;
+  String FacultytId2 = BookedAppointments[index].FacultytId;
+  DateTime now = new DateTime.now();
+
+ final DocumentSnapshot docRef = await FirebaseFirestore.instance
+        .collection("faculty")
+        .doc(FacultytId2)
+        .collection('appointment')
+        .doc(appointmentId2)
+        .get();
+
+      Timestamp t3 = docRef['starttime'] as Timestamp;
+      DateTime StartTimeDate = t3.toDate();
+
+DateTime TimeFromNowTo10Hours = now.add(Duration(hours: 10));
+print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+print(TimeFromNowTo10Hours);
+
+if(StartTimeDate.isAfter(TimeFromNowTo10Hours)){/////CAN CANCLE
 
 
-showConfirmationDialog(BuildContext context, int index) {
-    // set up the buttons
-    bool deleteappointment = false;
     Widget dontCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
@@ -486,19 +581,14 @@ showConfirmationDialog(BuildContext context, int index) {
       onPressed: () {
         Navigator.of(context).pop();
         CancelAppointment(index);
-        //deleteappointment=true;
-        // Navigator.pushNamed(context, 'facultyhome');
+        
       },
     );
 
-//   if(deleteappointment == true){
-// CancelAppointment(index);
-// deleteappointment == false;
-//   }
 
     AlertDialog alert = AlertDialog(
       // title: Text(""),
-      content: Text("Are you sure you want to cancel the appointment ?"),
+      content: Text("Are you sure you want to cancel your appointment with "+ BookedAppointments[index].FacultyName+" on "+BookedAppointments[index].StringDate()+" at "+BookedAppointments[index].StringTimeRange()+" ?"),
       actions: [
         dontCancelAppButton,
         YesCancelAppButton,
@@ -511,39 +601,6 @@ showConfirmationDialog(BuildContext context, int index) {
         return alert;
       },
     );
-  }
-
-
-   CancelAppointment(int index) async {
-  
-
-    String appointmentId = BookedAppointments[index].appointmentId;
-    String FacultytId = BookedAppointments[index].FacultytId;
-    
-    FirebaseFirestore.instance
-        .collection("faculty")
-        .doc(FacultytId)
-        .collection('appointment')
-        .doc(appointmentId) 
-        .update({
-      'Booked': false, 
-    });
-    
-
-    
-  }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -556,4 +613,142 @@ showConfirmationDialog(BuildContext context, int index) {
 
 
 }
-  
+else{//// CANNOT CANCLE
+
+
+    Widget OkButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+   
+
+
+    AlertDialog alert = AlertDialog(
+      // title: Text(""),
+      content: Text("You CANNOT cancel your appointment with "+ BookedAppointments[index].FacultyName+" on "+BookedAppointments[index].StringDate()+" at "+BookedAppointments[index].StringTimeRange()+
+      " because it is within the next ten hours."),
+      actions: [
+        OkButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+
+}
+
+
+
+
+
+
+
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  }//END FUNCTION
+
+
+
+  CancelAppointment(int index) async {
+    String appointmentId = BookedAppointments[index].appointmentId;
+    String FacultytId = BookedAppointments[index].FacultytId;
+
+
+//delete students array of reference in appointment and make booked false
+    FirebaseFirestore.instance
+        .collection("faculty")
+        .doc(FacultytId)
+        .collection('appointment')
+        .doc(appointmentId)
+        .update({
+      'Booked': false,
+       "student": FieldValue.delete(),
+       "specialty": FieldValue.delete()
+    });
+
+
+
+//delete the appointment in each student's appointments array 
+
+   List studentsArrayOfRef = BookedAppointments[index].studentsArrayOfReference;
+    print( "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+   
+    for (var i = 0; i < studentsArrayOfRef.length; i++) {
+      final DocumentSnapshot docRef2 = await studentsArrayOfRef[i].get(); //await
+      print( "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+      //print(docRef2['token']);
+     // String st = docRef2['token'];
+     print("appintment reference");
+    print(BookedAppointments[index].appointmentReference);
+      studentsArrayOfRef[i].update({
+        "appointments":
+          FieldValue.arrayRemove([BookedAppointments[index].appointmentReference]),
+      });
+      //sendPushMessege(st, Fname);
+      print('++++++++++++++++++++++++++++++++++++++++++++++++++++');
+    }
+
+
+
+
+
+
+  }//end cancel function
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}//end class
