@@ -172,21 +172,22 @@ class _loginState extends State<login> {
                                   if (formkey.currentState!.validate()) {
                                     await FirebaseAuth.instance
                                         .signInWithEmailAndPassword(
-                                            email: email, password: password)
+                                            email: email, password: password);
+                                    Navigator.pushNamed(context, 'facultyhome')
                                         .then((value) async {
                                       final FirebaseAuth auth =
                                           FirebaseAuth.instance;
                                       final User? user = auth.currentUser;
                                       final Uid = user!.uid;
-                                      if (user.emailVerified) {
-                                        Navigator.pushNamed(
-                                            context, 'facultyhome');
-                                      } else {
-                                        if (!(user.emailVerified)) {
-                                          Navigator.pushNamed(
-                                              context, 'verfication');
-                                        }
-                                      }
+                                      // if (user.emailVerified) {
+                                      //   Navigator.pushNamed(
+                                      //       context, 'facultyhome');
+                                      // } else {
+                                      //   if (!(user.emailVerified)) {
+                                      //     Navigator.pushNamed(
+                                      //         context, 'verfication');
+                                      //   }
+                                      // }
                                     });
                                   }
                                 } on FirebaseAuthException catch (error) {
