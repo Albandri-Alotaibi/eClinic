@@ -112,24 +112,30 @@
 
         <!-- right form -->
         <div class="col-md-3 ms-auto mt-3 card">
+          <!-- start faculty list -->
+          <ul id="facultyList" class="list-group m-3" style="display: none;">
+
+          </ul>
+          <!-- / end faculty list -->
           <div style="display: none;" class="card border-success mt-5 m-3 p-2 text-success" id="message"></div>
 
           <form id="semester-year" class="col" style="display: none;">
             <div class="my-3">
-              <label class="form-label" style="margin-bottom: 0.2px;">Semester</label><small style="color: red;"> *</small> 
-             
+              <label class="form-label" style="margin-bottom: 0.2px;">Semester</label><small style="color: red;">
+                *</small>
+
               <select class="semester form-select" name="semester" id="semester">
                 <option selected disabled>choose a semester</option>
                 <option value="1st">1st</option>
                 <option value="2nd">2nd</option>
                 <option value="3rd">3rd</option>
-                
+
               </select>
             </div>
 
             <label class="form-label" style="margin-bottom: 0.2px;"> Year</label><small style="color: red;"> *</small>
-            
-         
+
+
             <div class="input-group mb-0">
 
               <select class="years form-select" name="year" id="firstyear">
@@ -148,7 +154,7 @@
               <input type="button" value="Update" id="updatetodb" class="mt-3 logbut btn btn-primary btn-lg"
                 style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px;"
                 style="display: none;" data-ref="" data-current-value="">
-              <input type="button" value="Cancle" id="cancle" class="mt-3 btn btn-secondary" style="display: none; ">
+              <input type="button" value="CANCEL" id="cancle" class="mt-3 btn btn-secondary" style="display: none; ">
             </div>
           </form>
         </div>
@@ -197,17 +203,65 @@
       if (document.getElementById("noItems").style.display == "none")
         document.getElementById("mytable").style.display = "block";
     }, 2000);
+// ************************************************** Start Semester Faculty List *************************************
+    async function getFaculty (semester) {
 
+      if (semester == null) {
+        return false;
+      }
+
+      document.getElementById("facultyList").innerHTML = "";
+
+      const semesterDocRef = doc(db, "semester", semester);
+
+      let q = query(collection(db, 'faculty'), where('semester', '==', semesterDocRef));
+      const qSnapshot = await getDocs(q);
+      let found = qSnapshot.size > 0;
+
+
+      await qSnapshot.forEach(async (doc) => {
+
+
+        let facultyData = doc.data();
+        let specialityList = "";
+        console.log("facultyData.specialty ", facultyData.specialty);
+        if (facultyData.specialty != null) {
+          for (let index = 0; index < facultyData.specialty.length; index++) {
+            const element = facultyData.specialty[index];
+            const qqSnapshot = await getDoc(facultyData.specialty[index]);
+            let sp = qqSnapshot.data();
+            specialityList += (specialityList != "" ? ", " : "") + sp.specialityname;
+          };
+        }
+
+        document.getElementById("facultyList").innerHTML += '<li class="list-group-item d-flex justify-content-between align-items-center">' + facultyData.firstname + ' ' + facultyData.lastname + '<span class="badge rounded-pill text-bg-dark">' + specialityList + '</span></li>';
+      });
+
+      if (!found) {
+        document.getElementById('facultyList').innerHTML += '<li class="list-group-item list-group-item-warning">No faculty is found for this semester!</li>';
+      } else {
+        document.getElementById('facultyList').innerHTML += '<li class="list-group-item list-group-item-info text-center">Semester Faculty List</li>';
+
+      }
+
+      document.getElementById("semester-year").style.display = "none";
+      document.getElementById("facultyList").style.display = "block";
+
+      return true;
+    }
+// ************************************************** End Semester Faculty List **********************************
 
     // *********************************INITIALIZE ALL VARIBALES*********************************************
     document.onreadystatechange = async function () {
       let addnewbtn = document.getElementById("add");
       let addDBbtn = document.getElementById("addtodb");
       let updatebtn = document.getElementsByClassName("update");
+      let showFacultyListbtn = document.getElementsByClassName("show-faculty");
       let updateDBbtn = document.getElementById("updatetodb");
       let canclebtn = document.getElementById("cancle");
       // **********************FOR DIV ***************************************************************************
       let addUpdatediv = document.getElementById("semester-year");
+      let facultylistdiv = document.getElementById("facultyList");
       // ********************** FOR DROP DOWN ********************************************************************
       let semesterDropdown = document.getElementById("semester");
       let dateDropdown1 = document.getElementById("firstyear");
@@ -224,9 +278,11 @@
         let detail = doc.data();
         let text = detail.semestername;
         const myArray = text.split(" ");
+
         box.innerHTML += '<tr>' + '<td><span id="semester-' + doc.id + '">' + myArray[0] + '</span></td>' + '<td><span id="year-' + doc.id + '"">' + myArray[1] + '</span></td>' +
-          '<td>' +
-          '<input type="button" value="✎"  class=" update logbut btn btn-primary btn-lg"  style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px; left:100%;" data-ref="' + doc.id + '">' +
+          '<td class="d-flex justify-content-between">' +
+          '<input type="button" value="✎"  class=" update logbut btn btn-primary btn-lg m-1"  style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px; left:100%;" data-ref="' + doc.id + '">' +
+          '<input type="button" value="👩‍💻" class=" show-faculty logbut btn btn-primary btn-lg m-1"  style="padding-left: 0.3rem; padding-right: 0.3rem; padding-bottom: 0.1rem; padding-top: 0.2rem; font-size: 18px; left:100%;" data-semester="' + doc.id + '">' +
           '</td>' + '</tr>';
       });
 
@@ -265,10 +321,11 @@
         addUpdatediv.style.display = "block";
         addDBbtn.style.display = "block";
         updateDBbtn.style.display = "none";
+        facultylistdiv.style.display = "none";
         canclebtn.style.display = "block";
       });
 
-      // ********************** CLICK CANCLE BUTTON WITH VALUE(CANCLE)****************************************************
+      // ********************** CLICK CANCLE BUTTON WITH VALUE(CANCEL)****************************************************
 
       canclebtn.addEventListener('click', function () {
         {
@@ -333,7 +390,7 @@
         }
 
         if (dateDropdown2.value != "choose a year") {
-          if (dateDropdown2.value -1 != dateDropdown1.value & dateDropdown2.value -1 > dateDropdown1.value ) {
+          if (dateDropdown2.value - 1 != dateDropdown1.value & dateDropdown2.value - 1 > dateDropdown1.value) {
             alert("The duration between the first year and the second year should be one year");
             return '';
           }
@@ -401,15 +458,25 @@
         addDBbtn.removeAttribute("disabled");
       })
 
-      // ********************** CLICK UPDATE BUTTON WITH VALUE(edit) WITH UNIQUE ID**********************
+    
 
       const addUpdateEvents = () => {
+    // ********************** CLICK Faculty Icons WITH UNIQUE ID**********************
         for (var i = 0; i < updatebtn.length; i++) {
+          showFacultyListbtn.item(i).addEventListener('click', async function (event) {
+            let docSemester = event.target.getAttribute('data-semester');
+            console.log("docSemester:show-press:", docSemester);
+
+            await getFaculty(docSemester);
+          });
+  // ********************** CLICK UPDATE BUTTON WITH VALUE(edit) WITH UNIQUE ID**********************
           updatebtn.item(i).addEventListener('click', async function (event) {
             addUpdatediv.style.display = "block";
             addDBbtn.style.display = "none";
             updateDBbtn.style.display = "block";
             canclebtn.style.display = "block";
+            facultylistdiv.style.display = "none";
+
 
             // **************************HOW I CAN RETRIVE DATA IN DROP DOWN TO UPDATE IT ? ********************
 
@@ -531,14 +598,15 @@
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // console.log("the same user")
+        uid=user.uid;
 
       }
       else {
         signOut(auth)
-        window.location.replace("login.html")
-          .then(() => {
-            console.log("user log out")
-          })
+          window.location.replace("login.html")
+            .then(() => {
+              console.log("user log out")
+            })
           .catch((err) => {
             console.log(err.message)
           })
