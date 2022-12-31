@@ -175,7 +175,8 @@ class _sState extends State<studenthome> {
       ])),
       body: Padding(
         padding: const EdgeInsets.all(100.0),
-        child: Row(
+        child: Column(children: [
+ Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ElevatedButton(
@@ -194,6 +195,30 @@ class _sState extends State<studenthome> {
             ),
           ],
         ),
+
+
+           Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                // Navigator.pushNamed(context, 'viewfaculty');
+                Navigator.pushNamed(context, 'UploadGP');
+              },
+              child: Text('Upload GP'),
+            ),
+            const SizedBox(width: 16),
+            
+          ],
+        ),
+
+
+
+
+        ],)
+        
+        
+       
       ),
     ));
   } //end build
