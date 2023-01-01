@@ -73,11 +73,8 @@ class MyApp extends StatelessWidget {
           'studentviewprofile': (context) => studentviewprofile(),
           'StudentViewBookedAppointment': (context) =>
               StudentViewBookedAppointment(),
-<<<<<<< Updated upstream
-              'UploadGP': (context) => UploadGP(),
-=======
+          'UploadGP': (context) => UploadGP(),
           'addcommonissue': (context) => addcommonissue(),
->>>>>>> Stashed changes
         });
   }
 
