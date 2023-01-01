@@ -55,7 +55,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
   List<String> options = [];
   Rx<List<String>> selectedoptionlist = Rx<List<String>>([]);
   var selectedoption = "".obs;
-  var zag = 0;
+  var checklengthforcategory = 0;
   bool isshow = false;
   List category = [];
   List gpcategorynamebaeforedit = [];
@@ -165,7 +165,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
         categoryfromDB.add(docRef["gpcategoryname"]);
       });
     }
-    zag = categoryfromDB.length;
+    checklengthforcategory = categoryfromDB.length;
     checkidcategory(categoryfromDB);
     print(categoryfromDB);
   }
@@ -780,13 +780,14 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                   selectedoptionlist.value.forEach((element) {
                                     selectedoption.value =
                                         selectedoption.value + " " + element;
-                                    zag = selectedoptionlist.value.length;
+                                    checklengthforcategory =
+                                        selectedoptionlist.value.length;
                                     isshow = selectedoption.value.isEmpty;
 
-                                    if (zag < 1) {
+                                    if (checklengthforcategory < 1) {
                                       isshow = true;
                                     }
-                                    if (zag > 0 ||
+                                    if (checklengthforcategory > 0 ||
                                         selectedoption.value.isEmpty ||
                                         selectedoption.value == null) {
                                       isshow = false;
@@ -795,8 +796,9 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                 });
                                 checkidcategory(selectedoptionlist.value);
                                 //isshow = selectedoptionlist.value.isEmpty;
-                                zag = selectedoptionlist.value.length;
-                                if (zag < 1) {
+                                checklengthforcategory =
+                                    selectedoptionlist.value.length;
+                                if (checklengthforcategory < 1) {
                                   isshow = true;
                                 }
                               },
@@ -1100,15 +1102,16 @@ class _studentviewprofileState extends State<studentviewprofile> {
                       if (social == "None") {
                         socoamediaaccount = "";
                       }
-                      if (zag < 1) {
+                      if (checklengthforcategory < 1) {
                         isshow = true;
                       }
-                      if (zag > 0) {
+                      if (checklengthforcategory > 0) {
                         isshow = false;
                       }
                     });
 
-                    if (formkey.currentState!.validate() && zag > 0) {
+                    if (formkey.currentState!.validate() &&
+                        checklengthforcategory > 0) {
                       gpdate = dategp(selctedyear, month);
                       Navigator.push(
                           context,
