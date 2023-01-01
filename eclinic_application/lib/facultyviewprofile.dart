@@ -195,13 +195,12 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
             String sn = element['semestername'];
             var startdate = element['startdate'];
             startdate.toString();
-
-            if ((sn.contains(s))) {
-              print(sn);
-              semester.add(element['semestername']);
-            }
-
             if (startdate != null) {
+              if ((sn.contains(s))) {
+                print(sn);
+                semester.add(element['semestername']);
+              }
+
               Timestamp t = element['enddate'];
               DateTime enddate = t.toDate();
               // if (Dateoftoday.year <= enddate.year) {
@@ -1110,16 +1109,32 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
   addfacultyinsemester(List spe, var fid) async {
     var ref = FirebaseFirestore.instance.collection("faculty").doc(fid);
     print(ref);
-    await FirebaseFirestore.instance
+    var snap = await FirebaseFirestore.instance
         .collection('semester')
-        .get()
-        .then((querySnapshot) {
-      querySnapshot.docs.forEach((element) {
-        setState(() {
-          if (semesterselectedvalue == element['semestername']) {}
-        });
-      });
-    });
+        .doc(docsforsemestername)
+        .get();
+    List faculty = snap["facultymembers"];
+    for (var i = 0; i < faculty.length; i++) {
+      print("llllllllllllllllllllllllllllllllllllllllllllllll");
+      print(faculty);
+      print(faculty[i]["faculty"]);
+      if (faculty[i]["faculty"] == ref) {
+        print("yyyyyyyeeeeeeessssssssssss");
+        //  print(faculty[i]["specialty"]);
+        faculty[i]["specialty"] = spe;
+        // await FirebaseFirestore.instance
+        //     .collection('semester')
+        //     .doc(docsforsemestername)
+        //     .update({
+        //   "facultymembers": FieldValue.arrayUnion([
+
+        //     {
+        //       'specialty': spe,
+        //     }
+        //   ]),
+        // });
+      }
+    }
 
     // await FirebaseFirestore.instance
     //     .collection('semester')

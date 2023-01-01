@@ -86,15 +86,14 @@ class _facultysignupState extends State<facultysignup> {
             String sn = element['semestername'];
             var startdate = element['startdate'];
             startdate.toString();
-
-            if ((sn.contains(s))) {
-              print(sn);
-              semester.add(element['semestername']);
-              print("ppppppppppppppppppppppppppppppppppppppp");
-              print(semester);
-            }
-
             if (startdate != null) {
+              if ((sn.contains(s))) {
+                print(sn);
+                semester.add(element['semestername']);
+                print("ppppppppppppppppppppppppppppppppppppppp");
+                print(semester);
+              }
+
               Timestamp t = element['enddate'];
               DateTime enddate = t.toDate();
 
