@@ -1107,34 +1107,53 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
   }
 
   addfacultyinsemester(List spe, var fid) async {
+    // bool flag = true;
     var ref = FirebaseFirestore.instance.collection("faculty").doc(fid);
     print(ref);
     var snap = await FirebaseFirestore.instance
         .collection('semester')
         .doc(docsforsemestername)
         .get();
-    List faculty = snap["facultymembers"];
-    for (var i = 0; i < faculty.length; i++) {
-      print("llllllllllllllllllllllllllllllllllllllllllllllll");
-      print(faculty);
-      print(faculty[i]["faculty"]);
-      if (faculty[i]["faculty"] == ref) {
-        print("yyyyyyyeeeeeeessssssssssss");
-        //  print(faculty[i]["specialty"]);
-        faculty[i]["specialty"] = spe;
-        // await FirebaseFirestore.instance
-        //     .collection('semester')
-        //     .doc(docsforsemestername)
-        //     .update({
-        //   "facultymembers": FieldValue.arrayUnion([
+    int index = 0;
+    List faculty = snap.data()!["facultymembers"] as List;
+    print(docsforsemestername);
+    faculty.forEach(
+      (element) async {
+        print("hiiiiiiiiiiiiiiiiiiiiiiiiiii");
+        print(ref);
+        print(element["faculty"]);
+        if (element["faculty"] == ref) {
+          // flag = false;
+          print("yeeeeeeeeeeeeeesssssssssssssssssssssssss");
+          element["specialty"] = spe;
+          await FirebaseFirestore.instance
+              .collection('semester')
+              .doc(docsforsemestername)
+              .update({
+            "facultymembers": faculty,
+          });
+        }
+        index++;
+        if (element["faculty"] != ref && index == faculty.length) {
+          print("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
 
-        //     {
-        //       'specialty': spe,
-        //     }
-        //   ]),
-        // });
-      }
-    }
+          await FirebaseFirestore.instance
+              .collection('semester')
+              .doc(docsforsemestername)
+              .update({
+            "facultymembers": FieldValue.arrayUnion([
+              {
+                'faculty': ref,
+                'specialty': spe,
+              }
+            ]),
+          });
+        }
+      },
+    );
+    // if (flag) {
+    //   print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+    // }
 
     // await FirebaseFirestore.instance
     //     .collection('semester')
