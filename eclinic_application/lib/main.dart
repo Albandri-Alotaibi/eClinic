@@ -21,7 +21,6 @@ import 'package:myapp/verfication.dart';
 import 'package:myapp/FacultyViewScreen.dart';
 import 'package:myapp/FacultyListScreen.dart';
 import 'package:myapp/facultyFAQ.dart';
-
 import 'UploadGP.dart';
 
 Future<void> _firebaseMsgBackgroundHanler(RemoteMessage message) async {

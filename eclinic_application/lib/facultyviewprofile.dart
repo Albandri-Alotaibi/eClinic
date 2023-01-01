@@ -76,7 +76,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
   var year;
   var monthe;
   var day;
-  var zag = 0;
+  var checklengthforspecialty = 0;
   bool isshow = false;
   var fnDrawer;
   var lnDrawer;
@@ -141,7 +141,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
         specality.add(docRef["specialityname"]);
       });
     }
-    zag = specality.length;
+    checklengthforspecialty = specality.length;
     checkidspecialty(specality);
   }
 
@@ -705,13 +705,14 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                     selectedoption.value =
                                         selectedoption.value + " " + element;
                                     specality = selectedoptionlist.value;
-                                    zag = selectedoptionlist.value.length;
+                                    checklengthforspecialty =
+                                        selectedoptionlist.value.length;
                                     isshow = selectedoption.value.isEmpty;
 
-                                    if (zag < 1) {
+                                    if (checklengthforspecialty < 1) {
                                       isshow = true;
                                     }
-                                    if (zag > 0 ||
+                                    if (checklengthforspecialty > 0 ||
                                         selectedoption.value.isEmpty ||
                                         selectedoption.value == null) {
                                       isshow = false;
@@ -721,8 +722,9 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
 
                                 checkidspecialty(selectedoptionlist.value);
 
-                                zag = selectedoptionlist.value.length;
-                                if (zag < 1) {
+                                checklengthforspecialty =
+                                    selectedoptionlist.value.length;
+                                if (checklengthforspecialty < 1) {
                                   isshow = true;
                                 }
                               },
@@ -899,16 +901,18 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                       mm = mettingmethoddrop;
                       mmi = _meetingmethodcontroller.text;
                       editfacultyarray(editfacultRefspecailty);
-                      if (zag < 1) {
+                      if (checklengthforspecialty < 1) {
                         isshow = true;
                       }
-                      if (zag > 0) {
+                      if (checklengthforspecialty > 0) {
                         isshow = false;
                       }
                     });
 
-                    if (formkey.currentState!.validate() && zag > 0) {
+                    if (formkey.currentState!.validate() &&
+                        checklengthforspecialty > 0) {
                       try {
+                        addfacultyinsemester(specalityid, userid);
                         FirebaseFirestore.instance
                             .collection('faculty')
                             .doc(userid)
@@ -1103,6 +1107,34 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
     }
   }
 
+  addfacultyinsemester(List spe, var fid) async {
+    var ref = FirebaseFirestore.instance.collection("faculty").doc(fid);
+    print(ref);
+    await FirebaseFirestore.instance
+        .collection('semester')
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((element) {
+        setState(() {
+          if (semesterselectedvalue == element['semestername']) {}
+        });
+      });
+    });
+
+    // await FirebaseFirestore.instance
+    //     .collection('semester')
+    //     .doc(docsforsemestername)
+    //     .update({
+    //   "facultymembers": FieldValue.arrayUnion([
+    //     {
+    //       'faculty': ref,
+    //       'specialty': spe,
+    //     }
+    //   ]),
+    // });
+    print(ref);
+    print(spe);
+  }
   // showConfirmationDialog(BuildContext context) {
   //   Widget dontCancelAppButton = ElevatedButton(
   //     style: ElevatedButton.styleFrom(
