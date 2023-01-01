@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:myapp/StudentViewBookedAppointment.dart';
 import 'package:myapp/addHoursFaculty.dart';
 import 'package:myapp/FacultyViewBookedAppointment.dart';
+import 'package:myapp/addcommonissue.dart';
 import 'package:myapp/facultyhome.dart';
 import 'package:myapp/facultyviewprofile.dart';
 import 'package:myapp/home.dart';
@@ -72,7 +73,11 @@ class MyApp extends StatelessWidget {
           'studentviewprofile': (context) => studentviewprofile(),
           'StudentViewBookedAppointment': (context) =>
               StudentViewBookedAppointment(),
+<<<<<<< Updated upstream
               'UploadGP': (context) => UploadGP(),
+=======
+          'addcommonissue': (context) => addcommonissue(),
+>>>>>>> Stashed changes
         });
   }
 
