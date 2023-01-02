@@ -1151,21 +1151,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
         }
       },
     );
-    // if (flag) {
-    //   print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
-    // }
 
-    // await FirebaseFirestore.instance
-    //     .collection('semester')
-    //     .doc(docsforsemestername)
-    //     .update({
-    //   "facultymembers": FieldValue.arrayUnion([
-    //     {
-    //       'faculty': ref,
-    //       'specialty': spe,
-    //     }
-    //   ]),
-    // });
     print(ref);
     print(spe);
   }
