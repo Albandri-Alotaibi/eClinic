@@ -30,7 +30,7 @@ class _fState extends State<facultyhome> {
   var lnDrawer;
   @override
   void initState() {
-    getfacultname();
+    // getfacultname();
     // TODO: implement initState
     super.initState();
   }
@@ -38,18 +38,18 @@ class _fState extends State<facultyhome> {
   String? email = '';
   String? userid = '';
   //int selectedIndex = 0;
-  getfacultname() async {
-    final snap = await FirebaseFirestore.instance
-        .collection('faculty')
-        .doc(userid)
-        .get();
-    setState(() {
-      fnDrawer = snap['firstname'];
-      lnDrawer = snap['lastname'];
-    });
+  // getfacultname() async {
+  //   final snap = await FirebaseFirestore.instance
+  //       .collection('faculty')
+  //       .doc(userid)
+  //       .get();
+  //   setState(() {
+  //     fnDrawer = snap['firstname'];
+  //     lnDrawer = snap['lastname'];
+  //   });
 
-    print(fnDrawer);
-  }
+  //   print(fnDrawer);
+  // }
 
   final List<Widget> _pages = [
     FacultyViewBookedAppointment(),
