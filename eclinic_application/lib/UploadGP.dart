@@ -6,6 +6,9 @@ import 'package:file_picker/file_picker.dart';
 import 'package:myapp/style/Mycolors.dart';
 import 'package:open_file/open_file.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
+import 'package:multiselect/multiselect.dart';
+import 'package:get/get.dart';
 
 class UploadGP extends StatefulWidget {
   const UploadGP({super.key});
@@ -16,15 +19,76 @@ class UploadGP extends StatefulWidget {
 class _UploadGPState extends State<UploadGP> {
   String? email = '';
   String? userid = '';
+    List<String> options = [];
+    Rx<List<String>> selectedoptionlist = Rx<List<String>>([]);
+  var selectedoption = "".obs;
+   var checklengthforcategory = 0;
+  bool isshow = false;
   bool? AlreadyUploaded;
   bool? graduationDateArrived;
+    //bool categoryselected=false;
+   List category = [];
+  List gpcategoryname = [];
+  final formkey = GlobalKey<FormState>();
 
   void initState() {
     super.initState();
     HasUploadedOrNot();
     graduationDateCheck();
+     retrivegpcategory();
+      bool isshow = false;
+ }
+
+ retrivegpcategory() async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('gpcategory')
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          setState(() {
+            options.add(element['gpcategoryname']);
+          });
+        });
+      });
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 
+   checkidcategory(List<String?> categoryoption) async {
+    category.clear();
+    gpcategoryname.clear();
+    // print(specialityoption);
+    // print(speciality.length);
+    // print(speciality);
+
+    try {
+      await FirebaseFirestore.instance
+          .collection('gpcategory')
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          setState(() {
+            for (var i = 0; i < categoryoption.length; i++) {
+              if (element['gpcategoryname'] == categoryoption[i]) {
+                final ref = FirebaseFirestore.instance
+                    .collection("gpcategory")
+                    .doc(element.id);
+                category.add(ref);
+                gpcategoryname.add(element['gpcategoryname']);
+                print(category);
+              }
+            }
+          });
+        });
+      });
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 graduationDateCheck() async {
 
  final FirebaseAuth auth = await FirebaseAuth.instance;
@@ -162,6 +226,10 @@ ShowingDialog(){
         },
       );
 
+
+
+  
+
       Widget ConfirmButton = ElevatedButton(
         style: ElevatedButton.styleFrom(
           textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
@@ -174,19 +242,113 @@ ShowingDialog(){
           ),
         ),
         child: Text("Confirm"),
-        onPressed: () {
-          Navigator.of(context).pop();
-          //CancelAppointment(index);
-          uploadFile();
-        },
+        onPressed:() {
+          
+      //if a category is selected 
+      //uploadFile();
+    // Navigator.of(context).pop();
+
+      //else
+      //error
+
+        
+        }  ,
+       
       );
-       var reasone;
+     
       AlertDialog alert = AlertDialog(
         // title: Text(""),
-        content:Column(
+        content:
+        Column(
             children: [
          Text("Select a Category"),
-        ] ),
+                   DropDownMultiSelect(
+                                decoration: InputDecoration(
+                                    hintText:
+                                        "Select your graduation project category",
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: isshow
+                                              ? Colors.red
+                                              : Colors.grey),
+                                      borderRadius: BorderRadius.circular(25),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: isshow
+                                              ? Colors.red
+                                              : Colors.blueAccent),
+                                      borderRadius: BorderRadius.circular(25),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: isshow
+                                              ? Colors.red
+                                              : Colors.blueAccent),
+                                      borderRadius: BorderRadius.circular(25),
+                                    )
+                                    // border: OutlineInputBorder(
+                                    //     borderSide: BorderSide(
+                                    //         color: isshow ? Colors.red : Colors.grey)
+                                    ),
+                                options: options,
+                                whenEmpty: "",
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedoptionlist.value = value;
+                                    selectedoption.value = "";
+                                    selectedoptionlist.value.forEach((element) {
+                                      selectedoption.value =
+                                          selectedoption.value + " " + element;
+                                      checklengthforcategory =
+                                          selectedoptionlist.value.length;
+                                      isshow = selectedoption.value.isEmpty;
+
+                                      if (checklengthforcategory < 1) {
+                                        isshow = true;
+                                      }
+                                      if (checklengthforcategory > 0 ||
+                                          selectedoption.value.isEmpty ||
+                                          selectedoption.value == null) {
+                                        isshow = false;
+                                      }
+                                    });
+                                  });
+                                  checkidcategory(selectedoptionlist.value);
+                                  // isshow = selectedoptionlist.value.isEmpty;
+                                  checklengthforcategory =
+                                      selectedoptionlist.value.length;
+                                  if (checklengthforcategory < 1) {
+                                    isshow = true;
+                                  }
+                                },
+                                selectedValues: selectedoptionlist.value,
+                              ),
+                              SizedBox(
+                                height: 2,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 10, top: 7),
+                                child: Visibility(
+                                  visible: isshow,
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Please choose your graduation project category",
+                                          style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 211, 56, 45),
+                                              fontSize: 12),
+                                          textAlign: TextAlign.left,
+                                        ),
+                                      ]),
+                                ),
+                              ),
+            ]
+            ),
         actions: [
           CancelButton,
           ConfirmButton,
@@ -293,6 +455,9 @@ showerror(context, "Only pdf format is acceptable");
 
   @override
   Widget build(BuildContext context) {
+    print("Category length ${checklengthforcategory}");
+    //print("Category selected  ${categoryselected}");
+
     if ((AlreadyUploaded == false) && (graduationDateArrived==true)) {
       return SafeArea(
           child: Scaffold(
