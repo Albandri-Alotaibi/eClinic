@@ -113,9 +113,12 @@
         <!-- right form -->
         <div class="col-md-3 ms-auto mt-3 card">
           <!-- start faculty list -->
-          <ul id="facultyList" class="list-group m-3" style="display: none; ">
+          <div id="facultyList" class="m-3" style="display: none;">
+            <select id="specialityList" class="form-select mb-2"></select>
+            <ul id="facultyListData" class="list-group m-1">
 
-          </ul>
+            </ul>
+          </div>
           <!-- / end faculty list -->
           <div style="display: none;" class="card border-success mt-5 m-3 p-2 text-success" id="message"></div>
 
@@ -203,44 +206,60 @@
       if (document.getElementById("noItems").style.display == "none")
         document.getElementById("mytable").style.display = "block";
     }, 2000);
-// ************************************************** Start Semester Faculty List *************************************
-    async function getFaculty (semester) {
 
-      if (semester == null) {
-        return false;
+    //get all faculty members of one semester
+    async function getFaculty (semesterFaculty) {
+
+      // if (semesterFaculty == null) {
+      //   return false;
+      // }
+
+      //fix duplicated loading.
+      if (document.getElementById("facultyList").style.display != 'none') {
+        return;
       }
 
-      document.getElementById("facultyList").innerHTML = "";
+      document.getElementById("facultyListData").innerHTML = "Wait...";
 
-      const semesterDocRef = doc(db, "semester", semester);
+      document.getElementById("facultyListData").innerHTML = "";
+      let found = semesterFaculty.length > 0;
 
-      let q = query(collection(db, 'faculty'), where('semester', '==', semesterDocRef));
-      const qSnapshot = await getDocs(q);
-      let found = qSnapshot.size > 0;
-
-
-      await qSnapshot.forEach(async (doc) => {
-
-
-        let facultyData = doc.data();
+      let currentItem = 1;
+      await semesterFaculty.forEach(async (docc) => {
+        console.log("doc.faculty ", docc.faculty);
+        const facultyDocRef = await getDoc(docc.faculty);
+        let facultyData = facultyDocRef.data();
         let specialityList = "";
-        console.log("facultyData.specialty ", facultyData.specialty);
-        if (facultyData.specialty != null) {
-          for (let index = 0; index < facultyData.specialty.length; index++) {
-            const element = facultyData.specialty[index];
-            const qqSnapshot = await getDoc(facultyData.specialty[index]);
+        let specialityListIDs = '';
+        console.log("doc.specialty ", docc.specialty);
+        if (docc.specialty != null) {
+          for (let index = 0; index < docc.specialty.length; index++) {
+            const element = docc.specialty[index];
+            const qqSnapshot = await getDoc(docc.specialty[index]);
             let sp = qqSnapshot.data();
             specialityList += (specialityList != "" ? ", " : "") + sp.specialityname;
+            specialityListIDs += (specialityListIDs != "" ? "," : '') + '"' + qqSnapshot.id + '"';
           };
         }
 
-        document.getElementById("facultyList").innerHTML += '<li class="list-group-item d-flex justify-content-between align-items-center">' + facultyData.firstname + ' ' + facultyData.lastname + '<span class="badge rounded-pill " style="background-color:#0084bd;" >' + specialityList + '</span></li>';
+        document.getElementById("facultyListData").innerHTML += '<li data-sp=\'[' + specialityListIDs + ']\' class="spitem list-group-item d-flex justify-content-between align-items-center">' + facultyData.firstname + ' ' + facultyData.lastname + '<span class="badge rounded-pill" style="background-color:#0084bd;">' + specialityList + '</span></li>';
+
+        if (currentItem == semesterFaculty.length) {
+          document.getElementById('specialityList').disabled = false;
+        }
+
+        currentItem++;
       });
 
+
+
       if (!found) {
-        document.getElementById('facultyList').innerHTML += '<li class="list-group-item list-group-item-warning">There are no faculty members under the chosen semester</li>';
+        document.getElementById('specialityList').style.display = 'none';
+        document.getElementById('facultyListData').innerHTML += '<li class="list-group-item list-group-item-warning">No faculty is found to be listed under this semester!</li>';
       } else {
-        document.getElementById('facultyList').innerHTML += '<li class="list-group-item list-group-item-info text-center text-white" style="background-color:#0084bd; ">Semester Faculty List</li>';
+        document.getElementById('specialityList').style.display = 'block';
+        document.getElementById('facultyListData').innerHTML += '<li class="list-group-item list-group-item-info text-center text-white" style="background-color:#0084bd;">Semester Faculty List</li>';
+        document.getElementById('facultyListData').innerHTML += '<li id="no-faculty" class="list-group-item list-group-item-warning" style="display:none">No faculty is found to be listed under this sepciality!</li>';
 
       }
 
@@ -249,7 +268,6 @@
 
       return true;
     }
-// ************************************************** End Semester Faculty List **********************************
 
     // *********************************INITIALIZE ALL VARIBALES*********************************************
     document.onreadystatechange = async function () {
@@ -268,7 +286,18 @@
       let dateDropdown2 = document.getElementById("secondyear");
       let box = document.getElementById("show_data");
       let hasNoItems = true;
+      let specialityList = document.getElementById("specialityList");
+      let semestersFacultyList = {};
       // ********************** get all docs********************************************************************
+
+      //get all specialities
+      const specialityCollection = query(collection(db, "facultyspeciality"));
+      const specialityDocs = await getDocs(specialityCollection);
+      specialityList.innerHTML += '<option value="0" selected>All</option>';
+      specialityDocs.forEach((doc) => {
+        let detail = doc.data();
+        specialityList.innerHTML += '<option value="' + doc.id + '">' + detail.specialityname + '</option>';
+      });
 
       const q = query(collection(db, "semester"));
       const querySnapshot = await getDocs(q);
@@ -279,14 +308,19 @@
         let text = detail.semestername;
         const myArray = text.split(" ");
 
+        semestersFacultyList[doc.id] = detail.facultymembers ?? [];
+
         box.innerHTML += '<tr>' + '<td><span id="semester-' + doc.id + '">' + myArray[0] + '</span></td>' + '<td><span id="year-' + doc.id + '"">' + myArray[1] + '</span></td>' +
           '<td class="d-flex justify-content-between">' +
           '<input type="button" value="✎"  class=" update logbut btn btn-primary btn-lg m-1"  style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px; left:100%;" data-ref="' + doc.id + '">' +
-          '<input type="button" value="👩‍💻" class=" show-faculty logbut btn btn-primary btn-lg m-1"  style="padding-left: 0.3rem; padding-right: 0.3rem; padding-bottom: 0.1rem; padding-top: 0.2rem; font-size: 18px; left:100%;" data-semester="' + doc.id + '">' +
+          '<input type="button" value="👩‍💻" class=" show-faculty logbut btn btn-primary btn-lg m-1"  style="padding-left: 0.3rem; padding-right: 0.3rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px; left:100%;" data-semester="' + doc.id + '">' +
           '</td>' + '</tr>';
       });
 
       hasItemsCheck();
+
+
+
 
       // ********************** set years********************************************************************
 
@@ -325,7 +359,7 @@
         canclebtn.style.display = "block";
       });
 
-      // ********************** CLICK CANCLE BUTTON WITH VALUE(CANCEL)****************************************************
+      // ********************** CLICK CANCLE BUTTON WITH VALUE(CANCLE)****************************************************
 
       canclebtn.addEventListener('click', function () {
         {
@@ -335,11 +369,32 @@
           }
           else
             return false;
-
         }
       })
-      // ********************** for yallow alert ****************************************************
+      specialityList.addEventListener('change', function (event) {
+        const items = document.querySelectorAll('.spitem');
+        let foundItems = 0;
+        items.forEach(p => {
+          let x = JSON.parse(p.dataset.sp);
 
+          if (x.includes(specialityList.value) || specialityList.value == 0) {
+            p.style.display = '';
+            foundItems++;
+          } else {
+            p.setAttribute('style', 'display:none !important');
+          }
+        });
+        console.log(foundItems)
+
+        if (foundItems == 0) {
+          document.getElementById('no-faculty').style.display = 'block'
+        } else {
+          document.getElementById('no-faculty').style.display = 'none'
+        }
+      });
+
+
+      // ********************** for yallow alert ****************************************************
       function hasItemsCheck () {
         if (hasNoItems) {
           document.getElementById('noItems').style.display = 'block';
@@ -458,18 +513,19 @@
         addDBbtn.removeAttribute("disabled");
       })
 
-    
+      // ********************** CLICK UPDATE BUTTON WITH VALUE(edit) WITH UNIQUE ID**********************
 
       const addUpdateEvents = () => {
-    // ********************** CLICK Faculty Icons WITH UNIQUE ID**********************
         for (var i = 0; i < updatebtn.length; i++) {
           showFacultyListbtn.item(i).addEventListener('click', async function (event) {
+            document.getElementById("facultyList").style.display = "none";
             let docSemester = event.target.getAttribute('data-semester');
-            console.log("docSemester:show-press:", docSemester);
-
-            await getFaculty(docSemester);
+            console.log("docSemester:show-press:" + docSemester);
+            specialityList.value = 0;
+            document.getElementById('specialityList').disabled = true;
+            await getFaculty(semestersFacultyList[docSemester]);
           });
-  // ********************** CLICK UPDATE BUTTON WITH VALUE(edit) WITH UNIQUE ID**********************
+
           updatebtn.item(i).addEventListener('click', async function (event) {
             addUpdatediv.style.display = "block";
             addDBbtn.style.display = "none";
@@ -599,7 +655,6 @@
       if (user) {
         // console.log("the same user")
         uid=user.uid;
-
       }
       else {
         signOut(auth)
