@@ -78,21 +78,22 @@ class _facultysignupState extends State<facultysignup> {
           setState(() {
             DateTime now = DateTime.now();
             year = now.year;
+            print(year);
             DateTime Dateoftoday = DateTime.now();
 
             String s = year.toString();
+            print(s);
             String sn = element['semestername'];
             var startdate = element['startdate'];
             startdate.toString();
-
-            if ((sn.contains(s))) {
-              print(sn);
-              semester.add(element['semestername']);
-              print("ppppppppppppppppppppppppppppppppppppppp");
-              print(semester);
-            }
-
             if (startdate != null) {
+              if ((sn.contains(s))) {
+                print(sn);
+                semester.add(element['semestername']);
+                print("ppppppppppppppppppppppppppppppppppppppp");
+                print(semester);
+              }
+
               Timestamp t = element['enddate'];
               DateTime enddate = t.toDate();
 
@@ -294,7 +295,7 @@ class _facultysignupState extends State<facultysignup> {
   var dep = '';
   var spec = '';
   var userid = "";
-  var zag = 0;
+  var checklengthforspeciality = 0;
   bool isshow = false;
 
   final _fnameController = TextEditingController();
@@ -737,17 +738,18 @@ class _facultysignupState extends State<facultysignup> {
                                   selectedoptionlist.value.forEach((element) {
                                     selectedoption.value =
                                         selectedoption.value + " " + element;
-                                    zag = selectedoptionlist.value.length;
+                                    checklengthforspeciality =
+                                        selectedoptionlist.value.length;
                                     isshow = selectedoption.value.isEmpty;
                                     print(
                                         "////////////////during//////////////////");
                                     print(selectedoptionlist.value.length);
-                                    print(zag);
+                                    print(checklengthforspeciality);
                                     print(isshow);
-                                    if (zag < 1) {
+                                    if (checklengthforspeciality < 1) {
                                       isshow = true;
                                     }
-                                    if (zag > 0 ||
+                                    if (checklengthforspeciality > 0 ||
                                         selectedoption.value.isEmpty ||
                                         selectedoption.value == null) {
                                       isshow = false;
@@ -756,13 +758,14 @@ class _facultysignupState extends State<facultysignup> {
                                 });
                                 checkidspecialty(selectedoptionlist.value);
                                 //isshow = selectedoptionlist.value.isEmpty;
-                                zag = selectedoptionlist.value.length;
-                                if (zag < 1) {
+                                checklengthforspeciality =
+                                    selectedoptionlist.value.length;
+                                if (checklengthforspeciality < 1) {
                                   isshow = true;
                                 }
                                 print(
                                     "///////////////////////////////////////////////////");
-                                print(zag);
+                                print(checklengthforspeciality);
                                 print(isshow);
                               },
                               selectedValues: selectedoptionlist.value,
@@ -816,18 +819,18 @@ class _facultysignupState extends State<facultysignup> {
                                     // mettingmethodinfo =
                                     //     _meetingmethodcontroller.text;
 
-                                    if (zag < 1) {
+                                    if (checklengthforspeciality < 1) {
                                       isshow = true;
-                                      zag = 0;
+                                      checklengthforspeciality = 0;
                                     }
-                                    if (zag > 0) {
+                                    if (checklengthforspeciality > 0) {
                                       isshow = false;
                                     }
                                   });
 
                                   try {
                                     if (formkey.currentState!.validate() &&
-                                        zag > 0) {
+                                        checklengthforspeciality > 0) {
                                       await FirebaseAuth.instance
                                           .createUserWithEmailAndPassword(
                                               email: email, password: password)
@@ -839,6 +842,7 @@ class _facultysignupState extends State<facultysignup> {
                                         Navigator.pushNamed(
                                             context, 'verfication');
                                         addfacultyRefonspeciality(spName, Uid);
+                                        addfacultyinsemester(speciality, Uid);
                                         await FirebaseFirestore.instance
                                             .collection('faculty')
                                             .doc(Uid)
@@ -975,5 +979,22 @@ class _facultysignupState extends State<facultysignup> {
       backgroundColor: Colors.transparent,
       elevation: 0,
     ));
+  }
+
+  addfacultyinsemester(List spe, var fid) async {
+    var ref = FirebaseFirestore.instance.collection("faculty").doc(fid);
+    print(ref);
+
+    await FirebaseFirestore.instance
+        .collection('semester')
+        .doc(docsforsemestername)
+        .update({
+      "facultymembers": FieldValue.arrayUnion([
+        {
+          'faculty': ref,
+          'specialty': spe,
+        }
+      ]),
+    });
   }
 }

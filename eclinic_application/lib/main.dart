@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:myapp/StudentViewBookedAppointment.dart';
 import 'package:myapp/addHoursFaculty.dart';
 import 'package:myapp/FacultyViewBookedAppointment.dart';
+import 'package:myapp/addcommonissue.dart';
 import 'package:myapp/facultyhome.dart';
 import 'package:myapp/facultyviewprofile.dart';
 import 'package:myapp/home.dart';
@@ -20,7 +21,6 @@ import 'package:myapp/verfication.dart';
 import 'package:myapp/FacultyViewScreen.dart';
 import 'package:myapp/FacultyListScreen.dart';
 import 'package:myapp/facultyFAQ.dart';
-
 import 'UploadGP.dart';
 
 Future<void> _firebaseMsgBackgroundHanler(RemoteMessage message) async {
@@ -72,7 +72,8 @@ class MyApp extends StatelessWidget {
           'studentviewprofile': (context) => studentviewprofile(),
           'StudentViewBookedAppointment': (context) =>
               StudentViewBookedAppointment(),
-              'UploadGP': (context) => UploadGP(),
+          'UploadGP': (context) => UploadGP(),
+          'addcommonissue': (context) => addcommonissue(),
         });
   }
 

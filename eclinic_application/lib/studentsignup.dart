@@ -46,7 +46,7 @@ class _studentsignupState extends State<studentsignup> {
   var account;
   var phonenumber;
   var socialmediaaccount;
-  var zag = 0;
+  var checklengthforspeciality = 0;
   bool isshow = false;
 
   late String semstername;
@@ -806,13 +806,14 @@ class _studentsignupState extends State<studentsignup> {
                                     selectedoptionlist.value.forEach((element) {
                                       selectedoption.value =
                                           selectedoption.value + " " + element;
-                                      zag = selectedoptionlist.value.length;
+                                      checklengthforspeciality =
+                                          selectedoptionlist.value.length;
                                       isshow = selectedoption.value.isEmpty;
 
-                                      if (zag < 1) {
+                                      if (checklengthforspeciality < 1) {
                                         isshow = true;
                                       }
-                                      if (zag > 0 ||
+                                      if (checklengthforspeciality > 0 ||
                                           selectedoption.value.isEmpty ||
                                           selectedoption.value == null) {
                                         isshow = false;
@@ -821,8 +822,9 @@ class _studentsignupState extends State<studentsignup> {
                                   });
                                   checkidcategory(selectedoptionlist.value);
                                   // isshow = selectedoptionlist.value.isEmpty;
-                                  zag = selectedoptionlist.value.length;
-                                  if (zag < 1) {
+                                  checklengthforspeciality =
+                                      selectedoptionlist.value.length;
+                                  if (checklengthforspeciality < 1) {
                                     isshow = true;
                                   }
                                 },
@@ -978,10 +980,10 @@ class _studentsignupState extends State<studentsignup> {
                                     socialmedia = social;
                                     socialmediaaccount = _socialmedialink2.text;
                                     // phonenumber = _socialmedialink1.text;
-                                    if (zag < 1) {
+                                    if (checklengthforspeciality < 1) {
                                       isshow = true;
                                     }
-                                    if (zag > 0) {
+                                    if (checklengthforspeciality > 0) {
                                       isshow = false;
                                     }
                                   });
@@ -990,7 +992,7 @@ class _studentsignupState extends State<studentsignup> {
 
                                   try {
                                     if (formkey.currentState!.validate() &&
-                                        zag > 0) {
+                                        checklengthforspeciality > 0) {
                                       GPdate = dategp(selctedyear, month);
                                       await FirebaseAuth.instance
                                           .createUserWithEmailAndPassword(
