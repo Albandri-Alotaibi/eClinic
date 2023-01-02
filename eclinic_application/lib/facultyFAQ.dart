@@ -157,7 +157,12 @@ class _facultyFAQState extends State<facultyFAQ> {
                       child: Row(
                         children: [
                           Text(Allcommonissue[index].issuetitle),
-                          Text("                         learnMore>>"),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, 'addcommonissue');
+                            },
+                            child: Text("learnMore>>"),
+                          )
                         ],
                       ),
                     );
