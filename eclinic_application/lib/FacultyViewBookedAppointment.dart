@@ -243,7 +243,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
 
       BookedAppointments.clear();
       BookedAppointments.length = 0;
-
+   print("xxxxxxxx");
       event.docs.forEach((element) async {
         //print(element.id);
         print("1");
@@ -573,14 +573,15 @@ class _sState extends State<FacultyViewBookedAppointment> {
                                             Text(
                                                 "Students : " +
                                                     BookedAppointments[index]
-                                                        .StringStudents(),
+                                                        .StringStudents()+
+                                                    "\n",
                                                 style: TextStyle(
                                                     color:
                                                         Mycolors.mainColorBlack,
                                                     fontFamily: 'main',
                                                     fontSize: 15)),
                                             Text(
-                                                "speciality : " +
+                                                "Speciality : " +
                                                     BookedAppointments[index]
                                                         .specialty +
                                                     "\n",
@@ -901,6 +902,29 @@ class _sState extends State<FacultyViewBookedAppointment> {
   }
 
   showConfirmationDialog(BuildContext context, int index) {
+
+
+// final DocumentSnapshot docRef = await FirebaseFirestore.instance
+//         .collection("faculty")
+//         .doc(FacultytId2)
+//         .collection('appointment')
+//         .doc(appointmentId2)
+//         .get();
+
+    // Timestamp t3 = docRef['starttime'] as Timestamp;
+    DateTime StartTimeDate = BookedAppointments[index].startTime;
+
+    DateTime now = new DateTime.now();
+    DateTime TimeFromNowTo24Hours = now.add(Duration(hours: 24));
+
+    print(
+        "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    print(TimeFromNowTo24Hours);
+   
+    if (StartTimeDate.isAfter(TimeFromNowTo24Hours)) {
+      /////CAN CANCLE
+
+
     // set up the buttons
     bool deleteappointment = false;
     Widget dontCancelAppButton = ElevatedButton(
@@ -947,7 +971,10 @@ class _sState extends State<FacultyViewBookedAppointment> {
 
     AlertDialog alert = AlertDialog(
       // title: Text(""),
-      content: Text("Are you sure you want to cancel the appointment ?"),
+      content: Text("Are you sure you want to cancel the appointment on " +
+            BookedAppointments[index].StringDate() +
+            " at " +
+            BookedAppointments[index].StringTimeRange()+" ?"),
       actions: [
         dontCancelAppButton,
         YesCancelAppButton,
@@ -960,5 +987,45 @@ class _sState extends State<FacultyViewBookedAppointment> {
         return alert;
       },
     );
-  }
+    }//end if can cancel
+    else {
+      //// CANNOT CANCLE
+
+      Widget OkButton = ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+          shadowColor: Colors.blue[900],
+          elevation: 20,
+          backgroundColor: Mycolors.mainShadedColorBlue,
+          minimumSize: Size(60, 40),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10), // <-- Radius
+          ),
+        ),
+        child: Text("OK"),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      );
+
+      AlertDialog alert = AlertDialog(
+        // title: Text(""),
+        content: Text("You CANNOT cancel your appointment with on " +
+            BookedAppointments[index].StringDate() +
+            " at " +
+            BookedAppointments[index].StringTimeRange() +
+            " because it is within the next 24 hours."),
+        actions: [
+          OkButton,
+        ],
+      );
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }//end else cant cancel
+  }//end function
 } //end class

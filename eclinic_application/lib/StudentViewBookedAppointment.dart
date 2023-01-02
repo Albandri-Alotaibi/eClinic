@@ -504,26 +504,26 @@ class _StudentViewBookedAppointmentState
 
   showConfirmationDialog(BuildContext context, int index) async {
 // ---------------START OF CHECKING IF THE CANCEL IS ALLOWED----------------------------------------------------------
-    String appointmentId2 = BookedAppointments[index].appointmentId;
-    String FacultytId2 = BookedAppointments[index].FacultytId;
-    DateTime now = new DateTime.now();
+    // String appointmentId2 = BookedAppointments[index].appointmentId;
+    // String FacultytId2 = BookedAppointments[index].FacultytId;
+    // DateTime now = new DateTime.now();
 
-    final DocumentSnapshot docRef = await FirebaseFirestore.instance
-        .collection("faculty")
-        .doc(FacultytId2)
-        .collection('appointment')
-        .doc(appointmentId2)
-        .get();
+    // final DocumentSnapshot docRef = await FirebaseFirestore.instance
+    //     .collection("faculty")
+    //     .doc(FacultytId2)
+    //     .collection('appointment')
+    //     .doc(appointmentId2)
+    //     .get();
 
-    Timestamp t3 = docRef['starttime'] as Timestamp;
-    DateTime StartTimeDate = t3.toDate();
+    // Timestamp t3 = docRef['starttime'] as Timestamp;
+    // DateTime StartTimeDate = t3.toDate();
 
-    DateTime TimeFromNowTo10Hours = now.add(Duration(hours: 10));
-    print(
-        "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    print(TimeFromNowTo10Hours);
+    // DateTime TimeFromNowTo10Hours = now.add(Duration(hours: 10));
+    // print(
+    //     "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    // print(TimeFromNowTo10Hours);
 
-    if (StartTimeDate.isAfter(TimeFromNowTo10Hours)) {
+    // if (StartTimeDate.isAfter(TimeFromNowTo10Hours)) {
       /////CAN CANCLE
 
       Widget dontCancelAppButton = ElevatedButton(
@@ -560,16 +560,48 @@ class _StudentViewBookedAppointmentState
           CancelAppointment(index);
         },
       );
-
+       var reasone;
       AlertDialog alert = AlertDialog(
         // title: Text(""),
-        content: Text("Are you sure you want to cancel your appointment with " +
+        content:Column(
+            children: [
+         Text("Choose a  reason to cancel your appointment with " +
             BookedAppointments[index].FacultyName +
             " on " +
             BookedAppointments[index].StringDate() +
             " at " +
             BookedAppointments[index].StringTimeRange() +
-            " ?"),
+            " ?\n"),
+        DropdownButtonFormField(
+              decoration: InputDecoration(
+                hintText: 'Please Choose the reason for cancelation',
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25),
+                    borderSide: const BorderSide(
+                      width: 0,
+                    )),
+              ),
+              items: const [
+                DropdownMenuItem(child: Text("Lecture at the same time"), value: "Lecture at the same time"),
+                DropdownMenuItem(child: Text("Exam at the same time"), value: "Exam at the same time"),
+                DropdownMenuItem(child: Text("solution was found "), value: "solution was found"),
+                DropdownMenuItem(child: Text("Other commitment"), value: "Other commitment")
+              ],
+              onChanged: (value) {
+                setState(() {
+                 reasone = value;
+                });
+              },
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: (value) {
+                if (value == null || reasone == null) {
+                  return 'Please Choose the reason for cancelation';
+                }
+              },
+            ),
+
+        
+       ] ),
         actions: [
           dontCancelAppButton,
           YesCancelAppButton,
@@ -582,47 +614,47 @@ class _StudentViewBookedAppointmentState
           return alert;
         },
       );
-    } else {
-      //// CANNOT CANCLE
+    // } else {
+    //   //// CANNOT CANCLE
 
-      Widget OkButton = ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-          shadowColor: Colors.blue[900],
-          elevation: 20,
-          backgroundColor: Mycolors.mainShadedColorBlue,
-          minimumSize: Size(60, 40),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10), // <-- Radius
-          ),
-        ),
-        child: Text("OK"),
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-      );
+    //   Widget OkButton = ElevatedButton(
+    //     style: ElevatedButton.styleFrom(
+    //       textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+    //       shadowColor: Colors.blue[900],
+    //       elevation: 20,
+    //       backgroundColor: Mycolors.mainShadedColorBlue,
+    //       minimumSize: Size(60, 40),
+    //       shape: RoundedRectangleBorder(
+    //         borderRadius: BorderRadius.circular(10), // <-- Radius
+    //       ),
+    //     ),
+    //     child: Text("OK"),
+    //     onPressed: () {
+    //       Navigator.of(context).pop();
+    //     },
+    //   );
 
-      AlertDialog alert = AlertDialog(
-        // title: Text(""),
-        content: Text("You CANNOT cancel your appointment with " +
-            BookedAppointments[index].FacultyName +
-            " on " +
-            BookedAppointments[index].StringDate() +
-            " at " +
-            BookedAppointments[index].StringTimeRange() +
-            " because it is within the next ten hours."),
-        actions: [
-          OkButton,
-        ],
-      );
+    //   AlertDialog alert = AlertDialog(
+    //     // title: Text(""),
+    //     content: Text("You CANNOT cancel your appointment with " +
+    //         BookedAppointments[index].FacultyName +
+    //         " on " +
+    //         BookedAppointments[index].StringDate() +
+    //         " at " +
+    //         BookedAppointments[index].StringTimeRange() +
+    //         " because it is within the next ten hours."),
+    //     actions: [
+    //       OkButton,
+    //     ],
+    //   );
 
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        },
-      );
-    }
+    //   showDialog(
+    //     context: context,
+    //     builder: (BuildContext context) {
+    //       return alert;
+    //     },
+    //   );
+    // }//end else cant cancel
   } //END FUNCTION
 
   void sendPushMessege(String token, String Fname) async {
