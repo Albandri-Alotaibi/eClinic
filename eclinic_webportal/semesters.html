@@ -208,17 +208,18 @@
     }, 2000);
 
     //get all faculty members of one semester
-    async function getFaculty (semesterFaculty) {
+    async function getFaculty (semesterFaculty, semesterId) {
 
-      // if (semesterFaculty == null) {
-      //   return false;
-      // }
+      if (semesterFaculty == null) {
+        return false;
+      }
 
       //fix duplicated loading.
       if (document.getElementById("facultyList").style.display != 'none') {
         return;
       }
 
+      document.getElementById("facultyListData").dataset.uniqueid = semesterId;
       document.getElementById("facultyListData").innerHTML = "Wait...";
 
       document.getElementById("facultyListData").innerHTML = "";
@@ -242,8 +243,9 @@
           };
         }
 
-        document.getElementById("facultyListData").innerHTML += '<li data-sp=\'[' + specialityListIDs + ']\' class="spitem list-group-item d-flex justify-content-between align-items-center">' + facultyData.firstname + ' ' + facultyData.lastname + '<span class="badge rounded-pill" style="background-color:#0084bd;">' + specialityList + '</span></li>';
-
+        if (document.getElementById("facultyListData").dataset.uniqueid == semesterId) {
+          document.getElementById("facultyListData").innerHTML += '<li data-sp=\'[' + specialityListIDs + ']\' class="spitem list-group-item d-flex justify-content-between align-items-center">' + facultyData.firstname + ' ' + facultyData.lastname + '<span class="badge rounded-pill" style="background-color:#0084bd;">' + specialityList + '</span></li>';
+        }
         if (currentItem == semesterFaculty.length) {
           document.getElementById('specialityList').disabled = false;
         }
@@ -523,7 +525,7 @@
             console.log("docSemester:show-press:" + docSemester);
             specialityList.value = 0;
             document.getElementById('specialityList').disabled = true;
-            await getFaculty(semestersFacultyList[docSemester]);
+            await getFaculty(semestersFacultyList[docSemester], docSemester);
           });
 
           updatebtn.item(i).addEventListener('click', async function (event) {
@@ -654,14 +656,14 @@
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // console.log("the same user")
-        uid=user.uid;
+        uid = user.uid;
       }
       else {
         signOut(auth)
-          window.location.replace("login.html")
-            .then(() => {
-              console.log("user log out")
-            })
+        window.location.replace("login.html")
+          .then(() => {
+            console.log("user log out")
+          })
           .catch((err) => {
             console.log(err.message)
           })
