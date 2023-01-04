@@ -138,6 +138,7 @@ class _AddHourState extends State<addHoursFaculty> {
     super.initState();
     IsHoursExists(); // use a helper method because initState() cannot be async
     IsSemesterDatesExists();
+    getusers();
     //retrivecolldepsem();
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
@@ -291,7 +292,6 @@ class _AddHourState extends State<addHoursFaculty> {
 
   @override
   Widget build(BuildContext context) {
-    getusers();
     PrintViewHours();
     IsValueChecked();
     // retrivecolldepsem();
