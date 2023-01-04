@@ -2,6 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:http/http.dart' as http;
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'dart:convert';
 
 class AppointmentConfirmationScreen extends StatefulWidget {
   const AppointmentConfirmationScreen(
@@ -21,6 +26,8 @@ class AppointmentConfirmationScreen extends StatefulWidget {
 
 class AppointmentConfirmationScreenState
     extends State<AppointmentConfirmationScreen> {
+  late List students;
+
   late ThemeData themeData;
   var formattedDate = DateFormat('dd-MM-yyyy hh:mm a');
   var formattedDateTime = DateFormat('hh:mm a');
@@ -43,6 +50,7 @@ class AppointmentConfirmationScreenState
 
     loading = true;
     initStudent().then((value) => bookAnAppointment());
+    pushNotification();
   }
 
   Future initStudent() async {
@@ -133,7 +141,7 @@ class AppointmentConfirmationScreenState
           .get();
 
       //get their references
-      var students = studentsDoc.docs
+      students = studentsDoc.docs
           .map((doc) {
             setState(() {
               currentProgressStatus =
@@ -383,6 +391,92 @@ class AppointmentConfirmationScreenState
     }
 
     return value;
+  }
+
+  void sendPushMessege(String token, String msg) async {
+    print(token);
+    try {
+      await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization':
+              'key=AAAAIqZZfrY:APA91bGmyg-TtTdQSaXgauRdN1LmyCWHL18IWSzI5UxqHk3TYdCFegHCDysMhyEvEYFBi9o7ofyiAQE-HZOG_TGH9AnfknXWUZmZpbKvBJ0Wx4zsQ8BJPx21NDiZloaCoyfetjjPkRP4'
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'status': 'done',
+              'body': 'your appointment has been canceled with ',
+              'title': 'appointment cancelation',
+            },
+            "notification": <String, dynamic>{
+              "title": "Consultation appointment",
+              "body": msg,
+              "android_channel_id": "dbfood",
+            },
+            "to": token,
+          },
+        ),
+      );
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error push notifcathion");
+      }
+    }
+  }
+
+  pushNotification() async {
+    // final FirebaseAuth auth = await FirebaseAuth.instance;
+    // final User? user = await auth.currentUser;
+    // userid = user!.uid;
+
+    var facultyName =
+        "${widget.faculty['firstname']} ${widget.faculty['lastname']}";
+    DateTime StartTimeDate = widget.appointment['starttime'].toDate();
+    print(StartTimeDate);
+    DateTime now = new DateTime.now();
+    print(now);
+    DateTime TimeFromNowTo24Hours = now.add(Duration(hours: 24));
+    print(TimeFromNowTo24Hours);
+    DateTime At4Pm = new DateTime(now.year, now.month, now.day, 4, 0, 0);
+    print(At4Pm);
+    print("ddddeeeeeeeeeemmmmmmmmmm1111");
+    //print("ddddeeeeeeeeeemmmmmmmmmm");
+    // while (students.length != null) {
+    await Future.delayed(Duration(seconds: 1));
+    print(students.length);
+    print("ddddeeeeeeeeeemmmmmmmmmm22222");
+    print(students);
+    // }
+    print("in the If ###################");
+    if (now.isAfter(At4Pm)) {
+      print("in the If ###################");
+      if (StartTimeDate.isBefore(TimeFromNowTo24Hours)) {
+        print("in the If ###################");
+        //send t the faculty
+        var facultyToken = widget.faculty['token'];
+        //group name
+        final DocumentSnapshot firstDtudentRef = await students[0].get();
+        var projectName = firstDtudentRef['projectname'];
+        //get time fo the appointment
+
+        String facultymsg =
+            "You have a new appointment tomorrow at ${formattedDateTime.format(widget.appointment['starttime']!.toDate())}";
+        sendPushMessege(facultyToken, facultymsg);
+        print("ddddeeeeeeeeeemmmmmmmmmm3333");
+
+        for (int i = 0; i < students.length; i++) {
+          String studentMsg =
+              "Tomorrow at ${formattedDateTime.format(widget.appointment['starttime']!.toDate())}";
+          final DocumentSnapshot StudentdocRef = await students[i].get();
+          var studentToken = StudentdocRef['token'];
+          sendPushMessege(studentToken, studentMsg);
+        }
+      }
+    }
   }
 }
 
