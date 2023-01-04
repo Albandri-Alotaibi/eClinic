@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multiselect/multiselect.dart';
 import 'package:intl/intl.dart';
+import 'package:myapp/viewFAQ.dart';
 import 'style/Mycolors.dart';
 import 'package:myapp/home.dart';
 import 'model/commonissue.dart';
@@ -141,35 +142,41 @@ class _facultyFAQState extends State<facultyFAQ> {
             //    }
             //  })),),
             SizedBox(
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: numofcommonissueunderfacultyspeciality,
-                itemBuilder: ((context, index) {
-                  if (index < Allcommonissue.length) {
-                    return Card(
-                      margin: EdgeInsets.only(bottom: 5),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(17), // <-- Radius
-                      ),
-                      shadowColor: Color.fromARGB(94, 250, 250, 250),
-                      elevation: 20,
-                      child: Row(
-                        children: [
-                          Text(Allcommonissue[index].issuetitle),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(context, 'addcommonissue');
-                            },
-                            child: Text("learnMore>>"),
-                          )
-                        ],
-                      ),
-                    );
-                  } else {
-                    return Container();
-                  }
-                }),
+              child: Container(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: numofcommonissueunderfacultyspeciality,
+                  itemBuilder: ((context, index) {
+                    if (index < Allcommonissue.length) {
+                      return Card(
+                        margin: EdgeInsets.only(bottom: 5),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(17), // <-- Radius
+                        ),
+                        shadowColor: Color.fromARGB(94, 250, 250, 250),
+                        elevation: 20,
+                        child: Row(
+                          children: [
+                            Text(Allcommonissue[index].issuetitle),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: ((context) => viewFAQ(
+                                        value: Allcommonissue[index].cid))));
+                              },
+                              child: Text("See More>>"),
+                            )
+                          ],
+                        ),
+                      );
+                    } else {
+                      return Container(
+                        child: Text("jhhhhhhhhhhhhhhhh"),
+                      );
+                    }
+                  }),
+                ),
               ),
             ),
             ElevatedButton(

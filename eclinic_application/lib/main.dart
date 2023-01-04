@@ -75,7 +75,9 @@ class MyApp extends StatelessWidget {
               StudentViewBookedAppointment(),
           'UploadGP': (context) => UploadGP(),
           'addcommonissue': (context) => addcommonissue(),
-          'viewFAQ': (context) => viewFAQ(),
+          'viewFAQ': (context) => viewFAQ(
+                value: '',
+              ),
         });
   }
 
