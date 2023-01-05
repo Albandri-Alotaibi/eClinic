@@ -208,6 +208,15 @@ class _sState extends State<studenthome> {
                     child: Text('Upload GP'),
                   ),
                   const SizedBox(width: 16),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Navigator.pushNamed(context, 'viewfaculty');
+                        Navigator.pushNamed(context, 'viewGPlibrary');
+                      },
+                      child: Text('GP library'),
+                    ),
+                  ),
                 ],
               ),
             ],

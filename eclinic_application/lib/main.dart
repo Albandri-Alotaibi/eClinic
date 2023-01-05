@@ -22,6 +22,7 @@ import 'package:myapp/FacultyViewScreen.dart';
 import 'package:myapp/FacultyListScreen.dart';
 import 'package:myapp/facultyFAQ.dart';
 import 'package:myapp/viewFAQ.dart';
+import 'package:myapp/viewGPlibrary.dart';
 import 'UploadGP.dart';
 
 Future<void> _firebaseMsgBackgroundHanler(RemoteMessage message) async {
@@ -78,6 +79,7 @@ class MyApp extends StatelessWidget {
           'viewFAQ': (context) => viewFAQ(
                 value: '',
               ),
+          'viewGPlibrary': (context) => viewGPlibrary(),
         });
   }
 
