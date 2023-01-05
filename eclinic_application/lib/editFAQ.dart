@@ -26,11 +26,16 @@ class editFAQ extends StatefulWidget {
 class _editFAQState extends State<editFAQ> {
   @override
   void initState() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    userid = user!.uid;
     // TODO: implement initState
     super.initState();
     getcommonissue();
+    getfacultysemester();
   }
 
+  var userid;
   final formkey = GlobalKey<FormState>();
   final formkeyforlink = GlobalKey<FormState>();
   var link;
@@ -41,8 +46,10 @@ class _editFAQState extends State<editFAQ> {
   var newsolution;
   List newlinks = [];
   List links = [];
+  var i;
   var snap;
   bool exist = false;
+  var semesterref;
   var _issuetitleconstroller = TextEditingController();
   var _problemController = TextEditingController();
   var _solutioncontroll = TextEditingController();
@@ -66,6 +73,14 @@ class _editFAQState extends State<editFAQ> {
     print(links);
 
     print(widget.value);
+  }
+
+  getfacultysemester() async {
+    var snap = await FirebaseFirestore.instance
+        .collection('faculty')
+        .doc(userid)
+        .get();
+    semesterref = snap["semester"];
   }
 
   Widget build(BuildContext context) {
@@ -170,14 +185,14 @@ class _editFAQState extends State<editFAQ> {
                               height: 8,
                             ),
                             if (links.length > 0)
-                              for (var i = 0; i < links.length; i++)
+                              for (i = 0; i < links.length; i++)
                                 Padding(
                                   padding: const EdgeInsets.only(right: 200),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       Text(
-                                        "More Resources ",
+                                        "More Resources ${links.length}",
                                         style: TextStyle(
                                             overflow: TextOverflow.ellipsis,
                                             color: Mycolors.mainColorBlue,
@@ -216,8 +231,10 @@ class _editFAQState extends State<editFAQ> {
                                             padding:
                                                 const EdgeInsets.only(top: 1),
                                             child: IconButton(
-                                                onPressed: (() =>
-                                                    links.remove(links[i])),
+                                                onPressed: (() {
+                                                  links.remove(links[i]);
+                                                  getcommonissue();
+                                                }),
                                                 icon: Icon(
                                                   Icons.cancel,
                                                   size: 20,
@@ -251,7 +268,7 @@ class _editFAQState extends State<editFAQ> {
                                   onPressed: (() {
                                     //
                                   }),
-                                  child: Text("upload file "),
+                                  child: Text("upload file"),
                                 ),
                                 SizedBox(
                                   width: 6,
@@ -276,6 +293,25 @@ class _editFAQState extends State<editFAQ> {
                                   }),
                                   child: Text("add link"),
                                 ),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    textStyle: TextStyle(
+                                        fontFamily: 'main', fontSize: 16),
+                                    shadowColor: Colors.blue[900],
+                                    elevation: 16,
+                                    backgroundColor:
+                                        Mycolors.mainShadedColorBlue,
+                                    minimumSize: Size(150, 50),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          17), // <-- Radius
+                                    ),
+                                  ),
+                                  onPressed: (() {
+                                    ConfirmationDialogfordelete(context);
+                                  }),
+                                  child: Text("delete common issue"),
+                                ),
                               ],
                             ),
                             ElevatedButton(
@@ -292,54 +328,7 @@ class _editFAQState extends State<editFAQ> {
                                 ),
                               ),
                               onPressed: () {
-                                setState(() {
-                                  newproblem = _problemController.text;
-                                  newsolution = _solutioncontroll.text;
-                                  newlinks = links;
-                                });
-
-                                if (formkey.currentState!.validate()) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              viewFAQ(value: widget.value)));
-                                  try {
-                                    FirebaseFirestore.instance
-                                        .collection('commonissue')
-                                        .doc(widget.value)
-                                        .update({
-                                      'problem': newproblem,
-                                      'solution': newsolution,
-                                      'links': newlinks
-                                    });
-
-                                    Fluttertoast.showToast(
-                                      msg:
-                                          " Your information has been updated successfully",
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.CENTER,
-                                      timeInSecForIosWeb: 2,
-                                      backgroundColor:
-                                          Color.fromARGB(255, 127, 166, 233),
-                                      textColor:
-                                          Color.fromARGB(255, 248, 249, 250),
-                                      fontSize: 18.0,
-                                    );
-                                  } on FirebaseAuthException catch (error) {
-                                    Fluttertoast.showToast(
-                                      msg: "Something wronge",
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.CENTER,
-                                      timeInSecForIosWeb: 5,
-                                      backgroundColor:
-                                          Color.fromARGB(255, 127, 166, 233),
-                                      textColor:
-                                          Color.fromARGB(255, 252, 253, 255),
-                                      fontSize: 18.0,
-                                    );
-                                  }
-                                }
+                                ConfirmationDialogforupdate(context);
                               },
                               child: Text("Save changes"),
                             ),
@@ -388,12 +377,11 @@ class _editFAQState extends State<editFAQ> {
       child: Text("Add"),
       onPressed: () {
         if (formkeyforlink.currentState!.validate()) {
-          setState(() {
-            link = _linkcontroll.text;
-            print(link);
-            links.add(link);
-            Navigator.of(context).pop();
-          });
+          link = _linkcontroll.text;
+          print("llllllllllllllllllllliiiiiiiiinnnnnnnnkkkkkkkkkssssss");
+          links.add(link);
+
+          Navigator.of(context).pop();
         }
       },
     );
@@ -451,5 +439,155 @@ class _editFAQState extends State<editFAQ> {
     );
 
     // show the dialog
+  }
+
+  ConfirmationDialogfordelete(BuildContext context) {
+    Widget dontCancelAppButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
+      child: Text("No"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    Widget YesCancelAppButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
+      child: Text("Yes"),
+      onPressed: () async {
+        await FirebaseFirestore.instance
+            .collection("commonissue")
+            .doc(widget.value)
+            .delete();
+        Navigator.pushNamed(context, 'facultyFAQ');
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      // title: Text("LogOut"),
+      content: Text("Are you sure you want to delete the common issue ?"),
+      actions: [
+        dontCancelAppButton,
+        YesCancelAppButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  ConfirmationDialogforupdate(BuildContext context) {
+    Widget dontCancelAppButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
+      child: Text("No"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    Widget YesCancelAppButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
+      child: Text("Yes"),
+      onPressed: () async {
+        setState(() {
+          newproblem = _problemController.text;
+          newsolution = _solutioncontroll.text;
+          newlinks = links;
+        });
+
+        if (formkey.currentState!.validate()) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => viewFAQ(value: widget.value)));
+          try {
+            FirebaseFirestore.instance
+                .collection('commonissue')
+                .doc(widget.value)
+                .update({
+              'problem': newproblem,
+              'solution': newsolution,
+              'links': newlinks,
+              'semester': semesterref,
+            });
+
+            Fluttertoast.showToast(
+              msg: " Your information has been updated successfully",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 2,
+              backgroundColor: Color.fromARGB(255, 127, 166, 233),
+              textColor: Color.fromARGB(255, 248, 249, 250),
+              fontSize: 18.0,
+            );
+          } on FirebaseAuthException catch (error) {
+            Fluttertoast.showToast(
+              msg: "Something wronge",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 5,
+              backgroundColor: Color.fromARGB(255, 127, 166, 233),
+              textColor: Color.fromARGB(255, 252, 253, 255),
+              fontSize: 18.0,
+            );
+          }
+        }
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      // title: Text("LogOut"),
+      content: Text("Are you sure you want to update the common issue ?"),
+      actions: [
+        dontCancelAppButton,
+        YesCancelAppButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

@@ -117,7 +117,7 @@ class _sState extends State<studenthome> {
         ListTile(
           leading: Icon(Icons.edit_note),
           title: Text(
-            "Edit profile",
+            "My profile",
             style: TextStyle(
                 fontFamily: 'main',
                 fontSize: 16,
@@ -174,52 +174,44 @@ class _sState extends State<studenthome> {
         ),
       ])),
       body: Padding(
-        padding: const EdgeInsets.all(100.0),
-        child: Column(children: [
- Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () {
-                // Navigator.pushNamed(context, 'viewfaculty');
-                Navigator.pushNamed(context, 'FacultyListScreen');
-              },
-              child: Text('Schdule'),
-            ),
-            const SizedBox(width: 16),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, 'StudentViewBookedAppointment');
-              },
-              child: Text('view'),
-            ),
-          ],
-        ),
-
-
-           Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () {
-                // Navigator.pushNamed(context, 'viewfaculty');
-                Navigator.pushNamed(context, 'UploadGP');
-              },
-              child: Text('Upload GP'),
-            ),
-            const SizedBox(width: 16),
-            
-          ],
-        ),
-
-
-
-
-        ],)
-        
-        
-       
-      ),
+          padding: const EdgeInsets.all(100.0),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  ElevatedButton(
+                    onPressed: () {
+                      // Navigator.pushNamed(context, 'viewfaculty');
+                      Navigator.pushNamed(context, 'FacultyListScreen');
+                    },
+                    child: Text('Schdule'),
+                  ),
+                  const SizedBox(width: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(
+                          context, 'StudentViewBookedAppointment');
+                    },
+                    child: Text('view'),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  ElevatedButton(
+                    onPressed: () {
+                      // Navigator.pushNamed(context, 'viewfaculty');
+                      Navigator.pushNamed(context, 'UploadGP');
+                    },
+                    child: Text('Upload GP'),
+                  ),
+                  const SizedBox(width: 16),
+                ],
+              ),
+            ],
+          )),
     ));
   } //end build
 

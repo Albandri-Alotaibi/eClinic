@@ -123,7 +123,7 @@ class _fState extends State<facultyhome> {
           ListTile(
             leading: Icon(Icons.edit_note),
             title: Text(
-              "Edit profile",
+              "My profile",
               style: TextStyle(
                   fontFamily: 'main',
                   fontSize: 16,

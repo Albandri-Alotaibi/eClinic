@@ -452,6 +452,7 @@ class _addcommonissueState extends State<addcommonissue> {
             link = _linkcontroll.text;
             print(link);
             links.add(link);
+
             Navigator.of(context).pop();
           });
         }
@@ -548,21 +549,26 @@ class _addcommonissueState extends State<addcommonissue> {
       child: Text("confirm"),
       onPressed: () async {
         if (formkey.currentState!.validate()) {
-          problem = _problemController.text;
-          solution = _solutioncontroll.text;
-          isuuetitle = _issuetitleconstroller.text;
-          await FirebaseFirestore.instance.collection('commonissue').doc().set({
-            "issuetitle": isuuetitle,
-            "problem": problem,
-            "solution": solution,
-            "document": null,
-            "semester": semesterRef,
-            "issuecategory": FirebaseFirestore.instance
-                .collection("facultyspeciality")
-                .doc(docforspeciality),
-            "links": links,
+          setState(() async {
+            problem = _problemController.text;
+            solution = _solutioncontroll.text;
+            isuuetitle = _issuetitleconstroller.text;
+            await FirebaseFirestore.instance
+                .collection('commonissue')
+                .doc()
+                .set({
+              "issuetitle": isuuetitle,
+              "problem": problem,
+              "solution": solution,
+              "document": null,
+              "semester": semesterRef,
+              "issuecategory": FirebaseFirestore.instance
+                  .collection("facultyspeciality")
+                  .doc(docforspeciality),
+              "links": links,
+            });
+            Navigator.pushNamed(context, 'facultyFAQ');
           });
-          Navigator.pushNamed(context, 'facultyFAQ');
         }
       },
     );

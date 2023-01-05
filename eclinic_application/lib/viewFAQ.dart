@@ -104,7 +104,7 @@ class _viewFAQState extends State<viewFAQ> {
                                                 editFAQ(value: value))));
                                   },
                                   icon: Icon(
-                                    Icons.app_registration,
+                                    Icons.edit_note,
                                     size: 20,
                                   )),
                             )
