@@ -6,7 +6,7 @@ admin.initializeApp(functions.config().firebase);
 // Create and deploy your first functions
 // https://firebase.google.com/docs/functions/get-started
 
-exports.helloWorld = functions.https.onRequest(async (request, response) => {
+exports.helloWorld = functions.pubsub.schedule('0 13 * * *').onRun(async (context) => {
     functions.logger.info("Hello logs", { structuredData: true });
     //response.send("Hello Firebase");
 
@@ -60,7 +60,7 @@ exports.helloWorld = functions.https.onRequest(async (request, response) => {
                         // functions.logger.info(Diff_in_hours);
 
                         //if the appointment will start in the comming 24h then we will send a notification to the dr and students
-                        if (Diff_in_hours <= 24) {
+                        if (Diff_in_hours <= 24 && Diff_in_hours>0) {
                             // count the numder of appointments a faculty have to send it later
                             numOfBookedAppointments = numOfBookedAppointments+1;
 
@@ -84,8 +84,8 @@ exports.helloWorld = functions.https.onRequest(async (request, response) => {
                             // Notification details.
                             const payload = {
                                 notification: {
-                                    title: 'Appointment reminder',
-                                    body: `You have an appointment tomorrow with Dr.${facultyName} at ${StartTimeForAppointment}.`,
+                                    title: 'Consultation appointment',
+                                    body: `Tomorrow at ${StartTimeForAppointment}.`,
                                     //icon: follower.photoURL
                                 }
                             };
@@ -110,7 +110,7 @@ exports.helloWorld = functions.https.onRequest(async (request, response) => {
                     if(numOfBookedAppointments>0){
                         const payload = {
                             notification: {
-                                title: 'Appointment reminder',
+                                title: 'Consultation appointment',
                                 body: `You have ${numOfBookedAppointments} appointment(s) tomorrow.`,
                                 //icon: follower.photoURL
                             }
