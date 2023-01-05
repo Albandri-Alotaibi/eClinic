@@ -327,7 +327,8 @@ class _addcommonissueState extends State<addcommonissue> {
                             Padding(
                               padding: const EdgeInsets.only(top: 1),
                               child: IconButton(
-                                  onPressed: (() => links.remove(links[i])),
+                                  onPressed: (() =>
+                                      ConfirmationDialogfordelete(context, i)),
                                   icon: Icon(
                                     Icons.cancel,
                                     size: 20,
@@ -658,5 +659,61 @@ class _addcommonissueState extends State<addcommonissue> {
       backgroundColor: Colors.transparent,
       elevation: 0,
     ));
+  }
+
+  ConfirmationDialogfordelete(BuildContext context, var i) {
+    Widget dontCancelAppButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
+      child: Text("No"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    Widget YesCancelAppButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
+      child: Text("Yes"),
+      onPressed: () async {
+        links.remove(links[i]);
+        Future.delayed(Duration(seconds: 0), () {
+          setState(() {});
+        });
+        Navigator.of(context).pop();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      // title: Text("LogOut"),
+      content: Text("Are you sure you want to delete this link ?"),
+      actions: [
+        dontCancelAppButton,
+        YesCancelAppButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }
