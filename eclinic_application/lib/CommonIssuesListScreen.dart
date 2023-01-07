@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp/CommonIssueViewScreen.dart';
 
 class CommonIssuesListScreen extends StatefulWidget {
   const CommonIssuesListScreen({super.key});
@@ -61,6 +62,11 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
       return semester;
     }).toList();
 
+    semesterList.insert(
+        0, <String, dynamic>{"semestername": "All Semesters", "id": "0"});
+
+    semesterDropdownValue = semesterList[0];
+
     setState(() {
       firstLoading = false;
     });
@@ -68,6 +74,10 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
 
   //get common issues by selected dropdowns (speciality / semester) refs
   void initCommonIssues() async {
+    if (specialityDropdownValue == null) {
+      return;
+    }
+
     setState(() {
       secondLoading = true;
       searchClicked = true;
@@ -75,13 +85,18 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
 
     var ci = FirebaseFirestore.instance.collection('commonissue');
 
-    print(specialityDropdownValue?['ref'].toString());
-
-    var q = await ci
-        // .where('semester', isEqualTo: semesterDropdownValue?['ref'])
-        .where('issuecategory', isEqualTo: specialityDropdownValue?['ref'])
-        .get(const GetOptions(source: Source.server));
-
+    // print(specialityDropdownValue?['ref'].toString());
+    QuerySnapshot<Map<String, dynamic>> q;
+    if (semesterDropdownValue != null && semesterDropdownValue?['id'] != "0") {
+      q = await ci
+          .where('semester', isEqualTo: semesterDropdownValue?['ref'])
+          .where('issuecategory', isEqualTo: specialityDropdownValue?['ref'])
+          .get(const GetOptions(source: Source.server));
+    } else {
+      q = await ci
+          .where('issuecategory', isEqualTo: specialityDropdownValue?['ref'])
+          .get(const GetOptions(source: Source.server));
+    }
     commonIssuesList = [];
 
     for (var doc in q.docs) {
@@ -90,13 +105,13 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
       commonIssue['ref'] = doc.reference;
 
       setState(() {
-        noResults = q.docs.isEmpty;
-
         commonIssuesList.add(commonIssue);
       });
     }
 
     setState(() {
+      noResults = q.docs.isEmpty;
+
       secondLoading = false;
     });
   }
@@ -106,9 +121,21 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
     themeData = Theme.of(context);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: "xxx",
+        title: "Common Issues",
         home: SafeArea(
           child: Scaffold(
+              appBar: AppBar(
+                title: const Text("Common Issues"),
+                leading: InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
               body: firstLoading
                   ? const Center(
                       child: CircularProgressIndicator(),
@@ -116,24 +143,8 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                   : ListView(
                       padding: const EdgeInsets.all(24),
                       children: <Widget>[
-                        Container(
-                          alignment: Alignment.topLeft,
-                          child: IconButton(
-                            onPressed: () => Navigator.of(context).pop(),
-                            icon: const Icon(Icons.chevron_left),
-                          ),
-                        ),
                         //------------------------- dropdowns [speciality/semester]
                         Column(children: [
-                          Row(children: [
-                            Text(
-                              "Common Issues",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: themeData.colorScheme.primary,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ]),
                           Row(children: [
                             DropdownButton<Map<String, dynamic>?>(
                                 // icon: const Icon(Icons.face),
@@ -164,7 +175,10 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                                 onChanged: (newValue) {
                                   if (newValue != null) {
                                     setState(() {
+                                      //reset variables, to remove results and show messages
                                       specialityDropdownValue = newValue;
+                                      commonIssuesList = [];
+                                      searchClicked = false;
                                     });
                                   }
                                 }),
@@ -198,7 +212,11 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                                 onChanged: (newValue) {
                                   if (newValue != null) {
                                     setState(() {
+                                      //reset variables, to remove results and show messages
                                       semesterDropdownValue = newValue;
+                                      commonIssuesList = [];
+                                      searchClicked = false;
+                                      noResults = true;
                                     });
                                   }
                                 }),
@@ -219,13 +237,13 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                                 ? Padding(
                                     padding: const EdgeInsets.all(15),
                                     child: Text(
+                                        //if common issues list is loading from database
                                         secondLoading
                                             ? 'Wait...'
-                                            : (specialityDropdownValue ==
-                                                        null &&
-                                                    semesterDropdownValue ==
-                                                        null
-                                                ? 'Please select speciality/semester to find common issues.'
+                                            //if loading is done but dropdowns are null
+                                            : (specialityDropdownValue == null
+                                                ? 'Please select speciality to find common issues.'
+                                                //if no search clicked
                                                 : (searchClicked
                                                     ? 'There are no common issues available with the selected options.'
                                                     : 'Please click search to continue..')),
@@ -249,18 +267,20 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
   }
 
   //to show every common issue as an item in the list
-  _commonIssueDetails({required String title, required Map commonIssue}) {
+  _commonIssueDetails(
+      {required String title, required Map<String, dynamic> commonIssue}) {
     return InkWell(
       onTap: () {
         //after clicking on the issue, move to common issue view page
-        // Navigator.push(
-        //         context,
-        //         MaterialPageRoute(
-        //             builder: (context) =>
-        //                 CommonIssueViewScreen(commonIssue: commonIssue)))
-        //     .then((value) => setState(() {
-        //           //..
-        //         }));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    //we send common issue object item to the next page to show it
+                    CommonIssueViewScreen(commonIssue: commonIssue))).then(
+            (value) => setState(() {
+                  //..
+                }));
       },
       child: Container(
         margin: const EdgeInsets.fromLTRB(0, 25, 0, 0),
