@@ -231,7 +231,11 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                 item++)
                               ListTile(
                                   leading: const Icon(Icons.link),
-                                  title: Text('Link ${item + 1}'),
+                                  title: widget.commonIssue['linkname'][item] !=
+                                          null
+                                      ? Text(
+                                          widget.commonIssue['linkname'][item])
+                                      : Text('Link ${item + 1}'),
                                   subtitle:
                                       Text(widget.commonIssue['links'][item]),
                                   onTap: () => launchUrl(Uri.parse(
