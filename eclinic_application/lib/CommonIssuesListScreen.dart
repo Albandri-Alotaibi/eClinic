@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:myapp/CommonIssueViewScreen.dart';
+import 'package:myapp/style/Mycolors.dart';
 
 class CommonIssuesListScreen extends StatefulWidget {
   const CommonIssuesListScreen({super.key});
@@ -46,6 +48,12 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
 
       return speciality;
     }).toList();
+
+    //add all Specialties to dropdown
+    specialityList.insert(
+        0, <String, dynamic>{"specialityname": "All Specialties", "id": "0"});
+
+    specialityDropdownValue = specialityList[0];
   }
 
   Future initSemester() async {
@@ -62,6 +70,7 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
       return semester;
     }).toList();
 
+    //add all semesters option to dropdown
     semesterList.insert(
         0, <String, dynamic>{"semestername": "All Semesters", "id": "0"});
 
@@ -70,14 +79,12 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
     setState(() {
       firstLoading = false;
     });
+
+    initCommonIssues();
   }
 
   //get common issues by selected dropdowns (speciality / semester) refs
   void initCommonIssues() async {
-    if (specialityDropdownValue == null) {
-      return;
-    }
-
     setState(() {
       secondLoading = true;
       searchClicked = true;
@@ -85,27 +92,45 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
 
     var ci = FirebaseFirestore.instance.collection('commonissue');
 
-    // print(specialityDropdownValue?['ref'].toString());
+    //depends on the dropdown, make the query to database
     QuerySnapshot<Map<String, dynamic>> q;
-    if (semesterDropdownValue != null && semesterDropdownValue?['id'] != "0") {
+    if (semesterDropdownValue != null &&
+        semesterDropdownValue?['id'] != "0" &&
+        specialityDropdownValue != null &&
+        specialityDropdownValue?['id'] != "0") {
       q = await ci
           .where('semester', isEqualTo: semesterDropdownValue?['ref'])
           .where('issuecategory', isEqualTo: specialityDropdownValue?['ref'])
           .get(const GetOptions(source: Source.server));
-    } else {
+    } else if (semesterDropdownValue != null &&
+        semesterDropdownValue?['id'] != "0") {
+      q = await ci
+          .where('semester', isEqualTo: semesterDropdownValue?['ref'])
+          .get(const GetOptions(source: Source.server));
+    } else if (specialityDropdownValue != null &&
+        specialityDropdownValue?['id'] != "0") {
       q = await ci
           .where('issuecategory', isEqualTo: specialityDropdownValue?['ref'])
           .get(const GetOptions(source: Source.server));
+    } else {
+      q = await ci.get(const GetOptions(source: Source.server));
     }
+
     commonIssuesList = [];
 
+    var i = 0;
     for (var doc in q.docs) {
       var commonIssue = doc.data();
       commonIssue['id'] = doc.reference.id;
       commonIssue['ref'] = doc.reference;
 
+      i++;
+
       setState(() {
         commonIssuesList.add(commonIssue);
+        if (i > 0) {
+          secondLoading = false;
+        }
       });
     }
 
@@ -124,6 +149,7 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
         title: "Common Issues",
         home: SafeArea(
           child: Scaffold(
+              //show the app bar above
               appBar: AppBar(
                 title: const Text("Common Issues"),
                 leading: InkWell(
@@ -137,9 +163,11 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                 ),
               ),
               body: firstLoading
+                  //show progress bar during dropdowns loading
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
+                  //when loading if done, show everything.
                   : ListView(
                       padding: const EdgeInsets.all(24),
                       children: <Widget>[
@@ -179,6 +207,7 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                                       specialityDropdownValue = newValue;
                                       commonIssuesList = [];
                                       searchClicked = false;
+                                      noResults = true;
                                     });
                                   }
                                 }),
@@ -216,7 +245,7 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                                       semesterDropdownValue = newValue;
                                       commonIssuesList = [];
                                       searchClicked = false;
-                                      noResults = true;
+                                      // noResults = true;
                                     });
                                   }
                                 }),
@@ -230,11 +259,13 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                           ]),
                         ]),
                         //--------------------------- end dropdowns
-                        SizedBox(
-                            height: 800,
-                            //if no semester/speciality is selected, show message, if no results show message
-                            child: noResults || secondLoading
-                                ? Padding(
+
+                        //show message if no results and still loading or user didnt click search
+                        noResults || secondLoading || !searchClicked
+                            ? SizedBox(
+                                height: 800,
+                                //if no semester/speciality is selected, show message, if no results show message
+                                child: Padding(
                                     padding: const EdgeInsets.all(15),
                                     child: Text(
                                         //if common issues list is loading from database
@@ -243,7 +274,7 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                                             //if loading is done but dropdowns are null
                                             : (specialityDropdownValue == null
                                                 ? 'Please select speciality to find common issues.'
-                                                //if no search clicked
+                                                //if no search clicked then tell user to click search, otherwise if it's clicked, no results are found
                                                 : (searchClicked
                                                     ? 'There are no common issues available with the selected options.'
                                                     : 'Please click search to continue..')),
@@ -252,15 +283,35 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                                             fontWeight: FontWeight.w600,
                                             height: 2,
                                             fontSize: 18,
-                                            color: Colors.blue)))
-                                : ListView.builder(
-                                    itemCount: commonIssuesList.length,
-                                    itemBuilder: (context, index) {
-                                      return _commonIssueDetails(
-                                          title: commonIssuesList[index]
-                                              ['issuetitle'],
-                                          commonIssue: commonIssuesList[index]);
-                                    }))
+                                            color: Colors.blue))))
+                            :
+                            //show all items if no loading and there are result from search
+                            ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: commonIssuesList.length,
+                                itemBuilder: (context, index) {
+                                  return _commonIssueDetails(
+                                      title: commonIssuesList[index]
+                                          ['issuetitle'],
+                                      semester: semesterList.isNotEmpty
+                                          ? (semesterList.firstWhereOrNull((element) =>
+                                                      element?['ref'] ==
+                                                      commonIssuesList[index]
+                                                          ['semester'])?[
+                                                  'semestername'] ??
+                                              "--")
+                                          : "--",
+                                      speciality: specialityList.isNotEmpty
+                                          ? (specialityList.firstWhereOrNull((element) =>
+                                                      element?['ref'] ==
+                                                      commonIssuesList[index]
+                                                          ['issuecategory'])?[
+                                                  'specialityname'] ??
+                                              "--")
+                                          : "--",
+                                      commonIssue: commonIssuesList[index]);
+                                })
                       ],
                     )),
         ));
@@ -268,7 +319,10 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
 
   //to show every common issue as an item in the list
   _commonIssueDetails(
-      {required String title, required Map<String, dynamic> commonIssue}) {
+      {required String title,
+      required String semester,
+      required String speciality,
+      required Map<String, dynamic> commonIssue}) {
     return InkWell(
       onTap: () {
         //after clicking on the issue, move to common issue view page
@@ -278,36 +332,35 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                 builder: (context) =>
                     //we send common issue object item to the next page to show it
                     CommonIssueViewScreen(commonIssue: commonIssue))).then(
-            (value) => setState(() {
-                  //..
-                }));
+            (value) => setState(() {}));
       },
       child: Container(
-        margin: const EdgeInsets.fromLTRB(0, 25, 0, 0),
+        margin: const EdgeInsets.fromLTRB(0, 5, 0, 0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 200,
-              padding: const EdgeInsets.all(11),
-              color: themeData.colorScheme.background.withOpacity(0.3),
-              child: Column(children: [
-                Row(children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          title,
-                          style: TextStyle(
-                              color: themeData.colorScheme.primary,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ],
-                    ),
-                  )
-                ])
-              ]),
+            Expanded(
+              child: Card(
+                color: Mycolors.mainShadedColorBlue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(17), // <-- Radius
+                ),
+                shadowColor: const Color.fromARGB(94, 114, 168, 243),
+                child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: ListTile(
+                      title: Text(title, style: const TextStyle(fontSize: 18)),
+                      subtitle: Text(
+                        "Speciality: $speciality\nSemester: $semester",
+                        style: const TextStyle(fontSize: 11),
+                      ),
+                      textColor: Mycolors.mainColorWhite,
+
+                      // fontFamily: 'main',
+                      // fontWeight: FontWeight.w600
+                      // ),
+                    )),
+              ),
             )
           ],
         ),

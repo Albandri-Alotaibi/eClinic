@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CommonIssueViewScreen extends StatefulWidget {
@@ -19,8 +18,6 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
   late List students;
 
   late ThemeData themeData;
-  var formattedDate = DateFormat('dd-MM-yyyy hh:mm a');
-  var formattedDateTime = DateFormat('hh:mm a');
 
   var loading = false;
   Map<String, dynamic>? semester;
@@ -30,7 +27,6 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
   void initState() {
     super.initState();
 
-    print(widget.commonIssue?['links'].toString());
     loading = true;
     initCommonIssue();
   }
@@ -124,8 +120,9 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                             style: TextStyle(
                                 letterSpacing: 0.1,
                                 fontSize: 14,
+                                fontFamily: "main",
                                 color: themeData.colorScheme.primary,
-                                fontWeight: FontWeight.w500),
+                                fontWeight: FontWeight.w600),
                           )
                         ]),
                         const Divider(
@@ -142,63 +139,89 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                             style: TextStyle(
                                 letterSpacing: 0.1,
                                 fontSize: 14,
+                                fontFamily: "main",
                                 color: themeData.colorScheme.primary,
-                                fontWeight: FontWeight.w500),
+                                fontWeight: FontWeight.w600),
                           )
                         ]),
                         const Divider(
                           color: Colors.grey,
                           thickness: 1,
                         ),
-                        Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Icon(
-                                Icons.question_mark_outlined,
-                                color: Colors.grey,
-                              ),
-                              Expanded(
-                                  child: Text(
-                                "Problem:\n\n${widget.commonIssue['problem']}",
-                                // "  Problem:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                                style: TextStyle(
-                                    letterSpacing: 1.5,
-                                    fontSize: 15,
-                                    color: themeData.colorScheme.primary,
-                                    fontWeight: FontWeight.w500),
+                        Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Icon(
+                                    Icons.question_mark_outlined,
+                                    color: Colors.red,
+                                  ),
+                                  Expanded(
+                                      child: Text(
+                                    "  Problem:\n\n${widget.commonIssue['problem']}",
+                                    // "  Problem:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                                    style: TextStyle(
+                                        letterSpacing: 1.5,
+                                        fontSize: 15,
+                                        fontFamily: "main",
+                                        color: themeData.colorScheme.primary,
+                                        fontWeight: FontWeight.w500),
 
-                                // decoration: const InputDecoration(
-                                //   prefixIcon: Icon(Icons.collections),
-                                // ),
-                              ))
-                            ]),
+                                    // decoration: const InputDecoration(
+                                    //   prefixIcon: Icon(Icons.collections),
+                                    // ),
+                                  ))
+                                ])),
                         const Divider(
                           color: Colors.grey,
                           thickness: 1,
                         ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Icon(
-                              Icons.check,
-                              color: Colors.grey,
-                            ),
-                            Expanded(
-                                child: Text(
-                              "Solution: ${widget.commonIssue['solution']})",
-                              // "  Solution:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                              style: TextStyle(
-                                  letterSpacing: 2,
-                                  fontSize: 14,
-                                  color: themeData.colorScheme.primary,
-                                  fontWeight: FontWeight.w500),
-                            ))
-                          ],
-                        ),
+                        Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Icon(
+                                  Icons.lightbulb,
+                                  color: Colors.green,
+                                ),
+                                Expanded(
+                                    child: Text(
+                                  "  Solution: ${widget.commonIssue['solution']})",
+                                  // "  Solution:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                                  style: TextStyle(
+                                      letterSpacing: 2,
+                                      fontSize: 14,
+                                      fontFamily: "main",
+                                      color: themeData.colorScheme.primary,
+                                      fontWeight: FontWeight.w500),
+                                ))
+                              ],
+                            )),
+                        if (widget.commonIssue['document'] != null)
+                          const Divider(
+                            color: Colors.grey,
+                            thickness: 1,
+                          ),
+                        /**
+                         * Document
+                         */
+                        if (widget.commonIssue['document'] != null)
+                          ListTile(
+                              leading: const Icon(Icons.file_copy),
+                              title: const Text('Docuemnt'),
+                              subtitle: const Text("Click to download"),
+                              onTap: () =>
+                                  launchUrl(widget.commonIssue['document'])),
                         const Divider(
                           color: Colors.grey,
                           thickness: 1,
                         ),
+
+                        /**
+                         * links
+                         */
                         if (widget.commonIssue['links'] != null &&
                             widget.commonIssue['links'].isNotEmpty)
                           Wrap(children: [
