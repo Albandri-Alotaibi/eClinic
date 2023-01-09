@@ -219,6 +219,20 @@ class _sState extends State<studenthome> {
                   ),
                 ],
               ),
+              //---------- add  common issue button
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, 'commonIssuesList');
+                        },
+                        child: Text('Common Issues'),
+                      ),
+                    ),
+                  ])
+              //-------------- end row of common issues button
             ],
           )),
     ));
