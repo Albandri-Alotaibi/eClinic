@@ -32,11 +32,15 @@ class _facultyFAQState extends State<facultyFAQ> {
   var userid;
   var specialityselectedvalue;
   var numofcommonissueunderfacultyspeciality = 0;
+  var refspeclailty;
   void initState() {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
     userid = user!.uid;
     print(userid);
+    Future.delayed(Duration(seconds: 1), () {
+      setState(() {});
+    });
     // TODO: implement initState
     retrivespeciality();
     getcommonissue();
@@ -57,7 +61,7 @@ class _facultyFAQState extends State<facultyFAQ> {
       setState(() {
         specality.add(docRef["specialityname"]);
         print(docRef["specialityname"]);
-        print(specality);
+        print(docRef.id);
         print("222222222222222222222");
       });
     }
@@ -78,10 +82,61 @@ class _facultyFAQState extends State<facultyFAQ> {
             print(sp);
             print(element.id);
             numofcommonissueunderfacultyspeciality++;
+
             Allcommonissue.add(
                 new commonissue(cid: element.id, issuetitle: title));
             print(element.id);
           }
+        });
+      });
+    });
+  }
+
+  getcommonissuebasedonspeciality(var s) async {
+    print(s);
+
+    final snap = await FirebaseFirestore.instance
+        .collection('faculty')
+        .doc(userid)
+        .get();
+    List facultyspecialityRef = snap["specialty"];
+    sp = snap["specialty"];
+    print(sp);
+    for (var i = 0; i < facultyspecialityRef.length; i++) {
+      final DocumentSnapshot docRef = await facultyspecialityRef[i].get();
+      setState(() {
+        if (s == docRef["specialityname"]) {
+          print(docRef.id);
+          refspeclailty = docRef.id;
+          refreshthepagewithcommonisuue(refspeclailty);
+        }
+      });
+    }
+  }
+
+  refreshthepagewithcommonisuue(var s) async {
+    print("مددددريييييي");
+    await FirebaseFirestore.instance
+        .collection('commonissue')
+        .where("issuecategory", isEqualTo: s)
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((element) {
+        String title = element['issuetitle'];
+        String id = element.id;
+        // print(sp);
+        // print(element.id);
+        setState(() {
+          print(sp);
+          print("مددددريييييي");
+          numofcommonissueunderfacultyspeciality++;
+
+          Allcommonissue.add(
+              new commonissue(cid: element.id, issuetitle: title));
+          print(Allcommonissue);
+        });
+        Future.delayed(Duration(seconds: 1), () {
+          setState(() {});
         });
       });
     });
@@ -124,6 +179,7 @@ class _facultyFAQState extends State<facultyFAQ> {
               onChanged: (String? newselect) {
                 setState(() {
                   specialityselectedvalue = newselect;
+                  getcommonissuebasedonspeciality(specialityselectedvalue);
                 });
               },
               value: specialityselectedvalue,
@@ -159,6 +215,7 @@ class _facultyFAQState extends State<facultyFAQ> {
                         child: Row(
                           children: [
                             Text(Allcommonissue[index].issuetitle),
+                            SizedBox(width: 10),
                             GestureDetector(
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(

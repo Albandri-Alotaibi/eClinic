@@ -49,6 +49,7 @@ class _viewFAQState extends State<viewFAQ> {
     problem = snap["problem"];
     solution = snap["solution"];
     links = snap["links"];
+
     print(snap["issuetitle"]);
     print(problem);
     print(solution);
@@ -223,16 +224,16 @@ class _viewFAQState extends State<viewFAQ> {
                                                       TextOverflow.ellipsis,
                                                   color: Colors.blue),
                                               recognizer: TapGestureRecognizer()
-                                                ..onTap = () async {
-                                                  var url = links[i];
+                                                ..onTap = () {
+                                                  //var url = links[i];
                                                   // final uri = Uri.parse(url);
                                                   // ignore: deprecated_member_use
-                                                  if (await canLaunch(url)) {
-                                                    // ignore: deprecated_member_use
-                                                    launch(url);
-                                                  } else {
-                                                    throw "Cannot load url";
-                                                  }
+                                                  // if (await canLaunch(url)) {
+                                                  // ignore: deprecated_member_use
+                                                  launch(links[i]);
+                                                  // } else {
+                                                  //   throw "Cannot load url";
+                                                  // }
                                                 })
                                         ]),
                                       ),
