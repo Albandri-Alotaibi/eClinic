@@ -453,7 +453,6 @@ class _addcommonissueState extends State<addcommonissue> {
             link = _linkcontroll.text;
             print(link);
             links.add(link);
-
             Navigator.of(context).pop();
           });
         }

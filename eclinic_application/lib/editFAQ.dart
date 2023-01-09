@@ -32,6 +32,7 @@ class _editFAQState extends State<editFAQ> {
     // TODO: implement initState
     super.initState();
     getcommonissue();
+    getlink();
     getfacultysemester();
   }
 
@@ -46,7 +47,8 @@ class _editFAQState extends State<editFAQ> {
   var newsolution;
   List newlinks = [];
   List links = [];
-  var i;
+  var c;
+  int i = 0;
   var snap;
   bool exist = false;
   var semesterref;
@@ -64,14 +66,20 @@ class _editFAQState extends State<editFAQ> {
     title = snap["issuetitle"];
     problem = snap["problem"];
     solution = snap["solution"];
-    links = snap["links"];
+    // links = snap["links"];
+
+    // for (var j = 0; j < links.length; j++) {
+    //   links.add(links[j]);
+    //   print("neeeeeeeeeeewwwwwwwwwww");
+    //   print(links[j]);
+    // }
+
     if (title != null) {
       exist = true;
     }
     print(problem);
     print(solution);
     print(links);
-
     print(widget.value);
   }
 
@@ -81,6 +89,14 @@ class _editFAQState extends State<editFAQ> {
         .doc(userid)
         .get();
     semesterref = snap["semester"];
+  }
+
+  getlink() async {
+    var snap1 = await FirebaseFirestore.instance
+        .collection('commonissue')
+        .doc(widget.value)
+        .get();
+    links = snap1["links"];
   }
 
   Widget build(BuildContext context) {
@@ -216,6 +232,7 @@ class _editFAQState extends State<editFAQ> {
                                                       TapGestureRecognizer()
                                                         ..onTap = () async {
                                                           var url = links[i];
+                                                          c = i;
                                                           // ignore: deprecated_member_use
                                                           if (await canLaunch(
                                                               url)) {
@@ -232,8 +249,9 @@ class _editFAQState extends State<editFAQ> {
                                                 const EdgeInsets.only(top: 1),
                                             child: IconButton(
                                                 onPressed: (() {
-                                                  links.remove(links[i]);
-                                                  getcommonissue();
+                                                  // c = links[i];
+                                                  ConfirmationDialogfordeletelink(
+                                                      context, 1);
                                                 }),
                                                 icon: Icon(
                                                   Icons.cancel,
@@ -334,7 +352,7 @@ class _editFAQState extends State<editFAQ> {
                             ),
                           ],
                         );
-                      }))
+                      })),
                 ]),
               ),
             )),
@@ -377,11 +395,14 @@ class _editFAQState extends State<editFAQ> {
       child: Text("Add"),
       onPressed: () {
         if (formkeyforlink.currentState!.validate()) {
-          link = _linkcontroll.text;
-          print("llllllllllllllllllllliiiiiiiiinnnnnnnnkkkkkkkkkssssss");
-          links.add(link);
-
-          Navigator.of(context).pop();
+          setState(() {
+            link = _linkcontroll.text;
+            // print(_linkcontroll.text);
+            // print(link);
+            links.add(link);
+            print(links);
+            Navigator.of(context).pop();
+          });
         }
       },
     );
@@ -577,6 +598,67 @@ class _editFAQState extends State<editFAQ> {
     AlertDialog alert = AlertDialog(
       // title: Text("LogOut"),
       content: Text("Are you sure you want to update the common issue ?"),
+      actions: [
+        dontCancelAppButton,
+        YesCancelAppButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  ConfirmationDialogfordeletelink(BuildContext context, var i) {
+    Widget dontCancelAppButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
+      child: Text("No"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    Widget YesCancelAppButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
+      child: Text("Yes"),
+      onPressed: () {
+        print(i);
+        //عشان الاي تكون قيمتها 1 دايم مع ان مفروض انه انديكس زيرو لكنه متخلف
+        if (i == 1) {
+          i = 0;
+        }
+        links.remove(links[i]);
+        Future.delayed(Duration(seconds: 0), () {
+          setState(() {});
+        });
+        Navigator.of(context).pop();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      // title: Text("LogOut"),
+      content: Text("Are you sure you want to delete this link ?"),
       actions: [
         dontCancelAppButton,
         YesCancelAppButton,
