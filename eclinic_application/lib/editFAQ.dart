@@ -47,6 +47,8 @@ class _editFAQState extends State<editFAQ> {
   var newsolution;
   List newlinks = [];
   List links = [];
+  List linkname = [];
+  var urlname;
   var c;
   int i = 0;
   var snap;
@@ -56,6 +58,7 @@ class _editFAQState extends State<editFAQ> {
   var _problemController = TextEditingController();
   var _solutioncontroll = TextEditingController();
   final _linkcontroll = TextEditingController();
+  final _linknamecontroll = TextEditingController();
   RegExp english = RegExp("^[\u0000-\u007F]+\$");
 
   getcommonissue() async {
@@ -80,6 +83,7 @@ class _editFAQState extends State<editFAQ> {
     print(problem);
     print(solution);
     print(links);
+    print(linkname);
     print(widget.value);
   }
 
@@ -97,6 +101,10 @@ class _editFAQState extends State<editFAQ> {
         .doc(widget.value)
         .get();
     links = snap1["links"];
+    linkname = snap1["linkname"];
+    print("kkkkkkkkkkkkkkkkkkkkkkkkkk");
+    print(linkname);
+    print(links);
   }
 
   Widget build(BuildContext context) {
@@ -201,68 +209,74 @@ class _editFAQState extends State<editFAQ> {
                               height: 8,
                             ),
                             if (links.length > 0)
-                              for (i = 0; i < links.length; i++)
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 200),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        "More Resources ${links.length}",
-                                        style: TextStyle(
-                                            overflow: TextOverflow.ellipsis,
-                                            color: Mycolors.mainColorBlue,
-                                            fontFamily: 'bold',
-                                            fontSize: 17),
-                                        textAlign: TextAlign.start,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          RichText(
-                                            text: TextSpan(children: [
-                                              TextSpan(
-                                                  text: links[i],
-                                                  style: TextStyle(
-                                                      decoration: TextDecoration
-                                                          .underline,
-                                                      color: Colors.blue),
-                                                  recognizer:
-                                                      TapGestureRecognizer()
-                                                        ..onTap = () async {
-                                                          var url = links[i];
-                                                          c = i;
-                                                          // ignore: deprecated_member_use
-                                                          if (await canLaunch(
-                                                              url)) {
+                              Padding(
+                                padding: const EdgeInsets.only(right: 200),
+                                child: Column(
+                                  children: List.generate(
+                                    links.length,
+                                    (index) => Column(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          "More Resources ${links.length}",
+                                          style: TextStyle(
+                                              overflow: TextOverflow.ellipsis,
+                                              color: Mycolors.mainColorBlue,
+                                              fontFamily: 'bold',
+                                              fontSize: 17),
+                                          textAlign: TextAlign.start,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            RichText(
+                                              text: TextSpan(children: [
+                                                TextSpan(
+                                                    text: linkname[index],
+                                                    style: TextStyle(
+                                                        decoration:
+                                                            TextDecoration
+                                                                .underline,
+                                                        color: Colors.blue),
+                                                    recognizer:
+                                                        TapGestureRecognizer()
+                                                          ..onTap = () async {
+                                                            var url =
+                                                                links[index];
+                                                            // c = i;
                                                             // ignore: deprecated_member_use
-                                                            launch(url);
-                                                          } else {
-                                                            throw "Cannot load url";
-                                                          }
-                                                        })
-                                            ]),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 1),
-                                            child: IconButton(
-                                                onPressed: (() {
-                                                  // c = links[i];
-                                                  ConfirmationDialogfordeletelink(
-                                                      context, 1);
-                                                }),
-                                                icon: Icon(
-                                                  Icons.cancel,
-                                                  size: 20,
-                                                )),
-                                          )
-                                        ],
-                                      ),
-                                    ],
+                                                            if (await canLaunch(
+                                                                url)) {
+                                                              // ignore: deprecated_member_use
+                                                              launch(url);
+                                                            } else {
+                                                              throw "Cannot load url";
+                                                            }
+                                                          })
+                                              ]),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.only(top: 1),
+                                              child: IconButton(
+                                                  onPressed: (() {
+                                                    // c = links[i];
+                                                    ConfirmationDialogfordeletelink(
+                                                        context, index);
+                                                  }),
+                                                  icon: Icon(
+                                                    Icons.cancel,
+                                                    size: 20,
+                                                  )),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
+                              ),
                             SizedBox(
                               height: 20,
                             ),
@@ -307,6 +321,7 @@ class _editFAQState extends State<editFAQ> {
                                   ),
                                   onPressed: (() {
                                     _linkcontroll.text = "";
+                                    _linknamecontroll.text = "";
                                     showConfirmationDialog(context);
                                   }),
                                   child: Text("add link"),
@@ -397,9 +412,11 @@ class _editFAQState extends State<editFAQ> {
         if (formkeyforlink.currentState!.validate()) {
           setState(() {
             link = _linkcontroll.text;
+            urlname = _linknamecontroll.text;
             // print(_linkcontroll.text);
             // print(link);
             links.add(link);
+            linkname.add(urlname);
             print(links);
             Navigator.of(context).pop();
           });
@@ -409,7 +426,7 @@ class _editFAQState extends State<editFAQ> {
     AlertDialog alert = AlertDialog(
       title: Text(""),
       content: SizedBox(
-        height: 100,
+        height: 200,
         child: Form(
           key: formkeyforlink,
           child: Column(
@@ -419,6 +436,28 @@ class _editFAQState extends State<editFAQ> {
                 child: SizedBox(
                   width: 350,
                 ),
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              SizedBox(
+                width: 350,
+                child: TextFormField(
+                    controller: _linknamecontroll,
+                    decoration: InputDecoration(
+                        labelText: 'Name',
+                        hintText: "Enter the link name ",
+                        border: OutlineInputBorder()),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value) {
+                      if (value!.isEmpty || _linknamecontroll.text == "") {
+                        return 'Please enter the link name';
+                      } else {
+                        if (!(english.hasMatch(_linknamecontroll.text))) {
+                          return "only english is allowed";
+                        }
+                      }
+                    }),
               ),
               SizedBox(
                 height: 8,
@@ -568,6 +607,7 @@ class _editFAQState extends State<editFAQ> {
               'problem': newproblem,
               'solution': newsolution,
               'links': newlinks,
+              'linkname': linkname,
               'semester': semesterref,
             });
 
@@ -643,12 +683,25 @@ class _editFAQState extends State<editFAQ> {
       ),
       child: Text("Yes"),
       onPressed: () {
-        print(i);
-        //عشان الاي تكون قيمتها 1 دايم مع ان مفروض انه انديكس زيرو لكنه متخلف
-        if (i == 1) {
-          i = 0;
-        }
+        // i = i - 1;
+        //  print(linkname1);
+        //كان فيه مشاكل بالانديكس وانحلت بالمعادله هذي
+        // i = i - 1;
+        // print("ppppppppppppppppp");
+        // print(i);
+        // // print(s);
+        // //عشان الاي تكون قيمتها 1 دايم مع ان مفروض انه انديكس زيرو لكنه متخلف
+        // if (i == 1) {
+        //   i = 0;
+        // }
+        // links.remove(links[i]);
+        // linkname.remove(linkname[i]);
+        // Future.delayed(Duration(seconds: 0), () {
+        //   setState(() {});
+        // });
+        // Navigator.of(context).pop();
         links.remove(links[i]);
+        linkname.remove(linkname[i]);
         Future.delayed(Duration(seconds: 0), () {
           setState(() {});
         });

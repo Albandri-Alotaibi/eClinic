@@ -39,6 +39,7 @@ class _viewFAQState extends State<viewFAQ> {
   var problem;
   var solution;
   List links = [];
+  List linkname = [];
   var snap;
   getcommonissue() async {
     snap = await FirebaseFirestore.instance
@@ -49,12 +50,13 @@ class _viewFAQState extends State<viewFAQ> {
     problem = snap["problem"];
     solution = snap["solution"];
     links = snap["links"];
+    linkname = snap["linkname"];
 
     print(snap["issuetitle"]);
     print(problem);
     print(solution);
     print(links);
-
+    print(linkname);
     print(value);
   }
 
@@ -216,7 +218,7 @@ class _viewFAQState extends State<viewFAQ> {
                                       RichText(
                                         text: TextSpan(children: [
                                           TextSpan(
-                                              text: links[i],
+                                              text: linkname[i],
                                               style: TextStyle(
                                                   decoration:
                                                       TextDecoration.underline,

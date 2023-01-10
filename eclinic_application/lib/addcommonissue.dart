@@ -37,6 +37,8 @@ class _addcommonissueState extends State<addcommonissue> {
   var refforspe;
   var link;
   List links = [];
+  List linkname = [];
+  var urlname;
   bool exist = true;
   var title;
   var showlink;
@@ -46,6 +48,7 @@ class _addcommonissueState extends State<addcommonissue> {
   final _problemController = TextEditingController();
   final _solutioncontroll = TextEditingController();
   final _linkcontroll = TextEditingController();
+  final _linknamecontroll = TextEditingController();
   RegExp english = RegExp("^[\u0000-\u007F]+\$");
   var specialityselectedvalue;
   void initState() {
@@ -307,7 +310,7 @@ class _addcommonissueState extends State<addcommonissue> {
                             RichText(
                               text: TextSpan(children: [
                                 TextSpan(
-                                    text: links[i],
+                                    text: linkname[i],
                                     style: TextStyle(
                                         decoration: TextDecoration.underline,
                                         color: Colors.blue),
@@ -375,6 +378,7 @@ class _addcommonissueState extends State<addcommonissue> {
                           ),
                           onPressed: (() {
                             _linkcontroll.text = "";
+                            _linknamecontroll.text = "";
                             showConfirmationDialog(context);
                           }),
                           child: Text("add link"),
@@ -451,8 +455,14 @@ class _addcommonissueState extends State<addcommonissue> {
         if (formkeyforlink.currentState!.validate()) {
           setState(() {
             link = _linkcontroll.text;
+            urlname = _linknamecontroll.text;
             print(link);
             links.add(link);
+            linkname.add(urlname);
+            print(urlname);
+            print(linkname);
+
+            //add to array of map
             Navigator.of(context).pop();
           });
         }
@@ -461,7 +471,7 @@ class _addcommonissueState extends State<addcommonissue> {
     AlertDialog alert = AlertDialog(
       title: Text(""),
       content: SizedBox(
-        height: 100,
+        height: 200,
         child: Form(
           key: formkeyforlink,
           child: Column(
@@ -471,6 +481,28 @@ class _addcommonissueState extends State<addcommonissue> {
                 child: SizedBox(
                   width: 350,
                 ),
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              SizedBox(
+                width: 350,
+                child: TextFormField(
+                    controller: _linknamecontroll,
+                    decoration: InputDecoration(
+                        labelText: 'Name',
+                        hintText: "Enter the link name ",
+                        border: OutlineInputBorder()),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value) {
+                      if (value!.isEmpty || _linknamecontroll.text == "") {
+                        return 'Please enter the link name';
+                      } else {
+                        if (!(english.hasMatch(_linknamecontroll.text))) {
+                          return "only english is allowed";
+                        }
+                      }
+                    }),
               ),
               SizedBox(
                 height: 8,
@@ -493,6 +525,9 @@ class _addcommonissueState extends State<addcommonissue> {
                         }
                       }
                     }),
+              ),
+              SizedBox(
+                height: 8,
               ),
             ],
           ),
@@ -566,6 +601,7 @@ class _addcommonissueState extends State<addcommonissue> {
                   .collection("facultyspeciality")
                   .doc(docforspeciality),
               "links": links,
+              "linkname": linkname,
             });
             Navigator.pushNamed(context, 'facultyFAQ');
           });
@@ -692,6 +728,7 @@ class _addcommonissueState extends State<addcommonissue> {
       child: Text("Yes"),
       onPressed: () async {
         links.remove(links[i]);
+        linkname.remove(linkname[i]);
         Future.delayed(Duration(seconds: 0), () {
           setState(() {});
         });
