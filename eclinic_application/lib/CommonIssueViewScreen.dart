@@ -199,7 +199,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                 ))
                               ],
                             )),
-                        if (widget.commonIssue['document'] != null)
+                        if (widget.commonIssue['filesurl'] != null)
                           const Divider(
                             color: Colors.grey,
                             thickness: 1,
@@ -207,13 +207,26 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                         /**
                          * Document
                          */
-                        if (widget.commonIssue['document'] != null)
-                          ListTile(
-                              leading: const Icon(Icons.file_copy),
-                              title: const Text('Docuemnt'),
-                              subtitle: const Text("Click to download"),
-                              onTap: () =>
-                                  launchUrl(widget.commonIssue['document'])),
+                        if (widget.commonIssue['filesurl'] != null &&
+                            widget.commonIssue['filesurl'] is List &&
+                            widget.commonIssue['filesurl'].isNotEmpty)
+                          Wrap(children: [
+                            for (var item = 0;
+                                item <
+                                    (widget.commonIssue['filesurl'] ?? [])
+                                        .length;
+                                item++)
+                              ListTile(
+                                  leading: const Icon(Icons.file_copy),
+                                  title: Text('Document ${item + 1}'),
+                                  subtitle: Text(
+                                      widget.commonIssue['filesurl'][item]),
+                                  onTap: () => launchUrl(
+                                      Uri.parse(
+                                          widget.commonIssue['filesurl'][item]),
+                                      mode: LaunchMode.externalApplication)),
+                          ]),
+
                         const Divider(
                           color: Colors.grey,
                           thickness: 1,
@@ -223,6 +236,8 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                          * links
                          */
                         if (widget.commonIssue['links'] != null &&
+                            widget.commonIssue['links'] is List &&
+                            widget.commonIssue['linkname'] is List &&
                             widget.commonIssue['links'].isNotEmpty)
                           Wrap(children: [
                             for (var item = 0;
@@ -238,8 +253,10 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                       : Text('Link ${item + 1}'),
                                   subtitle:
                                       Text(widget.commonIssue['links'][item]),
-                                  onTap: () => launchUrl(Uri.parse(
-                                      widget.commonIssue['links'][item]))),
+                                  onTap: () => launchUrl(
+                                      Uri.parse(
+                                          widget.commonIssue['links'][item]),
+                                      mode: LaunchMode.externalApplication)),
                           ])
 
                         // Container(
