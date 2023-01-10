@@ -6,7 +6,7 @@ admin.initializeApp(functions.config().firebase);
 // Create and deploy your first functions
 // https://firebase.google.com/docs/functions/get-started
 
-exports.helloWorld = functions.pubsub.schedule('0 13 * * *').onRun(async (context) => {
+exports.helloWorld = functions.pubsub.schedule('0 4 * * *').onRun(async (context) => {
     functions.logger.info("Hello logs", { structuredData: true });
     //response.send("Hello Firebase");
 
@@ -85,7 +85,7 @@ exports.helloWorld = functions.pubsub.schedule('0 13 * * *').onRun(async (contex
                             const payload = {
                                 notification: {
                                     title: 'Consultation appointment',
-                                    body: `Tomorrow at ${StartTimeForAppointment}.`,
+                                    body: `Tomorrow at ${StartTimeForAppointment}. Backend`,
                                     //icon: follower.photoURL
                                 }
                             };
@@ -111,7 +111,7 @@ exports.helloWorld = functions.pubsub.schedule('0 13 * * *').onRun(async (contex
                         const payload = {
                             notification: {
                                 title: 'Consultation appointment',
-                                body: `You have ${numOfBookedAppointments} appointment(s) tomorrow.`,
+                                body: `You have ${numOfBookedAppointments} appointment(s) tomorrow. Backend`,
                                 //icon: follower.photoURL
                             }
                         };
