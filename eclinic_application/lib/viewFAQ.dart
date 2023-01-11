@@ -13,16 +13,21 @@ import 'package:intl/intl.dart';
 import 'editFAQ.dart';
 import 'style/Mycolors.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:path/path.dart';
+import 'package:dio/dio.dart';
+import 'package:open_file/open_file.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class viewFAQ extends StatefulWidget {
-  String? value;
+  String value;
   viewFAQ({super.key, required this.value});
   @override
   State<viewFAQ> createState() => _viewFAQState(value);
 }
 
 class _viewFAQState extends State<viewFAQ> {
-  String? value;
+  String value;
 
   _viewFAQState(this.value);
   @override
@@ -40,6 +45,7 @@ class _viewFAQState extends State<viewFAQ> {
   var solution;
   List links = [];
   List linkname = [];
+  List<PlatformFile>? filesurl = [];
   var snap;
   getcommonissue() async {
     snap = await FirebaseFirestore.instance

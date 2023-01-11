@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -13,9 +12,15 @@ import 'package:get/get.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multiselect/multiselect.dart';
 import 'package:intl/intl.dart';
+import 'package:open_file/open_file.dart';
 import 'style/Mycolors.dart';
 import 'package:myapp/home.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:path/path.dart';
+import 'package:dio/dio.dart';
+import 'package:open_file/open_file.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class addcommonissue extends StatefulWidget {
   const addcommonissue({super.key});
@@ -38,10 +43,14 @@ class _addcommonissueState extends State<addcommonissue> {
   var link;
   List links = [];
   List linkname = [];
+  // List file = [];
+  List<PlatformFile>? filesurl = [];
+  List fileurltoDB = [];
   var urlname;
   bool exist = true;
   var title;
   var showlink;
+  bool isloading = false;
   final formkey = GlobalKey<FormState>();
   final formkeyforlink = GlobalKey<FormState>();
   final _issuetitleconstroller = TextEditingController();
@@ -50,6 +59,9 @@ class _addcommonissueState extends State<addcommonissue> {
   final _linkcontroll = TextEditingController();
   final _linknamecontroll = TextEditingController();
   RegExp english = RegExp("^[\u0000-\u007F]+\$");
+  // File? _file;
+  PlatformFile? pickedFile;
+
   var specialityselectedvalue;
   void initState() {
     final FirebaseAuth auth = FirebaseAuth.instance;
@@ -153,6 +165,35 @@ class _addcommonissueState extends State<addcommonissue> {
       print(e.toString());
       return null;
     }
+  }
+
+  // Future getFile() async {
+  //   File file = await FilePicker.platform.
+  // }
+
+  void openfile(PlatformFile file) {
+    OpenFile.open(file.path);
+  }
+
+  upload() async {
+    setState(() {
+      isloading = true;
+    });
+
+    for (var i = 0; i < filesurl!.length; i++) {
+      final path = filesurl![i].name;
+      final File file = File(filesurl![i].path!);
+      final ref = await FirebaseStorage.instance.ref().child(path);
+      await ref.putFile(file);
+      final FileUrl = await ref.getDownloadURL();
+      fileurltoDB.add(FileUrl);
+      print(FileUrl);
+      print(fileurltoDB);
+    }
+    setState(() {
+      print("finnnnnsssssssssshhhhh");
+      isloading = false;
+    });
   }
 
   Widget build(BuildContext context) {
@@ -316,14 +357,15 @@ class _addcommonissueState extends State<addcommonissue> {
                                         color: Colors.blue),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () async {
-                                        var url = links[i];
-                                        // ignore: deprecated_member_use
-                                        if (await canLaunch(url)) {
-                                          // ignore: deprecated_member_use
-                                          launch(url);
-                                        } else {
-                                          throw "Cannot load url";
-                                        }
+                                        // var url = links[i];
+                                        // // ignore: deprecated_member_use
+                                        // if (await canLaunch(url)) {
+                                        //   // ignore: deprecated_member_use
+                                        //   launch(url);
+                                        // } else {
+                                        //   throw "Cannot load url";
+                                        // }
+                                        launch(links[i]);
                                       })
                               ]),
                             ),
@@ -332,6 +374,68 @@ class _addcommonissueState extends State<addcommonissue> {
                               child: IconButton(
                                   onPressed: (() =>
                                       ConfirmationDialogfordelete(context, i)),
+                                  icon: Icon(
+                                    Icons.cancel,
+                                    size: 20,
+                                  )),
+                            )
+                          ],
+                        ),
+                    // if (pickedFile != null)
+                    //   Container(
+                    //     height: 170,
+                    //     width: 380,
+                    //     child: Card(
+                    //       //Mycolors.mainShadedColorBlue
+                    //       color: Color.fromARGB(171, 204, 204, 210),
+                    //       shape: RoundedRectangleBorder(
+                    //         borderRadius:
+                    //             BorderRadius.circular(30), // <-- Radius
+                    //       ),
+                    //       shadowColor: Color.fromARGB(171, 212, 212, 240),
+                    //       elevation: 40,
+                    //       child: Padding(
+                    //           padding: const EdgeInsets.all(40),
+                    //           child: new GestureDetector(
+                    //             child: Center(
+                    //                 child: Text(pickedFile!.name,
+                    //                     style: TextStyle(
+                    //                         decoration:
+                    //                             TextDecoration.underline,
+                    //                         color: Mycolors.mainShadedColorBlue,
+                    //                         fontFamily: 'main',
+                    //                         fontSize: 20),
+                    //                     textAlign: TextAlign.center)),
+                    //             onTap: () {
+                    //               //print("Container clicked");
+                    //               openfile(pickedFile!);
+                    //             },
+                    //           )),
+                    //     ),
+                    //   ),
+                    if (filesurl != null)
+                      for (var l = 0; l < filesurl!.length; l++)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RichText(
+                              text: TextSpan(children: [
+                                TextSpan(
+                                    text: filesurl![l].name,
+                                    style: TextStyle(
+                                        decoration: TextDecoration.underline,
+                                        color: Colors.blue),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () async {
+                                        openfile(filesurl![l]);
+                                      })
+                              ]),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 1),
+                              child: IconButton(
+                                  onPressed: (() =>
+                                      ConfirmationDialogfordelete(context, l)),
                                   icon: Icon(
                                     Icons.cancel,
                                     size: 20,
@@ -358,8 +462,27 @@ class _addcommonissueState extends State<addcommonissue> {
                                   BorderRadius.circular(17), // <-- Radius
                             ),
                           ),
-                          onPressed: (() {
-                            //
+                          onPressed: (() async {
+                            final result = await FilePicker.platform
+                                .pickFiles(allowMultiple: true);
+                            if (result == null) return;
+                            setState(() {
+                              pickedFile = result.files.first;
+                              if (pickedFile != null) {
+                                filesurl?.addAll(result.files);
+
+                                // for (var i = 0; i < result.count; i++) {
+                                //    filesurl?.add(result.files as PlatformFile);
+                                // }
+                              }
+                              var exe = pickedFile!.extension;
+                              print("00000000000000000000");
+                              print(pickedFile!.path);
+                              print(pickedFile!.name);
+                              print(filesurl);
+                            });
+                            // final file = result.filesurl.first;
+                            //openfile(pickedFile!);
                           }),
                           child: Text("upload file "),
                         ),
@@ -401,6 +524,7 @@ class _addcommonissueState extends State<addcommonissue> {
                       ),
                       onPressed: () async {
                         if (formkey.currentState!.validate()) {
+                          upload();
                           retriveissuetitle(_issuetitleconstroller.text);
 
                           if (exist == true) {
@@ -584,27 +708,22 @@ class _addcommonissueState extends State<addcommonissue> {
       child: Text("confirm"),
       onPressed: () async {
         if (formkey.currentState!.validate()) {
-          setState(() async {
-            problem = _problemController.text;
-            solution = _solutioncontroll.text;
-            isuuetitle = _issuetitleconstroller.text;
-            await FirebaseFirestore.instance
-                .collection('commonissue')
-                .doc()
-                .set({
-              "issuetitle": isuuetitle,
-              "problem": problem,
-              "solution": solution,
-              "document": null,
-              "semester": semesterRef,
-              "issuecategory": FirebaseFirestore.instance
-                  .collection("facultyspeciality")
-                  .doc(docforspeciality),
-              "links": links,
-              "linkname": linkname,
-            });
-            Navigator.pushNamed(context, 'facultyFAQ');
+          problem = _problemController.text;
+          solution = _solutioncontroll.text;
+          isuuetitle = _issuetitleconstroller.text;
+          await FirebaseFirestore.instance.collection('commonissue').doc().set({
+            "issuetitle": isuuetitle,
+            "problem": problem,
+            "solution": solution,
+            "semester": semesterRef,
+            "issuecategory": FirebaseFirestore.instance
+                .collection("facultyspeciality")
+                .doc(docforspeciality),
+            "links": links,
+            "linkname": linkname,
+            "filesurl": fileurltoDB,
           });
+          Navigator.pushNamed(context, 'facultyFAQ');
         }
       },
     );
@@ -636,6 +755,7 @@ class _addcommonissueState extends State<addcommonissue> {
         continueButton,
       ],
     );
+
     showDialog(
       barrierDismissible: false,
       context: context,
