@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +16,14 @@ import 'package:myapp/viewFAQ.dart';
 import 'editFAQ.dart';
 import 'style/Mycolors.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:path/path.dart';
+import 'package:dio/dio.dart';
+import 'package:open_file/open_file.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class editFAQ extends StatefulWidget {
-  String? value;
+  String value;
   editFAQ({super.key, required this.value});
 
   @override
@@ -49,6 +56,10 @@ class _editFAQState extends State<editFAQ> {
   List links = [];
   List linkname = [];
   var urlname;
+  List<PlatformFile>? filesurl = [];
+  List fileurltoDB = [];
+  bool isloading = false;
+  PlatformFile? pickedFile;
   var c;
   int i = 0;
   var snap;
@@ -105,6 +116,31 @@ class _editFAQState extends State<editFAQ> {
     print("kkkkkkkkkkkkkkkkkkkkkkkkkk");
     print(linkname);
     print(links);
+  }
+
+  void openfile(PlatformFile file) {
+    OpenFile.open(file.path);
+  }
+
+  upload() async {
+    setState(() {
+      isloading = true;
+    });
+
+    for (var i = 0; i < filesurl!.length; i++) {
+      final path = filesurl![i].name;
+      final File file = File(filesurl![i].path!);
+      final ref = await FirebaseStorage.instance.ref().child(path);
+      await ref.putFile(file);
+      final FileUrl = await ref.getDownloadURL();
+      fileurltoDB.add(FileUrl);
+      print(FileUrl);
+      print(fileurltoDB);
+    }
+    setState(() {
+      print("finnnnnsssssssssshhhhh");
+      isloading = false;
+    });
   }
 
   Widget build(BuildContext context) {
@@ -211,21 +247,34 @@ class _editFAQState extends State<editFAQ> {
                             if (links.length > 0)
                               Padding(
                                 padding: const EdgeInsets.only(right: 200),
+                                child: Text(
+                                  "More Resources",
+                                  style: TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                      color: Mycolors.mainColorBlue,
+                                      fontFamily: 'bold',
+                                      fontSize: 17),
+                                  textAlign: TextAlign.start,
+                                ),
+                              ),
+                            if (links.length > 0)
+                              Padding(
+                                padding: const EdgeInsets.only(right: 200),
                                 child: Column(
                                   children: List.generate(
                                     links.length,
                                     (index) => Column(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        Text(
-                                          "More Resources ${links.length}",
-                                          style: TextStyle(
-                                              overflow: TextOverflow.ellipsis,
-                                              color: Mycolors.mainColorBlue,
-                                              fontFamily: 'bold',
-                                              fontSize: 17),
-                                          textAlign: TextAlign.start,
-                                        ),
+                                        // Text(
+                                        //   "More Resources",
+                                        //   style: TextStyle(
+                                        //       overflow: TextOverflow.ellipsis,
+                                        //       color: Mycolors.mainColorBlue,
+                                        //       fontFamily: 'bold',
+                                        //       fontSize: 17),
+                                        //   textAlign: TextAlign.start,
+                                        // ),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.end,
@@ -242,17 +291,18 @@ class _editFAQState extends State<editFAQ> {
                                                     recognizer:
                                                         TapGestureRecognizer()
                                                           ..onTap = () async {
-                                                            var url =
-                                                                links[index];
-                                                            // c = i;
-                                                            // ignore: deprecated_member_use
-                                                            if (await canLaunch(
-                                                                url)) {
-                                                              // ignore: deprecated_member_use
-                                                              launch(url);
-                                                            } else {
-                                                              throw "Cannot load url";
-                                                            }
+                                                            // var url =
+                                                            //     links[index];
+                                                            // // c = i;
+                                                            // // ignore: deprecated_member_use
+                                                            // if (await canLaunch(
+                                                            //     url)) {
+                                                            //   // ignore: deprecated_member_use
+                                                            //   launch(url);
+                                                            // } else {
+                                                            //   throw "Cannot load url";
+                                                            // }
+                                                            launch(links[i]);
                                                           })
                                               ]),
                                             ),
@@ -277,6 +327,38 @@ class _editFAQState extends State<editFAQ> {
                                   ),
                                 ),
                               ),
+                            if (filesurl != null)
+                              for (var l = 0; l < filesurl!.length; l++)
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    RichText(
+                                      text: TextSpan(children: [
+                                        TextSpan(
+                                            text: filesurl![l].name,
+                                            style: TextStyle(
+                                                decoration:
+                                                    TextDecoration.underline,
+                                                color: Colors.blue),
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () async {
+                                                openfile(filesurl![l]);
+                                              })
+                                      ]),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 1),
+                                      child: IconButton(
+                                          onPressed: (() =>
+                                              ConfirmationDialogfordelete(
+                                                  context)),
+                                          icon: Icon(
+                                            Icons.cancel,
+                                            size: 20,
+                                          )),
+                                    )
+                                  ],
+                                ),
                             SizedBox(
                               height: 20,
                             ),
@@ -297,8 +379,25 @@ class _editFAQState extends State<editFAQ> {
                                           17), // <-- Radius
                                     ),
                                   ),
-                                  onPressed: (() {
-                                    //
+                                  onPressed: (() async {
+                                    final result = await FilePicker.platform
+                                        .pickFiles(allowMultiple: true);
+                                    if (result == null) return;
+                                    setState(() {
+                                      pickedFile = result.files.first;
+                                      if (pickedFile != null) {
+                                        filesurl?.addAll(result.files);
+
+                                        // for (var i = 0; i < result.count; i++) {
+                                        //    filesurl?.add(result.files as PlatformFile);
+                                        // }
+                                      }
+                                      var exe = pickedFile!.extension;
+                                      print("00000000000000000000");
+                                      print(pickedFile!.path);
+                                      print(pickedFile!.name);
+                                      print(filesurl);
+                                    });
                                   }),
                                   child: Text("upload file"),
                                 ),
@@ -592,9 +691,11 @@ class _editFAQState extends State<editFAQ> {
           newproblem = _problemController.text;
           newsolution = _solutioncontroll.text;
           newlinks = links;
+          //اضيف الفايل اللي انضاف جديد على الالراي اللي قبل
         });
 
         if (formkey.currentState!.validate()) {
+          upload();
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -609,6 +710,7 @@ class _editFAQState extends State<editFAQ> {
               'links': newlinks,
               'linkname': linkname,
               'semester': semesterref,
+              //'filesurl': fileurltoDB,
             });
 
             Fluttertoast.showToast(
