@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class StudentAppointment {
-
   final String appointmentId;
   var appointmentReference;
   final String FacultytId;
@@ -10,45 +9,50 @@ class StudentAppointment {
   DateTime startTime;
   DateTime endTime;
   String FacultyName;
-    String specialityn;
+  String specialityn;
 
   String meetingMethod;
   String meetingInfo;
   var studentsArrayOfReference;
 
-
   StudentAppointment({
     required this.appointmentId,
     required this.appointmentReference,
-     required this.FacultytId,
-     //required this.booked,
+    required this.FacultytId,
+    //required this.booked,
     required this.Day,
     required this.startTime,
     required this.endTime,
-   required this.FacultyName,
-      required this.specialityn,
-   required this.meetingMethod,    
-   required this.meetingInfo,    
-    required this.studentsArrayOfReference,    
-
+    required this.FacultyName,
+    required this.specialityn,
+    required this.meetingMethod,
+    required this.meetingInfo,
+    required this.studentsArrayOfReference,
   });
 
-@override
+  @override
   String toString() {
     // TODO: implement toString
-      String srting = "Day ${Day} Date:${startTime.year}/${startTime.month}/${startTime.day} time: ${startTime.hour}:${startTime.minute} - ${endTime.hour}:${endTime.minute} \n";
+    String srting =
+        "Day ${Day} Date:${startTime.year}/${startTime.month}/${startTime.day} time: ${startTime.hour}:${startTime.minute} - ${endTime.hour}:${endTime.minute} \n";
     return srting;
   }
 
-String StringDate() {
+  String StringDate() {
     // TODO: implement toString
-      String srting = "${startTime.day}/${startTime.month}/${startTime.year}";
+    String srting = "${startTime.day}/${startTime.month}/${startTime.year}";
     return srting;
   }
 
-String StringTimeRange() {
+  String StringTimeRange() {
     // TODO: implement toString
-    String srting = "${startTime.hour}:${startTime.minute} - ${endTime.hour}:${endTime.minute}";
+    String srting =
+        "${startTime.hour}:${startTime.minute} - ${endTime.hour}:${endTime.minute}";
+    return srting;
+  }
+
+  String OnlyStart() {
+    String srting = "${startTime.hour}:${startTime.minute}";
     return srting;
   }
 
@@ -59,13 +63,8 @@ String StringTimeRange() {
   // //  for (var i = 0; i < students.length; i++) {
   // //   srting= srting+ "${students[i]} - ";
   // //  }
-    
+
   // //   return srting+"\n";
   // }
-
-
-
-
-
 
 }

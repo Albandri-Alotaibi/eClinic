@@ -565,7 +565,7 @@ class _StudentViewBookedAppointmentState
     AlertDialog alert = AlertDialog(
       // title: Text(""),
       content: Column(children: [
-        Text("Choose a  reason to cancel your appointment with " +
+        Text("Choose a  reason to cancel your appointment with Dr." +
             BookedAppointments[index].FacultyName +
             " on " +
             BookedAppointments[index].StringDate() +
@@ -584,15 +584,15 @@ class _StudentViewBookedAppointmentState
           items: const [
             DropdownMenuItem(
                 child: Text("Lecture at the same time"),
-                value: "Lecture at the same time"),
+                value: "lecture at the same time"),
             DropdownMenuItem(
                 child: Text("Exam at the same time"),
-                value: "Exam at the same time"),
+                value: "exam at the same time"),
             DropdownMenuItem(
-                child: Text("solution was found "),
+                child: Text("Solution was found "),
                 value: "solution was found"),
             DropdownMenuItem(
-                child: Text("Other commitment"), value: "Other commitment")
+                child: Text("other commitment"), value: "Other commitment")
           ],
           onChanged: (value) {
             setState(() {
@@ -684,8 +684,7 @@ class _StudentViewBookedAppointmentState
             },
             "notification": <String, dynamic>{
               "title": "Appointment Cancelation",
-              "body":
-                  "Your appointment with $Fname$date has been canceled. $res",
+              "body": "Your appointment with $Fname$date has been canceled$res",
               "android_channel_id": "dbfood",
             },
             "to": token,
@@ -715,42 +714,95 @@ class _StudentViewBookedAppointmentState
       "specialty": FieldValue.delete()
     });
 
-    List studentsArrayOfRef =
-        BookedAppointments[index].studentsArrayOfReference;
-    print(
-        "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    final snap2 = await FirebaseFirestore.instance
-        .collection("faculty")
-        .doc(FacultytId) //its the faclulty doc id???????????
-        .get();
-    String Fname = "Dr." + snap2['firstname'] + snap2['lastname'];
-
-    // a msg for the faclulty
-    final DocumentSnapshot student0ref = await studentsArrayOfRef[0].get();
-    String projectName = student0ref['projectname'];
-    sendPushMessege(
-        snap2['token'],
-        projectName,
-        (" at ${BookedAppointments[index].StringDate()}"),
-        ("\n Reasone: $reasone"));
-    //student notification
-    for (var i = 0; i < studentsArrayOfRef.length; i++) {
-      final DocumentSnapshot docRef2 =
-          await studentsArrayOfRef[i].get(); //await
+    DateTime now = new DateTime.now();
+    //at the same day
+    String reasoneFinal;
+    if (reasone != "solution was found") {
+      reasoneFinal = " due to having $reasone.";
+    } else {
+      reasoneFinal = " as the $reasone.";
+    }
+    if (now.day == BookedAppointments[index].startTime.day &&
+        now.month == BookedAppointments[index].startTime.month &&
+        now.year == BookedAppointments[index].startTime.year) {
+      List studentsArrayOfRef =
+          BookedAppointments[index].studentsArrayOfReference;
       print(
           "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-      print(docRef2['token']);
-      String st = docRef2['token'];
-      print("appintment reference");
-      print(BookedAppointments[index].appointmentReference);
-      studentsArrayOfRef[i].update({
-        "appointments": FieldValue.arrayRemove(
-            [BookedAppointments[index].appointmentReference]),
-      });
-      sendPushMessege(st, Fname, "", "");
-      print('++++++++++++++++++++++++++++++++++++++++++++++++++++');
-    }
+      final snap2 = await FirebaseFirestore.instance
+          .collection("faculty")
+          .doc(FacultytId) //its the faclulty doc id???????????
+          .get();
+      String Fname = "Dr." + snap2['firstname'] + " " + snap2['lastname'];
 
+      // a msg for the faclulty
+      final DocumentSnapshot student0ref = await studentsArrayOfRef[0].get();
+      String projectName = student0ref['projectname'];
+      //for the doctor
+      sendPushMessege(snap2['token'], projectName,
+          (" today at ${BookedAppointments[index].OnlyStart()}"), reasoneFinal);
+      //student notification
+      for (var i = 0; i < studentsArrayOfRef.length; i++) {
+        final DocumentSnapshot docRef2 =
+            await studentsArrayOfRef[i].get(); //await
+        print(
+            "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        print(docRef2['token']);
+        String st = docRef2['token'];
+        print("appintment reference");
+        print(BookedAppointments[index].appointmentReference);
+        studentsArrayOfRef[i].update({
+          "appointments": FieldValue.arrayRemove(
+              [BookedAppointments[index].appointmentReference]),
+        });
+        //for the students
+        sendPushMessege(st, Fname,
+            (" today at ${BookedAppointments[index].OnlyStart()}"), ".");
+        print('++++++++++++++++++++++++++++++++++++++++++++++++++++');
+      }
+    } else {
+      List studentsArrayOfRef =
+          BookedAppointments[index].studentsArrayOfReference;
+      print(
+          "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+      final snap2 = await FirebaseFirestore.instance
+          .collection("faculty")
+          .doc(FacultytId) //its the faclulty doc id???????????
+          .get();
+      String Fname = "Dr." + snap2['firstname'] + " " + snap2['lastname'];
+
+      // a msg for the faclulty
+      final DocumentSnapshot student0ref = await studentsArrayOfRef[0].get();
+      String projectName = student0ref['projectname'];
+      sendPushMessege(
+          snap2['token'],
+          projectName,
+          (" on ${BookedAppointments[index].StringDate()}" +
+              " at ${BookedAppointments[index].OnlyStart()}"),
+          reasoneFinal);
+      //student notification
+      for (var i = 0; i < studentsArrayOfRef.length; i++) {
+        final DocumentSnapshot docRef2 =
+            await studentsArrayOfRef[i].get(); //await
+        print(
+            "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        print(docRef2['token']);
+        String st = docRef2['token'];
+        print("appintment reference");
+        print(BookedAppointments[index].appointmentReference);
+        studentsArrayOfRef[i].update({
+          "appointments": FieldValue.arrayRemove(
+              [BookedAppointments[index].appointmentReference]),
+        });
+        sendPushMessege(
+            st,
+            Fname,
+            (" on ${BookedAppointments[index].StringDate()}" +
+                " at ${BookedAppointments[index].OnlyStart()}"),
+            ".");
+        print('++++++++++++++++++++++++++++++++++++++++++++++++++++');
+      }
+    }
 //delete the appointment in each student's appointments array
 
     // List studentsArrayOfRef =

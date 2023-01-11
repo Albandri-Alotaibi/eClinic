@@ -773,7 +773,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
             },
             "notification": <String, dynamic>{
               "title": "appointment cancelation",
-              "body": "your appointment with $Fname has been canceled ",
+              "body": "your appointment with $Fname$time has been canceled ",
               "android_channel_id": "dbfood",
             },
             "to": token,
@@ -824,7 +824,10 @@ class _sState extends State<FacultyViewBookedAppointment> {
         .doc(userid)
         .get();
     String Fname = " Dr." + snap2['firstname'] + ' ' + snap2['lastname'];
-    String time = BookedAppointments[index].Day;
+    String time = " on " +
+        BookedAppointments[index].StringDate() +
+        " at " +
+        BookedAppointments[index].StringTimeRange();
     String? gpname;
     for (var i = 0; i < studentsArrayOfRef.length; i++) {
       final DocumentSnapshot docRef2 =
@@ -843,7 +846,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
       sendPushMessege(st, Fname, time);
       print('++++++++++++++++++++++++++++++++++++++++++++++++++++');
     }
-    sendPushMessege(snap2['token'], gpname!, time);
+    sendPushMessege(snap2['token'], gpname!, "");
     // sendPushMessege(
     //     "f2Fy3zYaR-OqtIsht7D3L3:APA91bHihw83eQLNqgFpIOLHcQ2XzCX7JOJLK9IyMrc8XHcssBaKoga3mMAWEMwEY_i5kxbgLiJuHHj-PdPESVtuqryHUWspyFsXUnJHWvHAWsnrw1n4IipbLUsAdbo2ESLiPs5y6nY9");
     //+++++++++++++++++++++++++++++++end Deem+++++++++++++++++++++++++++++++++++
