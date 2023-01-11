@@ -3,12 +3,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
+import 'package:myapp/studenthome.dart';
 import 'package:myapp/style/Mycolors.dart';
 import 'package:open_file/open_file.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multiselect/multiselect.dart';
 import 'package:get/get.dart';
+import 'package:quickalert/quickalert.dart';
+
 
 class UploadGP extends StatefulWidget {
   const UploadGP({super.key});
@@ -156,6 +159,15 @@ setState(() {
   PlatformFile? pickedFile;
 
   Future uploadFile() async {
+
+final snap = await FirebaseFirestore.instance
+        .collection("student")
+        .doc(userid)
+        .update({
+        'uploadgp': true,
+      });
+
+
 
    print("*************** ABOUT TO UPLOAD *******************");
 
@@ -583,181 +595,84 @@ Future checkids(String? semstername) async {
                            Container(
                   height: 170,
                   width: 380,
-                  child: Card(
-                  //Mycolors.mainShadedColorBlue
-                  color: Color.fromARGB(171, 204, 204, 210),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30), // <-- Radius
-                  ),
-                  shadowColor: Color.fromARGB(171, 212, 212, 240),
-                  elevation: 40,
-                  child: Padding(
-                    padding: const EdgeInsets.all(40),
-                    child:  new GestureDetector(
-                          child: Center(
-                            child: Text(
-                          pickedFile!.name,
-                          style: TextStyle(
-                             decoration: TextDecoration.underline,
-                              color:Mycolors.mainShadedColorBlue,
-                              fontFamily: 'main',
-                              fontSize: 20),
-                        textAlign: TextAlign.center)),
-                        onTap: () {
-                          //print("Container clicked");
-                          openFile(pickedFile!);
-                        },
+                  child:Card(
+                      //Mycolors.mainShadedColorBlue
+                      color: Color.fromARGB(171, 204, 204, 210),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30), // <-- Radius
+                      ),
+                      shadowColor: Color.fromARGB(171, 212, 212, 240),
+                      elevation: 40,
+                      child:
+                          Column(
+                            children: [
+
+                             Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                               children: [
+                                 IconButton(
+            //iconSize: 100,
+            alignment: Alignment.topLeft,
+            color: Color.fromARGB(255, 74, 72, 72) ,
+            icon: const Icon(
+              Icons.attach_file,
+               size: 35,
+            ),
+            // the method which is called
+            // when button is pressed
+             onPressed: selectFile,
+          ),
+                               ],
+                             ),
+                                
+                                 
+           const SizedBox(height: 10),
+                              Padding(
+                                padding: const EdgeInsets.all(10),
+                                child:new GestureDetector(
+                                          child: Center(
+                                            
+                                            child: Text(
+                                          pickedFile!.name,
+                                          style: TextStyle(
+                                             decoration: TextDecoration.underline,
+                                              color:Mycolors.mainShadedColorBlue,
+                                              fontFamily: 'main',
+                                              fontSize: 20),
+                                        textAlign: TextAlign.end)),
+                                        onTap: () {
+                                         openFile(pickedFile!);
+                                        },
+                                        
+                                      ),
+                              
+                              ),
+                            ],
+                          ),
                         
-                      )
-                  ),
+                      
+                        
+                      
                 ),
+       
                            ),
               
-              
-              
-                        if (pickedFile != null)
-                       const SizedBox(height: 50),
-              
-              
-              
-              
               if (pickedFile != null)
-              Row(
-                        children: <Widget>[
-                          SizedBox(
-                            width: 10,
-                          ), //SizedBox
-                           Checkbox(
-                        value: checkboxvalue,
-                                  onChanged: (newvalue) {
-                                    setState(() {
-                                      checkboxvalue = newvalue!;
-                                    });
-                                  }
-                                  ),
-                          Text(
-                            'I would like to share GitHub repository link',
-                            style: TextStyle(fontSize: 17.0),
-                          ), //Text
-                          SizedBox(width: 10),
-                        ], 
-                      ),
-              
-              
-              
-              
-              
-              
-              
-                  //if(checkboxvalue==true)
-                  // const TextField(
-                  //   obscureText: true,
-                  //   decoration: InputDecoration(
-                  //     border: OutlineInputBorder(),
-                  //     labelText: 'please add your GitHub repository link here',
-                  //   ),
-                  // ),
-                 Form(
-                        key: formkey,
-                        child: Padding(
-                          padding: const EdgeInsets.all(13.0),
-                          child: Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                 if(checkboxvalue==true)
-                                TextFormField(
-                                  controller: GitHubController,
-                                  decoration: InputDecoration(
-                                      hintText: "Please add your GitHub repository link here",///*******وش فايدتها؟ */
-                                      labelText: ' GitHub repository link :',
-                                      border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(25),
-                                          borderSide: const BorderSide(
-                                            width: 0,
-                                          ))),
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  validator: (value) {
-                                    if (value!.isEmpty ||
-                                        GitHubController.text == "") {
-                                      return 'Please add GitHub repository link ';
-                                    } 
-                                    else {
-                                      if (!(GitHubFormat
-                                          .hasMatch(GitHubController.text))) {
-                                        return 'Only GitHub link is acceptable';
-                                      } 
-                                      else {
-                                        if (!(english
-                                            .hasMatch(GitHubController.text))) {
-                                          return "only english is allowed";
-                                        }
-                                     }
-                                    }
-                                  },
-                                ),
-                                SizedBox(
-                            width: 10,
-                          ),
-                                if (pickedFile != null)
-                                DropdownButtonFormField<String>(
-                              decoration: InputDecoration(
-                                hintText: ' Choose a semester:',
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                    borderSide: const BorderSide(
-                                      width: 0,
-                                    )),
-                              ),
-                              isExpanded: true,
-                              items: semester.map((String dropdownitems) {
-                                return DropdownMenuItem<String>(
-                                  value: dropdownitems,
-                                  child: Text(dropdownitems),
-                                );
-                              }).toList(),
-                              onChanged: (String? newselect) {
-                                setState(() {
-                                  semesterselectedvalue = newselect;
-                                  checkids(semesterselectedvalue);
-                                });
-                              },
-                              value: semesterselectedvalue,
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              validator: (value) {
-                                if (value == null ||
-                                    semesterselectedvalue!.isEmpty ||
-                                    semesterselectedvalue == null) {
-                                  return 'Please choose a semester';
-                                }
-                              },
-                            ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        ),
-              
-              
-              
-              
-              
+            const SizedBox(height: 35),
               
                         if (pickedFile != null)
                                  Container(
-                              height: 140,
+                              height: 125,
                               width: 360,
                               child:Column(
                       children: [
-                        Text("Select your graduation project Category : \n",
+                        Text("Under which category does your project fall? \n",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                              color: Mycolors.mainColorBlack,
                              fontFamily: 'main',
                              fontWeight: FontWeight.bold,
-                            fontSize: 17)),
+                            fontSize: 15.5)),
                                  DropDownMultiSelect(
                                               decoration: InputDecoration(
                                                   hintText:
@@ -783,9 +698,6 @@ Future checkids(String? semstername) async {
                                                             : Colors.blueAccent),
                                                     borderRadius: BorderRadius.circular(25),
                                                   )
-                                                  // border: OutlineInputBorder(
-                                                  //     borderSide: BorderSide(
-                                                  //         color: isshow ? Colors.red : Colors.grey)
                                                   ),
                                               options: options,
                                               whenEmpty: "",
@@ -847,12 +759,144 @@ Future checkids(String? semstername) async {
               
               
               
+                        
+              
+              
+        
+              
+              
+                 Form(
+                        key: formkey,
+                        child: Padding(
+                          padding: const EdgeInsets.all(13.0),
+                          child: Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                 if (pickedFile != null)
+                                 Container(
+                              // height: 125,
+                              width: 360,
+                                  child:Column(
+                                     children: <Widget>[
+                               Text("When did you finish your graduation project? \n",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                             color: Mycolors.mainColorBlack,
+                             fontFamily: 'main',
+                             fontWeight: FontWeight.bold,
+                            fontSize: 15.5)),
+                                DropdownButtonFormField<String>(
+                              decoration: InputDecoration(
+                                hintText: ' Choose a semester:',
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(25),
+                                    borderSide: const BorderSide(
+                                      width: 0,
+                                    )),
+                              ),
+                              isExpanded: true,
+                              items: semester.map((String dropdownitems) {
+                                return DropdownMenuItem<String>(
+                                  value: dropdownitems,
+                                  child: Text(dropdownitems),
+                                );
+                              }).toList(),
+                              onChanged: (String? newselect) {
+                                setState(() {
+                                  semesterselectedvalue = newselect;
+                                  checkids(semesterselectedvalue);
+                                });
+                              },
+                              value: semesterselectedvalue,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (value) {
+                                if (value == null ||
+                                    semesterselectedvalue!.isEmpty ||
+                                    semesterselectedvalue == null) {
+                                  return 'Please choose a semester';
+                                }
+                              },
+                            ),
+                              ],
+                                 ),
+                                 ),
+                               if (pickedFile != null)
+                                             SizedBox(height: 20,),
+                             if (pickedFile != null)
+                                  Row(
+                                            children: <Widget>[
+                                              SizedBox(
+                                                width: 10,
+                                              ), //SizedBox
+                                              Checkbox(
+                                            value: checkboxvalue,
+                                                      onChanged: (newvalue) {
+                                                        setState(() {
+                                                          checkboxvalue = newvalue!;
+                                                        });
+                                                      }
+                                                      ),
+                                              Text(
+                                                'I would like to share GitHub repository link',
+                                                style: TextStyle(fontSize: 17.0),
+                                              ), //Text
+                                              SizedBox(width: 5),
+                                            ], 
+                                          ),
+
+
+
+                               if(checkboxvalue==true)
+                                Container(
+                                   width: 360,
+                                  child: TextFormField(
+                                    controller: GitHubController,
+                                    decoration: InputDecoration(
+                                        hintText: "Please add your GitHub repository link here",///*******وش فايدتها؟ */
+                                        labelText: ' GitHub repository link',
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(25),
+                                            borderSide: const BorderSide(
+                                              width: 0,
+                                            ))),
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    validator: (value) {
+                                      if (value!.isEmpty ||
+                                          GitHubController.text == "") {
+                                        return 'Please add GitHub repository link ';
+                                      } 
+                                      else {
+                                        if (!(GitHubFormat
+                                            .hasMatch(GitHubController.text))) {
+                                          return 'Only GitHub link is acceptable';
+                                        } 
+                                        else {
+                                          if (!(english
+                                              .hasMatch(GitHubController.text))) {
+                                            return "only english is allowed";
+                                          }
+                                       }
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        ),
+              
+              
+              
+              
+              
+              
               
                       if (pickedFile != null)
-                       const SizedBox(height: 50),
-              
-              
-                
+                       const SizedBox(height: 15),
               
               
                          if (pickedFile != null)
@@ -868,34 +912,13 @@ Future checkids(String? semstername) async {
                   ),
                 ),
                 child: Text(
-                  "Change selected file",
-                ),
-                onPressed: selectFile,
-                          ),
-              
-              
-                       if (pickedFile != null)
-                       const SizedBox(height: 5),
-              
-                         if (pickedFile != null)
-                          ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-                  shadowColor: Colors.blue[900],
-                  elevation: 20,
-                  backgroundColor: Mycolors.mainShadedColorBlue,
-                  minimumSize: Size(200, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(17), // <-- Radius
-                  ),
-                ),
-                child: Text(
-                  "Upload your file",
+                  "Upload file",
                 ),
                 onPressed: (){
       // if(checkboxvalue==true){
          if(formkey.currentState!.validate() && checklengthforcategory>0){
                 uploadFile();
+                showSucessAlert();
                   print("category is selected ");
                   }
                   else if(checklengthforcategory == 0){
@@ -1021,7 +1044,7 @@ Future checkids(String? semstername) async {
                 child: Padding(
                   padding: const EdgeInsets.all(30),
                   child: Text(
-                    "Your GP document has been uploaded by you or one of your group members, Thank you!",
+                    "Your GP document has been uploaded by you or one of your group members along with your social media conctacts.\nYou can edit you socials from your profile.",
                     overflow: TextOverflow.clip,
                     style: TextStyle(
                         color: Mycolors.mainColorWhite,
@@ -1063,7 +1086,7 @@ Future checkids(String? semstername) async {
                 child: Padding(
                   padding: const EdgeInsets.all(30),
                   child: Text(
-                    "You can't upload you GP document now, wait till your finish it all to upload a complete documnet.",
+                    "You can't upload you GP document now, wait till your finish it to upload a complete documnet.",
                     overflow: TextOverflow.clip,
                     style: TextStyle(
                         color: Mycolors.mainColorWhite,
@@ -1080,16 +1103,33 @@ Future checkids(String? semstername) async {
     else{
         return SafeArea(
         child: Scaffold(
-            body: Container(
-              child: Text(
-                    "")
-            )));
+            body:Container(
+                child: Text(
+                      "")
+              ),
+            ));
     }
   } //end build
 
   openFile(PlatformFile file) {
-    //  openFile(file);//lاكانت كذا بالفيديو بس الميثود الثانية ماكانت موجودة
     OpenFile.open(file.path!);
   }
+  showSucessAlert(){
+
+    QuickAlert.show(
+   context: context,
+   type: QuickAlertType.success,
+   title:"Uploaded successfully",
+   text: 'Thank you!',
+   onConfirmBtnTap:(){
+   Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => UploadGP(),//studenthome
+      ),
+    );
+   },
+  );
+}
 }
 
