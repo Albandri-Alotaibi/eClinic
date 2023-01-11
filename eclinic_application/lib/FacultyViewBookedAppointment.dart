@@ -243,7 +243,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
 
       BookedAppointments.clear();
       BookedAppointments.length = 0;
-   print("xxxxxxxx");
+      print("xxxxxxxx");
       event.docs.forEach((element) async {
         //print(element.id);
         print("1");
@@ -573,7 +573,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
                                             Text(
                                                 "Students : " +
                                                     BookedAppointments[index]
-                                                        .StringStudents()+
+                                                        .StringStudents() +
                                                     "\n",
                                                 style: TextStyle(
                                                     color:
@@ -773,8 +773,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
             },
             "notification": <String, dynamic>{
               "title": "appointment cancelation",
-              "body":
-                  "your appointment with Dr.$Fname at $time has been canceled ",
+              "body": "your appointment with $Fname has been canceled ",
               "android_channel_id": "dbfood",
             },
             "to": token,
@@ -815,7 +814,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
 
     List studentsArrayOfRef = snap['student'];
     print(
-        "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        "+++++++++++++++++++fff++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     // print(snap['Day']);
     // print(snap['students']);
     //  print("sssssssssssssssssssssssssssssssss");
@@ -824,8 +823,9 @@ class _sState extends State<FacultyViewBookedAppointment> {
         .collection("faculty")
         .doc(userid)
         .get();
-    String Fname = snap2['firstname'] + ' ' + snap2['lastname'];
+    String Fname = " Dr." + snap2['firstname'] + ' ' + snap2['lastname'];
     String time = BookedAppointments[index].Day;
+    String? gpname;
     for (var i = 0; i < studentsArrayOfRef.length; i++) {
       final DocumentSnapshot docRef2 =
           await studentsArrayOfRef[i].get(); //await
@@ -839,9 +839,11 @@ class _sState extends State<FacultyViewBookedAppointment> {
         "appointments":
             FieldValue.arrayRemove([BookedAppointments[index].reference]),
       });
+      gpname = docRef2['projectname'];
       sendPushMessege(st, Fname, time);
       print('++++++++++++++++++++++++++++++++++++++++++++++++++++');
     }
+    sendPushMessege(snap2['token'], gpname!, time);
     // sendPushMessege(
     //     "f2Fy3zYaR-OqtIsht7D3L3:APA91bHihw83eQLNqgFpIOLHcQ2XzCX7JOJLK9IyMrc8XHcssBaKoga3mMAWEMwEY_i5kxbgLiJuHHj-PdPESVtuqryHUWspyFsXUnJHWvHAWsnrw1n4IipbLUsAdbo2ESLiPs5y6nY9");
     //+++++++++++++++++++++++++++++++end Deem+++++++++++++++++++++++++++++++++++
@@ -902,8 +904,6 @@ class _sState extends State<FacultyViewBookedAppointment> {
   }
 
   showConfirmationDialog(BuildContext context, int index) {
-
-
 // final DocumentSnapshot docRef = await FirebaseFirestore.instance
 //         .collection("faculty")
 //         .doc(FacultytId2)
@@ -920,74 +920,74 @@ class _sState extends State<FacultyViewBookedAppointment> {
     print(
         "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     print(TimeFromNowTo24Hours);
-   
+
     if (StartTimeDate.isAfter(TimeFromNowTo24Hours)) {
       /////CAN CANCLE
 
-
-    // set up the buttons
-    bool deleteappointment = false;
-    Widget dontCancelAppButton = ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
-        backgroundColor: Mycolors.mainShadedColorBlue,
-        minimumSize: Size(60, 40),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10), // <-- Radius
+      // set up the buttons
+      bool deleteappointment = false;
+      Widget dontCancelAppButton = ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+          shadowColor: Colors.blue[900],
+          elevation: 20,
+          backgroundColor: Mycolors.mainShadedColorBlue,
+          minimumSize: Size(60, 40),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10), // <-- Radius
+          ),
         ),
-      ),
-      child: Text("No"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
+        child: Text("No"),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      );
 
-    Widget YesCancelAppButton = ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
-        backgroundColor: Mycolors.mainShadedColorBlue,
-        minimumSize: Size(60, 40),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10), // <-- Radius
+      Widget YesCancelAppButton = ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+          shadowColor: Colors.blue[900],
+          elevation: 20,
+          backgroundColor: Mycolors.mainShadedColorBlue,
+          minimumSize: Size(60, 40),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10), // <-- Radius
+          ),
         ),
-      ),
-      child: Text("Yes"),
-      onPressed: () {
-        Navigator.of(context).pop();
-        CancelAppointment(index);
-        //deleteappointment=true;
-        // Navigator.pushNamed(context, 'facultyhome');
-      },
-    );
+        child: Text("Yes"),
+        onPressed: () {
+          Navigator.of(context).pop();
+          CancelAppointment(index);
+          //deleteappointment=true;
+          // Navigator.pushNamed(context, 'facultyhome');
+        },
+      );
 
 //   if(deleteappointment == true){
 // CancelAppointment(index);
 // deleteappointment == false;
 //   }
 
-    AlertDialog alert = AlertDialog(
-      // title: Text(""),
-      content: Text("Are you sure you want to cancel the appointment on " +
+      AlertDialog alert = AlertDialog(
+        // title: Text(""),
+        content: Text("Are you sure you want to cancel the appointment on " +
             BookedAppointments[index].StringDate() +
             " at " +
-            BookedAppointments[index].StringTimeRange()+" ?"),
-      actions: [
-        dontCancelAppButton,
-        YesCancelAppButton,
-      ],
-    );
+            BookedAppointments[index].StringTimeRange() +
+            " ?"),
+        actions: [
+          dontCancelAppButton,
+          YesCancelAppButton,
+        ],
+      );
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-    }//end if can cancel
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    } //end if can cancel
     else {
       //// CANNOT CANCLE
 
@@ -1026,6 +1026,6 @@ class _sState extends State<FacultyViewBookedAppointment> {
           return alert;
         },
       );
-    }//end else cant cancel
-  }//end function
+    } //end else cant cancel
+  } //end function
 } //end class

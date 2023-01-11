@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:myapp/model/GPlist.dart';
 
 import 'package:myapp/style/Mycolors.dart';
@@ -170,12 +171,13 @@ class _viewGPlibraryState extends State<viewGPlibrary> {
       //stor the sting in gps
       gps['gpcategoryname'] = gpCat;
       print(gps['gpcategoryname']);
+
       //doing the same thing for semester
-      var semesterRef = doc['semester'];
-      final DocumentSnapshot onesem = await semesterRef.get();
-      String semesterName = onesem['semestername'];
-      gps['semestername'] = semesterName;
-      print(gps['semestername']);
+      // var semesterRef = doc['semester'];
+      // final DocumentSnapshot onesem = await semesterRef.get();
+      // String semesterName = onesem['semestername'];
+      // gps['semestername'] = semesterName;
+      // print(gps['semestername']);
 
       i++;
       setState(() {
@@ -453,7 +455,15 @@ class _viewGPlibraryState extends State<viewGPlibrary> {
                                       GPList[index]['gpcategoryname'] +
                                       "\n" +
                                       "Semester: " +
-                                      GPList[index]['semestername'],
+                                      (semesterList.isNotEmpty
+                                          ? (semesterList.firstWhereOrNull(
+                                                      (element) =>
+                                                          element?['ref'] ==
+                                                          GPList[index]
+                                                              ['semester'])?[
+                                                  'semestername'] ??
+                                              "--")
+                                          : "--"),
                                   style: TextStyle(
                                       //color: Mycolors.mainColorBlack,
                                       fontFamily: 'main',

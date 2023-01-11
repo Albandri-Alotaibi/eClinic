@@ -409,7 +409,7 @@ class AppointmentConfirmationScreenState
             'data': <String, dynamic>{
               'click_action': 'FLUTTER_NOTIFICATION_CLICK',
               'status': 'done',
-              'body': 'your appointment has been canceled with ',
+              'body': msg,
               'title': 'appointment cancelation',
             },
             "notification": <String, dynamic>{
@@ -441,7 +441,7 @@ class AppointmentConfirmationScreenState
     print(now);
     DateTime TimeFromNowTo24Hours = now.add(Duration(hours: 24));
     print(TimeFromNowTo24Hours);
-    DateTime At4Pm = new DateTime(now.year, now.month, now.day, 4, 0, 0);
+    DateTime At4Pm = new DateTime(now.year, now.month, now.day, 16, 0, 0);
     print(At4Pm);
     print("ddddeeeeeeeeeemmmmmmmmmm1111");
     //print("ddddeeeeeeeeeemmmmmmmmmm");

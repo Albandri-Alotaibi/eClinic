@@ -502,6 +502,7 @@ class _StudentViewBookedAppointmentState
     } //end els
   }
 
+  var reasone;
   showConfirmationDialog(BuildContext context, int index) async {
 // ---------------START OF CHECKING IF THE CANCEL IS ALLOWED----------------------------------------------------------
     // String appointmentId2 = BookedAppointments[index].appointmentId;
@@ -524,48 +525,47 @@ class _StudentViewBookedAppointmentState
     // print(TimeFromNowTo10Hours);
 
     // if (StartTimeDate.isAfter(TimeFromNowTo10Hours)) {
-      /////CAN CANCLE
+    /////CAN CANCLE
 
-      Widget dontCancelAppButton = ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-          shadowColor: Colors.blue[900],
-          elevation: 20,
-          backgroundColor: Mycolors.mainShadedColorBlue,
-          minimumSize: Size(60, 40),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10), // <-- Radius
-          ),
+    Widget dontCancelAppButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
         ),
-        child: Text("No"),
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-      );
+      ),
+      child: Text("No"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
 
-      Widget YesCancelAppButton = ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-          shadowColor: Colors.blue[900],
-          elevation: 20,
-          backgroundColor: Mycolors.mainShadedColorBlue,
-          minimumSize: Size(60, 40),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10), // <-- Radius
-          ),
+    Widget YesCancelAppButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
         ),
-        child: Text("Yes"),
-        onPressed: () {
-          Navigator.of(context).pop();
-          CancelAppointment(index);
-        },
-      );
-       var reasone;
-      AlertDialog alert = AlertDialog(
-        // title: Text(""),
-        content:Column(
-            children: [
-         Text("Choose a  reason to cancel your appointment with " +
+      ),
+      child: Text("Yes"),
+      onPressed: () {
+        Navigator.of(context).pop();
+        CancelAppointment(index);
+      },
+    );
+    //var reasone;
+    AlertDialog alert = AlertDialog(
+      // title: Text(""),
+      content: Column(children: [
+        Text("Choose a  reason to cancel your appointment with " +
             BookedAppointments[index].FacultyName +
             " on " +
             BookedAppointments[index].StringDate() +
@@ -573,47 +573,52 @@ class _StudentViewBookedAppointmentState
             BookedAppointments[index].StringTimeRange() +
             " ?\n"),
         DropdownButtonFormField(
-              decoration: InputDecoration(
-                hintText: 'Please Choose the reason for cancelation',
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25),
-                    borderSide: const BorderSide(
-                      width: 0,
-                    )),
-              ),
-              items: const [
-                DropdownMenuItem(child: Text("Lecture at the same time"), value: "Lecture at the same time"),
-                DropdownMenuItem(child: Text("Exam at the same time"), value: "Exam at the same time"),
-                DropdownMenuItem(child: Text("solution was found "), value: "solution was found"),
-                DropdownMenuItem(child: Text("Other commitment"), value: "Other commitment")
-              ],
-              onChanged: (value) {
-                setState(() {
-                 reasone = value;
-                });
-              },
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: (value) {
-                if (value == null || reasone == null) {
-                  return 'Please Choose the reason for cancelation';
-                }
-              },
-            ),
+          decoration: InputDecoration(
+            hintText: 'Please Choose the reason for cancelation',
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(25),
+                borderSide: const BorderSide(
+                  width: 0,
+                )),
+          ),
+          items: const [
+            DropdownMenuItem(
+                child: Text("Lecture at the same time"),
+                value: "Lecture at the same time"),
+            DropdownMenuItem(
+                child: Text("Exam at the same time"),
+                value: "Exam at the same time"),
+            DropdownMenuItem(
+                child: Text("solution was found "),
+                value: "solution was found"),
+            DropdownMenuItem(
+                child: Text("Other commitment"), value: "Other commitment")
+          ],
+          onChanged: (value) {
+            setState(() {
+              reasone = value;
+            });
+          },
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          validator: (value) {
+            if (value == null || reasone == null) {
+              return 'Please Choose the reason for cancelation';
+            }
+          },
+        ),
+      ]),
+      actions: [
+        dontCancelAppButton,
+        YesCancelAppButton,
+      ],
+    );
 
-        
-       ] ),
-        actions: [
-          dontCancelAppButton,
-          YesCancelAppButton,
-        ],
-      );
-
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        },
-      );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
     // } else {
     //   //// CANNOT CANCLE
 
@@ -657,7 +662,8 @@ class _StudentViewBookedAppointmentState
     // }//end else cant cancel
   } //END FUNCTION
 
-  void sendPushMessege(String token, String Fname) async {
+  void sendPushMessege(
+      String token, String Fname, String date, String res) async {
     print(token);
     try {
       await http.post(
@@ -677,8 +683,9 @@ class _StudentViewBookedAppointmentState
               'title': 'appointment cancelation',
             },
             "notification": <String, dynamic>{
-              "title": "appointment cancelation",
-              "body": "your appointment with $Fname has been canceled ",
+              "title": "Appointment Cancelation",
+              "body":
+                  "Your appointment with $Fname$date has been canceled. $res",
               "android_channel_id": "dbfood",
             },
             "to": token,
@@ -695,6 +702,19 @@ class _StudentViewBookedAppointmentState
   CancelAppointment(int index) async {
     String appointmentId = BookedAppointments[index].appointmentId;
     String FacultytId = BookedAppointments[index].FacultytId;
+
+//delete students array of reference in appointment and make booked false
+    FirebaseFirestore.instance
+        .collection("faculty")
+        .doc(FacultytId)
+        .collection('appointment')
+        .doc(appointmentId)
+        .update({
+      'Booked': false,
+      "student": FieldValue.delete(),
+      "specialty": FieldValue.delete()
+    });
+
     List studentsArrayOfRef =
         BookedAppointments[index].studentsArrayOfReference;
     print(
@@ -703,12 +723,16 @@ class _StudentViewBookedAppointmentState
         .collection("faculty")
         .doc(FacultytId) //its the faclulty doc id???????????
         .get();
-    String Fname = "Dr." + snap2['firstname'] + ' ' + snap2['lastname'];
+    String Fname = "Dr." + snap2['firstname'] + snap2['lastname'];
 
     // a msg for the faclulty
     final DocumentSnapshot student0ref = await studentsArrayOfRef[0].get();
     String projectName = student0ref['projectname'];
-    sendPushMessege(snap2['token'], projectName);
+    sendPushMessege(
+        snap2['token'],
+        projectName,
+        (" at ${BookedAppointments[index].StringDate()}"),
+        ("\n Reasone: $reasone"));
     //student notification
     for (var i = 0; i < studentsArrayOfRef.length; i++) {
       final DocumentSnapshot docRef2 =
@@ -723,21 +747,9 @@ class _StudentViewBookedAppointmentState
         "appointments": FieldValue.arrayRemove(
             [BookedAppointments[index].appointmentReference]),
       });
-      sendPushMessege(st, Fname);
+      sendPushMessege(st, Fname, "", "");
       print('++++++++++++++++++++++++++++++++++++++++++++++++++++');
     }
-
-//delete students array of reference in appointment and make booked false
-    FirebaseFirestore.instance
-        .collection("faculty")
-        .doc(FacultytId)
-        .collection('appointment')
-        .doc(appointmentId)
-        .update({
-      'Booked': false,
-      "student": FieldValue.delete(),
-      "specialty": FieldValue.delete()
-    });
 
 //delete the appointment in each student's appointments array
 
