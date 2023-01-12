@@ -15,19 +15,19 @@ class viewGPlibrary extends StatefulWidget {
 }
 
 class _viewGPlibraryState extends State<viewGPlibrary> {
-  String? email = '';
-  String? userid = '';
-  int numOfGPdocs = 0; // DELETE THIS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // String? email = '';
+  // String? userid = '';
+  // = 0; // DELETE THIS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   //bool? isExists;
   //all category
   List<String> category = [];
   // final items = ['red', 'blue'];
   //list for all GPs
-  List GPdocs = [];
+  // List GPdocs = [];
   //list for filterd Gps
   //List filterd = [];
   // tery=urn a refrence of all GP
-  var AllGPref = FirebaseFirestore.instance.collection("GPlibrary");
+  // var AllGPref = FirebaseFirestore.instance.collection("GPlibrary");
   String? value;
 
   var searchClicked = false;
@@ -39,16 +39,16 @@ class _viewGPlibraryState extends State<viewGPlibrary> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final User? user = auth.currentUser;
-    userid = user!.uid;
-    email = user.email!;
+    initGP();
+    // final FirebaseAuth auth = FirebaseAuth.instance;
+    // final User? user = auth.currentUser;
+    // userid = user!.uid;
+    // email = user.email!;
     // IsGPExists();
     // returnAllGPcategory();
     // Future.delayed(Duration(seconds: 2), (() {
     //   setState(() {});
     // }));
-
     initCategory();
     initSemester();
   }
@@ -102,7 +102,7 @@ class _viewGPlibraryState extends State<viewGPlibrary> {
       firstLoading = false;
     });
 
-    initGP();
+    // initGP();
   }
 
   List GPList = [];
@@ -498,6 +498,52 @@ class _viewGPlibraryState extends State<viewGPlibrary> {
     // } else {
     //   return Center(child: CircularProgressIndicator());
     // }
+  }
+
+  getInfo(index) async {
+    print("=======================getinfo====================");
+    DocumentSnapshot doc = await GPList[index]["ref"].get();
+    //get gp name
+    print(doc['Students']);
+    // Map<String, dynamic> gps;
+    List arrayOfStudent = doc['Students'];
+    final DocumentSnapshot oneStudent = await arrayOfStudent[0].get();
+    String GPName = oneStudent['projectname'];
+    GPList[index]['projectname'] = GPName;
+    print(GPList[index]['projectname']);
+
+    //get GP category and store the category names in a string w/o the last name so we dont hav , at the end
+    List GPcatRef = doc['GPcategory'];
+    // List AllCat = [];
+    String gpCat = "";
+    for (int i = 0; i < GPcatRef.length - 1; i++) {
+      final DocumentSnapshot oneCat = await GPcatRef[i].get();
+      // AllCat.add(oneCat['gpcategoryname']);
+      gpCat = gpCat + oneCat['gpcategoryname'] + ", ";
+    }
+    //get last name
+    final DocumentSnapshot oneCat = await GPcatRef.last.get();
+    gpCat = gpCat + oneCat['gpcategoryname'];
+    //stor the sting in gps
+    GPList[index]['gpcategoryname'] = gpCat;
+    print(GPList[index]['gpcategoryname']);
+
+    return Text(GPList[index]['projectname'] +
+        "Category: " +
+        GPList[index]['gpcategoryname']);
+  }
+
+  getGPname(index) async {
+    // DocumentSnapshot doc = await GPList[index]["ref"].get();
+    //get gp name
+    print(GPList[index]['Students']);
+    // Map<String, dynamic> gps;
+    List arrayOfStudent = GPList[index]['Students'];
+    final DocumentSnapshot oneStudent = await arrayOfStudent[0].get();
+    String GPName = oneStudent['projectname'];
+    GPList[index]['projectname'] = GPName;
+    print(GPList[index]['projectname']);
+    return Text(GPName);
   }
 
   // DropdownMenuItem<String> buildlistItems(String item) {
