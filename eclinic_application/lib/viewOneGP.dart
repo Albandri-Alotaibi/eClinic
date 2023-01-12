@@ -1,5 +1,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -36,16 +37,23 @@ void initState() {
 
   
 
-var GPname;
+
 var GPcategory;
 
-
+var GPname;
 var CodeLink='';
 var Students;
 var Fileurl;
+  String? email = '';
+  String? userid = '';
 List<socialLinks> SocialLinks = []; //availableHours
 
 retrieve() async {
+   final FirebaseAuth auth = await FirebaseAuth.instance;
+    final User? user = await auth.currentUser;
+    userid = user!.uid;
+    email = user.email!;
+
  final snap = await FirebaseFirestore.instance
         .collection("GPlibrary")
         .doc(widget.GPid)
@@ -60,6 +68,13 @@ retrieve() async {
      
     Students=await snap['Students'];
     print(Students.length);
+
+    final snap3 = await FirebaseFirestore.instance
+        .collection("student")
+        .doc(userid)
+        .get();
+     GPname = snap3['projectname']; 
+
 
   for (var i = 0; i < Students.length; i++) {
             final DocumentSnapshot docRef2 = await Students[i].get(); 
@@ -97,10 +112,10 @@ retrieve() async {
                       children: <Widget>[
             
            const SizedBox(height: 50,),
-           ElevatedButton(child: Text('open'),
+           ElevatedButton(child: Text('Open file'),
            onPressed: ()=> openFile(
           url:Fileurl,
-          fileName:'file.pdf',
+          fileName:'${GPname}.pdf',
            )
            ),
  const SizedBox(height: 50,),
