@@ -1,6 +1,15 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/services.dart';
+import 'package:open_file/open_file.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart';
 
 class CommonIssueViewScreen extends StatefulWidget {
   const CommonIssueViewScreen({
@@ -20,6 +29,9 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
   late ThemeData themeData;
 
   var loading = false;
+  int loadingFile = -1;
+  Map<int, String> downloadedFilesStatus = {};
+
   Map<String, dynamic>? semester;
   Map<String, dynamic>? category;
 
@@ -60,16 +72,16 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
-            Image(
-              image: AssetImage('./assets/images/eClinicLogo-blue.png'),
-              height: 80,
-            ),
+            // Image(
+            //   image: AssetImage('./assets/images/eClinicLogo-blue.png'),
+            //   height: 80,
+            // ),
             Center(child: CircularProgressIndicator()),
             SizedBox(height: 20),
-            Text(
-              "Fetching the issue information, Please wait.....\n\n ",
-              textAlign: TextAlign.center,
-            ),
+            // Text(
+            //   "Fetching the issue information, Please wait.....\n\n ",
+            //   textAlign: TextAlign.center,
+            // ),
           ],
         ),
       );
@@ -87,7 +99,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
           title: Text(widget.commonIssue['issuetitle'] ?? ""),
           leading: InkWell(
             onTap: () {
-              Navigator.pop(context);
+              Navigator.pop(this.context);
             },
             child: const Icon(
               Icons.arrow_back,
@@ -217,14 +229,39 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                         .length;
                                 item++)
                               ListTile(
-                                  leading: const Icon(Icons.file_copy),
+                                  leading: loadingFile == item
+                                      ? const CircularProgressIndicator()
+                                      : const Icon(Icons.file_copy),
                                   title: Text('Document ${item + 1}'),
                                   subtitle: Text(
-                                      widget.commonIssue['filesurl'][item]),
-                                  onTap: () => launchUrl(
-                                      Uri.parse(
-                                          widget.commonIssue['filesurl'][item]),
-                                      mode: LaunchMode.externalApplication)),
+                                    loadingFile == item
+                                        ? "Opening..."
+                                        : (downloadedFilesStatus
+                                                .containsKey(item)
+                                            ? downloadedFilesStatus[item]!
+                                            : getFilename(
+                                                widget.commonIssue['filesurl']
+                                                    [item])),
+                                    style: downloadedFilesStatus
+                                            .containsKey(item)
+                                        ? TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            color: downloadedFilesStatus[item]!
+                                                    .contains('Error')
+                                                ? Colors.red
+                                                : Colors.green)
+                                        : null,
+                                  ),
+                                  onLongPress: () async =>
+                                      await Clipboard.setData(ClipboardData(
+                                          text: widget.commonIssue['filesurl']
+                                              [item])),
+                                  onTap: () async => {
+                                        downloadFile(
+                                            widget.commonIssue['filesurl']
+                                                [item],
+                                            item)
+                                      }),
                           ]),
 
                         const Divider(
@@ -253,9 +290,12 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                       : Text('Link ${item + 1}'),
                                   subtitle:
                                       Text(widget.commonIssue['links'][item]),
+                                  onLongPress: () async =>
+                                      await Clipboard.setData(ClipboardData(
+                                          text: widget.commonIssue['links']
+                                              [item])),
                                   onTap: () => launchUrl(
-                                      Uri.parse(
-                                          widget.commonIssue['links'][item]),
+                                      Uri.parse(widget.commonIssue['links'][item]),
                                       mode: LaunchMode.externalApplication)),
                           ])
 
@@ -299,6 +339,51 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> downloadFile(String file, itemNumber) async {
+    final Reference ref = FirebaseStorage.instance.refFromURL(file);
+
+    final Directory appDocDir = await getApplicationDocumentsDirectory();
+    final String appDocPath = appDocDir.path;
+    final String urlFilename =
+        basename(file.contains('?') ? file.split("?").first : file);
+
+    final File tempFile = File('$appDocPath/$urlFilename');
+
+    if (downloadedFilesStatus.containsKey(itemNumber) &&
+        downloadedFilesStatus[itemNumber]!.contains("opened")) {
+      await OpenFile.open(tempFile.path);
+      return;
+    }
+
+    setState(() {
+      loadingFile = itemNumber;
+    });
+
+    try {
+      await ref.writeToFile(tempFile);
+      await tempFile.create();
+      await OpenFile.open(tempFile.path);
+    } on FirebaseException {
+      setState(() {
+        downloadedFilesStatus[itemNumber] =
+            "Error, we can not open this file ($urlFilename)";
+        loadingFile = -1;
+      });
+
+      launchUrl(Uri.parse(widget.commonIssue['links'][itemNumber]),
+          mode: LaunchMode.externalApplication);
+    }
+    setState(() {
+      downloadedFilesStatus[itemNumber] =
+          "File is already opened ($urlFilename).";
+      loadingFile = -1;
+    });
+  }
+
+  String getFilename(file) {
+    return basename(file.contains('?') ? file.split("?").first : file);
   }
 }
 

@@ -177,8 +177,9 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                             Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
-                                  border:
-                                      Border.all(color: Colors.black, width: 1),
+                                  border: Border.all(
+                                      color: Mycolors.mainShadedColorBlue,
+                                      width: 1),
                                 ),
                                 padding: const EdgeInsets.all(10),
                                 margin: const EdgeInsets.only(bottom: 8),
@@ -228,8 +229,9 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                             Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
-                                  border:
-                                      Border.all(color: Colors.black, width: 1),
+                                  border: Border.all(
+                                      color: Mycolors.mainShadedColorBlue,
+                                      width: 1),
                                 ),
                                 padding: const EdgeInsets.all(10),
                                 margin: const EdgeInsets.only(bottom: 8),
@@ -292,7 +294,7 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                                     child: Text(
                                         //if common issues list is loading from database
                                         secondLoading
-                                            ? 'Wait...'
+                                            ? '' //add wait... later
                                             //if loading is done but dropdowns are null
                                             : (specialityDropdownValue == null
                                                 ? 'Please select speciality to find common issues.'
@@ -363,7 +365,7 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
           children: [
             Expanded(
               child: Card(
-                color: Mycolors.mainShadedColorBlue,
+                color: Mycolors.mainColorBlue,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(17), // <-- Radius
                 ),

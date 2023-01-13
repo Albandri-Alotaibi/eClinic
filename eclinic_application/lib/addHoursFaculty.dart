@@ -1295,7 +1295,7 @@ class _AddHourState extends State<addHoursFaculty> {
     // show the dialog
   }
 
-  Confirm() {
+  Confirm() async {
     for (var k = 0; k < daysOfHelp.length; k++) {
       if (daysOfHelp[k].value == true) {
         addAvailableHoursToDB(k);
@@ -1315,6 +1315,7 @@ class _AddHourState extends State<addHoursFaculty> {
         OneDayGenerating(daysOfHelp[k].title, ArrayOfAllTheDayRanges);
       } //value true
     } //loop on each day
+    await Future.delayed(Duration(seconds: 1));
     Navigator.push(
       context,
       MaterialPageRoute(

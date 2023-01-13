@@ -126,7 +126,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
   dategp(String? year, String? month) {
     print(selctedyear);
     print(month);
-    var gpdate = selctedyear + "-" + month + "-" + "15" + " " + "00:00:00.000";
+    var gpdate = selctedyear + "-" + month + "-" + "15" + " " + "12:00:00.000";
     DateTime dt = DateTime.parse(gpdate);
     print(gpdate);
     print(dt);
