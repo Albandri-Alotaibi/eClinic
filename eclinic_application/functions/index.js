@@ -6,7 +6,7 @@ admin.initializeApp(functions.config().firebase);
 // Create and deploy your first functions
 // https://firebase.google.com/docs/functions/get-started
 
-exports.helloWorld = functions.pubsub.schedule('0 4 * * *').onRun(async (context) => {
+exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async (context) => {
     functions.logger.info("Hello logs", { structuredData: true });
     //response.send("Hello Firebase");
 
@@ -60,9 +60,9 @@ exports.helloWorld = functions.pubsub.schedule('0 4 * * *').onRun(async (context
                         // functions.logger.info(Diff_in_hours);
 
                         //if the appointment will start in the comming 24h then we will send a notification to the dr and students
-                        if (Diff_in_hours <= 24 && Diff_in_hours>0) {
+                        if (Diff_in_hours <= 24 && Diff_in_hours > 0) {
                             // count the numder of appointments a faculty have to send it later
-                            numOfBookedAppointments = numOfBookedAppointments+1;
+                            numOfBookedAppointments = numOfBookedAppointments + 1;
 
                             //now we will send to the student the reminders
                             //first we will get the faculty member name
@@ -107,7 +107,7 @@ exports.helloWorld = functions.pubsub.schedule('0 4 * * *').onRun(async (context
 
                     })// end of loop on booked appointments
                     //here we will send the reminder for the faculty!!!!!!!!
-                    if(numOfBookedAppointments>0){
+                    if (numOfBookedAppointments > 0) {
                         const payload = {
                             notification: {
                                 title: 'Consultation appointment',
@@ -127,6 +127,35 @@ exports.helloWorld = functions.pubsub.schedule('0 4 * * *').onRun(async (context
         });//end of the loop
     });
 
+});
+
+exports.gpreminder = functions.https.onRequest(async (req, res) => {
+    functions.logger.info("Hello logs", { structuredData: true });
+    //response.send("Hello Firebase");
+    const StudentsSnapshot = await admin.firestore().collection('student').get().then((querySnapshot) => {
+        querySnapshot.forEach(async (doc) => {
+            functions.logger.info(doc.id);
+            var today = new Date();
+            var gradDate = new Date(doc.data().graduationDate.toDate());
+            functions.logger.info(today);
+            functions.logger.info(gradDate);
+            if (today.getDay() === gradDate.getDay() && today.getMonth() === gradDate.getMonth() && today.getFullYear() === gradDate.getFullYear()) {
+                if (doc.data().uploadgp == false) {
+                    functions.logger.info("in if", { structuredData: true });
+                    const payload = {
+                        notification: {
+                            title: 'GP upload reminder',
+                            body: `This is a reminder to upload you GP document in the GP library!`,
+                            //icon: follower.photoURL
+                        }
+                    };
+                    const response = await admin.messaging().sendToDevice(doc.data().token, payload);
+                }
+
+            }
+
+        })
+    })
 });
 
 
