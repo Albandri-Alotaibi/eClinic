@@ -33,6 +33,7 @@ class _facultyFAQState extends State<facultyFAQ> {
   var specialityselectedvalue;
   var numofcommonissueunderfacultyspeciality = 0;
   var refspeclailty;
+
   void initState() {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
@@ -87,6 +88,9 @@ class _facultyFAQState extends State<facultyFAQ> {
                 new commonissue(cid: element.id, issuetitle: title));
             print(element.id);
           }
+          // Future.delayed(Duration(seconds: 1), () {
+          //   setState(() {});
+          // });
         });
       });
     });
@@ -192,11 +196,90 @@ class _facultyFAQState extends State<facultyFAQ> {
                 }
               },
             ),
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, 'addcommonissue');
+              },
+              child: Container(
+                margin: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Card(
+                        color: Mycolors.mainColorWhite,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(17), // <-- Radius
+                        ),
+                        shadowColor: const Color.fromARGB(94, 114, 168, 243),
+                        child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: ListTile(
+                              title: Text("new common issue",
+                                  style: const TextStyle(fontSize: 18)),
+
+                              textColor: Mycolors.mainColorBlue,
+                              trailing: const Icon(
+                                Icons.add,
+                                color: Colors.blue,
+                              ),
+
+                              // fontFamily: 'main',
+                              // fontWeight: FontWeight.w600
+                              // ),
+                            )),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
             //  Expanded(child: ListView.builder(itemCount: numofcommonissueunderfacultyspeciality,itemBuilder: ((context, index){
             //    if (index < Allcommonissue.length){
             //       return Card()
             //    }
             //  })),),
+
+            // SizedBox(
+            //   child: Container(
+            //     child: ListView.builder(
+            //       shrinkWrap: true,
+            //       physics: NeverScrollableScrollPhysics(),
+            //       itemCount: numofcommonissueunderfacultyspeciality,
+            //       itemBuilder: ((context, index) {
+            //         if (index < Allcommonissue.length) {
+            //           return Card(
+            //             margin: EdgeInsets.only(bottom: 5),
+            //             shape: RoundedRectangleBorder(
+            //               borderRadius: BorderRadius.circular(17), // <-- Radius
+            //             ),
+            //             shadowColor: Color.fromARGB(94, 250, 250, 250),
+            //             elevation: 20,
+            //             child: Row(
+            //               children: [
+            //                 Text(Allcommonissue[index].issuetitle),
+            //                 SizedBox(width: 10),
+            //                 GestureDetector(
+            //                   onTap: () {
+            //                     Navigator.of(context).push(MaterialPageRoute(
+            //                         builder: ((context) => viewFAQ(
+            //                             value: Allcommonissue[index].cid))));
+            //                   },
+            //                   child: Text("See More>>"),
+            //                 )
+            //               ],
+            //             ),
+            //           );
+            //         } else {
+            //           return Container(
+            //             child: Text("jhhhhhhhhhhhhhhhh"),
+            //           );
+            //         }
+            //       }),
+            //     ),
+            //   ),
+            // ),
+
             SizedBox(
               child: Container(
                 child: ListView.builder(
@@ -205,26 +288,50 @@ class _facultyFAQState extends State<facultyFAQ> {
                   itemCount: numofcommonissueunderfacultyspeciality,
                   itemBuilder: ((context, index) {
                     if (index < Allcommonissue.length) {
-                      return Card(
-                        margin: EdgeInsets.only(bottom: 5),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(17), // <-- Radius
-                        ),
-                        shadowColor: Color.fromARGB(94, 250, 250, 250),
-                        elevation: 20,
-                        child: Row(
-                          children: [
-                            Text(Allcommonissue[index].issuetitle),
-                            SizedBox(width: 10),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: ((context) => viewFAQ(
-                                        value: Allcommonissue[index].cid))));
-                              },
-                              child: Text("See More>>"),
-                            )
-                          ],
+                      return InkWell(
+                        onTap: () {
+                          //after clicking on the issue, move to common issue view page
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: ((context) =>
+                                  viewFAQ(value: Allcommonissue[index].cid))));
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Card(
+                                  color: Mycolors.mainShadedColorBlue,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(17), // <-- Radius
+                                  ),
+                                  shadowColor:
+                                      const Color.fromARGB(94, 114, 168, 243),
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: ListTile(
+                                        title: Text(
+                                            Allcommonissue[index].issuetitle,
+                                            style:
+                                                const TextStyle(fontSize: 18)),
+
+                                        textColor: Mycolors.mainColorWhite,
+                                        trailing: const Icon(
+                                          Icons.chevron_right,
+                                          color: Color.fromARGB(
+                                              255, 255, 255, 255),
+                                        ),
+
+                                        // fontFamily: 'main',
+                                        // fontWeight: FontWeight.w600
+                                        // ),
+                                      )),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       );
                     } else {
@@ -236,24 +343,24 @@ class _facultyFAQState extends State<facultyFAQ> {
                 ),
               ),
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-                shadowColor: Colors.blue[900],
-                elevation: 16,
-                backgroundColor: Mycolors.mainShadedColorBlue,
-                minimumSize: Size(150, 50),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(17), // <-- Radius
-                ),
-              ),
-              onPressed: () {
-                if (formkey.currentState!.validate()) {
-                  Navigator.pushNamed(context, 'addcommonissue');
-                }
-              },
-              child: Text("Add"),
-            ),
+            // ElevatedButton(
+            //   style: ElevatedButton.styleFrom(
+            //     textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+            //     shadowColor: Colors.blue[900],
+            //     elevation: 16,
+            //     backgroundColor: Mycolors.mainShadedColorBlue,
+            //     minimumSize: Size(150, 50),
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(17), // <-- Radius
+            //     ),
+            //   ),
+            //   onPressed: () {
+            //     if (formkey.currentState!.validate()) {
+            //       // Navigator.pushNamed(context, 'addcommonissue');
+            //     }
+            //   },
+            //   child: Text("Add"),
+            // ),
           ]),
         )),
       ),

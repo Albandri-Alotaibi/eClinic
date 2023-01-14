@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -18,9 +17,11 @@ import 'style/Mycolors.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart';
-import 'package:dio/dio.dart';
 import 'package:open_file/open_file.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:dio/dio.dart';
+import '';
 
 class editFAQ extends StatefulWidget {
   String value;
@@ -57,6 +58,7 @@ class _editFAQState extends State<editFAQ> {
   List linkname = [];
   var urlname;
   List<PlatformFile>? filesurl = [];
+  List filsbefordownload = [];
   List fileurltoDB = [];
   bool isloading = false;
   PlatformFile? pickedFile;
@@ -80,6 +82,7 @@ class _editFAQState extends State<editFAQ> {
     title = snap["issuetitle"];
     problem = snap["problem"];
     solution = snap["solution"];
+
     // links = snap["links"];
 
     // for (var j = 0; j < links.length; j++) {
@@ -113,9 +116,11 @@ class _editFAQState extends State<editFAQ> {
         .get();
     links = snap1["links"];
     linkname = snap1["linkname"];
+    filsbefordownload = snap1['filesurl'];
     print("kkkkkkkkkkkkkkkkkkkkkkkkkk");
-    print(linkname);
-    print(links);
+    // print(linkname);
+    // print(links);
+    print(filsbefordownload);
   }
 
   void openfile(PlatformFile file) {
@@ -133,14 +138,53 @@ class _editFAQState extends State<editFAQ> {
       final ref = await FirebaseStorage.instance.ref().child(path);
       await ref.putFile(file);
       final FileUrl = await ref.getDownloadURL();
+      // delete fileurltoDB after check
       fileurltoDB.add(FileUrl);
+      filsbefordownload.add(FileUrl);
+      //delete from the new if its down load
+      // filesurl?.remove(filesurl![i]);
       print(FileUrl);
       print(fileurltoDB);
     }
     setState(() {
       print("finnnnnsssssssssshhhhh");
+      filesurl?.clear();
       isloading = false;
     });
+  }
+
+  Future openFile({required String url, String? fileName}) async {
+    final file = await downloadFile(url, fileName!);
+
+    if (file == null) return;
+
+    print('Path: ${file.path}');
+
+    OpenFile.open(file.path);
+  }
+
+  Future<File?> downloadFile(String url, String name) async {
+    final appStorage = await getApplicationDocumentsDirectory();
+    final file = File('${appStorage.path}/$name');
+
+    try {
+      final response = await Dio().get(
+        url,
+        options: Options(
+          responseType: ResponseType.bytes,
+          followRedirects: false,
+          receiveTimeout: 0,
+        ),
+      );
+
+      final raf = file.openSync(mode: FileMode.write);
+      raf.writeFromSync(response.data);
+      await raf.close();
+
+      return file;
+    } catch (e) {
+      return null;
+    }
   }
 
   Widget build(BuildContext context) {
@@ -185,7 +229,7 @@ class _editFAQState extends State<editFAQ> {
                             TextFormField(
                               controller: _problemController,
                               minLines: 4,
-                              maxLines: 10,
+                              maxLines: 50,
                               keyboardType: TextInputType.multiline,
                               decoration: InputDecoration(
                                   suffixIcon: Icon(Icons.edit),
@@ -216,7 +260,7 @@ class _editFAQState extends State<editFAQ> {
                             TextFormField(
                               controller: _solutioncontroll,
                               minLines: 4,
-                              maxLines: 10,
+                              maxLines: 50,
                               keyboardType: TextInputType.multiline,
                               decoration: InputDecoration(
                                   suffixIcon: Icon(Icons.edit),
@@ -244,7 +288,9 @@ class _editFAQState extends State<editFAQ> {
                             SizedBox(
                               height: 8,
                             ),
-                            if (links.length > 0)
+                            if (links.length > 0 ||
+                                filesurl!.length > 0 ||
+                                filsbefordownload.length > 0)
                               Padding(
                                 padding: const EdgeInsets.only(right: 200),
                                 child: Text(
@@ -302,7 +348,8 @@ class _editFAQState extends State<editFAQ> {
                                                             // } else {
                                                             //   throw "Cannot load url";
                                                             // }
-                                                            launch(links[i]);
+                                                            launch(
+                                                                links[index]);
                                                           })
                                               ]),
                                             ),
@@ -329,35 +376,77 @@ class _editFAQState extends State<editFAQ> {
                               ),
                             if (filesurl != null)
                               for (var l = 0; l < filesurl!.length; l++)
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    RichText(
-                                      text: TextSpan(children: [
-                                        TextSpan(
-                                            text: filesurl![l].name,
-                                            style: TextStyle(
-                                                decoration:
-                                                    TextDecoration.underline,
-                                                color: Colors.blue),
-                                            recognizer: TapGestureRecognizer()
-                                              ..onTap = () async {
-                                                openfile(filesurl![l]);
-                                              })
-                                      ]),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 1),
-                                      child: IconButton(
-                                          onPressed: (() =>
-                                              ConfirmationDialogfordelete(
-                                                  context)),
-                                          icon: Icon(
-                                            Icons.cancel,
-                                            size: 20,
-                                          )),
-                                    )
-                                  ],
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 100),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      RichText(
+                                        text: TextSpan(children: [
+                                          TextSpan(
+                                              text: filesurl![l].name,
+                                              style: TextStyle(
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                  color: Colors.blue),
+                                              recognizer: TapGestureRecognizer()
+                                                ..onTap = () async {
+                                                  openfile(filesurl![l]);
+                                                })
+                                        ]),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 1),
+                                        child: IconButton(
+                                            onPressed: (() =>
+                                                ConfirmationDialogfordeleteforfilebefordownload(
+                                                    context, l)),
+                                            icon: Icon(
+                                              Icons.cancel,
+                                              size: 20,
+                                            )),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                            if (filsbefordownload.length > 0)
+                              for (var s = 0; s < filsbefordownload.length; s++)
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 200),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      RichText(
+                                        text: TextSpan(children: [
+                                          TextSpan(
+                                              text: "file${s + 1}",
+                                              style: TextStyle(
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                  color: Colors.blue),
+                                              recognizer: TapGestureRecognizer()
+                                                ..onTap = () async {
+                                                  print(filsbefordownload[s]);
+                                                  // openfile(filesurl![l]);
+                                                  openFile(
+                                                      url: filsbefordownload[s],
+                                                      fileName: "file");
+                                                })
+                                        ]),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 1),
+                                        child: IconButton(
+                                            onPressed: (() =>
+                                                ConfirmationDialogfordeleteforfileafterdownload(
+                                                    context, s)),
+                                            icon: Icon(
+                                              Icons.cancel,
+                                              size: 20,
+                                            )),
+                                      )
+                                    ],
+                                  ),
                                 ),
                             SizedBox(
                               height: 20,
@@ -425,25 +514,6 @@ class _editFAQState extends State<editFAQ> {
                                   }),
                                   child: Text("add link"),
                                 ),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    textStyle: TextStyle(
-                                        fontFamily: 'main', fontSize: 16),
-                                    shadowColor: Colors.blue[900],
-                                    elevation: 16,
-                                    backgroundColor:
-                                        Mycolors.mainShadedColorBlue,
-                                    minimumSize: Size(150, 50),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          17), // <-- Radius
-                                    ),
-                                  ),
-                                  onPressed: (() {
-                                    ConfirmationDialogfordelete(context);
-                                  }),
-                                  child: Text("delete common issue"),
-                                ),
                               ],
                             ),
                             ElevatedButton(
@@ -461,12 +531,32 @@ class _editFAQState extends State<editFAQ> {
                               ),
                               onPressed: () {
                                 ConfirmationDialogforupdate(context);
+                                upload();
                               },
                               child: Text("Save changes"),
                             ),
                           ],
                         );
                       })),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+                      shadowColor: Colors.blue[900],
+                      elevation: 16,
+                      backgroundColor: Mycolors.mainShadedColorBlue,
+                      minimumSize: Size(150, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(17), // <-- Radius
+                      ),
+                    ),
+                    onPressed: (() {
+                      ConfirmationDialogfordelete(context);
+                    }),
+                    child: Text("delete common issue"),
+                  ),
                 ]),
               ),
             )),
@@ -695,7 +785,6 @@ class _editFAQState extends State<editFAQ> {
         });
 
         if (formkey.currentState!.validate()) {
-          upload();
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -710,7 +799,7 @@ class _editFAQState extends State<editFAQ> {
               'links': newlinks,
               'linkname': linkname,
               'semester': semesterref,
-              //'filesurl': fileurltoDB,
+              'filesurl': filsbefordownload,
             });
 
             Fluttertoast.showToast(
@@ -814,6 +903,126 @@ class _editFAQState extends State<editFAQ> {
     AlertDialog alert = AlertDialog(
       // title: Text("LogOut"),
       content: Text("Are you sure you want to delete this link ?"),
+      actions: [
+        dontCancelAppButton,
+        YesCancelAppButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  ConfirmationDialogfordeleteforfilebefordownload(BuildContext context, var i) {
+    Widget dontCancelAppButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
+      child: Text("No"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    Widget YesCancelAppButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
+      child: Text("Yes"),
+      onPressed: () async {
+        // links.remove(links[i]);
+        // linkname.remove(linkname[i]);
+        print("/////////////////////////////////");
+        print(i);
+        filesurl?.remove(filesurl![i]);
+        Future.delayed(Duration(seconds: 0), () {
+          setState(() {});
+        });
+        Navigator.of(context).pop();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      // title: Text("LogOut"),
+      content: Text("Are you sure you want to delete this file?"),
+      actions: [
+        dontCancelAppButton,
+        YesCancelAppButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  ConfirmationDialogfordeleteforfileafterdownload(BuildContext context, var i) {
+    Widget dontCancelAppButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
+      child: Text("No"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    Widget YesCancelAppButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
+      child: Text("Yes"),
+      onPressed: () async {
+        // links.remove(links[i]);
+        // linkname.remove(linkname[i]);
+        print("/////////////////////////////////");
+        print(i);
+        filsbefordownload.remove(filsbefordownload[i]);
+        Future.delayed(Duration(seconds: 0), () {
+          setState(() {});
+        });
+        Navigator.of(context).pop();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      // title: Text("LogOut"),
+      content: Text("Are you sure you want to delete this file?"),
       actions: [
         dontCancelAppButton,
         YesCancelAppButton,
