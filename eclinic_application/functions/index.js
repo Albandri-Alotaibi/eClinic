@@ -129,7 +129,7 @@ exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async
 
 });
 
-exports.gpreminder = functions.https.onRequest(async (req, res) => {
+exports.gpreminder =  functions.pubsub.schedule('0 21 * * *').onRun(async (context) => {
     functions.logger.info("Hello logs", { structuredData: true });
     //response.send("Hello Firebase");
     const StudentsSnapshot = await admin.firestore().collection('student').get().then((querySnapshot) => {
