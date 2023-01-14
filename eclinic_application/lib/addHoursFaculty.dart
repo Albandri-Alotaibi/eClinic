@@ -1325,6 +1325,8 @@ class _AddHourState extends State<addHoursFaculty> {
   } //end confirm
 
   addAvailableHoursToDB(int x) async {
+
+
     //await
     FirebaseFirestore.instance
         .collection("faculty")
@@ -1336,39 +1338,14 @@ class _AddHourState extends State<addHoursFaculty> {
     });
 
     for (int i = 1; i < daysOfHelp[x].hours.length; i++) {
+
       FirebaseFirestore.instance
           .collection("faculty")
           .doc(userid)
           .collection('availableHours')
           .doc(daysOfHelp[x].title)
           .update({
-        "HoursToString":
-            FieldValue.arrayUnion([daysOfHelp[x].hours[i].toString()]),
-      });
-    } //end for loop
 
-    for (int i = 1; i < daysOfHelp[x].hours.length; i++) {
-      // Timestamp StartInTimestamp = Timestamp.fromDate(DateTime(
-      //     1990,
-      //     1,
-      //     1,
-      //     daysOfHelp[x].hours[i].start.hour,
-      //     daysOfHelp[x].hours[i].start.minute));
-
-      // Timestamp EndInTimestamp = Timestamp.fromDate(DateTime(1990, 1, 1,
-      //     daysOfHelp[x].hours[i].end.hour, daysOfHelp[x].hours[i].end.minute));
-      FirebaseFirestore.instance
-          .collection("faculty")
-          .doc(userid)
-          .collection('availableHours')
-          .doc(daysOfHelp[x].title)
-          .update({
-        // "HoursString2": FieldValue.arrayUnion([
-        //   {
-        //     'starttime': StartInTimestamp,
-        //     'endtime': EndInTimestamp,
-        //   }
-        // ]),
         "HoursString2": FieldValue.arrayUnion([
           {
             'starttime':
@@ -1380,44 +1357,46 @@ class _AddHourState extends State<addHoursFaculty> {
       });
     }
 
+
+List hoursArray=[];
+
+ for (int i = 1; i < daysOfHelp[x].hours.length; i++) {
+Map map = {'startTime': "${daysOfHelp[x].hours[i].start.hour}:${daysOfHelp[x].hours[i].start.minute}", 'endTime': "${daysOfHelp[x].hours[i].end.hour}:${daysOfHelp[x].hours[i].end.minute}"};
+   hoursArray.add(map);
+    }
+
+ await FirebaseFirestore.instance
+          .collection("faculty")
+          .doc(userid)
+          .update({
+        "availablehours": FieldValue.arrayUnion([
+           {
+            'Day': daysOfHelp[x].title,
+            "time":hoursArray,
+       
+          }
+        ]),
+      });
+
+
+
+
     await FirebaseFirestore.instance.collection('faculty').doc(userid).update({
       'meetingmethod': meetingmethod,
       'mettingmethodinfo': mettingmethodinfo,
     });
 
-    for (int i = 1; i < daysOfHelp[x].hours.length; i++) {
-      FirebaseFirestore.instance
-          .collection("faculty")
-          .doc(userid)
-          .collection('availableHours')
-          .doc(daysOfHelp[x].title)
-          .update({
-        "HoursTime": FieldValue.arrayUnion([
-          {
-            'starttime': daysOfHelp[x].hours[i].start,
-            'endtime': daysOfHelp[x].hours[i].end,
-          }
-        ]),
-      });
-    }
+  
   } //end method add hours to db
 
   hourDivision(TimeOfDay starttime, TimeOfDay endtime) {
-//loop on days or deal with each day alone?
 
-    //if checked
-    //loop on its hour list length
-    //convert each 2 times in the hour index  list to datetine
-
-//convert user input start and end time to DateTime
     DateTime now = DateTime.now();
     DateTime start = DateTime(now.year, now.month, now.day, starttime.hour,
         starttime.minute); //user input converted
     DateTime end = DateTime(now.year, now.month, now.day, endtime.hour,
         endtime.minute); //user input converted
 
-//  DateTime start = DateTime(2021, 07, 20, 10);//user input1
-//  DateTime end = DateTime(2021, 07, 20, 12);//user input1
 
     var Ranges = <timesWithDates>[];
 

@@ -907,24 +907,17 @@ class _sState extends State<FacultyViewBookedAppointment> {
   }
 
   showConfirmationDialog(BuildContext context, int index) {
-// final DocumentSnapshot docRef = await FirebaseFirestore.instance
-//         .collection("faculty")
-//         .doc(FacultytId2)
-//         .collection('appointment')
-//         .doc(appointmentId2)
-//         .get();
 
-    // Timestamp t3 = docRef['starttime'] as Timestamp;
     DateTime StartTimeDate = BookedAppointments[index].startTime;
 
     DateTime now = new DateTime.now();
-    DateTime TimeFromNowTo24Hours = now.add(Duration(hours: 24));
+    DateTime TimeFromNowTo12Hours = now.add(Duration(hours: 12));
 
     print(
         "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    print(TimeFromNowTo24Hours);
+    print(TimeFromNowTo12Hours);
 
-    if (StartTimeDate.isAfter(TimeFromNowTo24Hours)) {
+    if (StartTimeDate.isAfter(TimeFromNowTo12Hours)) {
       /////CAN CANCLE
 
       // set up the buttons
