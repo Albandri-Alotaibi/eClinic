@@ -143,6 +143,7 @@ class _AddHourState extends State<addHoursFaculty> {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
     userid = user!.uid;
+     PrintViewHours();
   }
 
   // retrivecolldepsem() async {
@@ -203,55 +204,84 @@ class _AddHourState extends State<addHoursFaculty> {
     final snap = await FirebaseFirestore.instance
         .collection("faculty")
         .doc(userid)
-        .collection('availableHours')
         .get();
-    if (snap.size == 0) {
-      print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
-      print("empty");
-      setState(() {
-        isExists = false;
-      });
 
-      return isExists;
-    } else {
+ if (snap.data()!.containsKey('availablehours') == true) {
+
       print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
-      print("full");
+      print("THERE ARE HOURS");
       setState(() {
         isExists = true;
       });
 
       return isExists;
+    } else {
+      print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
+      print("NO HOURS");
+      setState(() {
+        isExists = false;
+      });
+
+      return isExists;
     }
+
+
+
+
+
   }
 
   int numOfDaysOfHelp = 0;
 
   Future getavailableHours() async {
+    await Future.delayed(Duration(seconds: 1));
     final FirebaseAuth auth = await FirebaseAuth.instance;
     final User? user = await auth.currentUser;
     userid = user!.uid;
     email = user.email!;
-    // print('******************');
-    // print(userid);
-
-    final snap = await FirebaseFirestore.instance
+   
+if( isExists == true){
+  final snap = await FirebaseFirestore.instance
         .collection("faculty")
         .doc(userid)
-        .collection('availableHours')
-        .get()
-        .then((QuerySnapshot snapshot) {
-      print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-      print(snapshot.size);
-      numOfDaysOfHelp = snapshot.size;
-      snapshot.docs.forEach((DocumentSnapshot doc) {
-        // for (int i = 0; i < availableHours.length; i++) {
-        //  if (doc['Day'] != availableHours[i].title) {
-        availableHours.add(
-            availableHoursArray(title: doc['Day'], hours: doc['HoursString2']));
-        // }//end of if
-        // }// end for
-      });
-    });
+        .get();
+
+  var array=  snap['availablehours']  ;  
+numOfDaysOfHelp = array.length;
+ for (var i = 0; i < array.length; i++) {
+
+  availableHours.add(
+            availableHoursArray(title: array[i]['Day'], hours: array[i]['time']));
+
+
+
+
+}
+}
+else{
+  numOfDaysOfHelp = 0;
+}
+
+
+
+    // final snap = await FirebaseFirestore.instance
+    //     .collection("faculty")
+    //     .doc(userid)
+    //     .collection('availableHours')
+    //     .get()
+    //     .then((QuerySnapshot snapshot) {
+    //   print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+    //   print(snapshot.size);
+    //   numOfDaysOfHelp = snapshot.size;
+    //   snapshot.docs.forEach((DocumentSnapshot doc) {
+    //     // for (int i = 0; i < availableHours.length; i++) {
+    //     //  if (doc['Day'] != availableHours[i].title) {
+    //     availableHours.add(
+    //         availableHoursArray(title: doc['Day'], hours: doc['HoursString2']));
+    //     // }//end of if
+    //     // }// end for
+    //   });
+    // });
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
     print(availableHours.length);
 
@@ -268,15 +298,20 @@ class _AddHourState extends State<addHoursFaculty> {
     // _meetingmethodcontroller2 = TextEditingController(text: mmi);
   }
 
-  PrintViewHours() {
+  PrintViewHours() async{
+    await Future.delayed(Duration(seconds: 1));
     String string = "";
+   
+            print("++++++++++++++++++++++++++++++++++    ${availableHours.length}");
     for (int i = 0; i < availableHours.length; i++) {
+       print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^    ${availableHours[i].hours.length}");
+
       for (int j = 0; j < availableHours[i].hours.length; j++) {
         string = string +
             "\n start: " +
-            availableHours[i].hours[j]['starttime'] +
+            availableHours[i].hours[j]['startTime'] +
             " - end: " +
-            availableHours[i].hours[j]['endtime'];
+            availableHours[i].hours[j]['endTime'];
       }
       print("(((((((((())))))))))))))))))))))))");
       print(availableHours[i].title);
@@ -294,81 +329,11 @@ class _AddHourState extends State<addHoursFaculty> {
   Widget build(BuildContext context) {
     PrintViewHours();
     IsValueChecked();
-    // retrivecolldepsem();
-    // IsSemesterDatesExists();
-//     final FirebaseAuth auth = FirebaseAuth.instance;
-//     final User? user = auth.currentUser;
-//     userid = user!.uid;
-//     email = user.email!;
-//    print('****************************************************');
-//    print(userid);
 
-// var semester;
-
-// final docRef = FirebaseFirestore.instance.collection("faculty").doc(userid);
-//  print('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
-//   print(docRef);
-//    docRef.get().then(
-//     (DocumentSnapshot doc) {
-//      //semester1 = doc.data()!.semester;
-//      //final data = doc.data() as Map<String, dynamic>;
-
-//      semester=doc['semester'];
-
-//     print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
-//     print(semester);
-//     //print(semester['semestername']);
-//      },
-//    onError: (e) => print("Error getting document: $e"),
-//    );
-
-//  setState(() {
-// if(semester != null){
-//  semester.get().then(
-//     (DocumentSnapshot doc2) {
-
-//       startingDate=doc2['startdate'].toDate();
-//       endDate=doc2['enddate'].toDate();
-//       print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-//           print(startingDate);
-//           print(endDate);
-//      }
-//    );
-// }
-//  });
-
-    //print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
-    //print(semester);
-
-// Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-
-    // final semesterRef = FirebaseFirestore.instance
-    //     .collection('semester')
-    //     .get()
-    //     .then((QuerySnapshot snapshot) {
-    //   snapshot.docs.forEach((DocumentSnapshot doc) {
-    //     //print(doc['semestername']);
-    //     if (doc['semestername'] == '1st 2022/2023') {
-    //       //print('doc id ${doc.id}');
-    //       startingDate=doc['startdate'].toDate();
-    //       endDate=doc['enddate'].toDate();
-    //        print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-    //       print(startingDate);
-    //       print(endDate);
-    //     }
-    //   });
-    // });
-    //      print('#####################################################');
-    //       print(startingDate);
-    //       print(endDate);
     if (isSemesterDateExists == false) {
       return SafeArea(
         child: Scaffold(
           backgroundColor: Mycolors.BackgroundColor,
-          // appBar: AppBar(
-          //   automaticallyImplyLeading: false,
-          //   title: Text('Add hours'),
-          // ),
           body: Column(
             children: [
               Padding(
@@ -590,25 +555,6 @@ class _AddHourState extends State<addHoursFaculty> {
       return SafeArea(
         child: Scaffold(
           backgroundColor: Mycolors.BackgroundColor,
-          // appBar: AppBar(
-          //   primary: false,
-          //   centerTitle: true,
-          //   backgroundColor: Mycolors.mainColorWhite,
-          //   shadowColor: Colors.transparent,
-          //   //foregroundColor: Mycolors.mainColorBlack,
-          //   automaticallyImplyLeading: false,
-          //   title: Padding(
-          //     padding: const EdgeInsets.only(
-          //       top: 40,
-          //     ),
-          //     child: Text('View hours'),
-          //   ),
-          //   titleTextStyle: TextStyle(
-          //     fontFamily: 'main',
-          //     fontSize: 28,
-          //     color: Mycolors.mainColorBlack,
-          //   ),
-          // ),
           body:
               // Form(
               //   key: formkey,
@@ -816,94 +762,7 @@ class _AddHourState extends State<addHoursFaculty> {
                     }
                     return Center(child: CircularProgressIndicator());
                   })
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: SizedBox(
-              //     width: 350,
-              //     child: DropdownButtonFormField(
-              //         decoration: InputDecoration(
-              //           suffixIcon: Icon(Icons.edit),
-              //           hintText: "Choose meeting method",
-              //           border: OutlineInputBorder(),
-              //         ),
-              //         items: const [
-              //           DropdownMenuItem(
-              //               child: Text("In person metting"),
-              //               value: "inperson"),
-              //           DropdownMenuItem(
-              //               child: Text("Online meeting "), value: "online"),
-              //         ],
-              //         value: mettingmethoddrop2,
-              //         onChanged: (value) {
-              //           print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-              //           print(value);
-              //           setState(() {
-              //             mettingmethoddrop2 = value;
-              //             _meetingmethodcontroller2.text = "";
-              //           });
-              //         }),
-              //   ),
-              // ),
-              // if (mettingmethoddrop2 != null)
-              //   Padding(
-              //     padding: const EdgeInsets.all(8.0),
-              //     child: SizedBox(
-              //       width: 350,
-              //       child: TextFormField(
-              //           controller: _meetingmethodcontroller2,
-              //           decoration: InputDecoration(
-              //               labelText: 'Office number/link',
-              //               hintText: "Enter your office number/link",
-              //               // suffixIcon: Icon(Icons.edit),
-              //               border: OutlineInputBorder()),
-              //           autovalidateMode: AutovalidateMode.onUserInteraction,
-              //           validator: (value) {
-              //             if (value!.isEmpty ||
-              //                 _meetingmethodcontroller2.text == "") {
-              //               return 'Please enter your office number/link';
-              //             } else {
-              //               if (!(english
-              //                   .hasMatch(_meetingmethodcontroller2.text))) {
-              //                 return "only english is allowed";
-              //               }
-              //             }
-              //           }),
-              //     ),
-              //   ),
-              // Container(
-              //   padding: EdgeInsets.only(bottom: 20),
-              //   child: ElevatedButton(
-              //     style: ElevatedButton.styleFrom(
-              //       textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-              //       shadowColor: Colors.blue[900],
-              //       elevation: 20,
-              //       backgroundColor: Mycolors.mainShadedColorBlue,
-              //       minimumSize: Size(200, 50),
-              //       shape: RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.circular(17), // <-- Radius
-              //       ),
-              //     ),
-              //     onPressed: () {
-              //       setState(() {
-              //         mm = mettingmethoddrop2;
-              //         mmi = _meetingmethodcontroller2.text;
-              //       });
-
-              //       if (formkey.currentState!.validate()) {
-              //         print("///hhiiii");
-              //         print(mm);
-              //         FirebaseFirestore.instance
-              //             .collection('faculty')
-              //             .doc(userid)
-              //             .update({
-              //           "meetingmethod": mm,
-              //           "mettingmethodinfo": mmi,
-              //         });
-              //       }
-              //     },
-              //     child: Text("Save changes"),
-              //   ),
-              // ),
+             
             ],
           ),
           // ),
@@ -1064,15 +923,7 @@ class _AddHourState extends State<addHoursFaculty> {
                       flag = false;
                     }
 
-                    //-----------------------------the new start time > old start time------------------------------
-                    // else if (_startTime.hour < startend.start.hour) {
-                    //   showerror(
-                    //       context,
-                    //       "the new start time must start after the the prevrios period of times",
-                    //       x);
-                    //   flag = false;
-                    // }
-                    //------------------------new time connot be inside the old time-----------------------
+                   
                     else if (_startTime.hour > startend.start.hour &&
                         _endTime.hour <= startend.end.hour) {
                       showerror(
@@ -1121,12 +972,7 @@ class _AddHourState extends State<addHoursFaculty> {
                   }
                   if (flag) _timeFormated(_startTime, _endTime, x);
                 },
-                // onCancel: (() {
-                //   setState(() {
-                //     daysOfHelp[x].value = false;
-                //    // daysOfHelp[x].hours[0] = "un";
-                //   });
-                // })
+                
               ),
             ),
           ),
@@ -1328,34 +1174,34 @@ class _AddHourState extends State<addHoursFaculty> {
 
 
     //await
-    FirebaseFirestore.instance
-        .collection("faculty")
-        .doc(userid)
-        .collection('availableHours')
-        .doc(daysOfHelp[x].title)
-        .set({
-      'Day': daysOfHelp[x].title,
-    });
+    // FirebaseFirestore.instance
+    //     .collection("faculty")
+    //     .doc(userid)
+    //     .collection('availableHours')
+    //     .doc(daysOfHelp[x].title)
+    //     .set({
+    //   'Day': daysOfHelp[x].title,
+    // });
 
-    for (int i = 1; i < daysOfHelp[x].hours.length; i++) {
+    // for (int i = 1; i < daysOfHelp[x].hours.length; i++) {
 
-      FirebaseFirestore.instance
-          .collection("faculty")
-          .doc(userid)
-          .collection('availableHours')
-          .doc(daysOfHelp[x].title)
-          .update({
+    //   FirebaseFirestore.instance
+    //       .collection("faculty")
+    //       .doc(userid)
+    //       .collection('availableHours')
+    //       .doc(daysOfHelp[x].title)
+    //       .update({
 
-        "HoursString2": FieldValue.arrayUnion([
-          {
-            'starttime':
-                "${daysOfHelp[x].hours[i].start.hour}:${daysOfHelp[x].hours[i].start.minute}",
-            'endtime':
-                "${daysOfHelp[x].hours[i].end.hour}:${daysOfHelp[x].hours[i].end.minute}",
-          }
-        ]),
-      });
-    }
+    //     "HoursString2": FieldValue.arrayUnion([
+    //       {
+    //         'starttime':
+    //             "${daysOfHelp[x].hours[i].start.hour}:${daysOfHelp[x].hours[i].start.minute}",
+    //         'endtime':
+    //             "${daysOfHelp[x].hours[i].end.hour}:${daysOfHelp[x].hours[i].end.minute}",
+    //       }
+    //     ]),
+    //   });
+    // }
 
 
 List hoursArray=[];
