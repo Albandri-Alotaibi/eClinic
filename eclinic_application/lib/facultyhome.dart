@@ -55,7 +55,7 @@ class _fState extends State<facultyhome> {
   final List<Widget> _pages = [
     FacultyViewBookedAppointment(),
     addHoursFaculty(),
-    facultyFAQ(),
+    facultyListFAQ(),
   ];
   @override
   Widget build(BuildContext context) {

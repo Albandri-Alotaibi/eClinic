@@ -24,10 +24,12 @@ class _facultyListFAQState extends State<facultyListFAQ> {
   List<Map<String, dynamic>?> specialityList = [];
   List<Map<String, dynamic>?> semesterList = [];
   List specalityforfaculty = [];
+  List toremoveid = [];
   var firstLoading = true;
   var secondLoading = false;
   var noResults = true;
   var searchClicked = false;
+  bool downloadissue = true;
   var userid;
   @override
   void initState() {
@@ -36,13 +38,17 @@ class _facultyListFAQState extends State<facultyListFAQ> {
     userid = user!.uid;
     super.initState();
     retrivespeciality();
+    // initSpeciality();
+    //initSpeciality();
     //get specialities for dropdown
     //get semesters for dropdown
     initSemester();
+
+    //initSpeciality1nnoooo();
   }
 
   retrivespeciality() async {
-    specalityforfaculty.clear();
+    // specalityforfaculty.clear();
     final snap = await FirebaseFirestore.instance
         .collection('faculty')
         .doc(userid)
@@ -54,95 +60,148 @@ class _facultyListFAQState extends State<facultyListFAQ> {
       final DocumentSnapshot docRef = await facultyspecialityRef[i].get();
       setState(() {
         specalityforfaculty.add(docRef.id);
-        // print(docRef["specialityname"]);
+        //print(docRef["specialityname"]);
         //   print(docRef.id);
-        print("222222222222222222222");
+        // print("222222222222222222222");
       });
     }
-    // print(specalityforfaculty);
+    print("222222222222222222222");
+    print(specalityforfaculty);
     initSpeciality();
+    Future.delayed(Duration(seconds: 1), () {
+      setState(() {});
+    });
   }
 
-  // Future initSpeciality() async {
+  // Future initSpecialitynnoo() async {
   //   Map<String, dynamic>? speciality;
   //   CollectionReference cats =
   //       FirebaseFirestore.instance.collection('facultyspeciality');
+
   //   QuerySnapshot q = await cats.get(const GetOptions(source: Source.server));
-  //   specialityList.clear();
+  //   //specialityList.clear();
   //   specialityList = q.docs.map((doc) {
-  //     for (var i = 0; i < specalityforfaculty.length; i++) {
-  //       // print(specalityforfaculty.length);
-  //       if (doc.id == specalityforfaculty[i]) {
-  //         speciality = doc.data() as Map<String, dynamic>?;
-  //         speciality!['id'] = doc.reference.id;
-  //         speciality!['ref'] = doc.reference;
-  //         print(
-  //             "////////////////////////specialityList//////////////////////////////////////");
-  //       }
+  //     // for (var i = 0; i < specalityforfaculty.length; i++) {
+  //     //   // print(specalityforfaculty.length);
+  //     //   if (doc.id == specalityforfaculty[i]) {
+  //     speciality = doc.data() as Map<String, dynamic>?;
+  //     speciality!['id'] = doc.reference.id;
+  //     speciality!['ref'] = doc.reference;
+  //     //   print(
+  //     //       "////////////////////////specialityList//////////////////////////////////////");
+  //     //   print(speciality);
+  //     // }
 
-  //       // print(speciality);
+  //     // print(speciality);
 
-  //     }
+  //     //}
   //     return speciality;
   //   }).toList();
-  //   Future.delayed(Duration(seconds: 1), () {
-  //     setState(() {});
-  //   });
+  //   // Future.delayed(Duration(seconds: 1), () {
+  //   //   setState(() {});
+  //   // });
   //   //add all Specialties to dropdown
   //   specialityList.insert(
   //       0, <String, dynamic>{"specialityname": "All Specialties", "id": "0"});
   //   specialityDropdownValue = specialityList[0];
-  //   print("99999999999999999999999999999999999999999999999");
-  //   specialityList.forEach(((element) {
-  //     print(element?["specialityname"]);
-  //   }));
+  //   // print("99999999999999999999999999999999999999999999999");
+  //   specialityList.forEach((element) {
+  //     print(element?["id"]);
+  //     for (var i = 0; i < element!.length; i++) {
+  //       if (specalityforfaculty[i] == element["id"]) {
+  //         print("999999999999999999999yyyeesss99999999999999999999999999");
+  //       }
+  //     }
+  //   });
   //   print(specalityforfaculty.length);
   //   print(speciality!.length);
   //   print(specialityList.length);
   // }
+
   Future initSpeciality() async {
-    Map<String, dynamic>? speciality;
     CollectionReference cats =
         FirebaseFirestore.instance.collection('facultyspeciality');
     QuerySnapshot q = await cats.get(const GetOptions(source: Source.server));
-    specialityList.clear();
+
     specialityList = q.docs.map((doc) {
-      q.docs.forEach((element) {
-        for (var i = 0; i < specalityforfaculty.length; i++) {
-          if (element.id == specalityforfaculty[i]) {
-            speciality = element.data() as Map<String, dynamic>?;
-            speciality!['id'] = element.reference.id;
-            speciality!['ref'] = element.reference;
-            print(" ========== speciality id ============ ");
-            print(speciality!['id']);
-            specialityList.add(speciality);
-          }
-          // print(speciality);
-        }
-      });
+      var speciality = doc.data() as Map<String, dynamic>;
+      // bool c = false;
+      // for (var i = 0; i < specalityforfaculty.length; i++) {
+      //   print(specalityforfaculty[i]);
+      //   // print("44444444444444444444444444444444444444444");
+      //   // print(speciality.entries);
+      //   if (speciality.containsValue(specalityforfaculty[i])) {
+      //     c = false;
+      //     // if (doc.id == specalityforfaculty[i]) {
+      //     speciality.removeWhere((key, value) => c);
+
+      //     speciality.forEach((key, value) {
+      //       if (speciality.containsValue("--")) {
+      //         c = false;
+      //         speciality.removeWhere((key, value) => c);
+      //       }
+      //     });
+      //   }
+      // }
+      speciality['id'] = doc.reference.id;
+      speciality['ref'] = doc.reference;
+
       return speciality;
     }).toList();
-    Future.delayed(Duration(seconds: 1), () {
-      setState(() {});
-    });
+
     //add all Specialties to dropdown
     specialityList.insert(
         0, <String, dynamic>{"specialityname": "All Specialties", "id": "0"});
-    specialityDropdownValue = specialityList[0];
-    print("99999999999999999999999999999999999999999999999");
-    specialityList.forEach(((element) {
-      print(element?["specialityname"]);
-    }));
-    print(specalityforfaculty.length);
-    print(speciality!.length);
-    print(specialityList.length);
-  }
-  // Future initSpeciality() async {
-  //   CollectionReference cats =
-  //       FirebaseFirestore.instance.collection('facultyspeciality');
-  //   QuerySnapshot q = await cats.get(const GetOptions(source: Source.server));
 
-  //   specialityList = q.docs.map((doc) {
+    specialityDropdownValue = specialityList[0];
+
+    specialityList.forEach((element) {
+      // for (var i = 0; i < specalityforfaculty.length; i++) {
+      if ((element?["id"]) != "0") {
+        // print("wwwwhhhhhsssss deeleetteeee");
+        if (!(specalityforfaculty.contains((element?["id"])))) {
+          print("wwwwhhhhhsssss deeleetteeee");
+          toremoveid.add(element);
+          //specialityList.remove(element);
+          //}
+        }
+      }
+    });
+    specialityList.removeWhere((element) => toremoveid.contains(element));
+    // specialityList.forEach((element) {
+    //   // print("44444444444444444444444444444444444444444");
+    //   print(element?["id"]);
+
+    //   // print("44444444444444444444444444444444444444444");
+    //   // print(element['id']);
+    //   // print(specalityforfaculty);
+    //   if (!(specalityforfaculty.contains(element!['id']))) {
+    //     specialityList.remove(element);
+    //     print("444444444444444yyyessss44444444444444444444444444");
+    //     print(specialityList);
+    //   }
+    // });
+    //       specialityList.forEach((element) {
+
+    //     if ((specalityforfaculty.contains(element!['id']))) {
+
+    //     }
+    //   });
+    initCommonIssues();
+  }
+
+  ///try
+  // Future initSpeciality1nnoooo() async {
+  //   QuerySnapshot<Object?> cats = FirebaseFirestore.instance
+  //       .collection('facultyspeciality')
+  //       .where("specialityname", whereIn: [specalityforfaculty]).get(
+  //           const GetOptions(source: Source.server)) as QuerySnapshot<Object?>;
+  //   //var c = cats.where("specialityname", whereIn: [specalityforfaculty]);
+  //   print("////////////////////////////////////////////");
+  //   //print(c.firestore.doc("Ai"));
+  //   //QuerySnapshot q = await cats.get(const GetOptions(source: Source.server));
+
+  //   specialityList = cats.docs.map((doc) {
   //     var speciality = doc.data() as Map<String, dynamic>;
 
   //     speciality['id'] = doc.reference.id;
@@ -156,6 +215,17 @@ class _facultyListFAQState extends State<facultyListFAQ> {
   //       0, <String, dynamic>{"specialityname": "All Specialties", "id": "0"});
 
   //   specialityDropdownValue = specialityList[0];
+  // }
+
+//try
+  // gets() async {
+  //   var snap = await FirebaseFirestore.instance
+  //       .collection('facultyspeciality')
+  //       .where("specialityname", whereIn: [specalityforfaculty]).get();
+  //   print("//////////////////////////////////////");
+  //   print(snap.size);
+  //   print("////////////////44444//////////////////////");
+  //   print(specalityforfaculty);
   // }
 
   Future initSemester() async {
@@ -177,16 +247,16 @@ class _facultyListFAQState extends State<facultyListFAQ> {
         0, <String, dynamic>{"semestername": "All Semesters", "id": "0"});
 
     semesterDropdownValue = semesterList[0];
-
     setState(() {
       firstLoading = false;
     });
-
     initCommonIssues();
   }
 
   //get common issues by selected dropdowns (speciality / semester) refs
   void initCommonIssues() async {
+    downloadissue = true;
+    commonIssuesList = [];
     setState(() {
       secondLoading = true;
       searchClicked = true;
@@ -223,24 +293,33 @@ class _facultyListFAQState extends State<facultyListFAQ> {
     var i = 0;
     for (var doc in q.docs) {
       var commonIssue = doc.data();
+
       commonIssue['id'] = doc.reference.id;
       commonIssue['ref'] = doc.reference;
 
       i++;
 
       setState(() {
-        commonIssuesList.add(commonIssue);
-        if (i > 0) {
-          secondLoading = false;
+        //  List fordownloudnow = [];
+        print("تدخل هينا وهي ماسوت فلتر");
+
+        if (specalityforfaculty.contains(commonIssue['issuecategory'].id)) {
+          commonIssuesList.add(commonIssue);
+
+          if (i > 0) {
+            secondLoading = false;
+          }
         }
       });
     }
+    // downloadissue = false;
 
     setState(() {
       noResults = q.docs.isEmpty;
 
       secondLoading = false;
     });
+    print('finish download 66666666666666666666666666');
   }
 
   @override
@@ -383,7 +462,47 @@ class _facultyListFAQState extends State<facultyListFAQ> {
                           // ]),
                         ]),
                         //--------------------------- end dropdowns
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, 'addcommonissue');
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Card(
+                                    color: Mycolors.mainColorWhite,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          17), // <-- Radius
+                                    ),
+                                    shadowColor:
+                                        const Color.fromARGB(94, 114, 168, 243),
+                                    child: Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: ListTile(
+                                          title: Text("new common issue",
+                                              style: const TextStyle(
+                                                  fontSize: 18)),
 
+                                          textColor: Mycolors.mainColorBlue,
+                                          trailing: const Icon(
+                                            Icons.add,
+                                            color: Colors.blue,
+                                          ),
+
+                                          // fontFamily: 'main',
+                                          // fontWeight: FontWeight.w600
+                                          // ),
+                                        )),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
                         //show message if no results and still loading or user didnt click search
                         noResults || secondLoading || !searchClicked
                             ? SizedBox(
@@ -410,6 +529,7 @@ class _facultyListFAQState extends State<facultyListFAQ> {
                                             color: Colors.blue))))
                             :
                             //show all items if no loading and there are result from search
+
                             ListView.builder(
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
