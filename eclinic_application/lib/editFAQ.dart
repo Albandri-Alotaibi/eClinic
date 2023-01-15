@@ -743,7 +743,7 @@ class _editFAQState extends State<editFAQ> {
             .collection("commonissue")
             .doc(widget.value)
             .delete();
-        Navigator.pushNamed(context, 'facultyFAQ');
+        Navigator.pushNamed(context, 'facultyListFAQ');
       },
     );
 

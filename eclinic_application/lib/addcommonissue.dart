@@ -212,335 +212,370 @@ class _addcommonissueState extends State<addcommonissue> {
 
     return SafeArea(
         child: Scaffold(
+            appBar: AppBar(
+              primary: false,
+              centerTitle: true,
+              backgroundColor: Mycolors.mainColorWhite,
+              shadowColor: Colors.transparent,
+              //foregroundColor: Mycolors.mainColorBlack,
+              // automaticallyImplyLeading: false,
+              iconTheme: IconThemeData(
+                color: Color.fromARGB(255, 12, 12, 12), //change your color here
+              ),
+              title: Text(''),
+
+              titleTextStyle: TextStyle(
+                fontFamily: 'main',
+                fontSize: 24,
+                color: Mycolors.mainColorBlack,
+              ),
+            ),
             body: SingleChildScrollView(
-      child: Container(
-          child: Form(
-              key: formkey,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    DropdownButtonFormField<String>(
-                      decoration: InputDecoration(
-                        hintText: ' Choose your specialty : ',
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
-                            borderSide: const BorderSide(
-                              width: 0,
-                            )),
-                      ),
-                      isExpanded: true,
-                      items: specality.map((String dropdownitems) {
-                        return DropdownMenuItem<String>(
-                          value: dropdownitems,
-                          child: Text(dropdownitems),
-                        );
-                      }).toList(),
-                      onChanged: (String? newselect) {
-                        setState(() {
-                          specialityselectedvalue = newselect;
-                          checkids(specialityselectedvalue);
-                        });
-                      },
-                      value: specialityselectedvalue,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (value) {
-                        if (value == null ||
-                            specialityselectedvalue!.isEmpty ||
-                            specialityselectedvalue == null) {
-                          return 'Please choose your specialty';
-                        }
-                      },
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    TextFormField(
-                        controller: _issuetitleconstroller,
-                        decoration: InputDecoration(
-                            labelText: ' issue title :',
-                            hintText: "Enter issue title",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25),
-                                borderSide: const BorderSide(
-                                  width: 0,
-                                ))),
-                        onChanged: (value) {
-                          setState(() {
-                            retriveissuetitle(_issuetitleconstroller.text);
-                          });
-                        },
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (value) {
-                          if (value!.isEmpty ||
-                              _issuetitleconstroller.text == "") {
-                            return 'Please enter issue title ';
-                          } else {
-                            if (!(english
-                                .hasMatch(_issuetitleconstroller.text))) {
-                              return "only english is allowed";
-                            }
-                          }
-                          if (!(value.isEmpty ||
-                              _issuetitleconstroller.text == "")) {
-                            // retriveissuetitle(
-                            //     _issuetitleconstroller.text);
-                          }
-                        }),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    TextFormField(
-                      controller: _problemController,
-                      minLines: 4,
-                      maxLines: 10,
-                      keyboardType: TextInputType.multiline,
-                      decoration: InputDecoration(
-                          //   labelText: ' problem :',
-                          hintText: "Enter issue description ",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                              borderSide: const BorderSide(
-                                width: 0,
-                              ))),
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (value) {
-                        if (value!.isEmpty || _problemController.text == "") {
-                          return 'Please enter issue description';
-                        } else {
-                          if (!(english.hasMatch(_problemController.text))) {
-                            return "only english is allowed";
-                          }
-                        }
-                      },
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    TextFormField(
-                      controller: _solutioncontroll,
-                      minLines: 4,
-                      maxLines: 10,
-                      keyboardType: TextInputType.multiline,
-                      decoration: InputDecoration(
-                          // labelText: ' Solution :',
-                          hintText: "Enter the solution ",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                              borderSide: const BorderSide(
-                                width: 0,
-                              ))),
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (value) {
-                        if (value!.isEmpty || _solutioncontroll.text == "") {
-                          return 'Please enter the solution';
-                        } else {
-                          if (!(english.hasMatch(_solutioncontroll.text))) {
-                            return "only english is allowed";
-                          }
-                        }
-                      },
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    if (links.length > 0)
-                      for (var i = 0; i < links.length; i++)
-                        Row(
+              child: Container(
+                  child: Form(
+                      key: formkey,
+                      child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            RichText(
-                              text: TextSpan(children: [
-                                TextSpan(
-                                    text: linkname[i],
-                                    style: TextStyle(
-                                        decoration: TextDecoration.underline,
-                                        color: Colors.blue),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () async {
-                                        // var url = links[i];
-                                        // // ignore: deprecated_member_use
-                                        // if (await canLaunch(url)) {
-                                        //   // ignore: deprecated_member_use
-                                        //   launch(url);
-                                        // } else {
-                                        //   throw "Cannot load url";
+                            DropdownButtonFormField<String>(
+                              decoration: InputDecoration(
+                                hintText: ' Choose your specialty : ',
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(25),
+                                    borderSide: const BorderSide(
+                                      width: 0,
+                                    )),
+                              ),
+                              isExpanded: true,
+                              items: specality.map((String dropdownitems) {
+                                return DropdownMenuItem<String>(
+                                  value: dropdownitems,
+                                  child: Text(dropdownitems),
+                                );
+                              }).toList(),
+                              onChanged: (String? newselect) {
+                                setState(() {
+                                  specialityselectedvalue = newselect;
+                                  checkids(specialityselectedvalue);
+                                });
+                              },
+                              value: specialityselectedvalue,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (value) {
+                                if (value == null ||
+                                    specialityselectedvalue!.isEmpty ||
+                                    specialityselectedvalue == null) {
+                                  return 'Please choose your specialty';
+                                }
+                              },
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            TextFormField(
+                                controller: _issuetitleconstroller,
+                                decoration: InputDecoration(
+                                    labelText: ' issue title :',
+                                    hintText: "Enter issue title",
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(25),
+                                        borderSide: const BorderSide(
+                                          width: 0,
+                                        ))),
+                                onChanged: (value) {
+                                  setState(() {
+                                    retriveissuetitle(
+                                        _issuetitleconstroller.text);
+                                  });
+                                },
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value!.isEmpty ||
+                                      _issuetitleconstroller.text == "") {
+                                    return 'Please enter issue title ';
+                                  } else {
+                                    if (!(english.hasMatch(
+                                        _issuetitleconstroller.text))) {
+                                      return "only english is allowed";
+                                    }
+                                  }
+                                  if (!(value.isEmpty ||
+                                      _issuetitleconstroller.text == "")) {
+                                    // retriveissuetitle(
+                                    //     _issuetitleconstroller.text);
+                                  }
+                                }),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            TextFormField(
+                              controller: _problemController,
+                              minLines: 4,
+                              maxLines: 10,
+                              keyboardType: TextInputType.multiline,
+                              decoration: InputDecoration(
+                                  //   labelText: ' problem :',
+                                  hintText: "Enter issue description ",
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25),
+                                      borderSide: const BorderSide(
+                                        width: 0,
+                                      ))),
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (value) {
+                                if (value!.isEmpty ||
+                                    _problemController.text == "") {
+                                  return 'Please enter issue description';
+                                } else {
+                                  if (!(english
+                                      .hasMatch(_problemController.text))) {
+                                    return "only english is allowed";
+                                  }
+                                }
+                              },
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            TextFormField(
+                              controller: _solutioncontroll,
+                              minLines: 4,
+                              maxLines: 10,
+                              keyboardType: TextInputType.multiline,
+                              decoration: InputDecoration(
+                                  // labelText: ' Solution :',
+                                  hintText: "Enter the solution ",
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25),
+                                      borderSide: const BorderSide(
+                                        width: 0,
+                                      ))),
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (value) {
+                                if (value!.isEmpty ||
+                                    _solutioncontroll.text == "") {
+                                  return 'Please enter the solution';
+                                } else {
+                                  if (!(english
+                                      .hasMatch(_solutioncontroll.text))) {
+                                    return "only english is allowed";
+                                  }
+                                }
+                              },
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            if (links.length > 0)
+                              for (var i = 0; i < links.length; i++)
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    RichText(
+                                      text: TextSpan(children: [
+                                        TextSpan(
+                                            text: linkname[i],
+                                            style: TextStyle(
+                                                decoration:
+                                                    TextDecoration.underline,
+                                                color: Colors.blue),
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () async {
+                                                // var url = links[i];
+                                                // // ignore: deprecated_member_use
+                                                // if (await canLaunch(url)) {
+                                                //   // ignore: deprecated_member_use
+                                                //   launch(url);
+                                                // } else {
+                                                //   throw "Cannot load url";
+                                                // }
+                                                launch(links[i]);
+                                              })
+                                      ]),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 1),
+                                      child: IconButton(
+                                          onPressed: (() =>
+                                              ConfirmationDialogfordelete(
+                                                  context, i)),
+                                          icon: Icon(
+                                            Icons.cancel,
+                                            size: 20,
+                                          )),
+                                    )
+                                  ],
+                                ),
+                            // if (pickedFile != null)
+                            //   Container(
+                            //     height: 170,
+                            //     width: 380,
+                            //     child: Card(
+                            //       //Mycolors.mainShadedColorBlue
+                            //       color: Color.fromARGB(171, 204, 204, 210),
+                            //       shape: RoundedRectangleBorder(
+                            //         borderRadius:
+                            //             BorderRadius.circular(30), // <-- Radius
+                            //       ),
+                            //       shadowColor: Color.fromARGB(171, 212, 212, 240),
+                            //       elevation: 40,
+                            //       child: Padding(
+                            //           padding: const EdgeInsets.all(40),
+                            //           child: new GestureDetector(
+                            //             child: Center(
+                            //                 child: Text(pickedFile!.name,
+                            //                     style: TextStyle(
+                            //                         decoration:
+                            //                             TextDecoration.underline,
+                            //                         color: Mycolors.mainShadedColorBlue,
+                            //                         fontFamily: 'main',
+                            //                         fontSize: 20),
+                            //                     textAlign: TextAlign.center)),
+                            //             onTap: () {
+                            //               //print("Container clicked");
+                            //               openfile(pickedFile!);
+                            //             },
+                            //           )),
+                            //     ),
+                            //   ),
+                            if (filesurl != null)
+                              for (var l = 0; l < filesurl!.length; l++)
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    RichText(
+                                      text: TextSpan(children: [
+                                        TextSpan(
+                                            text: filesurl![l].name,
+                                            style: TextStyle(
+                                                decoration:
+                                                    TextDecoration.underline,
+                                                color: Colors.blue),
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () async {
+                                                openfile(filesurl![l]);
+                                              })
+                                      ]),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 1),
+                                      child: IconButton(
+                                          onPressed: (() =>
+                                              ConfirmationDialogfordeleteforfile(
+                                                  context, l)),
+                                          icon: Icon(
+                                            Icons.cancel,
+                                            size: 20,
+                                          )),
+                                    )
+                                  ],
+                                ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    textStyle: TextStyle(
+                                        fontFamily: 'main', fontSize: 16),
+                                    shadowColor: Colors.blue[900],
+                                    elevation: 16,
+                                    backgroundColor:
+                                        Mycolors.mainShadedColorBlue,
+                                    minimumSize: Size(150, 50),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          17), // <-- Radius
+                                    ),
+                                  ),
+                                  onPressed: (() async {
+                                    final result = await FilePicker.platform
+                                        .pickFiles(allowMultiple: true);
+                                    if (result == null) return;
+                                    setState(() {
+                                      pickedFile = result.files.first;
+                                      if (pickedFile != null) {
+                                        filesurl?.addAll(result.files);
+
+                                        // for (var i = 0; i < result.count; i++) {
+                                        //    filesurl?.add(result.files as PlatformFile);
                                         // }
-                                        launch(links[i]);
-                                      })
-                              ]),
+                                      }
+                                      var exe = pickedFile!.extension;
+                                      print("00000000000000000000");
+                                      print(pickedFile!.path);
+                                      print(pickedFile!.name);
+                                      print(filesurl);
+                                    });
+                                    // final file = result.filesurl.first;
+                                    //openfile(pickedFile!);
+                                  }),
+                                  child: Text("upload file "),
+                                ),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    textStyle: TextStyle(
+                                        fontFamily: 'main', fontSize: 16),
+                                    shadowColor: Colors.blue[900],
+                                    elevation: 16,
+                                    backgroundColor:
+                                        Mycolors.mainShadedColorBlue,
+                                    minimumSize: Size(150, 50),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          17), // <-- Radius
+                                    ),
+                                  ),
+                                  onPressed: (() {
+                                    _linkcontroll.text = "";
+                                    _linknamecontroll.text = "";
+                                    showConfirmationDialog(context);
+                                  }),
+                                  child: Text("add link"),
+                                ),
+                              ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 1),
-                              child: IconButton(
-                                  onPressed: (() =>
-                                      ConfirmationDialogfordelete(context, i)),
-                                  icon: Icon(
-                                    Icons.cancel,
-                                    size: 20,
-                                  )),
-                            )
-                          ],
-                        ),
-                    // if (pickedFile != null)
-                    //   Container(
-                    //     height: 170,
-                    //     width: 380,
-                    //     child: Card(
-                    //       //Mycolors.mainShadedColorBlue
-                    //       color: Color.fromARGB(171, 204, 204, 210),
-                    //       shape: RoundedRectangleBorder(
-                    //         borderRadius:
-                    //             BorderRadius.circular(30), // <-- Radius
-                    //       ),
-                    //       shadowColor: Color.fromARGB(171, 212, 212, 240),
-                    //       elevation: 40,
-                    //       child: Padding(
-                    //           padding: const EdgeInsets.all(40),
-                    //           child: new GestureDetector(
-                    //             child: Center(
-                    //                 child: Text(pickedFile!.name,
-                    //                     style: TextStyle(
-                    //                         decoration:
-                    //                             TextDecoration.underline,
-                    //                         color: Mycolors.mainShadedColorBlue,
-                    //                         fontFamily: 'main',
-                    //                         fontSize: 20),
-                    //                     textAlign: TextAlign.center)),
-                    //             onTap: () {
-                    //               //print("Container clicked");
-                    //               openfile(pickedFile!);
-                    //             },
-                    //           )),
-                    //     ),
-                    //   ),
-                    if (filesurl != null)
-                      for (var l = 0; l < filesurl!.length; l++)
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            RichText(
-                              text: TextSpan(children: [
-                                TextSpan(
-                                    text: filesurl![l].name,
-                                    style: TextStyle(
-                                        decoration: TextDecoration.underline,
-                                        color: Colors.blue),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () async {
-                                        openfile(filesurl![l]);
-                                      })
-                              ]),
+                            SizedBox(
+                              height: 8,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 1),
-                              child: IconButton(
-                                  onPressed: (() =>
-                                      ConfirmationDialogfordeleteforfile(
-                                          context, l)),
-                                  icon: Icon(
-                                    Icons.cancel,
-                                    size: 20,
-                                  )),
-                            )
-                          ],
-                        ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            textStyle:
-                                TextStyle(fontFamily: 'main', fontSize: 16),
-                            shadowColor: Colors.blue[900],
-                            elevation: 16,
-                            backgroundColor: Mycolors.mainShadedColorBlue,
-                            minimumSize: Size(150, 50),
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(17), // <-- Radius
-                            ),
-                          ),
-                          onPressed: (() async {
-                            final result = await FilePicker.platform
-                                .pickFiles(allowMultiple: true);
-                            if (result == null) return;
-                            setState(() {
-                              pickedFile = result.files.first;
-                              if (pickedFile != null) {
-                                filesurl?.addAll(result.files);
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                textStyle:
+                                    TextStyle(fontFamily: 'main', fontSize: 16),
+                                shadowColor: Colors.blue[900],
+                                elevation: 16,
+                                backgroundColor: Mycolors.mainShadedColorBlue,
+                                minimumSize: Size(150, 50),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(17), // <-- Radius
+                                ),
+                              ),
+                              onPressed: () async {
+                                if (formkey.currentState!.validate()) {
+                                  upload();
+                                  retriveissuetitle(
+                                      _issuetitleconstroller.text);
 
-                                // for (var i = 0; i < result.count; i++) {
-                                //    filesurl?.add(result.files as PlatformFile);
-                                // }
-                              }
-                              var exe = pickedFile!.extension;
-                              print("00000000000000000000");
-                              print(pickedFile!.path);
-                              print(pickedFile!.name);
-                              print(filesurl);
-                            });
-                            // final file = result.filesurl.first;
-                            //openfile(pickedFile!);
-                          }),
-                          child: Text("upload file "),
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            textStyle:
-                                TextStyle(fontFamily: 'main', fontSize: 16),
-                            shadowColor: Colors.blue[900],
-                            elevation: 16,
-                            backgroundColor: Mycolors.mainShadedColorBlue,
-                            minimumSize: Size(150, 50),
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(17), // <-- Radius
+                                  if (exist == true) {
+                                    confirm(context);
+                                  }
+                                  if (exist == false) {
+                                    showerror(context,
+                                        "there is common issue with the same title please check ");
+                                  }
+                                }
+                              },
+                              child: Text("Add"),
                             ),
-                          ),
-                          onPressed: (() {
-                            _linkcontroll.text = "";
-                            _linknamecontroll.text = "";
-                            showConfirmationDialog(context);
-                          }),
-                          child: Text("add link"),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-                        shadowColor: Colors.blue[900],
-                        elevation: 16,
-                        backgroundColor: Mycolors.mainShadedColorBlue,
-                        minimumSize: Size(150, 50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(17), // <-- Radius
-                        ),
-                      ),
-                      onPressed: () async {
-                        if (formkey.currentState!.validate()) {
-                          upload();
-                          retriveissuetitle(_issuetitleconstroller.text);
-
-                          if (exist == true) {
-                            confirm(context);
-                          }
-                          if (exist == false) {
-                            showerror(context,
-                                "there is common issue with the same title please check ");
-                          }
-                        }
-                      },
-                      child: Text("Add"),
-                    ),
-                  ]))),
-    )));
+                          ]))),
+            )));
   }
 
   showConfirmationDialog(BuildContext context) {
@@ -724,7 +759,7 @@ class _addcommonissueState extends State<addcommonissue> {
             "linkname": linkname,
             "filesurl": fileurltoDB,
           });
-          Navigator.pushNamed(context, 'facultyFAQ');
+          Navigator.pushNamed(context, 'facultyListFAQ');
         }
       },
     );
