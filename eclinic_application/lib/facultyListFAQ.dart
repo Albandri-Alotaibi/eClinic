@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:myapp/CommonIssueViewScreen.dart';
 import 'package:myapp/style/Mycolors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:myapp/facultyViewFAQ.dart';
 
 class facultyListFAQ extends StatefulWidget {
   const facultyListFAQ({super.key});
@@ -575,7 +576,7 @@ class _facultyListFAQState extends State<facultyListFAQ> {
             MaterialPageRoute(
                 builder: (context) =>
                     //we send common issue object item to the next page to show it
-                    CommonIssueViewScreen(commonIssue: commonIssue))).then(
+                    facultyViewFAQ(commonIssue: commonIssue))).then(
             (value) => setState(() {}));
       },
       child: Container(

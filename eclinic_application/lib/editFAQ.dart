@@ -190,6 +190,24 @@ class _editFAQState extends State<editFAQ> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          primary: false,
+          centerTitle: true,
+          backgroundColor: Mycolors.mainColorWhite,
+          shadowColor: Colors.transparent,
+          //foregroundColor: Mycolors.mainColorBlack,
+          // automaticallyImplyLeading: false,
+          iconTheme: IconThemeData(
+            color: Color.fromARGB(255, 12, 12, 12), //change your color here
+          ),
+          title: Text(''),
+
+          titleTextStyle: TextStyle(
+            fontFamily: 'main',
+            fontSize: 24,
+            color: Mycolors.mainColorBlack,
+          ),
+        ),
         body: SingleChildScrollView(
             clipBehavior: Clip.none,
             child: Padding(

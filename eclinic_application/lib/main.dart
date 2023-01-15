@@ -7,7 +7,9 @@ import 'package:myapp/StudentViewBookedAppointment.dart';
 import 'package:myapp/addHoursFaculty.dart';
 import 'package:myapp/FacultyViewBookedAppointment.dart';
 import 'package:myapp/addcommonissue.dart';
+import 'package:myapp/editFAQ.dart';
 import 'package:myapp/facultyListFAQ.dart';
+import 'package:myapp/facultyViewFAQ.dart';
 import 'package:myapp/facultyhome.dart';
 import 'package:myapp/facultyviewprofile.dart';
 import 'package:myapp/home.dart';
@@ -84,6 +86,8 @@ class MyApp extends StatelessWidget {
           'viewGPlibrary': (context) => viewGPlibrary(),
           'commonIssuesList': (context) => CommonIssuesListScreen(),
           'facultyListFAQ': (context) => facultyListFAQ(),
+          'editFAQ': (context) => editFAQ(value: ""),
+          'facultyViewFAQ': (context) => facultyViewFAQ(commonIssue: {}),
         });
   }
 
