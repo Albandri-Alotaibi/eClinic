@@ -85,7 +85,7 @@ exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async
                             const payload = {
                                 notification: {
                                     title: 'Consultation appointment',
-                                    body: `Tomorrow at ${StartTimeForAppointment}. Backend`,
+                                    body: `Tomorrow at ${StartTimeForAppointment}.`,
                                     //icon: follower.photoURL
                                 }
                             };
@@ -111,7 +111,7 @@ exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async
                         const payload = {
                             notification: {
                                 title: 'Consultation appointment',
-                                body: `You have ${numOfBookedAppointments} appointment(s) tomorrow. Backend`,
+                                body: `You have ${numOfBookedAppointments} appointment(s) tomorrow.`,
                                 //icon: follower.photoURL
                             }
                         };
@@ -129,7 +129,7 @@ exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async
 
 });
 
-exports.gpreminder =  functions.pubsub.schedule('0 21 * * *').onRun(async (context) => {
+exports.gpAndEndonsemesterreminder = functions.pubsub.schedule('0 21 * * *').onRun(async (context) => {
     functions.logger.info("Hello logs", { structuredData: true });
     //response.send("Hello Firebase");
     const StudentsSnapshot = await admin.firestore().collection('student').get().then((querySnapshot) => {
@@ -156,8 +156,157 @@ exports.gpreminder =  functions.pubsub.schedule('0 21 * * *').onRun(async (conte
 
         })
     })
+    //sending notification to notify faculty about semester ending
+    const SemesterSnapshot = await admin.firestore().collection('semester').get().then((querySnapshot) => {
+        querySnapshot.forEach(async (doc) => {
+            var today = new Date();
+            var endDate = new Date(doc.data().enddate.toDate());
+            if (today.getDay() === endDate.getDay() && today.getMonth() === endDate.getMonth() && today.getFullYear() === endDate.getFullYear()) {
+                // functions.logger.info("doc.data().semestername");
+                // functions.logger.info(doc.data().semestername);
+                // check if their is faculty members
+                if (doc.data().facultymembers != null) {
+                    // functions.logger.info(doc.data().facultymembers);
+                    // functions.logger.info(doc.data().facultymembers[0]['faculty']);
+
+                    const payload = {
+                        notification: {
+                            title: 'Thank you for your effort',
+                            body: `This semester has ended, but if you want to be a member of the help desk in the next semester, update the semester from your profile`,
+                            //icon: follower.photoURL
+                        }
+                    };
+                    var facultyRef = doc.data().facultymembers;
+
+                    for (let i = 0; i < facultyRef.length; i++) {
+                        var oneS = facultyRef[i]['faculty'].get().then(async (onefacultytDoc) => {
+                            var token = onefacultytDoc.data().token
+                            // functions.logger.info(token);
+                            if (token != null) {
+                                // functions.logger.info("in  if(token != null)");
+                                const response = await admin.messaging().sendToDevice(token, payload);
+                            }
+
+                        });
+                    }
+
+                }
+
+                //functions.logger.info("end of the loop");
+            }
+        })
+    })
+
+
+
 });
 
 
+
+exports.updateSemester = functions.firestore
+    .document('faculty/{wildcard}')
+    .onUpdate(async (change, context) => {
+        // Get an object representing the document
+        // e.g. {'name': 'Marie', 'age': 66}
+        const semesterRef = await admin.firestore().collection('semester');
+        const facultyRef = await admin.firestore().collection('faculty').doc(context.params.wildcard).collection("appointment");
+        functions.logger.info(context.params.wildcard);
+        var today = new Date();
+
+        const newValue = change.after.data();
+        var newSemesterSnap = await semesterRef.doc(newValue.semester.id).get();
+        var newsemestername = newSemesterSnap.data().semestername;
+
+
+        const previousValue = change.before.data();
+        var preSemesterSnap = await semesterRef.doc(previousValue.semester.id).get();
+        var presemestername = preSemesterSnap.data().semestername;
+
+
+
+        //return the name of the previous value
+        functions.logger.info("previousValue");
+        // (await semesterRef.doc(doc.id).get()).data()
+        // previousValue.semester.get().then( (onesemesterDoc) => {
+        //     functions.logger.info("onesemesterDoc");
+        //     functions.logger.info(onesemesterDoc);
+        //     presemestername = onesemesterDoc.data().semestername
+        // });
+        functions.logger.info(presemestername);
+
+
+        // return the name of the new value
+        functions.logger.info("newValue");
+        functions.logger.info(newsemestername);
+
+
+        const semesterIsUpdated = newsemestername !== presemestername;
+        functions.logger.info("semesterIsUpdated");
+        functions.logger.info(semesterIsUpdated);
+
+        if (semesterIsUpdated === true) {
+            functions.logger.info("in semesterIsUpdated change to ==");
+            var facultyAppointmentSnap = await facultyRef.get().then(
+                (querySnapshot) => {
+                    querySnapshot.forEach(async (doc) => { 
+                       // functions.logger.info(doc.data().Booked);
+                       //check if the faculty have booked appointmments
+                       if(doc.data().Booked === true){
+                        var startdate = new Date(doc.data().starttime.toDate());
+                        // if the appointments in the future we will send a notification to the students
+                        if(today < startdate){
+                            //get the faculty name
+                            const facultySnap = await admin.firestore().collection('faculty').doc(context.params.wildcard).get();
+                            var Fname = facultySnap.data().firstname +" " + facultySnap.data().lastname;
+                            functions.logger.info(Fname);
+                            functions.logger.info("today < startdate");
+
+
+                            //format the start time and date
+                            let appointmantTime = doc.data().starttime.toDate().getTime();
+                            let appointmantTimeAfter3 = new Date(appointmantTime + 3 * 60 * 60 * 1000);// add 3h bcz it on UTC time not saudi time
+                            //this is the time I will send it to the student
+                            let StartTimeForAppointment = appointmantTimeAfter3.toLocaleTimeString('default', {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                            });
+                            //same for end 
+                            let appointmantTimeend = doc.data().endtime.toDate().getTime();
+                            let appointmantTimeAfter3end = new Date(appointmantTimeend + 3 * 60 * 60 * 1000);// add 3h bcz it on UTC time not saudi time
+                            //this is the time I will send it to the student
+                            let endTimeForAppointment = appointmantTimeAfter3end.toLocaleTimeString('default', {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                            });
+
+                            functions.logger.info("your appointment with Dr.",Fname ,"date",startdate.getDate(),"/",startdate.getMonth(),"/",startdate.getFullYear(),"time",StartTimeForAppointment,"-",endTimeForAppointment);
+                            var month = startdate.getMonth()+1;
+                            const payload = {
+                                notification: {
+                                    title: 'Appointment cancelation',
+                                    body: `your appointment with Dr.${Fname} on ${startdate.getDate()}/${month}/${startdate.getFullYear()} at ${StartTimeForAppointment} - ${endTimeForAppointment} has been canceled `,
+                                    //icon: follower.photoURL
+                                }
+                            };
+                            var studentsRef = doc.data().student;
+                            for (let i = 0; i < studentsRef.length; i++) {
+                                var oneS = studentsRef[i].get().then(async (oneStudentDoc) => {
+                                    var token = oneStudentDoc.data().token
+                                    functions.logger.info(token);
+                                    const response = await admin.messaging().sendToDevice(token, payload);
+                                });
+                            }
+                        }
+                       }
+
+                       //delet all doc
+                       await admin.firestore().collection('faculty').doc(context.params.wildcard).collection("appointment").doc(doc.id).delete();
+                       
+                    })
+                }
+            );
+        }
+
+    });
 
 

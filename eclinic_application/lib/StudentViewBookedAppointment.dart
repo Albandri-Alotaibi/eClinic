@@ -683,7 +683,7 @@ class _StudentViewBookedAppointmentState
               'title': 'appointment cancelation',
             },
             "notification": <String, dynamic>{
-              "title": "Appointment Cancelation",
+              "title": "Appointment cancelation",
               "body": "Your appointment with $Fname$date has been canceled$res",
               "android_channel_id": "dbfood",
             },

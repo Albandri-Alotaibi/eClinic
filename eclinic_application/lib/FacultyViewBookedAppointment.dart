@@ -772,7 +772,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
               'title': 'appointment cancelation',
             },
             "notification": <String, dynamic>{
-              "title": "appointment cancelation",
+              "title": "Appointment cancelation",
               "body": "your appointment with $Fname$time has been canceled ",
               "android_channel_id": "dbfood",
             },
