@@ -80,7 +80,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
     retriveselectedcategory();
     retrivedepartment();
     retrivecolldep();
-    retrivecollage();
+    //retrivecollage();
     genrateyear();
     // getusername();
     super.initState();
@@ -245,49 +245,49 @@ class _studentviewprofileState extends State<studentviewprofile> {
     });
   }
 
-  retrivecollage() async {
-    try {
-      await FirebaseFirestore.instance
-          .collection('collage')
-          .get()
-          .then((querySnapshot) {
-        querySnapshot.docs.forEach((element) {
-          setState(() {
-            collage.add(element['collagename']);
-          });
-        });
-      });
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
+  // retrivecollage() async {
+  //   try {
+  //     await FirebaseFirestore.instance
+  //         .collection('collage')
+  //         .get()
+  //         .then((querySnapshot) {
+  //       querySnapshot.docs.forEach((element) {
+  //         setState(() {
+  //           collage.add(element['collagename']);
+  //         });
+  //       });
+  //     });
+  //   } catch (e) {
+  //     print(e.toString());
+  //     return null;
+  //   }
+  // }
 
-  Future checkidc(String? collagename) async {
-    try {
-      await FirebaseFirestore.instance
-          .collection('collage')
-          .get()
-          .then((querySnapshot) {
-        querySnapshot.docs.forEach((element) {
-          setState(() {
-            if (collagename == element['collagename']) {
-              docsforcollage = element.id;
-            }
-          });
-        });
-      });
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
+  // Future checkidc(String? collagename) async {
+  //   try {
+  //     await FirebaseFirestore.instance
+  //         .collection('collage')
+  //         .get()
+  //         .then((querySnapshot) {
+  //       querySnapshot.docs.forEach((element) {
+  //         setState(() {
+  //           if (collagename == element['collagename']) {
+  //             docsforcollage = element.id;
+  //           }
+  //         });
+  //       });
+  //     });
+  //   } catch (e) {
+  //     print(e.toString());
+  //     return null;
+  //   }
+  // }
 
   retrivedepartment() async {
     try {
       await FirebaseFirestore.instance
-          .collection('collage')
-          .doc("CCIS")
+          // .collection('collage')
+          // .doc("CCIS")
           .collection("department")
           .get()
           .then((querySnapshot) {
@@ -306,8 +306,8 @@ class _studentviewprofileState extends State<studentviewprofile> {
   Future checkidd(String? departmentename) async {
     try {
       await FirebaseFirestore.instance
-          .collection('collage')
-          .doc("CCIS")
+          // .collection('collage')
+          // .doc("CCIS")
           .collection("department")
           .get()
           .then((querySnapshot) {
@@ -356,11 +356,11 @@ class _studentviewprofileState extends State<studentviewprofile> {
         _socialmed = TextEditingController(text: so);
       }
       social = so;
-      var collageRef = snap["college"];
-      final DocumentSnapshot docRef1 = await collageRef.get();
-      collageselectedfromDB = docRef1["collagename"];
-      print("/////////////////////collage///////////////////////////");
-      print(collageselectedfromDB);
+      // var collageRef = snap["college"];
+      // final DocumentSnapshot docRef1 = await collageRef.get();
+      // collageselectedfromDB = docRef1["collagename"];
+      // print("/////////////////////collage///////////////////////////");
+      // print(collageselectedfromDB);
 
       var departmentRef = snap["department"];
       final DocumentSnapshot docRef2 = await departmentRef.get();
@@ -371,7 +371,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
       print(e.toString());
       return null;
     }
-    checkidc(collageselectedfromDB);
+    //checkidc(collageselectedfromDB);
     checkidd(departmentselectedfromDB);
   }
 
@@ -738,9 +738,9 @@ class _studentviewprofileState extends State<studentviewprofile> {
                             //   }),
                             // ),
 
-                            SizedBox(
-                              height: 8,
-                            ),
+                            // SizedBox(
+                            //   height: 8,
+                            // ),
                             DropDownMultiSelect(
                               decoration: InputDecoration(
                                   suffixIcon: Icon(Icons.edit),
@@ -824,46 +824,46 @@ class _studentviewprofileState extends State<studentviewprofile> {
                             SizedBox(
                               height: 8,
                             ),
-                            DropdownButtonFormField<String>(
-                              decoration: InputDecoration(
-                                suffixIcon: Icon(Icons.edit),
-                                labelText: 'College',
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                    borderSide: const BorderSide(
-                                      width: 0,
-                                    )),
-                              ),
-                              isExpanded: true,
-                              items: collage.map((String dropdownitems) {
-                                return DropdownMenuItem<String>(
-                                  value: dropdownitems,
-                                  child: Text(dropdownitems),
-                                );
-                              }).toList(),
+                            // DropdownButtonFormField<String>(
+                            //   decoration: InputDecoration(
+                            //     suffixIcon: Icon(Icons.edit),
+                            //     labelText: 'College',
+                            //     border: OutlineInputBorder(
+                            //         borderRadius: BorderRadius.circular(25),
+                            //         borderSide: const BorderSide(
+                            //           width: 0,
+                            //         )),
+                            //   ),
+                            //   isExpanded: true,
+                            //   items: collage.map((String dropdownitems) {
+                            //     return DropdownMenuItem<String>(
+                            //       value: dropdownitems,
+                            //       child: Text(dropdownitems),
+                            //     );
+                            //   }).toList(),
 
-                              onChanged: (String? newselect) {
-                                setState(() {
-                                  collageselectedvalue = newselect;
-                                  collageselectedfromDB = newselect;
-                                  checkidc(collageselectedvalue);
-                                });
-                              },
-                              value: collageselectedvalue,
+                            //   onChanged: (String? newselect) {
+                            //     setState(() {
+                            //       collageselectedvalue = newselect;
+                            //       collageselectedfromDB = newselect;
+                            //       checkidc(collageselectedvalue);
+                            //     });
+                            //   },
+                            //   value: collageselectedvalue,
 
-                              // autovalidateMode:
-                              //     AutovalidateMode.onUserInteraction,
-                              // validator: (value) {
-                              //   if (value == null ||
-                              //       collageselectedvalue!.isEmpty ||
-                              //       collageselectedvalue == null) {
-                              //     return 'Please choose your collage';
-                              //   }
-                              // },
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
+                            //   // autovalidateMode:
+                            //   //     AutovalidateMode.onUserInteraction,
+                            //   // validator: (value) {
+                            //   //   if (value == null ||
+                            //   //       collageselectedvalue!.isEmpty ||
+                            //   //       collageselectedvalue == null) {
+                            //   //     return 'Please choose your collage';
+                            //   //   }
+                            //   // },
+                            // ),
+                            // SizedBox(
+                            //   height: 8,
+                            // ),
 
                             DropdownButtonFormField<String>(
                               decoration: InputDecoration(
@@ -1131,13 +1131,13 @@ class _studentviewprofileState extends State<studentviewprofile> {
                           "socialmediaaccount": socoamediaaccount,
                           "graduationDate": gpdate,
                           'department': FirebaseFirestore.instance
-                              .collection("collage")
-                              .doc(docsforcollage)
+                              // .collection("collage")
+                              // .doc(docsforcollage)
                               .collection("department")
                               .doc(docfordepatment),
-                          'college': FirebaseFirestore.instance
-                              .collection("collage")
-                              .doc(docsforcollage),
+                          // 'college': FirebaseFirestore.instance
+                          //     .collection("collage")
+                          //     .doc(docsforcollage),
                         });
 
                         Fluttertoast.showToast(

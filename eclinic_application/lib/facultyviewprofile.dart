@@ -36,7 +36,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
     retriveAllspecilty();
     retrivesuserinfo();
     retrievesemester();
-    retrivecollage();
+    // retrivecollage();
     retrivedepartment();
     retrivecolldepsem();
     specialitybeforedit();
@@ -93,23 +93,23 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
   RegExp ksuEmailRegEx = new RegExp(r'^([a-z\d\._]+)@ksu.edu.sa$',
       multiLine: false, caseSensitive: false);
   RegExp english = RegExp("^[\u0000-\u007F]+\$");
-  retrivecollage() async {
-    try {
-      await FirebaseFirestore.instance
-          .collection('collage')
-          .get()
-          .then((querySnapshot) {
-        querySnapshot.docs.forEach((element) {
-          setState(() {
-            collage.add(element['collagename']);
-          });
-        });
-      });
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
+  // retrivecollage() async {
+  //   try {
+  //     await FirebaseFirestore.instance
+  //         .collection('collage')
+  //         .get()
+  //         .then((querySnapshot) {
+  //       querySnapshot.docs.forEach((element) {
+  //         setState(() {
+  //           collage.add(element['collagename']);
+  //         });
+  //       });
+  //     });
+  //   } catch (e) {
+  //     print(e.toString());
+  //     return null;
+  //   }
+  // }
 
   retriveAllspecilty() async {
     try {
@@ -163,18 +163,20 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
     // print("/////////////////////semester///////////////////////////");
     // print(semesterselectedfromDB);
     /////////////////////////////////////////////////////
-    var collageRef = snap["collage"];
-    final DocumentSnapshot docRef3 = await collageRef.get();
-    collageselectedfromDB = docRef3["collagename"];
+    // var collageRef = snap["collage"];
+    // final DocumentSnapshot docRef3 = await collageRef.get();
+    // collageselectedfromDB = docRef3["collagename"];
     // print("/////////////////////collage///////////////////////////");
     // print(collageselectedfromDB);
     /////////////////////////////////////////////////////
     var departmentRef = snap["department"];
     final DocumentSnapshot docRef4 = await departmentRef.get();
+
     departmentselectedfromDB = docRef4["departmentname"];
+
     // print("/////////////////////department///////////////////////////");
     // print(departmentselectedfromDB);
-    checkidc(collageselectedfromDB);
+    //checkidc(collageselectedfromDB);
     checkidd(departmentselectedfromDB);
     checkids(semesterselectedfromDB);
   }
@@ -230,9 +232,11 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
   retrivedepartment() async {
     try {
       await FirebaseFirestore.instance
-          .collection('collage')
-          .doc("CCIS")
-          .collection("department")
+          .
+          // .collection('collage')
+          // .doc("CCIS")
+          // .
+          collection("department")
           .get()
           .then((querySnapshot) {
         querySnapshot.docs.forEach((element) {
@@ -467,8 +471,8 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                         collageselectedvalue = collageselectedfromDB;
                         departmentselectedvalue = departmentselectedfromDB;
                         semesterselectedvalue = semesterselectedfromDB;
-                        // print("/////////////////ممههههممم//////////////////");
-                        // print(departmentselectedvalue);
+                        print("/////////////////ممههههممم//////////////////");
+                        print(departmentselectedvalue);
                         // print("//////////////////////////////////");
                         // print(departmentselectedfromDB);
                         // print("/////////////////ممههههممم//////////////////");
@@ -586,46 +590,46 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                             SizedBox(
                               height: 8,
                             ),
-                            DropdownButtonFormField<String>(
-                              decoration: InputDecoration(
-                                suffixIcon: Icon(Icons.edit),
-                                labelText: 'College',
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                    borderSide: const BorderSide(
-                                      width: 0,
-                                    )),
-                              ),
-                              isExpanded: true,
-                              items: collage.map((String dropdownitems) {
-                                return DropdownMenuItem<String>(
-                                  value: dropdownitems,
-                                  child: Text(dropdownitems),
-                                );
-                              }).toList(),
+                            // DropdownButtonFormField<String>(
+                            //   decoration: InputDecoration(
+                            //     suffixIcon: Icon(Icons.edit),
+                            //     labelText: 'College',
+                            //     border: OutlineInputBorder(
+                            //         borderRadius: BorderRadius.circular(25),
+                            //         borderSide: const BorderSide(
+                            //           width: 0,
+                            //         )),
+                            //   ),
+                            //   isExpanded: true,
+                            //   items: collage.map((String dropdownitems) {
+                            //     return DropdownMenuItem<String>(
+                            //       value: dropdownitems,
+                            //       child: Text(dropdownitems),
+                            //     );
+                            //   }).toList(),
 
-                              onChanged: (String? newselect) {
-                                setState(() {
-                                  collageselectedvalue = newselect;
-                                  collageselectedfromDB = newselect;
-                                  checkidc(collageselectedvalue);
-                                });
-                              },
-                              value: collageselectedvalue,
+                            //   onChanged: (String? newselect) {
+                            //     setState(() {
+                            //       collageselectedvalue = newselect;
+                            //       collageselectedfromDB = newselect;
+                            //       checkidc(collageselectedvalue);
+                            //     });
+                            //   },
+                            //   value: collageselectedvalue,
 
-                              // autovalidateMode:
-                              //     AutovalidateMode.onUserInteraction,
-                              // validator: (value) {
-                              //   if (value == null ||
-                              //       collageselectedvalue!.isEmpty ||
-                              //       collageselectedvalue == null) {
-                              //     return 'Please choose your collage';
-                              //   }
-                              // },
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
+                            //   // autovalidateMode:
+                            //   //     AutovalidateMode.onUserInteraction,
+                            //   // validator: (value) {
+                            //   //   if (value == null ||
+                            //   //       collageselectedvalue!.isEmpty ||
+                            //   //       collageselectedvalue == null) {
+                            //   //     return 'Please choose your collage';
+                            //   //   }
+                            //   // },
+                            // ),
+                            // SizedBox(
+                            //   height: 8,
+                            // ),
 
                             DropdownButtonFormField<String>(
                               decoration: InputDecoration(
@@ -921,13 +925,11 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                           "meetingmethod": mm,
                           "mettingmethodinfo": mmi,
                           'department': FirebaseFirestore.instance
-                              .collection("collage")
-                              .doc(docsforcollage)
                               .collection("department")
                               .doc(docfordepatment),
-                          'collage': FirebaseFirestore.instance
-                              .collection("collage")
-                              .doc(docsforcollage),
+                          // 'collage': FirebaseFirestore.instance
+                          //     .collection("collage")
+                          //     .doc(docsforcollage),
                           'semester': FirebaseFirestore.instance
                               .collection("semester")
                               .doc(docsforsemestername),
@@ -1064,31 +1066,31 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
     }
   }
 
-  checkidc(String? collagename) async {
-    try {
-      await FirebaseFirestore.instance
-          .collection('collage')
-          .get()
-          .then((querySnapshot) {
-        querySnapshot.docs.forEach((element) {
-          setState(() {
-            if (collagename == element['collagename']) {
-              docsforcollage = element.id;
-            }
-          });
-        });
-      });
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
+  // checkidc(String? collagename) async {
+  //   try {
+  //     await FirebaseFirestore.instance
+  //         .collection('collage')
+  //         .get()
+  //         .then((querySnapshot) {
+  //       querySnapshot.docs.forEach((element) {
+  //         setState(() {
+  //           if (collagename == element['collagename']) {
+  //             docsforcollage = element.id;
+  //           }
+  //         });
+  //       });
+  //     });
+  //   } catch (e) {
+  //     print(e.toString());
+  //     return null;
+  //   }
+  // }
 
   checkidd(String? departmentename) async {
     try {
       await FirebaseFirestore.instance
-          .collection('collage')
-          .doc("CCIS")
+          // .collection('collage')
+          // .doc("CCIS")
           .collection("department")
           .get()
           .then((querySnapshot) {

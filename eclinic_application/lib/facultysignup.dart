@@ -44,7 +44,7 @@ class _facultysignupState extends State<facultysignup> {
   void initState() {
     retrivespecilty();
     retrievesemester();
-    retrivecollage();
+    // retrivecollage();
     retrivedepartment();
     super.initState();
   }
@@ -124,29 +124,29 @@ class _facultysignupState extends State<facultysignup> {
     }
   }
 
-  retrivecollage() async {
-    try {
-      await FirebaseFirestore.instance
-          .collection('collage')
-          .get()
-          .then((querySnapshot) {
-        querySnapshot.docs.forEach((element) {
-          setState(() {
-            collage.add(element['collagename']);
-          });
-        });
-      });
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
+  // retrivecollage() async {
+  //   try {
+  //     await FirebaseFirestore.instance
+  //         .collection('collage')
+  //         .get()
+  //         .then((querySnapshot) {
+  //       querySnapshot.docs.forEach((element) {
+  //         setState(() {
+  //           collage.add(element['collagename']);
+  //         });
+  //       });
+  //     });
+  //   } catch (e) {
+  //     print(e.toString());
+  //     return null;
+  //   }
+  // }
 
   retrivedepartment() async {
     try {
       await FirebaseFirestore.instance
-          .collection('collage')
-          .doc("CCIS")
+          // .collection('collage')
+          // .doc("CCIS")
           .collection("department")
           .get()
           .then((querySnapshot) {
@@ -182,31 +182,31 @@ class _facultysignupState extends State<facultysignup> {
     }
   }
 
-  Future checkidc(String? collagename) async {
-    try {
-      await FirebaseFirestore.instance
-          .collection('collage')
-          .get()
-          .then((querySnapshot) {
-        querySnapshot.docs.forEach((element) {
-          setState(() {
-            if (collagename == element['collagename']) {
-              docsforcollage = element.id;
-            }
-          });
-        });
-      });
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
+  // Future checkidc(String? collagename) async {
+  //   try {
+  //     await FirebaseFirestore.instance
+  //         .collection('collage')
+  //         .get()
+  //         .then((querySnapshot) {
+  //       querySnapshot.docs.forEach((element) {
+  //         setState(() {
+  //           if (collagename == element['collagename']) {
+  //             docsforcollage = element.id;
+  //           }
+  //         });
+  //       });
+  //     });
+  //   } catch (e) {
+  //     print(e.toString());
+  //     return null;
+  //   }
+  // }
 
   Future checkidd(String? departmentename) async {
     try {
       await FirebaseFirestore.instance
-          .collection('collage')
-          .doc("CCIS")
+          // .collection('collage')
+          // .doc("CCIS")
           .collection("department")
           .get()
           .then((querySnapshot) {
@@ -504,42 +504,42 @@ class _facultysignupState extends State<facultysignup> {
                             SizedBox(
                               height: 8,
                             ),
-                            DropdownButtonFormField<String>(
-                              decoration: InputDecoration(
-                                hintText: ' Choose your collage : ',
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                    borderSide: const BorderSide(
-                                      width: 0,
-                                    )),
-                              ),
-                              isExpanded: true,
-                              items: collage.map((String dropdownitems) {
-                                return DropdownMenuItem<String>(
-                                  value: dropdownitems,
-                                  child: Text(dropdownitems),
-                                );
-                              }).toList(),
-                              onChanged: (String? newselect) {
-                                setState(() {
-                                  collageselectedvalue = newselect;
-                                  checkidc(collageselectedvalue);
-                                });
-                              },
-                              value: collageselectedvalue,
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              validator: (value) {
-                                if (value == null ||
-                                    collageselectedvalue!.isEmpty ||
-                                    collageselectedvalue == null) {
-                                  return 'Please choose your collage';
-                                }
-                              },
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
+                            // DropdownButtonFormField<String>(
+                            //   decoration: InputDecoration(
+                            //     hintText: ' Choose your collage : ',
+                            //     border: OutlineInputBorder(
+                            //         borderRadius: BorderRadius.circular(25),
+                            //         borderSide: const BorderSide(
+                            //           width: 0,
+                            //         )),
+                            //   ),
+                            //   isExpanded: true,
+                            //   items: collage.map((String dropdownitems) {
+                            //     return DropdownMenuItem<String>(
+                            //       value: dropdownitems,
+                            //       child: Text(dropdownitems),
+                            //     );
+                            //   }).toList(),
+                            //   onChanged: (String? newselect) {
+                            //     setState(() {
+                            //       collageselectedvalue = newselect;
+                            //       checkidc(collageselectedvalue);
+                            //     });
+                            //   },
+                            //   value: collageselectedvalue,
+                            //   autovalidateMode:
+                            //       AutovalidateMode.onUserInteraction,
+                            //   validator: (value) {
+                            //     if (value == null ||
+                            //         collageselectedvalue!.isEmpty ||
+                            //         collageselectedvalue == null) {
+                            //       return 'Please choose your collage';
+                            //     }
+                            //   },
+                            // ),
+                            // SizedBox(
+                            //   height: 8,
+                            // ),
                             DropdownButtonFormField<String>(
                               decoration: InputDecoration(
                                 hintText: ' Choose your department:',
@@ -853,15 +853,15 @@ class _facultysignupState extends State<facultysignup> {
                                           'meetingmethod': meetingmethod,
                                           'mettingmethodinfo':
                                               mettingmethodinfo,
-                                          'department': FirebaseFirestore
-                                              .instance
-                                              .collection("collage")
-                                              .doc(docsforcollage)
-                                              .collection("department")
-                                              .doc(docfordepatment),
-                                          'collage': FirebaseFirestore.instance
-                                              .collection("collage")
-                                              .doc(docsforcollage),
+                                          'department':
+                                              FirebaseFirestore.instance
+                                                  // .collection("collage")
+                                                  // .doc(docsforcollage)
+                                                  .collection("department")
+                                                  .doc(docfordepatment),
+                                          // 'collage': FirebaseFirestore.instance
+                                          //     .collection("collage")
+                                          //     .doc(docsforcollage),
                                           'semester': FirebaseFirestore.instance
                                               .collection("semester")
                                               .doc(docsforsemestername),
