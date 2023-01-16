@@ -300,14 +300,15 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                                                 ? 'Please select speciality to find common issues.'
                                                 //if no search clicked then tell user to click search, otherwise if it's clicked, no results are found
                                                 : (searchClicked
-                                                    ? 'There are no common issues available with the selected options.'
+                                                    ? 'There are no common issues available ${specialityDropdownValue?['id'] == '0' && semesterDropdownValue?['id'] == "0" ? 'currently.' : 'with the selected options.'}'
                                                     : 'Please click search to continue..')),
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            height: 2,
-                                            fontSize: 18,
-                                            color: Colors.blue))))
+                                          fontWeight: FontWeight.w600,
+                                          height: 2,
+                                          fontSize: 18,
+                                          color: Color.fromRGBO(21, 70, 160, 1),
+                                        ))))
                             :
                             //show all items if no loading and there are result from search
                             ListView.builder(

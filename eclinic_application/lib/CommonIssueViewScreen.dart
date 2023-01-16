@@ -1,13 +1,11 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
 import 'package:open_file/open_file.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart';
 
@@ -96,6 +94,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: const Color.fromRGBO(21, 70, 160, 1),
           title: Text(widget.commonIssue['issuetitle'] ?? ""),
           leading: InkWell(
             onTap: () {
@@ -129,11 +128,11 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                           ),
                           Text(
                             "  Speciality: ${category?['specialityname']}",
-                            style: TextStyle(
+                            style: const TextStyle(
                                 letterSpacing: 0.1,
                                 fontSize: 14,
                                 fontFamily: "main",
-                                color: themeData.colorScheme.primary,
+                                color: Color.fromRGBO(21, 70, 160, 1),
                                 fontWeight: FontWeight.w600),
                           )
                         ]),
@@ -148,11 +147,11 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                           ),
                           Text(
                             "  Semester: ${semester?['semestername']}",
-                            style: TextStyle(
+                            style: const TextStyle(
                                 letterSpacing: 0.1,
                                 fontSize: 14,
                                 fontFamily: "main",
-                                color: themeData.colorScheme.primary,
+                                color: Color.fromRGBO(21, 70, 160, 1),
                                 fontWeight: FontWeight.w600),
                           )
                         ]),
@@ -173,11 +172,11 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                       child: Text(
                                     "  Problem:\n\n${widget.commonIssue['problem']}",
                                     // "  Problem:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         letterSpacing: 1.5,
                                         fontSize: 15,
                                         fontFamily: "main",
-                                        color: themeData.colorScheme.primary,
+                                        color: Color.fromRGBO(21, 70, 160, 1),
                                         fontWeight: FontWeight.w500),
 
                                     // decoration: const InputDecoration(
@@ -202,11 +201,11 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                     child: Text(
                                   "  Solution: ${widget.commonIssue['solution']})",
                                   // "  Solution:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       letterSpacing: 2,
                                       fontSize: 14,
                                       fontFamily: "main",
-                                      color: themeData.colorScheme.primary,
+                                      color: Color.fromRGBO(21, 70, 160, 1),
                                       fontWeight: FontWeight.w500),
                                 ))
                               ],
@@ -232,7 +231,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                   leading: loadingFile == item
                                       ? const CircularProgressIndicator()
                                       : const Icon(Icons.file_copy),
-                                  title: Text('Document ${item + 1}'),
+                                  title: Text('File ${item + 1}'),
                                   subtitle: Text(
                                     loadingFile == item
                                         ? "Opening..."
@@ -308,7 +307,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                         //     boxShadow: [
                         //       BoxShadow(
                         //         color:
-                        //             themeData.colorScheme.primary.withAlpha(18),
+                        //             Color.fromRGBO(21, 70, 160, 1).withAlpha(18),
                         //         blurRadius: 3,
                         //         offset: const Offset(0, 1),
                         //       ),
@@ -364,7 +363,12 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
     try {
       await ref.writeToFile(tempFile);
       await tempFile.create();
-      await OpenFile.open(tempFile.path);
+
+      final x = await OpenFile.open(tempFile.path);
+      if (x.type != ResultType.done) {
+        launchUrl(Uri.parse(widget.commonIssue['links'][itemNumber]),
+            mode: LaunchMode.externalApplication);
+      }
     } on FirebaseException {
       setState(() {
         downloadedFilesStatus[itemNumber] =

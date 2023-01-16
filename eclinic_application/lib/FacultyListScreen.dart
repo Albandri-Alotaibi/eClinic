@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/FacultyViewScreen.dart';
+import 'dart:async';
+import 'package:myapp/style/Mycolors.dart';
 
 class FacultyListScreen extends StatefulWidget {
   const FacultyListScreen({super.key});
@@ -21,6 +23,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
   String? userid;
   String? email;
   Map<String, dynamic>? student;
+  bool isItVisible = false;
 
   @override
   void initState() {
@@ -42,22 +45,6 @@ class FacultyListScreenState extends State<FacultyListScreen> {
 
     if (studentData.exists) {
       student = studentData.data() as Map<String, dynamic>;
-
-      Map<String, dynamic>? college;
-      if (student?.containsKey("college") ?? false) {
-        DocumentReference? collageData = studentData['college'];
-
-        if (collageData != null) {
-          var cData = await collageData.get();
-
-          if (cData.exists) {
-            college = cData.data() as Map<String, dynamic>;
-            college['id'] = cData.reference.id;
-          }
-        }
-      }
-
-      student?['college'] = college;
 
       Map<String, dynamic>? department;
       if (student?.containsKey("department") ?? false) {
@@ -117,7 +104,6 @@ class FacultyListScreenState extends State<FacultyListScreen> {
     var faculty = FirebaseFirestore.instance.collection('faculty');
     var q = await faculty
         .where('semester', isEqualTo: student?['semester']?['ref'])
-        .where('collage', isEqualTo: student?['college']?['ref'])
         .where('department', isEqualTo: student?['department']?['ref'])
         .get(const GetOptions(source: Source.server));
 
@@ -139,68 +125,6 @@ class FacultyListScreenState extends State<FacultyListScreen> {
           }
         }
       }
-
-      Map<String, dynamic>? college;
-      // if (faculty.containsKey("collage")) {
-      //   DocumentReference? collageData = doc['collage'];
-      //
-      //   if (collageData != null) {
-      //     var cData = await collageData.get();
-      //
-      //     if (cData.exists) {
-      //       college = cData.data() as Map<String, dynamic>;
-      //       college['id'] = cData.reference.id;
-      //     }
-      //   }
-      // }
-      faculty['collage'] = college;
-      //
-      // if (faculty['collage']?['id']
-      //         .compareTo(student?['college']?['id'] ?? "") !=
-      //     0) {
-      //   continue;
-      // }
-      //
-      Map<String, dynamic>? department;
-      // if (faculty.containsKey("department")) {
-      //   DocumentReference? departmentData = doc['department'];
-      //
-      //   if (departmentData != null) {
-      //     var dData = await departmentData.get();
-      //
-      //     if (dData.exists) {
-      //       department = dData.data() as Map<String, dynamic>;
-      //       department['id'] = dData.reference.id;
-      //     }
-      //   }
-      // }
-      faculty['department'] = department;
-      //
-      // if (faculty['department']?['id']
-      //         .compareTo(student?['department']?['id'] ?? "") !=
-      //     0) {
-      //   continue;
-      // }
-
-      Map<String, dynamic>? semester;
-      // if (faculty.containsKey("semester")) {
-      //   DocumentReference? semesterData = doc['semester'];
-      //
-      //   if (semesterData != null) {
-      //     var sData = await semesterData.get();
-      //
-      //     if (sData.exists) {
-      //       semester = sData.data() as Map<String, dynamic>;
-      //       semester['id'] = sData.reference.id;
-      //     }
-      //   }
-      // }
-      faculty['semester'] = semester;
-      // if (faculty['semester']?['id']
-      //         .compareTo(student?['semester']?['id'] ?? "") !=
-      //     0) {
-      //   continue;
-      // }
 
       var appointmentCounts = (await FirebaseFirestore.instance
               .collection('faculty')
@@ -232,79 +156,72 @@ class FacultyListScreenState extends State<FacultyListScreen> {
   @override
   Widget build(BuildContext context) {
     themeData = Theme.of(context);
+
+    Future.delayed(
+        Duration.zero,
+        () => {
+              if (!isItVisible &&
+                  dropdownvalue == null &&
+                  specialityList.isNotEmpty)
+                showMenu(context)
+            });
+
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: SafeArea(
           child: Scaffold(
-              body: loading
+              appBar: AppBar(
+                backgroundColor: const Color.fromRGBO(21, 70, 160, 1),
+                title: const Text("Schedule An Appointment"),
+                leading: InkWell(
+                  onTap: () {
+                    Navigator.pop(this.context);
+                  },
+                  child: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              body: loading || dropdownvalue == null
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
                   : ListView(
                       padding: const EdgeInsets.all(24),
                       children: <Widget>[
-                        Container(
-                          alignment: Alignment.topLeft,
-                          child: IconButton(
-                            onPressed: () => Navigator.of(context).pop(),
-                            icon: const Icon(Icons.chevron_left),
-                          ),
-                        ),
                         Column(children: [
-                          Text(
-                            "Choose Faculty",
-                            style: TextStyle(
-                                color: themeData.colorScheme.primary,
-                                fontWeight: FontWeight.w400),
-                          ),
+                          // Text(
+                          //   "Choose Faculty",
+                          //   style: TextStyle(
+                          //       color: themeData.colorScheme.primary,
+                          //       fontWeight: FontWeight.w400),
+                          // ),
                           SafeArea(
-                              child: Row(children: [
-                            if (specialityList.isNotEmpty)
-                              DropdownButton<Map<String, dynamic>?>(
-                                  icon: const Icon(Icons.face),
-                                  disabledHint: Row(children: const [
-                                    Text("Wait ... "),
-                                    SizedBox(
-                                        height: 15.0,
-                                        width: 15.0,
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 3,
-                                        ))
-                                  ]),
-                                  hint: Text(
-                                    "Select Speciality",
-                                    style: TextStyle(
-                                        color: themeData.colorScheme.primary,
-                                        fontWeight: FontWeight.w500),
+                            child: Container(
+                              padding: const EdgeInsets.only(bottom: 20),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  textStyle: const TextStyle(
+                                      fontFamily: 'main', fontSize: 16),
+                                  shadowColor: Colors.blue[900],
+                                  elevation: 20,
+                                  backgroundColor: Mycolors.mainShadedColorBlue,
+                                  minimumSize: const Size(200, 50),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(17), // <-- Radius
                                   ),
-                                  value: dropdownvalue,
-                                  items: facultyLoading && facultyList.isEmpty
-                                      ? []
-                                      : specialityList
-                                          .map((Map<String, dynamic>? item) {
-                                          return DropdownMenuItem(
-                                              value: item,
-                                              child: Text(
-                                                  item?['specialityname'] ??
-                                                      "--"));
-                                        }).toList(),
-                                  onChanged: (newValue) {
-                                    if (newValue != null) {
-                                      setState(() {
-                                        dropdownvalue = newValue;
-                                      });
-                                    }
-                                  }),
-                            if (specialityList.isNotEmpty) const Spacer(),
-                            if (dropdownvalue != null)
-                              IconButton(
-                                  onPressed: () => {
-                                        setState(() {
-                                          dropdownvalue = null;
-                                        })
-                                      },
-                                  icon: const Icon(Icons.delete_sweep))
-                          ])),
+                                ),
+                                child: const Text("Select Another Speciality"),
+                                onPressed: () {
+                                  setState(() {
+                                    dropdownvalue = null;
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
                         ]),
                         SizedBox(
                             height: 800,
@@ -339,7 +256,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                                             " " +
                                             getResults()[index]['lastname'],
                                         college:
-                                            "${student?['college']?['collagename'] ?? "--"}/${student?['department']?['departmentname'] ?? "--"}",
+                                            "${student?['department']?['departmentname'] ?? "--"}",
                                         faculty: getResults()[index],
                                       );
                                     }))
@@ -453,5 +370,33 @@ class FacultyListScreenState extends State<FacultyListScreen> {
     } else {
       return [];
     }
+  }
+
+  void showMenu(thisContext) {
+    setState(() {
+      isItVisible = true;
+    });
+
+    showDialog(
+        context: thisContext,
+        builder: (context) {
+          return SimpleDialog(
+            title:
+                Text(specialityList.isEmpty ? 'Wait...' : 'Chose a Speciality'),
+            children: [
+              for (var item = 0; item < specialityList.length; item++)
+                SimpleDialogOption(
+                  onPressed: () {
+                    setState(() {
+                      isItVisible = false;
+                      dropdownvalue = specialityList[item];
+                    });
+                    Navigator.of(context, rootNavigator: true).pop();
+                  },
+                  child: Text(specialityList[item]!['specialityname']),
+                ),
+            ],
+          );
+        });
   }
 }
