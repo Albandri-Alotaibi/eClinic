@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:convert';
+import 'package:myapp/style/Mycolors.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class AppointmentConfirmationScreen extends StatefulWidget {
   const AppointmentConfirmationScreen(
@@ -66,38 +68,6 @@ class AppointmentConfirmationScreenState
 
     if (studentData.exists) {
       student = studentData.data() as Map<String, dynamic>;
-
-      // Map<String, dynamic>? college;
-      // if (student?.containsKey("collage") ?? false) {
-      //   DocumentReference? collageData = studentData['collage'];
-      //
-      //   if (collageData != null) {
-      //     var cData = await collageData.get();
-      //
-      //     if (cData.exists) {
-      //       college = cData.data() as Map<String, dynamic>;
-      //       college['id'] = cData.reference.id;
-      //     }
-      //   }
-      // }
-      //
-      // student?['collage'] = college;
-
-      // Map<String, dynamic>? department;
-      // if (student?.containsKey("department") ?? false) {
-      //   DocumentReference? departmentData = studentData['department'];
-      //
-      //   if (departmentData != null) {
-      //     var dData = await departmentData.get();
-      //
-      //     if (dData.exists) {
-      //       department = dData.data() as Map<String, dynamic>;
-      //       department['id'] = dData.reference.id;
-      //     }
-      //   }
-      // }
-      //
-      // student?['department'] = department;
 
       if (student?.containsKey("semester") ?? false) {
         DocumentReference? semesterData = studentData['semester'];
@@ -211,13 +181,17 @@ class AppointmentConfirmationScreenState
           children: [
             const Image(
               image: AssetImage('./assets/images/eClinicLogo-blue.png'),
-              height: 80,
+              height: 50,
             ),
             const Center(child: CircularProgressIndicator()),
-            const SizedBox(height: 20),
+            const SizedBox(height: 40),
             Text(
               "Booking an appointment with ${widget.faculty['firstname']} ${widget.faculty['lastname']}\n\nPlease wait.....\n\n ", //(${currentProgressStatus})
               textAlign: TextAlign.center,
+              style: const TextStyle(
+                  color: Colors.black54,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14),
             ),
           ],
         ),
@@ -235,7 +209,7 @@ class AppointmentConfirmationScreenState
             clipper: _MyCustomClipper(context),
             child: Container(
               alignment: Alignment.center,
-              color: themeData.colorScheme.background,
+              color: const Color.fromRGBO(21, 70, 160, 1),
             )),
         Positioned(
           left: 30,
@@ -251,7 +225,7 @@ class AppointmentConfirmationScreenState
                     children: <Widget>[
                       const Image(
                           image: AssetImage('./assets/images/check-mark.png'),
-                          height: 180),
+                          height: 100),
                       Container(
                         margin: const EdgeInsets.only(bottom: 24, top: 0),
                         child: const Padding(
@@ -259,7 +233,8 @@ class AppointmentConfirmationScreenState
                                 vertical: 2.0, horizontal: 10.0),
                             child: Text(
                               "The selected appointment is now booked for your group.",
-                              style: TextStyle(fontWeight: FontWeight.w600),
+                              style: TextStyle(
+                                  fontSize: 17, fontWeight: FontWeight.w600),
                               textAlign: TextAlign.center,
                             )),
                       ),
@@ -267,95 +242,111 @@ class AppointmentConfirmationScreenState
                         padding: const EdgeInsets.only(left: 16, right: 16),
                         child: Column(
                           children: <Widget>[
-                            TextFormField(
-                              readOnly: true,
-                              initialValue:
-                                  "Faculty: ${widget.faculty['firstname']} ${widget.faculty['lastname']}",
-                              style: TextStyle(
-                                  letterSpacing: 0.1,
-                                  color: themeData.colorScheme.primary,
-                                  fontWeight: FontWeight.w500),
-                              decoration: const InputDecoration(
-                                prefixIcon: Icon(Icons.face_outlined),
+                            ListTile(
+                              title: Text(
+                                "Faculty: ${widget.faculty['firstname']} ${widget.faculty['lastname']}",
+                                style: const TextStyle(
+                                    fontSize: 15,
+                                    color: Color.fromRGBO(21, 70, 160, 1),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              // title: const Text("Faculty",
+                              //     style: TextStyle(
+                              //         fontSize: 12,
+                              //         color: Colors.lightBlueAccent)),
+                              leading: const Icon(
+                                Icons.face_outlined,
+                                color: Colors.black45,
                               ),
                             ),
-                            Container(
-                              margin: const EdgeInsets.only(top: 16),
-                              child: TextFormField(
-                                readOnly: true,
-                                initialValue:
-                                    "Time: ${formattedDate.format(widget.appointment['starttime']!.toDate())}-${formattedDateTime.format(widget.appointment['endtime']!.toDate())}",
-                                style: TextStyle(
-                                    letterSpacing: 0.1,
-                                    fontSize: 13,
-                                    color: themeData.colorScheme.primary,
-                                    fontWeight: FontWeight.w500),
-                                decoration: const InputDecoration(
-                                  prefixIcon: Icon(Icons.timer),
+                            const Divider(
+                              color: Colors.grey,
+                              thickness: 1,
+                            ),
+                            ListTile(
+                              title: Text(
+                                "Time: ${formattedDate.format(widget.appointment['starttime']!.toDate())}-${formattedDateTime.format(widget.appointment['endtime']!.toDate())}",
+                                style: const TextStyle(
+                                    fontSize: 15,
+                                    color: Color.fromRGBO(21, 70, 160, 1),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              // title: const Text("Time",
+                              //     style: TextStyle(
+                              //         fontSize: 12,
+                              //         color: Colors.lightBlueAccent)),
+                              leading: const Icon(
+                                Icons.timer,
+                                color: Colors.black45,
+                              ),
+                            ),
+                            const Divider(
+                              color: Colors.grey,
+                              thickness: 1,
+                            ),
+                            ListTile(
+                              title: Text(
+                                "Speciality: ${widget.speciality['specialityname']}",
+                                style: const TextStyle(
+                                    fontSize: 15,
+                                    color: Color.fromRGBO(21, 70, 160, 1),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              // title: const Text("Speciality",
+                              //     style: TextStyle(
+                              //         fontSize: 12,
+                              //         color: Colors.lightBlueAccent)),
+                              leading: const Icon(
+                                Icons.collections,
+                                color: Colors.black45,
+                              ),
+                            ),
+                            const Divider(
+                              color: Colors.grey,
+                              thickness: 1,
+                            ),
+                            ListTile(
+                              title: Row(children: [
+                                Text(
+                                  "Meeting: ${meetingValues(widget.faculty['meetingmethod'])}",
+                                  style: const TextStyle(
+                                      fontSize: 15,
+                                      color: Color.fromRGBO(21, 70, 160, 1),
+                                      fontWeight: FontWeight.w600),
                                 ),
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(top: 16),
-                              child: TextFormField(
-                                readOnly: true,
-                                initialValue:
-                                    "Speciality: ${widget.speciality['specialityname']}",
-                                style: TextStyle(
-                                    letterSpacing: 0.1,
-                                    color: themeData.colorScheme.primary,
-                                    fontWeight: FontWeight.w500),
-                                decoration: const InputDecoration(
-                                  prefixIcon: Icon(Icons.collections),
+                                Text(
+                                  widget.faculty['meetingmethod'] == "online"
+                                      ? " (Click Me)"
+                                      : " (${widget.faculty['mettingmethodinfo'] ?? "--"})",
+                                  style: TextStyle(
+                                      decoration:
+                                          widget.faculty['meetingmethod'] ==
+                                                  "online"
+                                              ? TextDecoration.underline
+                                              : null,
+                                      fontSize: 15,
+                                      color:
+                                          const Color.fromRGBO(21, 70, 160, 1),
+                                      fontWeight: FontWeight.w600),
                                 ),
+                              ]),
+                              onTap: () => {
+                                if (widget.faculty['meetingmethod'] ==
+                                        "online" &&
+                                    widget.faculty['mettingmethodinfo'] != "")
+                                  {
+                                    launchUrlString(
+                                        widget.faculty['mettingmethodinfo'])
+                                  }
+                              },
+                              // title: const Text("Meeting",
+                              //     style: TextStyle(
+                              //         fontSize: 12,
+                              //         color: Colors.lightBlueAccent)),
+                              leading: const Icon(
+                                Icons.meeting_room,
+                                color: Colors.black45,
                               ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(top: 16),
-                              child: TextFormField(
-                                readOnly: true,
-                                maxLines: 2,
-                                minLines: 2,
-                                initialValue:
-                                    "Meeting: ${meetingValues(widget.faculty['meetingmethod'])} (${widget.faculty['mettingmethodinfo'] ?? "--"})",
-                                style: TextStyle(
-                                    letterSpacing: 0.1,
-                                    color: themeData.colorScheme.primary,
-                                    fontWeight: FontWeight.w500),
-                                decoration: const InputDecoration(
-                                  prefixIcon: Icon(Icons.meeting_room),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(top: 16),
-                              width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(24)),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: themeData.colorScheme.primary
-                                        .withAlpha(18),
-                                    blurRadius: 3,
-                                    offset: const Offset(0, 1),
-                                  ),
-                                ],
-                              ),
-                              child: ElevatedButton(
-                                  style: ButtonStyle(
-                                      padding: MaterialStateProperty.all(
-                                          const EdgeInsets.symmetric(
-                                              vertical: 16))),
-                                  onPressed: () {
-                                    Navigator.pushNamed(context, 'studenthome');
-                                  },
-                                  child: Text("Back to Home.",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          color:
-                                              themeData.colorScheme.onPrimary,
-                                          letterSpacing: 0.5))),
                             ),
                           ],
                         ),
@@ -368,14 +359,25 @@ class AppointmentConfirmationScreenState
           ),
         ),
         Positioned(
-          top: 24,
-          left: 12,
-          child: BackButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            color: themeData.colorScheme.primary,
-          ),
+          top: 30,
+          left: 30,
+          child: ElevatedButton.icon(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateColor.resolveWith(
+                      (states) => Colors.transparent),
+                  shadowColor: MaterialStateColor.resolveWith(
+                      (states) => Colors.transparent),
+                  padding: MaterialStateProperty.all(
+                      const EdgeInsets.symmetric(vertical: 16))),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.arrow_back),
+              label: Text("Back",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: themeData.colorScheme.onPrimary,
+                      letterSpacing: 0.5))),
         ),
       ],
     ));

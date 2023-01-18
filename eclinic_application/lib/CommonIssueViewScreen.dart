@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:open_file/open_file.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart';
+import 'package:myapp/style/Mycolors.dart';
 
 class CommonIssueViewScreen extends StatefulWidget {
   const CommonIssueViewScreen({
@@ -94,7 +95,17 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(21, 70, 160, 1),
+          centerTitle: true,
+          backgroundColor: Mycolors.mainColorWhite,
+          shadowColor: Colors.transparent,
+          iconTheme: const IconThemeData(
+            color: Color.fromARGB(255, 12, 12, 12),
+          ),
+          titleTextStyle: TextStyle(
+            fontFamily: 'main',
+            fontSize: 18,
+            color: Mycolors.mainColorBlack,
+          ),
           title: Text(widget.commonIssue['issuetitle'] ?? ""),
           leading: InkWell(
             onTap: () {
@@ -102,7 +113,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
             },
             child: const Icon(
               Icons.arrow_back,
-              color: Colors.white,
+              color: Colors.black45,
             ),
           ),
         ),
@@ -122,10 +133,10 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                     Column(
                       children: <Widget>[
                         Row(children: [
-                          const Icon(
-                            Icons.collections_bookmark,
-                            color: Colors.grey,
-                          ),
+                          // const Icon(
+                          //   Icons.collections_bookmark,
+                          //   color: Colors.grey,
+                          // ),
                           Text(
                             "  Speciality: ${category?['specialityname']}",
                             style: const TextStyle(
@@ -133,7 +144,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                 fontSize: 14,
                                 fontFamily: "main",
                                 color: Color.fromRGBO(21, 70, 160, 1),
-                                fontWeight: FontWeight.w600),
+                                fontWeight: FontWeight.w500),
                           )
                         ]),
                         const Divider(
@@ -141,10 +152,10 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                           thickness: 1,
                         ),
                         Row(children: [
-                          const Icon(
-                            Icons.timer,
-                            color: Colors.grey,
-                          ),
+                          // const Icon(
+                          //   Icons.timer,
+                          //   color: Colors.grey,
+                          // ),
                           Text(
                             "  Semester: ${semester?['semestername']}",
                             style: const TextStyle(
@@ -152,7 +163,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                 fontSize: 14,
                                 fontFamily: "main",
                                 color: Color.fromRGBO(21, 70, 160, 1),
-                                fontWeight: FontWeight.w600),
+                                fontWeight: FontWeight.w500),
                           )
                         ]),
                         const Divider(
@@ -199,7 +210,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                 ),
                                 Expanded(
                                     child: Text(
-                                  "  Solution: ${widget.commonIssue['solution']})",
+                                  "  Solution:\n\n${widget.commonIssue['solution']})",
                                   // "  Solution:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                                   style: const TextStyle(
                                       letterSpacing: 2,
@@ -353,6 +364,11 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
     if (downloadedFilesStatus.containsKey(itemNumber) &&
         downloadedFilesStatus[itemNumber]!.contains("opened")) {
       await OpenFile.open(tempFile.path);
+      setState(() {
+        downloadedFilesStatus[itemNumber] =
+            "File is already opened ($urlFilename).";
+        loadingFile = -1;
+      });
       return;
     }
 
@@ -366,7 +382,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
 
       final x = await OpenFile.open(tempFile.path);
       if (x.type != ResultType.done) {
-        launchUrl(Uri.parse(widget.commonIssue['links'][itemNumber]),
+        launchUrl(Uri.parse(widget.commonIssue['filesurl'][itemNumber]),
             mode: LaunchMode.externalApplication);
       }
     } on FirebaseException {
@@ -376,7 +392,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
         loadingFile = -1;
       });
 
-      launchUrl(Uri.parse(widget.commonIssue['links'][itemNumber]),
+      launchUrl(Uri.parse(widget.commonIssue['filesurl'][itemNumber]),
           mode: LaunchMode.externalApplication);
     }
     setState(() {

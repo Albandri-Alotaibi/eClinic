@@ -1,7 +1,9 @@
 import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'package:myapp/AppointmentConfirmationScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp/style/Mycolors.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 
@@ -141,13 +143,26 @@ class FacultyViewScreenState extends State<FacultyViewScreen> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
+            backgroundColor: Colors.white,
             appBar: AppBar(
+              // primary: true,
+              centerTitle: true,
+              backgroundColor: Mycolors.mainColorWhite,
+              shadowColor: Colors.transparent,
+              iconTheme: const IconThemeData(
+                color: Color.fromARGB(255, 12, 12, 12),
+              ),
+              titleTextStyle: TextStyle(
+                fontFamily: 'main',
+                fontSize: 18,
+                color: Mycolors.mainColorBlack,
+              ),
               leading: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.black),
+                icon: const Icon(Icons.arrow_back, color: Colors.black54),
                 onPressed: () => Navigator.of(context).pop(),
               ),
               title: Text(
-                  "${widget.faculty['firstname']} ${widget.faculty['lastname']} — ${widget.speciality['specialityname']}"),
+                  "${widget.faculty['firstname']} — ${widget.speciality['specialityname']}"),
             ),
             body: loading
                 ? const Center(
@@ -163,22 +178,24 @@ class FacultyViewScreenState extends State<FacultyViewScreen> {
           padding: EdgeInsets.all(20),
           child: Text(
             "No appointments available for this faculty. Go back and choose another faculty with available appointments.",
-            style: TextStyle(fontSize: 18),
+            style: TextStyle(fontSize: 18, color: Colors.black54),
             textAlign: TextAlign.center,
           ),
         ),
       if (appointmentModels.isEmpty)
         ElevatedButton(
             style: ButtonStyle(
+                backgroundColor: MaterialStateColor.resolveWith(
+                    (states) => const Color.fromRGBO(21, 70, 160, 1)),
                 padding: MaterialStateProperty.all(
                     const EdgeInsets.symmetric(vertical: 16, horizontal: 16))),
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text("Go Back",
+            child: const Text("Go Back",
                 style: TextStyle(
                     fontWeight: FontWeight.w600,
-                    color: themeData.colorScheme.onPrimary,
+                    color: Colors.white,
                     letterSpacing: 0.5))),
       if (appointmentModels.isNotEmpty)
         TableCalendar<Map<String, dynamic>>(
@@ -246,19 +263,23 @@ class FacultyViewScreenState extends State<FacultyViewScreen> {
                       vertical: 4.0,
                     ),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.indigo),
-                      borderRadius: BorderRadius.circular(5.0),
+                      border: Border.all(
+                        color: const Color.fromRGBO(21, 70, 160, 1),
+                      ),
+                      borderRadius: BorderRadius.circular(15),
                     ),
                     child: ListTile(
-                      tileColor: Colors.blueAccent,
+                      tileColor: Colors.transparent,
                       onTap: () => appointmentClick(value[index]),
                       title: Text(
                           "${formattedDateTime.format(value[index]['starttime']?.toDate() ?? DateTime.now())}-${formattedDateTime.format(value[index]['endtime']?.toDate() ?? DateTime.now())}",
                           textAlign: TextAlign.center,
                           style: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 20,
-                              color: Colors.white)),
+                            // backgroundColor: Color.fromRGBO(21, 70, 160, 1),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 20,
+                            color: Color.fromRGBO(21, 70, 160, 1),
+                          )),
                     ),
                   );
                 },
