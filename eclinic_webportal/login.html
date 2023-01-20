@@ -144,7 +144,7 @@
       const app = initializeApp(firebaseConfig);
       const db = getFirestore()
       const auth = getAuth()
-      var adminemail;
+     // var adminemail;
 
 
 
@@ -172,10 +172,17 @@
       //     }
       //   ])
       // }
-      
-          //buldin function: we send the admin info to authenticate 
-
-          signInWithEmailAndPassword(auth, email, password)
+      isadmin();
+      async function isadmin() {
+            const querySnapshot = await getDocs(collection(db, "admin"));
+            querySnapshot.forEach((doc) => { //loop for all doc in the collection
+                // doc.data() is never undefined for query doc snapshots
+               
+                var adminemail = doc.data().email;
+                if(email != adminemail){
+                  alert("Invalid Email or Password");
+                }else{
+                  signInWithEmailAndPassword(auth, email, password)
             .then((cred) => {
               
               console.log("user logged in:")
@@ -190,8 +197,28 @@
                 alert("Invalid Email or Password")
 
             })
+                }
+                
+
+            });
+        }
+      
+          //buldin function: we send the admin info to authenticate 
+
+         
         } //else close
       })
+
+      // async function itsadmin(){
+      //   const querySnapshot = await getDocs(collection(db,"admin"));
+      //   querySnapshot.forEach((doc)=> [
+      //     adminemail = doc.data().email;
+      //     alert(adminemail);
+        
+      //   ])
+      // }
+
+  
     
      
 

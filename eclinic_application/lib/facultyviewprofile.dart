@@ -35,7 +35,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
     email = user.email!;
     retriveAllspecilty();
     retrivesuserinfo();
-    retrievesemester();
+    // retrievesemester();
     // retrivecollage();
     retrivedepartment();
     retrivecolldepsem();
@@ -160,6 +160,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
     var semesterRef = snap["semester"];
     final DocumentSnapshot docRef2 = await semesterRef.get();
     semesterselectedfromDB = docRef2["semestername"];
+    retrievesemester();
     // print("/////////////////////semester///////////////////////////");
     // print(semesterselectedfromDB);
     /////////////////////////////////////////////////////
@@ -197,25 +198,27 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
             String sn = element['semestername'];
             var startdate = element['startdate'];
             startdate.toString();
-            if (startdate != null) {
-              if ((sn.contains(s))) {
-                print(sn);
-                semester.add(element['semestername']);
-              }
 
+            if ((sn.contains(s))) {
+              print(sn);
+              semester.add(element['semestername']);
+            }
+
+            // if (Dateoftoday.year <= enddate.year) {
+            //   if (Dateoftoday.month > enddate.month) {
+            //     semester.remove(element['semestername']);
+            //   }
+
+            //   if (Dateoftoday.month == enddate.month &&
+            //       Dateoftoday.day > enddate.day) {
+            //     semester.remove(element['semestername']);
+            //   }
+            // }
+            if (startdate != null) {
               Timestamp t = element['enddate'];
               DateTime enddate = t.toDate();
-              // if (Dateoftoday.year <= enddate.year) {
-              //   if (Dateoftoday.month > enddate.month) {
-              //     semester.remove(element['semestername']);
-              //   }
-
-              //   if (Dateoftoday.month == enddate.month &&
-              //       Dateoftoday.day > enddate.day) {
-              //     semester.remove(element['semestername']);
-              //   }
-              // }
-              if (Dateoftoday.isAfter(enddate)) {
+              if (Dateoftoday.isAfter(enddate) &&
+                  element['semestername'] != semesterselectedfromDB) {
                 semester.remove(element['semestername']);
               }
             }

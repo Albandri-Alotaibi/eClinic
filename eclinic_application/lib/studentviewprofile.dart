@@ -76,8 +76,8 @@ class _studentviewprofileState extends State<studentviewprofile> {
     final User? user = auth.currentUser;
     userid = user!.uid;
     email = user.email!;
-    retrivegpcategory();
-    retriveselectedcategory();
+    //retrivegpcategory();
+    //retriveselectedcategory();
     retrivedepartment();
     retrivecolldep();
     //retrivecollage();
@@ -135,115 +135,115 @@ class _studentviewprofileState extends State<studentviewprofile> {
     //2023-09-15 00:00:00.000
   }
 
-  retrivegpcategory() async {
-    try {
-      await FirebaseFirestore.instance
-          .collection('gpcategory')
-          .get()
-          .then((querySnapshot) {
-        querySnapshot.docs.forEach((element) {
-          setState(() {
-            options.add(element['gpcategoryname']);
-          });
-        });
-      });
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
+  // retrivegpcategory() async {
+  //   try {
+  //     await FirebaseFirestore.instance
+  //         .collection('gpcategory')
+  //         .get()
+  //         .then((querySnapshot) {
+  //       querySnapshot.docs.forEach((element) {
+  //         setState(() {
+  //           options.add(element['gpcategoryname']);
+  //         });
+  //       });
+  //     });
+  //   } catch (e) {
+  //     print(e.toString());
+  //     return null;
+  //   }
+  // }
 
-  retriveselectedcategory() async {
-    final snap = await FirebaseFirestore.instance
-        .collection('student')
-        .doc(userid)
-        .get();
-    List gpcategoryRef = snap["projectCategory"];
-    for (var i = 0; i < gpcategoryRef.length; i++) {
-      final DocumentSnapshot docRef = await gpcategoryRef[i].get();
-      setState(() {
-        categoryfromDB.add(docRef["gpcategoryname"]);
-      });
-    }
-    checklengthforcategory = categoryfromDB.length;
-    checkidcategory(categoryfromDB);
-    print(categoryfromDB);
-  }
+  // retriveselectedcategory() async {
+  //   final snap = await FirebaseFirestore.instance
+  //       .collection('student')
+  //       .doc(userid)
+  //       .get();
+  //   List gpcategoryRef = snap["projectCategory"];
+  //   for (var i = 0; i < gpcategoryRef.length; i++) {
+  //     final DocumentSnapshot docRef = await gpcategoryRef[i].get();
+  //     setState(() {
+  //       categoryfromDB.add(docRef["gpcategoryname"]);
+  //     });
+  //   }
+  //   checklengthforcategory = categoryfromDB.length;
+  //   checkidcategory(categoryfromDB);
+  //   print(categoryfromDB);
+  // }
 
-  checkidcategory(List<String?> categoryoption) async {
-    category.length = 0;
-    newselectgpcategory.clear();
-    try {
-      await FirebaseFirestore.instance
-          .collection('gpcategory')
-          .get()
-          .then((querySnapshot) {
-        querySnapshot.docs.forEach((element) {
-          setState(() {
-            for (var i = 0; i < categoryoption.length; i++) {
-              if (element['gpcategoryname'] == categoryoption[i]) {
-                final ref = FirebaseFirestore.instance
-                    .collection("gpcategory")
-                    .doc(element.id);
-                category.add(ref);
-                newselectgpcategory.add(element['gpcategoryname']);
-                print(category);
-              }
-            }
-          });
-        });
-      });
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
+  // checkidcategory(List<String?> categoryoption) async {
+  //   category.length = 0;
+  //   newselectgpcategory.clear();
+  //   try {
+  //     await FirebaseFirestore.instance
+  //         .collection('gpcategory')
+  //         .get()
+  //         .then((querySnapshot) {
+  //       querySnapshot.docs.forEach((element) {
+  //         setState(() {
+  //           for (var i = 0; i < categoryoption.length; i++) {
+  //             if (element['gpcategoryname'] == categoryoption[i]) {
+  //               final ref = FirebaseFirestore.instance
+  //                   .collection("gpcategory")
+  //                   .doc(element.id);
+  //               category.add(ref);
+  //               newselectgpcategory.add(element['gpcategoryname']);
+  //               print(category);
+  //             }
+  //           }
+  //         });
+  //       });
+  //     });
+  //   } catch (e) {
+  //     print(e.toString());
+  //     return null;
+  //   }
+  // }
 
-  editstudentarray(List spe) async {
-    final ref = FirebaseFirestore.instance.collection("student").doc(userid);
-    List f = [];
-    f.clear();
-    await FirebaseFirestore.instance
-        .collection('gpcategory')
-        .get()
-        .then((querySnapshot) {
-      // ignore: avoid_function_literals_in_foreach_calls
-      querySnapshot.docs.forEach((element) async {
-        for (var i = 0; i < category.length; i++) {
-          print(
-              "oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
-          print(spe);
-          ///// for add
-          if (element['gpcategoryname'] == spe[i]) {
-            f = element['student'];
-            print(f);
-            if (!(f.contains(ref))) {
-              f.add(ref);
-              FirebaseFirestore.instance
-                  .collection('gpcategory')
-                  .doc(element.id)
-                  .update({
-                'student': FieldValue.arrayUnion([ref]),
-              });
-            }
-          }
-          ////////for delete
-          if (!(spe.contains(element['gpcategoryname']))) {
-            f = element['student'];
-            print(f);
-            if ((f.contains(ref))) {
-              FirebaseFirestore.instance
-                  .collection('gpcategory')
-                  .doc(element.id)
-                  .update({
-                'student': FieldValue.arrayRemove([ref]),
-              });
-            }
-          }
-        }
-      });
-    });
-  }
+  // editstudentarray(List spe) async {
+  //   final ref = FirebaseFirestore.instance.collection("student").doc(userid);
+  //   List f = [];
+  //   f.clear();
+  //   await FirebaseFirestore.instance
+  //       .collection('gpcategory')
+  //       .get()
+  //       .then((querySnapshot) {
+  //     // ignore: avoid_function_literals_in_foreach_calls
+  //     querySnapshot.docs.forEach((element) async {
+  //       for (var i = 0; i < category.length; i++) {
+  //         print(
+  //             "oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+  //         print(spe);
+  //         ///// for add
+  //         if (element['gpcategoryname'] == spe[i]) {
+  //           f = element['student'];
+  //           print(f);
+  //           if (!(f.contains(ref))) {
+  //             f.add(ref);
+  //             FirebaseFirestore.instance
+  //                 .collection('gpcategory')
+  //                 .doc(element.id)
+  //                 .update({
+  //               'student': FieldValue.arrayUnion([ref]),
+  //             });
+  //           }
+  //         }
+  //         ////////for delete
+  //         if (!(spe.contains(element['gpcategoryname']))) {
+  //           f = element['student'];
+  //           print(f);
+  //           if ((f.contains(ref))) {
+  //             FirebaseFirestore.instance
+  //                 .collection('gpcategory')
+  //                 .doc(element.id)
+  //                 .update({
+  //               'student': FieldValue.arrayRemove([ref]),
+  //             });
+  //           }
+  //         }
+  //       }
+  //     });
+  //   });
+  // }
 
   // retrivecollage() async {
   //   try {
@@ -741,89 +741,89 @@ class _studentviewprofileState extends State<studentviewprofile> {
                             // SizedBox(
                             //   height: 8,
                             // ),
-                            DropDownMultiSelect(
-                              decoration: InputDecoration(
-                                  suffixIcon: Icon(Icons.edit),
-                                  hintText:
-                                      "select your graduation project category",
-                                  labelText: " Graduation project category",
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color:
-                                            isshow ? Colors.red : Colors.grey),
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: isshow
-                                            ? Colors.red
-                                            : Colors.blueAccent),
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: isshow
-                                            ? Colors.red
-                                            : Colors.blueAccent),
-                                    borderRadius: BorderRadius.circular(25),
-                                  )
-                                  // border: OutlineInputBorder(
-                                  //     borderSide: BorderSide(
-                                  //         color: isshow ? Colors.red : Colors.grey)
-                                  ),
-                              options: options,
-                              whenEmpty: "",
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedoptionlist.value = value;
-                                  selectedoption.value = "";
-                                  selectedoptionlist.value.forEach((element) {
-                                    selectedoption.value =
-                                        selectedoption.value + " " + element;
-                                    checklengthforcategory =
-                                        selectedoptionlist.value.length;
-                                    isshow = selectedoption.value.isEmpty;
+                            // DropDownMultiSelect(
+                            //   decoration: InputDecoration(
+                            //       suffixIcon: Icon(Icons.edit),
+                            //       hintText:
+                            //           "select your graduation project category",
+                            //       labelText: " Graduation project category",
+                            //       enabledBorder: OutlineInputBorder(
+                            //         borderSide: BorderSide(
+                            //             color:
+                            //                 isshow ? Colors.red : Colors.grey),
+                            //         borderRadius: BorderRadius.circular(25),
+                            //       ),
+                            //       errorBorder: OutlineInputBorder(
+                            //         borderSide: BorderSide(
+                            //             color: isshow
+                            //                 ? Colors.red
+                            //                 : Colors.blueAccent),
+                            //         borderRadius: BorderRadius.circular(25),
+                            //       ),
+                            //       focusedBorder: OutlineInputBorder(
+                            //         borderSide: BorderSide(
+                            //             color: isshow
+                            //                 ? Colors.red
+                            //                 : Colors.blueAccent),
+                            //         borderRadius: BorderRadius.circular(25),
+                            //       )
+                            //       // border: OutlineInputBorder(
+                            //       //     borderSide: BorderSide(
+                            //       //         color: isshow ? Colors.red : Colors.grey)
+                            //       ),
+                            //   options: options,
+                            //   whenEmpty: "",
+                            //   onChanged: (value) {
+                            //     setState(() {
+                            //       selectedoptionlist.value = value;
+                            //       selectedoption.value = "";
+                            //       selectedoptionlist.value.forEach((element) {
+                            //         selectedoption.value =
+                            //             selectedoption.value + " " + element;
+                            //         checklengthforcategory =
+                            //             selectedoptionlist.value.length;
+                            //         isshow = selectedoption.value.isEmpty;
 
-                                    if (checklengthforcategory < 1) {
-                                      isshow = true;
-                                    }
-                                    if (checklengthforcategory > 0 ||
-                                        selectedoption.value.isEmpty ||
-                                        selectedoption.value == null) {
-                                      isshow = false;
-                                    }
-                                  });
-                                });
-                                checkidcategory(selectedoptionlist.value);
-                                //isshow = selectedoptionlist.value.isEmpty;
-                                checklengthforcategory =
-                                    selectedoptionlist.value.length;
-                                if (checklengthforcategory < 1) {
-                                  isshow = true;
-                                }
-                              },
-                              selectedValues: selectedoptionlist.value,
-                            ),
-                            SizedBox(
-                              height: 2,
-                            ),
-                            Visibility(
-                              visible: isshow,
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Please choose your graduation project category",
-                                      style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 211, 56, 45)),
-                                      textAlign: TextAlign.left,
-                                    ),
-                                  ]),
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
+                            //         if (checklengthforcategory < 1) {
+                            //           isshow = true;
+                            //         }
+                            //         if (checklengthforcategory > 0 ||
+                            //             selectedoption.value.isEmpty ||
+                            //             selectedoption.value == null) {
+                            //           isshow = false;
+                            //         }
+                            //       });
+                            //     });
+                            //     checkidcategory(selectedoptionlist.value);
+                            //     //isshow = selectedoptionlist.value.isEmpty;
+                            //     checklengthforcategory =
+                            //         selectedoptionlist.value.length;
+                            //     if (checklengthforcategory < 1) {
+                            //       isshow = true;
+                            //     }
+                            //   },
+                            //   selectedValues: selectedoptionlist.value,
+                            // ),
+                            // SizedBox(
+                            //   height: 2,
+                            // ),
+                            // Visibility(
+                            //   visible: isshow,
+                            //   child: Row(
+                            //       mainAxisAlignment: MainAxisAlignment.start,
+                            //       children: [
+                            //         Text(
+                            //           "Please choose your graduation project category",
+                            //           style: TextStyle(
+                            //               color:
+                            //                   Color.fromARGB(255, 211, 56, 45)),
+                            //           textAlign: TextAlign.left,
+                            //         ),
+                            //       ]),
+                            // ),
+                            // SizedBox(
+                            //   height: 8,
+                            // ),
                             // DropdownButtonFormField<String>(
                             //   decoration: InputDecoration(
                             //     suffixIcon: Icon(Icons.edit),
@@ -1098,20 +1098,19 @@ class _studentviewprofileState extends State<studentviewprofile> {
                       // gpdate = date;
                       socialmedia = social;
                       socoamediaaccount = _socialmediaccount.text;
-                      editstudentarray(newselectgpcategory);
+                      // editstudentarray(newselectgpcategory);
                       if (social == "None") {
                         socoamediaaccount = "";
                       }
-                      if (checklengthforcategory < 1) {
-                        isshow = true;
-                      }
-                      if (checklengthforcategory > 0) {
-                        isshow = false;
-                      }
+                      // if (checklengthforcategory < 1) {
+                      //   isshow = true;
+                      // }
+                      // if (checklengthforcategory > 0) {
+                      //   isshow = false;
+                      // }
                     });
 
-                    if (formkey.currentState!.validate() &&
-                        checklengthforcategory > 0) {
+                    if (formkey.currentState!.validate()) {
                       gpdate = dategp(selctedyear, month);
                       Navigator.push(
                           context,
@@ -1126,7 +1125,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                           "lastname": ln,
                           // "studentId": sid,
                           "projectname": pn,
-                          "projectCategory": category,
+                          // "projectCategory": category,
                           "socialmedia": socialmedia,
                           "socialmediaaccount": socoamediaaccount,
                           "graduationDate": gpdate,

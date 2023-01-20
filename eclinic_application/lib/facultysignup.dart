@@ -86,31 +86,35 @@ class _facultysignupState extends State<facultysignup> {
             String sn = element['semestername'];
             var startdate = element['startdate'];
             startdate.toString();
-            if (startdate != null) {
-              if ((sn.contains(s))) {
-                print(sn);
-                semester.add(element['semestername']);
-                print("ppppppppppppppppppppppppppppppppppppppp");
-                print(semester);
-              }
 
+            if ((sn.contains(s))) {
+              print(element['semestername']);
+              print("ppppppppppppppppppppppppppppppppppppppp");
+              print(sn);
+              semester.add(element['semestername']);
+              // print("ppppppppppppppppppppppppppppppppppppppp");
+              // print(semester);
+            }
+
+            // if (Dateoftoday.year <= enddate.year) {
+            //   if (Dateoftoday.month > enddate.month &&
+            //       Dateoftoday.day > enddate.day) {
+            //     semester.remove(element['semestername']);
+            //   }
+            // }
+
+            // if (Dateoftoday.year <= enddate.year) {
+            //   if (Dateoftoday.month == enddate.month &&
+            //       Dateoftoday.day > enddate.day) {
+            //     semester.remove(element['semestername']);
+            //   }
+            // }
+            if (startdate != null) {
               Timestamp t = element['enddate'];
               DateTime enddate = t.toDate();
-
-              // if (Dateoftoday.year <= enddate.year) {
-              //   if (Dateoftoday.month > enddate.month &&
-              //       Dateoftoday.day > enddate.day) {
-              //     semester.remove(element['semestername']);
-              //   }
-              // }
-
-              // if (Dateoftoday.year <= enddate.year) {
-              //   if (Dateoftoday.month == enddate.month &&
-              //       Dateoftoday.day > enddate.day) {
-              //     semester.remove(element['semestername']);
-              //   }
-              // }
               if (Dateoftoday.isAfter(enddate)) {
+                print("rrrrrrrrrrrrrreeeeeeeeeeeeeeemmmmmmmmmmmoooveeeeeee");
+                print(element['semestername']);
                 semester.remove(element['semestername']);
               }
             }
