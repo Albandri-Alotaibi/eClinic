@@ -304,11 +304,10 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                                                     : 'Please click search to continue..')),
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          height: 2,
-                                          fontSize: 18,
-                                          color: Color.fromRGBO(21, 70, 160, 1),
-                                        ))))
+                                            fontWeight: FontWeight.w600,
+                                            height: 2,
+                                            fontSize: 18,
+                                            color: Colors.black54))))
                             :
                             //show all items if no loading and there are result from search
                             ListView.builder(

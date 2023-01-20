@@ -170,18 +170,31 @@ class FacultyListScreenState extends State<FacultyListScreen> {
         debugShowCheckedModeBanner: false,
         home: SafeArea(
           child: Scaffold(
+              backgroundColor: Colors.white,
               appBar: AppBar(
-                backgroundColor: const Color.fromRGBO(21, 70, 160, 1),
-                title: const Text("Schedule An Appointment"),
-                leading: InkWell(
-                  onTap: () {
-                    Navigator.pop(this.context);
-                  },
-                  child: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
-                  ),
+                primary: false,
+                centerTitle: true,
+                backgroundColor: Mycolors.mainColorWhite,
+                shadowColor: Colors.transparent,
+                iconTheme: const IconThemeData(
+                  color:
+                      Color.fromARGB(255, 12, 12, 12), //change your color here
                 ),
+                title: const Text("Schedule An Appointment"),
+                titleTextStyle: TextStyle(
+                  fontFamily: 'main',
+                  fontSize: 20,
+                  color: Mycolors.mainColorBlack,
+                ),
+                // leading: InkWell(
+                //   onTap: () {
+                //     Navigator.pop(this.context);
+                //   },
+                //   child: const Icon(
+                //     Icons.arrow_back,
+                //     color: Colors.black54,
+                //   ),
+                // ),
               ),
               body: loading || dropdownvalue == null
                   ? const Center(
@@ -204,7 +217,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                                 style: ElevatedButton.styleFrom(
                                   textStyle: const TextStyle(
                                       fontFamily: 'main', fontSize: 16),
-                                  shadowColor: Colors.blue[900],
+                                  // shadowColor: Colors.blue[900],
                                   elevation: 20,
                                   backgroundColor: Mycolors.mainShadedColorBlue,
                                   minimumSize: const Size(200, 50),
@@ -241,7 +254,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                                             fontWeight: FontWeight.w600,
                                             height: 2,
                                             fontSize: 18,
-                                            color: Colors.blue)))
+                                            color: Colors.black54)))
                                 : ListView.builder(
                                     itemCount: getResults().length,
                                     itemBuilder: (context, index) {
@@ -308,45 +321,53 @@ class FacultyListScreenState extends State<FacultyListScreen> {
               height: 40,
             ),
             Container(
-              width: 200,
-              padding: const EdgeInsets.all(11),
-              color: themeData.colorScheme.background.withOpacity(0.3),
-              child: Column(children: [
-                Row(children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          specialisation,
-                          style: TextStyle(
-                            color: themeData.colorScheme.primary,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        Text(
-                          facultyName,
-                          style: TextStyle(
-                              color: themeData.colorScheme.primary,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        Text(
-                          college,
-                          style: TextStyle(
-                              color: themeData.colorScheme.primary,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
-                  )
-                ])
-              ]),
+              width: 230,
+              // padding: const EdgeInsets.all(11),
+              // color: themeData.colorScheme.background.withOpacity(0.3),
+              child: Card(
+                  color: const Color.fromRGBO(21, 70, 160, 1),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10), // <-- Radius
+                  ),
+                  child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(children: [
+                        Row(children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  facultyName,
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                const SizedBox(
+                                  height: 6,
+                                ),
+                                Text(
+                                  specialisation,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  college,
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
+                          )
+                        ])
+                      ]))),
             )
           ],
         ),
@@ -380,23 +401,49 @@ class FacultyListScreenState extends State<FacultyListScreen> {
     showDialog(
         context: thisContext,
         builder: (context) {
-          return SimpleDialog(
-            title:
-                Text(specialityList.isEmpty ? 'Wait...' : 'Chose a Speciality'),
-            children: [
-              for (var item = 0; item < specialityList.length; item++)
-                SimpleDialogOption(
-                  onPressed: () {
-                    setState(() {
-                      isItVisible = false;
-                      dropdownvalue = specialityList[item];
-                    });
-                    Navigator.of(context, rootNavigator: true).pop();
-                  },
-                  child: Text(specialityList[item]!['specialityname']),
+          return WillPopScope(
+              onWillPop: () {
+                return Future.value(false);
+              },
+              child: SimpleDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15), // <-- Radius
                 ),
-            ],
-          );
+                title: Text(
+                  specialityList.isEmpty ? 'Wait...' : 'Choose a Speciality',
+                  textAlign: TextAlign.center,
+                ),
+                children: [
+                  for (var item = 0; item < specialityList.length; item++)
+                    SimpleDialogOption(
+                        padding: const EdgeInsets.all(0),
+                        onPressed: () {
+                          setState(() {
+                            isItVisible = false;
+                            dropdownvalue = specialityList[item];
+                          });
+                          Navigator.of(context, rootNavigator: true).pop();
+                        },
+                        child: Card(
+                          color: const Color.fromRGBO(21, 70, 160, 1),
+                          borderOnForeground: true,
+                          child: Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Text(
+                                specialityList[item]!['specialityname'],
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600),
+                              )),
+                        )
+/*                  Text(
+                    specialityList[item]!['specialityname'],
+                  ),*/
+                        ),
+                ],
+              ));
         });
   }
 }
