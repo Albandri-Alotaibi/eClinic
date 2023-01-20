@@ -299,7 +299,7 @@ exports.updateSemester = functions.firestore
                                     functions.logger.info(token);
                                     const response = await admin.messaging().sendToDevice(token, payload);
                                     //delete the appointment from the students appointment array
-                                    studentsRef[i].update({"appointments": admin.FieldValue.arrayRemove(appointmentRef)})
+                                    studentsRef[i].update({"appointments": admin.firestore.FieldValue.arrayRemove(appointmentRef)})
                                 });
                             }
                         }
