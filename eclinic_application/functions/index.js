@@ -209,7 +209,7 @@ exports.updateSemester = functions.firestore
         // Get an object representing the document
         // e.g. {'name': 'Marie', 'age': 66}
         const semesterRef = await admin.firestore().collection('semester');
-        const facultyRef = await admin.firestore().collection('faculty').doc(context.params.wildcard).collection("appointment");
+        const appointmentRef = await admin.firestore().collection('faculty').doc(context.params.wildcard).collection("appointment");
         functions.logger.info(context.params.wildcard);
         var today = new Date();
 
@@ -246,7 +246,7 @@ exports.updateSemester = functions.firestore
 
         if (semesterIsUpdated === true) {
             functions.logger.info("in semesterIsUpdated change to ==");
-            var facultyAppointmentSnap = await facultyRef.get().then(
+            var facultyAppointmentSnap = await appointmentRef.get().then(
                 (querySnapshot) => {
                     querySnapshot.forEach(async (doc) => { 
                        // functions.logger.info(doc.data().Booked);
@@ -288,12 +288,18 @@ exports.updateSemester = functions.firestore
                                     //icon: follower.photoURL
                                 }
                             };
+                            //store the appointment refrence
+                            var appointmentRef = doc.ref;
+                            functions.logger.info("appointmentRef");
+                            functions.logger.info(appointmentRef);
                             var studentsRef = doc.data().student;
                             for (let i = 0; i < studentsRef.length; i++) {
                                 var oneS = studentsRef[i].get().then(async (oneStudentDoc) => {
                                     var token = oneStudentDoc.data().token
                                     functions.logger.info(token);
                                     const response = await admin.messaging().sendToDevice(token, payload);
+                                    //delete the appointment from the students appointment array
+                                    studentsRef[i].update({"appointments": admin.FieldValue.arrayRemove(appointmentRef)})
                                 });
                             }
                         }

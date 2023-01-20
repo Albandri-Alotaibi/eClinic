@@ -221,115 +221,123 @@ class _viewGPlibraryState extends State<viewGPlibrary> {
             Center(
               child: Row(children: [
                 Expanded(
-                  child: DropdownButtonFormField<Map<String, dynamic>?>(
-                      // icon: const Icon(Icons.face),
+                  child: Container(
+                    // padding: const EdgeInsets.all(10),
+                    margin: const EdgeInsets.only(bottom: 8),
+                    child: DropdownButtonFormField<Map<String, dynamic>?>(
+                        // icon: const Icon(Icons.face),
 
-                      isExpanded: true,
-                      iconEnabledColor: Mycolors.mainShadedColorBlue,
-                      decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(
-                                  width: 1,
-                                  color: Mycolors.mainShadedColorBlue)),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(
-                                  width: 1,
-                                  color: Mycolors.mainShadedColorBlue))),
-                      disabledHint: Row(children: const [
-                        Text("---"),
-                        // SizedBox(
-                        //     height: 15.0,
-                        //     width: 15.0,
-                        //     child: CircularProgressIndicator(
-                        //       strokeWidth: 3,
-                        //       color: Color.fromRGBO(21, 70, 160, 1),
-                        //     ))
-                      ]),
-                      hint: Text(
-                        "Select Category",
-                        style: TextStyle(
-                            fontSize: 14,
-                            //color: themeData.colorScheme.primary,
-                            fontWeight: FontWeight.w400),
-                      ),
-                      value: categoryDropdownValue,
-                      items: categoryList.map((Map<String, dynamic>? item) {
-                        return DropdownMenuItem(
-                            value: item,
-                            child: Text(item?['gpcategoryname'] ?? "--"));
-                      }).toList(),
-                      onChanged: secondLoading
-                          ? null
-                          : (newValue) {
-                              if (newValue != null) {
-                                setState(() {
-                                  //reset variables, to remove results and show messages
-                                  categoryDropdownValue = newValue;
-                                  GPList = [];
-                                  searchClicked = false;
-                                  noResults = true;
-                                  initGP();
-                                });
-                              }
-                            }),
+                        isExpanded: true,
+                        iconEnabledColor: Mycolors.mainShadedColorBlue,
+                        decoration: InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide(
+                                    width: 1,
+                                    color: Mycolors.mainShadedColorBlue)),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide(
+                                    width: 1,
+                                    color: Mycolors.mainShadedColorBlue))),
+                        disabledHint: Row(children: const [
+                          Text("---"),
+                          // SizedBox(
+                          //     height: 15.0,
+                          //     width: 15.0,
+                          //     child: CircularProgressIndicator(
+                          //       strokeWidth: 3,
+                          //       color: Color.fromRGBO(21, 70, 160, 1),
+                          //     ))
+                        ]),
+                        hint: Text(
+                          "Select Category",
+                          style: TextStyle(
+                              fontSize: 14,
+                              //color: themeData.colorScheme.primary,
+                              fontWeight: FontWeight.w400),
+                        ),
+                        value: categoryDropdownValue,
+                        items: categoryList.map((Map<String, dynamic>? item) {
+                          return DropdownMenuItem(
+                              value: item,
+                              child: Text(item?['gpcategoryname'] ?? "--"));
+                        }).toList(),
+                        onChanged: secondLoading
+                            ? null
+                            : (newValue) {
+                                if (newValue != null) {
+                                  setState(() {
+                                    //reset variables, to remove results and show messages
+                                    categoryDropdownValue = newValue;
+                                    GPList = [];
+                                    searchClicked = false;
+                                    noResults = true;
+                                    initGP();
+                                  });
+                                }
+                              }),
+                  ),
                 ),
                 SizedBox(
                   width: 20,
                 ),
                 Expanded(
-                  child: DropdownButtonFormField<Map<String, dynamic>?>(
-                      // icon: const Icon(Icons.pages),
-                      iconEnabledColor: Mycolors.mainShadedColorBlue,
-                      decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(
-                                  width: 1,
-                                  color: Mycolors.mainShadedColorBlue)),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(
-                                  width: 1,
-                                  color: Mycolors.mainShadedColorBlue))),
-                      disabledHint: Row(children: const [
-                        Text("---"),
-                        // SizedBox(
-                        //     height: 15.0,
-                        //     width: 15.0,
-                        //     child: CircularProgressIndicator(
-                        //       strokeWidth: 3,
-                        //       color: Color.fromRGBO(21, 70, 160, 1),
-                        //     ))
-                      ]),
-                      hint: Text(
-                        "Select Semester",
-                        style: TextStyle(
-                            fontSize: 14,
-                            // color: themeData.colorScheme.primary,
-                            fontWeight: FontWeight.w400),
-                      ),
-                      value: semesterDropdownValue,
-                      items: semesterList.map((Map<String, dynamic>? item) {
-                        return DropdownMenuItem(
-                            value: item,
-                            child: Text(item?['semestername'] ?? "--"));
-                      }).toList(),
-                      onChanged: secondLoading
-                          ? null
-                          : (newValue) {
-                              if (newValue != null) {
-                                setState(() {
-                                  //reset variables, to remove results and show messages
-                                  semesterDropdownValue = newValue;
-                                  GPList = [];
-                                  searchClicked = false;
-                                  initGP();
-                                  // noResults = true;
-                                });
-                              }
-                            }),
+                  child: Container(
+                    //padding: const EdgeInsets.all(10),
+                    margin: const EdgeInsets.only(bottom: 8),
+                    child: DropdownButtonFormField<Map<String, dynamic>?>(
+                        // icon: const Icon(Icons.pages),
+                        iconEnabledColor: Mycolors.mainShadedColorBlue,
+                        decoration: InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide(
+                                    width: 1,
+                                    color: Mycolors.mainShadedColorBlue)),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide(
+                                    width: 1,
+                                    color: Mycolors.mainShadedColorBlue))),
+                        disabledHint: Row(children: const [
+                          Text("---"),
+                          // SizedBox(
+                          //     height: 15.0,
+                          //     width: 15.0,
+                          //     child: CircularProgressIndicator(
+                          //       strokeWidth: 3,
+                          //       color: Color.fromRGBO(21, 70, 160, 1),
+                          //     ))
+                        ]),
+                        hint: Text(
+                          "Select Semester",
+                          style: TextStyle(
+                              fontSize: 14,
+                              // color: themeData.colorScheme.primary,
+                              fontWeight: FontWeight.w400),
+                        ),
+                        value: semesterDropdownValue,
+                        items: semesterList.map((Map<String, dynamic>? item) {
+                          return DropdownMenuItem(
+                              value: item,
+                              child: Text(item?['semestername'] ?? "--"));
+                        }).toList(),
+                        onChanged: secondLoading
+                            ? null
+                            : (newValue) {
+                                if (newValue != null) {
+                                  setState(() {
+                                    //reset variables, to remove results and show messages
+                                    semesterDropdownValue = newValue;
+                                    GPList = [];
+                                    searchClicked = false;
+                                    initGP();
+                                    // noResults = true;
+                                  });
+                                }
+                              }),
+                  ),
                 ),
               ]),
             ),
@@ -384,11 +392,10 @@ class _viewGPlibraryState extends State<viewGPlibrary> {
                                           : 'Please click filter to continue..')),
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    height: 2,
-                                    fontSize: 18,
-                                    color: Color.fromRGBO(21, 70, 160, 1),
-                                  ),
+                                      fontWeight: FontWeight.w600,
+                                      height: 2,
+                                      fontSize: 18,
+                                      color: Colors.black54),
                                 ),
                     ),
                   )
@@ -451,7 +458,7 @@ class _viewGPlibraryState extends State<viewGPlibrary> {
                                     fontSize: 20),
                               ),
                               subtitle: Text(
-                                  "Category: " +
+                                  "\nCategory: " +
                                       GPList[index]['gpcategoryname'] +
                                       "\n" +
                                       "Semester: " +

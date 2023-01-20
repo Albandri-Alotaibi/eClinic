@@ -57,6 +57,12 @@ class _fState extends State<facultyhome> {
     addHoursFaculty(),
     facultyListFAQ(),
   ];
+
+  final List<String> appbar = [
+    "Booked Appointments",
+    "Help Desk Hours",
+    "Common Issues"
+  ];
   @override
   Widget build(BuildContext context) {
     body:
@@ -80,9 +86,15 @@ class _fState extends State<facultyhome> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          title: Text(appbar[widget.selectedIndex],
+              style: TextStyle(
+                  fontFamily: 'bold',
+                  fontSize: 20,
+                  color: Mycolors.mainColorBlack)),
+          foregroundColor: Mycolors.mainColorBlack,
           primary: false,
           centerTitle: true,
-          backgroundColor: Mycolors.mainColorWhite,
+          backgroundColor: Color.fromARGB(162, 246, 246, 246),
           shadowColor: Colors.transparent,
           iconTheme: IconThemeData(
             color: Color.fromARGB(255, 12, 12, 12), //change your color here
