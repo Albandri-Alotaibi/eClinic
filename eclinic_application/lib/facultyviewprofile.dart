@@ -70,6 +70,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
   var semesterselectedfromDB;
   var collageselectedfromDB;
   var departmentselectedfromDB;
+  var fixedselectedsemester;
   late String docsforsemestername;
   late String docsforcollage;
   late String docfordepatment;
@@ -151,35 +152,23 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
         .doc(userid)
         .get();
     print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
-    var mm = snap['meetingmethod'];
-    mettingmethoddrop = mm;
-    print(mm);
-    var mmi = snap['mettingmethodinfo'];
-    print(mmi);
-    _meetingmethodcontroller = TextEditingController(text: mmi);
+
     var semesterRef = snap["semester"];
     final DocumentSnapshot docRef2 = await semesterRef.get();
     semesterselectedfromDB = docRef2["semestername"];
-    retrievesemester();
-    // print("/////////////////////semester///////////////////////////");
-    // print(semesterselectedfromDB);
-    /////////////////////////////////////////////////////
-    // var collageRef = snap["collage"];
-    // final DocumentSnapshot docRef3 = await collageRef.get();
-    // collageselectedfromDB = docRef3["collagename"];
-    // print("/////////////////////collage///////////////////////////");
-    // print(collageselectedfromDB);
-    /////////////////////////////////////////////////////
+    fixedselectedsemester = docRef2["semestername"];
+    final fname = snap['firstname'];
+    final lname = snap['lastname'];
+    _fnameController = TextEditingController(text: fname);
+    _lnameController = TextEditingController(text: lname);
+
     var departmentRef = snap["department"];
     final DocumentSnapshot docRef4 = await departmentRef.get();
-
     departmentselectedfromDB = docRef4["departmentname"];
 
-    // print("/////////////////////department///////////////////////////");
-    // print(departmentselectedfromDB);
-    //checkidc(collageselectedfromDB);
     checkidd(departmentselectedfromDB);
     checkids(semesterselectedfromDB);
+    retrievesemester();
   }
 
   retrievesemester() async {
@@ -193,13 +182,17 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
             DateTime now = DateTime.now();
             year = now.year;
             DateTime Dateoftoday = DateTime.now();
-
+            var secondyear = year + 1;
             String s = year.toString();
+            String sy = secondyear.toString();
             String sn = element['semestername'];
             var startdate = element['startdate'];
             startdate.toString();
-
-            if ((sn.contains(s))) {
+            print("second year");
+            print(secondyear);
+            print("after parse");
+            print(sy);
+            if ((sn.contains(s)) || (sn.contains(sy))) {
               print(sn);
               semester.add(element['semestername']);
             }
@@ -209,22 +202,47 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
             //     semester.remove(element['semestername']);
             //   }
 
-            //   if (Dateoftoday.month == enddate.month &&
-            //       Dateoftoday.day > enddate.day) {
-            //     semester.remove(element['semestername']);
-            //   }
-            // }
             if (startdate != null) {
               Timestamp t = element['enddate'];
               DateTime enddate = t.toDate();
+              // after && becuase if faculty was choose semester that the end date become in the past
               if (Dateoftoday.isAfter(enddate) &&
                   element['semestername'] != semesterselectedfromDB) {
                 semester.remove(element['semestername']);
               }
+
+              // if (Dateoftoday.month == enddate.month &&
+              //     Dateoftoday.day > enddate.day) {
+              //   if (sn.contains(sy)) {
+              //     semester.add(element['semestername']);
+              //   }
+              // }
             }
           });
         });
-        print(semester);
+        // var count = 0;
+
+        // for (var i = 0; i < forenddate.length; i++) {
+        //   print("ggggggggggggggggggggggggggggg");
+        //   print(forenddate[i]);
+        //   Timestamp t = forenddate[i];
+        //   DateTime enddate = t.toDate();
+        //   DateTime now = DateTime.now();
+        //   year = now.year;
+        //   DateTime Dateoftoday = DateTime.now();
+        //   var secondyear = year + 1;
+        //   String s = year.toString();
+        //   String sy = secondyear.toString();
+        //   if (Dateoftoday.month == enddate.month &&
+        //       Dateoftoday.day > enddate.day) {
+        //     count++;
+        //   }
+        //    if (startdate != null) {
+        // forenddate.add(element['enddate']);
+        //}
+        // }
+        //print(count);
+        // print(semester);
       });
     } catch (e) {
       print(e.toString());
@@ -271,7 +289,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
   editfacultyarray(List spe) async {
     final ref = FirebaseFirestore.instance.collection("faculty").doc(userid);
     List f = [];
-    f.clear();
+
     await FirebaseFirestore.instance
         .collection('facultyspeciality')
         .get()
@@ -309,18 +327,6 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
               });
             }
           }
-          // if (element['specialityname'] != specialitybefore[i]) {
-          //   f = element['faculty'];
-          //   print(f);
-          //   if ((f.contains(ref))) {
-          //     FirebaseFirestore.instance
-          //         .collection('facultyspeciality')
-          //         .doc(element.id)
-          //         .update({
-          //       'faculty': FieldValue.arrayRemove([ref]),
-          //     });
-          //   }
-          // }
         }
       });
     });
@@ -458,24 +464,24 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                         final cuser =
                             snapshot.data!.data() as Map<String, dynamic>;
 
-                        final fname = cuser['firstname'];
-                        final lname = cuser['lastname'];
+                        // final fname = cuser['firstname'];
+                        // final lname = cuser['lastname'];
                         final ksuemail = cuser['ksuemail'];
-                        final mettingmethod = cuser['meetingmethod'];
+
                         fnDrawer = cuser['firstname'];
                         lnDrawer = cuser['lastname'];
-                        _fnameController = TextEditingController(text: fname);
-                        _lnameController = TextEditingController(text: lname);
+                        // _fnameController = TextEditingController(text: fname);
+                        // _lnameController = TextEditingController(text: lname);
                         final _emailController =
                             TextEditingController(text: ksuemail);
                         // _meetingmethodcontroller =
                         //     TextEditingController(text: mettingmethod);
                         selectedoptionlist.value = specality;
-                        collageselectedvalue = collageselectedfromDB;
+
                         departmentselectedvalue = departmentselectedfromDB;
                         semesterselectedvalue = semesterselectedfromDB;
-                        print("/////////////////ممههههممم//////////////////");
-                        print(departmentselectedvalue);
+                        //  print("/////////////////ممههههممم//////////////////");
+                        // print(departmentselectedvalue);
                         // print("//////////////////////////////////");
                         // print(departmentselectedfromDB);
                         // print("/////////////////ممههههممم//////////////////");
@@ -881,6 +887,92 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                             //           }
                             //         }
                             //       }),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                textStyle:
+                                    TextStyle(fontFamily: 'main', fontSize: 16),
+                                shadowColor: Colors.blue[900],
+                                elevation: 16,
+                                backgroundColor: Mycolors.mainShadedColorBlue,
+                                minimumSize: Size(150, 50),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(17), // <-- Radius
+                                ),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  fn = _fnameController.text;
+                                  ln = _lnameController.text;
+                                  editfacultyarray(editfacultRefspecailty);
+                                  if (checklengthforspecialty < 1) {
+                                    isshow = true;
+                                  }
+                                  if (checklengthforspecialty > 0) {
+                                    isshow = false;
+                                  }
+                                });
+                                if (formkey.currentState!.validate() &&
+                                    checklengthforspecialty > 0) {
+                                  if (semesterselectedvalue ==
+                                      fixedselectedsemester) {
+                                    try {
+                                      addfacultyinsemester(specalityid, userid);
+                                      FirebaseFirestore.instance
+                                          .collection('faculty')
+                                          .doc(userid)
+                                          .update({
+                                        "firstname": fn,
+                                        "lastname": ln,
+                                        'department': FirebaseFirestore.instance
+                                            .collection("department")
+                                            .doc(docfordepatment),
+                                        // 'collage': FirebaseFirestore.instance
+                                        //     .collection("collage")
+                                        //     .doc(docsforcollage),
+                                        'semester': FirebaseFirestore.instance
+                                            .collection("semester")
+                                            .doc(docsforsemestername),
+                                        "specialty": specalityid,
+                                      });
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  facultyviewprofile()));
+
+                                      Fluttertoast.showToast(
+                                        msg:
+                                            " Your information has been updated successfully",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 2,
+                                        backgroundColor:
+                                            Color.fromARGB(255, 127, 166, 233),
+                                        textColor:
+                                            Color.fromARGB(255, 248, 249, 250),
+                                        fontSize: 18.0,
+                                      );
+                                    } on FirebaseAuthException catch (error) {
+                                      Fluttertoast.showToast(
+                                        msg: "Something wronge",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 5,
+                                        backgroundColor:
+                                            Color.fromARGB(255, 127, 166, 233),
+                                        textColor:
+                                            Color.fromARGB(255, 252, 253, 255),
+                                        fontSize: 18.0,
+                                      );
+                                    }
+                                  } else {
+                                    confirm(context);
+                                  }
+                                }
+                              },
+                              child: Text("Save changes"),
+                            ),
                           ],
                         ); //here
                       }
@@ -889,81 +981,80 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                 SizedBox(
                   height: 12,
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-                    shadowColor: Colors.blue[900],
-                    elevation: 16,
-                    backgroundColor: Mycolors.mainShadedColorBlue,
-                    minimumSize: Size(150, 50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(17), // <-- Radius
-                    ),
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      fn = _fnameController.text;
-                      ln = _lnameController.text;
-                      mm = mettingmethoddrop;
-                      mmi = _meetingmethodcontroller.text;
-                      editfacultyarray(editfacultRefspecailty);
-                      if (checklengthforspecialty < 1) {
-                        isshow = true;
-                      }
-                      if (checklengthforspecialty > 0) {
-                        isshow = false;
-                      }
-                    });
+                // ElevatedButton(
+                //   style: ElevatedButton.styleFrom(
+                //     textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+                //     shadowColor: Colors.blue[900],
+                //     elevation: 16,
+                //     backgroundColor: Mycolors.mainShadedColorBlue,
+                //     minimumSize: Size(150, 50),
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(17), // <-- Radius
+                //     ),
+                //   ),
+                //   onPressed: () {
+                //     if (formkey.currentState!.validate() &&
+                //         checklengthforspecialty > 0) {
+                //       // if (semesterselectedvalue != fixedselectedsemester) {
+                //       //   confirm(context);
+                //       // } else {
+                //       setState(() {
+                //         fn = _fnameController.text;
+                //         ln = _lnameController.text;
+                //         editfacultyarray(editfacultRefspecailty);
+                //         if (checklengthforspecialty < 1) {
+                //           isshow = true;
+                //         }
+                //         if (checklengthforspecialty > 0) {
+                //           isshow = false;
+                //         }
+                //       });
+                //       try {
+                //         addfacultyinsemester(specalityid, userid);
+                //         FirebaseFirestore.instance
+                //             .collection('faculty')
+                //             .doc(userid)
+                //             .update({
+                //           "firstname": fn,
+                //           "lastname": ln,
+                //           'department': FirebaseFirestore.instance
+                //               .collection("department")
+                //               .doc(docfordepatment),
+                //           // 'collage': FirebaseFirestore.instance
+                //           //     .collection("collage")
+                //           //     .doc(docsforcollage),
+                //           'semester': FirebaseFirestore.instance
+                //               .collection("semester")
+                //               .doc(docsforsemestername),
+                //           "specialty": specalityid,
+                //         });
 
-                    if (formkey.currentState!.validate() &&
-                        checklengthforspecialty > 0) {
-                      try {
-                        addfacultyinsemester(specalityid, userid);
-                        FirebaseFirestore.instance
-                            .collection('faculty')
-                            .doc(userid)
-                            .update({
-                          "firstname": fn,
-                          "lastname": ln,
-                          "meetingmethod": mm,
-                          "mettingmethodinfo": mmi,
-                          'department': FirebaseFirestore.instance
-                              .collection("department")
-                              .doc(docfordepatment),
-                          // 'collage': FirebaseFirestore.instance
-                          //     .collection("collage")
-                          //     .doc(docsforcollage),
-                          'semester': FirebaseFirestore.instance
-                              .collection("semester")
-                              .doc(docsforsemestername),
-                          "specialty": specalityid,
-                        });
-
-                        Fluttertoast.showToast(
-                          msg:
-                              " Your information has been updated successfully",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.CENTER,
-                          timeInSecForIosWeb: 2,
-                          backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                          textColor: Color.fromARGB(255, 248, 249, 250),
-                          fontSize: 18.0,
-                        );
-                      } on FirebaseAuthException catch (error) {
-                        Fluttertoast.showToast(
-                          msg: "Something wronge",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.CENTER,
-                          timeInSecForIosWeb: 5,
-                          backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                          textColor: Color.fromARGB(255, 252, 253, 255),
-                          fontSize: 18.0,
-                        );
-                      }
-                    }
-                  },
-                  child: Text("Save changes"),
-                ),
+                //         Fluttertoast.showToast(
+                //           msg:
+                //               " Your information has been updated successfully",
+                //           toastLength: Toast.LENGTH_SHORT,
+                //           gravity: ToastGravity.CENTER,
+                //           timeInSecForIosWeb: 2,
+                //           backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                //           textColor: Color.fromARGB(255, 248, 249, 250),
+                //           fontSize: 18.0,
+                //         );
+                //       } on FirebaseAuthException catch (error) {
+                //         Fluttertoast.showToast(
+                //           msg: "Something wronge",
+                //           toastLength: Toast.LENGTH_SHORT,
+                //           gravity: ToastGravity.CENTER,
+                //           timeInSecForIosWeb: 5,
+                //           backgroundColor: Color.fromARGB(255, 127, 166, 233),
+                //           textColor: Color.fromARGB(255, 252, 253, 255),
+                //           fontSize: 18.0,
+                //         );
+                //       }
+                //     }
+                //     // }
+                //   },
+                //   child: Text("Save changes"),
+                // ),
               ]),
             ), ////here
           ),
@@ -972,6 +1063,132 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
     );
   }
 
+  confirm(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // set up the AlertDialog
+
+    Widget continueButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        shadowColor: Colors.blue[900],
+        elevation: 20,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(70, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
+      child: Text("confirm"),
+      onPressed: () async {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => facultyviewprofile()));
+        if (formkey.currentState!.validate() && checklengthforspecialty > 0) {
+          setState(() {
+            fn = _fnameController.text;
+            ln = _lnameController.text;
+            editfacultyarray(editfacultRefspecailty);
+            if (checklengthforspecialty < 1) {
+              isshow = true;
+            }
+            if (checklengthforspecialty > 0) {
+              isshow = false;
+            }
+          });
+
+          try {
+            addfacultyinsemester(specalityid, userid);
+            FirebaseFirestore.instance
+                .collection('faculty')
+                .doc(userid)
+                .update({
+              "firstname": fn,
+              "lastname": ln,
+              'department': FirebaseFirestore.instance
+                  .collection("department")
+                  .doc(docfordepatment),
+              'semester': FirebaseFirestore.instance
+                  .collection("semester")
+                  .doc(docsforsemestername),
+              "specialty": specalityid,
+              "availablehours": FieldValue.delete(),
+            });
+
+            Fluttertoast.showToast(
+              msg: " Your information has been updated successfully",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 2,
+              backgroundColor: Color.fromARGB(255, 127, 166, 233),
+              textColor: Color.fromARGB(255, 248, 249, 250),
+              fontSize: 18.0,
+            );
+          } on FirebaseAuthException catch (error) {
+            Fluttertoast.showToast(
+              msg: "Something wronge",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 5,
+              backgroundColor: Color.fromARGB(255, 127, 166, 233),
+              textColor: Color.fromARGB(255, 252, 253, 255),
+              fontSize: 18.0,
+            );
+          }
+        }
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      title: Text(""),
+      content: SizedBox(
+        height: 100,
+        child: Column(
+          children: [
+            Container(
+              alignment: Alignment.topCenter,
+              child: SizedBox(
+                width: 350,
+              ),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Text(
+                "Note : Changing your semester will cause your availabile hours to be deleted "),
+          ],
+        ),
+      ),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+
+    // show the dialog
+  }
   // Widget buildCoverImage() => Container(
   //       color: Colors.grey,
   //       // child: Image.asset(
@@ -1122,6 +1339,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
     int index = 0;
     List faculty = snap.data()!["facultymembers"] as List;
     print(docsforsemestername);
+
     faculty.forEach(
       (element) async {
         print("hiiiiiiiiiiiiiiiiiiiiiiiiiii");

@@ -116,10 +116,15 @@ class _studentviewprofileState extends State<studentviewprofile> {
     nowyear = now.year;
     DateTime Dateoftoday = DateTime.now();
     nextyear = nowyear + 1;
+    //var pastyear = nowyear - 1;
+    // if (selctedyear == pastyear) {
+    //   years.add(pastyear.toString());
+    // }
     print("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
     print(nextyear);
     years.add(nowyear.toString());
     years.add(nextyear.toString());
+
     print(years);
   }
 
@@ -335,6 +340,10 @@ class _studentviewprofileState extends State<studentviewprofile> {
       var datetostring = DateTime.fromMillisecondsSinceEpoch(gd.seconds * 1000);
       var m = datetostring.month;
       selctedyear = datetostring.year.toString();
+      // if (nowyear.isAfter(datetostring.year)) {
+      //   years.add(selctedyear);
+      // }
+
       print("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
       print(datetostring);
       if (m >= 10) {
@@ -347,6 +356,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
       print("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
       print(selctedyear);
       _date = TextEditingController(text: formatdate(gd));
+      // genrateyear();
       date = gd;
 
       final so = snap['socialmedia'];

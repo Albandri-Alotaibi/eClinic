@@ -98,70 +98,44 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          primary: false,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.edit_note,
+                color: Mycolors.mainShadedColorBlue,
+              ),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: ((context) =>
+                        editFAQ(value: widget.commonIssue['id']))));
+              },
+            )
+          ],
           centerTitle: true,
           backgroundColor: Mycolors.mainColorWhite,
           shadowColor: Colors.transparent,
-          //foregroundColor: Mycolors.mainColorBlack,
-          // automaticallyImplyLeading: false,
-          iconTheme: IconThemeData(
-            color: Color.fromARGB(255, 12, 12, 12), //change your color here
+          iconTheme: const IconThemeData(
+            color: Color.fromARGB(255, 12, 12, 12),
           ),
-          title: Text(''),
-
           titleTextStyle: TextStyle(
             fontFamily: 'main',
-            fontSize: 24,
-            color: Mycolors.mainColorBlack,
+            fontSize: 18,
+            color: Mycolors.mainShadedColorBlue,
+          ),
+          title: Text(widget.commonIssue['issuetitle'] ?? ""),
+          leading: InkWell(
+            onTap: () {
+              Navigator.pop(this.context);
+            },
+            child: const Icon(
+              Icons.arrow_back,
+              color: Colors.black45,
+            ),
           ),
         ),
         body: ListView(
           shrinkWrap: true,
           children: <Widget>[
-            InkWell(
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: ((context) =>
-                        editFAQ(value: widget.commonIssue['id']))));
-              },
-              child: Container(
-                margin: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Card(
-                        color: Mycolors.mainColorWhite,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(17), // <-- Radius
-                        ),
-                        shadowColor: const Color.fromARGB(94, 114, 168, 243),
-                        child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: ListTile(
-                              title:
-                                  Text(widget.commonIssue['issuetitle'] ?? "",
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        fontFamily: 'bold',
-                                      )),
-
-                              textColor: Mycolors.mainColorBlue,
-                              trailing: const Icon(
-                                Icons.edit_note,
-                                color: Colors.blue,
-                              ),
-
-                              // fontFamily: 'main',
-                              // fontWeight: FontWeight.w600
-                              // ),
-                            )),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
             Card(
               child: Container(
                 padding: const EdgeInsets.only(
@@ -181,11 +155,11 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                           // ),
                           Text(
                             "  Speciality: ${category?['specialityname']}",
-                            style: TextStyle(
-                                letterSpacing: 0.1,
+                            style: const TextStyle(
+                                // letterSpacing: 0.1,
                                 fontSize: 14,
                                 fontFamily: "main",
-                                color: themeData.colorScheme.primary,
+                                color: Color.fromRGBO(21, 70, 160, 1),
                                 fontWeight: FontWeight.w500),
                           )
                         ]),
@@ -200,11 +174,11 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                           // ),
                           Text(
                             "  Semester: ${semester?['semestername']}",
-                            style: TextStyle(
-                                letterSpacing: 0.1,
+                            style: const TextStyle(
+                                // letterSpacing: 0.1,
                                 fontSize: 14,
                                 fontFamily: "main",
-                                color: themeData.colorScheme.primary,
+                                color: Color.fromRGBO(21, 70, 160, 1),
                                 fontWeight: FontWeight.w500),
                           )
                         ]),
@@ -223,14 +197,14 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                                   ),
                                   Expanded(
                                       child: Text(
-                                    "  Problem:\n\n${widget.commonIssue['problem']}",
+                                    "  Problem :\n\n${widget.commonIssue['problem']}",
                                     // "  Problem:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                                    style: TextStyle(
-                                        letterSpacing: 1.5,
-                                        fontSize: 15,
-                                        fontFamily: "main",
-                                        color: themeData.colorScheme.primary,
-                                        fontWeight: FontWeight.w500),
+                                    style: const TextStyle(
+                                      // letterSpacing: 1.5,
+                                      fontSize: 15,
+                                      fontFamily: "main",
+                                      color: Color.fromRGBO(21, 70, 160, 1),
+                                    ),
 
                                     // decoration: const InputDecoration(
                                     //   prefixIcon: Icon(Icons.collections),
@@ -252,14 +226,14 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                                 ),
                                 Expanded(
                                     child: Text(
-                                  "  Solution:\n\n ${widget.commonIssue['solution']})",
+                                  "  Solution :\n\n${widget.commonIssue['solution']})",
                                   // "  Solution:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                                  style: TextStyle(
-                                      letterSpacing: 2,
-                                      fontSize: 14,
-                                      fontFamily: "main",
-                                      color: themeData.colorScheme.primary,
-                                      fontWeight: FontWeight.w500),
+                                  style: const TextStyle(
+                                    // letterSpacing: 2,
+                                    fontSize: 15,
+                                    fontFamily: "main",
+                                    color: Color.fromRGBO(21, 70, 160, 1),
+                                  ),
                                 ))
                               ],
                             )),
@@ -284,7 +258,7 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                                   leading: loadingFile == item
                                       ? const CircularProgressIndicator()
                                       : const Icon(Icons.file_copy),
-                                  title: Text('Document ${item + 1}'),
+                                  title: Text('File ${item + 1}'),
                                   subtitle: Text(
                                     loadingFile == item
                                         ? "Opening..."
@@ -360,7 +334,7 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                         //     boxShadow: [
                         //       BoxShadow(
                         //         color:
-                        //             themeData.colorScheme.primary.withAlpha(18),
+                        //             Color.fromRGBO(21, 70, 160, 1).withAlpha(18),
                         //         blurRadius: 3,
                         //         offset: const Offset(0, 1),
                         //       ),
@@ -406,6 +380,11 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
     if (downloadedFilesStatus.containsKey(itemNumber) &&
         downloadedFilesStatus[itemNumber]!.contains("opened")) {
       await OpenFile.open(tempFile.path);
+      setState(() {
+        downloadedFilesStatus[itemNumber] =
+            "File is already opened ($urlFilename).";
+        loadingFile = -1;
+      });
       return;
     }
 
@@ -416,7 +395,12 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
     try {
       await ref.writeToFile(tempFile);
       await tempFile.create();
-      await OpenFile.open(tempFile.path);
+
+      final x = await OpenFile.open(tempFile.path);
+      if (x.type != ResultType.done) {
+        launchUrl(Uri.parse(widget.commonIssue['filesurl'][itemNumber]),
+            mode: LaunchMode.externalApplication);
+      }
     } on FirebaseException {
       setState(() {
         downloadedFilesStatus[itemNumber] =
@@ -424,7 +408,7 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
         loadingFile = -1;
       });
 
-      launchUrl(Uri.parse(widget.commonIssue['links'][itemNumber]),
+      launchUrl(Uri.parse(widget.commonIssue['filesurl'][itemNumber]),
           mode: LaunchMode.externalApplication);
     }
     setState(() {

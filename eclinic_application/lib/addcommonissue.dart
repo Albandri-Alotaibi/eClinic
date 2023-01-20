@@ -650,8 +650,8 @@ class _addcommonissueState extends State<addcommonissue> {
                 child: TextFormField(
                     controller: _linknamecontroll,
                     decoration: InputDecoration(
-                        labelText: 'Name',
-                        hintText: "Enter the link name ",
+                        labelText: 'URL name',
+                        hintText: "Enter the url name ",
                         border: OutlineInputBorder()),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
@@ -672,7 +672,7 @@ class _addcommonissueState extends State<addcommonissue> {
                 child: TextFormField(
                     controller: _linkcontroll,
                     decoration: InputDecoration(
-                        labelText: 'Link',
+                        labelText: 'URL',
                         hintText: "Paste the link ",
                         border: OutlineInputBorder()),
                     autovalidateMode: AutovalidateMode.onUserInteraction,

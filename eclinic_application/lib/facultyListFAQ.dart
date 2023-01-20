@@ -48,6 +48,7 @@ class _facultyListFAQState extends State<facultyListFAQ> {
     //initSpeciality1nnoooo();
   }
 
+  bool ciempty = true;
   retrivespeciality() async {
     // specalityforfaculty.clear();
     final snap = await FirebaseFirestore.instance
@@ -306,6 +307,7 @@ class _facultyListFAQState extends State<facultyListFAQ> {
 
         if (specalityforfaculty.contains(commonIssue['issuecategory'].id)) {
           commonIssuesList.add(commonIssue);
+          ciempty = false;
 
           if (i > 0) {
             secondLoading = false;
@@ -476,9 +478,11 @@ class _facultyListFAQState extends State<facultyListFAQ> {
                                   child: Card(
                                     color: Mycolors.mainColorWhite,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          17), // <-- Radius
-                                    ),
+                                        borderRadius: BorderRadius.circular(
+                                            17), // <-- Radius
+                                        side: BorderSide(
+                                            color:
+                                                Mycolors.mainShadedColorBlue)),
                                     shadowColor:
                                         const Color.fromARGB(94, 114, 168, 243),
                                     child: Padding(
@@ -488,7 +492,8 @@ class _facultyListFAQState extends State<facultyListFAQ> {
                                               style: const TextStyle(
                                                   fontSize: 18)),
 
-                                          textColor: Mycolors.mainColorBlue,
+                                          textColor:
+                                              Mycolors.mainShadedColorBlue,
                                           trailing: const Icon(
                                             Icons.add,
                                             color: Colors.blue,
@@ -520,43 +525,52 @@ class _facultyListFAQState extends State<facultyListFAQ> {
                                                 ? 'Please select speciality to find common issues.'
                                                 //if no search clicked then tell user to click search, otherwise if it's clicked, no results are found
                                                 : (searchClicked
-                                                    ? 'There are no common issues available with the selected options.'
+                                                    ? 'There are no common issues available ${specialityDropdownValue?['id'] == '0' && semesterDropdownValue?['id'] == "0" ? 'currently.' : 'with the selected options.'}'
                                                     : 'Please click search to continue..')),
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
                                             fontWeight: FontWeight.w600,
                                             height: 2,
                                             fontSize: 18,
-                                            color: Colors.blue))))
-                            :
-                            //show all items if no loading and there are result from search
+                                            color: Colors.black54))))
+                            : ciempty
+                                ? Text("There are no common issues available",
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        height: 2,
+                                        fontSize: 18,
+                                        color: Colors.black54))
+                                :
+                                //show all items if no loading and there are result from search
 
-                            ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: commonIssuesList.length,
-                                itemBuilder: (context, index) {
-                                  return _commonIssueDetails(
-                                      title: commonIssuesList[index]
-                                          ['issuetitle'],
-                                      semester: semesterList.isNotEmpty
-                                          ? (semesterList.firstWhereOrNull((element) =>
-                                                      element?['ref'] ==
-                                                      commonIssuesList[index]
-                                                          ['semester'])?[
-                                                  'semestername'] ??
-                                              "--")
-                                          : "--",
-                                      speciality: specialityList.isNotEmpty
-                                          ? (specialityList.firstWhereOrNull((element) =>
-                                                      element?['ref'] ==
-                                                      commonIssuesList[index]
-                                                          ['issuecategory'])?[
-                                                  'specialityname'] ??
-                                              "--")
-                                          : "--",
-                                      commonIssue: commonIssuesList[index]);
-                                })
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: commonIssuesList.length,
+                                    itemBuilder: (context, index) {
+                                      return _commonIssueDetails(
+                                          title: commonIssuesList[index]
+                                              ['issuetitle'],
+                                          semester: semesterList.isNotEmpty
+                                              ? (semesterList.firstWhereOrNull((element) =>
+                                                          element?['ref'] ==
+                                                          commonIssuesList[index]
+                                                              ['semester'])?[
+                                                      'semestername'] ??
+                                                  "--")
+                                              : "--",
+                                          speciality: specialityList.isNotEmpty
+                                              ? (specialityList.firstWhereOrNull(
+                                                      (element) =>
+                                                          element?['ref'] ==
+                                                          commonIssuesList[index]
+                                                              ['issuecategory'])?['specialityname'] ??
+                                                  "--")
+                                              : "--",
+                                          commonIssue: commonIssuesList[index]);
+                                    })
                       ],
                     )),
         ));
