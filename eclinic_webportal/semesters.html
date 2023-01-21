@@ -124,8 +124,7 @@
 
           <form id="semester-year" class="col" style="display: none;">
             <div class="my-3">
-              <label class="form-label" style="margin-bottom: 0.2px;">Semester</label><small style="color: red;">
-                *</small>
+              <label class="form-label" style="margin-bottom: 0.2px;">Semester</label>
 
               <select class="semester form-select" name="semester" id="semester">
                 <option selected disabled>choose a semester</option>
@@ -136,7 +135,7 @@
               </select>
             </div>
 
-            <label class="form-label" style="margin-bottom: 0.2px;"> Year</label><small style="color: red;"> *</small>
+            <label class="form-label" style="margin-bottom: 0.2px;"> Year</label>
 
 
             <div class="input-group mb-0">
@@ -314,8 +313,8 @@
 
         box.innerHTML += '<tr>' + '<td><span id="semester-' + doc.id + '">' + myArray[0] + '</span></td>' + '<td><span id="year-' + doc.id + '"">' + myArray[1] + '</span></td>' +
           '<td class="d-flex justify-content-between">' +
-          '<input type="button" value="✎"  class=" update logbut btn btn-primary btn-lg m-1"  style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px; left:100%;" data-ref="' + doc.id + '">' +
-          '<input type="button" value="👩‍💻" class=" show-faculty logbut btn btn-primary btn-lg m-1"  style="padding-left: 0.3rem; padding-right: 0.3rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px; left:100%;" data-semester="' + doc.id + '">' +
+          '<button id="' + doc.id + '-ref" type="button" class=" update logbut btn btn-primary mx-2" style="border:0" data-ref="' + doc.id + '"><i class="fa fa-pencil" aria-hidden="true"></i></button>' +
+          '<button id="' + doc.id + '-sesmster" type="button" class=" show-faculty logbut btn btn-primary mx-2" style="border:0"  data-semester="' + doc.id + '"><i class="fa fa-users" aria-hidden="true"></i></button>' +
           '</td>' + '</tr>';
       });
 
@@ -494,25 +493,25 @@
               semestername: semesteryearname,
               enddate: null,
               startdate: null,
-              timeframe: false
+            
             });
 
             const myArray = semesteryearname.split(" ");
 
             box.innerHTML += '<tr class="table-success">' + '<td><span id="semester-' + docRef.id + '">' + myArray[0] + '</span></td>' + '<td><span id="year-' + docRef.id + '"">' + myArray[1] + '</span></td>' +
-              '<td>' +
-              '<input type="button" value="✎" class="update logbut btn btn-primary btn-lg"  style="padding-left: 0.5rem; padding-right: 0.5rem; padding-bottom: 0.2rem; padding-top: 0.2rem; font-size: 18px; left:100%;" data-ref="' + docRef.id + '">' +
+              '<td class="d-flex justify-content-between">' +
+              '<button id="' + doc.id + '-ref" type="button" class=" update logbut btn btn-primary mx-2" style=" border:0" data-ref="' + docRef.id + '"><i class="fa fa-pencil" aria-hidden="true"></i></button>' +
+              '<button id="' + doc.id + '-semester" type="button" class=" show-faculty logbut btn btn-primary mx-2" style=" border:0"  data-semester="' + docRef.id + '"><i class="fa fa-users" aria-hidden="true"></i></button>' +
               '</td>' + '</tr>';
 
+            document.getElementById("semester-year").style.display = "none";
             hasNoItems = false;
             hasItemsCheck();
             successMessage('Semester has been added successfully');
             addUpdateEvents();
-            addUpdatediv.style.display = "none";
-
           }
         }
-        addDBbtn.removeAttribute("disabled");
+        document.getElementById("addtodb").removeAttribute("disabled");
       })
 
       // ********************** CLICK UPDATE BUTTON WITH VALUE(edit) WITH UNIQUE ID**********************
@@ -521,7 +520,11 @@
         for (var i = 0; i < updatebtn.length; i++) {
           showFacultyListbtn.item(i).addEventListener('click', async function (event) {
             document.getElementById("facultyList").style.display = "none";
-            let docSemester = event.target.getAttribute('data-semester');
+            let docSemester = event.target.dataset.semester;
+            if (!docSemester) {
+              docSemester = event.currentTarget.dataset.semester;
+            }
+
             console.log("docSemester:show-press:" + docSemester);
             specialityList.value = 0;
             document.getElementById('specialityList').disabled = true;
@@ -539,8 +542,12 @@
             // **************************HOW I CAN RETRIVE DATA IN DROP DOWN TO UPDATE IT ? ********************
 
 
-            let docRef = event.target.getAttribute('data-ref');
+            let docRef = event.target.dataset.ref;
+            if (!docRef) {
+              docRef = event.currentTarget.dataset.ref;
+            }
             console.log("docref:edit-press:", docRef);
+
 
             const docSnap = await getDoc(doc(db, "semester", docRef));
 
