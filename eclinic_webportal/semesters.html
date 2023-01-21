@@ -216,7 +216,8 @@
       }
       document.getElementById("facultyList").style.display = "block";
       document.getElementById("facultyListData").dataset.uniqueid = semesterId;
-      document.getElementById("facultyListData").innerHTML = '<li><i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> Wait...</li>';
+      document.getElementById('specialityList').style.display = 'none';
+      document.getElementById("facultyListData").innerHTML = '<div style="text-align:center"><i class="fa fa-spinner fa-spin fa-3x fa-fw"></i></div>';
 
 
       //get a fresh facultymembers from database
