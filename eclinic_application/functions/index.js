@@ -203,7 +203,7 @@ exports.gpAndEndonsemesterreminder = functions.pubsub.schedule('0 21 * * *').onR
 
 
 
-exports.updateSemester = functions.firestore
+exports.updateFaculty = functions.firestore
     .document('faculty/{wildcard}')
     .onUpdate(async (change, context) => {
         // Get an object representing the document
