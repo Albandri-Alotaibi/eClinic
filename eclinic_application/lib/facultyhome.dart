@@ -94,7 +94,7 @@ class _fState extends State<facultyhome> {
           foregroundColor: Mycolors.mainColorBlack,
           primary: false,
           centerTitle: true,
-          backgroundColor: Color.fromARGB(162, 246, 246, 246),
+          backgroundColor: Color.fromARGB(255, 246, 246, 246),
           shadowColor: Colors.transparent,
           iconTheme: IconThemeData(
             color: Color.fromARGB(255, 12, 12, 12), //change your color here

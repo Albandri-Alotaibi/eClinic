@@ -248,69 +248,124 @@ exports.updateSemester = functions.firestore
             functions.logger.info("in semesterIsUpdated change to ==");
             var facultyAppointmentSnap = await appointmentRef.get().then(
                 (querySnapshot) => {
-                    querySnapshot.forEach(async (doc) => { 
-                       // functions.logger.info(doc.data().Booked);
-                       //check if the faculty have booked appointmments
-                       if(doc.data().Booked === true){
-                        var startdate = new Date(doc.data().starttime.toDate());
-                        // if the appointments in the future we will send a notification to the students
-                        if(today < startdate){
-                            //get the faculty name
-                            const facultySnap = await admin.firestore().collection('faculty').doc(context.params.wildcard).get();
-                            var Fname = facultySnap.data().firstname +" " + facultySnap.data().lastname;
-                            functions.logger.info(Fname);
-                            functions.logger.info("today < startdate");
+                    querySnapshot.forEach(async (doc) => {
+                        // functions.logger.info(doc.data().Booked);
+                        //check if the faculty have booked appointmments
+                        if (doc.data().Booked === true) {
+                            var startdate = new Date(doc.data().starttime.toDate());
+                            // if the appointments in the future we will send a notification to the students
+                            if (today < startdate) {
+                                //get the faculty name
+                                const facultySnap = await admin.firestore().collection('faculty').doc(context.params.wildcard).get();
+                                var Fname = facultySnap.data().firstname + " " + facultySnap.data().lastname;
+                                functions.logger.info(Fname);
+                                functions.logger.info("today < startdate");
 
 
-                            //format the start time and date
-                            let appointmantTime = doc.data().starttime.toDate().getTime();
-                            let appointmantTimeAfter3 = new Date(appointmantTime + 3 * 60 * 60 * 1000);// add 3h bcz it on UTC time not saudi time
-                            //this is the time I will send it to the student
-                            let StartTimeForAppointment = appointmantTimeAfter3.toLocaleTimeString('default', {
-                                hour: '2-digit',
-                                minute: '2-digit',
-                            });
-                            //same for end 
-                            let appointmantTimeend = doc.data().endtime.toDate().getTime();
-                            let appointmantTimeAfter3end = new Date(appointmantTimeend + 3 * 60 * 60 * 1000);// add 3h bcz it on UTC time not saudi time
-                            //this is the time I will send it to the student
-                            let endTimeForAppointment = appointmantTimeAfter3end.toLocaleTimeString('default', {
-                                hour: '2-digit',
-                                minute: '2-digit',
-                            });
-
-                            functions.logger.info("your appointment with Dr.",Fname ,"date",startdate.getDate(),"/",startdate.getMonth(),"/",startdate.getFullYear(),"time",StartTimeForAppointment,"-",endTimeForAppointment);
-                            var month = startdate.getMonth()+1;
-                            const payload = {
-                                notification: {
-                                    title: 'Appointment cancelation',
-                                    body: `your appointment with Dr.${Fname} on ${startdate.getDate()}/${month}/${startdate.getFullYear()} at ${StartTimeForAppointment} - ${endTimeForAppointment} has been canceled `,
-                                    //icon: follower.photoURL
-                                }
-                            };
-                            //store the appointment refrence
-                            var appointmentRef = doc.ref;
-                            functions.logger.info("appointmentRef");
-                            functions.logger.info(appointmentRef);
-                            var studentsRef = doc.data().student;
-                            for (let i = 0; i < studentsRef.length; i++) {
-                                var oneS = studentsRef[i].get().then(async (oneStudentDoc) => {
-                                    var token = oneStudentDoc.data().token
-                                    functions.logger.info(token);
-                                    const response = await admin.messaging().sendToDevice(token, payload);
-                                    //delete the appointment from the students appointment array
-                                    studentsRef[i].update({"appointments": admin.firestore.FieldValue.arrayRemove(appointmentRef)})
+                                //format the start time and date
+                                let appointmantTime = doc.data().starttime.toDate().getTime();
+                                let appointmantTimeAfter3 = new Date(appointmantTime + 3 * 60 * 60 * 1000);// add 3h bcz it on UTC time not saudi time
+                                //this is the time I will send it to the student
+                                let StartTimeForAppointment = appointmantTimeAfter3.toLocaleTimeString('default', {
+                                    hour: '2-digit',
+                                    minute: '2-digit',
                                 });
+                                //same for end 
+                                let appointmantTimeend = doc.data().endtime.toDate().getTime();
+                                let appointmantTimeAfter3end = new Date(appointmantTimeend + 3 * 60 * 60 * 1000);// add 3h bcz it on UTC time not saudi time
+                                //this is the time I will send it to the student
+                                let endTimeForAppointment = appointmantTimeAfter3end.toLocaleTimeString('default', {
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                });
+
+                                functions.logger.info("your appointment with Dr.", Fname, "date", startdate.getDate(), "/", startdate.getMonth(), "/", startdate.getFullYear(), "time", StartTimeForAppointment, "-", endTimeForAppointment);
+                                var month = startdate.getMonth() + 1;
+                                const payload = {
+                                    notification: {
+                                        title: 'Appointment cancelation',
+                                        body: `your appointment with Dr.${Fname} on ${startdate.getDate()}/${month}/${startdate.getFullYear()} at ${StartTimeForAppointment} - ${endTimeForAppointment} has been canceled `,
+                                        //icon: follower.photoURL
+                                    }
+                                };
+                                //store the appointment refrence
+                                var appointmentRef = doc.ref;
+                                functions.logger.info("appointmentRef");
+                                functions.logger.info(appointmentRef);
+                                var studentsRef = doc.data().student;
+                                for (let i = 0; i < studentsRef.length; i++) {
+                                    var oneS = studentsRef[i].get().then(async (oneStudentDoc) => {
+                                        var token = oneStudentDoc.data().token
+                                        functions.logger.info(token);
+                                        const response = await admin.messaging().sendToDevice(token, payload);
+                                        //delete the appointment from the students appointment array
+                                        studentsRef[i].update({ "appointments": admin.firestore.FieldValue.arrayRemove(appointmentRef) })
+                                    });
+                                }
                             }
                         }
-                       }
 
-                       //delet all doc
-                       await admin.firestore().collection('faculty').doc(context.params.wildcard).collection("appointment").doc(doc.id).delete();
-                       
+                        //delet all doc
+                        await admin.firestore().collection('faculty').doc(context.params.wildcard).collection("appointment").doc(doc.id).delete();
+
                     })
                 }
             );
+        }
+
+
+        //check if the meetting method has changed 
+        var meettingInfo = newValue.mettingmethodinfo;
+        functions.logger.info("meettingInfo");
+        functions.logger.info(meettingInfo);
+
+        const meetingMethodInfoIsUpdated = newValue.mettingmethodinfo != previousValue.mettingmethodinfo;
+        if (meetingMethodInfoIsUpdated) {
+            functions.logger.info("meetingMethodInfoIsUpdated");
+            var facultyAppointmentSnap = await appointmentRef.get().then(
+                (querySnapshot) => {
+                    querySnapshot.forEach(async (doc) => {
+                        if (doc.data().Booked === true) {
+                            var today = new Date();
+                            var appointmentDate = new Date(doc.data().starttime.toDate());
+                            var Difference_In_Time = (appointmentDate.getTime() - today.getTime()) / 1000;
+                            Difference_In_Time /= (60 * 60);
+                            //get the time in hours
+                            Diff_in_hours = Math.abs(Math.round(Difference_In_Time));
+                            // functions.logger.info('Difference_In_Time hours');
+                            functions.logger.info(Diff_in_hours);
+
+                            //if the appointment will start in the comming 24h then we will send a notification to the dr and students
+                            if (Diff_in_hours <= 24 && Diff_in_hours > 0) {
+
+                                const facultySnap = await admin.firestore().collection('faculty').doc(context.params.wildcard).get();
+                                var Fname = facultySnap.data().firstname + " " + facultySnap.data().lastname;
+                                functions.logger.info(Fname);
+
+                                const payload = {
+                                    notification: {
+                                        title: 'Meetting method',
+                                        body: `Dr. ${Fname}'s meeting method has changed for her upcoming appointments; please check it from the application.`,
+                                        //icon: follower.photoURL
+                                    }
+
+                                };
+
+                                var studentsRef = doc.data().student;
+                                for (let i = 0; i < studentsRef.length; i++) {
+                                    var oneS = studentsRef[i].get().then(async (oneStudentDoc) => {
+                                        var token = oneStudentDoc.data().token
+                                        functions.logger.info(token);
+                                        const response = await admin.messaging().sendToDevice(token, payload);
+                                       
+                                    });
+                                }
+                            }
+                        }
+                    })
+                })
+
+
         }
 
     });
