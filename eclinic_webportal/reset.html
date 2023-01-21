@@ -194,15 +194,15 @@
               const errorCode = error.code;
               const errorMessage = error.message;
              
-              if ( errorMessage ==="Firebase: Error (auth/invalid-email).")
-              {
-              alert("Please check the email format")
-              }
+              // if ( errorMessage ==="Firebase: Error (auth/invalid-email).")
+              // {
+              // alert("Please check the email format")
+              // }
 
 
 
-              else if(errorMessage === "Firebase: Error (auth/user-not-found)."){
-                after.innerHTML = "If you enter the email correctly then the reset link will be sent,Note the email you entered is " + email;
+             if(errorMessage === "Firebase: Error (auth/user-not-found)." ||  errorMessage ==="Firebase: Error (auth/invalid-email)."){
+                after.innerHTML = "Email : "+ email+ " <br> If this is a registered email, then a reset link will be sent to it. ";
               box.style.display = "none";
               guide.style.display = "none";
               afterclicksend.style.display = "none";
