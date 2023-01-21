@@ -47,6 +47,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
       student = studentData.data() as Map<String, dynamic>;
 
       Map<String, dynamic>? department;
+
       if (student?.containsKey("department") ?? false) {
         DocumentReference? departmentData = studentData['department'];
 
@@ -56,6 +57,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
           if (dData.exists) {
             department = dData.data() as Map<String, dynamic>;
             department['id'] = dData.reference.id;
+            department['ref'] = dData.reference;
           }
         }
       }
@@ -101,6 +103,12 @@ class FacultyListScreenState extends State<FacultyListScreen> {
   }
 
   void initFaculty() async {
+    if (student?['department']?['ref'] == null) {
+      setState(() {
+        facultyLoading = false;
+      });
+      return;
+    }
     var faculty = FirebaseFirestore.instance.collection('faculty');
     var q = await faculty
         .where('semester', isEqualTo: student?['semester']?['ref'])
@@ -245,7 +253,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                                         facultyLoading
                                             ? 'Wait...'
                                             : (facultyList.isEmpty
-                                                ? "No faculty found for you currently."
+                                                ? "No appointments found for you currently."
                                                 : (dropdownvalue == null
                                                     ? 'Please select speciality first...'
                                                     : 'There are no appointments available with the selected speciality.')),
@@ -410,7 +418,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                   borderRadius: BorderRadius.circular(15), // <-- Radius
                 ),
                 title: Text(
-                  specialityList.isEmpty ? 'Wait...' : 'Choose a Speciality',
+                  specialityList.isEmpty ? 'Wait...' : 'Chose a Speciality',
                   textAlign: TextAlign.center,
                 ),
                 children: [
