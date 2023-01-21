@@ -207,11 +207,8 @@
     }, 2000);
 
     //get all faculty members of one semester
-    async function getFaculty (semesterFaculty, semesterId) {
+    async function getFaculty (semesterId) {
 
-      if (semesterFaculty == null) {
-        return false;
-      }
 
       //fix duplicated loading.
       if (document.getElementById("facultyList").style.display != 'none') {
@@ -219,10 +216,23 @@
       }
 
       document.getElementById("facultyListData").dataset.uniqueid = semesterId;
-      document.getElementById("facultyListData").innerHTML = "Wait...";
+      document.getElementById("facultyListData").innerHTML = "<li>Wait...</li>";
+
+
+      //get a fresh facultymembers from database
+      const docSnap = await getDoc(doc(db, "semester", semesterId));
+
+      var semesterFaculty;
+      if (docSnap.exists()) {
+        semesterFaculty = [];
+      } else {
+        const details = docSnap.data();
+        semesterFaculty = details.facultymembers;
+      }
+      let found = semesterFaculty.length > 0;
 
       document.getElementById("facultyListData").innerHTML = "";
-      let found = semesterFaculty.length > 0;
+
 
       let currentItem = 1;
       await semesterFaculty.forEach(async (docc) => {
@@ -288,7 +298,7 @@
       let box = document.getElementById("show_data");
       let hasNoItems = true;
       let specialityList = document.getElementById("specialityList");
-      let semestersFacultyList = {};
+      // let semestersFacultyList = {};
       // ********************** get all docs********************************************************************
 
       //get all specialities
@@ -309,7 +319,7 @@
         let text = detail.semestername;
         const myArray = text.split(" ");
 
-        semestersFacultyList[doc.id] = detail.facultymembers ?? [];
+        // semestersFacultyList[doc.id] = detail.facultymembers ?? [];
 
         box.innerHTML += '<tr>' + '<td><span id="semester-' + doc.id + '">' + myArray[0] + '</span></td>' + '<td><span id="year-' + doc.id + '"">' + myArray[1] + '</span></td>' +
           '<td class="d-flex justify-content-between">' +
@@ -493,7 +503,7 @@
               semestername: semesteryearname,
               enddate: null,
               startdate: null,
-            
+
             });
 
             const myArray = semesteryearname.split(" ");
@@ -528,7 +538,7 @@
             console.log("docSemester:show-press:" + docSemester);
             specialityList.value = 0;
             document.getElementById('specialityList').disabled = true;
-            await getFaculty(semestersFacultyList[docSemester], docSemester);
+            await getFaculty(docSemester);
           });
 
           updatebtn.item(i).addEventListener('click', async function (event) {
