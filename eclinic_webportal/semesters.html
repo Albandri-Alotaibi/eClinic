@@ -214,9 +214,9 @@
       if (document.getElementById("facultyList").style.display != 'none') {
         return;
       }
-
+      document.getElementById("facultyList").style.display = "block";
       document.getElementById("facultyListData").dataset.uniqueid = semesterId;
-      document.getElementById("facultyListData").innerHTML = "<li>Wait...</li>";
+      document.getElementById("facultyListData").innerHTML = '<li><i class="fa fa-spinner fa-spin fa-3x fa-fw"></i> Wait...</li>';
 
 
       //get a fresh facultymembers from database
@@ -323,7 +323,7 @@
 
         box.innerHTML += '<tr>' + '<td><span id="semester-' + doc.id + '">' + myArray[0] + '</span></td>' + '<td><span id="year-' + doc.id + '"">' + myArray[1] + '</span></td>' +
           '<td class="d-flex justify-content-between">' +
-          '<button id="' + doc.id + '-ref" type="button" class=" update logbut btn btn-primary mx-2" style="border:0" data-ref="' + doc.id + '"><i class="fa fa-pencil" aria-hidden="true"></i></button>' +
+          '<button id="' + doc.id + '-ref" type="button" class=" update logbut btn btn-primary mx-2" style="border:0;font-size: 18px;" data-ref="' + doc.id + '">✎</button>' +
           '<button id="' + doc.id + '-sesmster" type="button" class=" show-faculty logbut btn btn-primary mx-2" style="border:0"  data-semester="' + doc.id + '"><i class="fa fa-users" aria-hidden="true"></i></button>' +
           '</td>' + '</tr>';
       });
@@ -510,7 +510,7 @@
 
             box.innerHTML += '<tr class="table-success">' + '<td><span id="semester-' + docRef.id + '">' + myArray[0] + '</span></td>' + '<td><span id="year-' + docRef.id + '"">' + myArray[1] + '</span></td>' +
               '<td class="d-flex justify-content-between">' +
-              '<button id="' + doc.id + '-ref" type="button" class=" update logbut btn btn-primary mx-2" style=" border:0" data-ref="' + docRef.id + '"><i class="fa fa-pencil" aria-hidden="true"></i></button>' +
+              '<button id="' + doc.id + '-ref" type="button" class=" update logbut btn btn-primary mx-2" style=" border:0;font-size: 18px;" data-ref="' + docRef.id + '">✎</button>' +
               '<button id="' + doc.id + '-semester" type="button" class=" show-faculty logbut btn btn-primary mx-2" style=" border:0"  data-semester="' + docRef.id + '"><i class="fa fa-users" aria-hidden="true"></i></button>' +
               '</td>' + '</tr>';
 
