@@ -216,7 +216,8 @@ class _AddHourState extends State<addHoursFaculty> {
         .doc(userid)
         .get();
 
-    if (snap.data()!.containsKey('availablehours') == true) {
+    if (snap.data()!.containsKey('availablehours') == true &&
+        snap['availablehours'] != null) {
       print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
       print("THERE ARE HOURS");
       setState(() {
@@ -766,142 +767,6 @@ class _AddHourState extends State<addHoursFaculty> {
                     ),
                   ),
                 ),
-
-                // FutureBuilder(
-                //     future: FirebaseFirestore.instance
-                //         .collection('faculty')
-                //         .doc(userid!)
-                //         .get(),
-                //     builder: (context, snapshot) {
-                //       if (snapshot.hasData) {
-                //         final muser =
-                //             snapshot.data!.data() as Map<String, dynamic>;
-                //         var mettingmethoddrop2 = muser['meetingmethod'];
-                //         final metingmethodinfotext = muser['mettingmethodinfo'];
-
-                //         _meetingmethodcontroller2 =
-                //             TextEditingController(text: metingmethodinfotext);
-                //         return Form(
-                //             key: formkey,
-                //             child: Column(
-                //               children: [
-                //                 SizedBox(
-                //                   width: 350,
-                //                   child: DropdownButtonFormField(
-                //                     decoration: InputDecoration(
-                //                       suffixIcon: Icon(Icons.edit),
-                //                       hintText: "Choose meeting method",
-                //                       border: OutlineInputBorder(),
-                //                     ),
-                //                     items: const [
-                //                       DropdownMenuItem(
-                //                           child: Text("In person metting"),
-                //                           value: "inperson"),
-                //                       DropdownMenuItem(
-                //                           child: Text("Online meeting"),
-                //                           value: "online"),
-                //                     ],
-                //                     value: mettingmethoddrop2,
-                //                     onChanged: (value) {
-                //                       print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-                //                       print(value);
-                //                       mettingmethoddrop2 = value;
-                //                       print(mettingmethoddrop2);
-                //                       _meetingmethodcontroller2.text = "";
-                //                     },
-                //                     //     onChanged: (value) {
-                //                     //   setState(() {
-                //                     //     mettingmethoddrop = value;
-                //                     //     _meetingmethodcontroller.text = "";
-                //                     //   });
-                //                     // }
-                //                   ),
-                //                 ),
-                //                 if (mettingmethoddrop2 != "")
-                //                   Padding(
-                //                     padding: const EdgeInsets.all(8.0),
-                //                     child: SizedBox(
-                //                       width: 350,
-                //                       child: TextFormField(
-                //                           controller: _meetingmethodcontroller2,
-                //                           decoration: InputDecoration(
-                //                               labelText: 'Office number/link',
-                //                               hintText:
-                //                                   "Enter your office number/link",
-                //                               // suffixIcon: Icon(Icons.edit),
-                //                               border: OutlineInputBorder()),
-                //                           autovalidateMode:
-                //                               AutovalidateMode.onUserInteraction,
-                //                           validator: (value) {
-                //                             if (value!.isEmpty ||
-                //                                 _meetingmethodcontroller2.text ==
-                //                                     "") {
-                //                               return 'Please enter your office number/link';
-                //                             } else {
-                //                               if (!(english.hasMatch(
-                //                                   _meetingmethodcontroller2
-                //                                       .text))) {
-                //                                 return "only english is allowed";
-                //                               }
-                //                             }
-                //                           }),
-                //                     ),
-                //                   ),
-                //                 Container(
-                //                   padding: EdgeInsets.only(bottom: 20),
-                //                   child: ElevatedButton(
-                //                     style: ElevatedButton.styleFrom(
-                //                       textStyle: TextStyle(
-                //                           fontFamily: 'main', fontSize: 16),
-                //                       shadowColor: Colors.blue[900],
-                //                       elevation: 20,
-                //                       backgroundColor:
-                //                           Mycolors.mainShadedColorBlue,
-                //                       minimumSize: Size(200, 50),
-                //                       shape: RoundedRectangleBorder(
-                //                         borderRadius: BorderRadius.circular(
-                //                             17), // <-- Radius
-                //                       ),
-                //                     ),
-                //                     onPressed: () {
-                //                       mm = mettingmethoddrop2;
-                //                       mmi = _meetingmethodcontroller2.text;
-
-                //                       if (formkey.currentState!.validate()) {
-                //                         print("///hhiiii");
-                //                         print(mm);
-                //                         FirebaseFirestore.instance
-                //                             .collection('faculty')
-                //                             .doc(userid)
-                //                             .update({
-                //                           "meetingmethod": mm,
-                //                           "mettingmethodinfo": mmi,
-                //                         });
-
-                //                         Fluttertoast.showToast(
-                //                           msg:
-                //                               "Your meeting method has been updated successfully",
-                //                           toastLength: Toast.LENGTH_SHORT,
-                //                           gravity: ToastGravity.CENTER,
-                //                           timeInSecForIosWeb: 2,
-                //                           backgroundColor:
-                //                               Color.fromARGB(255, 127, 166, 233),
-                //                           textColor:
-                //                               Color.fromARGB(255, 248, 249, 250),
-                //                           fontSize: 18.0,
-                //                         );
-                //                       }
-                //                     },
-                //                     child: Text("Save changes"),
-                //                   ),
-                //                 ),
-                //               ],
-                //             ));
-                //       }
-                //       return Center(
-                //           child: CircularProgressIndicator(
-                //               color: Mycolors.mainShadedColorBlue));
-                //     })
               ],
             ),
           ),
