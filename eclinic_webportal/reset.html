@@ -182,7 +182,7 @@
         else {//send email to admin so he can reset his password
           sendPasswordResetEmail(auth, email)
             .then(() => {
-              after.innerHTML = "We have sent you the reset link on this email " + email;
+              after.innerHTML = "We have sent you the reset link on this email "  + email;
               box.style.display = "none";
               guide.style.display = "none";
               afterclicksend.style.display = "none";
@@ -202,7 +202,7 @@
 
 
               else if(errorMessage === "Firebase: Error (auth/user-not-found)."){
-                after.innerHTML = "If you enter the email correctly then the reset link will be sent,Note the email you entered is" + email;
+                after.innerHTML = "If you enter the email correctly then the reset link will be sent,Note the email you entered is " + email;
               box.style.display = "none";
               guide.style.display = "none";
               afterclicksend.style.display = "none";
