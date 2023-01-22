@@ -332,7 +332,7 @@ class _facultysignupState extends State<facultysignup> {
             title: Text('Create account'),
 
             titleTextStyle: TextStyle(
-              fontFamily: 'main',
+              fontFamily: 'bold',
               fontSize: 24,
               color: Mycolors.mainColorBlack,
             ),

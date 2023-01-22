@@ -42,7 +42,7 @@ class _studentloginState extends State<studentlogin> {
           title: Text('Welcome back'),
 
           titleTextStyle: TextStyle(
-            fontFamily: 'main',
+            fontFamily: 'bold',
             fontSize: 24,
             color: Mycolors.mainColorBlack,
           ),

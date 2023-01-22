@@ -13,7 +13,9 @@ import 'package:myapp/facultyViewFAQ.dart';
 import 'package:myapp/facultyhome.dart';
 import 'package:myapp/facultyviewprofile.dart';
 import 'package:myapp/home.dart';
+import 'package:myapp/innereset.dart';
 import 'package:myapp/login.dart';
+import 'package:myapp/resetpassword.dart';
 import 'package:myapp/reusable.dart';
 import 'package:myapp/studenthome.dart';
 import 'package:myapp/facultysignup.dart';
@@ -88,6 +90,8 @@ class MyApp extends StatelessWidget {
           'facultyListFAQ': (context) => facultyListFAQ(),
           'editFAQ': (context) => editFAQ(value: ""),
           'facultyViewFAQ': (context) => facultyViewFAQ(commonIssue: {}),
+          'resetpassword': (context) => resetpassword(),
+          "innereset": (context) => innereset(),
         });
   }
 

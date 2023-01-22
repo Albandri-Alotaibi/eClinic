@@ -10,6 +10,7 @@ import 'package:myapp/addHoursFaculty.dart';
 import 'package:myapp/facultyFAQ.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:myapp/resetpassword.dart';
 
 class facultyhome extends StatefulWidget {
   // This class is the configuration for the state.
@@ -162,7 +163,7 @@ class _fState extends State<facultyhome> {
                   color: Mycolors.mainColorBlack),
             ),
             onTap: (() {
-              // Navigator.pushNamed(context, 'resetpasswprd');
+              Navigator.pushNamed(context, 'innereset');
             }),
           ),
           Divider(

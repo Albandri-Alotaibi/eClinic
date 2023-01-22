@@ -39,7 +39,7 @@ class _loginState extends State<login> {
           ),
           title: Text('Welcome back'),
           titleTextStyle: TextStyle(
-            fontFamily: 'main',
+            fontFamily: 'bols',
             fontSize: 24,
             color: Mycolors.mainColorBlack,
           ),
@@ -142,6 +142,22 @@ class _loginState extends State<login> {
                                   return null;
                                 }
                               }),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 230,
+                            ),
+                            child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(context, "resetpassword");
+                                },
+                                child: Text(
+                                  "Forget password ?",
+                                  style: TextStyle(
+                                      color: Mycolors.mainColorRed,
+                                      fontFamily: 'main',
+                                      fontSize: 14),
+                                )),
+                          ),
                           SizedBox(
                             height: 30,
                           ),

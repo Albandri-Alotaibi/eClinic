@@ -397,6 +397,12 @@ class _studentviewprofileState extends State<studentviewprofile> {
               Navigator.pushNamed(context, 'studenthome');
             },
           ),
+          titleTextStyle: TextStyle(
+            fontFamily: 'bold',
+            fontSize: 18,
+            color: Mycolors.mainColorBlack,
+          ),
+          title: Text("My profile"),
           backgroundColor: Mycolors.mainColorWhite,
           shadowColor: Colors.transparent,
           iconTheme: IconThemeData(

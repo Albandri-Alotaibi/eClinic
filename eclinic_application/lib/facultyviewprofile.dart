@@ -344,6 +344,12 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
               Navigator.pushNamed(context, 'facultyhome');
             },
           ),
+          titleTextStyle: TextStyle(
+            fontFamily: 'bold',
+            fontSize: 18,
+            color: Mycolors.mainColorBlack,
+          ),
+          title: Text("My profile"),
           backgroundColor: Mycolors.mainColorWhite,
           shadowColor: Colors.transparent,
           iconTheme: IconThemeData(
