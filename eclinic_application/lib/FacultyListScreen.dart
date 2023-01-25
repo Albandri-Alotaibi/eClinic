@@ -418,7 +418,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                   borderRadius: BorderRadius.circular(15), // <-- Radius
                 ),
                 title: Text(
-                  specialityList.isEmpty ? 'Wait...' : 'Chose a Speciality',
+                  specialityList.isEmpty ? 'Wait...' : 'Choose a Speciality',
                   textAlign: TextAlign.center,
                 ),
                 children: [
