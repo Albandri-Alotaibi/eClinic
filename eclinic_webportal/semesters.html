@@ -224,11 +224,11 @@
       const docSnap = await getDoc(doc(db, "semester", semesterId));
 
       var semesterFaculty;
-      if (docSnap.exists()) {
+      if (!docSnap.exists()) {
         semesterFaculty = [];
       } else {
         const details = docSnap.data();
-        semesterFaculty = details.facultymembers;
+        semesterFaculty = details.facultymembers || [];
       }
       let found = semesterFaculty.length > 0;
 
