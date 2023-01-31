@@ -16,18 +16,17 @@ import 'package:myapp/home.dart';
 import 'package:myapp/innereset.dart';
 import 'package:myapp/login.dart';
 import 'package:myapp/resetpassword.dart';
-import 'package:myapp/reusable.dart';
 import 'package:myapp/studenthome.dart';
 import 'package:myapp/facultysignup.dart';
 import 'package:myapp/studentlogin.dart';
+import 'package:myapp/studentresetpassword.dart';
 import 'package:myapp/studentsignup.dart';
 import 'package:myapp/studentverfication.dart';
 import 'package:myapp/studentviewprofile.dart';
 import 'package:myapp/verfication.dart';
 import 'package:myapp/FacultyViewScreen.dart';
 import 'package:myapp/FacultyListScreen.dart';
-import 'package:myapp/facultyFAQ.dart';
-import 'package:myapp/viewFAQ.dart';
+
 import 'package:myapp/viewGPlibrary.dart';
 import 'UploadGP.dart';
 
@@ -66,7 +65,7 @@ class MyApp extends StatelessWidget {
           'facultyhome': (context) => facultyhome(0),
           'studenthome': (context) => studenthome(),
           'facultysignup': (context) => facultysignup(),
-          'reusable': (context) => reusable(),
+
           'FacultyListScreen': (context) => FacultyListScreen(),
           'login': (context) => login(),
           'FacultyViewBookedAppointment': (context) =>
@@ -75,16 +74,12 @@ class MyApp extends StatelessWidget {
           'studentsignup': (context) => studentsignup(),
           'studentlogin': (context) => studentlogin(),
           'facultyviewprofile': (context) => facultyviewprofile(),
-          'facultyFAQ': (context) => facultyFAQ(),
           'studentverfication': (context) => studentverfication(),
           'studentviewprofile': (context) => studentviewprofile(),
           'StudentViewBookedAppointment': (context) =>
               StudentViewBookedAppointment(),
           'UploadGP': (context) => UploadGP(),
           'addcommonissue': (context) => addcommonissue(),
-          'viewFAQ': (context) => viewFAQ(
-                value: '',
-              ),
           'viewGPlibrary': (context) => viewGPlibrary(),
           'commonIssuesList': (context) => CommonIssuesListScreen(),
           'facultyListFAQ': (context) => facultyListFAQ(),
@@ -92,6 +87,7 @@ class MyApp extends StatelessWidget {
           'facultyViewFAQ': (context) => facultyViewFAQ(commonIssue: {}),
           'resetpassword': (context) => resetpassword(),
           "innereset": (context) => innereset(),
+          "studentresetpassword": (context) => studentresetpassword(),
         });
   }
 

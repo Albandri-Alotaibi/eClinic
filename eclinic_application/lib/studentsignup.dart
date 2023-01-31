@@ -279,6 +279,24 @@ class _studentsignupState extends State<studentsignup> {
   RegExp idRegEx = RegExp(r'^[0-9]+$');
   RegExp countRegEx = RegExp(r'^\d{9}$');
   RegExp countRegEx10 = RegExp(r'^\d{10}$');
+  //https://iwtsp.com/966591356970?fbclid=PAAaZvXSh0XdYn3drgv1lQLEIyU_-_pJ6SLCKzopLNfd0bgHTZ8fec3ua6mc4
+  //https://api.whatsapp.com/send/?phone=%2B966542806668&text&type=phone_number&app_absent=0
+  //wa.me/ above
+  //https://mobile.twitter.com/10Deem
+  //https://www.linkedin.com/in/asmaa-alqahtani-08a114190
+
+  RegExp whatsappformat = new RegExp(r'https://iwtsp.com/.*',
+      multiLine: false, caseSensitive: false);
+
+  RegExp whatsapp2format = new RegExp(r'https://api.whatsapp.com/.*',
+      multiLine: false, caseSensitive: false);
+
+  RegExp linkedinformat = new RegExp(r'https://www.linkedin.com/.*',
+      multiLine: false, caseSensitive: false);
+
+  RegExp twitterformat = new RegExp(r'https://mobile.twitter.com/.*',
+      multiLine: false, caseSensitive: false);
+
   RegExp english = RegExp("^[\u0000-\u007F]+\$");
   @override
   Widget build(BuildContext context) {
@@ -947,6 +965,26 @@ class _studentsignupState extends State<studentsignup> {
                                         if (!(english.hasMatch(
                                             _socialmedialink2.text))) {
                                           return "only english is allowed";
+                                        }
+                                        if (social == "WhatsApp") {
+                                          if (!(whatsappformat.hasMatch(
+                                                  _socialmedialink2.text)) &&
+                                              !(whatsapp2format.hasMatch(
+                                                  _socialmedialink2.text))) {
+                                            return 'Make sure your link account related to selected social media';
+                                          }
+                                        }
+                                        if (social == "LinkedIn") {
+                                          if (!(linkedinformat.hasMatch(
+                                              _socialmedialink2.text))) {
+                                            return 'Make sure your link account related to selected social media';
+                                          }
+                                        }
+                                        if (social == "Twitter") {
+                                          if (!(twitterformat.hasMatch(
+                                              _socialmedialink2.text))) {
+                                            return 'Make sure your link account related to selected social media';
+                                          }
                                         }
                                       }
                                     }),

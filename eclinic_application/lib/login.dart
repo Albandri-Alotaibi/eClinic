@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:myapp/home.dart';
 
 class login extends StatefulWidget {
   const login({super.key});
@@ -34,12 +35,18 @@ class _loginState extends State<login> {
           centerTitle: true,
           backgroundColor: Mycolors.mainColorWhite,
           shadowColor: Colors.transparent,
+          leading: BackButton(
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => home()));
+            },
+          ),
           iconTheme: IconThemeData(
             color: Color.fromARGB(255, 12, 12, 12), //change your color here
           ),
           title: Text('Welcome back'),
           titleTextStyle: TextStyle(
-            fontFamily: 'bols',
+            fontFamily: 'bold',
             fontSize: 24,
             color: Mycolors.mainColorBlack,
           ),
@@ -153,8 +160,8 @@ class _loginState extends State<login> {
                                 child: Text(
                                   "Forget password ?",
                                   style: TextStyle(
-                                      color: Mycolors.mainColorRed,
-                                      fontFamily: 'main',
+                                      color: Mycolors.mainColorGray,
+                                      fontFamily: 'bold',
                                       fontSize: 14),
                                 )),
                           ),

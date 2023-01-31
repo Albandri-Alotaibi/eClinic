@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:myapp/login.dart';
+import 'package:myapp/studentlogin.dart';
 import 'style/Mycolors.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -10,14 +11,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:quickalert/quickalert.dart';
 
-class resetpassword extends StatefulWidget {
-  const resetpassword({super.key});
+class studentresetpassword extends StatefulWidget {
+  const studentresetpassword({super.key});
 
   @override
-  State<resetpassword> createState() => _resetpasswordState();
+  State<studentresetpassword> createState() => _studentresetpasswordState();
 }
 
-class _resetpasswordState extends State<resetpassword> {
+class _studentresetpasswordState extends State<studentresetpassword> {
   @override
   final double profileheight = 244;
   final formkey = GlobalKey<FormState>();
@@ -279,7 +280,7 @@ class _resetpasswordState extends State<resetpassword> {
   //       Navigator.push(
   //         context,
   //         MaterialPageRoute(
-  //           builder: (context) => login(),
+  //           builder: (context) => studentlogin(),
   //         ),
   //       );
   //     },

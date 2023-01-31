@@ -144,7 +144,7 @@ class _sState extends State<studenthome> {
                 color: Mycolors.mainColorBlack),
           ),
           onTap: (() {
-            // Navigator.pushNamed(context, 'resetpasswprd');
+            Navigator.pushNamed(context, 'innereset');
           }),
         ),
         Divider(

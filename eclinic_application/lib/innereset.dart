@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:myapp/facultyhome.dart';
+import 'package:myapp/studenthome.dart';
 import 'style/Mycolors.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:quickalert/quickalert.dart';
 
 class innereset extends StatefulWidget {
   const innereset({super.key});
@@ -58,9 +61,10 @@ class _inneresetState extends State<innereset> {
               SizedBox(
                 height: 50,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 90),
-                child: buildprofileImage(),
+              Image(
+                image: AssetImage('assets/images/forgot-password.png'),
+                width: 180,
+                height: 180,
               ),
               SizedBox(
                 height: 40,
@@ -105,44 +109,16 @@ class _inneresetState extends State<innereset> {
                             try {
                               await FirebaseAuth.instance
                                   .sendPasswordResetEmail(email: email);
-                              showerror(context,
-                                  " وبعدين ارجعه للوق ان لا انسى احط المسج الخضراء");
 
                               setState(() {
                                 ifsend = true;
                               });
-                              // Navigator.push(context,
-                              //     MaterialPageRoute(builder: (context) {
-                              //   return LogIn();
-                              // }));
                             } on FirebaseAuthException catch (e) {
                               return;
                             }
-                            // setState(() {
-                            //   email = _emailcontrol.text;
-                            // });
-                            // try {
-                            //   //reset function
-
-                            //   await FirebaseAuth.instance
-                            //       .sendPasswordResetEmail(email: email);
-                            //   print("00000");
-                            // } on FirebaseAuthMultiFactorException catch (error) {
-                            //   showerror(context, "please check the error format");
-                            //   print("000000000000000000000000");
-                            //   print(error.message);
-                            //   if (error.message ==
-                            //           "The email address is badly formatted." ||
-                            //       error.message ==
-                            //           "There is no user record corresponding to this identifier. The user may have been deleted.") {
-                            //     showerror(
-                            //         context, "please check the error format");
-                            //     print("wrong");
-                            //   }
-                            // }
                             print(email);
                           },
-                          child: Text("Resend "),
+                          child: Text("Resend"),
                         ),
                       ],
                     )
@@ -165,41 +141,15 @@ class _inneresetState extends State<innereset> {
                           try {
                             await FirebaseAuth.instance
                                 .sendPasswordResetEmail(email: email);
-                            showerror(context,
-                                " وبعدين ارجعه للوق ان لا انسى احط المسج الخضراء");
+                            // showSucessAlert();
                             setState(() {
                               ifsend = true;
                             });
-                            // Navigator.push(context,
-                            //     MaterialPageRoute(builder: (context) {
-                            //   return LogIn();
-                            // }));
                           } on FirebaseAuthException catch (e) {
                             print(e);
                             return;
                           }
-                          // setState(() {
-                          //   email = _emailcontrol.text;
-                          // });
-                          // try {
-                          //   //reset function
 
-                          //   await FirebaseAuth.instance
-                          //       .sendPasswordResetEmail(email: email);
-                          //   print("00000");
-                          // } on FirebaseAuthMultiFactorException catch (error) {
-                          //   showerror(context, "please check the error format");
-                          //   print("000000000000000000000000");
-                          //   print(error.message);
-                          //   if (error.message ==
-                          //           "The email address is badly formatted." ||
-                          //       error.message ==
-                          //           "There is no user record corresponding to this identifier. The user may have been deleted.") {
-                          //     showerror(
-                          //         context, "please check the error format");
-                          //     print("wrong");
-                          //   }
-                          // }
                           print(email);
                         },
                         child: Text("Send reset password link "),
@@ -212,58 +162,26 @@ class _inneresetState extends State<innereset> {
     );
   }
 
-  Widget buildprofileImage() => CircleAvatar(
-        radius: profileheight / 2,
-        backgroundColor: Mycolors.mainColorShadow,
-        backgroundImage: AssetImage('assets/images/forgot-password.png'),
-      );
+  // Widget buildprofileImage() => CircleAvatar(
+  //       radius: profileheight / 2,
+  //       backgroundColor: Mycolors.mainColorShadow,
+  //       backgroundImage: AssetImage('assets/images/forgot-password.png'),
+  //     );
 
-  showerror(BuildContext context, String msg) {
-    return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Stack(
-        children: [
-          Container(
-            padding: EdgeInsets.all(16),
-            height: 90,
-            decoration: BoxDecoration(
-                color: Color(0xFFC72C41),
-                borderRadius: BorderRadius.all(Radius.circular(20))),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 48,
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Text(
-                      //   "Oh snap!",
-                      //   style: TextStyle(
-                      //     color: Colors.white,
-                      //     fontSize: 12,
-                      //   ),
-                      // ),
-                      Text(
-                        msg,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-    ));
-  }
+  // showSucessAlert() {
+  //   QuickAlert.show(
+  //     context: context,
+  //     type: QuickAlertType.success,
+  //     title: _emailcontrol.text,
+  //     text: "We have sent you the reset link on this email:\n ${email}",
+  //     onConfirmBtnTap: () {
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(
+  //           builder: (context) => facultyhome(0),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 }

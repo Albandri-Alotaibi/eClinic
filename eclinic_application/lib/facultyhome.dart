@@ -7,7 +7,6 @@ import 'package:myapp/login.dart';
 import 'package:myapp/style/Mycolors.dart';
 import 'package:myapp/FacultyViewBookedAppointment.dart';
 import 'package:myapp/addHoursFaculty.dart';
-import 'package:myapp/facultyFAQ.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:myapp/resetpassword.dart';

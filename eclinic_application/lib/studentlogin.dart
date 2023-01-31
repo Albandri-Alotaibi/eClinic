@@ -6,6 +6,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'style/Mycolors.dart';
+import 'package:quickalert/quickalert.dart';
+import 'package:myapp/home.dart';
+import 'package:myapp/studentresetpassword.dart';
 
 class studentlogin extends StatefulWidget {
   const studentlogin({super.key});
@@ -34,6 +37,12 @@ class _studentloginState extends State<studentlogin> {
           centerTitle: true,
           backgroundColor: Mycolors.mainColorWhite,
           shadowColor: Colors.transparent,
+          leading: BackButton(
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => home()));
+            },
+          ),
           //foregroundColor: Mycolors.mainColorBlack,
           // automaticallyImplyLeading: false,
           iconTheme: IconThemeData(
@@ -143,8 +152,25 @@ class _studentloginState extends State<studentlogin> {
                                   return null;
                                 }
                               }),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 230,
+                            ),
+                            child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, "studentresetpassword");
+                                },
+                                child: Text(
+                                  "Forget password ?",
+                                  style: TextStyle(
+                                      color: Mycolors.mainColorGray,
+                                      fontFamily: 'bold',
+                                      fontSize: 14),
+                                )),
+                          ),
                           SizedBox(
-                            height: 15,
+                            height: 30,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 30),

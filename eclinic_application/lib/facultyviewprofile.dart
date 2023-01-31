@@ -15,6 +15,7 @@ import 'package:myapp/login.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'style/Mycolors.dart';
+import 'package:quickalert/quickalert.dart';
 
 class facultyviewprofile extends StatefulWidget {
   const facultyviewprofile({super.key});
@@ -941,36 +942,10 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                             .doc(docsforsemestername),
                                         "specialty": specalityid,
                                       });
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  facultyviewprofile()));
 
-                                      Fluttertoast.showToast(
-                                        msg:
-                                            " Your information has been updated successfully",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 2,
-                                        backgroundColor:
-                                            Color.fromARGB(255, 127, 166, 233),
-                                        textColor:
-                                            Color.fromARGB(255, 248, 249, 250),
-                                        fontSize: 18.0,
-                                      );
+                                      showSucessAlert();
                                     } on FirebaseAuthException catch (error) {
-                                      Fluttertoast.showToast(
-                                        msg: "Something wronge",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 5,
-                                        backgroundColor:
-                                            Color.fromARGB(255, 127, 166, 233),
-                                        textColor:
-                                            Color.fromARGB(255, 252, 253, 255),
-                                        fontSize: 18.0,
-                                      );
+                                      showerror(context, "Something wronge");
                                     }
                                   } else {
                                     confirm(context);
@@ -1103,8 +1078,6 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
       ),
       child: Text("confirm"),
       onPressed: () async {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => facultyviewprofile()));
         if (formkey.currentState!.validate() && checklengthforspecialty > 0) {
           setState(() {
             fn = _fnameController.text;
@@ -1136,25 +1109,9 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
               "availablehours": FieldValue.delete(),
             });
 
-            Fluttertoast.showToast(
-              msg: " Your information has been updated successfully",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 2,
-              backgroundColor: Color.fromARGB(255, 127, 166, 233),
-              textColor: Color.fromARGB(255, 248, 249, 250),
-              fontSize: 18.0,
-            );
+            showSucessAlert();
           } on FirebaseAuthException catch (error) {
-            Fluttertoast.showToast(
-              msg: "Something wronge",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 5,
-              backgroundColor: Color.fromARGB(255, 127, 166, 233),
-              textColor: Color.fromARGB(255, 252, 253, 255),
-              fontSize: 18.0,
-            );
+            showerror(context, "Something wronge");
           }
         }
       },
@@ -1384,56 +1341,70 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
     print(ref);
     print(spe);
   }
-  // showConfirmationDialog(BuildContext context) {
-  //   Widget dontCancelAppButton = ElevatedButton(
-  //     style: ElevatedButton.styleFrom(
-  //       textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-  //       shadowColor: Colors.blue[900],
-  //       elevation: 20,
-  //       backgroundColor: Mycolors.mainShadedColorBlue,
-  //       minimumSize: Size(60, 40),
-  //       shape: RoundedRectangleBorder(
-  //         borderRadius: BorderRadius.circular(10), // <-- Radius
-  //       ),
-  //     ),
-  //     child: Text("No"),
-  //     onPressed: () {
-  //       Navigator.of(context).pop();
-  //     },
-  //   );
 
-  //   Widget YesCancelAppButton = ElevatedButton(
-  //     style: ElevatedButton.styleFrom(
-  //       textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-  //       shadowColor: Colors.blue[900],
-  //       elevation: 20,
-  //       backgroundColor: Mycolors.mainShadedColorBlue,
-  //       minimumSize: Size(60, 40),
-  //       shape: RoundedRectangleBorder(
-  //         borderRadius: BorderRadius.circular(10), // <-- Radius
-  //       ),
-  //     ),
-  //     child: Text("Yes"),
-  //     onPressed: () {
-  //       FirebaseAuth.instance.signOut().then((value) => Navigator.push(
-  //           context, MaterialPageRoute(builder: (context) => login())));
-  //     },
-  //   );
+  showSucessAlert() {
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.success,
+      title: "",
+      text: " Your information has been updated successfully",
+      onConfirmBtnTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => facultyviewprofile(),
+          ),
+        );
+      },
+    );
+  }
 
-  //   AlertDialog alert = AlertDialog(
-  //     // title: Text("LogOut"),
-  //     content: Text("Are you sure you want to logout ?"),
-  //     actions: [
-  //       dontCancelAppButton,
-  //       YesCancelAppButton,
-  //     ],
-  //   );
-
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return alert;
-  //     },
-  //   );
-  // }
+  showerror(BuildContext context, String msg) {
+    return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Stack(
+        children: [
+          Container(
+            padding: EdgeInsets.all(16),
+            height: 90,
+            decoration: BoxDecoration(
+                color: Color(0xFFC72C41),
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 48,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Text(
+                      //   "Oh snap!",
+                      //   style: TextStyle(
+                      //     color: Colors.white,
+                      //     fontSize: 12,
+                      //   ),
+                      // ),
+                      Text(
+                        msg,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+    ));
+  }
 }
