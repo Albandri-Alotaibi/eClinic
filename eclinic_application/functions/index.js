@@ -28,37 +28,22 @@ exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async
                     functions.logger.info('subcollection exists');
                     var numOfBookedAppointments = 0;
                     sub.forEach(async (subDoc) => {//loop on booked appointments only
-                        // functions.logger.info('subDoc id for the booked appointment');
-                        // functions.logger.info(subDoc.id);
-                        // functions.logger.info('subDoc.data().starttime');
-                        // functions.logger.info(subDoc.data().starttime);
-
-
+                      
                         //NOTE: I did not add a natify field bcz I will push notifications only once a day and the notifications that after this will be sended imedutly
 
                         //today date
                         var today = new Date();
-                        // functions.logger.info('today');
-                        // functions.logger.info(today);
-                        // functions.logger.info('today.getTime()');
-                        // functions.logger.info(today.getTime());
-
+                      
                         //appointment start date and time
                         var appointmentDate = new Date(subDoc.data().starttime.toDate());
-                        // functions.logger.info('appointmentDate');
-                        // functions.logger.info(appointmentDate);
-
-
-
+                        
 
                         // To calculate the time difference of two dates
                         var Difference_In_Time = (appointmentDate.getTime() - today.getTime()) / 1000;
                         Difference_In_Time /= (60 * 60);
                         //get the time in hours
                         Diff_in_hours = Math.abs(Math.round(Difference_In_Time));
-                        // functions.logger.info('Difference_In_Time hours');
-                        // functions.logger.info(Diff_in_hours);
-
+                       
                         //if the appointment will start in the comming 24h then we will send a notification to the dr and students
                         if (Diff_in_hours <= 24 && Diff_in_hours > 0) {
                             // count the numder of appointments a faculty have to send it later
@@ -67,9 +52,7 @@ exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async
                             //now we will send to the student the reminders
                             //first we will get the faculty member name
                             facultyName = doc.data().firstname + " " + doc.data().lastname;
-                            // functions.logger.info('faculty Name');
-                            // functions.logger.info(facultyName);
-
+                          
                             //now we will get the appointment time
                             let appointmantTime = subDoc.data().starttime.toDate().getTime();
                             let appointmantTimeAfter3 = new Date(appointmantTime + 3 * 60 * 60 * 1000);// add 3h bcz it on UTC time not saudi time
@@ -79,8 +62,7 @@ exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async
                                 hour: '2-digit',
                                 minute: '2-digit',
                             });
-                            // functions.logger.info('appointmant start Time');
-                            // functions.logger.info(StartTimeForAppointment);//the time in saudi 
+                           
                             // Notification details.
                             const payload = {
                                 notification: {
@@ -98,11 +80,6 @@ exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async
                                 });
                             }
 
-                            // tokens = "f2Fy3zYaR-OqtIsht7D3L3:APA91bHihw83eQLNqgFpIOLHcQ2XzCX7JOJLK9IyMrc8XHcssBaKoga3mMAWEMwEY_i5kxbgLiJuHHj-PdPESVtuqryHUWspyFsXUnJHWvHAWsnrw1n4IipbLUsAdbo2ESLiPs5y6nY9";
-                            // Send notifications to tokens.
-                            // const response = await admin.messaging().sendToDevice(tokens, payload);
-
-
                         }
 
                     })// end of loop on booked appointments
@@ -112,7 +89,7 @@ exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async
                             notification: {
                                 title: 'Consultation appointment',
                                 body: `You have ${numOfBookedAppointments} appointment(s) tomorrow.`,
-                                //icon: follower.photoURL
+                               
                             }
                         };
                         const response = await admin.messaging().sendToDevice(doc.data().token, payload);

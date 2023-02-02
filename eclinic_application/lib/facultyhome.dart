@@ -94,120 +94,131 @@ class _fState extends State<facultyhome> {
           foregroundColor: Mycolors.mainColorBlack,
           primary: false,
           centerTitle: true,
-          backgroundColor: Color.fromARGB(255, 246, 246, 246),
-          shadowColor: Colors.transparent,
+          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          shadowColor: Color.fromARGB(0, 0, 0, 0),
           iconTheme: IconThemeData(
             color: Color.fromARGB(255, 12, 12, 12), //change your color here
           ),
         ),
-        backgroundColor: Mycolors.BackgroundColor,
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         drawer: Drawer(
+            width: 210,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.zero,
+                  topLeft: Radius.zero,
+                  bottomRight: Radius.circular(40),
+                  topRight: Radius.circular(40)),
+            ),
             child: ListView(children: [
-          Card(
-            shadowColor: Color.fromARGB(94, 114, 168, 243),
-            elevation: 0,
-            child: DrawerHeader(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: 0,
-                  ),
-                  child: Image.asset(
-                    "assets/images/woman.png",
-                    width: 100,
-                    height: 100,
-                  ),
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(70), // <-- Radius
                 ),
-                SizedBox(
-                  height: 10,
+                shadowColor: Color.fromARGB(94, 114, 168, 243),
+                elevation: 0,
+                child: DrawerHeader(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: 0,
+                      ),
+                      child: Image.asset(
+                        "assets/images/User1.png",
+                        width: 100,
+                        height: 100,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Center(
+                      child: Text(" ",
+                          style: TextStyle(
+                              fontFamily: 'bold',
+                              fontSize: 16,
+                              color: Mycolors.mainColorBlack)),
+                    ),
+                  ],
+                )),
+              ),
+              ListTile(
+                leading: Icon(Icons.edit_note, color: Mycolors.mainColorBlue),
+                title: Text(
+                  "My profile",
+                  style: TextStyle(
+                      fontFamily: 'main',
+                      fontSize: 16,
+                      color: Mycolors.mainColorBlack),
                 ),
-                Center(
-                  child: Text(" ",
-                      style: TextStyle(
-                          fontFamily: 'bold',
-                          fontSize: 16,
-                          color: Mycolors.mainColorBlack)),
+                onTap: (() {
+                  Navigator.pushNamed(context, 'facultyviewprofile');
+                }),
+              ),
+              Divider(
+                color: Mycolors.mainColorBlue,
+                thickness: 1,
+                endIndent: 15,
+                indent: 15,
+              ),
+              ListTile(
+                leading: Icon(Icons.password, color: Mycolors.mainColorBlue),
+                title: Text(
+                  "Reset password",
+                  style: TextStyle(
+                      fontFamily: 'main',
+                      fontSize: 16,
+                      color: Mycolors.mainColorBlack),
                 ),
-              ],
-            )),
-          ),
-          ListTile(
-            leading: Icon(Icons.edit_note),
-            title: Text(
-              "My profile",
-              style: TextStyle(
-                  fontFamily: 'main',
-                  fontSize: 16,
-                  color: Mycolors.mainColorBlack),
-            ),
-            onTap: (() {
-              Navigator.pushNamed(context, 'facultyviewprofile');
-            }),
-          ),
-          Divider(
-            color: Mycolors.mainColorBlue,
-            thickness: 1,
-            endIndent: 15,
-            indent: 15,
-          ),
-          ListTile(
-            leading: Icon(Icons.password),
-            title: Text(
-              "Reset password",
-              style: TextStyle(
-                  fontFamily: 'main',
-                  fontSize: 16,
-                  color: Mycolors.mainColorBlack),
-            ),
-            onTap: (() {
-              Navigator.pushNamed(context, 'innereset');
-            }),
-          ),
-          Divider(
-            color: Mycolors.mainColorBlue,
-            thickness: 1,
-            endIndent: 15,
-            indent: 15,
-          ),
-          ListTile(
-            leading: Icon(Icons.logout),
-            title: Text(
-              "Log out",
-              style: TextStyle(
-                  fontFamily: 'main',
-                  fontSize: 16,
-                  color: Mycolors.mainColorBlack),
-            ),
-            onTap: (() {
-              showConfirmationDialog(context);
-            }),
-          ),
-          Divider(
-            color: Mycolors.mainColorBlue,
-            thickness: 1,
-            endIndent: 15,
-            indent: 15,
-          ),
-        ])),
+                onTap: (() {
+                  Navigator.pushNamed(context, 'innereset');
+                }),
+              ),
+              Divider(
+                color: Mycolors.mainColorBlue,
+                thickness: 1,
+                endIndent: 15,
+                indent: 15,
+              ),
+              ListTile(
+                leading: Icon(Icons.logout, color: Mycolors.mainColorBlue),
+                title: Text(
+                  "Log out",
+                  style: TextStyle(
+                      fontFamily: 'main',
+                      fontSize: 16,
+                      color: Mycolors.mainColorBlack),
+                ),
+                onTap: (() {
+                  showConfirmationDialog(context);
+                }),
+              ),
+              Divider(
+                color: Mycolors.mainColorBlue,
+                thickness: 1,
+                endIndent: 15,
+                indent: 15,
+              ),
+            ])),
         body: _pages[widget.selectedIndex],
         //-------------------------Nav Bar------------------------------
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20)),
+                topLeft: Radius.circular(50),
+                topRight: Radius.circular(50),
+                bottomLeft: Radius.circular(50),
+                bottomRight: Radius.circular(50)),
             boxShadow: [
               BoxShadow(
                 // color: Colors.grey.withOpacity(0.5),
                 color: Mycolors.mainColorShadow,
                 spreadRadius: 10,
                 blurRadius: 7,
-                offset: Offset(0, 3), // changes position of shadow
+                offset: Offset(3, 3), // changes position of shadow
               ),
             ],
           ),
