@@ -47,9 +47,9 @@ class Appointment {
   String StringStudents() {
     // TODO: implement toString
 
-    String srting = "\n ${students[0]}";
-    for (var i = 1; i < students.length; i++) {
-      srting = srting + "\n ${students[i]}";
+    String srting = "${students[0]}";
+    for (var i = 1; i < students.length - 1; i++) {
+      srting = srting + ", ${students[i]}";
     }
 
     return srting + "\n";

@@ -335,6 +335,7 @@ class _AddHourState extends State<addHoursFaculty> {
     if (isSemesterDateExists == false) {
       return SafeArea(
         child: Scaffold(
+          backgroundColor: Color.fromARGB(255, 255, 255, 255),
           // backgroundColor: Mycolors.BackgroundColor,
           body: Column(
             children: [
@@ -380,6 +381,7 @@ class _AddHourState extends State<addHoursFaculty> {
     } else if (isExists == false && isSemesterDateExists == true) {
       return SafeArea(
         child: Scaffold(
+          backgroundColor: Color.fromARGB(255, 255, 255, 255),
           // backgroundColor: Mycolors.BackgroundColor,
           // appBar: AppBar(
           //   backgroundColor: Mycolors.BackgroundColor,
@@ -581,7 +583,7 @@ class _AddHourState extends State<addHoursFaculty> {
       return SafeArea(
         child: Scaffold(
           // appBar: AppBar(title: Text("gg")),
-          backgroundColor: Color.fromARGB(255, 246, 246, 246),
+          backgroundColor: Color.fromARGB(255, 255, 255, 255),
           body:
               // Form(
               //   key: formkey,
@@ -615,52 +617,64 @@ class _AddHourState extends State<addHoursFaculty> {
                                     return ListView.builder(
                                       itemCount: numOfDaysOfHelp,
                                       itemBuilder: ((context, index) {
-                                        return Card(
-                                            color: Colors.white,
-                                            margin: EdgeInsets.only(bottom: 20),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      17), // <-- Radius
-                                              // side: BorderSide(
-                                              //   width: 1,
-                                              //   color:
-                                              //       Mycolors.mainShadedColorBlue,
-                                              // ),
-                                            ),
-                                            shadowColor: Color.fromARGB(
-                                                94, 250, 250, 250),
-                                            elevation: 20,
-                                            child: ExpansionTile(
-                                              iconColor:
-                                                  Mycolors.mainShadedColorBlue,
-                                              collapsedIconColor:
-                                                  Mycolors.mainShadedColorBlue,
-                                              title: Text(
-                                                availableHours[index].title,
-                                                style: TextStyle(
-                                                    color:
-                                                        Mycolors.mainColorBlue,
-                                                    fontFamily: 'Semibold',
-                                                    fontSize: 17),
+                                        return ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(17),
+                                          child: Card(
+                                              color: Color.fromARGB(
+                                                  76, 221, 221, 221),
+                                              margin:
+                                                  EdgeInsets.only(bottom: 20),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        17), // <-- Radius
+                                                // side: BorderSide(
+                                                //   width: 1,
+                                                //   color:
+                                                //       Mycolors.mainShadedColorBlue,
+                                                // ),
                                               ),
-                                              children: [
-                                                Padding(
+                                              shadowColor: Color.fromARGB(
+                                                  0, 250, 250, 250),
+                                              elevation: 20,
+                                              child: ExpansionTile(
+                                                iconColor: Mycolors
+                                                    .mainShadedColorBlue,
+                                                collapsedIconColor: Mycolors
+                                                    .mainShadedColorBlue,
+                                                title: Padding(
                                                   padding:
                                                       const EdgeInsets.only(
-                                                          bottom: 15),
+                                                          top: 20, bottom: 20),
                                                   child: Text(
-                                                    availableHours[index]
-                                                        .allhours,
+                                                    availableHours[index].title,
                                                     style: TextStyle(
                                                         color: Mycolors
-                                                            .mainColorBlack,
-                                                        fontFamily: 'main',
-                                                        fontSize: 16),
+                                                            .mainShadedColorBlue,
+                                                        fontFamily: 'Semibold',
+                                                        fontSize: 17),
                                                   ),
-                                                )
-                                              ],
-                                            ));
+                                                ),
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            bottom: 15),
+                                                    child: Text(
+                                                      availableHours[index]
+                                                          .allhours,
+                                                      style: TextStyle(
+                                                          color: Mycolors
+                                                              .mainColorBlack,
+                                                          fontFamily:
+                                                              'Semibold',
+                                                          fontSize: 16),
+                                                    ),
+                                                  )
+                                                ],
+                                              )),
+                                        );
                                       }),
                                     );
                                   }
@@ -684,21 +698,22 @@ class _AddHourState extends State<addHoursFaculty> {
                                       muser['mettingmethodinfo'];
 
                                   return Container(
-                                    height: 140,
-                                    width: 350,
+                                    // height: 140,
+                                    // width: 350,
                                     child: Card(
+                                      //color: Color.fromARGB(76, 221, 221, 221),
                                       //Mycolors.mainShadedColorBlue
                                       //color: Color.fromARGB(171, 255, 255, 255),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(
                                             17), // <-- Radius
-                                        // side: BorderSide(
-                                        //   width: 1,
-                                        //   color: Mycolors.mainShadedColorBlue,
-                                        // ),
+                                        side: BorderSide(
+                                          width: 1,
+                                          color: Mycolors.mainColorGray,
+                                        ),
                                       ),
                                       shadowColor:
-                                          Color.fromARGB(171, 212, 212, 240),
+                                          Color.fromARGB(72, 212, 212, 240),
                                       elevation: 40,
                                       child: Column(
                                         children: [
@@ -734,7 +749,7 @@ class _AddHourState extends State<addHoursFaculty> {
                                                       " meeting",
                                                   style: TextStyle(
                                                       color: Mycolors
-                                                          .mainColorBlue,
+                                                          .mainColorBlack,
                                                       fontFamily: 'main',
                                                       fontSize: 18),
                                                 ),
@@ -743,7 +758,7 @@ class _AddHourState extends State<addHoursFaculty> {
                                                       metingmethodinfotext,
                                                   style: TextStyle(
                                                       color: Mycolors
-                                                          .mainColorBlue,
+                                                          .mainColorBlack,
                                                       fontFamily: 'main',
                                                       fontSize: 18),
                                                 )
@@ -755,9 +770,7 @@ class _AddHourState extends State<addHoursFaculty> {
                                     ),
                                   );
                                 } //end of if
-                                return Center(
-                                    child: CircularProgressIndicator(
-                                        color: Mycolors.mainShadedColorBlue));
+                                return Center();
                               }),
                           SizedBox(
                             height: 10,
@@ -774,9 +787,11 @@ class _AddHourState extends State<addHoursFaculty> {
         ),
       );
     } else {
-      return Center(
-          child:
-              CircularProgressIndicator(color: Mycolors.mainShadedColorBlue));
+      return Scaffold(
+          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          body: Center(
+              child: CircularProgressIndicator(
+                  color: Mycolors.mainShadedColorBlue)));
     }
   } //end build
 
@@ -849,7 +864,7 @@ class _AddHourState extends State<addHoursFaculty> {
     AlertDialog alert = AlertDialog(
       title: Text("Edit meething method"),
       content: SizedBox(
-          height: 150,
+          height: 180,
           child: Column(
             children: [
               Form(
