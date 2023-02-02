@@ -1,0 +1,13 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /admin/{admin} {
+      allow read: if true;
+    }
+    match /{document=**} {
+      //only allow authniticated users who is in admin collection
+      allow create, read, write, delete: if request.auth != null && exists(/databases/$(database)/documents/admin/$(request.auth.uid))
+    }
+  }
+}
+

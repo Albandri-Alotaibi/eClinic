@@ -1,0 +1,33 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "commonissue",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "issuecategory",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "semester",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "faculty",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "semester",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "department",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
