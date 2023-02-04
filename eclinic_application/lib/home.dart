@@ -31,24 +31,31 @@ class _homeState extends State<home> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("assets/images/ksu.jpg"),
-              fit: BoxFit.fill,
-              filterQuality: FilterQuality.high,
-              opacity: 0.6),
+            image: AssetImage("assets/images/KSU3.jpg"),
+            fit: BoxFit.fill,
+            filterQuality: FilterQuality.high,
+            // opacity: 0.6
+          ),
         ),
         child: Column(children: [
           Padding(
             padding: const EdgeInsets.only(top: 200, right: 120),
             child: Text(
               "Welcome  ",
-              style: TextStyle(fontFamily: 'bold', fontSize: 50),
+              style: TextStyle(
+                  fontFamily: 'bold',
+                  fontSize: 50,
+                  color: Mycolors.mainColorWhite),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10, right: 20),
             child: Text(
               "Join us, let's make success happen! ",
-              style: TextStyle(fontFamily: 'main', fontSize: 20),
+              style: TextStyle(
+                  fontFamily: 'main',
+                  fontSize: 20,
+                  color: Mycolors.mainColorWhite),
             ),
           ),
           Padding(
@@ -61,8 +68,8 @@ class _homeState extends State<home> {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-                    shadowColor: Colors.blue[900],
-                    elevation: 20,
+                    // shadowColor: Colors.blue[900],
+                    // elevation: 0,
                     backgroundColor: Mycolors.mainShadedColorBlue,
                     minimumSize: Size(150, 50),
                     shape: RoundedRectangleBorder(
@@ -78,8 +85,8 @@ class _homeState extends State<home> {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-                    shadowColor: Colors.blue[900],
-                    elevation: 20,
+                    // shadowColor: Colors.blue[900],
+                    // elevation: 20,
                     backgroundColor: Mycolors.mainShadedColorBlue,
                     minimumSize: Size(20, 50),
                     shape: RoundedRectangleBorder(
