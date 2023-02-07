@@ -135,7 +135,7 @@ class _fState extends State<facultyhome> {
                       height: 10,
                     ),
                     Center(
-                      child: Text(fnDrawer! + " " + lnDrawer!,
+                      child: Text("${fnDrawer} ${lnDrawer}",
                           style: TextStyle(
                               fontFamily: 'bold',
                               fontSize: 16,
