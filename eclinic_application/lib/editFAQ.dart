@@ -82,6 +82,8 @@ class _editFAQState extends State<editFAQ> {
     title = snap["issuetitle"];
     problem = snap["problem"];
     solution = snap["solution"];
+    _problemController = TextEditingController(text: problem);
+    _solutioncontroll = TextEditingController(text: solution);
 
     // links = snap["links"];
 
@@ -216,14 +218,14 @@ class _editFAQState extends State<editFAQ> {
                 key: formkey,
                 child: Column(children: [
                   FutureBuilder(
-                      future: getcommonissue(),
+                      future: FirebaseFirestore.instance
+                          .collection('commonissue')
+                          .doc(widget.value)
+                          .get(),
                       builder: ((context, snapshot) {
                         _issuetitleconstroller =
                             TextEditingController(text: title);
-                        _problemController =
-                            TextEditingController(text: problem);
-                        _solutioncontroll =
-                            TextEditingController(text: solution);
+
                         return Column(
                           children: [
                             TextFormField(

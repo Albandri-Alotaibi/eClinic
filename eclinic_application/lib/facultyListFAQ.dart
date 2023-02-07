@@ -362,8 +362,9 @@ class _facultyListFAQState extends State<facultyListFAQ> {
                             Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
-                                  border:
-                                      Border.all(color: Colors.black, width: 1),
+                                  border: Border.all(
+                                      color: Mycolors.mainShadedColorBlue,
+                                      width: 1),
                                 ),
                                 padding: const EdgeInsets.all(10),
                                 margin: const EdgeInsets.only(bottom: 8),
@@ -412,8 +413,9 @@ class _facultyListFAQState extends State<facultyListFAQ> {
                             Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
-                                  border:
-                                      Border.all(color: Colors.black, width: 1),
+                                  border: Border.all(
+                                      color: Mycolors.mainShadedColorBlue,
+                                      width: 1),
                                 ),
                                 padding: const EdgeInsets.all(10),
                                 margin: const EdgeInsets.only(bottom: 8),
@@ -492,11 +494,10 @@ class _facultyListFAQState extends State<facultyListFAQ> {
                                               style: const TextStyle(
                                                   fontSize: 18)),
 
-                                          textColor:
-                                              Mycolors.mainShadedColorBlue,
+                                          textColor: Mycolors.mainColorBlack,
                                           trailing: const Icon(
                                             Icons.add,
-                                            color: Colors.blue,
+                                            color: Colors.black,
                                           ),
 
                                           // fontFamily: 'main',
@@ -600,7 +601,7 @@ class _facultyListFAQState extends State<facultyListFAQ> {
           children: [
             Expanded(
               child: Card(
-                color: Mycolors.mainShadedColorBlue,
+                color: Mycolors.mainColorBlue,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(17), // <-- Radius
                 ),
