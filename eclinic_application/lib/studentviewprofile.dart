@@ -1191,7 +1191,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
   Widget buildprofileImage() => CircleAvatar(
         radius: profileheight / 2,
         backgroundColor: Colors.grey.shade800,
-        backgroundImage: AssetImage('assets/images/woman.png'),
+        backgroundImage: AssetImage("assets/images/User1.png"),
       );
   // showConfirmationDialog(BuildContext context) {
   //   Widget dontCancelAppButton = ElevatedButton(

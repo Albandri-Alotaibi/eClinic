@@ -25,9 +25,15 @@ class studenthome extends StatefulWidget {
 }
 
 class _sState extends State<studenthome> {
-  var fname;
-  var lname;
+  String? fname;
+  String? lname;
+  String? email = '';
+  String? userid = '';
   void initState() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    userid = user!.uid;
+    email = user.email!;
     super.initState();
     getusername();
     //++++++++++++++++++++++++++DEEM++++++++++++++++++++++++++++++++
@@ -48,8 +54,6 @@ class _sState extends State<studenthome> {
     });
   }
 
-  String? email = '';
-  String? userid = '';
   final double profileheight = 144;
   @override
   Widget build(BuildContext context) {
@@ -62,10 +66,7 @@ class _sState extends State<studenthome> {
     //         return login();
     //       }
     //     }));
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final User? user = auth.currentUser;
-    userid = user!.uid;
-    email = user.email!;
+
     // setSemester();
     // getusername();
 

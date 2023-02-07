@@ -1165,7 +1165,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
   Widget buildprofileImage() => CircleAvatar(
         radius: profileheight / 2,
         backgroundColor: Colors.grey.shade800,
-        backgroundImage: AssetImage('assets/images/woman.png'),
+        backgroundImage: AssetImage("assets/images/User1.png"),
       );
 
   checkidspecialty(List<String?> specialityoption) async {

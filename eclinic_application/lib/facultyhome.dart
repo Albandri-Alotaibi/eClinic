@@ -27,30 +27,34 @@ class facultyhome extends StatefulWidget {
 }
 
 class _fState extends State<facultyhome> {
-  var fnDrawer;
-  var lnDrawer;
+  String? fnDrawer;
+  String? lnDrawer;
+  String? email = '';
+  String? userid = '';
   @override
   void initState() {
-    // getfacultname();
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    userid = user!.uid;
+    email = user.email!;
+    getfacultname();
     // TODO: implement initState
     super.initState();
   }
 
-  String? email = '';
-  String? userid = '';
   //int selectedIndex = 0;
-  // getfacultname() async {
-  //   final snap = await FirebaseFirestore.instance
-  //       .collection('faculty')
-  //       .doc(userid)
-  //       .get();
-  //   setState(() {
-  //     fnDrawer = snap['firstname'];
-  //     lnDrawer = snap['lastname'];
-  //   });
-
-  //   print(fnDrawer);
-  // }
+  getfacultname() async {
+    final snap = await FirebaseFirestore.instance
+        .collection('faculty')
+        .doc(userid)
+        .get();
+    setState(() {
+      fnDrawer = snap['firstname'];
+      lnDrawer = snap['lastname'];
+    });
+    print("999999999999999999999999999999999999999999");
+    print(fnDrawer);
+  }
 
   final List<Widget> _pages = [
     FacultyViewBookedAppointment(),
@@ -75,10 +79,6 @@ class _fState extends State<facultyhome> {
             return login();
           }
         }));
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final User? user = auth.currentUser;
-    userid = user!.uid;
-    email = user.email!;
 
     // final ButtonStyle style =
     //     ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
@@ -135,7 +135,7 @@ class _fState extends State<facultyhome> {
                       height: 10,
                     ),
                     Center(
-                      child: Text(" ",
+                      child: Text(fnDrawer! + " " + lnDrawer!,
                           style: TextStyle(
                               fontFamily: 'bold',
                               fontSize: 16,
