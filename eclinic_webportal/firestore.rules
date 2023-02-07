@@ -31,7 +31,16 @@ service cloud.firestore {
  match /commonissue/{document=**} {
       allow create, update, delete: if request.auth != null && exists(/databases/$(database)/documents/faculty/$(request.auth.uid))
     }
-
+//for sign up 
+    match /department/{document=**} {
+      allow read: if true
+    }
+    match /semester/{document=**} {
+      allow read: if true
+    }
+    match /facultyspeciality/{document=**} {
+      allow read: if true
+    }
     //all
     match /{document=**} {
       //only allow authniticated users who is in admin/student/faculty collections
