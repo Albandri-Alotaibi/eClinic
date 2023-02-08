@@ -68,7 +68,7 @@ class _AddHourState extends State<addHoursFaculty> {
     final User? user = await auth.currentUser;
     userid = user!.uid;
     email = user.email!;
-    print('****************************************************');
+    print('****************************************************22');
     print(userid);
 
 //var semester;
@@ -95,73 +95,23 @@ class _AddHourState extends State<addHoursFaculty> {
     endDate = docRef2['enddate'].toDate();
     print('***********************print dates***********************');
     print(startingDate);
-    //print('***********************tttiimmmmmeeees***********************');
-    //print(new TimeOfDay(hour: 13, minute: 0));
-// semester.get().then(
-//     (DocumentSnapshot doc2) {
-
-//       startingDate=doc2['startdate'].toDate();
-//       endDate=doc2['enddate'].toDate();
-//       print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-//           print(startingDate);
-//           print(endDate);
-//      }
-//    );
-
-//print(docRef['semester']);
-//semester= docRef['semester'];
-
-//  print('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
-//   print(docRef);
-//    docRef.get().then(
-//     (DocumentSnapshot doc) {
-//      //semester1 = doc.data()!.semester;
-//      //final data = doc.data() as Map<String, dynamic>;
-
-//      semester=doc['semester'];
-
-//     print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
-//     print(semester);
-//     //print(semester['semestername']);
-//      },
-//    onError: (e) => print("Error getting document: $e"),
-//    );
-
-// //  setState(() {
-// // if(semester != null){
-
-// // }
-// //  });
   }
 
   @override
   initState() {
     super.initState();
+
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    userid = user!.uid;
+
     IsSemesterDatesExists();
 
     IsHoursExists(); // use a helper method because initState() cannot be async
 
     getusers();
-    //retrivecolldepsem();
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final User? user = auth.currentUser;
-    userid = user!.uid;
     PrintViewHours();
   }
-
-  // retrivecolldepsem() async {
-  //   final snap2 = await FirebaseFirestore.instance
-  //       .collection('faculty')
-  //       .doc(userid)
-  //       .get();
-  //   print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
-  //   var mm = snap2['meetingmethod'];
-  //   mettingmethoddrop2 = mm;
-  //   print(mm);
-  //   var mmi = snap2['mettingmethodinfo'];
-  //   print(mmi);
-  //   _meetingmethodcontroller2 = TextEditingController(text: mmi);
-  // }
 
   Future<bool?> IsSemesterDatesExists() async {
     final FirebaseAuth auth = await FirebaseAuth.instance;
@@ -814,7 +764,7 @@ class _AddHourState extends State<addHoursFaculty> {
     );
 
     // set up the AlertDialog
-
+    var meetinginfoAfterUpdate = muser['meetingmethod'];
     Widget continueButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
@@ -828,8 +778,10 @@ class _AddHourState extends State<addHoursFaculty> {
       ),
       child: Text("Save"),
       onPressed: () {
-        mm = muser['meetingmethod'];
-        mmi = _meetingmethodcontroller2.text;
+        setState(() {
+          mm = meetinginfoAfterUpdate;
+          mmi = _meetingmethodcontroller2.text;
+        });
 
         if (formkey.currentState!.validate()) {
           print("///hhiiii");
@@ -888,20 +840,18 @@ class _AddHourState extends State<addHoursFaculty> {
                           value: muser['meetingmethod'],
                           onChanged: (value) {
                             print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-                            print(value);
-                            muser['meetingmethod'] = value;
-                            print(muser['meetingmethod']);
+                            //  print(value);
+                            setState(() {
+                              meetinginfoAfterUpdate = value;
+                              print(meetinginfoAfterUpdate);
+                            });
+
+                            print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                             _meetingmethodcontroller2.text = "";
                           },
-                          //     onChanged: (value) {
-                          //   setState(() {
-                          //     mettingmethoddrop = value;
-                          //     _meetingmethodcontroller.text = "";
-                          //   });
-                          // }
                         ),
                       ),
-                      if (muser['meetingmethod'] != "")
+                      if (meetinginfoAfterUpdate != "")
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: SizedBox(
@@ -928,59 +878,6 @@ class _AddHourState extends State<addHoursFaculty> {
                                 }),
                           ),
                         ),
-                      // Container(
-                      //   padding: EdgeInsets.only(bottom: 20),
-                      //   child: ElevatedButton(
-                      //     style: ElevatedButton.styleFrom(
-                      //       textStyle:
-                      //           TextStyle(fontFamily: 'main', fontSize: 16),
-                      //       shadowColor: Colors.blue[900],
-                      //       elevation: 20,
-                      //       backgroundColor: Mycolors.mainShadedColorBlue,
-                      //       minimumSize: Size(200, 50),
-                      //       shape: RoundedRectangleBorder(
-                      //         borderRadius:
-                      //             BorderRadius.circular(17), // <-- Radius
-                      //       ),
-                      //     ),
-                      //     onPressed: () {
-                      //       mm = muser['meetingmethod'];
-                      //       mmi = _meetingmethodcontroller2.text;
-
-                      //       if (formkey.currentState!.validate()) {
-                      //         print("///hhiiii");
-                      //         print(mm);
-                      //         FirebaseFirestore.instance
-                      //             .collection('faculty')
-                      //             .doc(userid)
-                      //             .update({
-                      //           "meetingmethod": mm,
-                      //           "mettingmethodinfo": mmi,
-                      //         });
-
-                      //         Fluttertoast.showToast(
-                      //           msg:
-                      //               "Your meeting method has been updated successfully",
-                      //           toastLength: Toast.LENGTH_SHORT,
-                      //           gravity: ToastGravity.CENTER,
-                      //           timeInSecForIosWeb: 2,
-                      //           backgroundColor:
-                      //               Color.fromARGB(255, 127, 166, 233),
-                      //           textColor: Color.fromARGB(255, 248, 249, 250),
-                      //           fontSize: 18.0,
-                      //         );
-                      //       }
-                      //       Navigator.push(
-                      //         context,
-                      //         MaterialPageRoute(
-                      //           builder: (context) =>
-                      //               facultyhome(_selectedIndex),
-                      //         ),
-                      //       );
-                      //     },
-                      //     child: Text("Save changes"),
-                      //   ),
-                      // ),
                     ],
                   ))
             ],
