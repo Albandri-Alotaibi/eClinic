@@ -48,7 +48,7 @@ class _editFAQState extends State<editFAQ> {
   final formkey = GlobalKey<FormState>();
   final formkeyforlink = GlobalKey<FormState>();
   var link;
-  var title;
+  String? title;
   var problem;
   var solution;
   var newproblem;
@@ -79,7 +79,9 @@ class _editFAQState extends State<editFAQ> {
         .collection('commonissue')
         .doc(widget.value)
         .get();
-    title = snap["issuetitle"];
+    setState(() {
+      title = snap["issuetitle"];
+    });
     problem = snap["problem"];
     solution = snap["solution"];
     _problemController = TextEditingController(text: problem);
@@ -193,21 +195,38 @@ class _editFAQState extends State<editFAQ> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          primary: false,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.delete_sweep_rounded,
+                color: Mycolors.mainColorRed,
+              ),
+              onPressed: () {
+                //delete common issue
+                ConfirmationDialogfordelete(context);
+              },
+            )
+          ],
           centerTitle: true,
           backgroundColor: Mycolors.mainColorWhite,
           shadowColor: Colors.transparent,
-          //foregroundColor: Mycolors.mainColorBlack,
-          // automaticallyImplyLeading: false,
-          iconTheme: IconThemeData(
-            color: Color.fromARGB(255, 12, 12, 12), //change your color here
+          iconTheme: const IconThemeData(
+            color: Color.fromARGB(255, 12, 12, 12),
           ),
-          title: Text(''),
-
           titleTextStyle: TextStyle(
             fontFamily: 'main',
-            fontSize: 24,
-            color: Mycolors.mainColorBlack,
+            fontSize: 18,
+            color: Mycolors.mainShadedColorBlue,
+          ),
+          title: Text("${title}"),
+          leading: InkWell(
+            onTap: () {
+              Navigator.pop(this.context);
+            },
+            child: const Icon(
+              Icons.arrow_back,
+              color: Colors.black45,
+            ),
           ),
         ),
         body: SingleChildScrollView(
@@ -228,21 +247,21 @@ class _editFAQState extends State<editFAQ> {
 
                         return Column(
                           children: [
-                            TextFormField(
-                              controller: _issuetitleconstroller,
-                              readOnly: true,
-                              decoration: InputDecoration(
-                                  labelText: ' issue title :',
-                                  // hintText: "Enter issue title",
+                            // TextFormField(
+                            //   controller: _issuetitleconstroller,
+                            //   readOnly: true,
+                            //   decoration: InputDecoration(
+                            //       labelText: ' issue title :',
+                            //       // hintText: "Enter issue title",
 
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
-                                      borderSide: const BorderSide(
-                                        width: 0,
-                                      ))),
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                            ),
+                            //       border: OutlineInputBorder(
+                            //           borderRadius: BorderRadius.circular(25),
+                            //           borderSide: const BorderSide(
+                            //             width: 0,
+                            //           ))),
+                            //   autovalidateMode:
+                            //       AutovalidateMode.onUserInteraction,
+                            // ),
                             SizedBox(
                               height: 8,
                             ),
@@ -275,7 +294,7 @@ class _editFAQState extends State<editFAQ> {
                               },
                             ),
                             SizedBox(
-                              height: 8,
+                              height: 10,
                             ),
                             TextFormField(
                               controller: _solutioncontroll,
@@ -325,7 +344,7 @@ class _editFAQState extends State<editFAQ> {
                               ),
                             if (links.length > 0)
                               Padding(
-                                padding: const EdgeInsets.only(right: 200),
+                                padding: const EdgeInsets.only(right: 298),
                                 child: Column(
                                   children: List.generate(
                                     links.length,
@@ -394,45 +413,11 @@ class _editFAQState extends State<editFAQ> {
                                   ),
                                 ),
                               ),
-                            if (filesurl != null)
-                              for (var l = 0; l < filesurl!.length; l++)
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 100),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      RichText(
-                                        text: TextSpan(children: [
-                                          TextSpan(
-                                              text: filesurl![l].name,
-                                              style: TextStyle(
-                                                  decoration:
-                                                      TextDecoration.underline,
-                                                  color: Colors.blue),
-                                              recognizer: TapGestureRecognizer()
-                                                ..onTap = () async {
-                                                  openfile(filesurl![l]);
-                                                })
-                                        ]),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 1),
-                                        child: IconButton(
-                                            onPressed: (() =>
-                                                ConfirmationDialogfordeleteforfilebefordownload(
-                                                    context, l)),
-                                            icon: Icon(
-                                              Icons.cancel,
-                                              size: 20,
-                                            )),
-                                      )
-                                    ],
-                                  ),
-                                ),
+
                             if (filsbefordownload.length > 0)
                               for (var s = 0; s < filsbefordownload.length; s++)
                                 Padding(
-                                  padding: const EdgeInsets.only(right: 200),
+                                  padding: const EdgeInsets.only(right: 267),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -460,6 +445,41 @@ class _editFAQState extends State<editFAQ> {
                                             onPressed: (() =>
                                                 ConfirmationDialogfordeleteforfileafterdownload(
                                                     context, s)),
+                                            icon: Icon(
+                                              Icons.cancel,
+                                              size: 20,
+                                            )),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                            if (filesurl != null)
+                              for (var l = 0; l < filesurl!.length; l++)
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 175),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      RichText(
+                                        text: TextSpan(children: [
+                                          TextSpan(
+                                              text: filesurl![l].name,
+                                              style: TextStyle(
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                  color: Colors.blue),
+                                              recognizer: TapGestureRecognizer()
+                                                ..onTap = () async {
+                                                  openfile(filesurl![l]);
+                                                })
+                                        ]),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 1),
+                                        child: IconButton(
+                                            onPressed: (() =>
+                                                ConfirmationDialogfordeleteforfilebefordownload(
+                                                    context, l)),
                                             icon: Icon(
                                               Icons.cancel,
                                               size: 20,
@@ -511,7 +531,7 @@ class _editFAQState extends State<editFAQ> {
                                   child: Text("upload file"),
                                 ),
                                 SizedBox(
-                                  width: 6,
+                                  width: 10,
                                 ),
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
@@ -535,6 +555,9 @@ class _editFAQState extends State<editFAQ> {
                                   child: Text("add link"),
                                 ),
                               ],
+                            ),
+                            SizedBox(
+                              height: 120,
                             ),
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
@@ -561,22 +584,22 @@ class _editFAQState extends State<editFAQ> {
                   SizedBox(
                     height: 20,
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-                      shadowColor: Colors.blue[900],
-                      elevation: 16,
-                      backgroundColor: Mycolors.mainShadedColorBlue,
-                      minimumSize: Size(150, 50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(17), // <-- Radius
-                      ),
-                    ),
-                    onPressed: (() {
-                      ConfirmationDialogfordelete(context);
-                    }),
-                    child: Text("delete common issue"),
-                  ),
+                  // ElevatedButton(
+                  //   style: ElevatedButton.styleFrom(
+                  //     textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+                  //     shadowColor: Colors.blue[900],
+                  //     elevation: 16,
+                  //     backgroundColor: Mycolors.mainShadedColorBlue,
+                  //     minimumSize: Size(150, 50),
+                  //     shape: RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.circular(17), // <-- Radius
+                  //     ),
+                  //   ),
+                  //   onPressed: (() {
+                  //     ConfirmationDialogfordelete(context);
+                  //   }),
+                  //   child: Text("delete common issue"),
+                  // ),
                 ]),
               ),
             )),
@@ -805,10 +828,8 @@ class _editFAQState extends State<editFAQ> {
         });
 
         if (formkey.currentState!.validate()) {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => viewFAQ(value: widget.value)));
+          //alertsucceful
+          Navigator.pushNamed(context, 'facultyListFAQ');
           try {
             FirebaseFirestore.instance
                 .collection('commonissue')
