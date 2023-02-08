@@ -1191,11 +1191,9 @@ class _AddHourState extends State<addHoursFaculty> {
                   ),
                 ),
               ),
-
               SizedBox(
                 height: 8,
               ),
-
               SizedBox(
                 width: 350,
                 child: TextFormField(
@@ -1218,27 +1216,6 @@ class _AddHourState extends State<addHoursFaculty> {
                       }
                     }),
               ),
-
-              // SizedBox(
-              //   width: 350,
-              //   child: TextFormField(
-              //       controller: _meetingmethodcontroller,
-              //       decoration: InputDecoration(
-              //           labelText: 'meeting link',
-              //           hintText: "Enter your meeting link",
-              //           // suffixIcon: Icon(Icons.edit),
-              //           border: OutlineInputBorder()),
-              //       autovalidateMode: AutovalidateMode.onUserInteraction,
-              //       validator: (value) {
-              //         if (value!.isEmpty || _meetingmethodcontroller.text == "") {
-              //           return 'Please enter your meeting link';
-              //         } else {
-              //           if (!(english.hasMatch(_meetingmethodcontroller.text))) {
-              //             return "only english is allowed";
-              //           }
-              //         }
-              //       }),
-              // ),
               Text(
                   "if you press on confirm that means you approved on the entered hours and you know that you CANNOT updated later"),
             ],
