@@ -366,11 +366,12 @@ class _studentviewprofileState extends State<studentviewprofile> {
         _socialmed = TextEditingController(text: so);
       }
       social = so;
-      // var collageRef = snap["college"];
-      // final DocumentSnapshot docRef1 = await collageRef.get();
-      // collageselectedfromDB = docRef1["collagename"];
-      // print("/////////////////////collage///////////////////////////");
-      // print(collageselectedfromDB);
+      final fname = snap['firstname'];
+      final lname = snap['lastname'];
+      final projectname = snap["projectname"];
+      _projectname = TextEditingController(text: projectname);
+      _fnameController = TextEditingController(text: fname);
+      _lnamecontroller = TextEditingController(text: lname);
 
       var departmentRef = snap["department"];
       final DocumentSnapshot docRef2 = await departmentRef.get();
@@ -544,12 +545,12 @@ class _studentviewprofileState extends State<studentviewprofile> {
                         // print(gd);
                         // print(formatdate(gd));
 
-                        _fnameController = TextEditingController(text: fname);
-                        _lnamecontroller = TextEditingController(text: lname);
+                        // _fnameController = TextEditingController(text: fname);
+                        // _lnamecontroller = TextEditingController(text: lname);
                         _emailController =
                             TextEditingController(text: ksuemail);
-                        _idController = TextEditingController(text: studentid);
-                        _projectname = TextEditingController(text: projectname);
+                        //   _idController = TextEditingController(text: studentid);
+                        // _projectname = TextEditingController(text: projectname);
                         // _socialmed = TextEditingController(text: so);
                         final soaccount = cuser['socialmediaaccount'];
 
