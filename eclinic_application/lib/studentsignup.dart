@@ -28,7 +28,7 @@ class _studentsignupState extends State<studentsignup> {
   List gpcategoryname = [];
   List student = [];
   late String docsforcollage;
-  late String docfordepatment;
+  String? docfordepatment;
   var departmentselectedvalue;
   var collageselectedvalue;
   var semesterselectedvalue;
@@ -1018,12 +1018,6 @@ class _studentsignupState extends State<studentsignup> {
                                     socialmedia = social;
                                     socialmediaaccount = _socialmedialink2.text;
                                     // phonenumber = _socialmedialink1.text;
-                                    if (checklengthforspeciality < 1) {
-                                      isshow = true;
-                                    }
-                                    if (checklengthforspeciality > 0) {
-                                      isshow = false;
-                                    }
                                   });
 
                                   //check(social);

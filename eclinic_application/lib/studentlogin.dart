@@ -202,13 +202,15 @@ class _studentloginState extends State<studentlogin> {
                                           FirebaseAuth.instance;
                                       final User? user = auth.currentUser;
                                       final Uid = user!.uid;
-                                      if (user.emailVerified) {
-                                        Navigator.pushNamed(
-                                            context, 'studenthome');
-                                      } else {
-                                        Navigator.pushNamed(
-                                            context, 'studentverfication');
-                                      }
+                                      Navigator.pushNamed(
+                                          context, 'studenthome');
+                                      // if (user.emailVerified) {
+                                      //   Navigator.pushNamed(
+                                      //       context, 'studenthome');
+                                      // } else {
+                                      //   Navigator.pushNamed(
+                                      //       context, 'studentverfication');
+                                      // }
                                     });
                                   }
                                 } on FirebaseAuthException catch (error) {
