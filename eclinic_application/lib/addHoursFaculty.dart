@@ -572,7 +572,7 @@ class _AddHourState extends State<addHoursFaculty> {
                                               BorderRadius.circular(17),
                                           child: Card(
                                               color: Color.fromARGB(
-                                                  76, 221, 221, 221),
+                                                  97, 221, 221, 221),
                                               margin:
                                                   EdgeInsets.only(bottom: 20),
                                               shape: RoundedRectangleBorder(

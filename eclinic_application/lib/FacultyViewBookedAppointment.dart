@@ -515,7 +515,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
                               if (index < BookedAppointments.length) {
                                 return Card(
                                     margin: EdgeInsets.only(bottom: 20),
-                                    color: Color.fromARGB(76, 221, 221, 221),
+                                    color: Color.fromARGB(97, 221, 221, 221),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(
                                           17), // <-- Radius
