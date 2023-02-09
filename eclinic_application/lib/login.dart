@@ -174,8 +174,8 @@ class _loginState extends State<login> {
                               style: ElevatedButton.styleFrom(
                                 textStyle:
                                     TextStyle(fontFamily: 'main', fontSize: 16),
-                                shadowColor: Colors.blue[900],
-                                elevation: 16,
+                                // shadowColor: Colors.blue[900],
+                                elevation: 0,
                                 backgroundColor: Mycolors.mainShadedColorBlue,
                                 minimumSize: Size(150, 50),
                                 shape: RoundedRectangleBorder(

@@ -508,8 +508,8 @@ class _AddHourState extends State<addHoursFaculty> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-                    shadowColor: Colors.blue[900],
-                    elevation: 20,
+                    // shadowColor: Colors.blue[900],
+                    elevation: 0,
                     backgroundColor: Mycolors.mainShadedColorBlue,
                     minimumSize: Size(200, 50),
                     shape: RoundedRectangleBorder(
@@ -749,8 +749,8 @@ class _AddHourState extends State<addHoursFaculty> {
     Widget cancelButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        // shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
         shape: RoundedRectangleBorder(
@@ -768,8 +768,8 @@ class _AddHourState extends State<addHoursFaculty> {
     Widget continueButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        // shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(70, 40),
         shape: RoundedRectangleBorder(
@@ -1115,8 +1115,8 @@ class _AddHourState extends State<addHoursFaculty> {
     Widget cancelButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        // shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
         shape: RoundedRectangleBorder(
@@ -1134,8 +1134,8 @@ class _AddHourState extends State<addHoursFaculty> {
     Widget continueButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        // shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(70, 40),
         shape: RoundedRectangleBorder(

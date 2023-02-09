@@ -484,8 +484,8 @@ class _addcommonissueState extends State<addcommonissue> {
                                   style: ElevatedButton.styleFrom(
                                     textStyle: TextStyle(
                                         fontFamily: 'main', fontSize: 16),
-                                    shadowColor: Colors.blue[900],
-                                    elevation: 16,
+                                    //shadowColor: Colors.blue[900],
+                                    elevation: 0,
                                     backgroundColor:
                                         Mycolors.mainShadedColorBlue,
                                     minimumSize: Size(150, 50),
@@ -522,8 +522,8 @@ class _addcommonissueState extends State<addcommonissue> {
                                   style: ElevatedButton.styleFrom(
                                     textStyle: TextStyle(
                                         fontFamily: 'main', fontSize: 16),
-                                    shadowColor: Colors.blue[900],
-                                    elevation: 16,
+                                    //shadowColor: Colors.blue[900],
+                                    elevation: 0,
                                     backgroundColor:
                                         Mycolors.mainShadedColorBlue,
                                     minimumSize: Size(150, 50),
@@ -548,8 +548,8 @@ class _addcommonissueState extends State<addcommonissue> {
                               style: ElevatedButton.styleFrom(
                                 textStyle:
                                     TextStyle(fontFamily: 'main', fontSize: 16),
-                                shadowColor: Colors.blue[900],
-                                elevation: 16,
+                                // shadowColor: Colors.blue[900],
+                                elevation: 0,
                                 backgroundColor: Mycolors.mainShadedColorBlue,
                                 minimumSize: Size(150, 50),
                                 shape: RoundedRectangleBorder(
@@ -583,8 +583,8 @@ class _addcommonissueState extends State<addcommonissue> {
     Widget cancelButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        // shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
         shape: RoundedRectangleBorder(
@@ -602,8 +602,8 @@ class _addcommonissueState extends State<addcommonissue> {
     Widget continueButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        // shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(70, 40),
         shape: RoundedRectangleBorder(
@@ -714,8 +714,8 @@ class _addcommonissueState extends State<addcommonissue> {
     Widget cancelButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        //shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
         shape: RoundedRectangleBorder(
@@ -733,8 +733,8 @@ class _addcommonissueState extends State<addcommonissue> {
     Widget continueButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        //shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(70, 40),
         shape: RoundedRectangleBorder(
@@ -856,8 +856,8 @@ class _addcommonissueState extends State<addcommonissue> {
     Widget dontCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        // shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
         shape: RoundedRectangleBorder(
@@ -873,8 +873,8 @@ class _addcommonissueState extends State<addcommonissue> {
     Widget YesCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        //shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
         shape: RoundedRectangleBorder(
@@ -913,8 +913,8 @@ class _addcommonissueState extends State<addcommonissue> {
     Widget dontCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        // shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
         shape: RoundedRectangleBorder(
@@ -930,8 +930,8 @@ class _addcommonissueState extends State<addcommonissue> {
     Widget YesCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        // shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
         shape: RoundedRectangleBorder(

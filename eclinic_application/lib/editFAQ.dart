@@ -498,8 +498,8 @@ class _editFAQState extends State<editFAQ> {
                                   style: ElevatedButton.styleFrom(
                                     textStyle: TextStyle(
                                         fontFamily: 'main', fontSize: 16),
-                                    shadowColor: Colors.blue[900],
-                                    elevation: 16,
+                                    //shadowColor: Colors.blue[900],
+                                    elevation: 0,
                                     backgroundColor:
                                         Mycolors.mainShadedColorBlue,
                                     minimumSize: Size(150, 50),
@@ -537,8 +537,8 @@ class _editFAQState extends State<editFAQ> {
                                   style: ElevatedButton.styleFrom(
                                     textStyle: TextStyle(
                                         fontFamily: 'main', fontSize: 16),
-                                    shadowColor: Colors.blue[900],
-                                    elevation: 16,
+                                    //shadowColor: Colors.blue[900],
+                                    elevation: 0,
                                     backgroundColor:
                                         Mycolors.mainShadedColorBlue,
                                     minimumSize: Size(150, 50),
@@ -563,8 +563,8 @@ class _editFAQState extends State<editFAQ> {
                               style: ElevatedButton.styleFrom(
                                 textStyle:
                                     TextStyle(fontFamily: 'main', fontSize: 16),
-                                shadowColor: Colors.blue[900],
-                                elevation: 16,
+                                // shadowColor: Colors.blue[900],
+                                elevation: 0,
                                 backgroundColor: Mycolors.mainShadedColorBlue,
                                 minimumSize: Size(150, 50),
                                 shape: RoundedRectangleBorder(
@@ -612,8 +612,8 @@ class _editFAQState extends State<editFAQ> {
     Widget cancelButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        // shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
         shape: RoundedRectangleBorder(
@@ -631,8 +631,8 @@ class _editFAQState extends State<editFAQ> {
     Widget continueButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        // shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(70, 40),
         shape: RoundedRectangleBorder(
@@ -737,8 +737,8 @@ class _editFAQState extends State<editFAQ> {
     Widget dontCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        //shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
         shape: RoundedRectangleBorder(
@@ -754,8 +754,8 @@ class _editFAQState extends State<editFAQ> {
     Widget YesCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        // shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
         shape: RoundedRectangleBorder(
@@ -793,8 +793,8 @@ class _editFAQState extends State<editFAQ> {
     Widget dontCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        //shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
         shape: RoundedRectangleBorder(
@@ -810,8 +810,8 @@ class _editFAQState extends State<editFAQ> {
     Widget YesCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        // shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
         shape: RoundedRectangleBorder(
@@ -888,8 +888,8 @@ class _editFAQState extends State<editFAQ> {
     Widget dontCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        // shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
         shape: RoundedRectangleBorder(
@@ -905,8 +905,8 @@ class _editFAQState extends State<editFAQ> {
     Widget YesCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        //shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
         shape: RoundedRectangleBorder(
@@ -962,8 +962,8 @@ class _editFAQState extends State<editFAQ> {
     Widget dontCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        // shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
         shape: RoundedRectangleBorder(
@@ -979,8 +979,8 @@ class _editFAQState extends State<editFAQ> {
     Widget YesCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        //shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
         shape: RoundedRectangleBorder(
@@ -1022,8 +1022,8 @@ class _editFAQState extends State<editFAQ> {
     Widget dontCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        //shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
         shape: RoundedRectangleBorder(
@@ -1039,8 +1039,8 @@ class _editFAQState extends State<editFAQ> {
     Widget YesCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        //shadowColor: Colors.blue[900],
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
         shape: RoundedRectangleBorder(

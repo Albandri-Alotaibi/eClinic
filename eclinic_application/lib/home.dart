@@ -69,7 +69,7 @@ class _homeState extends State<home> {
                   style: ElevatedButton.styleFrom(
                     textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
                     // shadowColor: Colors.blue[900],
-                    // elevation: 0,
+                    elevation: 0,
                     backgroundColor: Mycolors.mainShadedColorBlue,
                     minimumSize: Size(150, 50),
                     shape: RoundedRectangleBorder(
@@ -86,7 +86,7 @@ class _homeState extends State<home> {
                   style: ElevatedButton.styleFrom(
                     textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
                     // shadowColor: Colors.blue[900],
-                    // elevation: 20,
+                    elevation: 0,
                     backgroundColor: Mycolors.mainShadedColorBlue,
                     minimumSize: Size(20, 50),
                     shape: RoundedRectangleBorder(

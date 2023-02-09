@@ -96,8 +96,8 @@ class _inneresetState extends State<innereset> {
                           style: ElevatedButton.styleFrom(
                             textStyle:
                                 TextStyle(fontFamily: 'main', fontSize: 16),
-                            shadowColor: Colors.blue[900],
-                            elevation: 16,
+                            //shadowColor: Colors.blue[900],
+                            elevation: 0,
                             backgroundColor: Mycolors.mainShadedColorBlue,
                             minimumSize: Size(150, 50),
                             shape: RoundedRectangleBorder(
@@ -128,8 +128,8 @@ class _inneresetState extends State<innereset> {
                         style: ElevatedButton.styleFrom(
                           textStyle:
                               TextStyle(fontFamily: 'main', fontSize: 16),
-                          shadowColor: Colors.blue[900],
-                          elevation: 16,
+                          // shadowColor: Colors.blue[900],
+                          elevation: 0,
                           backgroundColor: Mycolors.mainShadedColorBlue,
                           minimumSize: Size(150, 50),
                           shape: RoundedRectangleBorder(
