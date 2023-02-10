@@ -190,7 +190,7 @@ class _AddHourState extends State<addHoursFaculty> {
   int numOfDaysOfHelp = 0;
   bool viewHexist = false;
   Future getavailableHours() async {
-    await Future.delayed(Duration(seconds: 1));
+    // await Future.delayed(Duration(seconds: 1));
     final FirebaseAuth auth = await FirebaseAuth.instance;
     final User? user = await auth.currentUser;
     userid = user!.uid;
