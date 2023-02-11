@@ -644,8 +644,14 @@ class _AddHourState extends State<addHoursFaculty> {
                                       as Map<String, dynamic>;
                                   String mettingmethoddrop2 =
                                       muser['meetingmethod'];
-                                  final metingmethodinfotext =
-                                      muser['mettingmethodinfo'];
+                                  String metingmethodinfotext;
+                                  if (mettingmethoddrop2 == "inperson") {
+                                    metingmethodinfotext = "Office number: " +
+                                        muser['mettingmethodinfo'];
+                                  } else {
+                                    metingmethodinfotext =
+                                        "Link: " + muser['mettingmethodinfo'];
+                                  }
 
                                   return Container(
                                     child: Card(
@@ -695,8 +701,7 @@ class _AddHourState extends State<addHoursFaculty> {
                                                               fontSize: 16),
                                                         ),
                                                         Text(
-                                                          "Office number/link: " +
-                                                              metingmethodinfotext,
+                                                          metingmethodinfotext,
                                                           style: TextStyle(
                                                               color: Mycolors
                                                                   .mainColorBlack,
@@ -902,7 +907,7 @@ class _AddHourState extends State<addHoursFaculty> {
                                   }
                                 }),
                           ),
-                        ),
+                        )
                     ],
                   ))
             ],
