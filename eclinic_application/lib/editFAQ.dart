@@ -198,7 +198,7 @@ class _editFAQState extends State<editFAQ> {
           actions: <Widget>[
             IconButton(
               icon: Icon(
-                Icons.delete_sweep_rounded,
+                Icons.delete_sweep_outlined,
                 color: Mycolors.mainColorRed,
               ),
               onPressed: () {
@@ -214,7 +214,7 @@ class _editFAQState extends State<editFAQ> {
             color: Color.fromARGB(255, 12, 12, 12),
           ),
           titleTextStyle: TextStyle(
-            fontFamily: 'main',
+            fontFamily: 'bold',
             fontSize: 18,
             color: Mycolors.mainShadedColorBlue,
           ),
@@ -265,6 +265,164 @@ class _editFAQState extends State<editFAQ> {
                             SizedBox(
                               height: 8,
                             ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                // ElevatedButton(
+                                //   style: ElevatedButton.styleFrom(
+                                //     textStyle: TextStyle(
+                                //         fontFamily: 'main', fontSize: 16),
+                                //     //shadowColor: Colors.blue[900],
+                                //     elevation: 0,
+                                //     backgroundColor:
+                                //         Mycolors.mainShadedColorBlue,
+                                //     minimumSize: Size(150, 50),
+                                //     shape: RoundedRectangleBorder(
+                                //       borderRadius: BorderRadius.circular(
+                                //           17), // <-- Radius
+                                //     ),
+                                //   ),
+                                //   onPressed: (() async {
+                                //     final result = await FilePicker.platform
+                                //         .pickFiles(allowMultiple: true);
+                                //     if (result == null) return;
+                                //     setState(() {
+                                //       pickedFile = result.files.first;
+                                //       if (pickedFile != null) {
+                                //         filesurl?.addAll(result.files);
+
+                                //         // for (var i = 0; i < result.count; i++) {
+                                //         //    filesurl?.add(result.files as PlatformFile);
+                                //         // }
+                                //       }
+                                //       var exe = pickedFile!.extension;
+                                //       print("00000000000000000000");
+                                //       print(pickedFile!.path);
+                                //       print(pickedFile!.name);
+                                //       print(filesurl);
+                                //     });
+                                //   }),
+                                //   child: Text("upload file"),
+                                // ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.only(bottom: 7),
+                                  height: 40,
+                                  width: 135,
+                                  child: FloatingActionButton.extended(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          30), // <-- Radius
+                                      side: BorderSide(
+                                        width: 1,
+                                        color: Mycolors.mainShadedColorBlue,
+                                      ),
+                                    ),
+                                    splashColor: Mycolors.mainShadedColorBlue,
+                                    elevation: 0,
+                                    foregroundColor:
+                                        Color.fromARGB(255, 255, 255, 255),
+                                    label: Text(
+                                      'Uplouad file',
+                                    ), // <-- Text
+                                    backgroundColor:
+                                        Mycolors.mainShadedColorBlue,
+                                    icon: Icon(
+                                      // <-- Icon
+                                      Icons.upload_outlined,
+                                      size: 24.0,
+                                    ),
+                                    onPressed: (() async {
+                                      final result = await FilePicker.platform
+                                          .pickFiles(allowMultiple: true);
+                                      if (result == null) return;
+                                      setState(() {
+                                        pickedFile = result.files.first;
+                                        if (pickedFile != null) {
+                                          filesurl?.addAll(result.files);
+
+                                          // for (var i = 0; i < result.count; i++) {
+                                          //    filesurl?.add(result.files as PlatformFile);
+                                          // }
+                                        }
+                                        var exe = pickedFile!.extension;
+                                        print("00000000000000000000");
+                                        print(pickedFile!.path);
+                                        print(pickedFile!.name);
+                                        print(filesurl);
+                                      });
+                                    }),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 30,
+                                ),
+                                // ElevatedButton(
+                                //   style: ElevatedButton.styleFrom(
+                                //     textStyle: TextStyle(
+                                //         fontFamily: 'main', fontSize: 16),
+                                //     //shadowColor: Colors.blue[900],
+                                //     elevation: 0,
+                                //     backgroundColor:
+                                //         Mycolors.mainShadedColorBlue,
+                                //     minimumSize: Size(150, 50),
+                                //     shape: RoundedRectangleBorder(
+                                //       borderRadius: BorderRadius.circular(
+                                //           17), // <-- Radius
+                                //     ),
+                                //   ),
+                                //   onPressed: (() {
+                                //     _linkcontroll.text = "";
+                                //     _linknamecontroll.text = "";
+                                //     showConfirmationDialog(context);
+                                //   }),
+                                //   child: Text("add link"),
+                                // ),
+                                Container(
+                                  padding: const EdgeInsets.only(bottom: 7),
+                                  height: 40,
+                                  width: 135,
+                                  child: FloatingActionButton.extended(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          30), // <-- Radius
+                                      side: BorderSide(
+                                        width: 1,
+                                        color: Mycolors.mainShadedColorBlue,
+                                      ),
+                                    ),
+                                    splashColor: Mycolors.mainShadedColorBlue,
+                                    elevation: 0,
+                                    foregroundColor:
+                                        Color.fromARGB(255, 255, 255, 255),
+                                    label: Text(
+                                      'Add link',
+                                      style: TextStyle(
+                                        color: Color.fromRGBO(21, 70, 160, 1),
+                                      ),
+                                    ), // <-- Text
+                                    backgroundColor: Mycolors.mainColorWhite,
+                                    icon: Icon(
+                                      // <-- Icon
+                                      Icons.link_outlined,
+                                      color: Mycolors.mainColorBlue,
+                                      size: 24.0,
+                                    ),
+                                    onPressed: (() {
+                                      _linkcontroll.text = "";
+                                      _linknamecontroll.text = "";
+                                      showConfirmationDialog(context);
+                                    }),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+
                             TextFormField(
                               controller: _problemController,
                               minLines: 4,
@@ -327,16 +485,14 @@ class _editFAQState extends State<editFAQ> {
                             SizedBox(
                               height: 8,
                             ),
-                            if (links.length > 0 ||
-                                filesurl!.length > 0 ||
-                                filsbefordownload.length > 0)
+                            if (links.length > 0)
                               Padding(
-                                padding: const EdgeInsets.only(right: 200),
+                                padding: const EdgeInsets.only(right: 310),
                                 child: Text(
-                                  "More Resources",
+                                  "Links:",
                                   style: TextStyle(
                                       overflow: TextOverflow.ellipsis,
-                                      color: Mycolors.mainColorBlue,
+                                      color: Mycolors.mainColorBlack,
                                       fontFamily: 'bold',
                                       fontSize: 17),
                                   textAlign: TextAlign.start,
@@ -376,17 +532,6 @@ class _editFAQState extends State<editFAQ> {
                                                     recognizer:
                                                         TapGestureRecognizer()
                                                           ..onTap = () async {
-                                                            // var url =
-                                                            //     links[index];
-                                                            // // c = i;
-                                                            // // ignore: deprecated_member_use
-                                                            // if (await canLaunch(
-                                                            //     url)) {
-                                                            //   // ignore: deprecated_member_use
-                                                            //   launch(url);
-                                                            // } else {
-                                                            //   throw "Cannot load url";
-                                                            // }
                                                             launch(
                                                                 links[index]);
                                                           })
@@ -413,7 +558,26 @@ class _editFAQState extends State<editFAQ> {
                                   ),
                                 ),
                               ),
-
+                            if (filesurl!.length > 0 ||
+                                filsbefordownload.length > 0)
+                              const Divider(
+                                color: Colors.grey,
+                                thickness: 1,
+                              ),
+                            if (filesurl!.length > 0 ||
+                                filsbefordownload.length > 0)
+                              Padding(
+                                padding: const EdgeInsets.only(right: 310),
+                                child: Text(
+                                  "Files:",
+                                  style: TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                      color: Mycolors.mainColorBlack,
+                                      fontFamily: 'bold',
+                                      fontSize: 17),
+                                  textAlign: TextAlign.start,
+                                ),
+                              ),
                             if (filsbefordownload.length > 0)
                               for (var s = 0; s < filsbefordownload.length; s++)
                                 Padding(
@@ -424,7 +588,7 @@ class _editFAQState extends State<editFAQ> {
                                       RichText(
                                         text: TextSpan(children: [
                                           TextSpan(
-                                              text: "file${s + 1}",
+                                              text: "File ${s + 1}",
                                               style: TextStyle(
                                                   decoration:
                                                       TextDecoration.underline,
@@ -435,7 +599,7 @@ class _editFAQState extends State<editFAQ> {
                                                   // openfile(filesurl![l]);
                                                   openFile(
                                                       url: filsbefordownload[s],
-                                                      fileName: "file");
+                                                      fileName: "File");
                                                 })
                                         ]),
                                       ),
@@ -491,73 +655,160 @@ class _editFAQState extends State<editFAQ> {
                             SizedBox(
                               height: 20,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    textStyle: TextStyle(
-                                        fontFamily: 'main', fontSize: 16),
-                                    //shadowColor: Colors.blue[900],
-                                    elevation: 0,
-                                    backgroundColor:
-                                        Mycolors.mainShadedColorBlue,
-                                    minimumSize: Size(150, 50),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          17), // <-- Radius
-                                    ),
-                                  ),
-                                  onPressed: (() async {
-                                    final result = await FilePicker.platform
-                                        .pickFiles(allowMultiple: true);
-                                    if (result == null) return;
-                                    setState(() {
-                                      pickedFile = result.files.first;
-                                      if (pickedFile != null) {
-                                        filesurl?.addAll(result.files);
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   children: [
+                            //     // ElevatedButton(
+                            //     //   style: ElevatedButton.styleFrom(
+                            //     //     textStyle: TextStyle(
+                            //     //         fontFamily: 'main', fontSize: 16),
+                            //     //     //shadowColor: Colors.blue[900],
+                            //     //     elevation: 0,
+                            //     //     backgroundColor:
+                            //     //         Mycolors.mainShadedColorBlue,
+                            //     //     minimumSize: Size(150, 50),
+                            //     //     shape: RoundedRectangleBorder(
+                            //     //       borderRadius: BorderRadius.circular(
+                            //     //           17), // <-- Radius
+                            //     //     ),
+                            //     //   ),
+                            //     //   onPressed: (() async {
+                            //     //     final result = await FilePicker.platform
+                            //     //         .pickFiles(allowMultiple: true);
+                            //     //     if (result == null) return;
+                            //     //     setState(() {
+                            //     //       pickedFile = result.files.first;
+                            //     //       if (pickedFile != null) {
+                            //     //         filesurl?.addAll(result.files);
 
-                                        // for (var i = 0; i < result.count; i++) {
-                                        //    filesurl?.add(result.files as PlatformFile);
-                                        // }
-                                      }
-                                      var exe = pickedFile!.extension;
-                                      print("00000000000000000000");
-                                      print(pickedFile!.path);
-                                      print(pickedFile!.name);
-                                      print(filesurl);
-                                    });
-                                  }),
-                                  child: Text("upload file"),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    textStyle: TextStyle(
-                                        fontFamily: 'main', fontSize: 16),
-                                    //shadowColor: Colors.blue[900],
-                                    elevation: 0,
-                                    backgroundColor:
-                                        Mycolors.mainShadedColorBlue,
-                                    minimumSize: Size(150, 50),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          17), // <-- Radius
-                                    ),
-                                  ),
-                                  onPressed: (() {
-                                    _linkcontroll.text = "";
-                                    _linknamecontroll.text = "";
-                                    showConfirmationDialog(context);
-                                  }),
-                                  child: Text("add link"),
-                                ),
-                              ],
-                            ),
+                            //     //         // for (var i = 0; i < result.count; i++) {
+                            //     //         //    filesurl?.add(result.files as PlatformFile);
+                            //     //         // }
+                            //     //       }
+                            //     //       var exe = pickedFile!.extension;
+                            //     //       print("00000000000000000000");
+                            //     //       print(pickedFile!.path);
+                            //     //       print(pickedFile!.name);
+                            //     //       print(filesurl);
+                            //     //     });
+                            //     //   }),
+                            //     //   child: Text("upload file"),
+                            //     // ),
+                            //     SizedBox(
+                            //       width: 10,
+                            //     ),
+                            //     Container(
+                            //       padding: const EdgeInsets.only(bottom: 7),
+                            //       height: 40,
+                            //       width: 135,
+                            //       child: FloatingActionButton.extended(
+                            //         shape: RoundedRectangleBorder(
+                            //           borderRadius: BorderRadius.circular(
+                            //               30), // <-- Radius
+                            //           side: BorderSide(
+                            //             width: 1,
+                            //             color: Mycolors.mainShadedColorBlue,
+                            //           ),
+                            //         ),
+                            //         splashColor: Mycolors.mainShadedColorBlue,
+                            //         elevation: 0,
+                            //         foregroundColor:
+                            //             Color.fromARGB(255, 255, 255, 255),
+                            //         label: Text(
+                            //           'Uplouad file',
+                            //         ), // <-- Text
+                            //         backgroundColor:
+                            //             Mycolors.mainShadedColorBlue,
+                            //         icon: Icon(
+                            //           // <-- Icon
+                            //           Icons.upload_outlined,
+                            //           size: 24.0,
+                            //         ),
+                            //         onPressed: (() async {
+                            //           final result = await FilePicker.platform
+                            //               .pickFiles(allowMultiple: true);
+                            //           if (result == null) return;
+                            //           setState(() {
+                            //             pickedFile = result.files.first;
+                            //             if (pickedFile != null) {
+                            //               filesurl?.addAll(result.files);
+
+                            //               // for (var i = 0; i < result.count; i++) {
+                            //               //    filesurl?.add(result.files as PlatformFile);
+                            //               // }
+                            //             }
+                            //             var exe = pickedFile!.extension;
+                            //             print("00000000000000000000");
+                            //             print(pickedFile!.path);
+                            //             print(pickedFile!.name);
+                            //             print(filesurl);
+                            //           });
+                            //         }),
+                            //       ),
+                            //     ),
+                            //     SizedBox(
+                            //       width: 10,
+                            //     ),
+                            //     // ElevatedButton(
+                            //     //   style: ElevatedButton.styleFrom(
+                            //     //     textStyle: TextStyle(
+                            //     //         fontFamily: 'main', fontSize: 16),
+                            //     //     //shadowColor: Colors.blue[900],
+                            //     //     elevation: 0,
+                            //     //     backgroundColor:
+                            //     //         Mycolors.mainShadedColorBlue,
+                            //     //     minimumSize: Size(150, 50),
+                            //     //     shape: RoundedRectangleBorder(
+                            //     //       borderRadius: BorderRadius.circular(
+                            //     //           17), // <-- Radius
+                            //     //     ),
+                            //     //   ),
+                            //     //   onPressed: (() {
+                            //     //     _linkcontroll.text = "";
+                            //     //     _linknamecontroll.text = "";
+                            //     //     showConfirmationDialog(context);
+                            //     //   }),
+                            //     //   child: Text("add link"),
+                            //     // ),
+                            //     Container(
+                            //       padding: const EdgeInsets.only(bottom: 7),
+                            //       height: 40,
+                            //       width: 135,
+                            //       child: FloatingActionButton.extended(
+                            //         shape: RoundedRectangleBorder(
+                            //           borderRadius: BorderRadius.circular(
+                            //               30), // <-- Radius
+                            //           side: BorderSide(
+                            //             width: 1,
+                            //             color: Mycolors.mainShadedColorBlue,
+                            //           ),
+                            //         ),
+                            //         splashColor: Mycolors.mainShadedColorBlue,
+                            //         elevation: 0,
+                            //         foregroundColor:
+                            //             Color.fromARGB(255, 255, 255, 255),
+                            //         label: Text(
+                            //           'Add link',
+                            //         ), // <-- Text
+                            //         backgroundColor:
+                            //             Mycolors.mainShadedColorBlue,
+                            //         icon: Icon(
+                            //           // <-- Icon
+                            //           Icons.link_outlined,
+                            //           size: 24.0,
+                            //         ),
+                            //         onPressed: (() {
+                            //           _linkcontroll.text = "";
+                            //           _linknamecontroll.text = "";
+                            //           showConfirmationDialog(context);
+                            //         }),
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
+
                             SizedBox(
-                              height: 120,
+                              height: 50,
                             ),
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
@@ -677,8 +928,8 @@ class _editFAQState extends State<editFAQ> {
                 child: TextFormField(
                     controller: _linknamecontroll,
                     decoration: InputDecoration(
-                        labelText: 'Name',
-                        hintText: "Enter the link name ",
+                        labelText: 'URL name',
+                        hintText: "Enter the url name  ",
                         border: OutlineInputBorder()),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {

@@ -118,7 +118,7 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
             color: Color.fromARGB(255, 12, 12, 12),
           ),
           titleTextStyle: TextStyle(
-            fontFamily: 'main',
+            fontFamily: 'bold',
             fontSize: 18,
             color: Mycolors.mainShadedColorBlue,
           ),
@@ -237,7 +237,9 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                                 ))
                               ],
                             )),
-                        if (widget.commonIssue['filesurl'] != null)
+                        if (widget.commonIssue['filesurl'] != null &&
+                            widget.commonIssue['filesurl'] is List &&
+                            widget.commonIssue['filesurl'].isNotEmpty)
                           const Divider(
                             color: Colors.grey,
                             thickness: 1,
