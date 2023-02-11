@@ -648,8 +648,6 @@ class _AddHourState extends State<addHoursFaculty> {
                                       muser['mettingmethodinfo'];
 
                                   return Container(
-                                    // height: 140,
-                                    // width: 350,
                                     child: Card(
                                       //color: Color.fromARGB(76, 221, 221, 221),
                                       //Mycolors.mainShadedColorBlue
@@ -664,59 +662,86 @@ class _AddHourState extends State<addHoursFaculty> {
                                       ),
                                       shadowColor:
                                           Color.fromARGB(72, 212, 212, 240),
-                                      elevation: 40,
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              IconButton(
-                                                //iconSize: 100,
-                                                alignment: Alignment.topLeft,
-                                                color: Color.fromARGB(
-                                                    200, 21, 70, 160),
-                                                icon: const Icon(
-                                                  Icons.edit,
-                                                  size: 20,
-                                                ),
-                                                // the method which is called
-                                                // when button is pressed
-                                                onPressed: (() {
-                                                  showEditDialog(context);
-                                                }),
-                                              ),
-                                            ],
-                                          ),
-                                          // const SizedBox(height: 10),
-                                          Padding(
-                                            padding: const EdgeInsets.all(4),
-                                            child: Column(
+                                      elevation: 0,
+                                      child:
+                                          ListView(shrinkWrap: true, children: [
+                                        Column(
+                                          children: [
+                                            Row(
                                               children: [
-                                                Text(
-                                                  "Meeting method: " +
-                                                      mettingmethoddrop2 +
-                                                      " meeting",
-                                                  style: TextStyle(
-                                                      color: Mycolors
-                                                          .mainColorBlack,
-                                                      fontFamily: 'main',
-                                                      fontSize: 18),
+                                                Flexible(
+                                                  flex: 5,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          "Meeting method: " +
+                                                              mettingmethoddrop2 +
+                                                              " meeting",
+                                                          style: TextStyle(
+                                                              color: Mycolors
+                                                                  .mainColorBlack,
+                                                              fontFamily:
+                                                                  'main',
+                                                              fontSize: 16),
+                                                        ),
+                                                        Text(
+                                                          "Office number/link: " +
+                                                              metingmethodinfotext,
+                                                          style: TextStyle(
+                                                              color: Mycolors
+                                                                  .mainColorBlack,
+                                                              fontFamily:
+                                                                  'main',
+                                                              fontSize: 16),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
                                                 ),
-                                                Text(
-                                                  "Office number/link: " +
-                                                      metingmethodinfotext,
-                                                  style: TextStyle(
-                                                      color: Mycolors
-                                                          .mainColorBlack,
-                                                      fontFamily: 'main',
-                                                      fontSize: 18),
-                                                )
+                                                Flexible(
+                                                  flex: 1,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
+                                                    children: [
+                                                      IconButton(
+                                                        //iconSize: 100,
+
+                                                        alignment:
+                                                            Alignment.topRight,
+                                                        color: Color.fromARGB(
+                                                            200, 21, 70, 160),
+                                                        icon: const Icon(
+                                                          Icons.edit,
+                                                          size: 20,
+                                                        ),
+                                                        // the method which is called
+                                                        // when button is pressed
+                                                        onPressed: (() {
+                                                          showEditDialog(
+                                                              context);
+                                                        }),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
                                               ],
                                             ),
-                                          ),
-                                        ],
-                                      ),
+                                          ],
+                                        ),
+                                      ]),
                                     ),
                                   );
                                 } //end of if
