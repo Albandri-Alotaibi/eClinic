@@ -150,9 +150,9 @@ class _viewGPlibraryState extends State<viewGPlibrary> {
       gps['ref'] = doc.reference;
 
       //get gp name
-      List arrayOfStudent = doc['Students'];
-      final DocumentSnapshot oneStudent = await arrayOfStudent[0].get();
-      String GPName = oneStudent['projectname'];
+    // List arrayOfStudent = doc['Students'];
+      final DocumentSnapshot group = await doc["group"].get();
+      String GPName = group['projectname'];
       gps['projectname'] = GPName;
       // print(gps['projectname']);
 
