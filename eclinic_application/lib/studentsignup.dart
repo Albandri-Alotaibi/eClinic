@@ -420,7 +420,7 @@ class _studentsignupState extends State<studentsignup> {
                                   } else {
                                     if (!(ksuStudentEmail
                                         .hasMatch(_emailController.text))) {
-                                      return 'Please write email format correctly,ID@student.ksu.edu.sa ';
+                                      return 'Please write email format correctly,ID@student.ksu.edu.sa';
                                     } else {
                                       if (!(english
                                           .hasMatch(_emailController.text))) {

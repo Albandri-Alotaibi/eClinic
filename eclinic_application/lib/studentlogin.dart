@@ -9,6 +9,7 @@ import 'style/Mycolors.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:myapp/home.dart';
 import 'package:myapp/studentresetpassword.dart';
+import 'package:myapp/screeens/signUp/studentsignup.dart';
 
 class studentlogin extends StatefulWidget {
   const studentlogin({super.key});

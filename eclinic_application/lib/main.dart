@@ -20,15 +20,20 @@ import 'package:myapp/studenthome.dart';
 import 'package:myapp/facultysignup.dart';
 import 'package:myapp/studentlogin.dart';
 import 'package:myapp/studentresetpassword.dart';
-import 'package:myapp/studentsignup.dart';
+import 'package:myapp/screeens/signUp/studentsignup.dart';
 import 'package:myapp/studentverfication.dart';
 import 'package:myapp/studentviewprofile.dart';
 import 'package:myapp/verfication.dart';
 import 'package:myapp/FacultyViewScreen.dart';
 import 'package:myapp/FacultyListScreen.dart';
-
 import 'package:myapp/viewGPlibrary.dart';
+import 'package:myapp/screeens/signUp/screen_shoss_group.dart';
 import 'UploadGP.dart';
+import 'package:myapp/bloc/select_group/bloc.dart';
+import 'package:myapp/home.dart';
+import 'package:myapp/screeens/signUp/screen_shoss_group.dart';
+import 'package:myapp/screeens/signUp/studentsignup.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 Future<void> _firebaseMsgBackgroundHanler(RemoteMessage message) async {
   print("handling msg ${message.messageId}");
@@ -50,45 +55,49 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'main',
-        theme: ThemeData(
-          primaryColor: Color(0xFF55C1EF),
-        ),
-        // initialRoute: '/', //<----- deleted
-        home: getLandingPage(),
-        // <--------- new
-        routes: {
-          // '/': (context) => home(), //<----- deleted
-          'addHoursFaculty': (context) => addHoursFaculty(),
-          'facultyhome': (context) => facultyhome(0),
-          'studenthome': (context) => studenthome(),
-          'facultysignup': (context) => facultysignup(),
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => BlocGroupSelect()),
+        ],
+        child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'main',
+            theme: ThemeData(
+              primaryColor: Color(0xFF55C1EF),
+            ),
+            // initialRoute: '/', //<----- deleted
+            home: getLandingPage(),
+            // <--------- new
+            routes: {
+              // '/': (context) => home(), //<----- deleted
+              'addHoursFaculty': (context) => addHoursFaculty(),
+              'facultyhome': (context) => facultyhome(0),
+              'studenthome': (context) => studenthome(),
+              'facultysignup': (context) => facultysignup(),
 
-          'FacultyListScreen': (context) => FacultyListScreen(),
-          'login': (context) => login(),
-          'FacultyViewBookedAppointment': (context) =>
-              FacultyViewBookedAppointment(),
-          'verfication': (context) => verfication(),
-          'studentsignup': (context) => studentsignup(),
-          'studentlogin': (context) => studentlogin(),
-          'facultyviewprofile': (context) => facultyviewprofile(),
-          'studentverfication': (context) => studentverfication(),
-          'studentviewprofile': (context) => studentviewprofile(),
-          'StudentViewBookedAppointment': (context) =>
-              StudentViewBookedAppointment(),
-          'UploadGP': (context) => UploadGP(),
-          'addcommonissue': (context) => addcommonissue(),
-          'viewGPlibrary': (context) => viewGPlibrary(),
-          'commonIssuesList': (context) => CommonIssuesListScreen(),
-          'facultyListFAQ': (context) => facultyListFAQ(),
-          'editFAQ': (context) => editFAQ(value: ""),
-          'facultyViewFAQ': (context) => facultyViewFAQ(commonIssue: {}),
-          'resetpassword': (context) => resetpassword(),
-          "innereset": (context) => innereset(),
-          "studentresetpassword": (context) => studentresetpassword(),
-        });
+              'FacultyListScreen': (context) => FacultyListScreen(),
+              'login': (context) => login(),
+              'FacultyViewBookedAppointment': (context) =>
+                  FacultyViewBookedAppointment(),
+              'verfication': (context) => verfication(),
+              'studentsignup': (context) => studentsignup(),
+              'studentlogin': (context) => studentlogin(),
+              'facultyviewprofile': (context) => facultyviewprofile(),
+              'studentverfication': (context) => studentverfication(),
+              'studentviewprofile': (context) => studentviewprofile(),
+              'StudentViewBookedAppointment': (context) =>
+                  StudentViewBookedAppointment(),
+              'UploadGP': (context) => UploadGP(),
+              'addcommonissue': (context) => addcommonissue(),
+              'viewGPlibrary': (context) => viewGPlibrary(),
+              'commonIssuesList': (context) => CommonIssuesListScreen(),
+              'facultyListFAQ': (context) => facultyListFAQ(),
+              'editFAQ': (context) => editFAQ(value: ""),
+              'facultyViewFAQ': (context) => facultyViewFAQ(commonIssue: {}),
+              'resetpassword': (context) => resetpassword(),
+              "innereset": (context) => innereset(),
+              "studentresetpassword": (context) => studentresetpassword(),
+            }));
   }
 
   //for auto login  <---- new
