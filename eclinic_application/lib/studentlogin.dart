@@ -107,14 +107,9 @@ class _studentloginState extends State<studentlogin> {
                                     _emailController.text == "") {
                                   return 'Please enter your KSU email ';
                                 } else {
-                                  if (!(ksuStudentEmail
+                                  if (!(english
                                       .hasMatch(_emailController.text))) {
-                                    return 'Please write email format correctly,ID@student.ksu.edu.sa ';
-                                  } else {
-                                    if (!(english
-                                        .hasMatch(_emailController.text))) {
-                                      return "only english is allowed";
-                                    }
+                                    return "only english is allowed";
                                   }
                                 }
                               }),
@@ -195,24 +190,30 @@ class _studentloginState extends State<studentlogin> {
                                 });
                                 try {
                                   if (formkey.currentState!.validate()) {
-                                    await FirebaseAuth.instance
-                                        .signInWithEmailAndPassword(
-                                            email: email, password: password)
-                                        .then((value) async {
-                                      final FirebaseAuth auth =
-                                          FirebaseAuth.instance;
-                                      final User? user = auth.currentUser;
-                                      final Uid = user!.uid;
-                                      Navigator.pushNamed(
-                                          context, 'studenthome');
-                                      // if (user.emailVerified) {
-                                      //   Navigator.pushNamed(
-                                      //       context, 'studenthome');
-                                      // } else {
-                                      //   Navigator.pushNamed(
-                                      //       context, 'studentverfication');
-                                      // }
-                                    });
+                                    if (!(_emailController.text
+                                        .contains("student"))) {
+                                      showerror(
+                                          context, "invalid email or password");
+                                    } else {
+                                      await FirebaseAuth.instance
+                                          .signInWithEmailAndPassword(
+                                              email: email, password: password)
+                                          .then((value) async {
+                                        final FirebaseAuth auth =
+                                            FirebaseAuth.instance;
+                                        final User? user = auth.currentUser;
+                                        final Uid = user!.uid;
+                                        Navigator.pushNamed(
+                                            context, 'studenthome');
+                                        // if (user.emailVerified) {
+                                        //   Navigator.pushNamed(
+                                        //       context, 'studenthome');
+                                        // } else {
+                                        //   Navigator.pushNamed(
+                                        //       context, 'studentverfication');
+                                        // }
+                                      });
+                                    }
                                   }
                                 } on FirebaseAuthException catch (error) {
                                   // print(error.message);

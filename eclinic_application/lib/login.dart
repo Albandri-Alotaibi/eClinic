@@ -103,14 +103,9 @@ class _loginState extends State<login> {
                                     _emailController.text == "") {
                                   return 'Please enter your KSU email ';
                                 } else {
-                                  if (!(ksuEmailRegEx
+                                  if (!(english
                                       .hasMatch(_emailController.text))) {
-                                    return 'Please write email format correctly, example@ksu.edu.sa ';
-                                  } else {
-                                    if (!(english
-                                        .hasMatch(_emailController.text))) {
-                                      return "only english is allowed";
-                                    }
+                                    return "only english is allowed";
                                   }
                                 }
                               }),
@@ -190,25 +185,32 @@ class _loginState extends State<login> {
                                 });
                                 try {
                                   if (formkey.currentState!.validate()) {
-                                    await FirebaseAuth.instance
-                                        .signInWithEmailAndPassword(
-                                            email: email, password: password);
-                                    Navigator.pushNamed(context, 'facultyhome')
-                                        .then((value) async {
-                                      final FirebaseAuth auth =
-                                          FirebaseAuth.instance;
-                                      final User? user = auth.currentUser;
-                                      final Uid = user!.uid;
-                                      // if (user.emailVerified) {
-                                      //   Navigator.pushNamed(
-                                      //       context, 'facultyhome');
-                                      // } else {
-                                      //   if (!(user.emailVerified)) {
-                                      //     Navigator.pushNamed(
-                                      //         context, 'verfication');
-                                      //   }
-                                      // }
-                                    });
+                                    if (_emailController.text
+                                        .contains("student")) {
+                                      showerror(
+                                          context, "invalid email or password");
+                                    } else {
+                                      await FirebaseAuth.instance
+                                          .signInWithEmailAndPassword(
+                                              email: email, password: password);
+                                      Navigator.pushNamed(
+                                              context, 'facultyhome')
+                                          .then((value) async {
+                                        final FirebaseAuth auth =
+                                            FirebaseAuth.instance;
+                                        final User? user = auth.currentUser;
+                                        final Uid = user!.uid;
+                                        // if (user.emailVerified) {
+                                        //   Navigator.pushNamed(
+                                        //       context, 'facultyhome');
+                                        // } else {
+                                        //   if (!(user.emailVerified)) {
+                                        //     Navigator.pushNamed(
+                                        //         context, 'verfication');
+                                        //   }
+                                        // }
+                                      });
+                                    }
                                   }
                                 } on FirebaseAuthException catch (error) {
                                   print(error.message);
