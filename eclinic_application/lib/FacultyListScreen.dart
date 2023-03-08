@@ -48,16 +48,23 @@ class FacultyListScreenState extends State<FacultyListScreen> {
 
       Map<String, dynamic>? department;
 
-      if (student?.containsKey("department") ?? false) {
-        DocumentReference? departmentData = studentData['department'];
+      if (student?.containsKey("group") ?? false) {
+        DocumentReference? group = studentData['group'];
+        print("student?.containsKey(group)");
+        if (group != null) {
+          var gData = await group.get();
+          DocumentReference? dep = gData['department'];
 
-        if (departmentData != null) {
-          var dData = await departmentData.get();
+          print("group != null");
 
-          if (dData.exists) {
-            department = dData.data() as Map<String, dynamic>;
-            department['id'] = dData.reference.id;
-            department['ref'] = dData.reference;
+          if (dep != null) {
+            var dData = await dep.get();
+            if (dData.exists) {
+              department = dData.data() as Map<String, dynamic>;
+              department['id'] = dData.reference.id;
+              department['ref'] = dData.reference;
+              print(department['ref']);
+            }
           }
         }
       }

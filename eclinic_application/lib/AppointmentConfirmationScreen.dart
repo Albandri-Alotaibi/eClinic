@@ -28,7 +28,7 @@ class AppointmentConfirmationScreen extends StatefulWidget {
 
 class AppointmentConfirmationScreenState
     extends State<AppointmentConfirmationScreen> {
-  late List students;
+  late List students; //<----- DELETE ???
 
   late ThemeData themeData;
   var formattedDate = DateFormat('dd-MM-yyyy hh:mm a');
@@ -39,6 +39,7 @@ class AppointmentConfirmationScreenState
   var bookingDone = false;
   Map<String, dynamic>? student;
   Map<String, dynamic>? semester;
+  Map<String, dynamic>? group;
   String? userid;
   String? email;
 
@@ -105,46 +106,58 @@ class AppointmentConfirmationScreenState
       });
 
       //get all students with same project name
-      var studentsDoc = await FirebaseFirestore.instance
-          .collection('student')
-          .where("semester", isEqualTo: semester?['ref'])
-          .get();
+      // var studentsDoc = await FirebaseFirestore.instance
+      //     .collection('student')
+      //     .where("semester", isEqualTo: semester?['ref'])
+      //     .get();
 
-      //get their references
-      students = studentsDoc.docs
-          .map((doc) {
-            setState(() {
-              currentProgressStatus =
-                  "getting student: ${doc.data()['firstname']}";
-            });
-            var projectname = doc.data()['projectname'] as String?;
-            projectname = projectname
-                    ?.replaceAll(RegExp('[^A-Za-z0-9]'), '')
-                    .toLowerCase() ??
-                "";
-            if (projectname ==
-                student?['projectname']
-                    ?.replaceAll(RegExp('[^A-Za-z0-9]'), '')
-                    ?.toLowerCase()) {
-              return doc.reference;
-            }
-            return null;
-          })
-          .where((element) => element != null)
-          .toList();
+      // //get their references
+      // students = studentsDoc.docs
+      //     .map((doc) {
+      //       setState(() {
+      //         currentProgressStatus =
+      //             "getting student: ${doc.data()['firstname']}";
+      //       });
+      //       var projectname = doc.data()['projectname'] as String?;
+      //       projectname = projectname
+      //               ?.replaceAll(RegExp('[^A-Za-z0-9]'), '')
+      //               .toLowerCase() ??
+      //           "";
+      //       if (projectname ==
+      //           student?['projectname']
+      //               ?.replaceAll(RegExp('[^A-Za-z0-9]'), '')
+      //               ?.toLowerCase()) {
+      //         return doc.reference;
+      //       }
+      //       return null;
+      //     })
+      //     .where((element) => element != null)
+      //     .toList();
 
-      //add the appointment to each students array of appointments
-      var i = 0;
-      for (var element in students) {
-        i++;
-        setState(() {
-          currentProgressStatus = "adding appointment to a student $i";
-        });
+      DocumentReference? groupData = student?["group"];
+      if (groupData != null) {
+        var gData = await groupData.get();
 
-        await element?.update({
-          'appointments': FieldValue.arrayUnion([widget.appointment['ref']])
-        });
+        if (gData.exists) {
+          group = gData.data() as Map<String, dynamic>;
+          //   print(group?['projectname']);
+          await groupData.update({
+            'appointments': FieldValue.arrayUnion([widget.appointment['ref']])
+          });
+        }
       }
+      //add the appointment to each students array of appointments
+      // var i = 0;
+      // for (var element in students) {
+      //   i++;
+      //   setState(() {
+      //     currentProgressStatus = "adding appointment to a student $i";
+      //   });
+
+      //   await element?.update({
+      //     'appointments': FieldValue.arrayUnion([widget.appointment['ref']])
+      //   });
+      // }
 
       //update the appointment to add students/booked/specialty
 
@@ -154,7 +167,7 @@ class AppointmentConfirmationScreenState
       await widget.appointment['ref']?.update({
         'Booked': true,
         'specialty': widget.speciality['ref'],
-        'student': FieldValue.arrayUnion(students)
+        'group': groupData
       });
       setState(() {
         loading = false;
@@ -412,7 +425,7 @@ class AppointmentConfirmationScreenState
               'click_action': 'FLUTTER_NOTIFICATION_CLICK',
               'status': 'done',
               'body': msg,
-              'title': 'appointment cancelation',
+              'title': 'Consultation appointment',
             },
             "notification": <String, dynamic>{
               "title": "Consultation appointment",
@@ -438,42 +451,46 @@ class AppointmentConfirmationScreenState
     var facultyName =
         "${widget.faculty['firstname']} ${widget.faculty['lastname']}";
     DateTime StartTimeDate = widget.appointment['starttime'].toDate();
-    print(StartTimeDate);
     DateTime now = new DateTime.now();
-    print(now);
     DateTime TimeFromNowTo24Hours = now.add(Duration(hours: 24));
-    print(TimeFromNowTo24Hours);
     DateTime At4Pm = new DateTime(now.year, now.month, now.day, 16, 0, 0);
-    print(At4Pm);
-    print("ddddeeeeeeeeeemmmmmmmmmm1111");
-    //print("ddddeeeeeeeeeemmmmmmmmmm");
-    // while (students.length != null) {
+   // print("ddddeeeeeeeeeemmmmmmmmmm1111");
+   
     await Future.delayed(Duration(seconds: 1));
-    print(students.length);
-    print("ddddeeeeeeeeeemmmmmmmmmm22222");
-    print(students);
-    // }
-    print("in the If ###################");
+   
+    //print("ddddeeeeeeeeeemmmmmmmmmm22222");
+    
     if (now.isAfter(At4Pm)) {
-      print("in the If ###################");
+     // print("in the If ###################");
       if (StartTimeDate.isBefore(TimeFromNowTo24Hours)) {
-        print("in the If ###################");
-        //send t the faculty
+       // print("in the If ###################");
+        //send to the faculty
         var facultyToken = widget.faculty['token'];
-        //group name
-        final DocumentSnapshot firstDtudentRef = await students[0].get();
-        var projectName = firstDtudentRef['projectname'];
-        //get time fo the appointment
+      
+        //get the grop name and students
+        String? projectName;
+        late List groupStudents;
+        DocumentReference? groupData = student?["group"];
+        if (groupData != null) {
+          var gData = await groupData.get();
+
+          if (gData.exists) {
+            group = gData.data() as Map<String, dynamic>;
+            projectName = group?['projectname'];
+            groupStudents = group?['students'];
+          }
+        }
 
         String facultymsg =
             "You have a new appointment tomorrow at ${formattedDateTime.format(widget.appointment['starttime']!.toDate())}";
         sendPushMessege(facultyToken, facultymsg);
-        print("ddddeeeeeeeeeemmmmmmmmmm3333");
+       // print("ddddeeeeeeeeeemmmmmmmmmm3333");
 
-        for (int i = 0; i < students.length; i++) {
+        for (int i = 0; i < groupStudents.length; i++) {
           String studentMsg =
               "Tomorrow at ${formattedDateTime.format(widget.appointment['starttime']!.toDate())}";
-          final DocumentSnapshot StudentdocRef = await students[i].get();
+          final DocumentSnapshot StudentdocRef =
+              await groupStudents[i]['ref'].get();
           var studentToken = StudentdocRef['token'];
           sendPushMessege(studentToken, studentMsg);
         }
