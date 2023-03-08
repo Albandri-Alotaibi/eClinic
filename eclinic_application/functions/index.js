@@ -109,14 +109,14 @@ exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async
 exports.gpAndEndonsemesterreminder = functions.pubsub.schedule('0 21 * * *').onRun(async (context) => {
     functions.logger.info("Hello logs", { structuredData: true });
     //response.send("Hello Firebase");
-    const StudentsSnapshot = await admin.firestore().collection('student').get().then((querySnapshot) => {
-        querySnapshot.forEach(async (doc) => {
+    const StudentsSnapshot = await admin.firestore().collection('studentgroup').get().then((querySnapshot) => {
+        querySnapshot.forEach(async (doc) => { //doc os the group
             functions.logger.info(doc.id);
             var today = new Date();
-            var gradDate = new Date(doc.data().graduationDate.toDate());
+            var GPdate = new Date(doc.data().Projectcompletiondate.toDate());
             functions.logger.info(today);
-            functions.logger.info(gradDate);
-            if (today.getDay() === gradDate.getDay() && today.getMonth() === gradDate.getMonth() && today.getFullYear() === gradDate.getFullYear()) {
+            functions.logger.info(GPdate);
+            if (today.getDay() === GPdate.getDay() && today.getMonth() === GPdate.getMonth() && today.getFullYear() === GPdate.getFullYear()) {
                 if (doc.data().uploadgp == false) {
                     functions.logger.info("in if", { structuredData: true });
                     const payload = {
@@ -126,7 +126,21 @@ exports.gpAndEndonsemesterreminder = functions.pubsub.schedule('0 21 * * *').onR
                             //icon: follower.photoURL
                         }
                     };
-                    const response = await admin.messaging().sendToDevice(doc.data().token, payload);
+                    var studentsRefArray = doc.data().students;
+
+                    for (let i = 0; i < studentsRefArray.length; i++) {
+                        var oneS = studentsRefArray[i]['ref'].get().then(async (oneStudentDoc) => {
+                            var token = oneStudentDoc.data().token
+                            functions.logger.info('token');
+                             functions.logger.info(token);
+                            if (token != null) {
+                                // functions.logger.info("in  if(token != null)");
+                                const response = await admin.messaging().sendToDevice(token, payload);
+                            }
+
+                        });
+                    }
+                  
                 }
 
             }
@@ -134,10 +148,13 @@ exports.gpAndEndonsemesterreminder = functions.pubsub.schedule('0 21 * * *').onR
         })
     })
     //sending notification to notify faculty about semester ending
+    
     const SemesterSnapshot = await admin.firestore().collection('semester').get().then((querySnapshot) => {
         querySnapshot.forEach(async (doc) => {
             var today = new Date();
-            var endDate = new Date(doc.data().enddate.toDate());
+            var endDate = doc.data().enddate;
+            if(endDate != null ){
+                endDate = new Date(endDate.toDate());
             if (today.getDay() === endDate.getDay() && today.getMonth() === endDate.getMonth() && today.getFullYear() === endDate.getFullYear()) {
                 // functions.logger.info("doc.data().semestername");
                 // functions.logger.info(doc.data().semestername);
@@ -170,7 +187,7 @@ exports.gpAndEndonsemesterreminder = functions.pubsub.schedule('0 21 * * *').onR
                 }
 
                 //functions.logger.info("end of the loop");
-            }
+            }}
         })
     })
 

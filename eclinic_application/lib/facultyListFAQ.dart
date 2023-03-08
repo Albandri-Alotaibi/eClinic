@@ -334,6 +334,7 @@ class _facultyListFAQState extends State<facultyListFAQ> {
         title: "Common Issues",
         home: SafeArea(
           child: Scaffold(
+              backgroundColor: Color.fromARGB(255, 255, 255, 255),
               //show the app bar above
               // appBar: AppBar(
               //   title: const Text("Common Issues"),

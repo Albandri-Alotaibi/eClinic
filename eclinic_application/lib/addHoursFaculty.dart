@@ -318,7 +318,7 @@ class _AddHourState extends State<addHoursFaculty> {
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.clip,
                   style: TextStyle(
-                      color: Colors.black54, fontFamily: 'main', fontSize: 17),
+                      color: Colors.black54, fontFamily: 'main', fontSize: 19),
                 ),
               )
               //);
@@ -383,20 +383,22 @@ class _AddHourState extends State<addHoursFaculty> {
                       itemCount: daysOfHelp.length,
                       itemBuilder: ((context, index) {
                         return Card(
+                          color: Color.fromARGB(97, 221, 221, 221),
                           shape: RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.circular(17), // <-- Radius
                           ),
                           shadowColor: Color.fromARGB(94, 250, 250, 250),
-                          elevation: 20,
+                          elevation: 0,
                           child: ListTile(
                             title: Padding(
-                              padding: const EdgeInsets.only(top: 11.7),
+                              padding:
+                                  const EdgeInsets.only(top: 15, bottom: 3),
                               child: Text(
                                 daysOfHelp[index].title,
                                 style: TextStyle(
                                     color: Mycolors.mainColorBlack,
-                                    fontFamily: 'main',
+                                    fontFamily: 'Semibold',
                                     fontSize: 17),
                               ),
                             ),
@@ -587,7 +589,7 @@ class _AddHourState extends State<addHoursFaculty> {
                                               ),
                                               shadowColor: Color.fromARGB(
                                                   0, 250, 250, 250),
-                                              elevation: 20,
+                                              elevation: 0,
                                               child: ExpansionTile(
                                                 iconColor: Mycolors
                                                     .mainShadedColorBlue,
@@ -1005,7 +1007,7 @@ class _AddHourState extends State<addHoursFaculty> {
                     daysOfHelp[x].hours[i].toString(),
                     style: TextStyle(
                         color: Mycolors.mainColorBlack,
-                        fontFamily: 'main',
+                        fontFamily: 'Semibold',
                         fontSize: 14),
                   ),
                   Padding(
@@ -1031,8 +1033,8 @@ class _AddHourState extends State<addHoursFaculty> {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                   elevation: 0,
-                  surfaceTintColor: Mycolors.mainColorWhite,
-                  backgroundColor: Mycolors.mainColorWhite,
+                  surfaceTintColor: Color.fromARGB(0, 221, 221, 221),
+                  backgroundColor: Color.fromARGB(0, 221, 221, 221),
                   foregroundColor: Mycolors.mainColorGreen),
               child: Text("+ Add"),
               onPressed: () => TimeRangePicker.show(
@@ -1282,7 +1284,6 @@ class _AddHourState extends State<addHoursFaculty> {
 //print(ArrayOfAllTheDayRanges.length);
           ArrayOfAllTheDayRanges.add(Ranges);
           //print(ArrayOfAllTheDayRanges.length);
-
         } //end of generating all ranges for one day
 //print(ArrayOfAllTheDayRanges.length);
         OneDayGenerating(daysOfHelp[k].title, ArrayOfAllTheDayRanges);
@@ -1428,7 +1429,6 @@ class _AddHourState extends State<addHoursFaculty> {
         //date
         //time
       } //end if sunday
-
     }
 
 //start*************************************************************************************
@@ -1471,50 +1471,61 @@ class _AddHourState extends State<addHoursFaculty> {
         daysOfHelp[x].value = false;
       });
     return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Stack(
-        children: [
-          Container(
-            padding: EdgeInsets.all(16),
-            height: 90,
-            decoration: BoxDecoration(
-                color: Color(0xFFC72C41),
-                borderRadius: BorderRadius.all(Radius.circular(20))),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 48,
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Oh snap!",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                        ),
-                      ),
-                      Text(
-                        msg,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-    ));
+        backgroundColor: Colors.red,
+        content: Text(
+          msg,
+          style: Theme.of(context)
+              .textTheme
+              .button
+              ?.copyWith(fontSize: 15, color: Colors.white),
+          textAlign: TextAlign.center,
+        )));
+
+    // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //   content: Stack(
+    //     children: [
+    //       Container(
+    //         padding: EdgeInsets.all(16),
+    //         height: 90,
+    //         decoration: BoxDecoration(
+    //             color: Color(0xFFC72C41),
+    //             borderRadius: BorderRadius.all(Radius.circular(20))),
+    //         child: Row(
+    //           children: [
+    //             SizedBox(
+    //               width: 48,
+    //             ),
+    //             Expanded(
+    //               child: Column(
+    //                 crossAxisAlignment: CrossAxisAlignment.start,
+    //                 children: [
+    //                   Text(
+    //                     "Oh snap!",
+    //                     style: TextStyle(
+    //                       color: Colors.white,
+    //                       fontSize: 12,
+    //                     ),
+    //                   ),
+    //                   Text(
+    //                     msg,
+    //                     style: TextStyle(
+    //                       color: Colors.white,
+    //                       fontSize: 12,
+    //                     ),
+    //                     maxLines: 2,
+    //                     overflow: TextOverflow.ellipsis,
+    //                   )
+    //                 ],
+    //               ),
+    //             ),
+    //           ],
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    //   behavior: SnackBarBehavior.floating,
+    //   backgroundColor: Colors.transparent,
+    //   elevation: 0,
+    // ));
   }
 } //en

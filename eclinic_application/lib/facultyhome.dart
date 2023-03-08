@@ -206,24 +206,24 @@ class _fState extends State<facultyhome> {
         //-------------------------Nav Bar------------------------------
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(50),
-                topRight: Radius.circular(50),
-                bottomLeft: Radius.circular(50),
-                bottomRight: Radius.circular(50)),
+            color: Color.fromARGB(71, 229, 229, 229),
+            // borderRadius: BorderRadius.only(
+            //     topLeft: Radius.circular(45),
+            //     topRight: Radius.circular(45),
+            //     bottomLeft: Radius.circular(45),
+            //     bottomRight: Radius.circular(45)),
             boxShadow: [
               BoxShadow(
                 // color: Colors.grey.withOpacity(0.5),
                 color: Mycolors.mainColorShadow,
-                spreadRadius: 10,
-                blurRadius: 7,
+                spreadRadius: 0,
+                blurRadius: 0,
                 offset: Offset(3, 3), // changes position of shadow
               ),
             ],
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: GNav(
               selectedIndex: widget.selectedIndex,
               onTabChange: (index) {
@@ -233,12 +233,12 @@ class _fState extends State<facultyhome> {
                 });
               },
 
-              backgroundColor: Mycolors.BackgroundColor,
+              backgroundColor: Color.fromARGB(0, 229, 229, 229),
               color: Mycolors.mainColorBlack,
               activeColor: Mycolors.mainColorWhite,
-              tabBackgroundColor: Mycolors.mainShadedColorBlue,
+              tabBackgroundColor: Mycolors.mainColorBlue,
               gap: 8,
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.all(10),
               //curve: Curves.easeInOut,
               tabs: [
                 GButton(
