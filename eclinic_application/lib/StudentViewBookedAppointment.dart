@@ -65,11 +65,46 @@ class _StudentViewBookedAppointmentState
     userid = user!.uid;
     email = user.email!;
 
-    final snap = await FirebaseFirestore.instance
+// group = await element['group'];
+//          final DocumentSnapshot groupRef = await group.get(); 
+//          var Students=await groupRef['students'];
+//           print("HOW MANNNNNNY STUDEEEEEEEENTSSSSS***********");
+//           print(Students.length);
+
+
+
+// projectname = groupRef['projectname']; 
+/////////(((((((corect)))))))
+
+
+//   final snap = await FirebaseFirestore.instance
+//         .collection("student")
+//         .doc(userid)
+//         .get();
+
+// var group=await snap['group'];
+// final DocumentSnapshot groupRef = await group.get(); 
+//   print(groupRef['projectname']);
+
+
+  final snap = await FirebaseFirestore.instance
         .collection("student")
         .doc(userid)
+        .get();
+ var group=await snap['group'];
+
+// final snap2 = await FirebaseFirestore.instance
+//         .collection("student")
+//         .doc(userid)
+//         .snapshots()
+//         .listen((event) async {
+
+
+
+    final snap2 = await group
         .snapshots()
         .listen((event) async {
+          print("INSIDE");
       bool? found;
       if (event.data()!.containsKey('appointments') == true) {
         if (event['appointments'].length == 0) {
@@ -133,9 +168,14 @@ class _StudentViewBookedAppointmentState
     email = user.email!;
     DateTime now = new DateTime.now();
 
-    final snap2 = await FirebaseFirestore.instance
+
+  final snap = await FirebaseFirestore.instance
         .collection("student")
         .doc(userid)
+        .get();
+ var group=await snap['group'];
+
+    final snap2 = await group
         .snapshots()
         .listen((event) async {
       if (event.data()!.containsKey('appointments') == true) {
@@ -165,7 +205,7 @@ class _StudentViewBookedAppointmentState
             String dayname = DateFormat("EEE").format(StartTimeDate);
             Timestamp t2 = docRef2['endtime'] as Timestamp;
             DateTime EndTimeDate = t2.toDate();
-            var studentsrefrences = docRef2['student'];
+           // var studentsrefrences = docRef2['student'];
             var specialityRef = docRef2['specialty'];
             final DocumentSnapshot docRef4 = await specialityRef.get();
             String specialityName = docRef4['specialityname']; //specialityname
@@ -194,7 +234,8 @@ class _StudentViewBookedAppointmentState
                   specialityn: specialityName,
                   meetingMethod: meetingMethod,
                   meetingInfo: meetingInfo,
-                  studentsArrayOfReference: studentsrefrences));
+                  //studentsArrayOfReference: studentsrefrences
+                  ));
             });
 
             for (int i = 0; i < BookedAppointments.length; i++) {

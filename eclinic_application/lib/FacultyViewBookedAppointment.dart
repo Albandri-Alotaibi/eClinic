@@ -33,7 +33,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
   //  bool  isExists=false;
   //bool AleardyintheArray=false;
   bool? AleardyintheArray;
-  int numOfDaysOfHelp = 0;
+  int numOfBookedApp = 0;
 // var studentsArrayOfRef;
 // List students=[];
 // String projectname="";
@@ -218,7 +218,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
     //BuildContext context// Future
     BookedAppointments.clear();
     BookedAppointments.length = 0;
-    // numOfDaysOfHelp = 0;
+    // numOfBookedApp = 0;
     //await Future.delayed(Duration(seconds: 5));
 
     final FirebaseAuth auth = await FirebaseAuth.instance;
@@ -237,7 +237,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
         .snapshots()
         .listen((event) {
       //event ترجع كل شي مو بس الجديد
-      numOfDaysOfHelp = event.size;
+      numOfBookedApp = event.size;
       print("######################################");
       print(event.size);
 
@@ -278,6 +278,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
           print("6");
           //students.clear();
           var studentsArrayOfRef;
+          var group; 
           List students = [];
           students.clear();
           String projectname = "";
@@ -299,24 +300,31 @@ class _sState extends State<FacultyViewBookedAppointment> {
           String spName = specialtyDocRef2['specialityname'];
           print(spName);
 // ******************************HERE START ***********************************************************
-          studentsArrayOfRef = element['student'];
-          print("**********************************************");
-          print("777777777777777777777777777777777777777777777777777");
-          print(studentsArrayOfRef);
-          print("8888888888888888888888888888888888888888888888888888");
-          print(studentsArrayOfRef.length);
-          int len = studentsArrayOfRef.length;
-          //DocumentSnapshot docRef2 = await studentsArrayOfRef[0].get();
-          print("7");
-          for (var i = 0; i < studentsArrayOfRef.length; i++) {
-            final DocumentSnapshot docRef2 =
-                await studentsArrayOfRef[i].get(); //await
+          group = await element['group'];
+         final DocumentSnapshot groupRef = await group.get(); 
+         var Students=await groupRef['students'];
+          print("HOW MANNNNNNY STUDEEEEEEEENTSSSSS***********");
+          print(Students.length);
+
+
+
+projectname = groupRef['projectname']; 
+
+
+  for (var i = 0; i < Students.length; i++) {
+
+            final DocumentSnapshot docRef2 = await Students[i]['ref'].get(); 
+            
             print(docRef2['firstname']);
             String name = docRef2['firstname'] + " " + docRef2['lastname'];
             students.add(name);
             print(students);
-            projectname = docRef2['projectname'];
-          }
+           
+}
+
+
+
+          
 // ******************************HERE END ***********************************************************
 
           //if(AleardyintheArray==false){
@@ -371,7 +379,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
         //  setState(() {
         //  dynamic res = BookedAppointments.removeAt(i);
         //  print(res);
-        //   //numOfDaysOfHelp=numOfDaysOfHelp-1;
+        //   //numOfBookedApp=numOfBookedApp-1;
         //   //Exist=false; if event size==0
         //   });
 
@@ -391,12 +399,12 @@ class _sState extends State<FacultyViewBookedAppointment> {
     //   // print("############################################");
     //    //print(snapshot.size);
 
-    //  numOfDaysOfHelp = snapshot.size;
+    //  numOfBookedApp = snapshot.size;
 
     //   snapshot.docs.forEach((DocumentSnapshot doc) async {
     //    //if(doc['Booked']==true){
 
-    //     // numOfDaysOfHelp=numOfDaysOfHelp+1;
+    //     // numOfBookedApp=numOfBookedApp+1;
 
     //    Timestamp t1= doc['starttime'] as Timestamp;
     //    DateTime StartTimeDate=t1.toDate();
@@ -430,9 +438,9 @@ class _sState extends State<FacultyViewBookedAppointment> {
 //     return b.compareTo(a);
 // });
 
-//numOfDaysOfHelp=BookedAppointments.length;
+//numOfBookedApp=BookedAppointments.length;
     // print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%1");
-    //  print(numOfDaysOfHelp);
+    //  print(numOfBookedApp);
     //  print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%2");
     //  print(BookedAppointments.length);
     //  print(BookedAppointments.toString());
@@ -443,7 +451,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
     //getBookedappointments();
 
     if (isExists == false || (BookedAppointments.length == 0)) {
-      //|| numOfDaysOfHelp==0
+      //|| numOfBookedApp==0
       return SafeArea(
         child: Scaffold(
             backgroundColor: Color.fromARGB(255, 255, 255, 255),
@@ -486,7 +494,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
             )),
       );
     } else {
-      //BookedAppointments.isEmpty==false //numOfDaysOfHelp==BookedAppointments.length
+      //BookedAppointments.isEmpty==false //numOfBookedApp==BookedAppointments.length
       //if(BookedAppointments.length!=0){
       return SafeArea(
         child: Scaffold(
@@ -510,7 +518,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
                       Expanded(
                         child: ListView.builder(
                             itemCount:
-                                numOfDaysOfHelp, //BookedAppointments.length,//numOfDaysOfHelp
+                                numOfBookedApp, //BookedAppointments.length,//numOfBookedApp
                             itemBuilder: ((context, index) {
                               if (index < BookedAppointments.length) {
                                 return Card(
@@ -561,6 +569,18 @@ class _sState extends State<FacultyViewBookedAppointment> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: <Widget>[
+                                                 Text(
+                                                  "Speciality : " +
+                                                      BookedAppointments[index]
+                                                          .specialty +
+                                                      "\n",
+                                                  textAlign: TextAlign.left,
+                                                  style: TextStyle(
+                                                      color: Mycolors
+                                                          .mainColorBlack,
+                                                      fontFamily: 'Semibold',
+                                                      fontSize: 15),
+                                                ),
                                                 Text(
                                                   "Project : " +
                                                       BookedAppointments[index]
@@ -586,18 +606,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
                                                             .mainColorBlack,
                                                         fontFamily: 'Semibold',
                                                         fontSize: 15)),
-                                                Text(
-                                                  "Speciality : " +
-                                                      BookedAppointments[index]
-                                                          .specialty +
-                                                      "\n",
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                      color: Mycolors
-                                                          .mainColorBlack,
-                                                      fontFamily: 'Semibold',
-                                                      fontSize: 15),
-                                                ),
+                                               
                                                 Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
@@ -738,7 +747,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
                                 //         children: <Widget>[
                                 //         Text("inside else"),
                                 //         Text("${BookedAppointments.length}"),
-                                //         Text("${numOfDaysOfHelp}"),
+                                //         Text("${numOfBookedApp}"),
 
                                 //         ]);
                               }

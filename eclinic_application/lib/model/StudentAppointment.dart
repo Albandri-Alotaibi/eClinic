@@ -27,7 +27,6 @@ class StudentAppointment {
     required this.specialityn,
     required this.meetingMethod,
     required this.meetingInfo,
-    required this.studentsArrayOfReference,
   });
 
   @override

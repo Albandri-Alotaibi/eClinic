@@ -48,7 +48,7 @@ class Appointment {
     // TODO: implement toString
 
     String srting = "${students[0]}";
-    for (var i = 1; i < students.length - 1; i++) {
+    for (var i = 1; i < students.length; i++) {
       srting = srting + ", ${students[i]}";
     }
 
