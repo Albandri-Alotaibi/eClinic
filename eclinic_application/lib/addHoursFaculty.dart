@@ -519,28 +519,28 @@ class _AddHourState extends State<addHoursFaculty> {
                                         "Office number: " +
                                             muser['mettingmethodinfo']);
                                   } else {
-                                    metingmethodinfotext = Row(
-                                      children: [
-                                        Text("Link: "),
-                                        RichText(
-                                          text: TextSpan(children: [
-                                            TextSpan(
-                                                text:
-                                                    muser['mettingmethodinfo'],
-                                                style: TextStyle(
-                                                    decoration: TextDecoration
-                                                        .underline,
-                                                    color: Colors.blue),
-                                                recognizer:
-                                                    TapGestureRecognizer()
-                                                      ..onTap = () async {
-                                                        launch(muser[
-                                                            'mettingmethodinfo']);
-                                                      })
-                                          ]),
-                                        ),
-                                      ],
+                                    metingmethodinfotext = RichText(
+                                      text: TextSpan(children: [
+                                        TextSpan(
+                                            text: 'Link: ',
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color:
+                                                    Mycolors.mainColorBlack)),
+                                        TextSpan(
+                                            text: muser['mettingmethodinfo'],
+                                            style: TextStyle(
+                                                decoration:
+                                                    TextDecoration.underline,
+                                                color: Colors.blue),
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () async {
+                                                launch(
+                                                    muser['mettingmethodinfo']);
+                                              })
+                                      ]),
                                     );
+
                                     // metingmethodinfotext =
                                     //     "Link: " + muser['mettingmethodinfo'];
                                   }
