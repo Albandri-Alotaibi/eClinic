@@ -50,6 +50,7 @@ class _studentsignupState extends State<studentsignup> {
   var socialmediaaccount;
   var checklengthforspeciality = 0;
   bool isshow = false;
+  bool exist = true;
 
   late String semstername;
   Rx<List<String>> selectedoptionlist = Rx<List<String>>([]);
@@ -103,8 +104,6 @@ class _studentsignupState extends State<studentsignup> {
   Future checkidd(String? departmentename) async {
     try {
       await FirebaseFirestore.instance
-          // .collection('collage')
-          // .doc("CCIS")
           .collection("department")
           .get()
           .then((querySnapshot) {
@@ -216,6 +215,35 @@ class _studentsignupState extends State<studentsignup> {
   //     });
   //   });
   // }
+  getemails(var email1) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection("student")
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          setState(() {
+            if (email1 == element["email"]) {
+              setState(() {
+                exist = false;
+                print("there is account");
+                print(exist);
+              });
+            } else {
+              setState(() {
+                exist = true;
+                print("new account");
+                print(exist);
+              });
+            }
+          });
+        });
+      });
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 
   final formkey = GlobalKey<FormState>();
   final _fnameController = TextEditingController();
@@ -390,6 +418,9 @@ class _studentsignupState extends State<studentsignup> {
                                   }
                                 }
                               },
+                              onChanged: (value) {
+                                getemails(_emailController.text);
+                              },
                             ),
                             SizedBox(
                               height: 8,
@@ -477,105 +508,6 @@ class _studentsignupState extends State<studentsignup> {
                                 }
                               },
                             ),
-                            SizedBox(
-                              height: 8,
-                            ),
-
-                            /*Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: DropdownButtonFormField(
-                                    decoration: InputDecoration(
-                                      hintText: 'Choose month :',
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25),
-                                          borderSide: const BorderSide(
-                                            width: 0,
-                                          )),
-                                    ),
-                                    items: const [
-                                      DropdownMenuItem(
-                                          child: Text("Jan"), value: "01"),
-                                      DropdownMenuItem(
-                                          child: Text("Feb"), value: "02"),
-                                      DropdownMenuItem(
-                                          child: Text("Mar"), value: "03"),
-                                      DropdownMenuItem(
-                                          child: Text("Apr"), value: "04"),
-                                      DropdownMenuItem(
-                                          child: Text("May"), value: "05"),
-                                      DropdownMenuItem(
-                                          child: Text("Jun"), value: "06"),
-                                      DropdownMenuItem(
-                                          child: Text("Jul"), value: "07"),
-                                      DropdownMenuItem(
-                                          child: Text("Aug"), value: "08"),
-                                      DropdownMenuItem(
-                                          child: Text("Sep"), value: "09"),
-                                      DropdownMenuItem(
-                                          child: Text("Oct"), value: "10"),
-                                      DropdownMenuItem(
-                                          child: Text("Nov"), value: "11"),
-                                      DropdownMenuItem(
-                                          child: Text("Dec"), value: "12")
-                                    ],
-                                    onChanged: (value) {
-                                      setState(() {
-                                        month = value;
-                                        print(month);
-                                      });
-                                    },
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    validator: (value) {
-                                      if (value == null || month == "") {
-                                        return 'Please Choose month';
-                                      }
-                                    },
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: DropdownButtonFormField<String>(
-                                    decoration: InputDecoration(
-                                      hintText: ' Choose year :',
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25),
-                                          borderSide: const BorderSide(
-                                            width: 0,
-                                          )),
-                                    ),
-                                    items: years.map((String dropdownitems) {
-                                      return DropdownMenuItem<String>(
-                                        value: dropdownitems,
-                                        child: Text(dropdownitems),
-                                      );
-                                    }).toList(),
-                                    onChanged: (String? newselect) {
-                                      setState(() {
-                                        selctedyear = newselect;
-                                        print(selctedyear);
-                                      });
-                                    },
-                                    value: selctedyear,
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    validator: (value) {
-                                      if (value == null ||
-                                          selctedyear == "") {
-                                        return 'Please choose year';
-                                      }
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),*/
                             SizedBox(
                               height: 8,
                             ),
@@ -677,11 +609,11 @@ class _studentsignupState extends State<studentsignup> {
                               ),
                               onPressed: () async {
                                 setState(() {
+                                  getemails(_emailController.text);
                                   fname = _fnameController.text;
                                   lname = _lnamecontroller.text;
                                   email = _emailController.text;
                                   password = _passwordController.text;
-
                                   GPtitle = _projecttitle.text;
                                   socialmedia = social;
                                   socialmediaaccount = _socialmedialink2.text;
@@ -689,10 +621,8 @@ class _studentsignupState extends State<studentsignup> {
 
                                 try {
                                   //todo this change to formkey.currentState!.validate()
-                                  if (formkey.currentState!.validate()) {
-                                    //print('data : == ${formkey.currentState!.}') ;
-                                    //GPdate = dategp(selctedyear, month);
-
+                                  if (formkey.currentState!.validate() &&
+                                      exist) {
                                     DocumentReference refDep = FirebaseFirestore
                                         .instance
                                         .collection("department")
@@ -719,37 +649,9 @@ class _studentsignupState extends State<studentsignup> {
                                                   'socialmediaaccount':
                                                       socialmediaaccount
                                                 }))));
-
-                                    /*
-                                    GPdate = dategp(selctedyear, month);
-                                    await FirebaseAuth.instance
-                                        .createUserWithEmailAndPassword(
-                                            email: email, password: password)
-                                        .then((value) async {
-                                      final FirebaseAuth auth =
-                                          FirebaseAuth.instance;
-                                      final User? user = auth.currentUser;
-                                      final Uid = user!.uid;
-
-                                      await FirebaseFirestore.instance
-                                          .collection('student')
-                                          .doc(Uid)
-                                          .set({
-                                        'firstname': fname,
-                                        "lastname": lname,
-                                        'email': email,
-                                        'department': FirebaseFirestore
-                                            .instance
-                                            .collection("department")
-                                            .doc(docfordepatment),
-                                        'graduationDate': GPdate,
-                                        'socialmedia': socialmedia,
-                                        'socialmediaaccount':
-                                            socialmediaaccount,
-                                      });
-                                    });
-
-                                     */
+                                  } else {
+                                    showerror(context,
+                                        "The email address is already in use by another account");
                                   }
                                 } on FirebaseAuthException catch (error) {
                                   print(error.message);
