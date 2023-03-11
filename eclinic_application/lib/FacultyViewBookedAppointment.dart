@@ -278,7 +278,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
           print("6");
           //students.clear();
           var studentsArrayOfRef;
-          var group; 
+          var group;
           List students = [];
           students.clear();
           String projectname = "";
@@ -301,30 +301,22 @@ class _sState extends State<FacultyViewBookedAppointment> {
           print(spName);
 // ******************************HERE START ***********************************************************
           group = await element['group'];
-         final DocumentSnapshot groupRef = await group.get(); 
-         var Students=await groupRef['students'];
+          final DocumentSnapshot groupRef = await group.get();
+          var Students = await groupRef['students'];
           print("HOW MANNNNNNY STUDEEEEEEEENTSSSSS***********");
           print(Students.length);
 
+          projectname = groupRef['projectname'];
 
+          for (var i = 0; i < Students.length; i++) {
+            final DocumentSnapshot docRef2 = await Students[i]['ref'].get();
 
-projectname = groupRef['projectname']; 
-
-
-  for (var i = 0; i < Students.length; i++) {
-
-            final DocumentSnapshot docRef2 = await Students[i]['ref'].get(); 
-            
             print(docRef2['firstname']);
             String name = docRef2['firstname'] + " " + docRef2['lastname'];
             students.add(name);
             print(students);
-           
-}
+          }
 
-
-
-          
 // ******************************HERE END ***********************************************************
 
           //if(AleardyintheArray==false){
@@ -341,7 +333,6 @@ projectname = groupRef['projectname'];
           });
 
           // }//if not AleardyintheArray
-
         } //end if booked
 //         else{
 //  setState(() {
@@ -484,7 +475,7 @@ projectname = groupRef['projectname'];
                       overflow: TextOverflow.clip,
                       style: TextStyle(
                           color: Colors.black54,
-                          fontFamily: 'main',
+                          // fontFamily: 'main',
                           fontSize: 20),
                     ),
                   ),
@@ -523,7 +514,7 @@ projectname = groupRef['projectname'];
                               if (index < BookedAppointments.length) {
                                 return Card(
                                     margin: EdgeInsets.only(bottom: 20),
-                                    color: Color.fromARGB(97, 221, 221, 221),
+                                    color: Color.fromARGB(68, 221, 221, 221),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(
                                           17), // <-- Radius
@@ -543,19 +534,22 @@ projectname = groupRef['projectname'];
                                       title: Padding(
                                         padding: const EdgeInsets.only(
                                             top: 20, bottom: 20),
-                                        child: Text(
-                                            BookedAppointments[index].Day +
-                                                ",  " +
-                                                BookedAppointments[index]
-                                                    .StringDate() +
-                                                "  " +
-                                                BookedAppointments[index]
-                                                    .StringTimeRange(),
-                                            style: TextStyle(
-                                                color: Mycolors
-                                                    .mainShadedColorBlue,
-                                                fontFamily: 'Semibold',
-                                                fontSize: 17)),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                                BookedAppointments[index].Day +
+                                                    ",  " +
+                                                    BookedAppointments[index]
+                                                        .StringDate() +
+                                                    "  " +
+                                                    BookedAppointments[index]
+                                                        .StringTimeRange(),
+                                                style: TextStyle(
+                                                    color: Mycolors
+                                                        .mainShadedColorBlue,
+                                                    fontSize: 16)),
+                                          ],
+                                        ),
                                       ),
 
                                       //BookedAppointments[index].Day),
@@ -569,7 +563,7 @@ projectname = groupRef['projectname'];
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: <Widget>[
-                                                 Text(
+                                                Text(
                                                   "Speciality : " +
                                                       BookedAppointments[index]
                                                           .specialty +
@@ -578,7 +572,9 @@ projectname = groupRef['projectname'];
                                                   style: TextStyle(
                                                       color: Mycolors
                                                           .mainColorBlack,
-                                                      fontFamily: 'Semibold',
+                                                      //fontFamily: 'Semibold',
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                       fontSize: 15),
                                                 ),
                                                 Text(
@@ -590,7 +586,8 @@ projectname = groupRef['projectname'];
                                                   style: TextStyle(
                                                     color:
                                                         Mycolors.mainColorBlack,
-                                                    fontFamily: 'Semibold',
+                                                    // fontFamily: 'Semibold',
+                                                    fontWeight: FontWeight.w500,
                                                     fontSize: 15,
                                                   ),
                                                 ),
@@ -604,9 +601,10 @@ projectname = groupRef['projectname'];
                                                     style: TextStyle(
                                                         color: Mycolors
                                                             .mainColorBlack,
-                                                        fontFamily: 'Semibold',
+                                                        //  fontFamily: 'Semibold',
+                                                        fontWeight:
+                                                            FontWeight.w500,
                                                         fontSize: 15)),
-                                               
                                                 Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
@@ -656,7 +654,7 @@ projectname = groupRef['projectname'];
                                                         onPressed: () => {
                                                           showConfirmationDialog(
                                                               context, index)
-                                                          //CancelAppointment(index)
+                                                          // CancelAppointment(index)
                                                         },
                                                       ),
                                                     ),
@@ -759,7 +757,6 @@ projectname = groupRef['projectname'];
               ),
             )),
       ); //scaffold
-
     } //end else there is booked appointments
     //   else{
     // return Scaffold(
@@ -906,19 +903,7 @@ projectname = groupRef['projectname'];
 //+++++++++++++++++++++++++++++++++++++++++end DEEM+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
   CancelAppointment(int index) async {
-    //async
-// final FirebaseAuth auth = await FirebaseAuth.instance;
-//     final User? user = await auth.currentUser;
-//     userid = user!.uid;
-//     email = user.email!;
-
     String id = BookedAppointments[index].id;
-    //print(id);
-    //print(index);
-    //print(BookedAppointments.toString());
-    // setState(() {
-    //  dynamic res = BookedAppointments.removeAt(index);
-    // });
 
     //+++++++++++++++++++++++++++++++start Deem+++++++++++++++++++++++++++++++++++
     final snap = await FirebaseFirestore.instance
@@ -928,13 +913,9 @@ projectname = groupRef['projectname'];
         .doc(BookedAppointments[index].id)
         .get();
 
-    List studentsArrayOfRef = snap['student'];
+    DocumentReference? groupData = snap['group'];
     print(
         "+++++++++++++++++++fff++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    // print(snap['Day']);
-    // print(snap['students']);
-    //  print("sssssssssssssssssssssssssssssssss");
-
     final snap2 = await FirebaseFirestore.instance
         .collection("faculty")
         .doc(userid)
@@ -943,29 +924,27 @@ projectname = groupRef['projectname'];
     String time = " on " +
         BookedAppointments[index].StringDate() +
         " at " +
-        BookedAppointments[index].StringTimeRange();
-    String? gpname;
-    for (var i = 0; i < studentsArrayOfRef.length; i++) {
-      final DocumentSnapshot docRef2 =
-          await studentsArrayOfRef[i].get(); //await
-      print(
-          "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-      print(docRef2['token']);
-      String st = docRef2['token'];
-      print("element.reference");
-      print(BookedAppointments[index].reference);
-      studentsArrayOfRef[i].update({
-        "appointments":
-            FieldValue.arrayRemove([BookedAppointments[index].reference]),
-      });
-      gpname = docRef2['projectname'];
-      sendPushMessege(st, Fname, time);
-      print('++++++++++++++++++++++++++++++++++++++++++++++++++++');
+        BookedAppointments[index].StringStartTime12H();
+    Map<String, dynamic>? group;
+    String? projectName;
+    late List groupStudents;
+    if (groupData != null) {
+      var gData = await groupData.get();
+
+      if (gData.exists) {
+        group = gData.data() as Map<String, dynamic>;
+        projectName = group?['projectname'] + " team";
+        groupStudents = group?['students'];
+      }
     }
-    sendPushMessege(snap2['token'], gpname!, "");
-    // sendPushMessege(
-    //     "f2Fy3zYaR-OqtIsht7D3L3:APA91bHihw83eQLNqgFpIOLHcQ2XzCX7JOJLK9IyMrc8XHcssBaKoga3mMAWEMwEY_i5kxbgLiJuHHj-PdPESVtuqryHUWspyFsXUnJHWvHAWsnrw1n4IipbLUsAdbo2ESLiPs5y6nY9");
-    //+++++++++++++++++++++++++++++++end Deem+++++++++++++++++++++++++++++++++++
+    for (int i = 0; i < groupStudents.length; i++) {
+      final DocumentSnapshot StudentdocRef =
+          await groupStudents[i]['ref'].get();
+      var studentToken = StudentdocRef['token'];
+      sendPushMessege(studentToken, Fname, time);
+    }
+
+    sendPushMessege(snap2['token'], projectName!, "");
 
     //await
     FirebaseFirestore.instance
@@ -975,51 +954,9 @@ projectname = groupRef['projectname'];
         .doc(id) //Is there a specific id i should put for the appointments
         .update({
       'Booked': false, //string if booked then it should have a student refrence
-      "student": FieldValue.delete(),
+      "group": FieldValue.delete(),
       'specialty': FieldValue.delete(),
     });
-    // //+++++++++++++++++++++++++++++++start Deem+++++++++++++++++++++++++++++++++++
-    // final snap = await FirebaseFirestore.instance
-    //     .collection("faculty")
-    //     .doc(userid)
-    //     .collection('appointment')
-    //     .doc(BookedAppointments[index].id)
-    //     .get();
-
-    // List studentsArrayOfRef = snap['students'];
-    // print(
-    //     "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    // // print(snap['Day']);
-    // // print(snap['students']);
-    // //  print("sssssssssssssssssssssssssssssssss");
-
-    // final snap2 = await FirebaseFirestore.instance
-    //     .collection("faculty")
-    //     .doc(userid)
-    //     .get();
-    // String Fname = snap2['firstname'] + ' ' + snap2['lastname'];
-
-    // for (var i = 0; i < studentsArrayOfRef.length; i++) {
-    //   final DocumentSnapshot docRef2 =
-    //       await studentsArrayOfRef[i].get(); //await
-    //   print(
-    //       "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    //   print(docRef2['token']);
-    //   String st = docRef2['token'];
-    //   print("element.reference");
-    //   print(BookedAppointments[index].reference);
-    //   studentsArrayOfRef[i].update({
-    //     "appointments":
-    //         FieldValue.arrayRemove([BookedAppointments[index].reference]),
-    //   });
-    //   sendPushMessege(st, Fname);
-    //   print('++++++++++++++++++++++++++++++++++++++++++++++++++++');
-    // }
-    // // sendPushMessege(
-    // //     "f2Fy3zYaR-OqtIsht7D3L3:APA91bHihw83eQLNqgFpIOLHcQ2XzCX7JOJLK9IyMrc8XHcssBaKoga3mMAWEMwEY_i5kxbgLiJuHHj-PdPESVtuqryHUWspyFsXUnJHWvHAWsnrw1n4IipbLUsAdbo2ESLiPs5y6nY9");
-    // //+++++++++++++++++++++++++++++++end Deem+++++++++++++++++++++++++++++++++++
-
-    //print(BookedAppointments.toString());
   }
 
   showConfirmationDialog(BuildContext context, int index) {
@@ -1039,7 +976,7 @@ projectname = groupRef['projectname'];
       bool deleteappointment = false;
       Widget dontCancelAppButton = ElevatedButton(
         style: ElevatedButton.styleFrom(
-          textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+          textStyle: TextStyle(fontSize: 16),
           // shadowColor: Colors.blue[900],
           elevation: 0,
           backgroundColor: Mycolors.mainShadedColorBlue,
@@ -1056,7 +993,7 @@ projectname = groupRef['projectname'];
 
       Widget YesCancelAppButton = ElevatedButton(
         style: ElevatedButton.styleFrom(
-          textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+          textStyle: TextStyle(fontSize: 16),
           //shadowColor: Colors.blue[900],
           elevation: 0,
           backgroundColor: Mycolors.mainShadedColorBlue,
@@ -1073,11 +1010,6 @@ projectname = groupRef['projectname'];
           // Navigator.pushNamed(context, 'facultyhome');
         },
       );
-
-//   if(deleteappointment == true){
-// CancelAppointment(index);
-// deleteappointment == false;
-//   }
 
       AlertDialog alert = AlertDialog(
         // title: Text(""),
@@ -1104,7 +1036,7 @@ projectname = groupRef['projectname'];
 
       Widget OkButton = ElevatedButton(
         style: ElevatedButton.styleFrom(
-          textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+          textStyle: TextStyle(fontSize: 16),
           //shadowColor: Colors.blue[900],
           elevation: 0,
           backgroundColor: Mycolors.mainShadedColorBlue,

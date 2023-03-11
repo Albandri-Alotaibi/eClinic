@@ -355,7 +355,7 @@ class _facultyListFAQState extends State<facultyListFAQ> {
                     )
                   //when loading if done, show everything.
                   : ListView(
-                      padding: const EdgeInsets.all(24),
+                      padding: const EdgeInsets.only(left: 24, right: 24),
                       children: <Widget>[
                         //------------------------- dropdowns [speciality/semester]
                         Column(children: [
@@ -367,20 +367,20 @@ class _facultyListFAQState extends State<facultyListFAQ> {
                                       color: Mycolors.mainShadedColorBlue,
                                       width: 1),
                                 ),
-                                padding: const EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(7),
                                 margin: const EdgeInsets.only(bottom: 8),
                                 child: DropdownButton<Map<String, dynamic>?>(
                                     // icon: const Icon(Icons.face),
 
                                     underline: const SizedBox(),
                                     disabledHint: Row(children: const [
-                                      Text("Wait ... "),
-                                      SizedBox(
-                                          height: 15.0,
-                                          width: 15.0,
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 3,
-                                          ))
+                                      Text("---"),
+                                      // SizedBox(
+                                      //     height: 15.0,
+                                      //     width: 15.0,
+                                      //     child: CircularProgressIndicator(
+                                      //       strokeWidth: 3,
+                                      //     ))
                                     ]),
                                     hint: Text(
                                       "Select Speciality",
@@ -418,9 +418,10 @@ class _facultyListFAQState extends State<facultyListFAQ> {
                                       color: Mycolors.mainShadedColorBlue,
                                       width: 1),
                                 ),
-                                padding: const EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(7),
                                 margin: const EdgeInsets.only(bottom: 8),
                                 child: DropdownButton<Map<String, dynamic>?>(
+                                    borderRadius: BorderRadius.circular(25),
                                     // icon: const Icon(Icons.pages),
                                     disabledHint: Row(children: const [
                                       Text("Wait ... "),
@@ -492,13 +493,15 @@ class _facultyListFAQState extends State<facultyListFAQ> {
                                         padding: const EdgeInsets.all(10),
                                         child: ListTile(
                                           title: Text("new common issue",
-                                              style: const TextStyle(
+                                              style: TextStyle(
+                                                  color:
+                                                      Mycolors.mainColorBlack,
                                                   fontSize: 18)),
 
                                           textColor: Mycolors.mainColorBlack,
-                                          trailing: const Icon(
+                                          trailing: Icon(
                                             Icons.add,
-                                            color: Colors.black,
+                                            color: Mycolors.mainShadedColorBlue,
                                           ),
 
                                           // fontFamily: 'main',
@@ -602,7 +605,7 @@ class _facultyListFAQState extends State<facultyListFAQ> {
           children: [
             Expanded(
               child: Card(
-                color: Mycolors.mainColorBlue,
+                color: Mycolors.mainShadedColorBlue,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(17), // <-- Radius
                 ),

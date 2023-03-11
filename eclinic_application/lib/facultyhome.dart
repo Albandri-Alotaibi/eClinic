@@ -88,7 +88,7 @@ class _fState extends State<facultyhome> {
         appBar: AppBar(
           title: Text(appbar[widget.selectedIndex],
               style: TextStyle(
-                  fontFamily: 'bold',
+                  //  fontFamily: 'bold',
                   fontSize: 20,
                   color: Mycolors.mainColorBlack)),
           foregroundColor: Mycolors.mainColorBlack,
@@ -204,57 +204,101 @@ class _fState extends State<facultyhome> {
             ])),
         body: _pages[widget.selectedIndex],
         //-------------------------Nav Bar------------------------------
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            color: Color.fromARGB(71, 229, 229, 229),
-            // borderRadius: BorderRadius.only(
-            //     topLeft: Radius.circular(45),
-            //     topRight: Radius.circular(45),
-            //     bottomLeft: Radius.circular(45),
-            //     bottomRight: Radius.circular(45)),
-            boxShadow: [
-              BoxShadow(
-                // color: Colors.grey.withOpacity(0.5),
-                color: Mycolors.mainColorShadow,
-                spreadRadius: 0,
-                blurRadius: 0,
-                offset: Offset(3, 3), // changes position of shadow
-              ),
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-            child: GNav(
-              selectedIndex: widget.selectedIndex,
-              onTabChange: (index) {
-                print(index);
-                setState(() {
-                  widget.selectedIndex = index;
-                });
-              },
+        // bottomNavigationBar: Container(
+        //   decoration: BoxDecoration(
+        //     color: Color.fromARGB(71, 229, 229, 229),
+        //     // borderRadius: BorderRadius.only(
+        //     //     topLeft: Radius.circular(45),
+        //     //     topRight: Radius.circular(45),
+        //     //     bottomLeft: Radius.circular(45),
+        //     //     bottomRight: Radius.circular(45)),
+        //   ),
+        //   child: Padding(
+        //     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        //     child: GNav(
+        //       selectedIndex: widget.selectedIndex,
+        //       onTabChange: (index) {
+        //         print(index);
+        //         setState(() {
+        //           widget.selectedIndex = index;
+        //         });
+        //       },
 
-              backgroundColor: Color.fromARGB(0, 229, 229, 229),
-              color: Mycolors.mainColorBlack,
-              activeColor: Mycolors.mainColorWhite,
-              tabBackgroundColor: Mycolors.mainColorBlue,
-              gap: 8,
-              padding: EdgeInsets.all(10),
-              //curve: Curves.easeInOut,
-              tabs: [
-                GButton(
-                  icon: Icons.group,
-                  text: 'Appointments',
-                ),
-                GButton(
-                  icon: Icons.schedule,
-                  text: 'Available Hours ',
-                ),
-                GButton(
-                  icon: Icons.question_answer,
-                  text: 'FAQ',
-                ),
-              ],
-            ),
+        //       backgroundColor: Color.fromARGB(0, 229, 229, 229),
+        //       color: Mycolors.mainColorBlack,
+        //       activeColor: Mycolors.mainColorWhite,
+        //       tabBackgroundColor: Mycolors.mainShadedColorBlue,
+        //       gap: 8,
+        //       padding: EdgeInsets.all(10),
+        //       //curve: Curves.easeInOut,
+        //       tabs: [
+        //         GButton(
+        //           icon: Icons.group,
+        //           text: 'Appointments',
+        //         ),
+        //         GButton(
+        //           icon: Icons.schedule,
+        //           text: 'Available Hours ',
+        //         ),
+        //         GButton(
+        //           icon: Icons.question_answer,
+        //           text: 'FAQ',
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
+
+        //---------------------------Nav bar------------------------------
+        bottomNavigationBar: NavigationBarTheme(
+          data: NavigationBarThemeData(
+              backgroundColor: Color.fromARGB(124, 255, 255, 255),
+              indicatorColor: Colors.transparent,
+              labelTextStyle: MaterialStateProperty.all(
+                TextStyle(
+                    //fontFamily: 'Semibold',
+                    fontSize: 10,
+                    color: Mycolors.mainColorBlack),
+              )),
+          child: NavigationBar(
+            height: 60,
+            onDestinationSelected: (index) {
+              // print(index);
+              setState(() {
+                widget.selectedIndex = index;
+              });
+            },
+            surfaceTintColor: Mycolors.mainColorShadow,
+            selectedIndex: widget.selectedIndex,
+            destinations: [
+              NavigationDestination(
+                  selectedIcon: Icon(Icons.calendar_month_outlined,
+                      color: Mycolors.mainShadedColorBlue, size: 28),
+                  icon: Icon(
+                    Icons.calendar_month_outlined,
+                    size: 28,
+                    color: Color.fromARGB(108, 0, 0, 0),
+                  ),
+                  label: 'Appointments'),
+              NavigationDestination(
+                  selectedIcon: Icon(Icons.schedule_outlined,
+                      color: Mycolors.mainShadedColorBlue, size: 27),
+                  icon: Icon(
+                    Icons.schedule_outlined,
+                    size: 27,
+                    color: Color.fromARGB(108, 0, 0, 0),
+                  ),
+                  label: 'Available Hours'),
+              NavigationDestination(
+                  selectedIcon: Icon(Icons.question_answer_outlined,
+                      color: Mycolors.mainShadedColorBlue, size: 27),
+                  icon: Icon(
+                    Icons.question_answer_outlined,
+                    size: 27,
+                    color: Color.fromARGB(108, 0, 0, 0),
+                  ),
+                  label: 'Common Issues'),
+            ],
           ),
         ),
       ),
