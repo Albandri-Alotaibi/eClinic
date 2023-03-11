@@ -99,10 +99,13 @@ class _AddHourState extends State<addHoursFaculty> {
     print(startingDate);
   }
 
+  Future? myFuture;
   @override
   initState() {
     super.initState();
 
+    // we call getavailableHours her to stopp it from running multi times
+    myFuture = getavailableHours();
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
     userid = user!.uid;
@@ -112,7 +115,7 @@ class _AddHourState extends State<addHoursFaculty> {
     IsHoursExists(); // use a helper method because initState() cannot be async
 
     getusers();
-    PrintViewHours();
+    //PrintViewHours();
   }
 
   Future<bool?> IsSemesterDatesExists() async {
@@ -192,11 +195,13 @@ class _AddHourState extends State<addHoursFaculty> {
   int numOfDaysOfHelp = 0;
   bool viewHexist = false;
   Future getavailableHours() async {
+    String string = "";
     // await Future.delayed(Duration(seconds: 1));
-    final FirebaseAuth auth = await FirebaseAuth.instance;
-    final User? user = await auth.currentUser;
-    userid = user!.uid;
-    email = user.email!;
+
+    // final FirebaseAuth auth = await FirebaseAuth.instance;
+    // final User? user = await auth.currentUser;
+    // userid = user!.uid;
+    // email = user.email!;
 
     if (isExists == true) {
       final snap = await FirebaseFirestore.instance
@@ -213,19 +218,40 @@ class _AddHourState extends State<addHoursFaculty> {
     } else {
       numOfDaysOfHelp = 0;
     }
+    for (int i = 0; i < availableHours.length; i++) {
+      print(
+          "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  DEEM  ${availableHours[i].hours.length}");
+
+      for (int j = 0; j < availableHours[i].hours.length; j++) {
+        // TimeOfDay stime = TimeOfDay.fromDateTime(
+        //     format.parse(availableHours[i].hours[j]['startTime']));
+        string = string +
+            "\n Start: " +
+            availableHours[i].hours[j]['startTime'] +
+            " - End: " +
+            availableHours[i].hours[j]['endTime'];
+      }
+      // print("(((((((((())))))))))))))))))))))))");
+      // print(availableHours[i].title);
+      // print(string);
+      availableHours[i].allhours =
+          string; //store the value of all the hours in a string in the array
+      string = ""; //to delete old values of the previos day
+    }
 
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
     print(availableHours.length);
 
-    setState(() {
-      viewHexist = true;
-    });
+    // setState(() {
+    //   viewHexist = true;
+    // });
   }
 
+//I DONT call it any more
   PrintViewHours() async {
-    await Future.delayed(Duration(seconds: 2));
+    //await Future.delayed(Duration(seconds: 2));
     String string = "";
-    final format = DateFormat.jm();
+
     print("++++++++++++++++++++++++++++++++++    ${availableHours.length}");
     for (int i = 0; i < availableHours.length; i++) {
       print(
@@ -401,75 +427,72 @@ class _AddHourState extends State<addHoursFaculty> {
                             child: FutureBuilder(
                                 future: getavailableHours(),
                                 builder: (context, snapshot) {
-                                  if (viewHexist) {
-                                    return ListView.builder(
-                                      itemCount: numOfDaysOfHelp,
-                                      itemBuilder: ((context, index) {
-                                        return ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(17),
-                                          child: Card(
-                                              color: Color.fromARGB(
-                                                  68, 221, 221, 221),
-                                              margin:
-                                                  EdgeInsets.only(bottom: 20),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        17), // <-- Radius
-                                                // side: BorderSide(
-                                                //   width: 1,
-                                                //   color:
-                                                //       Mycolors.mainShadedColorBlue,
-                                                // ),
+                                  // if (viewHexist) {
+                                  return ListView.builder(
+                                    itemCount: numOfDaysOfHelp,
+                                    itemBuilder: ((context, index) {
+                                      return ClipRRect(
+                                        borderRadius: BorderRadius.circular(17),
+                                        child: Card(
+                                            color: Color.fromARGB(
+                                                68, 221, 221, 221),
+                                            margin: EdgeInsets.only(bottom: 20),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      17), // <-- Radius
+                                              // side: BorderSide(
+                                              //   width: 1,
+                                              //   color:
+                                              //       Mycolors.mainShadedColorBlue,
+                                              // ),
+                                            ),
+                                            shadowColor: Color.fromARGB(
+                                                0, 250, 250, 250),
+                                            elevation: 0,
+                                            child: ExpansionTile(
+                                              iconColor:
+                                                  Mycolors.mainShadedColorBlue,
+                                              collapsedIconColor:
+                                                  Mycolors.mainShadedColorBlue,
+                                              title: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 20, bottom: 20),
+                                                child: Text(
+                                                  availableHours[index].title,
+                                                  style: TextStyle(
+                                                      color: Mycolors
+                                                          .mainShadedColorBlue,
+                                                      // fontFamily: 'Semibold',
+                                                      // fontWeight:
+                                                      //     FontWeight.w500,
+                                                      fontSize: 17),
+                                                ),
                                               ),
-                                              shadowColor: Color.fromARGB(
-                                                  0, 250, 250, 250),
-                                              elevation: 0,
-                                              child: ExpansionTile(
-                                                iconColor: Mycolors
-                                                    .mainShadedColorBlue,
-                                                collapsedIconColor: Mycolors
-                                                    .mainShadedColorBlue,
-                                                title: Padding(
+                                              children: [
+                                                Padding(
                                                   padding:
                                                       const EdgeInsets.only(
-                                                          top: 20, bottom: 20),
+                                                          bottom: 15),
                                                   child: Text(
-                                                    availableHours[index].title,
+                                                    availableHours[index]
+                                                        .allhours,
                                                     style: TextStyle(
                                                         color: Mycolors
-                                                            .mainShadedColorBlue,
-                                                        // fontFamily: 'Semibold',
-                                                        // fontWeight:
-                                                        //     FontWeight.w500,
-                                                        fontSize: 17),
+                                                            .mainColorBlack,
+                                                        // fontFamily:
+                                                        //     'Semibold',
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 16),
                                                   ),
-                                                ),
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            bottom: 15),
-                                                    child: Text(
-                                                      availableHours[index]
-                                                          .allhours,
-                                                      style: TextStyle(
-                                                          color: Mycolors
-                                                              .mainColorBlack,
-                                                          // fontFamily:
-                                                          //     'Semibold',
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 16),
-                                                    ),
-                                                  )
-                                                ],
-                                              )),
-                                        );
-                                      }),
-                                    );
-                                  }
+                                                )
+                                              ],
+                                            )),
+                                      );
+                                    }),
+                                  );
+                                  // }
                                   return Center(
                                       child: CircularProgressIndicator(
                                           color: Mycolors.mainShadedColorBlue));
