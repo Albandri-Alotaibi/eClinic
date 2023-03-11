@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class startEnd {
   TimeOfDay start;
@@ -11,7 +12,12 @@ class startEnd {
   @override
   String toString() {
     // TODO: implement toString
+    var dateFormat = DateFormat("h:mm a");
+    DateTime tempDateS = DateFormat("hh:mm")
+        .parse(start.hour.toString() + ":" + start.minute.toString());
+    DateTime tempDateE = DateFormat("hh:mm")
+        .parse(end.hour.toString() + ":" + end.minute.toString());
     return "\n" +
-        "start: ${start.hour}:${start.minute} - end: ${end.hour}:${end.minute}";
+        "Start:${dateFormat.format(tempDateS)} - End:${dateFormat.format(tempDateE)}";
   }
 }

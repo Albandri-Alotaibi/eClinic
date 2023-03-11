@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/facultyhome.dart';
 //import 'package:simple_time_range_picker/simple_time_range_picker.dart';
@@ -29,6 +30,7 @@ class _AddHourState extends State<addHoursFaculty> {
   //   super.initState();
   //   getusers();
   // }
+  FocusNode myFocusNode = new FocusNode();
   var muser;
   int _selectedIndex = 1;
   TimeOfDay _startTime = TimeOfDay.now();
@@ -212,38 +214,9 @@ class _AddHourState extends State<addHoursFaculty> {
       numOfDaysOfHelp = 0;
     }
 
-    // final snap = await FirebaseFirestore.instance
-    //     .collection("faculty")
-    //     .doc(userid)
-    //     .collection('availableHours')
-    //     .get()
-    //     .then((QuerySnapshot snapshot) {
-    //   print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-    //   print(snapshot.size);
-    //   numOfDaysOfHelp = snapshot.size;
-    //   snapshot.docs.forEach((DocumentSnapshot doc) {
-    //     // for (int i = 0; i < availableHours.length; i++) {
-    //     //  if (doc['Day'] != availableHours[i].title) {
-    //     availableHours.add(
-    //         availableHoursArray(title: doc['Day'], hours: doc['HoursString2']));
-    //     // }//end of if
-    //     // }// end for
-    //   });
-    // });
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
     print(availableHours.length);
 
-    // final snap2 = await FirebaseFirestore.instance
-    //     .collection('faculty')
-    //     .doc(userid)
-    //     .get();
-    // print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
-    // var mm = snap2['meetingmethod'];
-    // mettingmethoddrop2 = mm;
-    // print(mm);
-    // var mmi = snap2['mettingmethodinfo'];
-    // print(mmi);
-    // _meetingmethodcontroller2 = TextEditingController(text: mmi);
     setState(() {
       viewHexist = true;
     });
@@ -252,17 +225,19 @@ class _AddHourState extends State<addHoursFaculty> {
   PrintViewHours() async {
     await Future.delayed(Duration(seconds: 2));
     String string = "";
-
+    final format = DateFormat.jm();
     print("++++++++++++++++++++++++++++++++++    ${availableHours.length}");
     for (int i = 0; i < availableHours.length; i++) {
       print(
-          "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^    ${availableHours[i].hours.length}");
+          "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  DEEM  ${availableHours[i].hours.length}");
 
       for (int j = 0; j < availableHours[i].hours.length; j++) {
+        // TimeOfDay stime = TimeOfDay.fromDateTime(
+        //     format.parse(availableHours[i].hours[j]['startTime']));
         string = string +
             "\n Start: " +
             availableHours[i].hours[j]['startTime'] +
-            " - end: " +
+            " - End: " +
             availableHours[i].hours[j]['endTime'];
       }
       print("(((((((((())))))))))))))))))))))))");
@@ -289,36 +264,13 @@ class _AddHourState extends State<addHoursFaculty> {
           // backgroundColor: Mycolors.BackgroundColor,
           body: Column(
             children: [
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 30, bottom: 10),
-              //   child: Text(
-              //     "Please add your available days and hours",
-              //     style: TextStyle(
-              //         color: Mycolors.mainColorBlack,
-              //         fontFamily: 'main',
-              //         fontSize: 24),
-              //   ),
-              // ),
-              // FutureBuilder(
-              //   future: IsSemesterDatesExists(),
-              //   builder: (context, snapshot) {
-              //     // return Card(
-              //     //   //color: Mycolors.mainColorBlue,
-              //     //   shape: RoundedRectangleBorder(
-              //     //     borderRadius: BorderRadius.circular(17), // <-- Radius
-              //     //   ),
-              //     //   shadowColor: Color.fromARGB(94, 114, 168, 243),
-              //     //   elevation: 20,
-              //     //   child:
-              //     return
               Padding(
                 padding: const EdgeInsets.all(30),
                 child: Text(
                   "The admin did not add the start and end dates for the help desk yet, please try later.",
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.clip,
-                  style: TextStyle(
-                      color: Colors.black54, fontFamily: 'main', fontSize: 19),
+                  style: TextStyle(color: Colors.black54, fontSize: 19),
                 ),
               )
               //);
@@ -332,35 +284,10 @@ class _AddHourState extends State<addHoursFaculty> {
       return SafeArea(
         child: Scaffold(
           backgroundColor: Color.fromARGB(255, 255, 255, 255),
-          // backgroundColor: Mycolors.BackgroundColor,
-          // appBar: AppBar(
-          //   backgroundColor: Mycolors.BackgroundColor,
-          //   automaticallyImplyLeading: false,
-          //   title: Text('Add hours',),
-          // ),
-          body:
-              // Form(
-              //   key: formkey,
-              //   child:
-              Padding(
+
+          body: Padding(
             padding: const EdgeInsets.only(top: 20),
             child: Column(children: [
-              // Padding(
-              //   padding: const EdgeInsets.only(
-              //       top: 20, bottom: 5, right: 20, left: 20),
-              //   child: Card(
-              //     color: Colors.white,
-              //     margin: EdgeInsets.only(bottom: 20),
-              //     shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(17), // <-- Radius
-              //       side: BorderSide(
-              //         width: 1,
-              //         color: Mycolors.mainShadedColorBlue,
-              //       ),
-              //     ),
-              //     shadowColor: Color.fromARGB(94, 250, 250, 250),
-              //     elevation: 20,
-              //     child:
               Padding(
                 padding: const EdgeInsets.only(top: 30, bottom: 10, right: 3),
                 child: Text(
@@ -368,7 +295,7 @@ class _AddHourState extends State<addHoursFaculty> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Mycolors.mainShadedColorBlue,
-                      fontFamily: 'main',
+                      //  fontFamily: 'main',
                       fontSize: 20),
                 ),
               ),
@@ -383,7 +310,7 @@ class _AddHourState extends State<addHoursFaculty> {
                       itemCount: daysOfHelp.length,
                       itemBuilder: ((context, index) {
                         return Card(
-                          color: Color.fromARGB(97, 221, 221, 221),
+                          color: Color.fromARGB(68, 221, 221, 221),
                           shape: RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.circular(17), // <-- Radius
@@ -398,7 +325,7 @@ class _AddHourState extends State<addHoursFaculty> {
                                 daysOfHelp[index].title,
                                 style: TextStyle(
                                     color: Mycolors.mainColorBlack,
-                                    fontFamily: 'Semibold',
+                                    // fontFamily: 'Semibold',
                                     fontSize: 17),
                               ),
                             ),
@@ -423,93 +350,12 @@ class _AddHourState extends State<addHoursFaculty> {
                   ),
                 ),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: Container(
-              //     alignment: Alignment.topCenter,
-              //     child: SizedBox(
-              //       width: 350,
-              //       child: DropdownButtonFormField(
-              //         decoration: InputDecoration(
-              //           // suffixIcon: Icon(Icons.edit),
-              //           hintText: "Choose meeting method",
-              //           border: OutlineInputBorder(),
-              //         ),
-              //         items: const [
-              //           DropdownMenuItem(
-              //               child: Text("In person metting"), value: "inperson"),
-              //           DropdownMenuItem(
-              //               child: Text("Online meeting "), value: "online"),
-              //         ],
-              //         onChanged: (value) {
-              //           setState(() {
-              //             mettingmethoddrop = value;
-              //           });
-              //         },
-              //         autovalidateMode: AutovalidateMode.onUserInteraction,
-              //         validator: (value) {
-              //           if (value == null || mettingmethoddrop == null) {
-              //             return 'Please Choose meeting method';
-              //           }
-              //         },
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: 8,
-              // ),
-              // if (mettingmethoddrop != null && mettingmethoddrop == "inperson")
-              //   SizedBox(
-              //     width: 350,
-              //     child: TextFormField(
-              //         controller: _meetingmethodcontroller,
-              //         decoration: InputDecoration(
-              //             labelText: 'Office number',
-              //             hintText: "Enter your office number",
-              //             // suffixIcon: Icon(Icons.edit),
-              //             border: OutlineInputBorder()),
-              //         autovalidateMode: AutovalidateMode.onUserInteraction,
-              //         validator: (value) {
-              //           if (value!.isEmpty ||
-              //               _meetingmethodcontroller.text == "") {
-              //             return 'Please enter your office number';
-              //           } else {
-              //             if (!(english
-              //                 .hasMatch(_meetingmethodcontroller.text))) {
-              //               return "only english is allowed";
-              //             }
-              //           }
-              //         }),
-              //   ),
-              // if (mettingmethoddrop != null && mettingmethoddrop == "online")
-              //   SizedBox(
-              //     width: 350,
-              //     child: TextFormField(
-              //         controller: _meetingmethodcontroller,
-              //         decoration: InputDecoration(
-              //             labelText: 'meeting link',
-              //             hintText: "Enter your meeting link",
-              //             // suffixIcon: Icon(Icons.edit),
-              //             border: OutlineInputBorder()),
-              //         autovalidateMode: AutovalidateMode.onUserInteraction,
-              //         validator: (value) {
-              //           if (value!.isEmpty ||
-              //               _meetingmethodcontroller.text == "") {
-              //             return 'Please enter your meeting link';
-              //           } else {
-              //             if (!(english
-              //                 .hasMatch(_meetingmethodcontroller.text))) {
-              //               return "only english is allowed";
-              //             }
-              //           }
-              //         }),
-              //   ),
+
               Container(
                 padding: EdgeInsets.only(bottom: 20),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+                    textStyle: TextStyle(fontSize: 16),
                     // shadowColor: Colors.blue[900],
                     elevation: 0,
                     backgroundColor: Mycolors.mainShadedColorBlue,
@@ -551,16 +397,6 @@ class _AddHourState extends State<addHoursFaculty> {
                       width: 350,
                       child: Column(
                         children: [
-                          // Padding(
-                          //   padding: const EdgeInsets.only(top: 4, bottom: 20),
-                          //   child: Text(
-                          //     "View hours",
-                          //     style: TextStyle(
-                          //         color: Mycolors.mainColorBlack,
-                          //         fontFamily: 'main',
-                          //         fontSize: 24),
-                          //   ),
-                          // ),
                           Expanded(
                             child: FutureBuilder(
                                 future: getavailableHours(),
@@ -574,7 +410,7 @@ class _AddHourState extends State<addHoursFaculty> {
                                               BorderRadius.circular(17),
                                           child: Card(
                                               color: Color.fromARGB(
-                                                  97, 221, 221, 221),
+                                                  68, 221, 221, 221),
                                               margin:
                                                   EdgeInsets.only(bottom: 20),
                                               shape: RoundedRectangleBorder(
@@ -604,7 +440,9 @@ class _AddHourState extends State<addHoursFaculty> {
                                                     style: TextStyle(
                                                         color: Mycolors
                                                             .mainShadedColorBlue,
-                                                        fontFamily: 'Semibold',
+                                                        // fontFamily: 'Semibold',
+                                                        // fontWeight:
+                                                        //     FontWeight.w500,
                                                         fontSize: 17),
                                                   ),
                                                 ),
@@ -619,8 +457,10 @@ class _AddHourState extends State<addHoursFaculty> {
                                                       style: TextStyle(
                                                           color: Mycolors
                                                               .mainColorBlack,
-                                                          fontFamily:
-                                                              'Semibold',
+                                                          // fontFamily:
+                                                          //     'Semibold',
+                                                          fontWeight:
+                                                              FontWeight.w500,
                                                           fontSize: 16),
                                                     ),
                                                   )
@@ -698,8 +538,8 @@ class _AddHourState extends State<addHoursFaculty> {
                                                           style: TextStyle(
                                                               color: Mycolors
                                                                   .mainColorBlack,
-                                                              fontFamily:
-                                                                  'main',
+                                                              // fontFamily:
+                                                              //     'main',
                                                               fontSize: 16),
                                                         ),
                                                         Text(
@@ -707,8 +547,8 @@ class _AddHourState extends State<addHoursFaculty> {
                                                           style: TextStyle(
                                                               color: Mycolors
                                                                   .mainColorBlack,
-                                                              fontFamily:
-                                                                  'main',
+                                                              // fontFamily:
+                                                              //     'main',
                                                               fontSize: 16),
                                                         )
                                                       ],
@@ -729,7 +569,7 @@ class _AddHourState extends State<addHoursFaculty> {
                                                         alignment:
                                                             Alignment.topRight,
                                                         color: Color.fromARGB(
-                                                            200, 21, 70, 160),
+                                                            255, 18, 61, 142),
                                                         icon: const Icon(
                                                           Icons.edit,
                                                           size: 20,
@@ -780,7 +620,7 @@ class _AddHourState extends State<addHoursFaculty> {
   showEditDialog(BuildContext context) {
     Widget cancelButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        textStyle: TextStyle(fontSize: 16),
         // shadowColor: Colors.blue[900],
         elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
@@ -799,7 +639,7 @@ class _AddHourState extends State<addHoursFaculty> {
     var meetinginfoAfterUpdate = muser['meetingmethod'];
     Widget continueButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        textStyle: TextStyle(fontSize: 16),
         // shadowColor: Colors.blue[900],
         elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
@@ -856,11 +696,19 @@ class _AddHourState extends State<addHoursFaculty> {
                   child: Column(
                     children: [
                       SizedBox(
-                        width: 350,
+                        // width: 350,
                         child: DropdownButtonFormField(
                           decoration: InputDecoration(
                             hintText: "Choose meeting method",
-                            border: OutlineInputBorder(),
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(17.0)),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(17.0)),
+                                borderSide: BorderSide(
+                                    color: Mycolors.mainShadedColorBlue)),
                           ),
                           items: const [
                             DropdownMenuItem(
@@ -885,16 +733,36 @@ class _AddHourState extends State<addHoursFaculty> {
                       ),
                       if (meetinginfoAfterUpdate != "")
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.only(top: 8),
                           child: SizedBox(
-                            width: 350,
+                            //  width: 400,
                             child: TextFormField(
+                                focusNode: myFocusNode,
+                                onTap: () => setState(() {
+                                      myFocusNode.requestFocus();
+                                    }),
                                 controller: _meetingmethodcontroller2,
                                 decoration: InputDecoration(
-                                    labelText: 'Office number/link',
-                                    hintText: "Enter your office number/link",
-                                    // suffixIcon: Icon(Icons.edit),
-                                    border: OutlineInputBorder()),
+                                  labelText: 'Office number/link',
+                                  // labelStyle: TextStyle(
+                                  //     color: myFocusNode.hasFocus
+                                  //         ? Colors.red
+                                  //         : Colors.black),
+                                  hintText: "Enter your office number/link",
+                                  hintStyle:
+                                      TextStyle(color: Mycolors.mainColorBlack),
+                                  // suffixIcon: Icon(Icons.edit),
+                                  border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(17.0)),
+                                  ),
+
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(17.0)),
+                                      borderSide: BorderSide(
+                                          color: Mycolors.mainShadedColorBlue)),
+                                ),
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) {
@@ -945,7 +813,6 @@ class _AddHourState extends State<addHoursFaculty> {
     if (Stime == null || Etime == null) {}
 
     daysOfHelp[x].hours.add(startEnd(start: Stime, end: Etime));
-    //ArrayOfTimesOfDays.add(startEnd(start: _startTime, end: _endTime));
   }
 
   selectTime1(int x) {
@@ -1003,12 +870,15 @@ class _AddHourState extends State<addHoursFaculty> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    daysOfHelp[x].hours[i].toString(),
-                    style: TextStyle(
-                        color: Mycolors.mainColorBlack,
-                        fontFamily: 'Semibold',
-                        fontSize: 14),
+                  Expanded(
+                    child: Text(
+                      daysOfHelp[x].hours[i].toString(),
+                      style: TextStyle(
+                          color: Mycolors.mainColorBlack,
+                          // fontFamily: 'Semibold',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12.5),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 0.0),
@@ -1022,11 +892,6 @@ class _AddHourState extends State<addHoursFaculty> {
                   ),
                 ],
               ),
-
-              // subtitle: IconButton(
-              //   icon: Icon(Icons.delete),
-              //   onPressed: () => {deleteHour(x, i)},
-              // ),
             ),
           Align(
             alignment: Alignment.bottomRight,
@@ -1146,7 +1011,7 @@ class _AddHourState extends State<addHoursFaculty> {
     // set up the buttons
     Widget cancelButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        textStyle: TextStyle(fontSize: 16),
         // shadowColor: Colors.blue[900],
         elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
@@ -1165,7 +1030,7 @@ class _AddHourState extends State<addHoursFaculty> {
 
     Widget continueButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        textStyle: TextStyle(fontSize: 16),
         // shadowColor: Colors.blue[900],
         elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
@@ -1330,13 +1195,19 @@ class _AddHourState extends State<addHoursFaculty> {
     // }
 
     List hoursArray = [];
-
+    var dateFormat = DateFormat("h:mm a");
     for (int i = 1; i < daysOfHelp[x].hours.length; i++) {
+      DateTime tempDateS = DateFormat("hh:mm").parse(
+          daysOfHelp[x].hours[i].start.hour.toString() +
+              ":" +
+              daysOfHelp[x].hours[i].start.minute.toString());
+      DateTime tempDateE = DateFormat("hh:mm").parse(
+          daysOfHelp[x].hours[i].end.hour.toString() +
+              ":" +
+              daysOfHelp[x].hours[i].end.minute.toString());
       Map map = {
-        'startTime':
-            "${daysOfHelp[x].hours[i].start.hour}:${daysOfHelp[x].hours[i].start.minute}",
-        'endTime':
-            "${daysOfHelp[x].hours[i].end.hour}:${daysOfHelp[x].hours[i].end.minute}"
+        'startTime': "${dateFormat.format(tempDateS)}",
+        'endTime': "${dateFormat.format(tempDateE)}"
       };
       hoursArray.add(map);
     }
@@ -1383,11 +1254,6 @@ class _AddHourState extends State<addHoursFaculty> {
   OneDayGenerating(String day, List<dynamic> ArrayOfAllTheDayRanges) {
     var AllActualDatesWithRanges = <timesWithDates>[];
 
-    //print("out of the firstore code start date${startdateINDate}");
-    //DateTime startingDate = startdateINDate; //admin start date or today
-    //print("old start date${startingDate}");
-    //DateTime endDate = enddateINDate; //admin end date
-
     int diff = endDate.difference(startingDate).inDays;
 
     for (var i = 0; i <= diff; i++) {
@@ -1421,13 +1287,6 @@ class _AddHourState extends State<addHoursFaculty> {
                 new timesWithDates(StartOfRange: start, EndOfRange: end));
           } //loop on one index in ArrayOfAllTheDayRanges
         } //loop on ArrayOfAllTheDayRanges
-
-        //AllActualDatesWithRanges
-        //HERE STORING IN DATABASE *****************************************
-
-        //day
-        //date
-        //time
       } //end if sunday
     }
 
@@ -1470,15 +1329,44 @@ class _AddHourState extends State<addHoursFaculty> {
       setState(() {
         daysOfHelp[x].value = false;
       });
+
+    //return Get.snackbar("h", msg);
+    // Flushbar(
+    //   //flushbarPosition: FlushbarPosition.TOP,
+    //   backgroundColor: Colors.red,
+    //   duration: Duration(seconds: 3),
+    //   messageText: Text(
+    //     msg,
+    //   ),
+    // )..show(context);
+
     return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        elevation: 0,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
         backgroundColor: Colors.red,
-        content: Text(
-          msg,
-          style: Theme.of(context)
-              .textTheme
-              .button
-              ?.copyWith(fontSize: 15, color: Colors.white),
-          textAlign: TextAlign.center,
+        content: Row(
+          children: [
+            Icon(
+              color: Colors.white,
+              Icons.report_problem_outlined,
+            ),
+            SizedBox(
+              width: 20,
+            ),
+            Expanded(
+              child: Text(
+                msg,
+                style: Theme.of(context)
+                    .textTheme
+                    .button
+                    ?.copyWith(fontSize: 15, color: Colors.white),
+                textAlign: TextAlign.left,
+              ),
+            ),
+          ],
         )));
 
     // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
