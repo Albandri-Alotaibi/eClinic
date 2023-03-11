@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
@@ -14,6 +15,9 @@ import 'package:intl/intl.dart';
 import 'model/timesWithDates.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:myapp/login.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:dio/dio.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class addHoursFaculty extends StatefulWidget {
   const addHoursFaculty({super.key});
@@ -193,7 +197,7 @@ class _AddHourState extends State<addHoursFaculty> {
   }
 
   int numOfDaysOfHelp = 0;
-  bool viewHexist = false;
+  bool viewHexist = false; // <--  DELETE
   Future getavailableHours() async {
     String string = "";
     // await Future.delayed(Duration(seconds: 1));
@@ -247,7 +251,7 @@ class _AddHourState extends State<addHoursFaculty> {
     // });
   }
 
-//I DONT call it any more
+//I DONT call it any more so  DELETE IT
   PrintViewHours() async {
     //await Future.delayed(Duration(seconds: 2));
     String string = "";
@@ -509,13 +513,36 @@ class _AddHourState extends State<addHoursFaculty> {
                                       as Map<String, dynamic>;
                                   String mettingmethoddrop2 =
                                       muser['meetingmethod'];
-                                  String metingmethodinfotext;
+                                  var metingmethodinfotext;
                                   if (mettingmethoddrop2 == "inperson") {
-                                    metingmethodinfotext = "Office number: " +
-                                        muser['mettingmethodinfo'];
+                                    metingmethodinfotext = Text(
+                                        "Office number: " +
+                                            muser['mettingmethodinfo']);
                                   } else {
-                                    metingmethodinfotext =
-                                        "Link: " + muser['mettingmethodinfo'];
+                                    metingmethodinfotext = Row(
+                                      children: [
+                                        Text("Link: "),
+                                        RichText(
+                                          text: TextSpan(children: [
+                                            TextSpan(
+                                                text:
+                                                    muser['mettingmethodinfo'],
+                                                style: TextStyle(
+                                                    decoration: TextDecoration
+                                                        .underline,
+                                                    color: Colors.blue),
+                                                recognizer:
+                                                    TapGestureRecognizer()
+                                                      ..onTap = () async {
+                                                        launch(muser[
+                                                            'mettingmethodinfo']);
+                                                      })
+                                          ]),
+                                        ),
+                                      ],
+                                    );
+                                    // metingmethodinfotext =
+                                    //     "Link: " + muser['mettingmethodinfo'];
                                   }
 
                                   return Container(
@@ -565,15 +592,7 @@ class _AddHourState extends State<addHoursFaculty> {
                                                               //     'main',
                                                               fontSize: 16),
                                                         ),
-                                                        Text(
-                                                          metingmethodinfotext,
-                                                          style: TextStyle(
-                                                              color: Mycolors
-                                                                  .mainColorBlack,
-                                                              // fontFamily:
-                                                              //     'main',
-                                                              fontSize: 16),
-                                                        )
+                                                        metingmethodinfotext
                                                       ],
                                                     ),
                                                   ),
@@ -767,10 +786,10 @@ class _AddHourState extends State<addHoursFaculty> {
                                 controller: _meetingmethodcontroller2,
                                 decoration: InputDecoration(
                                   labelText: 'Office number/link',
-                                  // labelStyle: TextStyle(
-                                  //     color: myFocusNode.hasFocus
-                                  //         ? Colors.red
-                                  //         : Colors.black),
+                                  labelStyle: TextStyle(
+                                      color: myFocusNode.hasFocus
+                                          ? Color.fromARGB(255, 18, 45, 128)
+                                          : Colors.black),
                                   hintText: "Enter your office number/link",
                                   hintStyle:
                                       TextStyle(color: Mycolors.mainColorBlack),
@@ -1074,7 +1093,7 @@ class _AddHourState extends State<addHoursFaculty> {
       },
     );
     AlertDialog alert = AlertDialog(
-      title: Text("warning"),
+      title: Text("Warning"),
       content: SizedBox(
         height: 300,
         child: Form(
@@ -1089,7 +1108,13 @@ class _AddHourState extends State<addHoursFaculty> {
                     decoration: InputDecoration(
                       // suffixIcon: Icon(Icons.edit),
                       hintText: "Choose meeting method",
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(17.0)),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(17.0)),
+                          borderSide:
+                              BorderSide(color: Mycolors.mainShadedColorBlue)),
                     ),
                     items: const [
                       DropdownMenuItem(
@@ -1119,10 +1144,17 @@ class _AddHourState extends State<addHoursFaculty> {
                 child: TextFormField(
                     controller: _meetingmethodcontroller,
                     decoration: InputDecoration(
-                        labelText: 'Office number/link',
-                        hintText: "Enter your office number/link",
-                        // suffixIcon: Icon(Icons.edit),
-                        border: OutlineInputBorder()),
+                      labelText: 'Office number/link',
+                      hintText: "Enter your office number/link",
+                      // suffixIcon: Icon(Icons.edit),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(17.0)),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(17.0)),
+                          borderSide:
+                              BorderSide(color: Mycolors.mainShadedColorBlue)),
+                    ),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value!.isEmpty ||
