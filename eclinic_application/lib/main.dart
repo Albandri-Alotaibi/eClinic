@@ -23,6 +23,7 @@ import 'package:myapp/studentresetpassword.dart';
 import 'package:myapp/screeens/signUp/studentsignup.dart';
 import 'package:myapp/studentverfication.dart';
 import 'package:myapp/studentviewprofile.dart';
+import 'package:myapp/style/Mycolors.dart';
 import 'package:myapp/verfication.dart';
 import 'package:myapp/FacultyViewScreen.dart';
 import 'package:myapp/FacultyListScreen.dart';
@@ -63,7 +64,37 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'main',
             theme: ThemeData(
-              primaryColor: Color(0xFF55C1EF),
+              textButtonTheme: TextButtonThemeData(
+                style: TextButton.styleFrom(
+                  foregroundColor: Mycolors.mainShadedColorBlue,
+                  textStyle: const TextStyle(fontSize: 15),
+                ),
+              ),
+              timePickerTheme: TimePickerThemeData(
+                dialHandColor: Mycolors.mainShadedColorBlue,
+                inputDecorationTheme: InputDecorationTheme(
+                    fillColor: Mycolors.mainShadedColorBlue),
+
+                //dialBackgroundColor: Mycolors.mainColorGreen,
+                //dayPeriodBorderSide: BorderSide(color: Colors.black),
+
+                dayPeriodColor: MaterialStateColor.resolveWith((states) =>
+                    states.contains(MaterialState.selected)
+                        ? Mycolors.mainShadedColorBlue
+                        : Color.fromARGB(47, 255, 255, 255)),
+                dayPeriodTextColor: MaterialStateColor.resolveWith((states) =>
+                    states.contains(MaterialState.selected)
+                        ? Colors.white
+                        : Mycolors.mainColorBlack),
+                hourMinuteColor: MaterialStateColor.resolveWith((states) =>
+                    states.contains(MaterialState.selected)
+                        ? Mycolors.mainShadedColorBlue
+                        : Color.fromARGB(30, 102, 102, 102)),
+                hourMinuteTextColor: MaterialStateColor.resolveWith((states) =>
+                    states.contains(MaterialState.selected)
+                        ? Colors.white
+                        : Mycolors.mainColorBlack),
+              ),
             ),
             // initialRoute: '/', //<----- deleted
             home: getLandingPage(),
