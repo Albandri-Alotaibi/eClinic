@@ -8,7 +8,7 @@ admin.initializeApp(functions.config().firebase);
 
 exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async (context) => {
     functions.logger.info("Hello logs", { structuredData: true });
-    //response.send("Hello Firebase");
+
 
     //get the faculty collection Refrence
     const facultyRef = await admin.firestore().collection('faculty');
@@ -16,9 +16,9 @@ exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async
     //make a loop on faculty collection to get the appointments 
     const facultySnapshot = await admin.firestore().collection('faculty').get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {//loop on the faculty members
-            functions.logger.info("before calling appointment collection", { structuredData: true });
+            // functions.logger.info("before calling appointment collection", { structuredData: true });
             //faculty doc id
-            functions.logger.info(doc.id);
+            //    functions.logger.info(doc.id);
 
             //get the appointment ref that are booked
             const appontmentRef = facultyRef.doc(doc.id).collection('appointment').where("Booked", '==', true);
@@ -28,22 +28,20 @@ exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async
                     functions.logger.info('subcollection exists');
                     var numOfBookedAppointments = 0;
                     sub.forEach(async (subDoc) => {//loop on booked appointments only
-                      
-                        //NOTE: I did not add a natify field bcz I will push notifications only once a day and the notifications that after this will be sended imedutly
 
                         //today date
                         var today = new Date();
-                      
+
                         //appointment start date and time
                         var appointmentDate = new Date(subDoc.data().starttime.toDate());
-                        
+
 
                         // To calculate the time difference of two dates
                         var Difference_In_Time = (appointmentDate.getTime() - today.getTime()) / 1000;
                         Difference_In_Time /= (60 * 60);
                         //get the time in hours
                         Diff_in_hours = Math.abs(Math.round(Difference_In_Time));
-                       
+
                         //if the appointment will start in the comming 24h then we will send a notification to the dr and students
                         if (Diff_in_hours <= 24 && Diff_in_hours > 0) {
                             // count the numder of appointments a faculty have to send it later
@@ -52,7 +50,7 @@ exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async
                             //now we will send to the student the reminders
                             //first we will get the faculty member name
                             facultyName = doc.data().firstname + " " + doc.data().lastname;
-                          
+
                             //now we will get the appointment time
                             let appointmantTime = subDoc.data().starttime.toDate().getTime();
                             let appointmantTimeAfter3 = new Date(appointmantTime + 3 * 60 * 60 * 1000);// add 3h bcz it on UTC time not saudi time
@@ -62,7 +60,7 @@ exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async
                                 hour: '2-digit',
                                 minute: '2-digit',
                             });
-                           
+
                             // Notification details.
                             const payload = {
                                 notification: {
@@ -71,14 +69,28 @@ exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async
                                     //icon: follower.photoURL
                                 }
                             };
-                            var studentsRef = subDoc.data().student;
-                            for (let i = 0; i < studentsRef.length; i++) {
-                                var oneS = studentsRef[i].get().then(async (oneStudentDoc) => {
-                                    var token = oneStudentDoc.data().token
-                                    functions.logger.info(token);
-                                    const response = await admin.messaging().sendToDevice(token, payload);
-                                });
-                            }
+                            var groupData = subDoc.data().group;
+                            functions.logger.info("Student group ID");
+                            functions.logger.info(groupData.id, { structuredData: true });
+
+                            groupData.get().then(async (oneGroup) => {
+                                functions.logger.info("get the group");
+                                var studentsRefArray = oneGroup.data().students;
+                                functions.logger.info("students");
+                                functions.logger.info(studentsRefArray);
+                                for (let i = 0; i < studentsRefArray.length; i++) {
+                                    var oneS = studentsRefArray[i].ref.get().then(async (oneStudent) => {
+                                        var token = oneStudent.data().token;
+                                        functions.logger.info("token");
+                                        functions.logger.info(token);
+                                        if (token != null) {
+                                            // functions.logger.info("in  if(token != null)");
+                                            const response = await admin.messaging().sendToDevice(token, payload);
+                                        }
+                                    });
+                                }
+
+                            });
 
                         }
 
@@ -89,23 +101,30 @@ exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async
                             notification: {
                                 title: 'Consultation appointment',
                                 body: `You have ${numOfBookedAppointments} appointment(s) tomorrow.`,
-                               
+
                             }
                         };
-                        const response = await admin.messaging().sendToDevice(doc.data().token, payload);
+                        if (token != null) {
+                            // functions.logger.info("in  if(token != null)");
+                            const response = await admin.messaging().sendToDevice(doc.data().token, payload);
+                        }
+
                     }
                 }//ENF OF check if appointment doc exsist 
             });
 
 
 
-            functions.logger.info("after calling appointment collection", { structuredData: true });
+            //functions.logger.info("after calling appointment collection", { structuredData: true });
 
         });//end of the loop
+
     });
+    functions.logger.info("END of the", { structuredData: true });
 
 });
 
+// updated
 exports.gpAndEndonsemesterreminder = functions.pubsub.schedule('0 21 * * *').onRun(async (context) => {
     functions.logger.info("Hello logs", { structuredData: true });
     //response.send("Hello Firebase");
@@ -132,7 +151,7 @@ exports.gpAndEndonsemesterreminder = functions.pubsub.schedule('0 21 * * *').onR
                         var oneS = studentsRefArray[i]['ref'].get().then(async (oneStudentDoc) => {
                             var token = oneStudentDoc.data().token
                             functions.logger.info('token');
-                             functions.logger.info(token);
+                            functions.logger.info(token);
                             if (token != null) {
                                 // functions.logger.info("in  if(token != null)");
                                 const response = await admin.messaging().sendToDevice(token, payload);
@@ -140,7 +159,7 @@ exports.gpAndEndonsemesterreminder = functions.pubsub.schedule('0 21 * * *').onR
 
                         });
                     }
-                  
+
                 }
 
             }
@@ -148,46 +167,47 @@ exports.gpAndEndonsemesterreminder = functions.pubsub.schedule('0 21 * * *').onR
         })
     })
     //sending notification to notify faculty about semester ending
-    
+
     const SemesterSnapshot = await admin.firestore().collection('semester').get().then((querySnapshot) => {
         querySnapshot.forEach(async (doc) => {
             var today = new Date();
             var endDate = doc.data().enddate;
-            if(endDate != null ){
+            if (endDate != null) {
                 endDate = new Date(endDate.toDate());
-            if (today.getDay() === endDate.getDay() && today.getMonth() === endDate.getMonth() && today.getFullYear() === endDate.getFullYear()) {
-                // functions.logger.info("doc.data().semestername");
-                // functions.logger.info(doc.data().semestername);
-                // check if their is faculty members
-                if (doc.data().facultymembers != null) {
-                    // functions.logger.info(doc.data().facultymembers);
-                    // functions.logger.info(doc.data().facultymembers[0]['faculty']);
+                if (today.getDay() === endDate.getDay() && today.getMonth() === endDate.getMonth() && today.getFullYear() === endDate.getFullYear()) {
+                    // functions.logger.info("doc.data().semestername");
+                    // functions.logger.info(doc.data().semestername);
+                    // check if their is faculty members
+                    if (doc.data().facultymembers != null) {
+                        // functions.logger.info(doc.data().facultymembers);
+                        // functions.logger.info(doc.data().facultymembers[0]['faculty']);
 
-                    const payload = {
-                        notification: {
-                            title: 'Thank you for your effort',
-                            body: `This semester has ended, but if you want to be a member of the help desk in the next semester, update the semester from your profile`,
-                            //icon: follower.photoURL
-                        }
-                    };
-                    var facultyRef = doc.data().facultymembers;
-
-                    for (let i = 0; i < facultyRef.length; i++) {
-                        var oneS = facultyRef[i]['faculty'].get().then(async (onefacultytDoc) => {
-                            var token = onefacultytDoc.data().token
-                            // functions.logger.info(token);
-                            if (token != null) {
-                                // functions.logger.info("in  if(token != null)");
-                                const response = await admin.messaging().sendToDevice(token, payload);
+                        const payload = {
+                            notification: {
+                                title: 'Thank you for your effort',
+                                body: `This semester has ended, but if you want to be a member of the help desk in the next semester, update the semester from your profile`,
+                                //icon: follower.photoURL
                             }
+                        };
+                        var facultyRef = doc.data().facultymembers;
 
-                        });
+                        for (let i = 0; i < facultyRef.length; i++) {
+                            var oneS = facultyRef[i]['faculty'].get().then(async (onefacultytDoc) => {
+                                var token = onefacultytDoc.data().token
+                                // functions.logger.info(token);
+                                if (token != null) {
+                                    // functions.logger.info("in  if(token != null)");
+                                    const response = await admin.messaging().sendToDevice(token, payload);
+                                }
+
+                            });
+                        }
+
                     }
 
+                    //functions.logger.info("end of the loop");
                 }
-
-                //functions.logger.info("end of the loop");
-            }}
+            }
         })
     })
 
@@ -283,19 +303,42 @@ exports.updateFaculty = functions.firestore
                                     }
                                 };
                                 //store the appointment refrence
+
+                                // functions.logger.info("appointmentRef");
+                                // functions.logger.info(appointmentRef);
+                                // var studentsRef = doc.data().student;
+                                // for (let i = 0; i < studentsRef.length; i++) {
+                                //     var oneS = studentsRef[i].get().then(async (oneStudentDoc) => {
+                                //         var token = oneStudentDoc.data().token
+                                //         functions.logger.info(token);
+                                //         const response = await admin.messaging().sendToDevice(token, payload);
+                                //         //delete the appointment from the students appointment array
+                                //         studentsRef[i].update({ "appointments": admin.firestore.FieldValue.arrayRemove(appointmentRef) })
+                                //     });
+                                // }
                                 var appointmentRef = doc.ref;
-                                functions.logger.info("appointmentRef");
-                                functions.logger.info(appointmentRef);
-                                var studentsRef = doc.data().student;
-                                for (let i = 0; i < studentsRef.length; i++) {
-                                    var oneS = studentsRef[i].get().then(async (oneStudentDoc) => {
-                                        var token = oneStudentDoc.data().token
-                                        functions.logger.info(token);
-                                        const response = await admin.messaging().sendToDevice(token, payload);
-                                        //delete the appointment from the students appointment array
-                                        studentsRef[i].update({ "appointments": admin.firestore.FieldValue.arrayRemove(appointmentRef) })
-                                    });
-                                }
+                                var groupData = doc.data().group;
+                                functions.logger.info("Student group ID");
+                                functions.logger.info(groupData.id, { structuredData: true });
+
+                                groupData.get().then(async (oneGroup) => {
+                                    functions.logger.info("get the group");
+                                    var studentsRefArray = oneGroup.data().students;
+                                    for (let i = 0; i < studentsRefArray.length; i++) {
+                                        var oneS = studentsRefArray[i].ref.get().then(async (oneStudent) => {
+                                            var token = oneStudent.data().token;
+                                            functions.logger.info("token");
+                                            functions.logger.info(token);
+                                            if (token != null) {
+                                                // functions.logger.info("in  if(token != null)");
+                                                const response = await admin.messaging().sendToDevice(token, payload);
+                                            }
+
+                                        });
+                                    }
+                                    //delete the appointment from the array
+                                    oneGroup.update({ "appointments": admin.firestore.FieldValue.arrayRemove(appointmentRef) })
+                                });
                             }
                         }
 
@@ -339,21 +382,34 @@ exports.updateFaculty = functions.firestore
                                 const payload = {
                                     notification: {
                                         title: 'Meetting method',
-                                        body: `Dr. ${Fname}'s meeting method has changed for her upcoming appointments; please check it from the application.`,
+                                        body: `Dr. ${Fname}'s meeting method has changed for the upcoming appointments; please check it on the application.`,
                                         //icon: follower.photoURL
                                     }
 
                                 };
 
-                                var studentsRef = doc.data().student;
-                                for (let i = 0; i < studentsRef.length; i++) {
-                                    var oneS = studentsRef[i].get().then(async (oneStudentDoc) => {
-                                        var token = oneStudentDoc.data().token
-                                        functions.logger.info(token);
-                                        const response = await admin.messaging().sendToDevice(token, payload);
-                                       
-                                    });
-                                }
+                                var groupData = doc.data().group;
+                                functions.logger.info("Student group ID");
+                                functions.logger.info(groupData.id, { structuredData: true });
+
+                                groupData.get().then(async (oneGroup) => {
+                                    functions.logger.info("get the group");
+                                    var studentsRefArray = oneGroup.data().students;
+                                    functions.logger.info("students");
+                                    functions.logger.info(studentsRefArray);
+                                    for (let i = 0; i < studentsRefArray.length; i++) {
+                                        var oneS = studentsRefArray[i].ref.get().then(async (oneStudent) => {
+                                            var token = oneStudent.data().token;
+                                            functions.logger.info("token");
+                                            functions.logger.info(token);
+                                            if (token != null) {
+                                                // functions.logger.info("in  if(token != null)");
+                                                const response = await admin.messaging().sendToDevice(token, payload);
+                                            }
+                                        });
+                                    }
+
+                                });
                             }
                         }
                     })
