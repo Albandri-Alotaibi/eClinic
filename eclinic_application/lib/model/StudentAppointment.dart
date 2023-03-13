@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class StudentAppointment {
   final String appointmentId;
@@ -45,14 +46,26 @@ class StudentAppointment {
 
   String StringTimeRange() {
     // TODO: implement toString
-    String srting =
-        "${startTime.hour}:${startTime.minute} - ${endTime.hour}:${endTime.minute}";
-    return srting;
+    DateTime tempDate = DateFormat("hh:mm")
+        .parse(startTime.hour.toString() + ":" + startTime.minute.toString());
+    var dateFormatA = DateFormat("h:mm a");
+    var dateFormat = DateFormat("h:mm a");
+    DateTime tempDate2 = DateFormat("hh:mm")
+        .parse(endTime.hour.toString() + ":" + endTime.minute.toString());
+    return dateFormat.format(tempDate) + "-" + dateFormatA.format(tempDate2);
+    // return dateFormat.format(tempDate) + "-" + dateFormatA.format(tempDate2);
+    // String srting =
+    //     "${startTime.hour}:${startTime.minute} - ${endTime.hour}:${endTime.minute}";
+    // return srting;
   }
 
   String OnlyStart() {
-    String srting = "${startTime.hour}:${startTime.minute}";
-    return srting;
+    DateTime tempDate = DateFormat("hh:mm")
+        .parse(startTime.hour.toString() + ":" + startTime.minute.toString());
+    var dateFormat = DateFormat("h:mm a");
+    return dateFormat.format(tempDate);
+    // String srting = "${startTime.hour}:${startTime.minute}";
+    // return srting;
   }
 
   // String StringStudents() {
@@ -65,5 +78,4 @@ class StudentAppointment {
 
   // //   return srting+"\n";
   // }
-
 }
