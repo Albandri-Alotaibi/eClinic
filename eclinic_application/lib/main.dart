@@ -12,6 +12,8 @@ import 'package:myapp/facultyListFAQ.dart';
 import 'package:myapp/facultyViewFAQ.dart';
 import 'package:myapp/facultyhome.dart';
 import 'package:myapp/facultyviewprofile.dart';
+import 'package:myapp/graduatelogin.dart';
+import 'package:myapp/graduatessignup.dart';
 import 'package:myapp/home.dart';
 import 'package:myapp/innereset.dart';
 import 'package:myapp/login.dart';
@@ -128,6 +130,8 @@ class MyApp extends StatelessWidget {
               'resetpassword': (context) => resetpassword(),
               "innereset": (context) => innereset(),
               "studentresetpassword": (context) => studentresetpassword(),
+              'graduatelogin': (context) => graduatelogin(),
+              'graduatessignup': (context) => graduatessignup(),
             }));
   }
 

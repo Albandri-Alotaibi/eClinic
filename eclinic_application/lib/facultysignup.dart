@@ -23,6 +23,7 @@ class _facultysignupState extends State<facultysignup> {
   final formkey = GlobalKey<FormState>();
   List<String> options = [];
   List<String> semester = [];
+  List<String> semesteraftersort = [];
   List<String> collage = [];
   List<String> department = [];
   List speciality = [];
@@ -41,10 +42,15 @@ class _facultysignupState extends State<facultysignup> {
   late String semstername;
   Rx<List<String>> selectedoptionlist = Rx<List<String>>([]);
   var selectedoption = "".obs;
+  List<String> t = [];
+  List<String> e = [];
+  List<String> t2 = [];
+  List<String> e2 = [];
+  List<String> first = [];
+  List<String> second = [];
   void initState() {
     retrivespecilty();
     retrievesemester();
-    // retrivecollage();
     retrivedepartment();
     super.initState();
   }
@@ -89,8 +95,8 @@ class _facultysignupState extends State<facultysignup> {
 
             if ((sn.contains(s))) {
               print(element['semestername']);
-              print("ppppppppppppppppppppppppppppppppppppppp");
-              print(sn);
+              // print("ppppppppppppppppppppppppppppppppppppppp");
+              // print(sn);
               semester.add(element['semestername']);
               // print("ppppppppppppppppppppppppppppppppppppppp");
               // print(semester);
@@ -119,38 +125,112 @@ class _facultysignupState extends State<facultysignup> {
               }
             }
           });
+          //calling sort function
+
+          semester.sort();
         });
         print(semester);
       });
+      sortsemester(semester);
     } catch (e) {
       print(e.toString());
       return null;
     }
   }
 
-  // retrivecollage() async {
-  //   try {
-  //     await FirebaseFirestore.instance
-  //         .collection('collage')
-  //         .get()
-  //         .then((querySnapshot) {
-  //       querySnapshot.docs.forEach((element) {
-  //         setState(() {
-  //           collage.add(element['collagename']);
-  //         });
-  //       });
-  //     });
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
+  sortsemester(List<String> sem) {
+    //     List<String> t = [];
+    // List<String> e = [];
+    // List<String> t2 = [];
+    // List<String> e2 = [];
+    // List<String> first = [];
+    // List<String> second = [];
+    // List<String> slash = [];
+
+    // print("befor sort");
+    // print(sem);
+    // print("after sort");
+    sem.sort();
+    print("befor sort by f s t ");
+    print(sem);
+    // for (var i = 0; i < sem.length; i++) {
+    //   t = sem[i].split(" ");
+    //   e = t[1].split("/");
+    // if (t[0].contains("1")) {
+    //   var s = t[0].substring(0, 1);
+    //   print(s);
+    //   print("first semester");
+    // }
+    // if (double.parse(e[0]) < double.parse(e[1])) {
+    //   print("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+    //   print(e[0]);
+    //   print(e[1]);
+    //   if (t[0].contains("1")) {
+    //     print("hi");
+    //   }
+    // }
+    //   first.add(e[0]);
+    //   second.add(e[1]);
+
+    //   //print(e[i]);
+    // }
+    // for (var b = 0; b < sem.length; b++) {
+    //   for (var b2 = 1; b2 < sem.length; b2++) {
+    //     for (var s = 0; s < second.length; s++) {
+    //       for (var s2 = 1; s2 < second.length; s2++) {
+    //         t = sem[b].split(" ");
+    //         e = t[1].split("/");
+    //         t2 = sem[b2].split(" ");
+    //         e2 = t[1].split("/");
+    //         if (double.parse(t[0].substring(0, 1)) <
+    //             double.parse(t2[0].substring(0, 1))) {
+    //           if (double.parse(e[1]) > double.parse(e2[1])) {
+    //             var temp = sem[b];
+    //             sem[b] = sem[b2];
+    //             sem[b2] = temp;
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
+    for (var b = 0; b < sem.length; b++) {
+      for (var b2 = 1; b2 < sem.length; b2++) {
+        t = sem[b].split(" ");
+        e = t[1].split("/");
+        t2 = sem[b2].split(" ");
+        e2 = t2[1].split("/");
+        print(t[0]);
+        // print(e[1]);
+        print("///////////////////////////////////////////");
+        print(e[1]);
+        print(e2[1]);
+        if (double.parse(e[1]) > double.parse(e2[1])) {
+          if (double.parse(t[0].substring(0, 1)) <
+              double.parse(t2[0].substring(0, 1))) {
+            print("hi hanouf ");
+            var temp = sem[b];
+            sem[b] = sem[b2];
+            sem[b2] = temp;
+          }
+        }
+      }
+    }
+    print("hhhhhhhhh after sort hhhhhhhhhhhhhhhhhhhhh");
+    print(sem);
+
+    // String test = "3rd 2023/2024";
+    // List<String> t = test.split(" ");
+    // List<String> e = t[1].split("/");
+    // print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+    // print(t);
+    // print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+    // print(e[1]);
+  }
 
   retrivedepartment() async {
     try {
       await FirebaseFirestore.instance
-          // .collection('collage')
-          // .doc("CCIS")
           .collection("department")
           .get()
           .then((querySnapshot) {
@@ -186,31 +266,9 @@ class _facultysignupState extends State<facultysignup> {
     }
   }
 
-  // Future checkidc(String? collagename) async {
-  //   try {
-  //     await FirebaseFirestore.instance
-  //         .collection('collage')
-  //         .get()
-  //         .then((querySnapshot) {
-  //       querySnapshot.docs.forEach((element) {
-  //         setState(() {
-  //           if (collagename == element['collagename']) {
-  //             docsforcollage = element.id;
-  //           }
-  //         });
-  //       });
-  //     });
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
-
   Future checkidd(String? departmentename) async {
     try {
       await FirebaseFirestore.instance
-          // .collection('collage')
-          // .doc("CCIS")
           .collection("department")
           .get()
           .then((querySnapshot) {
@@ -370,7 +428,7 @@ class _facultysignupState extends State<facultysignup> {
                             TextFormField(
                               controller: _fnameController,
                               decoration: InputDecoration(
-                                  labelText: ' Frist Name :',
+                                  labelText: ' First Name :',
                                   hintText: "Enter your first name",
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(25),
@@ -382,11 +440,11 @@ class _facultysignupState extends State<facultysignup> {
                               validator: (value) {
                                 if (value!.isEmpty ||
                                     _fnameController.text == "") {
-                                  return 'Please enter your frist name ';
+                                  return 'Please enter your first name ';
                                 } else {
                                   if (nameRegExp
                                       .hasMatch(_fnameController.text)) {
-                                    return 'Please frist name only letters accepted ';
+                                    return 'Please first name only letters accepted ';
                                   } else {
                                     if (!(english
                                         .hasMatch(_fnameController.text))) {
@@ -508,42 +566,7 @@ class _facultysignupState extends State<facultysignup> {
                             SizedBox(
                               height: 8,
                             ),
-                            // DropdownButtonFormField<String>(
-                            //   decoration: InputDecoration(
-                            //     hintText: ' Choose your collage : ',
-                            //     border: OutlineInputBorder(
-                            //         borderRadius: BorderRadius.circular(25),
-                            //         borderSide: const BorderSide(
-                            //           width: 0,
-                            //         )),
-                            //   ),
-                            //   isExpanded: true,
-                            //   items: collage.map((String dropdownitems) {
-                            //     return DropdownMenuItem<String>(
-                            //       value: dropdownitems,
-                            //       child: Text(dropdownitems),
-                            //     );
-                            //   }).toList(),
-                            //   onChanged: (String? newselect) {
-                            //     setState(() {
-                            //       collageselectedvalue = newselect;
-                            //       checkidc(collageselectedvalue);
-                            //     });
-                            //   },
-                            //   value: collageselectedvalue,
-                            //   autovalidateMode:
-                            //       AutovalidateMode.onUserInteraction,
-                            //   validator: (value) {
-                            //     if (value == null ||
-                            //         collageselectedvalue!.isEmpty ||
-                            //         collageselectedvalue == null) {
-                            //       return 'Please choose your collage';
-                            //     }
-                            //   },
-                            // ),
-                            // SizedBox(
-                            //   height: 8,
-                            // ),
+
                             DropdownButtonFormField<String>(
                               decoration: InputDecoration(
                                 hintText: ' Choose your department:',

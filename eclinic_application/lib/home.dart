@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'style/Mycolors.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:myapp/graduatelogin.dart';
 
 class home extends StatefulWidget {
   // This class is the configuration for the state.
@@ -100,6 +101,22 @@ class _homeState extends State<home> {
                 ),
               ],
             ),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+              // shadowColor: Colors.blue[900],
+              elevation: 0,
+              backgroundColor: Mycolors.mainShadedColorBlue,
+              minimumSize: Size(20, 50),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(17), // <-- Radius
+              ),
+            ),
+            onPressed: () {
+              Navigator.pushNamed(context, 'graduatelogin');
+            },
+            child: Text('Graduates'),
           ),
         ]),
       ),
