@@ -30,7 +30,6 @@ class _studentviewprofileState extends State<studentviewprofile> {
   late String docfordepatment;
   var _fnameController = TextEditingController();
   var _lnamecontroller = TextEditingController();
-  var _idController = TextEditingController();
   var _emailController = TextEditingController();
   var _projectname = TextEditingController();
   var _socialmed = TextEditingController();
@@ -353,28 +352,6 @@ class _studentviewprofileState extends State<studentviewprofile> {
           .collection('student')
           .doc(userid)
           .get();
-      Timestamp gd = snap["graduationDate"];
-      var datetostring = DateTime.fromMillisecondsSinceEpoch(gd.seconds * 1000);
-      var m = datetostring.month;
-      selctedyear = datetostring.year.toString();
-      // if (nowyear.isAfter(datetostring.year)) {
-      //   years.add(selctedyear);
-      // }
-
-      print("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
-      print(datetostring);
-      if (m >= 10) {
-        month = datetostring.month.toString();
-      }
-      if (m < 10) {
-        month = "0" + datetostring.month.toString();
-        print(month);
-      }
-      print("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
-      print(selctedyear);
-      _date = TextEditingController(text: formatdate(gd));
-      // genrateyear();
-      date = gd;
 
       final so = snap['socialmedia'];
       final soaccount = snap['socialmediaaccount'];
@@ -385,16 +362,9 @@ class _studentviewprofileState extends State<studentviewprofile> {
       social = so;
       final fname = snap['firstname'];
       final lname = snap['lastname'];
-      final projectname = snap["projectname"];
-      _projectname = TextEditingController(text: projectname);
+
       _fnameController = TextEditingController(text: fname);
       _lnamecontroller = TextEditingController(text: lname);
-
-      var departmentRef = snap["department"];
-      final DocumentSnapshot docRef2 = await departmentRef.get();
-      departmentselectedfromDB = docRef2["departmentname"];
-      print("/////////////////////department///////////////////////////");
-      print(departmentselectedfromDB);
     } catch (e) {
       print(e.toString());
       return null;
@@ -428,97 +398,6 @@ class _studentviewprofileState extends State<studentviewprofile> {
           ),
         ),
         backgroundColor: Mycolors.BackgroundColor,
-        // drawer: Drawer(
-        //     child: ListView(children: [
-        //   Card(
-        //     shadowColor: Color.fromARGB(94, 114, 168, 243),
-        //     elevation: 0,
-        //     child: DrawerHeader(
-        //         child: Column(
-        //       mainAxisAlignment: MainAxisAlignment.center,
-        //       children: [
-        //         Padding(
-        //           padding: const EdgeInsets.only(
-        //             bottom: 0,
-        //           ),
-        //           child: Image.asset(
-        //             "assets/images/woman.png",
-        //             width: 100,
-        //             height: 100,
-        //           ),
-        //         ),
-        //         SizedBox(
-        //           height: 10,
-        //         ),
-        //         Center(
-        //           child: Text("${fnDrawer} ${lnDrawer}",
-        //               style: TextStyle(
-        //                   fontFamily: 'bold',
-        //                   fontSize: 16,
-        //                   color: Mycolors.mainColorBlack)),
-        //         ),
-        //       ],
-        //     )),
-        //   ),
-        //   ListTile(
-        //     leading: Icon(Icons.edit_note),
-        //     title: Text(
-        //       "Edit profile",
-        //       style: TextStyle(
-        //           fontFamily: 'main',
-        //           fontSize: 16,
-        //           color: Mycolors.mainColorBlack),
-        //     ),
-        //     // hoverColor: Mycolors.mainColorBlue,
-        //     onTap: (() {
-        //       Navigator.pushNamed(context, 'studentviewprofile');
-        //     }),
-        //   ),
-        //   Divider(
-        //     color: Mycolors.mainColorBlue,
-        //     thickness: 1,
-        //     endIndent: 15,
-        //     indent: 15,
-        //   ),
-        //   ListTile(
-        //     leading: Icon(Icons.password),
-        //     title: Text(
-        //       "Reset password",
-        //       style: TextStyle(
-        //           fontFamily: 'main',
-        //           fontSize: 16,
-        //           color: Mycolors.mainColorBlack),
-        //     ),
-        //     onTap: (() {
-        //       // Navigator.pushNamed(context, 'resetpasswprd');
-        //     }),
-        //   ),
-        //   Divider(
-        //     color: Mycolors.mainColorBlue,
-        //     thickness: 1,
-        //     endIndent: 15,
-        //     indent: 15,
-        //   ),
-        //   ListTile(
-        //     leading: Icon(Icons.logout),
-        //     title: Text(
-        //       "Log out",
-        //       style: TextStyle(
-        //           fontFamily: 'main',
-        //           fontSize: 16,
-        //           color: Mycolors.mainColorBlack),
-        //     ),
-        //     onTap: (() {
-        //       showConfirmationDialog(context);
-        //     }),
-        //   ),
-        //   Divider(
-        //     color: Mycolors.mainColorBlue,
-        //     thickness: 1,
-        //     endIndent: 15,
-        //     indent: 15,
-        //   ),
-        // ])),
         body: SingleChildScrollView(
           clipBehavior: Clip.none,
           child: Padding(
@@ -544,56 +423,15 @@ class _studentviewprofileState extends State<studentviewprofile> {
 
                         final fname = cuser['firstname'];
                         final lname = cuser['lastname'];
-                        final ksuemail = cuser['ksuemail'];
-                        final projectname = cuser['projectname'];
-                        final studentid = cuser['studentId'];
+                        final email = cuser['email'];
+
                         final so = cuser['socialmedia'];
                         fnDrawer = cuser['firstname'];
                         lnDrawer = cuser['lastname'];
 
-                        // date = cuser["graduationDate"];
+                        _emailController = TextEditingController(text: email);
 
-                        // date = gd;
-                        // print("ggggggggggggggggggggggggggggggggggggggg");
-                        // print(cuser["graduationDate"]);
-                        //print(date);
-                        // formatdate(gd);
-                        // print("//////////////////////////////////////////");
-                        // print(gd);
-                        // print(formatdate(gd));
-
-                        // _fnameController = TextEditingController(text: fname);
-                        // _lnamecontroller = TextEditingController(text: lname);
-                        _emailController =
-                            TextEditingController(text: ksuemail);
-                        //   _idController = TextEditingController(text: studentid);
-                        // _projectname = TextEditingController(text: projectname);
-                        // _socialmed = TextEditingController(text: so);
                         final soaccount = cuser['socialmediaaccount'];
-
-                        // if (social != "None") {
-                        //   _socialmediaccount =
-                        //       TextEditingController(text: soaccount);
-                        // }
-
-                        //_date = TextEditingController(text: formatdate(gd));
-                        // social = so;
-                        selectedoptionlist.value = categoryfromDB;
-                        collageselectedvalue = collageselectedfromDB;
-                        departmentselectedvalue = departmentselectedfromDB;
-
-                        // print("/////////////////ممههههممم//////////////////");
-                        // print(date);
-                        // print("//////////////////////////////////");
-                        // print(departmentselectedfromDB);
-                        // print("/////////////////ممههههممم//////////////////");
-                        // print(semesterselectedvalue);
-                        // print("//////////////////////////////////");
-                        // print(semesterselectedfromDB);
-                        // print("/////////////////ممههههممم//////////////////");
-                        // print(collageselectedvalue);
-                        // print("//////////////////////////////////");
-                        // print(collageselectedfromDB);
 
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -673,267 +511,12 @@ class _studentviewprofileState extends State<studentviewprofile> {
                               readOnly: true,
                               decoration: InputDecoration(
                                   // hintText: "Enter your KSU email",
-                                  labelText: 'KSU Email',
+                                  labelText: 'Email',
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(25),
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            // TextFormField(
-                            //   controller: _idController,
-                            //   decoration: InputDecoration(
-                            //       labelText: 'Student ID',
-                            //       hintText: "Enter your ID number",
-                            //       suffixIcon: Icon(Icons.edit),
-                            //       border: OutlineInputBorder()),
-                            //   autovalidateMode:
-                            //       AutovalidateMode.onUserInteraction,
-                            //   validator: (value) {
-                            //     if (value!.isEmpty || _idController.text == "") {
-                            //       return 'Please enter your ID  ';
-                            //     } else {
-                            //       if (!(idRegEx.hasMatch(_idController.text))) {
-                            //         return 'Please ID number only number accepted ';
-                            //       } else {
-                            //         if (!(countRegEx
-                            //             .hasMatch(_idController.text))) {
-                            //           return 'Please ID number must be only 9 numbers';
-                            //         } else {
-                            //           if (!(english
-                            //               .hasMatch(_idController.text))) {
-                            //             return "only english is allowed";
-                            //           }
-                            //         }
-                            //       }
-                            //     }
-                            //   },
-                            // ),
-                            // SizedBox(
-                            //   height: 8,
-                            // ),
-                            TextFormField(
-                                controller: _projectname,
-                                decoration: InputDecoration(
-                                    labelText: ' Graduation project name',
-                                    hintText:
-                                        "Enter your Graduation project name",
-                                    suffixIcon: Icon(Icons.edit),
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(25),
-                                        borderSide: const BorderSide(
-                                          width: 0,
-                                        ))),
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                validator: (value) {
-                                  if (value!.isEmpty ||
-                                      _projectname.text == "") {
-                                    return 'Please enter Graduation project name ';
-                                  } else {
-                                    if (!(english
-                                        .hasMatch(_projectname.text))) {
-                                      return "only english is allowed";
-                                    }
-                                  }
-                                }),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            // TextFormField(
-                            //   controller: _date,
-                            //   readOnly: true,
-                            //   decoration: InputDecoration(
-                            //     hintText: 'Enter your graduation date',
-                            //     labelText: "Graduation date",
-                            //     suffixIcon: Icon(Icons.edit),
-                            //     border: OutlineInputBorder(),
-                            //   ),
-                            //   onTap: () async {
-                            //     DateTime? pickerdate = await showDatePicker(
-                            //         context: context,
-                            //         initialDate: DateTime.now(),
-                            //         firstDate: DateTime.now(),
-                            //         lastDate: DateTime(2100));
-
-                            //     setState(() {
-                            //       _date.text = DateFormat('dd-MM-yyyy')
-                            //           .format(pickerdate!);
-                            //       date = pickerdate;
-                            //     });
-                            //   },
-                            //   validator: ((value) {
-                            //     if (_date.text == "" || date == null)
-                            //       return 'Please enter your graduation date ';
-                            //     return null;
-                            //   }),
-                            // ),
-
-                            // SizedBox(
-                            //   height: 8,
-                            // ),
-                            // DropDownMultiSelect(
-                            //   decoration: InputDecoration(
-                            //       suffixIcon: Icon(Icons.edit),
-                            //       hintText:
-                            //           "select your graduation project category",
-                            //       labelText: " Graduation project category",
-                            //       enabledBorder: OutlineInputBorder(
-                            //         borderSide: BorderSide(
-                            //             color:
-                            //                 isshow ? Colors.red : Colors.grey),
-                            //         borderRadius: BorderRadius.circular(25),
-                            //       ),
-                            //       errorBorder: OutlineInputBorder(
-                            //         borderSide: BorderSide(
-                            //             color: isshow
-                            //                 ? Colors.red
-                            //                 : Colors.blueAccent),
-                            //         borderRadius: BorderRadius.circular(25),
-                            //       ),
-                            //       focusedBorder: OutlineInputBorder(
-                            //         borderSide: BorderSide(
-                            //             color: isshow
-                            //                 ? Colors.red
-                            //                 : Colors.blueAccent),
-                            //         borderRadius: BorderRadius.circular(25),
-                            //       )
-                            //       // border: OutlineInputBorder(
-                            //       //     borderSide: BorderSide(
-                            //       //         color: isshow ? Colors.red : Colors.grey)
-                            //       ),
-                            //   options: options,
-                            //   whenEmpty: "",
-                            //   onChanged: (value) {
-                            //     setState(() {
-                            //       selectedoptionlist.value = value;
-                            //       selectedoption.value = "";
-                            //       selectedoptionlist.value.forEach((element) {
-                            //         selectedoption.value =
-                            //             selectedoption.value + " " + element;
-                            //         checklengthforcategory =
-                            //             selectedoptionlist.value.length;
-                            //         isshow = selectedoption.value.isEmpty;
-
-                            //         if (checklengthforcategory < 1) {
-                            //           isshow = true;
-                            //         }
-                            //         if (checklengthforcategory > 0 ||
-                            //             selectedoption.value.isEmpty ||
-                            //             selectedoption.value == null) {
-                            //           isshow = false;
-                            //         }
-                            //       });
-                            //     });
-                            //     checkidcategory(selectedoptionlist.value);
-                            //     //isshow = selectedoptionlist.value.isEmpty;
-                            //     checklengthforcategory =
-                            //         selectedoptionlist.value.length;
-                            //     if (checklengthforcategory < 1) {
-                            //       isshow = true;
-                            //     }
-                            //   },
-                            //   selectedValues: selectedoptionlist.value,
-                            // ),
-                            // SizedBox(
-                            //   height: 2,
-                            // ),
-                            // Visibility(
-                            //   visible: isshow,
-                            //   child: Row(
-                            //       mainAxisAlignment: MainAxisAlignment.start,
-                            //       children: [
-                            //         Text(
-                            //           "Please choose your graduation project category",
-                            //           style: TextStyle(
-                            //               color:
-                            //                   Color.fromARGB(255, 211, 56, 45)),
-                            //           textAlign: TextAlign.left,
-                            //         ),
-                            //       ]),
-                            // ),
-                            // SizedBox(
-                            //   height: 8,
-                            // ),
-                            // DropdownButtonFormField<String>(
-                            //   decoration: InputDecoration(
-                            //     suffixIcon: Icon(Icons.edit),
-                            //     labelText: 'College',
-                            //     border: OutlineInputBorder(
-                            //         borderRadius: BorderRadius.circular(25),
-                            //         borderSide: const BorderSide(
-                            //           width: 0,
-                            //         )),
-                            //   ),
-                            //   isExpanded: true,
-                            //   items: collage.map((String dropdownitems) {
-                            //     return DropdownMenuItem<String>(
-                            //       value: dropdownitems,
-                            //       child: Text(dropdownitems),
-                            //     );
-                            //   }).toList(),
-
-                            //   onChanged: (String? newselect) {
-                            //     setState(() {
-                            //       collageselectedvalue = newselect;
-                            //       collageselectedfromDB = newselect;
-                            //       checkidc(collageselectedvalue);
-                            //     });
-                            //   },
-                            //   value: collageselectedvalue,
-
-                            //   // autovalidateMode:
-                            //   //     AutovalidateMode.onUserInteraction,
-                            //   // validator: (value) {
-                            //   //   if (value == null ||
-                            //   //       collageselectedvalue!.isEmpty ||
-                            //   //       collageselectedvalue == null) {
-                            //   //     return 'Please choose your collage';
-                            //   //   }
-                            //   // },
-                            // ),
-                            // SizedBox(
-                            //   height: 8,
-                            // ),
-
-                            DropdownButtonFormField<String>(
-                              decoration: InputDecoration(
-                                suffixIcon: Icon(Icons.edit),
-                                labelText: ' Department',
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                    borderSide: const BorderSide(
-                                      width: 0,
-                                    )),
-                              ),
-                              isExpanded: true,
-                              items: department.map((String dropdownitems) {
-                                return DropdownMenuItem<String>(
-                                  value: dropdownitems,
-                                  child: Text(dropdownitems),
-                                );
-                              }).toList(),
-                              onChanged: (String? newselect) {
-                                setState(() {
-                                  departmentselectedvalue = newselect;
-                                  departmentselectedfromDB = newselect;
-                                  checkidd(departmentselectedvalue);
-                                });
-                              },
-                              value: departmentselectedvalue,
-
-                              // autovalidateMode:
-                              //     AutovalidateMode.onUserInteraction,
-                              // validator: (value) {
-                              //   if (value == null ||
-                              //       departmentselectedvalue!.isEmpty ||
-                              //       departmentselectedvalue == null) {
-                              //     return 'Please choose your department';
-                              //   }
-                              // },
                             ),
 
                             SizedBox(
@@ -1020,113 +603,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                       height: 8,
                                     );
                                   }),
-
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(right: 250, bottom: 4),
-                              child: Text(
-                                "  Graduation date : ",
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: DropdownButtonFormField(
-                                    decoration: InputDecoration(
-                                      hintText: 'Choose month',
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25),
-                                          borderSide: const BorderSide(
-                                            width: 0,
-                                          )),
-                                    ),
-                                    items: const [
-                                      DropdownMenuItem(
-                                          child: Text("Jan"), value: "01"),
-                                      DropdownMenuItem(
-                                          child: Text("Feb"), value: "02"),
-                                      DropdownMenuItem(
-                                          child: Text("Mar"), value: "03"),
-                                      DropdownMenuItem(
-                                          child: Text("Apr"), value: "04"),
-                                      DropdownMenuItem(
-                                          child: Text("May"), value: "05"),
-                                      DropdownMenuItem(
-                                          child: Text("Jun"), value: "06"),
-                                      DropdownMenuItem(
-                                          child: Text("Jul"), value: "07"),
-                                      DropdownMenuItem(
-                                          child: Text("Aug"), value: "08"),
-                                      DropdownMenuItem(
-                                          child: Text("Sep"), value: "09"),
-                                      DropdownMenuItem(
-                                          child: Text("Oct"), value: "10"),
-                                      DropdownMenuItem(
-                                          child: Text("Nov"), value: "11"),
-                                      DropdownMenuItem(
-                                          child: Text("Dec"), value: "12")
-                                    ],
-                                    value: month,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        month = value;
-                                        print(month);
-                                      });
-                                    },
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    validator: (value) {
-                                      if (value == null || month == "") {
-                                        return 'Please Choose month';
-                                      }
-                                    },
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: DropdownButtonFormField<String>(
-                                    decoration: InputDecoration(
-                                      hintText: 'choose year',
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25),
-                                          borderSide: const BorderSide(
-                                            width: 0,
-                                          )),
-                                    ),
-                                    isExpanded: true,
-                                    items: years.map((String dropdownitems) {
-                                      return DropdownMenuItem<String>(
-                                        value: dropdownitems,
-                                        child: Text(dropdownitems),
-                                      );
-                                    }).toList(),
-                                    onChanged: (String? newselect) {
-                                      setState(() {
-                                        selctedyear = newselect;
-                                        print(selctedyear);
-                                      });
-                                    },
-                                    value: selctedyear,
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    validator: (value) {
-                                      if (value == null || selctedyear == "") {
-                                        return 'Please choose year';
-                                      }
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
+                            ////////////////////group information (department,project name , project completion date)
                           ],
                         ); //here
                       }
@@ -1147,25 +624,16 @@ class _studentviewprofileState extends State<studentviewprofile> {
                     setState(() {
                       fn = _fnameController.text;
                       ln = _lnamecontroller.text;
-                      // sid = _idController.text;
-                      pn = _projectname.text;
-                      // gpdate = date;
+
                       socialmedia = social;
                       socoamediaaccount = _socialmediaccount.text;
-                      // editstudentarray(newselectgpcategory);
+
                       if (social == "None") {
                         socoamediaaccount = "";
                       }
-                      // if (checklengthforcategory < 1) {
-                      //   isshow = true;
-                      // }
-                      // if (checklengthforcategory > 0) {
-                      //   isshow = false;
-                      // }
                     });
 
                     if (formkey.currentState!.validate()) {
-                      gpdate = dategp(selctedyear, month);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -1177,20 +645,8 @@ class _studentviewprofileState extends State<studentviewprofile> {
                             .update({
                           "firstname": fn,
                           "lastname": ln,
-                          // "studentId": sid,
-                          "projectname": pn,
-                          // "projectCategory": category,
                           "socialmedia": socialmedia,
                           "socialmediaaccount": socoamediaaccount,
-                          "graduationDate": gpdate,
-                          'department': FirebaseFirestore.instance
-                              // .collection("collage")
-                              // .doc(docsforcollage)
-                              .collection("department")
-                              .doc(docfordepatment),
-                          // 'college': FirebaseFirestore.instance
-                          //     .collection("collage")
-                          //     .doc(docsforcollage),
                         });
 
                         Fluttertoast.showToast(
