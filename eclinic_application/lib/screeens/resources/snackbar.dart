@@ -4,6 +4,10 @@ void showInSnackBar(context, String value,
     {color = Colors.green, bool onError = false}) {
   try {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
         backgroundColor: onError ? Colors.red : color,
         content: Row(
           children: [
@@ -17,7 +21,7 @@ void showInSnackBar(context, String value,
               width: 20,
             ),
             Text(
-              (onError ? 'Error : ' : '') + value,
+              value,
               style: Theme.of(context)
                   .textTheme
                   .button
