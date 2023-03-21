@@ -11,6 +11,7 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multiselect/multiselect.dart';
 import 'package:intl/intl.dart';
 import 'style/Mycolors.dart';
+import 'package:myapp/screeens/resources/snackbar.dart';
 
 class facultysignup extends StatefulWidget {
   const facultysignup({super.key});
@@ -492,8 +493,8 @@ class _facultysignupState extends State<facultysignup> {
                             TextFormField(
                               controller: _emailController,
                               decoration: InputDecoration(
-                                  hintText: "Enter your KSU email",
-                                  labelText: ' KSU Email :',
+                                  hintText: "Enter your email",
+                                  labelText: '  Email :',
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(25),
                                       borderSide: const BorderSide(
@@ -504,12 +505,12 @@ class _facultysignupState extends State<facultysignup> {
                               validator: (value) {
                                 if (value!.isEmpty ||
                                     _emailController.text == "") {
-                                  return 'Please enter your KSU email ';
-                                } else {
-                                  if (!(ksuEmailRegEx
-                                      .hasMatch(_emailController.text))) {
-                                    return 'Please write email format correctly, example@ksu.edu.sa ';
-                                  }
+                                  return 'Please enter your email ';
+                                  // } else {
+                                  //   if (!(ksuEmailRegEx
+                                  //       .hasMatch(_emailController.text))) {
+                                  //     return 'Please write email format correctly, example@ksu.edu.sa ';
+                                  //   }
                                 }
                               },
                             ),
@@ -900,14 +901,17 @@ class _facultysignupState extends State<facultysignup> {
                                     print(error.message);
                                     if (error.message ==
                                         "The email address is badly formatted.") {
-                                      showerror(
-                                          context, "check the email format");
+                                      //error message
+                                      showInSnackBar(
+                                          context, "check the email format",
+                                          onError: true);
                                     }
 
                                     if (error.message ==
                                         "The email address is already in use by another account.") {
-                                      showerror(context,
-                                          "The email address is already in use by another account");
+                                      showInSnackBar(context,
+                                          "The email address is already in use by another user",
+                                          onError: true);
                                     }
                                   }
                                 },

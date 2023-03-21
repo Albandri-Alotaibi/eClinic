@@ -854,7 +854,7 @@ class _addcommonissueState extends State<addcommonissue> {
                                     }
                                     if (exist == false) {
                                       showInSnackBar(context,
-                                          "there is common issue with the same title please check",
+                                          "Another common issue with same title already exists",
                                           onError: true);
                                     }
                                   }

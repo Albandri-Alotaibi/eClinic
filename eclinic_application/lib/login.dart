@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/home.dart';
+import 'package:myapp/screeens/resources/snackbar.dart';
 
 class login extends StatefulWidget {
   const login({super.key});
@@ -187,8 +188,11 @@ class _loginState extends State<login> {
                                   if (formkey.currentState!.validate()) {
                                     if (_emailController.text
                                         .contains("student")) {
-                                      showerror(
-                                          context, "invalid email or password");
+                                      // showerror(
+                                      //     context, "invalid email or password");
+                                      showInSnackBar(
+                                          context, "invalid email or password",
+                                          onError: true);
                                     } else {
                                       await FirebaseAuth.instance
                                           .signInWithEmailAndPassword(
@@ -233,8 +237,11 @@ class _loginState extends State<login> {
                                           "The password is invalid or the user does not have a password." ||
                                       error.message ==
                                           "There is no user record corresponding to this identifier. The user may have been deleted.") {
-                                    showerror(
-                                        context, "invalid email or password ");
+                                    // showerror(
+                                    //     context, "invalid email or password ");
+                                    showInSnackBar(
+                                        context, "invalid email or password",
+                                        onError: true);
                                   }
                                 }
                               },

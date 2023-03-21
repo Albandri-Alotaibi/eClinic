@@ -493,7 +493,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                               readOnly: true,
                               decoration: InputDecoration(
                                   // hintText: "Enter your KSU email",
-                                  labelText: 'KSU Email',
+                                  labelText: ' Email',
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(25),
                                       borderSide: const BorderSide(
@@ -504,12 +504,12 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                               validator: (value) {
                                 if (value!.isEmpty ||
                                     _emailController.text == "") {
-                                  return 'Please enter your KSU email ';
-                                } else {
-                                  if (!(ksuEmailRegEx
-                                      .hasMatch(_emailController.text))) {
-                                    return 'Please write email format correctly, example@ksu.edu.sa ';
-                                  }
+                                  return 'Please enter your email ';
+                                  // } else {
+                                  //   if (!(ksuEmailRegEx
+                                  //       .hasMatch(_emailController.text))) {
+                                  //     return 'Please write email format correctly, example@ksu.edu.sa ';
+                                  //   }
                                 }
                               },
                             ),
@@ -853,7 +853,8 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                         "specialty": specalityid,
                                       });
 
-                                      showSucessAlert();
+                                      showInSnackBar(context,
+                                          "Your information has been updated successfully ");
                                     } on FirebaseAuthException catch (error) {
                                       showInSnackBar(
                                           context, "Something wronge",
@@ -1021,7 +1022,8 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
               "availablehours": FieldValue.delete(),
             });
 
-            showSucessAlert();
+            showInSnackBar(
+                context, "Your information has been updated successfully ");
           } on FirebaseAuthException catch (error) {
             showInSnackBar(context, "Something wronge", onError: true);
           }
@@ -1044,7 +1046,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
               height: 8,
             ),
             Text(
-                "Note : Changing your semester will cause your availabile hours to be deleted "),
+                "Changing your semester will affect your current office hours by deleting them & your appointments by canceling them"),
           ],
         ),
       ),
@@ -1254,22 +1256,22 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
     print(spe);
   }
 
-  showSucessAlert() {
-    QuickAlert.show(
-      context: context,
-      type: QuickAlertType.success,
-      title: "",
-      text: " Your information has been updated successfully",
-      onConfirmBtnTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => facultyviewprofile(),
-          ),
-        );
-      },
-    );
-  }
+  // showSucessAlert() {
+  //   QuickAlert.show(
+  //     context: context,
+  //     type: QuickAlertType.success,
+  //     title: "",
+  //     text: " Your information has been updated successfully",
+  //     onConfirmBtnTap: () {
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(
+  //           builder: (context) => facultyviewprofile(),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   showerror(BuildContext context, String msg) {
     return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
