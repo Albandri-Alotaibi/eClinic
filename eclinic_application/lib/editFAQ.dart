@@ -194,6 +194,7 @@ class _editFAQState extends State<editFAQ> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           actions: <Widget>[
             IconButton(
@@ -214,7 +215,7 @@ class _editFAQState extends State<editFAQ> {
             color: Color.fromARGB(255, 12, 12, 12),
           ),
           titleTextStyle: TextStyle(
-            fontFamily: 'bold',
+            fontWeight: FontWeight.w500,
             fontSize: 18,
             color: Mycolors.mainShadedColorBlue,
           ),
@@ -323,12 +324,11 @@ class _editFAQState extends State<editFAQ> {
                                     splashColor: Mycolors.mainShadedColorBlue,
                                     elevation: 0,
                                     foregroundColor:
-                                        Color.fromARGB(255, 255, 255, 255),
+                                        Mycolors.mainShadedColorBlue,
                                     label: Text(
                                       'Uplouad file',
                                     ), // <-- Text
-                                    backgroundColor:
-                                        Mycolors.mainShadedColorBlue,
+                                    backgroundColor: Colors.white,
                                     icon: Icon(
                                       // <-- Icon
                                       Icons.upload_outlined,
@@ -396,20 +396,19 @@ class _editFAQState extends State<editFAQ> {
                                     splashColor: Mycolors.mainShadedColorBlue,
                                     elevation: 0,
                                     foregroundColor:
-                                        Color.fromARGB(255, 255, 255, 255),
+                                        Mycolors.mainShadedColorBlue,
                                     label: Text(
                                       'Add link',
                                       style: TextStyle(
-                                        color: Mycolors.mainColorWhite,
+                                        color: Mycolors.mainShadedColorBlue,
                                       ),
                                     ), // <-- Text
-                                    backgroundColor:
-                                        Color.fromRGBO(21, 70, 160, 1),
+                                    backgroundColor: Colors.white,
 
                                     icon: Icon(
                                       // <-- Icon
                                       Icons.link_outlined,
-                                      color: Mycolors.mainColorWhite,
+                                      color: Mycolors.mainShadedColorBlue,
                                       size: 24.0,
                                     ),
                                     onPressed: (() {
@@ -424,18 +423,19 @@ class _editFAQState extends State<editFAQ> {
                             SizedBox(
                               height: 20,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 310),
+                            Align(
+                              alignment: Alignment.centerLeft,
                               child: Text(
                                 "Problem:",
                                 style: TextStyle(
                                     overflow: TextOverflow.ellipsis,
                                     color: Mycolors.mainColorBlack,
-                                    fontFamily: 'bold',
+                                    fontWeight: FontWeight.w500,
                                     fontSize: 13),
                                 textAlign: TextAlign.start,
                               ),
                             ),
+
                             SizedBox(
                               height: 5,
                             ),
@@ -470,18 +470,19 @@ class _editFAQState extends State<editFAQ> {
                             SizedBox(
                               height: 10,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 310),
+                            Align(
+                              alignment: Alignment.centerLeft,
                               child: Text(
                                 "Solution:",
                                 style: TextStyle(
                                     overflow: TextOverflow.ellipsis,
                                     color: Mycolors.mainColorBlack,
-                                    fontFamily: 'bold',
+                                    fontWeight: FontWeight.w500,
                                     fontSize: 13),
                                 textAlign: TextAlign.start,
                               ),
                             ),
+
                             SizedBox(
                               height: 5,
                             ),
@@ -517,41 +518,42 @@ class _editFAQState extends State<editFAQ> {
                               height: 10,
                             ),
                             if (links.length > 0)
-                              Padding(
-                                padding: const EdgeInsets.only(right: 310),
+                              Align(
+                                alignment: Alignment.centerLeft,
                                 child: Text(
                                   "Links:",
                                   style: TextStyle(
                                       overflow: TextOverflow.ellipsis,
                                       color: Mycolors.mainColorBlack,
-                                      fontFamily: 'bold',
+                                      fontWeight: FontWeight.w500,
                                       fontSize: 13),
                                   textAlign: TextAlign.start,
                                 ),
                               ),
+
                             if (links.length > 0)
-                              Padding(
-                                padding: const EdgeInsets.only(right: 298),
-                                child: Column(
-                                  children: List.generate(
-                                    links.length,
-                                    (index) => Column(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        // Text(
-                                        //   "More Resources",
-                                        //   style: TextStyle(
-                                        //       overflow: TextOverflow.ellipsis,
-                                        //       color: Mycolors.mainColorBlue,
-                                        //       fontFamily: 'bold',
-                                        //       fontSize: 17),
-                                        //   textAlign: TextAlign.start,
-                                        // ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
+                              Row(
+                                children: List.generate(
+                                  links.length,
+                                  (index) => Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      // Text(
+                                      //   "More Resources",
+                                      //   style: TextStyle(
+                                      //       overflow: TextOverflow.ellipsis,
+                                      //       color: Mycolors.mainColorBlue,
+                                      //       fontFamily: 'bold',
+                                      //       fontSize: 17),
+                                      //   textAlign: TextAlign.start,
+                                      // ),
+                                      Align(
+                                        alignment: Alignment.bottomLeft,
+                                        child: Wrap(
                                           children: [
-                                            Expanded(
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 11),
                                               child: RichText(
                                                 text: TextSpan(children: [
                                                   TextSpan(
@@ -570,29 +572,28 @@ class _editFAQState extends State<editFAQ> {
                                                 ]),
                                               ),
                                             ),
-                                            Expanded(
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 1),
-                                                child: IconButton(
-                                                    onPressed: (() {
-                                                      // c = links[i];
-                                                      ConfirmationDialogfordeletelink(
-                                                          context, index);
-                                                    }),
-                                                    icon: Icon(
-                                                      Icons.cancel,
-                                                      size: 20,
-                                                    )),
-                                              ),
-                                            )
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.only(top: 1),
+                                              child: IconButton(
+                                                  onPressed: (() {
+                                                    // c = links[i];
+                                                    ConfirmationDialogfordeletelink(
+                                                        context, index);
+                                                  }),
+                                                  icon: Icon(
+                                                    Icons.cancel,
+                                                    size: 20,
+                                                  )),
+                                            ),
                                           ],
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
+
                             if (filesurl!.length > 0 ||
                                 filsbefordownload.length > 0)
                               const Divider(
@@ -601,18 +602,19 @@ class _editFAQState extends State<editFAQ> {
                               ),
                             if (filesurl!.length > 0 ||
                                 filsbefordownload.length > 0)
-                              Padding(
-                                padding: const EdgeInsets.only(right: 310),
+                              Align(
+                                alignment: Alignment.centerLeft,
                                 child: Text(
                                   "Files:",
                                   style: TextStyle(
                                       overflow: TextOverflow.ellipsis,
                                       color: Mycolors.mainColorBlack,
-                                      fontFamily: 'bold',
+                                      fontWeight: FontWeight.w500,
                                       fontSize: 13),
                                   textAlign: TextAlign.start,
                                 ),
                               ),
+
                             if (filsbefordownload.length > 0)
                               for (var s = 0; s < filsbefordownload.length; s++)
                                 Padding(
@@ -847,8 +849,7 @@ class _editFAQState extends State<editFAQ> {
                             ),
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                textStyle:
-                                    TextStyle(fontFamily: 'main', fontSize: 16),
+                                textStyle: TextStyle(fontSize: 16),
                                 // shadowColor: Colors.blue[900],
                                 elevation: 0,
                                 backgroundColor: Mycolors.mainShadedColorBlue,
@@ -897,7 +898,7 @@ class _editFAQState extends State<editFAQ> {
     // set up the buttons
     Widget cancelButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        textStyle: TextStyle(fontSize: 16),
         // shadowColor: Colors.blue[900],
         elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
@@ -916,7 +917,7 @@ class _editFAQState extends State<editFAQ> {
 
     Widget continueButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        textStyle: TextStyle(fontSize: 16),
         // shadowColor: Colors.blue[900],
         elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
@@ -1022,7 +1023,7 @@ class _editFAQState extends State<editFAQ> {
   ConfirmationDialogfordelete(BuildContext context) {
     Widget dontCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        textStyle: TextStyle(fontSize: 16),
         //shadowColor: Colors.blue[900],
         elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
@@ -1039,7 +1040,7 @@ class _editFAQState extends State<editFAQ> {
 
     Widget YesCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        textStyle: TextStyle(fontSize: 16),
         // shadowColor: Colors.blue[900],
         elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
@@ -1078,7 +1079,7 @@ class _editFAQState extends State<editFAQ> {
   ConfirmationDialogforupdate(BuildContext context) {
     Widget dontCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        textStyle: TextStyle(fontSize: 16),
         //shadowColor: Colors.blue[900],
         elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
@@ -1095,7 +1096,7 @@ class _editFAQState extends State<editFAQ> {
 
     Widget YesCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        textStyle: TextStyle(fontSize: 16),
         // shadowColor: Colors.blue[900],
         elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
@@ -1173,7 +1174,7 @@ class _editFAQState extends State<editFAQ> {
   ConfirmationDialogfordeletelink(BuildContext context, var i) {
     Widget dontCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        textStyle: TextStyle(fontSize: 16),
         // shadowColor: Colors.blue[900],
         elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
@@ -1190,7 +1191,7 @@ class _editFAQState extends State<editFAQ> {
 
     Widget YesCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        textStyle: TextStyle(fontSize: 16),
         //shadowColor: Colors.blue[900],
         elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
@@ -1247,7 +1248,7 @@ class _editFAQState extends State<editFAQ> {
   ConfirmationDialogfordeleteforfilebefordownload(BuildContext context, var i) {
     Widget dontCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        textStyle: TextStyle(fontSize: 16),
         // shadowColor: Colors.blue[900],
         elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
@@ -1264,7 +1265,7 @@ class _editFAQState extends State<editFAQ> {
 
     Widget YesCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        textStyle: TextStyle(fontSize: 16),
         //shadowColor: Colors.blue[900],
         elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
@@ -1307,7 +1308,7 @@ class _editFAQState extends State<editFAQ> {
   ConfirmationDialogfordeleteforfileafterdownload(BuildContext context, var i) {
     Widget dontCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        textStyle: TextStyle(fontSize: 16),
         //shadowColor: Colors.blue[900],
         elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
@@ -1324,7 +1325,7 @@ class _editFAQState extends State<editFAQ> {
 
     Widget YesCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        textStyle: TextStyle(fontSize: 16),
         //shadowColor: Colors.blue[900],
         elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,

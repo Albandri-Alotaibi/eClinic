@@ -71,6 +71,7 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
     //while loading data from database, show loading ...
     if (loading) {
       return Scaffold(
+        backgroundColor: Colors.white,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
@@ -97,6 +98,7 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
   Widget issueInfoBox() {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           actions: <Widget>[
             IconButton(
@@ -118,7 +120,7 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
             color: Color.fromARGB(255, 12, 12, 12),
           ),
           titleTextStyle: TextStyle(
-            fontFamily: 'bold',
+            fontWeight: FontWeight.w500,
             fontSize: 18,
             color: Mycolors.mainShadedColorBlue,
           ),
@@ -155,13 +157,20 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                           // ),
                           Text(
                             "  Speciality: ${category?['specialityname']}",
-                            style: const TextStyle(
+                            style: TextStyle(
                                 // letterSpacing: 0.1,
                                 fontSize: 14,
-                                fontFamily: "main",
                                 color: Color.fromRGBO(21, 70, 160, 1),
                                 fontWeight: FontWeight.w500),
-                          )
+                          ),
+                          // Text(
+                          //   " ${category?['specialityname']}",
+                          //   style: TextStyle(
+                          //       // letterSpacing: 0.1,
+                          //       fontSize: 14,
+                          //       color: Mycolors.mainColorBlack,
+                          //       fontWeight: FontWeight.w500),
+                          // )
                         ]),
                         const Divider(
                           color: Colors.grey,
@@ -174,13 +183,20 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                           // ),
                           Text(
                             "  Semester: ${semester?['semestername']}",
-                            style: const TextStyle(
+                            style: TextStyle(
                                 // letterSpacing: 0.1,
                                 fontSize: 14,
-                                fontFamily: "main",
                                 color: Color.fromRGBO(21, 70, 160, 1),
                                 fontWeight: FontWeight.w500),
-                          )
+                          ),
+                          // Text(
+                          //   "${semester?['semestername']}",
+                          //   style: TextStyle(
+                          //       // letterSpacing: 0.1,
+                          //       fontSize: 14,
+                          //       color: Mycolors.mainColorBlack,
+                          //       fontWeight: FontWeight.w500),
+                          // )
                         ]),
                         const Divider(
                           color: Colors.grey,
@@ -188,53 +204,78 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                         ),
                         Padding(
                             padding: const EdgeInsets.symmetric(vertical: 20),
-                            child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Icon(
+                            child: Wrap(children: [
+                              Row(
+                                children: const [
+                                  Icon(
                                     Icons.question_mark_outlined,
                                     color: Colors.red,
                                   ),
-                                  Expanded(
-                                      child: Text(
-                                    "  Problem :\n\n${widget.commonIssue['problem']}",
-                                    // "  Problem:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                                    style: const TextStyle(
-                                      // letterSpacing: 1.5,
+                                  Text(
+                                    " Problem:",
+                                    style: TextStyle(
+                                      // letterSpacing: 2,
                                       fontSize: 15,
-                                      fontFamily: "main",
+                                      fontWeight: FontWeight.w500,
                                       color: Color.fromRGBO(21, 70, 160, 1),
                                     ),
+                                  )
+                                ],
+                              ),
+                              Expanded(
+                                  child: Text(
+                                "\n${widget.commonIssue['problem']}",
+                                // "  Problem:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                                style: TextStyle(
+                                  // letterSpacing: 1.5,
+                                  fontSize: 15,
 
-                                    // decoration: const InputDecoration(
-                                    //   prefixIcon: Icon(Icons.collections),
-                                    // ),
-                                  ))
-                                ])),
+                                  color: Mycolors.mainColorBlack,
+                                ),
+
+                                // decoration: const InputDecoration(
+                                //   prefixIcon: Icon(Icons.collections),
+                                // ),
+                              ))
+                            ])),
                         const Divider(
                           color: Colors.grey,
                           thickness: 1,
                         ),
                         Padding(
                             padding: const EdgeInsets.symmetric(vertical: 20),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            child: Wrap(
+                              //crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Icon(
-                                  Icons.lightbulb,
-                                  color: Colors.green,
+                                Row(
+                                  children: const [
+                                    Icon(
+                                      Icons.lightbulb,
+                                      color: Colors.green,
+                                    ),
+                                    Text(
+                                      " Solution:",
+                                      style: TextStyle(
+                                        // letterSpacing: 2,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                        color: Color.fromRGBO(21, 70, 160, 1),
+                                      ),
+                                    )
+                                  ],
                                 ),
                                 Expanded(
-                                    child: Text(
-                                  "  Solution :\n\n${widget.commonIssue['solution']})",
-                                  // "  Solution:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                                  style: const TextStyle(
-                                    // letterSpacing: 2,
-                                    fontSize: 15,
-                                    fontFamily: "main",
-                                    color: Color.fromRGBO(21, 70, 160, 1),
+                                  child: Text(
+                                    "\n${widget.commonIssue['solution']})",
+                                    // "  Solution:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                                    style: TextStyle(
+                                      // letterSpacing: 2,
+                                      fontSize: 15,
+
+                                      color: Mycolors.mainColorBlack,
+                                    ),
                                   ),
-                                ))
+                                ),
                               ],
                             )),
                         if (widget.commonIssue['filesurl'] != null &&

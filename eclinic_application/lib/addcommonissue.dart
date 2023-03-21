@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multiselect/multiselect.dart';
 import 'package:intl/intl.dart';
+import 'package:myapp/screeens/resources/snackbar.dart';
 import 'package:open_file/open_file.dart';
 import 'style/Mycolors.dart';
 import 'package:myapp/home.dart';
@@ -608,45 +609,51 @@ class _addcommonissueState extends State<addcommonissue> {
                                 height: 8,
                               ),
                               if (links.length > 0)
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 330),
+                                Align(
+                                  alignment: Alignment.bottomLeft,
                                   child: Text(
                                     "Links:",
                                     style: TextStyle(
                                         overflow: TextOverflow.ellipsis,
                                         color: Mycolors.mainColorBlack,
                                         // fontFamily: 'bold',
+                                        fontWeight: FontWeight.w500,
                                         fontSize: 13),
                                     textAlign: TextAlign.start,
                                   ),
                                 ),
+
                               for (var i = 0; i < links.length; i++)
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 298),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: Wrap(
+                                    // mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      RichText(
-                                        text: TextSpan(children: [
-                                          TextSpan(
-                                              text: linkname[i],
-                                              style: TextStyle(
-                                                  decoration:
-                                                      TextDecoration.underline,
-                                                  color: Colors.blue),
-                                              recognizer: TapGestureRecognizer()
-                                                ..onTap = () async {
-                                                  // var url = links[i];
-                                                  // // ignore: deprecated_member_use
-                                                  // if (await canLaunch(url)) {
-                                                  //   // ignore: deprecated_member_use
-                                                  //   launch(url);
-                                                  // } else {
-                                                  //   throw "Cannot load url";
-                                                  // }
-                                                  launch(links[i]);
-                                                })
-                                        ]),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 11),
+                                        child: RichText(
+                                          text: TextSpan(children: [
+                                            TextSpan(
+                                                text: linkname[i],
+                                                style: TextStyle(
+                                                    decoration: TextDecoration
+                                                        .underline,
+                                                    color: Colors.blue),
+                                                recognizer:
+                                                    TapGestureRecognizer()
+                                                      ..onTap = () async {
+                                                        // var url = links[i];
+                                                        // // ignore: deprecated_member_use
+                                                        // if (await canLaunch(url)) {
+                                                        //   // ignore: deprecated_member_use
+                                                        //   launch(url);
+                                                        // } else {
+                                                        //   throw "Cannot load url";
+                                                        // }
+                                                        launch(links[i]);
+                                                      })
+                                          ]),
+                                        ),
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.only(top: 1),
@@ -662,6 +669,7 @@ class _addcommonissueState extends State<addcommonissue> {
                                     ],
                                   ),
                                 ),
+
                               // if (pickedFile != null)
                               //   Container(
                               //     height: 170,
@@ -700,8 +708,8 @@ class _addcommonissueState extends State<addcommonissue> {
                                   thickness: 1,
                                 ),
                               if (filesurl!.length > 0)
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 335),
+                                Align(
+                                  alignment: Alignment.centerLeft,
                                   child: Text(
                                     "Files:",
                                     style: TextStyle(
@@ -712,6 +720,7 @@ class _addcommonissueState extends State<addcommonissue> {
                                     textAlign: TextAlign.start,
                                   ),
                                 ),
+
                               if (filesurl != null)
                                 for (var l = 0; l < filesurl!.length; l++)
                                   Padding(
@@ -842,8 +851,9 @@ class _addcommonissueState extends State<addcommonissue> {
                                       confirm(context);
                                     }
                                     if (exist == false) {
-                                      showerror(context,
-                                          "there is common issue with the same title please check ");
+                                      showInSnackBar(context,
+                                          "there is common issue with the same title please check",
+                                          onError: true);
                                     }
                                   }
                                 },
@@ -905,9 +915,9 @@ class _addcommonissueState extends State<addcommonissue> {
       },
     );
     AlertDialog alert = AlertDialog(
-      title: Text(""),
+      // title: Text(""),
       content: SizedBox(
-        height: 200,
+        height: 230,
         child: Form(
           key: formkeyforlink,
           child: Column(
@@ -923,52 +933,92 @@ class _addcommonissueState extends State<addcommonissue> {
               ),
               SizedBox(
                 width: 350,
-                child: TextFormField(
-                    controller: _linknamecontroll,
-                    decoration: InputDecoration(
-                        labelText: 'URL name',
-                        hintText: "Enter the url name ",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(13),
-                            borderSide: const BorderSide(
-                              width: 0,
-                            ))),
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value!.isEmpty || _linknamecontroll.text == "") {
-                        return 'Please enter the link name';
-                      } else {
-                        if (!(english.hasMatch(_linknamecontroll.text))) {
-                          return "only english is allowed";
-                        }
-                      }
-                    }),
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "URL name",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            overflow: TextOverflow.ellipsis,
+                            color: Mycolors.mainColorBlack,
+                            // fontFamily: 'bold',
+                            fontSize: 13),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    TextFormField(
+                        controller: _linknamecontroll,
+                        decoration: InputDecoration(
+                            //  labelText: 'URL name',
+                            hintText: "Enter the url name ",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(13),
+                                borderSide: const BorderSide(
+                                  width: 0,
+                                ))),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) {
+                          if (value!.isEmpty || _linknamecontroll.text == "") {
+                            return 'Please enter the link name';
+                          } else {
+                            if (!(english.hasMatch(_linknamecontroll.text))) {
+                              return "only english is allowed";
+                            }
+                          }
+                        }),
+                  ],
+                ),
               ),
               SizedBox(
                 height: 8,
               ),
               SizedBox(
                 width: 350,
-                child: TextFormField(
-                    controller: _linkcontroll,
-                    decoration: InputDecoration(
-                        labelText: 'URL',
-                        hintText: "Paste the link ",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(13),
-                            borderSide: const BorderSide(
-                              width: 0,
-                            ))),
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value!.isEmpty || _linkcontroll.text == "") {
-                        return 'Please paste the link';
-                      } else {
-                        if (!(english.hasMatch(_linkcontroll.text))) {
-                          return "only english is allowed";
-                        }
-                      }
-                    }),
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "URL",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            overflow: TextOverflow.ellipsis,
+                            color: Mycolors.mainColorBlack,
+                            // fontFamily: 'bold',
+                            fontSize: 13),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    TextFormField(
+                        controller: _linkcontroll,
+                        decoration: InputDecoration(
+                            //labelText: 'URL',
+                            hintText: "Paste the link ",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(13),
+                                borderSide: const BorderSide(
+                                  width: 0,
+                                ))),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) {
+                          if (value!.isEmpty || _linkcontroll.text == "") {
+                            return 'Please paste the link';
+                          } else {
+                            if (!(english.hasMatch(_linkcontroll.text))) {
+                              return "only english is allowed";
+                            }
+                          }
+                        }),
+                  ],
+                ),
               ),
               SizedBox(
                 height: 8,
@@ -1178,7 +1228,7 @@ class _addcommonissueState extends State<addcommonissue> {
 
     AlertDialog alert = AlertDialog(
       // title: Text("LogOut"),
-      content: Text("Are you sure you want to delete this link ?"),
+      content: Text("Are you sure you want to delete this link?"),
       actions: [
         dontCancelAppButton,
         YesCancelAppButton,

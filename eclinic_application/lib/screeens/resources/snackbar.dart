@@ -20,13 +20,15 @@ void showInSnackBar(context, String value,
             SizedBox(
               width: 20,
             ),
-            Text(
-              value,
-              style: Theme.of(context)
-                  .textTheme
-                  .button
-                  ?.copyWith(fontSize: 15, color: Colors.white),
-              textAlign: TextAlign.center,
+            Expanded(
+              child: Text(
+                value,
+                style: Theme.of(context)
+                    .textTheme
+                    .button
+                    ?.copyWith(fontSize: 15, color: Colors.white),
+                textAlign: TextAlign.left,
+              ),
             ),
           ],
         )));
