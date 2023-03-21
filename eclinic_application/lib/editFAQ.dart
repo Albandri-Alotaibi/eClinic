@@ -400,14 +400,16 @@ class _editFAQState extends State<editFAQ> {
                                     label: Text(
                                       'Add link',
                                       style: TextStyle(
-                                        color: Color.fromRGBO(21, 70, 160, 1),
+                                        color: Mycolors.mainColorWhite,
                                       ),
                                     ), // <-- Text
-                                    backgroundColor: Mycolors.mainColorWhite,
+                                    backgroundColor:
+                                        Color.fromRGBO(21, 70, 160, 1),
+
                                     icon: Icon(
                                       // <-- Icon
                                       Icons.link_outlined,
-                                      color: Mycolors.mainColorBlue,
+                                      color: Mycolors.mainColorWhite,
                                       size: 24.0,
                                     ),
                                     onPressed: (() {
@@ -422,7 +424,21 @@ class _editFAQState extends State<editFAQ> {
                             SizedBox(
                               height: 20,
                             ),
-
+                            Padding(
+                              padding: const EdgeInsets.only(right: 310),
+                              child: Text(
+                                "Problem:",
+                                style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'bold',
+                                    fontSize: 13),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
                             TextFormField(
                               controller: _problemController,
                               minLines: 4,
@@ -430,10 +446,10 @@ class _editFAQState extends State<editFAQ> {
                               keyboardType: TextInputType.multiline,
                               decoration: InputDecoration(
                                   suffixIcon: Icon(Icons.edit),
-                                  labelText: ' problem :',
+                                  // labelText: ' problem :',
                                   hintText: "Enter issue description ",
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
+                                      borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),
@@ -454,6 +470,21 @@ class _editFAQState extends State<editFAQ> {
                             SizedBox(
                               height: 10,
                             ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 310),
+                              child: Text(
+                                "Solution:",
+                                style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'bold',
+                                    fontSize: 13),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
                             TextFormField(
                               controller: _solutioncontroll,
                               minLines: 4,
@@ -461,10 +492,10 @@ class _editFAQState extends State<editFAQ> {
                               keyboardType: TextInputType.multiline,
                               decoration: InputDecoration(
                                   suffixIcon: Icon(Icons.edit),
-                                  labelText: ' Solution :',
+                                  // labelText: ' Solution :',
                                   hintText: "Enter the solution ",
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
+                                      borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),
@@ -483,7 +514,7 @@ class _editFAQState extends State<editFAQ> {
                               },
                             ),
                             SizedBox(
-                              height: 8,
+                              height: 10,
                             ),
                             if (links.length > 0)
                               Padding(
@@ -494,7 +525,7 @@ class _editFAQState extends State<editFAQ> {
                                       overflow: TextOverflow.ellipsis,
                                       color: Mycolors.mainColorBlack,
                                       fontFamily: 'bold',
-                                      fontSize: 17),
+                                      fontSize: 13),
                                   textAlign: TextAlign.start,
                                 ),
                               ),
@@ -520,36 +551,40 @@ class _editFAQState extends State<editFAQ> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.end,
                                           children: [
-                                            RichText(
-                                              text: TextSpan(children: [
-                                                TextSpan(
-                                                    text: linkname[index],
-                                                    style: TextStyle(
-                                                        decoration:
-                                                            TextDecoration
-                                                                .underline,
-                                                        color: Colors.blue),
-                                                    recognizer:
-                                                        TapGestureRecognizer()
-                                                          ..onTap = () async {
-                                                            launch(
-                                                                links[index]);
-                                                          })
-                                              ]),
+                                            Expanded(
+                                              child: RichText(
+                                                text: TextSpan(children: [
+                                                  TextSpan(
+                                                      text: linkname[index],
+                                                      style: TextStyle(
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .underline,
+                                                          color: Colors.blue),
+                                                      recognizer:
+                                                          TapGestureRecognizer()
+                                                            ..onTap = () async {
+                                                              launch(
+                                                                  links[index]);
+                                                            })
+                                                ]),
+                                              ),
                                             ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.only(top: 1),
-                                              child: IconButton(
-                                                  onPressed: (() {
-                                                    // c = links[i];
-                                                    ConfirmationDialogfordeletelink(
-                                                        context, index);
-                                                  }),
-                                                  icon: Icon(
-                                                    Icons.cancel,
-                                                    size: 20,
-                                                  )),
+                                            Expanded(
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 1),
+                                                child: IconButton(
+                                                    onPressed: (() {
+                                                      // c = links[i];
+                                                      ConfirmationDialogfordeletelink(
+                                                          context, index);
+                                                    }),
+                                                    icon: Icon(
+                                                      Icons.cancel,
+                                                      size: 20,
+                                                    )),
+                                              ),
                                             )
                                           ],
                                         ),
@@ -574,7 +609,7 @@ class _editFAQState extends State<editFAQ> {
                                       overflow: TextOverflow.ellipsis,
                                       color: Mycolors.mainColorBlack,
                                       fontFamily: 'bold',
-                                      fontSize: 17),
+                                      fontSize: 13),
                                   textAlign: TextAlign.start,
                                 ),
                               ),
