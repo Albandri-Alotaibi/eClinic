@@ -12,6 +12,7 @@ import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multiselect/multiselect.dart';
 import 'package:myapp/login.dart';
+import 'package:myapp/screeens/resources/snackbar.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'style/Mycolors.dart';
@@ -854,7 +855,9 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
 
                                       showSucessAlert();
                                     } on FirebaseAuthException catch (error) {
-                                      showerror(context, "Something wronge");
+                                      showInSnackBar(
+                                          context, "Something wronge",
+                                          onError: true);
                                     }
                                   } else {
                                     confirm(context);
@@ -1020,7 +1023,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
 
             showSucessAlert();
           } on FirebaseAuthException catch (error) {
-            showerror(context, "Something wronge");
+            showInSnackBar(context, "Something wronge", onError: true);
           }
         }
       },
