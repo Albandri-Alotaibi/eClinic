@@ -746,11 +746,11 @@ class _AddHourState extends State<addHoursFaculty> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(17.0)),
                             ),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(17.0)),
-                                borderSide: BorderSide(
-                                    color: Mycolors.mainShadedColorBlue)),
+                            // focusedBorder: OutlineInputBorder(
+                            //     borderRadius:
+                            //         BorderRadius.all(Radius.circular(17.0)),
+                            //     borderSide: BorderSide(
+                            //         color: Mycolors.mainShadedColorBlue)),
                           ),
                           items: const [
                             DropdownMenuItem(
@@ -786,10 +786,11 @@ class _AddHourState extends State<addHoursFaculty> {
                                 controller: _meetingmethodcontroller2,
                                 decoration: InputDecoration(
                                   labelText: 'Office number/link',
-                                  labelStyle: TextStyle(
-                                      color: myFocusNode.hasFocus
-                                          ? Color.fromARGB(255, 18, 45, 128)
-                                          : Colors.black),
+                                  // labelStyle:
+                                  // TextStyle(
+                                  //     color: myFocusNode.hasFocus
+                                  //         ? Color.fromARGB(255, 18, 45, 128)
+                                  //         : Colors.black),
                                   hintText: "Enter your office number/link",
                                   hintStyle:
                                       TextStyle(color: Mycolors.mainColorBlack),
@@ -799,11 +800,12 @@ class _AddHourState extends State<addHoursFaculty> {
                                         BorderRadius.all(Radius.circular(17.0)),
                                   ),
 
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(17.0)),
-                                      borderSide: BorderSide(
-                                          color: Mycolors.mainShadedColorBlue)),
+                                  // focusedBorder: OutlineInputBorder(
+                                  //   borderRadius:
+                                  //       BorderRadius.all(Radius.circular(17.0)),
+                                  //   borderSide: BorderSide(
+                                  //       color: Mycolors.mainShadedColorBlue),
+                                  // ),
                                 ),
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,

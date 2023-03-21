@@ -44,7 +44,7 @@ class _homeState extends State<home> {
             child: Text(
               "Welcome  ",
               style: TextStyle(
-                  fontFamily: 'bold',
+                  // fontFamily: 'bold',
                   fontSize: 50,
                   color: Mycolors.mainColorWhite),
             ),
@@ -54,7 +54,7 @@ class _homeState extends State<home> {
             child: Text(
               "Join us, let's make success happen! ",
               style: TextStyle(
-                  fontFamily: 'main',
+                  // fontFamily: 'main',
                   fontSize: 20,
                   color: Mycolors.mainColorWhite),
             ),
@@ -68,13 +68,17 @@ class _homeState extends State<home> {
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+                    foregroundColor: Mycolors.mainColorWhite,
+                    textStyle: TextStyle(fontSize: 16),
                     // shadowColor: Colors.blue[900],
                     elevation: 0,
-                    backgroundColor: Mycolors.mainShadedColorBlue,
-                    minimumSize: Size(150, 50),
+
+                    backgroundColor: Color.fromARGB(135, 21, 70, 160),
+                    minimumSize: Size(140, 50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(17), // <-- Radius
+                      side: BorderSide(
+                          width: 2, color: Mycolors.mainShadedColorBlue),
                     ),
                   ),
                   onPressed: () {
@@ -85,13 +89,16 @@ class _homeState extends State<home> {
                 const SizedBox(width: 16),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+                    foregroundColor: Mycolors.mainColorWhite,
+                    textStyle: TextStyle(fontSize: 16),
                     // shadowColor: Colors.blue[900],
                     elevation: 0,
-                    backgroundColor: Mycolors.mainShadedColorBlue,
-                    minimumSize: Size(20, 50),
+                    backgroundColor: Color.fromARGB(135, 21, 70, 160),
+                    minimumSize: Size(140, 50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(17), // <-- Radius
+                      side: BorderSide(
+                          width: 2, color: Mycolors.mainShadedColorBlue),
                     ),
                   ),
                   onPressed: () {
@@ -102,21 +109,27 @@ class _homeState extends State<home> {
               ],
             ),
           ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-              // shadowColor: Colors.blue[900],
-              elevation: 0,
-              backgroundColor: Mycolors.mainShadedColorBlue,
-              minimumSize: Size(20, 50),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(17), // <-- Radius
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Mycolors.mainColorWhite,
+                textStyle: TextStyle(fontSize: 16),
+                // shadowColor: Colors.blue[900],
+                elevation: 0,
+                backgroundColor: Color.fromARGB(135, 21, 70, 160),
+                minimumSize: Size(140, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(17), // <-- Radius
+                  side:
+                      BorderSide(width: 2, color: Mycolors.mainShadedColorBlue),
+                ),
               ),
+              onPressed: () {
+                Navigator.pushNamed(context, 'graduatelogin');
+              },
+              child: Text('Graduates'),
             ),
-            onPressed: () {
-              Navigator.pushNamed(context, 'graduatelogin');
-            },
-            child: Text('Graduates'),
           ),
         ]),
       ),
