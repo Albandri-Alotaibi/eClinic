@@ -11,6 +11,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:myapp/facultyhome.dart';
+import 'package:myapp/screeens/resources/snackbar.dart';
 import 'package:myapp/viewFAQ.dart';
 import 'editFAQ.dart';
 import 'style/Mycolors.dart';
@@ -44,6 +46,7 @@ class _editFAQState extends State<editFAQ> {
     getfacultysemester();
   }
 
+  int _selectedIndex = 2;
   var userid;
   final formkey = GlobalKey<FormState>();
   final formkeyforlink = GlobalKey<FormState>();
@@ -1055,7 +1058,15 @@ class _editFAQState extends State<editFAQ> {
             .collection("commonissue")
             .doc(widget.value)
             .delete();
-        Navigator.pushNamed(context, 'facultyListFAQ');
+        // Navigator.pushNamed(context, 'facultyListFAQ');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => facultyhome(_selectedIndex),
+          ),
+        );
+        showInSnackBar(
+            context, "The common issue has been deleted successfully");
       },
     );
 
@@ -1116,7 +1127,13 @@ class _editFAQState extends State<editFAQ> {
 
         if (formkey.currentState!.validate()) {
           //alertsucceful
-          Navigator.pushNamed(context, 'facultyListFAQ');
+          // Navigator.pushNamed(context, 'facultyListFAQ');
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => facultyhome(_selectedIndex),
+            ),
+          );
           try {
             FirebaseFirestore.instance
                 .collection('commonissue')
@@ -1130,25 +1147,28 @@ class _editFAQState extends State<editFAQ> {
               'filesurl': filsbefordownload,
             });
 
-            Fluttertoast.showToast(
-              msg: " Your information has been updated successfully",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 2,
-              backgroundColor: Color.fromARGB(255, 127, 166, 233),
-              textColor: Color.fromARGB(255, 248, 249, 250),
-              fontSize: 18.0,
-            );
+            // Fluttertoast.showToast(
+            //   msg: " Your information has been updated successfully",
+            //   toastLength: Toast.LENGTH_SHORT,
+            //   gravity: ToastGravity.CENTER,
+            //   timeInSecForIosWeb: 2,
+            //   backgroundColor: Color.fromARGB(255, 127, 166, 233),
+            //   textColor: Color.fromARGB(255, 248, 249, 250),
+            //   fontSize: 18.0,
+            // );
+            showInSnackBar(
+                context, "Common issue has been updated successfully");
           } on FirebaseAuthException catch (error) {
-            Fluttertoast.showToast(
-              msg: "Something wronge",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 5,
-              backgroundColor: Color.fromARGB(255, 127, 166, 233),
-              textColor: Color.fromARGB(255, 252, 253, 255),
-              fontSize: 18.0,
-            );
+            // Fluttertoast.showToast(
+            //   msg: "Something wronge",
+            //   toastLength: Toast.LENGTH_SHORT,
+            //   gravity: ToastGravity.CENTER,
+            //   timeInSecForIosWeb: 5,
+            //   backgroundColor: Color.fromARGB(255, 127, 166, 233),
+            //   textColor: Color.fromARGB(255, 252, 253, 255),
+            //   fontSize: 18.0,
+            // );
+            showInSnackBar(context, "Something wronge", onError: true);
           }
         }
       },

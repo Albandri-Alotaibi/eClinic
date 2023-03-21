@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multiselect/multiselect.dart';
 import 'package:intl/intl.dart';
+import 'package:myapp/facultyhome.dart';
 import 'package:myapp/screeens/resources/snackbar.dart';
 import 'package:open_file/open_file.dart';
 import 'style/Mycolors.dart';
@@ -32,6 +33,7 @@ class addcommonissue extends StatefulWidget {
 
 class _addcommonissueState extends State<addcommonissue> {
   @override
+  int _selectedIndex = 2;
   List<String> specality = [];
   var semesterRef;
   var userid;
@@ -1077,6 +1079,7 @@ class _addcommonissueState extends State<addcommonissue> {
       ),
       child: Text("confirm"),
       onPressed: () async {
+        showInSnackBar(context, "Common issue has been added successfully");
         if (formkey.currentState!.validate()) {
           problem = _problemController.text;
           solution = _solutioncontroll.text;
@@ -1093,7 +1096,13 @@ class _addcommonissueState extends State<addcommonissue> {
             "linkname": linkname,
             "filesurl": fileurltoDB,
           });
-          Navigator.pushNamed(context, 'facultyListFAQ');
+          // Navigator.pushNamed(context, 'facultyListFAQ');
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => facultyhome(_selectedIndex),
+            ),
+          );
         }
       },
     );
