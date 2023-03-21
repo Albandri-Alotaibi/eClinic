@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/facultyhome.dart';
+import 'package:myapp/screeens/resources/snackbar.dart';
 //import 'package:simple_time_range_picker/simple_time_range_picker.dart';
 import 'TimeFiles/simple_time_range_picker.dart';
 import 'model/availableHoursArray.dart';
@@ -705,15 +706,17 @@ class _AddHourState extends State<addHoursFaculty> {
             "mettingmethodinfo": mmi,
           });
 
-          Fluttertoast.showToast(
-            msg: "Your meeting method has been updated successfully",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 2,
-            backgroundColor: Color.fromARGB(255, 127, 166, 233),
-            textColor: Color.fromARGB(255, 248, 249, 250),
-            fontSize: 18.0,
-          );
+          // Fluttertoast.showToast(
+          //   msg: "Your meeting method has been updated successfully",
+          //   toastLength: Toast.LENGTH_SHORT,
+          //   gravity: ToastGravity.CENTER,
+          //   timeInSecForIosWeb: 2,
+          //   backgroundColor: Color.fromARGB(255, 127, 166, 233),
+          //   textColor: Color.fromARGB(255, 248, 249, 250),
+          //   fontSize: 18.0,
+          // );
+          showInSnackBar(
+              context, "Your meeting method has been updated successfully");
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -1113,10 +1116,10 @@ class _AddHourState extends State<addHoursFaculty> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(17.0)),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(17.0)),
-                          borderSide:
-                              BorderSide(color: Mycolors.mainShadedColorBlue)),
+                      // focusedBorder: OutlineInputBorder(
+                      //     borderRadius: BorderRadius.all(Radius.circular(17.0)),
+                      //     borderSide:
+                      //         BorderSide(color: Mycolors.mainShadedColorBlue)),
                     ),
                     items: const [
                       DropdownMenuItem(
@@ -1152,10 +1155,10 @@ class _AddHourState extends State<addHoursFaculty> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(17.0)),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(17.0)),
-                          borderSide:
-                              BorderSide(color: Mycolors.mainShadedColorBlue)),
+                      // focusedBorder: OutlineInputBorder(
+                      //     borderRadius: BorderRadius.all(Radius.circular(17.0)),
+                      //     borderSide:
+                      //         BorderSide(color: Mycolors.mainShadedColorBlue)),
                     ),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {

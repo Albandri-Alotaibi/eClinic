@@ -375,12 +375,10 @@ class _facultyListFAQState extends State<facultyListFAQ> {
                                     underline: const SizedBox(),
                                     disabledHint: Row(children: const [
                                       Text("---"),
-                                      // SizedBox(
-                                      //     height: 15.0,
-                                      //     width: 15.0,
-                                      //     child: CircularProgressIndicator(
-                                      //       strokeWidth: 3,
-                                      //     ))
+                                      SizedBox(
+                                        height: 15.0,
+                                        width: 100.0,
+                                      )
                                     ]),
                                     hint: Text(
                                       "Select Speciality",
@@ -424,7 +422,7 @@ class _facultyListFAQState extends State<facultyListFAQ> {
                                     borderRadius: BorderRadius.circular(25),
                                     // icon: const Icon(Icons.pages),
                                     disabledHint: Row(children: const [
-                                      Text("Wait ... "),
+                                      Text(""),
                                       SizedBox(
                                           height: 15.0,
                                           width: 15.0,
@@ -524,7 +522,7 @@ class _facultyListFAQState extends State<facultyListFAQ> {
                                     child: Text(
                                         //if common issues list is loading from database
                                         secondLoading
-                                            ? 'Wait...'
+                                            ? ''
                                             //if loading is done but dropdowns are null
                                             : (specialityDropdownValue == null
                                                 ? 'Please select speciality to find common issues.'
