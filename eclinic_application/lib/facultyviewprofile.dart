@@ -429,7 +429,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                   // hintText: "Enter your first name",
                                   suffixIcon: Icon(Icons.edit),
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
+                                      borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),
@@ -462,7 +462,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                   // hintText: "Enter your last name",
                                   suffixIcon: Icon(Icons.edit),
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
+                                      borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),
@@ -495,7 +495,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                   // hintText: "Enter your KSU email",
                                   labelText: ' Email',
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
+                                      borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),
@@ -562,7 +562,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                 suffixIcon: Icon(Icons.edit),
                                 labelText: ' Department',
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
+                                    borderRadius: BorderRadius.circular(13),
                                     borderSide: const BorderSide(
                                       width: 0,
                                     )),
@@ -608,21 +608,21 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                     borderSide: BorderSide(
                                         color:
                                             isshow ? Colors.red : Colors.grey),
-                                    borderRadius: BorderRadius.circular(25),
+                                    borderRadius: BorderRadius.circular(13),
                                   ),
                                   errorBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                         color: isshow
                                             ? Colors.red
                                             : Colors.blueAccent),
-                                    borderRadius: BorderRadius.circular(25),
+                                    borderRadius: BorderRadius.circular(13),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                         color: isshow
                                             ? Colors.red
                                             : Colors.blueAccent),
-                                    borderRadius: BorderRadius.circular(25),
+                                    borderRadius: BorderRadius.circular(13),
                                   )),
                               options: options,
                               whenEmpty: "",
@@ -684,7 +684,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                 suffixIcon: Icon(Icons.edit),
                                 labelText: 'semester',
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
+                                    borderRadius: BorderRadius.circular(13),
                                     borderSide: const BorderSide(
                                       width: 0,
                                     )),

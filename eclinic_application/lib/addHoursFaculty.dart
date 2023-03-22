@@ -747,7 +747,7 @@ class _AddHourState extends State<addHoursFaculty> {
                             hintText: "Choose meeting method",
                             border: OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(17.0)),
+                                  BorderRadius.all(Radius.circular(13.0)),
                             ),
                             // focusedBorder: OutlineInputBorder(
                             //     borderRadius:
@@ -800,7 +800,7 @@ class _AddHourState extends State<addHoursFaculty> {
                                   // suffixIcon: Icon(Icons.edit),
                                   border: OutlineInputBorder(
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(17.0)),
+                                        BorderRadius.all(Radius.circular(13.0)),
                                   ),
 
                                   // focusedBorder: OutlineInputBorder(
@@ -1114,7 +1114,7 @@ class _AddHourState extends State<addHoursFaculty> {
                       // suffixIcon: Icon(Icons.edit),
                       hintText: "Choose meeting method",
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(17.0)),
+                        borderRadius: BorderRadius.all(Radius.circular(13.0)),
                       ),
                       // focusedBorder: OutlineInputBorder(
                       //     borderRadius: BorderRadius.all(Radius.circular(17.0)),
@@ -1153,7 +1153,7 @@ class _AddHourState extends State<addHoursFaculty> {
                       hintText: "Enter your office number/link",
                       // suffixIcon: Icon(Icons.edit),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(17.0)),
+                        borderRadius: BorderRadius.all(Radius.circular(13.0)),
                       ),
                       // focusedBorder: OutlineInputBorder(
                       //     borderRadius: BorderRadius.all(Radius.circular(17.0)),

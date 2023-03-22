@@ -1124,7 +1124,7 @@ class _addcommonissueState extends State<addcommonissue> {
                 height: 8,
               ),
               Text(
-                  "Note : you will add common issue under ${specialityselectedvalue} specialty "),
+                  "You will add common issue under ${specialityselectedvalue} specialty "),
             ],
           ),
         ),

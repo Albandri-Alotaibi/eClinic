@@ -432,7 +432,7 @@ class _facultysignupState extends State<facultysignup> {
                                   labelText: ' First Name :',
                                   hintText: "Enter your first name",
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
+                                      borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),
@@ -464,7 +464,7 @@ class _facultysignupState extends State<facultysignup> {
                                   labelText: ' Last Name : ',
                                   hintText: "Enter your last name",
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
+                                      borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),
@@ -496,7 +496,7 @@ class _facultysignupState extends State<facultysignup> {
                                   hintText: "Enter your email",
                                   labelText: '  Email :',
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
+                                      borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),
@@ -523,7 +523,7 @@ class _facultysignupState extends State<facultysignup> {
                                     labelText: ' Password :',
                                     hintText: "Enter your Password",
                                     border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(25),
+                                        borderRadius: BorderRadius.circular(13),
                                         borderSide: const BorderSide(
                                           width: 0,
                                         ))),
@@ -572,7 +572,7 @@ class _facultysignupState extends State<facultysignup> {
                               decoration: InputDecoration(
                                 hintText: ' Choose your department:',
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
+                                    borderRadius: BorderRadius.circular(13),
                                     borderSide: const BorderSide(
                                       width: 0,
                                     )),
@@ -608,7 +608,7 @@ class _facultysignupState extends State<facultysignup> {
                               decoration: InputDecoration(
                                 hintText: ' Choose a semester:',
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
+                                    borderRadius: BorderRadius.circular(13),
                                     borderSide: const BorderSide(
                                       width: 0,
                                     )),
@@ -740,14 +740,14 @@ class _facultysignupState extends State<facultysignup> {
                                     borderSide: BorderSide(
                                         color:
                                             isshow ? Colors.red : Colors.grey),
-                                    borderRadius: BorderRadius.circular(25),
+                                    borderRadius: BorderRadius.circular(13),
                                   ),
                                   errorBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                         color: isshow
                                             ? Colors.red
                                             : Colors.blueAccent),
-                                    borderRadius: BorderRadius.circular(25),
+                                    borderRadius: BorderRadius.circular(13),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
@@ -755,7 +755,7 @@ class _facultysignupState extends State<facultysignup> {
                                           ? Colors.red
                                           : Colors.blueAccent,
                                     ),
-                                    borderRadius: BorderRadius.circular(25),
+                                    borderRadius: BorderRadius.circular(13),
                                   )),
                               options: options,
                               whenEmpty: "",

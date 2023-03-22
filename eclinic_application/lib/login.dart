@@ -88,11 +88,11 @@ class _loginState extends State<login> {
                           TextFormField(
                               controller: _emailController,
                               decoration: InputDecoration(
-                                labelText: 'KSU email : ',
+                                labelText: ' Email : ',
                                 prefixIcon: Icon(Icons.email),
                                 hintText: "Enter your KSU email ",
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
+                                    borderRadius: BorderRadius.circular(13),
                                     borderSide: const BorderSide(
                                       width: 0,
                                     )),
@@ -130,7 +130,7 @@ class _loginState extends State<login> {
                                         : Icons.visibility),
                                   ),
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
+                                      borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),
