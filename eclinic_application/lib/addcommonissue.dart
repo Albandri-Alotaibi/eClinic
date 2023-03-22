@@ -307,7 +307,7 @@ class _addcommonissueState extends State<addcommonissue> {
                                       foregroundColor:
                                           Mycolors.mainShadedColorBlue,
                                       label: Text(
-                                        'Uplouad file',
+                                        'Upload file',
                                       ), // <-- Text
                                       backgroundColor: Colors.white,
                                       icon: Icon(

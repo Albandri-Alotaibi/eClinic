@@ -329,7 +329,7 @@ class _editFAQState extends State<editFAQ> {
                                     foregroundColor:
                                         Mycolors.mainShadedColorBlue,
                                     label: Text(
-                                      'Uplouad file',
+                                      'Upload file',
                                     ), // <-- Text
                                     backgroundColor: Colors.white,
                                     icon: Icon(
@@ -863,8 +863,10 @@ class _editFAQState extends State<editFAQ> {
                                 ),
                               ),
                               onPressed: () {
-                                ConfirmationDialogforupdate(context);
                                 upload();
+                                if (formkey.currentState!.validate()) {
+                                  ConfirmationDialogforupdate(context);
+                                }
                               },
                               child: Text("Save changes"),
                             ),
