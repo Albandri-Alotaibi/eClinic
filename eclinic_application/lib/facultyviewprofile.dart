@@ -1027,6 +1027,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
           } on FirebaseAuthException catch (error) {
             showInSnackBar(context, "Something wronge", onError: true);
           }
+          Navigator.pushNamed(context, 'facultyviewprofile');
         }
       },
     );

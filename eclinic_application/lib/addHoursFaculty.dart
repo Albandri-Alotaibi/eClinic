@@ -1174,7 +1174,7 @@ class _AddHourState extends State<addHoursFaculty> {
                     }),
               ),
               Text(
-                  "if you press on confirm that means you approved on the entered hours and you know that you CANNOT updated later"),
+                  "if you press on confirm that means you approved on the entered hours and you know that you CANNOT updated later for this semester"),
             ],
           ),
         ),

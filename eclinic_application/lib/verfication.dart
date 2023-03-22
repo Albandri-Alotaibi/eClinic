@@ -42,13 +42,20 @@ class _verficationState extends State<verfication> {
     super.dispose();
   }
 
+  int _selectedIndex = 0;
   Future<void> checkemailverfication() async {
     user = auth.currentUser;
     await user!.reload();
     if (user!.emailVerified) {
       timer.cancel();
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => addHoursFaculty()));
+      // Navigator.of(context).pushReplacement(
+      //     MaterialPageRoute(builder: (context) => addHoursFaculty()));
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => facultyhome(_selectedIndex),
+        ),
+      );
     }
   }
 
