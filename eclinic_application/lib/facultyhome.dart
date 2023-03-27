@@ -86,20 +86,32 @@ class _fState extends State<facultyhome> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(appbar[widget.selectedIndex],
-              style: TextStyle(
-                  //  fontFamily: 'bold',
-                  fontSize: 20,
-                  color: Mycolors.mainColorBlack)),
-          foregroundColor: Mycolors.mainColorBlack,
-          primary: false,
-          centerTitle: true,
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),
-          shadowColor: Color.fromARGB(0, 0, 0, 0),
-          iconTheme: IconThemeData(
-            color: Color.fromARGB(255, 12, 12, 12), //change your color here
-          ),
-        ),
+            title: Text(appbar[widget.selectedIndex],
+                style: TextStyle(
+                    //  fontFamily: 'bold',
+                    fontSize: 20,
+                    color: Mycolors.mainColorBlack)),
+            foregroundColor: Mycolors.mainColorBlack,
+            primary: false,
+            centerTitle: true,
+            backgroundColor: Color.fromARGB(255, 255, 255, 255),
+            shadowColor: Color.fromARGB(0, 0, 0, 0),
+            iconTheme: IconThemeData(
+              color: Color.fromARGB(255, 12, 12, 12), //change your color here
+            ),
+            actions: [
+              if (widget.selectedIndex == 2)
+                IconButton(
+                  icon: const Icon(
+                    Icons.add,
+                    color: Colors.green,
+                  ),
+                  tooltip: 'Open shopping cart',
+                  onPressed: () {
+                    // handle the press
+                  },
+                ),
+            ]),
         backgroundColor: Color.fromARGB(255, 255, 255, 255),
         drawer: Drawer(
             width: 210,
