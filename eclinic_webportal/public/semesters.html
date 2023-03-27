@@ -254,7 +254,7 @@
         }
 
         if (document.getElementById("facultyListData").dataset.uniqueid == semesterId) {
-          document.getElementById("facultyListData").innerHTML += '<li data-sp=\'[' + specialityListIDs + ']\' class="spitem list-group-item d-flex justify-content-between align-items-center">' + facultyData.firstname + ' ' + facultyData.lastname + '<span class="badge rounded-pill" style="background-color:#0084bd;">' + specialityList + '</span></li>';
+          document.getElementById("facultyListData").innerHTML += '<li data-sp=\'[' + specialityListIDs + ']\' class="spitem list-group-item d-flex justify-content-between align-items-center">' + facultyData.firstname + ' ' + facultyData.lastname + '<span class="badge rounded-pill" style="background-color:#0084bd; white-space: normal!important;">' + specialityList + '</span></li>';
         }
         if (currentItem == semesterFaculty.length) {
           document.getElementById('specialityList').disabled = false;
