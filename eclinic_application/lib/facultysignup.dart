@@ -426,16 +426,30 @@ class _facultysignupState extends State<facultysignup> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            SizedBox(
+                              height: 10,
+                            ),
                             TextFormField(
                               controller: _fnameController,
                               decoration: InputDecoration(
-                                  labelText: ' First Name :',
+                                  // labelText: ' First Name :',
                                   hintText: "Enter your first name",
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(13),
-                                      borderSide: const BorderSide(
-                                        width: 0,
-                                      ))),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Mycolors.mainColorGray),
+                                    borderRadius: BorderRadius.circular(13),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Mycolors.mainColorRed),
+                                    borderRadius: BorderRadius.circular(13),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Mycolors.mainShadedColorBlue,
+                                    ),
+                                    borderRadius: BorderRadius.circular(13),
+                                  )),
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               validator: (value) {
@@ -461,7 +475,7 @@ class _facultysignupState extends State<facultysignup> {
                             TextFormField(
                               controller: _lnameController,
                               decoration: InputDecoration(
-                                  labelText: ' Last Name : ',
+                                  // labelText: ' Last Name : ',
                                   hintText: "Enter your last name",
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(13),

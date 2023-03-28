@@ -36,6 +36,7 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
 
   Map<String, dynamic>? semester;
   Map<String, dynamic>? category;
+  Map<String, dynamic>? createdby;
 
   @override
   void initState() {
@@ -59,11 +60,15 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
       category = categoryData.data() as Map<String, dynamic>;
     }
 
+    // createdby =
+    //     await widget.commonIssue['createdby'].get() as Map<String, dynamic>;
+
     setState(() {
       loading = false;
     });
   }
 
+  faqown() async {}
   @override
   Widget build(BuildContext context) {
     themeData = Theme.of(context);
@@ -103,7 +108,7 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
           actions: <Widget>[
             IconButton(
               icon: Icon(
-                Icons.edit_note,
+                Icons.edit,
                 color: Mycolors.mainShadedColorBlue,
               ),
               onPressed: () {
@@ -163,8 +168,43 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                                 color: Color.fromRGBO(21, 70, 160, 1),
                                 fontWeight: FontWeight.w500),
                           ),
+                          const Spacer(),
+                          Text(
+                            "  Semester: ${semester?['semestername']}",
+                            style: TextStyle(
+                                // letterSpacing: 0.1,
+                                fontSize: 14,
+                                color: Color.fromRGBO(21, 70, 160, 1),
+                                fontWeight: FontWeight.w500),
+                          ),
                           // Text(
                           //   " ${category?['specialityname']}",
+                          //   style: TextStyle(
+                          //       // letterSpacing: 0.1,
+                          //       fontSize: 14,
+                          //       color: Mycolors.mainColorBlack,
+                          //       fontWeight: FontWeight.w500),
+                          // )
+                        ]),
+                        // const Divider(
+                        //   color: Colors.grey,
+                        //   thickness: 1,
+                        // ),
+                        Row(children: [
+                          // const Icon(
+                          //   Icons.timer,
+                          //   color: Colors.grey,
+                          // ),
+                          // Text(
+                          //   "  Semester: ${semester?['semestername']}",
+                          //   style: TextStyle(
+                          //       // letterSpacing: 0.1,
+                          //       fontSize: 14,
+                          //       color: Color.fromRGBO(21, 70, 160, 1),
+                          //       fontWeight: FontWeight.w500),
+                          // ),
+                          // Text(
+                          //   "${semester?['semestername']}",
                           //   style: TextStyle(
                           //       // letterSpacing: 0.1,
                           //       fontSize: 14,
@@ -182,7 +222,16 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                           //   color: Colors.grey,
                           // ),
                           Text(
-                            "  Semester: ${semester?['semestername']}",
+                            "  Created by: ${widget.commonIssue['createdby'] ?? ""}",
+                            style: TextStyle(
+                                // letterSpacing: 0.1,
+                                fontSize: 14,
+                                color: Color.fromRGBO(21, 70, 160, 1),
+                                fontWeight: FontWeight.w500),
+                          ),
+                          const Spacer(),
+                          Text(
+                            "  last modified by: ${widget.commonIssue['lastmodified'] ?? ""}",
                             style: TextStyle(
                                 // letterSpacing: 0.1,
                                 fontSize: 14,

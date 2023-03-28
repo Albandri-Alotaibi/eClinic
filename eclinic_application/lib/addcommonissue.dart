@@ -44,6 +44,9 @@ class _addcommonissueState extends State<addcommonissue> {
   var docforspeciality;
   var refforspe;
   var link;
+  var fname;
+  var lname;
+  var fullname;
   List links = [];
   List linkname = [];
   // List file = [];
@@ -71,6 +74,7 @@ class _addcommonissueState extends State<addcommonissue> {
     final User? user = auth.currentUser;
     userid = user!.uid;
     retrivespeciality();
+    createdname();
     print(userid);
     // TODO: implement initState
     super.initState();
@@ -93,6 +97,19 @@ class _addcommonissueState extends State<addcommonissue> {
         print("222222222222222222222");
       });
     }
+  }
+
+  createdname() async {
+    final snap = await FirebaseFirestore.instance
+        .collection('faculty')
+        .doc(userid)
+        .get();
+    fname = snap['firstname'];
+    lname = snap['lastname'];
+    print("ggggggggggggggggggggggggggggggggggggggg");
+    print(fname);
+    fullname = fname + " " + lname;
+    print(fullname);
   }
 
   retriveissuetitle(String title) async {
@@ -294,6 +311,7 @@ class _addcommonissueState extends State<addcommonissue> {
                                     height: 40,
                                     width: 135,
                                     child: FloatingActionButton.extended(
+                                      heroTag: "btn1",
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(
                                             30), // <-- Radius
@@ -368,6 +386,7 @@ class _addcommonissueState extends State<addcommonissue> {
                                     height: 40,
                                     width: 135,
                                     child: FloatingActionButton.extended(
+                                      heroTag: "btn2",
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(
                                             30), // <-- Radius
@@ -1095,6 +1114,8 @@ class _addcommonissueState extends State<addcommonissue> {
             "links": links,
             "linkname": linkname,
             "filesurl": fileurltoDB,
+            'createdby': fullname,
+            'lastmodified': fullname,
           });
           // Navigator.pushNamed(context, 'facultyListFAQ');
           Navigator.push(

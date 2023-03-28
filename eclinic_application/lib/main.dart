@@ -7,6 +7,7 @@ import 'package:myapp/StudentViewBookedAppointment.dart';
 import 'package:myapp/addHoursFaculty.dart';
 import 'package:myapp/FacultyViewBookedAppointment.dart';
 import 'package:myapp/addcommonissue.dart';
+import 'package:myapp/afterreset.dart';
 import 'package:myapp/editFAQ.dart';
 import 'package:myapp/facultyListFAQ.dart';
 import 'package:myapp/facultyViewFAQ.dart';
@@ -132,6 +133,9 @@ class MyApp extends StatelessWidget {
               "studentresetpassword": (context) => studentresetpassword(),
               'graduatelogin': (context) => graduatelogin(),
               'graduatessignup': (context) => graduatessignup(),
+              'afterreset': (context) => afterreset(
+                    value: '',
+                  ),
             }));
   }
 
