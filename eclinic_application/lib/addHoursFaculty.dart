@@ -53,7 +53,8 @@ class _AddHourState extends State<addHoursFaculty> {
   ];
 
   List availableHours = [];
-
+  RegExp Linkformat =
+      new RegExp(r'https://.*', multiLine: false, caseSensitive: false);
   DateTime startingDate = DateTime.now(); //admin start date or today
   DateTime endDate = DateTime.now(); //admin end date
   String? email = '';
@@ -821,6 +822,13 @@ class _AddHourState extends State<addHoursFaculty> {
                                         _meetingmethodcontroller2.text))) {
                                       return "only english is allowed";
                                     }
+
+                                    if (meetinginfoAfterUpdate == "online") {
+                                      if (!(Linkformat.hasMatch(
+                                          _meetingmethodcontroller2.text))) {
+                                        return 'Make sure your link format is correct';
+                                      }
+                                    }
                                   }
                                 }),
                           ),
@@ -883,15 +891,18 @@ class _AddHourState extends State<addHoursFaculty> {
                   _startTime.minute == _endTime.minute) {
                 //can she have a period of time ends and start at the same hour???????????
                 showerror(context,
-                    "the start time connot be equal to the end time", x);
-              } else if (_startTime.hour < 7 ||
-                  _startTime.hour > 16 ||
-                  _endTime.hour < 7 ||
-                  _endTime.hour > 16) {
+                    "The start time connot be equal to the end time", x);
+              } else if (_startTime.hour == _endTime.hour &&
+                  _startTime.minute > _endTime.minute) {
+                showerror(context, "The start must be before the end time", x);
+              } else if (_startTime.hour < 8 ||
+                  _startTime.hour > 17 ||
+                  _endTime.hour < 8 ||
+                  _endTime.hour > 17) {
                 // print(_startTime.hour);
                 // print(_endTime.hour);
                 showerror(context,
-                    "the time you choosed is out of the working hours", x);
+                    "The time you choosed is out of the working hours", x);
               } else
                 _timeFormated(_startTime, _endTime, x);
             },
@@ -971,7 +982,7 @@ class _AddHourState extends State<addHoursFaculty> {
                         startend.end.minute == _endTime.minute) {
                       showerror(
                           context,
-                          "the new time you choosed is the same for the previos one",
+                          "The new time you choosed is the same for the previos one",
                           x);
                       flag = false;
                     }
@@ -980,57 +991,57 @@ class _AddHourState extends State<addHoursFaculty> {
                         _startTime.minute == _endTime.minute) {
                       //can she have a period of time ends and start at the same hour???????????
                       showerror(context,
-                          "the start time connot be equal to the end time", x);
+                          "The start time connot be equal to the end time", x);
                       flag = false;
                     }
                     //----------------------------the start time > to the end time-------------------------------------
                     else if (_startTime.hour == _endTime.hour &&
                         _startTime.minute >= _endTime.minute) {
-                      showerror(context,
-                          "the end time must be after the end time", x);
+                      showerror(
+                          context, "The start must be before the end time", x);
                       flag = false;
                     } else if (_startTime.hour > startend.start.hour &&
                         _endTime.hour <= startend.end.hour) {
                       showerror(
                           context,
-                          "the new time must be out of the prevrios period ",
+                          "The new time must be out of the prevrios period ",
                           x);
                       flag = false;
                     } else if (_startTime.hour == startend.end.hour &&
                         _startTime.minute < startend.end.minute) {
                       showerror(context,
-                          "the new time must be out of the prevrios period", x);
+                          "The new time must be out of the prevrios period", x);
                       flag = false;
                     } else if (_startTime.hour <= startend.start.hour &&
                         _startTime.minute <= startend.start.minute &&
                         _endTime.hour >= startend.end.hour &&
                         _endTime.minute >= startend.end.minute) {
                       showerror(context,
-                          "the new time must be out of the prevrios period", x);
+                          "The new time must be out of the prevrios period", x);
                       flag = false;
                     } else if (_startTime.hour < startend.end.hour &&
                         _endTime.hour > startend.start.hour) {
                       showerror(context,
-                          "the new time must be out of the prevrios period", x);
+                          "The new time must be out of the prevrios period", x);
                       flag = false;
                     } else if (_startTime.hour == startend.end.hour &&
                         _startTime.minute == startend.end.minute) {
                       showerror(
                           context,
-                          "the start time must be out of the prevrios period",
+                          "The start time must be out of the prevrios period",
                           x);
                       flag = false;
                     }
                     //------------------------time must be in working hours(7-4)-------------------------
-                    else if (_startTime.hour < 7 ||
-                        _startTime.hour > 16 ||
-                        _endTime.hour < 7 ||
-                        _endTime.hour > 16) {
+                    else if (_startTime.hour < 8 ||
+                        _startTime.hour > 17 ||
+                        _endTime.hour < 8 ||
+                        _endTime.hour > 17) {
                       // print(_startTime.hour);
                       // print(_endTime.hour);
                       showerror(
                           context,
-                          "the time you choosed is out of the working hours",
+                          "The time you choosed is out of the working hours",
                           x);
                       flag = false;
                     }
@@ -1169,6 +1180,12 @@ class _AddHourState extends State<addHoursFaculty> {
                         if (!(english
                             .hasMatch(_meetingmethodcontroller.text))) {
                           return "only english is allowed";
+                        }
+                        if (mettingmethoddrop == "online") {
+                          if (!(Linkformat.hasMatch(
+                              _meetingmethodcontroller.text))) {
+                            return 'Make sure your link format is correct';
+                          }
                         }
                       }
                     }),
