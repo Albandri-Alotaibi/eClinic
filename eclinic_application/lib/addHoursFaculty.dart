@@ -53,7 +53,8 @@ class _AddHourState extends State<addHoursFaculty> {
   ];
 
   List availableHours = [];
-
+  RegExp Linkformat =
+      new RegExp(r'https://.*', multiLine: false, caseSensitive: false);
   DateTime startingDate = DateTime.now(); //admin start date or today
   DateTime endDate = DateTime.now(); //admin end date
   String? email = '';
@@ -821,6 +822,13 @@ class _AddHourState extends State<addHoursFaculty> {
                                         _meetingmethodcontroller2.text))) {
                                       return "only english is allowed";
                                     }
+
+                                    if (meetinginfoAfterUpdate == "online") {
+                                      if (!(Linkformat.hasMatch(
+                                          _meetingmethodcontroller2.text))) {
+                                        return 'Make sure your link format is correct';
+                                      }
+                                    }
                                   }
                                 }),
                           ),
@@ -1172,6 +1180,12 @@ class _AddHourState extends State<addHoursFaculty> {
                         if (!(english
                             .hasMatch(_meetingmethodcontroller.text))) {
                           return "only english is allowed";
+                        }
+                        if (mettingmethoddrop == "online") {
+                          if (!(Linkformat.hasMatch(
+                              _meetingmethodcontroller.text))) {
+                            return 'Make sure your link format is correct';
+                          }
                         }
                       }
                     }),
