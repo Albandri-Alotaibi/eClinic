@@ -454,19 +454,26 @@ class AppointmentConfirmationScreenState
     DateTime now = new DateTime.now();
     DateTime TimeFromNowTo24Hours = now.add(Duration(hours: 24));
     DateTime At4Pm = new DateTime(now.year, now.month, now.day, 16, 0, 0);
-   // print("ddddeeeeeeeeeemmmmmmmmmm1111");
-   
+    DateTime At12AM = new DateTime(now.year, now.month, now.day, 0, 0, 0);
+    // print("ddddeeeeeeeeeemmmmmmmmmm1111");
+
     await Future.delayed(Duration(seconds: 1));
-   
-    //print("ddddeeeeeeeeeemmmmmmmmmm22222");
-    
-    if (now.isAfter(At4Pm)) {
-     // print("in the If ###################");
+
+    print("ddddeeeeeeeeeemmmmmmmmmm22222");
+
+    if (now.isAfter(At4Pm) ||
+        (StartTimeDate.day == now.day &&
+            StartTimeDate.month == now.month &&
+            StartTimeDate.year == now.year)) {
+      // to chsek if the student book the appointment in after 4pm or in the morning -same day- of the appointment
+      print("in the If ###################");
+
       if (StartTimeDate.isBefore(TimeFromNowTo24Hours)) {
-       // print("in the If ###################");
+        // if (True) --> the appointment in the comming 24h
+        print("in the If ###################");
         //send to the faculty
         var facultyToken = widget.faculty['token'];
-      
+
         //get the grop name and students
         String? projectName;
         late List groupStudents;
@@ -482,13 +489,13 @@ class AppointmentConfirmationScreenState
         }
 
         String facultymsg =
-            "You have a new appointment tomorrow at ${formattedDateTime.format(widget.appointment['starttime']!.toDate())}";
+            "You have a new appointment at ${formattedDateTime.format(widget.appointment['starttime']!.toDate())}";
         sendPushMessege(facultyToken, facultymsg);
-       // print("ddddeeeeeeeeeemmmmmmmmmm3333");
+        // print("ddddeeeeeeeeeemmmmmmmmmm3333");
 
         for (int i = 0; i < groupStudents.length; i++) {
           String studentMsg =
-              "Tomorrow at ${formattedDateTime.format(widget.appointment['starttime']!.toDate())}";
+              "New appointment at ${formattedDateTime.format(widget.appointment['starttime']!.toDate())}";
           final DocumentSnapshot StudentdocRef =
               await groupStudents[i]['ref'].get();
           var studentToken = StudentdocRef['token'];
