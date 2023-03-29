@@ -658,57 +658,6 @@ class _sState extends State<FacultyViewBookedAppointment> {
                                                         },
                                                       ),
                                                     ),
-                                                    // ElevatedButton(
-                                                    //   style: ElevatedButton
-                                                    //       .styleFrom(
-                                                    //     textStyle: TextStyle(
-                                                    //         fontFamily:
-                                                    //             'main',
-                                                    //         fontSize:
-                                                    //             16),
-                                                    //     shadowColor:
-                                                    //         Mycolors
-                                                    //             .mainColorRed,
-                                                    //     elevation: 3,
-                                                    //     backgroundColor:
-                                                    //         Mycolors
-                                                    //             .mainColorRed,
-                                                    //     minimumSize:
-                                                    //         Size(60,
-                                                    //             40),
-                                                    //     shape:
-                                                    //         RoundedRectangleBorder(
-                                                    //       borderRadius:
-                                                    //           BorderRadius.circular(
-                                                    //               10), // <-- Radius
-                                                    //     ),
-                                                    //   ),
-                                                    //   child: Text(
-                                                    //       "Cancel"),
-                                                    //   onPressed: () {
-                                                    //     showConfirmationDialog(
-                                                    //         context,
-                                                    //         index);
-                                                    //   },
-                                                    // ),
-                                                    // IconButton(
-                                                    //   alignment: Alignment
-                                                    //       .topRight,
-                                                    //   icon: Icon(
-                                                    //     Icons.cancel,
-                                                    //     color:
-                                                    //         Color.fromARGB(
-                                                    //             255,
-                                                    //             175,
-                                                    //             48,
-                                                    //             38),
-                                                    //   ),
-                                                    //   onPressed: () => {
-                                                    //     showConfirmationDialog(
-                                                    //         context, index)
-                                                    //     //CancelAppointment(index)
-                                                    //   },
-                                                    // ),
                                                   ],
                                                 ),
                                               ]),

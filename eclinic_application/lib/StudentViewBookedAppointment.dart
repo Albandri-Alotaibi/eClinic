@@ -265,270 +265,340 @@ class _StudentViewBookedAppointmentState
       //|| numOfDaysOfHelp==0
       return SafeArea(
         child: Scaffold(
+            backgroundColor: Color.fromARGB(255, 255, 255, 255),
             body: Container(
-          alignment: Alignment.topCenter,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 30, bottom: 19),
-                child: Text(
-                  "Booked Appointments",
-                  style: TextStyle(
-                      color: Mycolors.mainColorBlack,
-                      fontFamily: 'main',
-                      fontSize: 24),
-                ),
-              ),
-              Card(
-                color: Mycolors.mainShadedColorBlue,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(17), // <-- Radius
-                ),
-                shadowColor: Color.fromARGB(94, 114, 168, 243),
-                elevation: 20,
-                child: Padding(
-                  padding: const EdgeInsets.all(30),
-                  child: Text(
-                    "No Booked Appointments",
-                    overflow: TextOverflow.clip,
-                    style: TextStyle(
-                        color: Mycolors.mainColorWhite,
-                        fontFamily: 'main',
-                        fontSize: 17),
+              alignment: Alignment.topCenter,
+              child: Column(
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(top: 60),
+                    child: Text(
+                      "No Booked Appointments",
+                      overflow: TextOverflow.clip,
+                      style: TextStyle(
+                          color: Colors.black54,
+                          // fontFamily: 'main',
+                          fontSize: 20),
+                    ),
                   ),
-                ),
+                  // ),
+                ],
               ),
-            ],
-          ),
-        )),
+            )),
       );
     } else {
       //BookedAppointments.isEmpty==false //numOfDaysOfHelp==BookedAppointments.length
       //if(BookedAppointments.length!=0){
       return SafeArea(
         child: Scaffold(
+            backgroundColor: Colors.white,
             body: //Row()
                 Column(
-          children: [
-            Expanded(
-              child: Container(
-                alignment: Alignment.topCenter,
-                child: SizedBox(
-                  width: 350,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 30, bottom: 10),
-                        child: Text(
-                          "Booked Appointments",
-                          style: TextStyle(
-                              color: Mycolors.mainColorBlack,
-                              fontFamily: 'main',
-                              fontSize: 24),
-                        ),
-                      ),
-                      Expanded(
-                        child: ListView.builder(
-                            itemCount:
-                                numOfDaysOfHelp, //BookedAppointments.length,//numOfDaysOfHelp
-                            itemBuilder: ((context, index) {
-                              if (index < BookedAppointments.length) {
-                                return Card(
-                                    margin: EdgeInsets.only(bottom: 20),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          17), // <-- Radius
-                                    ),
-                                    shadowColor:
-                                        Color.fromARGB(94, 250, 250, 250),
-                                    elevation: 20,
-                                    child: ExpansionTile(
-                                      iconColor: Mycolors.mainShadedColorBlue,
-                                      collapsedIconColor:
-                                          Mycolors.mainShadedColorBlue,
-                                      collapsedTextColor:
-                                          Mycolors.mainShadedColorBlue,
-                                      title: Text(
-                                          BookedAppointments[index].Day +
-                                              ",  " +
-                                              BookedAppointments[index]
-                                                  .StringDate() +
-                                              "  " +
-                                              BookedAppointments[index]
-                                                  .StringTimeRange(),
-                                          style: TextStyle(
-                                              color: Mycolors.mainColorBlue,
-                                              fontFamily: 'main',
-                                              fontSize: 17)),
-                                      children: [
-                                        Row(children: <Widget>[
-                                          Column(children: <Widget>[
-                                            // Text("  Date : "+ BookedAppointments[index].StringDate()),
-                                            // Text("  Time : "+BookedAppointments[index].StringTimeRange()),
-                                            Text(""),
-                                            //  Text("XXXXXXXX\n",
-                                            //         style: TextStyle(color: Colors.black,)),
-                                            Text(
-                                                " With : " +
-                                                    BookedAppointments[index]
-                                                        .FacultyName +
-                                                    "\n",
-                                                style: TextStyle(
-                                                    color:
-                                                        Mycolors.mainColorBlack,
-                                                    fontFamily: 'main',
-                                                    fontSize: 15)),
+              children: [
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.topCenter,
+                    child: SizedBox(
+                      width: 350,
+                      child: Column(
+                        children: [
+                          // Padding(
+                          //   padding: const EdgeInsets.only(top: 30, bottom: 10),
+                          //   child: Text(
+                          //     "Booked Appointments",
+                          //     style: TextStyle(
+                          //         color: Mycolors.mainColorBlack, fontSize: 24),
+                          //   ),
+                          // ),
+                          Expanded(
+                            child: ListView.builder(
+                                itemCount:
+                                    numOfDaysOfHelp, //BookedAppointments.length,//numOfDaysOfHelp
+                                itemBuilder: ((context, index) {
+                                  if (index < BookedAppointments.length) {
+                                    return Card(
+                                        margin: EdgeInsets.only(bottom: 20),
+                                        color:
+                                            Color.fromARGB(68, 221, 221, 221),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              17), // <-- Radius
+                                        ),
+                                        elevation: 0,
+                                        child: ExpansionTile(
+                                          iconColor:
+                                              Mycolors.mainShadedColorBlue,
+                                          collapsedIconColor:
+                                              Mycolors.mainShadedColorBlue,
+                                          collapsedTextColor:
+                                              Mycolors.mainShadedColorBlue,
+                                          title: Text(
+                                              BookedAppointments[index].Day +
+                                                  ",  " +
+                                                  BookedAppointments[index]
+                                                      .StringDate() +
+                                                  "  " +
+                                                  BookedAppointments[index]
+                                                      .StringTimeRange(),
+                                              style: TextStyle(
+                                                  color: Mycolors.mainColorBlue,
+                                                  fontSize: 17)),
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 18),
+                                              child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    // Text("  Date : "+ BookedAppointments[index].StringDate()),
+                                                    // Text("  Time : "+BookedAppointments[index].StringTimeRange()),
 
-                                            Text(
-                                                " Specialized in : " +
-                                                    BookedAppointments[index]
-                                                        .specialityn +
-                                                    "\n",
-                                                style: TextStyle(
-                                                    color:
-                                                        Mycolors.mainColorBlack,
-                                                    fontFamily: 'main',
-                                                    fontSize: 15)),
+                                                    //  Text("XXXXXXXX\n",
+                                                    //         style: TextStyle(color: Colors.black,)),
+                                                    Text(
+                                                        "With : Dr." +
+                                                            BookedAppointments[
+                                                                    index]
+                                                                .FacultyName +
+                                                            "\n",
+                                                        style: TextStyle(
+                                                            color: Mycolors
+                                                                .mainColorBlack,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontSize: 15)),
 
-                                            if (BookedAppointments[index]
-                                                    .meetingMethod ==
-                                                "inperson")
-                                              //{
-                                              Text(
-                                                  "  Meeting type : In-person meeting\n",
-                                                  style: TextStyle(
-                                                      color: Mycolors
-                                                          .mainColorBlack,
-                                                      fontFamily: 'main',
-                                                      fontSize: 15)),
+                                                    Text(
+                                                        "Specialized in : " +
+                                                            BookedAppointments[
+                                                                    index]
+                                                                .specialityn +
+                                                            "\n",
+                                                        style: TextStyle(
+                                                            color: Mycolors
+                                                                .mainColorBlack,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontSize: 15)),
 
-                                            if (BookedAppointments[index]
-                                                    .meetingMethod ==
-                                                "inperson")
-                                              Text(
-                                                  " office number  : " +
-                                                      BookedAppointments[index]
-                                                          .meetingInfo +
-                                                      "\n",
-                                                  style: TextStyle(
-                                                      color: Mycolors
-                                                          .mainColorBlack,
-                                                      fontFamily: 'main',
-                                                      fontSize: 15)),
+                                                    if (BookedAppointments[
+                                                                index]
+                                                            .meetingMethod ==
+                                                        "inperson")
+                                                      //{
+                                                      Text(
+                                                          "Meeting type : In-person meeting\n",
+                                                          style: TextStyle(
+                                                              color: Mycolors
+                                                                  .mainColorBlack,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 15)),
 
-                                            if (BookedAppointments[index]
-                                                    .meetingMethod ==
-                                                "online")
-                                              Text(
-                                                  "  Meeting type : Online meeting \n",
-                                                  style: TextStyle(
-                                                      color: Mycolors
-                                                          .mainColorBlack,
-                                                      fontFamily: 'main',
-                                                      fontSize: 15)),
-
-                                            if (BookedAppointments[index]
-                                                    .meetingMethod ==
-                                                "online")
-                                              // Text(
-                                              //     " Meeting link  : " +
-                                              //         BookedAppointments[index]
-                                              //             .meetingInfo +
-                                              //         "\n",
-                                              //     style: TextStyle(
-                                              //         color: Mycolors
-                                              //             .mainColorBlack,
-                                              //         fontFamily: 'main',
-                                              //         fontSize: 15)),
-
-                                              new RichText(
-                                                text: new TextSpan(
-                                                  //text: 'Meeting Link : ',
-                                                  children: [
-                                                    new TextSpan(
-                                                      // style: defaultText,
-                                                      text: "Meeting Link : ",
-                                                      style: TextStyle(
-                                                          color: Mycolors
-                                                              .mainColorBlack,
-                                                          fontFamily: 'main',
-                                                          fontSize: 15),
-                                                    ),
-                                                    new TextSpan(
-                                                      //new TextStyle(color: Colors.blue)
-                                                      text: 'Click here \n',
-                                                      style: TextStyle(
-                                                          color: Colors.blue,
-                                                          fontFamily: 'main',
-                                                          fontSize: 15),
-                                                      recognizer:
-                                                          new TapGestureRecognizer()
-                                                            ..onTap = () {
-                                                              launch(BookedAppointments[
+                                                    if (BookedAppointments[
+                                                                index]
+                                                            .meetingMethod ==
+                                                        "inperson")
+                                                      Text(
+                                                          "office number  : " +
+                                                              BookedAppointments[
                                                                       index]
-                                                                  .meetingInfo); //''+BookedAppointments[index].meetingInfo+''
+                                                                  .meetingInfo +
+                                                              "\n",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Mycolors
+                                                                      .mainColorBlack,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 15)),
+
+                                                    if (BookedAppointments[
+                                                                index]
+                                                            .meetingMethod ==
+                                                        "online")
+                                                      Text(
+                                                          "Meeting type : Online meeting \n",
+                                                          style: TextStyle(
+                                                              color: Mycolors
+                                                                  .mainColorBlack,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 15)),
+
+                                                    if (BookedAppointments[
+                                                                index]
+                                                            .meetingMethod ==
+                                                        "online")
+                                                      // Text(
+                                                      //     " Meeting link  : " +
+                                                      //         BookedAppointments[index]
+                                                      //             .meetingInfo +
+                                                      //         "\n",
+                                                      //     style: TextStyle(
+                                                      //         color: Mycolors
+                                                      //             .mainColorBlack,
+                                                      //         fontFamily: 'main',
+                                                      //         fontSize: 15)),
+
+                                                      new RichText(
+                                                        text: new TextSpan(
+                                                          //text: 'Meeting Link : ',
+                                                          children: [
+                                                            new TextSpan(
+                                                              // style: defaultText,
+                                                              text:
+                                                                  "Meeting Link : ",
+                                                              style: TextStyle(
+                                                                  color: Mycolors
+                                                                      .mainColorBlack,
+                                                                  fontSize: 15),
+                                                            ),
+                                                            new TextSpan(
+                                                              //new TextStyle(color: Colors.blue)
+                                                              text:
+                                                                  'Click here \n',
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .blue,
+                                                                  fontSize: 15),
+                                                              recognizer:
+                                                                  new TapGestureRecognizer()
+                                                                    ..onTap =
+                                                                        () {
+                                                                      launch(BookedAppointments[
+                                                                              index]
+                                                                          .meetingInfo); //''+BookedAppointments[index].meetingInfo+''
+                                                                    },
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .end,
+                                                      children: [
+                                                        Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  bottom: 7),
+                                                          height: 40,
+                                                          width: 100,
+                                                          child:
+                                                              FloatingActionButton
+                                                                  .extended(
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          30), // <-- Radius
+                                                              side: BorderSide(
+                                                                width: 1,
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        169,
+                                                                        43,
+                                                                        34),
+                                                              ),
+                                                            ),
+                                                            splashColor:
+                                                                Colors.red[900],
+                                                            elevation: 0,
+                                                            foregroundColor:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    255,
+                                                                    255,
+                                                                    255),
+                                                            label: Text(
+                                                              'Cancel',
+                                                            ), // <-- Text
+                                                            backgroundColor:
+                                                                Colors.red[900],
+                                                            icon: Icon(
+                                                              // <-- Icon
+                                                              Icons.cancel,
+                                                              size: 24.0,
+                                                            ),
+                                                            onPressed: () => {
+                                                              showConfirmationDialog(
+                                                                  context,
+                                                                  index)
+                                                              // CancelAppointment(index)
                                                             },
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
-                                                  ],
-                                                ),
-                                              ),
-                                          ]),
+                                                  ]),
+                                            ),
 
-                                          //crossAxisAlignment: CrossAxisAlignment.start,
-                                          Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              verticalDirection:
-                                                  VerticalDirection.up,
-                                              children: <Widget>[
-                                                IconButton(
-                                                  icon: Icon(Icons.cancel),
-                                                  onPressed: () => {
-                                                    showConfirmationDialog(
-                                                        context, index)
-                                                    //CancelAppointment(index)
-                                                  },
-                                                ),
-                                              ])
-                                        ])
-                                      ],
-                                    ));
+                                            //crossAxisAlignment: CrossAxisAlignment.start,
+                                            // Row(
+                                            //     crossAxisAlignment:
+                                            //         CrossAxisAlignment.end,
+                                            //     mainAxisAlignment:
+                                            //         MainAxisAlignment.end,
+                                            //     verticalDirection:
+                                            //         VerticalDirection.up,
+                                            //     children: <Widget>[
+                                            //       IconButton(
+                                            //         icon: Icon(Icons.cancel),
+                                            //         onPressed: () => {
+                                            //           showConfirmationDialog(
+                                            //               context, index)
+                                            //           //CancelAppointment(index)
+                                            //         },
+                                            //       ),
+                                            //     ])
+                                          ],
+                                        ));
 
-                                //       }),
-                                //     )
-                                //     ;
-                                //   },
-                                // )
+                                    //       }),
+                                    //     )
+                                    //     ;
+                                    //   },
+                                    // )
 
-                                // );
-                                //}
-                              } //index smaller than length
-                              else {
-                                return Row();
-                                // return Column(
-                                //         children: <Widget>[
-                                //         Text("inside else"),
-                                //         Text("${BookedAppointments.length}"),
-                                //         Text("${numOfDaysOfHelp}"),
+                                    // );
+                                    //}
+                                  } //index smaller than length
+                                  else {
+                                    return Row();
+                                    // return Column(
+                                    //         children: <Widget>[
+                                    //         Text("inside else"),
+                                    //         Text("${BookedAppointments.length}"),
+                                    //         Text("${numOfDaysOfHelp}"),
 
-                                //         ]);
-                              }
-                            })),
+                                    //         ]);
+                                  }
+                                })),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ],
-        )),
+              ],
+            )),
       ); //scaffold
     } //end els
   }
 
   var reasone;
+  final formkey = GlobalKey<FormState>();
   showConfirmationDialog(BuildContext context, int index) async {
 // ---------------START OF CHECKING IF THE CANCEL IS ALLOWED----------------------------------------------------------
     // String appointmentId2 = BookedAppointments[index].appointmentId;
@@ -555,7 +625,7 @@ class _StudentViewBookedAppointmentState
 
     Widget dontCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        textStyle: TextStyle(fontSize: 16),
         shadowColor: Colors.blue[900],
         elevation: 20,
         backgroundColor: Mycolors.mainShadedColorBlue,
@@ -572,7 +642,7 @@ class _StudentViewBookedAppointmentState
 
     Widget YesCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        textStyle: TextStyle(fontSize: 16),
         shadowColor: Colors.blue[900],
         elevation: 20,
         backgroundColor: Mycolors.mainShadedColorBlue,
@@ -583,56 +653,64 @@ class _StudentViewBookedAppointmentState
       ),
       child: Text("Yes"),
       onPressed: () {
-        Navigator.of(context).pop();
-        CancelAppointment(index);
+        if (formkey.currentState!.validate()) {
+          Navigator.of(context).pop();
+          CancelAppointment(index);
+        }
       },
     );
     //var reasone;
     AlertDialog alert = AlertDialog(
       // title: Text(""),
-      content: Column(children: [
-        Text("Choose a  reason to cancel your appointment with Dr." +
-            BookedAppointments[index].FacultyName +
-            " on " +
-            BookedAppointments[index].StringDate() +
-            " at " +
-            BookedAppointments[index].StringTimeRange() +
-            " ?\n"),
-        DropdownButtonFormField(
-          decoration: InputDecoration(
-            hintText: 'Please Choose the reason for cancelation',
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(25),
-                borderSide: const BorderSide(
-                  width: 0,
-                )),
-          ),
-          items: const [
-            DropdownMenuItem(
-                child: Text("Lecture at the same time"),
-                value: "lecture at the same time"),
-            DropdownMenuItem(
-                child: Text("Exam at the same time"),
-                value: "exam at the same time"),
-            DropdownMenuItem(
-                child: Text("Solution was found "),
-                value: "solution was found"),
-            DropdownMenuItem(
-                child: Text("other commitment"), value: "other commitment")
-          ],
-          onChanged: (value) {
-            setState(() {
-              reasone = value;
-            });
-          },
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          validator: (value) {
-            if (value == null || reasone == null) {
-              return 'Please Choose the reason for cancelation';
-            }
-          },
+      content: SizedBox(
+        height: 190,
+        child: Form(
+          key: formkey,
+          child: Column(children: [
+            Text("Choose a  reason to cancel your appointment with Dr." +
+                BookedAppointments[index].FacultyName +
+                " on " +
+                BookedAppointments[index].StringDate() +
+                " at " +
+                BookedAppointments[index].StringTimeRange() +
+                " ?\n"),
+            DropdownButtonFormField(
+              decoration: InputDecoration(
+                hintText: 'Please Choose the reason for cancelation',
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25),
+                    borderSide: const BorderSide(
+                      width: 0,
+                    )),
+              ),
+              items: const [
+                DropdownMenuItem(
+                    child: Text("Lecture at the same time"),
+                    value: "lecture at the same time"),
+                DropdownMenuItem(
+                    child: Text("Exam at the same time"),
+                    value: "exam at the same time"),
+                DropdownMenuItem(
+                    child: Text("Solution was found "),
+                    value: "solution was found"),
+                DropdownMenuItem(
+                    child: Text("other commitment"), value: "other commitment")
+              ],
+              onChanged: (value) {
+                setState(() {
+                  reasone = value;
+                });
+              },
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: (value) {
+                if (value == null || reasone == null) {
+                  return 'Please Choose the reason for cancelation';
+                }
+              },
+            ),
+          ]),
         ),
-      ]),
+      ),
       actions: [
         dontCancelAppButton,
         YesCancelAppButton,
@@ -645,47 +723,6 @@ class _StudentViewBookedAppointmentState
         return alert;
       },
     );
-    // } else {
-    //   //// CANNOT CANCLE
-
-    //   Widget OkButton = ElevatedButton(
-    //     style: ElevatedButton.styleFrom(
-    //       textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-    //       shadowColor: Colors.blue[900],
-    //       elevation: 20,
-    //       backgroundColor: Mycolors.mainShadedColorBlue,
-    //       minimumSize: Size(60, 40),
-    //       shape: RoundedRectangleBorder(
-    //         borderRadius: BorderRadius.circular(10), // <-- Radius
-    //       ),
-    //     ),
-    //     child: Text("OK"),
-    //     onPressed: () {
-    //       Navigator.of(context).pop();
-    //     },
-    //   );
-
-    //   AlertDialog alert = AlertDialog(
-    //     // title: Text(""),
-    //     content: Text("You CANNOT cancel your appointment with " +
-    //         BookedAppointments[index].FacultyName +
-    //         " on " +
-    //         BookedAppointments[index].StringDate() +
-    //         " at " +
-    //         BookedAppointments[index].StringTimeRange() +
-    //         " because it is within the next ten hours."),
-    //     actions: [
-    //       OkButton,
-    //     ],
-    //   );
-
-    //   showDialog(
-    //     context: context,
-    //     builder: (BuildContext context) {
-    //       return alert;
-    //     },
-    //   );
-    // }//end else cant cancel
   } //END FUNCTION
 
   void sendPushMessege(String token, String msg) async {

@@ -150,7 +150,7 @@ class _viewGPlibraryState extends State<viewGPlibrary> {
       gps['ref'] = doc.reference;
 
       //get gp name
-    // List arrayOfStudent = doc['Students'];
+      // List arrayOfStudent = doc['Students'];
       final DocumentSnapshot group = await doc["group"].get();
       String GPName = group['projectname'];
       gps['projectname'] = GPName;
@@ -200,6 +200,7 @@ class _viewGPlibraryState extends State<viewGPlibrary> {
     //if (isExists == true) {
     return SafeArea(
         child: Scaffold(
+      backgroundColor: Colors.white,
       body: ListView(
         padding: const EdgeInsets.all(24),
         children: <Widget>[
@@ -388,7 +389,7 @@ class _viewGPlibraryState extends State<viewGPlibrary> {
                                       //   //if no search clicked then tell user to click search, otherwise if it's clicked, no results are found
                                       //   :
                                       (searchClicked
-                                          ? 'There are no graduation projects available with the selected options.'
+                                          ? 'There are no graduation projects available.'
                                           : 'Please click filter to continue..')),
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(

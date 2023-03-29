@@ -106,7 +106,7 @@ class MyApp extends StatelessWidget {
               // '/': (context) => home(), //<----- deleted
               'addHoursFaculty': (context) => addHoursFaculty(),
               'facultyhome': (context) => facultyhome(0),
-              'studenthome': (context) => studenthome(),
+              'studenthome': (context) => studenthome(0),
               'facultysignup': (context) => facultysignup(),
 
               'FacultyListScreen': (context) => FacultyListScreen(),
@@ -152,7 +152,7 @@ class MyApp extends StatelessWidget {
               auth.currentUser != null) {
             if (auth.currentUser?.email?.contains("@student.ksu.edu.sa") ??
                 false) {
-              return studenthome();
+              return studenthome(0);
             } else if (auth.currentUser?.email?.isNotEmpty ?? false) {
               return facultyhome(0);
             }

@@ -50,7 +50,7 @@ class _studentverficationState extends State<studentverfication> {
     if (user!.emailVerified) {
       timer.cancel();
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => studenthome()));
+          MaterialPageRoute(builder: (context) => studenthome(0)));
     }
   }
 
