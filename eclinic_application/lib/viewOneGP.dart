@@ -13,7 +13,6 @@ import 'package:open_file/open_file.dart';
 import 'dart:io';
 import 'model/socialLinks.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '';
 
 
 
@@ -39,10 +38,10 @@ void initState() {
 
 
 var GPcategory;
-
 var GPname;
 var CodeLink='';
 var Students;
+var group;
 var Fileurl;
   String? email = '';
   String? userid = '';
@@ -65,19 +64,18 @@ retrieve() async {
     if (snap.data()!.containsKey('CodeLink') == true) {
       CodeLink=snap['CodeLink'];
     }
-     
-    Students=await snap['Students'];
-    print(Students.length);
+var group=await snap['group'];
+final DocumentSnapshot groupRef = await group.get(); 
 
-    final snap3 = await FirebaseFirestore.instance
-        .collection("student")
-        .doc(userid)
-        .get();
-     GPname = snap3['projectname']; 
+ Students=await groupRef['students'];
+ print(Students.length);
+
+GPname = groupRef['projectname']; 
 
 
   for (var i = 0; i < Students.length; i++) {
-            final DocumentSnapshot docRef2 = await Students[i].get(); 
+          //  final DocumentSnapshot docRef2 = await Students[i].get(); 
+            final DocumentSnapshot docRef2 = await Students[i]['ref'].get();
             print(docRef2['firstname']);
            var haveSocialAccount=docRef2['socialmedia'];
 
