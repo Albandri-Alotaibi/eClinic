@@ -29,12 +29,20 @@ class _sState extends State<studenthome> {
   String? lname;
   String? email = '';
   String? userid = '';
+  bool havename = false;
+
   void initState() {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
-    userid = user!.uid;
-    email = user.email!;
+
+    while (user != null && user.email != null) {
+      userid = user.uid;
+      email = user.email!;
+      break;
+    }
+
     super.initState();
+
     getusername();
     //++++++++++++++++++++++++++DEEM++++++++++++++++++++++++++++++++
     requestPremission();
@@ -44,14 +52,20 @@ class _sState extends State<studenthome> {
   }
 
   getusername() async {
-    final snap = await FirebaseFirestore.instance
-        .collection('student')
-        .doc(userid)
-        .get();
-    setState(() {
-      fname = snap['firstname'];
-      lname = snap['lastname'];
-    });
+    while (userid != '') {
+      final snap = await FirebaseFirestore.instance
+          .collection('student')
+          .doc(userid)
+          .get();
+      setState(() {
+        fname = snap['firstname'];
+        lname = snap['lastname'];
+      });
+      setState(() {
+        havename = true;
+      });
+      break;
+    }
   }
 
   final double profileheight = 144;
@@ -84,96 +98,109 @@ class _sState extends State<studenthome> {
       ),
       backgroundColor: Mycolors.BackgroundColor,
       drawer: Drawer(
+          width: 210,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.zero,
+                topLeft: Radius.zero,
+                bottomRight: Radius.circular(40),
+                topRight: Radius.circular(40)),
+          ),
           child: ListView(children: [
-        Card(
-          shadowColor: Color.fromARGB(94, 114, 168, 243),
-          elevation: 0,
-          child: DrawerHeader(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 0,
-                ),
-                child: Image.asset(
-                  "assets/images/woman.png",
-                  width: 100,
-                  height: 100,
-                ),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(70), // <-- Radius
               ),
-              SizedBox(
-                height: 10,
+              shadowColor: Color.fromARGB(94, 114, 168, 243),
+              elevation: 0,
+              child: DrawerHeader(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      bottom: 0,
+                    ),
+                    child: Image.asset(
+                      "assets/images/User1.png",
+                      width: 100,
+                      height: 100,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  //  if (havename)
+
+                  Center(
+                    child: Text("${fname} ${lname}",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            color: Mycolors.mainColorBlack)),
+                  ),
+                ],
+              )),
+            ),
+            ListTile(
+              leading: Icon(Icons.edit_note, color: Mycolors.mainColorBlue),
+              title: Text(
+                "My profile",
+                style: TextStyle(
+                    fontSize: 15,
+                    color: Mycolors.mainColorBlack,
+                    fontWeight: FontWeight.w400),
               ),
-              Center(
-                child: Text("${fname} ${lname}",
-                    style: TextStyle(
-                        fontFamily: 'bold',
-                        fontSize: 16,
-                        color: Mycolors.mainColorBlack)),
+              // hoverColor: Mycolors.mainColorBlue,
+              onTap: (() {
+                Navigator.pushNamed(context, 'studentviewprofile');
+              }),
+            ),
+            Divider(
+              color: Mycolors.mainColorBlue,
+              thickness: 1,
+              endIndent: 15,
+              indent: 15,
+            ),
+            ListTile(
+              leading: Icon(Icons.password, color: Mycolors.mainColorBlue),
+              title: Text(
+                "Reset password",
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Mycolors.mainColorBlack,
+                    fontWeight: FontWeight.w400),
               ),
-            ],
-          )),
-        ),
-        ListTile(
-          leading: Icon(Icons.edit_note),
-          title: Text(
-            "My profile",
-            style: TextStyle(
-                fontFamily: 'main',
-                fontSize: 16,
-                color: Mycolors.mainColorBlack),
-          ),
-          // hoverColor: Mycolors.mainColorBlue,
-          onTap: (() {
-            Navigator.pushNamed(context, 'studentviewprofile');
-          }),
-        ),
-        Divider(
-          color: Mycolors.mainColorBlue,
-          thickness: 1,
-          endIndent: 15,
-          indent: 15,
-        ),
-        ListTile(
-          leading: Icon(Icons.password),
-          title: Text(
-            "Reset password",
-            style: TextStyle(
-                fontFamily: 'main',
-                fontSize: 16,
-                color: Mycolors.mainColorBlack),
-          ),
-          onTap: (() {
-            Navigator.pushNamed(context, 'innereset');
-          }),
-        ),
-        Divider(
-          color: Mycolors.mainColorBlue,
-          thickness: 1,
-          endIndent: 15,
-          indent: 15,
-        ),
-        ListTile(
-          leading: Icon(Icons.logout),
-          title: Text(
-            "Log out",
-            style: TextStyle(
-                fontFamily: 'main',
-                fontSize: 16,
-                color: Mycolors.mainColorBlack),
-          ),
-          onTap: (() {
-            showConfirmationDialog(context);
-          }),
-        ),
-        Divider(
-          color: Mycolors.mainColorBlue,
-          thickness: 1,
-          endIndent: 15,
-          indent: 15,
-        ),
-      ])),
+              onTap: (() {
+                Navigator.pushNamed(context, 'innereset');
+              }),
+            ),
+            Divider(
+              color: Mycolors.mainColorBlue,
+              thickness: 1,
+              endIndent: 15,
+              indent: 15,
+            ),
+            ListTile(
+              leading: Icon(Icons.logout, color: Mycolors.mainColorBlue),
+              title: Text(
+                "Log out",
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Mycolors.mainColorBlack,
+                    fontWeight: FontWeight.w400),
+              ),
+              onTap: (() {
+                showConfirmationDialog(context);
+              }),
+            ),
+            Divider(
+              color: Mycolors.mainColorBlue,
+              thickness: 1,
+              endIndent: 15,
+              indent: 15,
+            ),
+          ])),
       body: Padding(
           padding: const EdgeInsets.all(100.0),
           child: Column(
@@ -316,10 +343,10 @@ class _sState extends State<studenthome> {
   }
 
   void saveToken(String token) async {
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final User? user = auth.currentUser;
-    userid = user!.uid;
-    email = user.email!;
+    // final FirebaseAuth auth = FirebaseAuth.instance;
+    // final User? user = auth.currentUser;
+    // userid = user!.uid;
+    // email = user.email!;
     await FirebaseFirestore.instance
         .collection("student")
         .doc(userid)

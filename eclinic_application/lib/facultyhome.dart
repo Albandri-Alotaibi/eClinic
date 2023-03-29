@@ -149,7 +149,7 @@ class _fState extends State<facultyhome> {
                     Center(
                       child: Text("${fnDrawer} ${lnDrawer}",
                           style: TextStyle(
-                              fontFamily: 'bold',
+                              fontWeight: FontWeight.w500,
                               fontSize: 16,
                               color: Mycolors.mainColorBlack)),
                     ),
@@ -161,8 +161,8 @@ class _fState extends State<facultyhome> {
                 title: Text(
                   "My profile",
                   style: TextStyle(
-                      fontFamily: 'main',
-                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 15,
                       color: Mycolors.mainColorBlack),
                 ),
                 onTap: (() {
@@ -180,8 +180,8 @@ class _fState extends State<facultyhome> {
                 title: Text(
                   "Reset password",
                   style: TextStyle(
-                      fontFamily: 'main',
-                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 15,
                       color: Mycolors.mainColorBlack),
                 ),
                 onTap: (() {
@@ -199,8 +199,8 @@ class _fState extends State<facultyhome> {
                 title: Text(
                   "Log out",
                   style: TextStyle(
-                      fontFamily: 'main',
-                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 15,
                       color: Mycolors.mainColorBlack),
                 ),
                 onTap: (() {
