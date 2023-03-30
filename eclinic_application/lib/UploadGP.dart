@@ -113,9 +113,12 @@ class _UploadGPState extends State<UploadGP> {
         print("yes2");
         Fileurl = await doc['FileUrl'];
         id = doc.id;
-         
+
+   var group = await doc['group'];
+    final DocumentSnapshot groupRef = await group.get();
+
          //for social media 
-         Students = await doc['students'];
+         Students = await groupRef['students'];
    for (var i = 0; i < Students.length; i++) {
       //  final DocumentSnapshot docRef2 = await Students[i].get();
       final DocumentSnapshot docRef2 = await Students[i]['ref'].get();
