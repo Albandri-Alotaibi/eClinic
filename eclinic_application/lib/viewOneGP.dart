@@ -38,7 +38,7 @@ class _viewOneGPState extends State<viewOneGP> {
   var Fileurl;
   String? email = '';
   String? userid = '';
-  List<socialLinks> SocialLinks = []; //availableHours
+  List<socialLinks> SocialLinks = []; 
 
   retrieve() async {
     final FirebaseAuth auth = await FirebaseAuth.instance;
@@ -124,46 +124,167 @@ class _viewOneGPState extends State<viewOneGP> {
               const SizedBox(
                 height: 50,
               ),
-              ElevatedButton(
-                  child: Text('Open file'),
-                  onPressed: () => openFile(
-                        url: Fileurl,
-                        fileName: '${GPname}.pdf',
-                      )),
+
+
+
+                   Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          IconButton(
+                              iconSize: 60,
+                              alignment: Alignment.center,
+                              color: Color.fromARGB(255, 5, 81, 212),
+                              icon: const Icon(
+                                Icons.file_open,
+                                size: 60,
+                              ),
+                              onPressed: () {
+                                openFile(
+                                  url: Fileurl,
+                                  fileName: '${GPname}.pdf',
+                                );
+                              }),
+                        ],
+                      ),
+                      new GestureDetector(
+                        child: Center(
+                            child: Text("View GP document",
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 120, 127, 139),
+
+                                    //Mycolors.mainShadedColorBlue,
+
+                                    fontSize: 20),
+                                textAlign: TextAlign.center)),
+                        onTap: () {
+                          openFile(
+                            url: Fileurl,
+                            fileName: '${GPname}.pdf',
+                          );
+                          //print("clicked");
+                        },
+                      ),
+                    ],
+                  ),
+
+
+
+              // ElevatedButton(
+              //     child: Text('Open file'),
+              //     onPressed: () => openFile(
+              //           url: Fileurl,
+              //           fileName: '${GPname}.pdf',
+              //         )),
+
+
+
+
+
+
+
+
               const SizedBox(
                 height: 50,
               ),
               if (CodeLink != '')
-                new RichText(
-                  text: new TextSpan(
-                    //text: 'Meeting Link : ',
+
+
+
+
+                   Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      new TextSpan(
-                        // style: defaultText,
-                        text: "Github repository link : ",
-                        style: TextStyle(
-                            color: Mycolors.mainColorBlack,
-                            fontFamily: 'main',
-                            fontSize: 15),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          IconButton(
+                              iconSize: 60,
+                              alignment: Alignment.center,
+                              color: Color.fromARGB(255, 5, 81, 212),
+                              icon: const Icon(
+                                Icons.code,
+                                size: 60,
+                              ),
+                              onPressed: () {
+                                 launch(
+                                CodeLink);
+                              }),
+                        ],
                       ),
-                      new TextSpan(
-                        //new TextStyle(color: Colors.blue)
-                        text: 'Click here \n',
-                        style: TextStyle(
-                            color: Colors.blue,
-                            fontFamily: 'main',
-                            fontSize: 15),
-                        recognizer: new TapGestureRecognizer()
-                          ..onTap = () {
-                            launch(
-                                CodeLink); //''+BookedAppointments[index].meetingInfo+''
-                          },
+                      new GestureDetector(
+                        child: Center(
+                            child: Text("View Github repository",
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 120, 127, 139),
+
+                                    //Mycolors.mainShadedColorBlue,
+
+                                    fontSize: 20),
+                                textAlign: TextAlign.center)),
+                        onTap: () {
+                           launch(
+                                CodeLink);
+                        },
                       ),
                     ],
                   ),
-                ),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                // new RichText(
+                //   text: new TextSpan(
+                //     //text: 'Meeting Link : ',
+                //     children: [
+                //       new TextSpan(
+                //         // style: defaultText,
+                //         text: "Github repository link : ",
+                //         style: TextStyle(
+                //             color: Mycolors.mainColorBlack,
+                //             fontFamily: 'main',
+                //             fontSize: 15),
+                //       ),
+                //       new TextSpan(
+                //         //new TextStyle(color: Colors.blue)
+                //         text: 'Click here \n',
+                //         style: TextStyle(
+                //             color: Colors.blue,
+                //             fontFamily: 'main',
+                //             fontSize: 15),
+                //         recognizer: new TapGestureRecognizer()
+                //           ..onTap = () {
+                //             launch(
+                //                 CodeLink); //''+BookedAppointments[index].meetingInfo+''
+                //           },
+                //       ),
+                //     ],
+                //   ),
+                // ),
+
+
+
+
+
+
+
+
               const SizedBox(
-                height: 300,
+                height: 200,
               ),
               if (SocialLinks.length != 0)
                 Expanded(
