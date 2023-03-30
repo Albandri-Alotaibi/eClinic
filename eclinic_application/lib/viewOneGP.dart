@@ -30,6 +30,7 @@ class _viewOneGPState extends State<viewOneGP> {
     retrieve();
   }
 
+  bool? endSearchForLink = false;
   var GPcategory;
   var GPname;
   var CodeLink = '';
@@ -38,7 +39,7 @@ class _viewOneGPState extends State<viewOneGP> {
   var Fileurl;
   String? email = '';
   String? userid = '';
-  List<socialLinks> SocialLinks = []; 
+  List<socialLinks> SocialLinks = [];
 
   retrieve() async {
     final FirebaseAuth auth = await FirebaseAuth.instance;
@@ -85,321 +86,301 @@ class _viewOneGPState extends State<viewOneGP> {
         });
       }
     }
+    setState(() {
+      endSearchForLink = true;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-            appBar: AppBar(
-              title: Text(
-                "${GPname}",
-                style: TextStyle(
-                    //  fontFamily: 'bold',
-                    fontSize: 20,
-                    color: Mycolors.mainColorBlack),
+    if (endSearchForLink! == true) {
+      return SafeArea(
+          child: Scaffold(
+              appBar: AppBar(
+                title: Text(
+                  "${GPname}",
+                  style: TextStyle(
+                      //  fontFamily: 'bold',
+                      fontSize: 20,
+                      color: Mycolors.mainColorBlack),
+                ),
+                elevation: 0,
+                primary: false,
+                centerTitle: true,
+                backgroundColor: Colors.white,
+                leading: BackButton(
+                  color: Colors.black,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => studenthome(2),
+                      ),
+                    );
+                  },
+                ),
               ),
-              elevation: 0,
-              primary: false,
-              centerTitle: true,
-              backgroundColor: Colors.white,
-              leading: BackButton(
-                color: Colors.black,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => studenthome(2),
+              backgroundColor: Colors.white, //Mycolors.BackgroundColor
+              body: Center(
+                  child: SizedBox(
+                width: 370,
+                child: Column(children: <Widget>[
+                  const SizedBox(
+                    height: 50,
+                  ),
+
+                  Card(
+                    color: Color.fromARGB(37, 232, 232, 232),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(13), // <-- Radius
+
+                        side: BorderSide(
+                            color: Color.fromARGB(255, 211, 211, 211),
+                            width: 1)),
+                    elevation: 0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                                iconSize: 60,
+                                alignment: Alignment.center,
+                                color: Color.fromARGB(255, 5, 81, 212),
+                                icon: const Icon(
+                                  Icons.file_open,
+                                  size: 60,
+                                ),
+                                onPressed: () {
+                                  openFile(
+                                    url: Fileurl,
+                                    fileName: '${GPname}.pdf',
+                                  );
+                                }),
+                          ],
+                        ),
+                        new GestureDetector(
+                          child: Center(
+                              child: Text("View GP document",
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 120, 127, 139),
+
+                                      //Mycolors.mainShadedColorBlue,
+
+                                      fontSize: 20),
+                                  textAlign: TextAlign.center)),
+                          onTap: () {
+                            openFile(
+                              url: Fileurl,
+                              fileName: '${GPname}.pdf',
+                            );
+                            //print("clicked");
+                          },
+                        ),
+                      ],
                     ),
-                  );
-                },
-              ),
-            ),
-            backgroundColor: Colors.white, //Mycolors.BackgroundColor
-            body:
-                //SingleChildScrollView(
-                //child:
-                Center(
-                    child: Column(children: <Widget>[
-              const SizedBox(
-                height: 50,
-              ),
-
-
-
-                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          IconButton(
-                              iconSize: 60,
-                              alignment: Alignment.center,
-                              color: Color.fromARGB(255, 5, 81, 212),
-                              icon: const Icon(
-                                Icons.file_open,
-                                size: 60,
-                              ),
-                              onPressed: () {
-                                openFile(
-                                  url: Fileurl,
-                                  fileName: '${GPname}.pdf',
-                                );
-                              }),
-                        ],
-                      ),
-                      new GestureDetector(
-                        child: Center(
-                            child: Text("View GP document",
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 120, 127, 139),
-
-                                    //Mycolors.mainShadedColorBlue,
-
-                                    fontSize: 20),
-                                textAlign: TextAlign.center)),
-                        onTap: () {
-                          openFile(
-                            url: Fileurl,
-                            fileName: '${GPname}.pdf',
-                          );
-                          //print("clicked");
-                        },
-                      ),
-                    ],
                   ),
 
+                  // ElevatedButton(
+                  //     child: Text('Open file'),
+                  //     onPressed: () => openFile(
+                  //           url: Fileurl,
+                  //           fileName: '${GPname}.pdf',
+                  //         )),
 
+                  if (CodeLink != '')
+                    Card(
+                      color: Color.fromARGB(37, 232, 232, 232),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(13), // <-- Radius
 
-              // ElevatedButton(
-              //     child: Text('Open file'),
-              //     onPressed: () => openFile(
-              //           url: Fileurl,
-              //           fileName: '${GPname}.pdf',
-              //         )),
-
-
-
-
-
-
-
-
-              const SizedBox(
-                height: 50,
-              ),
-              if (CodeLink != '')
-
-
-
-
-                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
+                          side: BorderSide(
+                              color: Color.fromARGB(255, 211, 211, 211),
+                              width: 1)),
+                      elevation: 0,
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          IconButton(
-                              iconSize: 60,
-                              alignment: Alignment.center,
-                              color: Color.fromARGB(255, 5, 81, 212),
-                              icon: const Icon(
-                                Icons.code,
-                                size: 60,
-                              ),
-                              onPressed: () {
-                                 launch(
-                                CodeLink);
-                              }),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                  iconSize: 60,
+                                  alignment: Alignment.center,
+                                  color: Color.fromARGB(255, 5, 81, 212),
+                                  icon: const Icon(
+                                    Icons.code,
+                                    size: 60,
+                                  ),
+                                  onPressed: () {
+                                    launch(CodeLink);
+                                  }),
+                            ],
+                          ),
+                          new GestureDetector(
+                            child: Center(
+                                child: Text("View Github repository",
+                                    style: TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 120, 127, 139),
+
+                                        //Mycolors.mainShadedColorBlue,
+
+                                        fontSize: 20),
+                                    textAlign: TextAlign.center)),
+                            onTap: () {
+                              launch(CodeLink);
+                            },
+                          ),
                         ],
                       ),
-                      new GestureDetector(
-                        child: Center(
-                            child: Text("View Github repository",
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 120, 127, 139),
+                    ),
 
-                                    //Mycolors.mainShadedColorBlue,
+                  Spacer(),
 
-                                    fontSize: 20),
-                                textAlign: TextAlign.center)),
-                        onTap: () {
-                           launch(
-                                CodeLink);
-                        },
-                      ),
-                    ],
+                  if (SocialLinks.length != 0)
+                    Card(
+                        color: Color.fromARGB(0, 232, 232, 232),
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(13), // <-- Radius
+
+                            side: const BorderSide(
+                                color: Color.fromARGB(187, 211, 211, 211),
+                                width: 1)),
+                        elevation: 0,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 8, bottom: 8),
+                          child: SizedBox(
+                            child: GridView.builder(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                gridDelegate:
+                                    const SliverGridDelegateWithMaxCrossAxisExtent(
+                                        maxCrossAxisExtent: 200,
+                                        childAspectRatio: 3,
+                                        crossAxisSpacing: 60,
+                                        mainAxisSpacing: 10),
+                                itemCount: SocialLinks.length,
+                                itemBuilder: ((context, index) {
+                                  if (index < SocialLinks.length) {
+                                    if (SocialLinks[index].mediaType ==
+                                        'WhatsApp') {
+                                      return Container(
+                                        child: ListView(
+                                          scrollDirection: Axis.vertical,
+                                          shrinkWrap: true,
+                                          children: <Widget>[
+                                            Row(
+                                              children: [
+                                                Text('     '),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    launch(SocialLinks[index]
+                                                        .link);
+                                                  },
+                                                  child: Image.asset(
+                                                    'assets/images/whatsapp.png',
+                                                    // name: 'ff',
+                                                    width: 40,
+                                                    height: 40,
+
+                                                    //fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                Text('   ' +
+                                                    SocialLinks[index]
+                                                        .studentName),
+                                              ],
+                                            ),
+                                            //Text("vvvv")
+                                          ],
+                                        ),
+                                        //Text('xxxxxx')
+                                      );
+                                    } else if (SocialLinks[index].mediaType ==
+                                        'Twitter') {
+                                      return Container(
+                                        child: ListView(
+                                          scrollDirection: Axis.vertical,
+                                          shrinkWrap: true,
+                                          children: <Widget>[
+                                            Row(
+                                              children: [
+                                                Text('     '),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    launch(SocialLinks[index]
+                                                        .link);
+                                                  },
+                                                  child: Image.asset(
+                                                    'assets/images/twitter.png', // On click should redirect to an URL
+                                                    width: 40,
+                                                    height: 40,
+                                                    //fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                Text('   ' +
+                                                    SocialLinks[index]
+                                                        .studentName),
+                                              ],
+                                            ),
+                                            // Text("vvvv")
+                                          ],
+                                        ),
+                                      );
+                                    } else if (SocialLinks[index].mediaType ==
+                                        'LinkedIn') {
+                                      return Container(
+                                        child: ListView(
+                                          scrollDirection: Axis.vertical,
+                                          shrinkWrap: true,
+                                          children: <Widget>[
+                                            Row(
+                                              children: [
+                                                Text('     '),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    launch(SocialLinks[index]
+                                                        .link);
+                                                  },
+                                                  child: Image.asset(
+                                                    'assets/images/linkedin.png', // On click should redirect to an URL
+                                                    width: 40,
+                                                    height: 40,
+                                                    //fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                Text('   ' +
+                                                    SocialLinks[index]
+                                                        .studentName),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                    } else {
+                                      return Row();
+                                    }
+                                  } else {
+                                    return Row();
+                                  }
+                                })),
+                          ),
+                        )),
+                  const SizedBox(
+                    height: 20,
                   ),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                // new RichText(
-                //   text: new TextSpan(
-                //     //text: 'Meeting Link : ',
-                //     children: [
-                //       new TextSpan(
-                //         // style: defaultText,
-                //         text: "Github repository link : ",
-                //         style: TextStyle(
-                //             color: Mycolors.mainColorBlack,
-                //             fontFamily: 'main',
-                //             fontSize: 15),
-                //       ),
-                //       new TextSpan(
-                //         //new TextStyle(color: Colors.blue)
-                //         text: 'Click here \n',
-                //         style: TextStyle(
-                //             color: Colors.blue,
-                //             fontFamily: 'main',
-                //             fontSize: 15),
-                //         recognizer: new TapGestureRecognizer()
-                //           ..onTap = () {
-                //             launch(
-                //                 CodeLink); //''+BookedAppointments[index].meetingInfo+''
-                //           },
-                //       ),
-                //     ],
-                //   ),
-                // ),
-
-
-
-
-
-
-
-
-              const SizedBox(
-                height: 200,
-              ),
-              if (SocialLinks.length != 0)
-                Expanded(
-                    child: SizedBox(
-                  height: 50,
-                  child: new GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: 200,
-                              childAspectRatio: 3,
-                              crossAxisSpacing: 60,
-                              mainAxisSpacing: 10),
-                      itemCount: SocialLinks.length,
-                      itemBuilder: ((context, index) {
-                        if (index < SocialLinks.length) {
-                          if (SocialLinks[index].mediaType == 'WhatsApp') {
-                            return Container(
-                              child: ListView(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                children: <Widget>[
-                                  Row(
-                                    children: [
-                                      Text('     '),
-                                      GestureDetector(
-                                        onTap: () {
-                                          launch(SocialLinks[index].link);
-                                        },
-                                        child: Image.asset(
-                                          'assets/images/whatsapp.png',
-                                          // name: 'ff',
-                                          width: 40,
-                                          height: 40,
-
-                                          //fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      Text('   ' +
-                                          SocialLinks[index].studentName),
-                                    ],
-                                  ),
-                                  //Text("vvvv")
-                                ],
-                              ),
-                              //Text('xxxxxx')
-                            );
-                          } else if (SocialLinks[index].mediaType ==
-                              'Twitter') {
-                            return Container(
-                              child: ListView(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                children: <Widget>[
-                                  Row(
-                                    children: [
-                                      Text('     '),
-                                      GestureDetector(
-                                        onTap: () {
-                                          launch(SocialLinks[index].link);
-                                        },
-                                        child: Image.asset(
-                                          'assets/images/twitter.png', // On click should redirect to an URL
-                                          width: 40,
-                                          height: 40,
-                                          //fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      Text('   ' +
-                                          SocialLinks[index].studentName),
-                                    ],
-                                  ),
-                                  // Text("vvvv")
-                                ],
-                              ),
-                            );
-                          } else if (SocialLinks[index].mediaType ==
-                              'LinkedIn') {
-                            return Container(
-                              child: ListView(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                children: <Widget>[
-                                  Row(
-                                    children: [
-                                      Text('     '),
-                                      GestureDetector(
-                                        onTap: () {
-                                          launch(SocialLinks[index].link);
-                                        },
-                                        child: Image.asset(
-                                          'assets/images/linkedin.png', // On click should redirect to an URL
-                                          width: 40,
-                                          height: 40,
-                                          //fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      Text('   ' +
-                                          SocialLinks[index].studentName),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            );
-                          } else {
-                            return Row();
-                          }
-                        } else {
-                          return Row();
-                        }
-                      })),
-                )),
-              const SizedBox(
-                height: 50,
-              ),
-            ]))));
+                ]),
+              ))));
+    } else {
+      return Scaffold(
+          backgroundColor: Colors.white,
+          body: Center(
+              child: CircularProgressIndicator(
+                  color: Mycolors.mainShadedColorBlue)));
+    }
   } //end build
 
   socialMediaCreation() {
