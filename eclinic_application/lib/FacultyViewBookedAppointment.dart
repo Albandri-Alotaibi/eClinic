@@ -104,7 +104,6 @@ class _sState extends State<FacultyViewBookedAppointment> {
           isExists = false;
         });
       } //end if no appointments at all
-
       else {
         // else there are appointments
 
@@ -136,82 +135,6 @@ class _sState extends State<FacultyViewBookedAppointment> {
     }); //end all event
 
     return isExists;
-
-// --------------------------START OF FIRST TRIAL TO SHOW ONLY FUTURE BOOKED----------------------------------------------------------------
-//     final snap = await FirebaseFirestore.instance
-//         .collection("faculty")
-//         .doc(userid)
-//         .collection('appointment')
-//         .where("Booked", isEqualTo: true)
-//         // .orderBy('starttime')
-//         .snapshots()
-//         .listen((event) {
-
-//       if (event.size == 0) { //if no booked appointments at all
-//         print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
-//         print("No Booked Appoinyments");
-//         print(event.size);
-//         setState(() {
-//           isExists = false;
-//           return;
-//         });
-
-//       }
-
-//        else { //if there are booked appointments
-//         print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
-//         print("Booked Appoinyments Exist");
-// //bool found=false;
-// DateTime now = new DateTime.now();
-// event.docs.forEach((element) async {
-//    Timestamp t1 = await element['starttime'] as Timestamp;
-//    DateTime StartTimeDate = t1.toDate();
-//  if (now.isBefore(StartTimeDate)){//if there are booked appointments in future only
-//    print("Yes");
-//   setState(() {
-//       isExists = true;
-//         });
-//  }
-//   });
-
-//   if(isExists != true){
-//      setState(() {
-//       isExists = false;
-//         });
-//   }
-
-//  //return isExists;
-
-//       }//end else
-//     });
-//    return isExists;
-// --------------------------END OF FIRST TRIAL TO SHOW ONLY FUTURE BOOKED----------------------------------------------------------------
-
-// --------------------------START OLD CODE WITHOUT FILTIRING TO ONLY FUTURE APPOINTMENTS----------------------------------------------------------------
-    // final snap = await FirebaseFirestore.instance
-    //       .collection("faculty")
-    //       .doc(userid)
-    //       .collection('appointment')
-    //       .where("Booked", isEqualTo: true).get();
-
-    //   if (snap.size == 0) {
-    //     print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
-    //     print("No Booked Appoinyments");
-    //     setState(() {
-    //       isExists = false;
-    //     });
-
-    //     return isExists;
-    //   } else {
-    //     print("*******&&&&&&&&&&&&&&&&&&&^^^^^^^^^^^^^^^^^^");
-    //     print("Booked Appoinyments Exist");
-    //     setState(() {
-    //       isExists = true;
-    //     });
-
-    //     return isExists;
-    //   }
-// --------------------------END OLD CODE WITHOUT FILTIRING TO ONLY FUTURE APPOINTMENTS----------------------------------------------------------------
   } //end function
 
   getBookedappointments() async {
@@ -441,7 +364,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
   Widget build(BuildContext context) {
     //getBookedappointments();
 
-    if (isExists == false || (BookedAppointments.length == 0)) {
+    if (isExists == false && BookedAppointments.isEmpty) {
       //|| numOfBookedApp==0
       return SafeArea(
         child: Scaffold(
@@ -449,34 +372,13 @@ class _sState extends State<FacultyViewBookedAppointment> {
             body: Container(
               alignment: Alignment.topCenter,
               child: Column(
-                children: [
-                  // Padding(
-                  //   padding: const EdgeInsets.only(top: 30, bottom: 19),
-                  //   child: Text(
-                  //     "Booked Appointments",
-                  //     style: TextStyle(
-                  //         color: Mycolors.mainColorBlack,
-                  //         fontFamily: 'main',
-                  //         fontSize: 24),
-                  //   ),
-                  // ),
-                  // Card(
-                  //   //color: Mycolors.mainShadedColorBlue,
-                  //   // shape: RoundedRectangleBorder(
-                  //   //   borderRadius: BorderRadius.circular(17), // <-- Radius
-                  //   // ),
-                  //   // shadowColor: Color.fromARGB(94, 114, 168, 243),
-                  //   // elevation: 20,
-                  //child:
+                children: const [
                   Padding(
-                    padding: const EdgeInsets.only(top: 60),
+                    padding: EdgeInsets.only(top: 60),
                     child: Text(
                       "No Booked Appointments",
                       overflow: TextOverflow.clip,
-                      style: TextStyle(
-                          color: Colors.black54,
-                          // fontFamily: 'main',
-                          fontSize: 20),
+                      style: TextStyle(color: Colors.black54, fontSize: 20),
                     ),
                   ),
                   // ),
@@ -485,227 +387,235 @@ class _sState extends State<FacultyViewBookedAppointment> {
             )),
       );
     } else {
-      //BookedAppointments.isEmpty==false //numOfBookedApp==BookedAppointments.length
-      //if(BookedAppointments.length!=0){
-      return SafeArea(
-        child: Scaffold(
-            backgroundColor: Color.fromARGB(255, 255, 255, 255),
-            // appBar: AppBar(
-            //   title: Text('Booked Appointments'),
-            // ),
-            body: //Row()
-                //  FutureBuilder(
-                //   future: getBookedappointments(),
-                //   builder: (context, snapshot) {
-                //     return
-                Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Container(
-                alignment: Alignment.topCenter,
-                child: SizedBox(
-                  width: 350,
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: ListView.builder(
-                            itemCount:
-                                numOfBookedApp, //BookedAppointments.length,//numOfBookedApp
-                            itemBuilder: ((context, index) {
-                              if (index < BookedAppointments.length) {
-                                return Card(
-                                    margin: EdgeInsets.only(bottom: 20),
-                                    color: Color.fromARGB(68, 221, 221, 221),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          17), // <-- Radius
-                                    ),
-                                    // shadowColor:
-                                    //     Color.fromARGB(94, 250, 250, 250),
-                                    elevation: 0,
-                                    child: ExpansionTile(
-                                      // backgroundColor:
-                                      //     Mycolors.mainColorBlue,
-                                      iconColor: Mycolors.mainShadedColorBlue,
-                                      collapsedIconColor:
-                                          Mycolors.mainShadedColorBlue,
-                                      collapsedTextColor:
-                                          Mycolors.mainShadedColorBlue,
-
-                                      title: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 20, bottom: 20),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                                BookedAppointments[index].Day +
-                                                    ",  " +
-                                                    BookedAppointments[index]
-                                                        .StringDate() +
-                                                    "  " +
-                                                    BookedAppointments[index]
-                                                        .StringTimeRange(),
-                                                style: TextStyle(
-                                                    color: Mycolors
-                                                        .mainShadedColorBlue,
-                                                    fontSize: 16)),
-                                          ],
-                                        ),
+      if (BookedAppointments.isEmpty == false) {
+        return SafeArea(
+          child: Scaffold(
+              backgroundColor: Color.fromARGB(255, 255, 255, 255),
+              body: Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Container(
+                  alignment: Alignment.topCenter,
+                  child: SizedBox(
+                    width: 350,
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: ListView.builder(
+                              itemCount:
+                                  numOfBookedApp, //BookedAppointments.length,//numOfBookedApp
+                              itemBuilder: ((context, index) {
+                                if (index < BookedAppointments.length) {
+                                  return Card(
+                                      margin: EdgeInsets.only(bottom: 20),
+                                      color: Color.fromARGB(68, 221, 221, 221),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            17), // <-- Radius
                                       ),
+                                      // shadowColor:
+                                      //     Color.fromARGB(94, 250, 250, 250),
+                                      elevation: 0,
+                                      child: ExpansionTile(
+                                        // backgroundColor:
+                                        //     Mycolors.mainColorBlue,
+                                        iconColor: Mycolors.mainShadedColorBlue,
+                                        collapsedIconColor:
+                                            Mycolors.mainShadedColorBlue,
+                                        collapsedTextColor:
+                                            Mycolors.mainShadedColorBlue,
 
-                                      //BookedAppointments[index].Day),
-
-                                      //subtitle: Text("Date : "+ BookedAppointments[index].StringDate()+"\n Time : "+BookedAppointments[index].StringTimeRange()),
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 18),
-                                          child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                Text(
-                                                  "Speciality : " +
+                                        title: Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 20, bottom: 20),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                  BookedAppointments[index]
+                                                          .Day +
+                                                      ",  " +
                                                       BookedAppointments[index]
-                                                          .specialty +
-                                                      "\n",
-                                                  textAlign: TextAlign.left,
+                                                          .StringDate() +
+                                                      "  " +
+                                                      BookedAppointments[index]
+                                                          .StringTimeRange(),
                                                   style: TextStyle(
                                                       color: Mycolors
-                                                          .mainColorBlack,
-                                                      //fontFamily: 'Semibold',
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 15),
-                                                ),
-                                                Text(
-                                                  "Project : " +
-                                                      BookedAppointments[index]
-                                                          .projectName +
-                                                      "\n",
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                    color:
-                                                        Mycolors.mainColorBlack,
-                                                    // fontFamily: 'Semibold',
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 15,
-                                                  ),
-                                                ),
-                                                Text(
-                                                    "Students : " +
+                                                          .mainShadedColorBlue,
+                                                      fontSize: 16)),
+                                            ],
+                                          ),
+                                        ),
+
+                                        //BookedAppointments[index].Day),
+
+                                        //subtitle: Text("Date : "+ BookedAppointments[index].StringDate()+"\n Time : "+BookedAppointments[index].StringTimeRange()),
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 18),
+                                            child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: <Widget>[
+                                                  Text(
+                                                    "Speciality : " +
                                                         BookedAppointments[
                                                                 index]
-                                                            .StringStudents() +
-                                                        "",
+                                                            .specialty +
+                                                        "\n",
                                                     textAlign: TextAlign.left,
                                                     style: TextStyle(
                                                         color: Mycolors
                                                             .mainColorBlack,
-                                                        //  fontFamily: 'Semibold',
+                                                        //fontFamily: 'Semibold',
                                                         fontWeight:
                                                             FontWeight.w500,
-                                                        fontSize: 15)),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
-                                                  children: [
-                                                    Container(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              bottom: 7),
-                                                      height: 40,
-                                                      width: 100,
-                                                      child:
-                                                          FloatingActionButton
-                                                              .extended(
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                  30), // <-- Radius
-                                                          side: BorderSide(
-                                                            width: 1,
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    169,
-                                                                    43,
-                                                                    34),
-                                                          ),
-                                                        ),
-                                                        splashColor:
-                                                            Colors.red[900],
-                                                        elevation: 0,
-                                                        foregroundColor:
-                                                            Color.fromARGB(255,
-                                                                255, 255, 255),
-                                                        label: Text(
-                                                          'Cancel',
-                                                        ), // <-- Text
-                                                        backgroundColor:
-                                                            Colors.red[900],
-                                                        icon: Icon(
-                                                          // <-- Icon
-                                                          Icons.cancel,
-                                                          size: 24.0,
-                                                        ),
-                                                        onPressed: () => {
-                                                          showConfirmationDialog(
-                                                              context, index)
-                                                          // CancelAppointment(index)
-                                                        },
-                                                      ),
+                                                        fontSize: 15),
+                                                  ),
+                                                  Text(
+                                                    "Project : " +
+                                                        BookedAppointments[
+                                                                index]
+                                                            .projectName +
+                                                        "\n",
+                                                    textAlign: TextAlign.left,
+                                                    style: TextStyle(
+                                                      color: Mycolors
+                                                          .mainColorBlack,
+                                                      // fontFamily: 'Semibold',
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 15,
                                                     ),
-                                                  ],
-                                                ),
-                                              ]),
-                                        ),
-                                        //crossAxisAlignment: CrossAxisAlignment.start,
-                                        // Row(
-                                        //     crossAxisAlignment:
-                                        //         CrossAxisAlignment.end,
-                                        //     mainAxisAlignment:
-                                        //         MainAxisAlignment.end,
-                                        //     verticalDirection:
-                                        //         VerticalDirection.up,
-                                        //     children: <Widget>[
-                                        //       IconButton(
-                                        //         icon: Icon(
-                                        //           Icons.cancel,
-                                        //           color: Color.fromARGB(
-                                        //               255, 175, 48, 38),
-                                        //         ),
-                                        //         onPressed: () => {
-                                        //           showConfirmationDialog(
-                                        //               context, index)
-                                        //           //CancelAppointment(index)
-                                        //         },
-                                        //       ),
-                                        //     ])
-                                        //  ])
-                                      ],
-                                    ));
-                              } //index smaller than length
-                              else {
-                                return Row();
-                                // return Column(
-                                //         children: <Widget>[
-                                //         Text("inside else"),
-                                //         Text("${BookedAppointments.length}"),
-                                //         Text("${numOfBookedApp}"),
+                                                  ),
+                                                  Text(
+                                                      "Students : " +
+                                                          BookedAppointments[
+                                                                  index]
+                                                              .StringStudents() +
+                                                          "",
+                                                      textAlign: TextAlign.left,
+                                                      style: TextStyle(
+                                                          color: Mycolors
+                                                              .mainColorBlack,
+                                                          //  fontFamily: 'Semibold',
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: 15)),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
+                                                    children: [
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                bottom: 7),
+                                                        height: 40,
+                                                        width: 100,
+                                                        child:
+                                                            FloatingActionButton
+                                                                .extended(
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        30), // <-- Radius
+                                                            side: BorderSide(
+                                                              width: 1,
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      169,
+                                                                      43,
+                                                                      34),
+                                                            ),
+                                                          ),
+                                                          splashColor:
+                                                              Colors.red[900],
+                                                          elevation: 0,
+                                                          foregroundColor:
+                                                              Color.fromARGB(
+                                                                  255,
+                                                                  255,
+                                                                  255,
+                                                                  255),
+                                                          label: Text(
+                                                            'Cancel',
+                                                          ), // <-- Text
+                                                          backgroundColor:
+                                                              Colors.red[900],
+                                                          icon: Icon(
+                                                            // <-- Icon
+                                                            Icons.cancel,
+                                                            size: 24.0,
+                                                          ),
+                                                          onPressed: () => {
+                                                            showConfirmationDialog(
+                                                                context, index)
+                                                            // CancelAppointment(index)
+                                                          },
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ]),
+                                          ),
+                                          //crossAxisAlignment: CrossAxisAlignment.start,
+                                          // Row(
+                                          //     crossAxisAlignment:
+                                          //         CrossAxisAlignment.end,
+                                          //     mainAxisAlignment:
+                                          //         MainAxisAlignment.end,
+                                          //     verticalDirection:
+                                          //         VerticalDirection.up,
+                                          //     children: <Widget>[
+                                          //       IconButton(
+                                          //         icon: Icon(
+                                          //           Icons.cancel,
+                                          //           color: Color.fromARGB(
+                                          //               255, 175, 48, 38),
+                                          //         ),
+                                          //         onPressed: () => {
+                                          //           showConfirmationDialog(
+                                          //               context, index)
+                                          //           //CancelAppointment(index)
+                                          //         },
+                                          //       ),
+                                          //     ])
+                                          //  ])
+                                        ],
+                                      ));
+                                } //index smaller than length
+                                else {
+                                  return Row();
+                                  // return Column(
+                                  //         children: <Widget>[
+                                  //         Text("inside else"),
+                                  //         Text("${BookedAppointments.length}"),
+                                  //         Text("${numOfBookedApp}"),
 
-                                //         ]);
-                              }
-                            })),
-                      ),
-                    ],
+                                  //         ]);
+                                }
+                              })),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            )),
-      ); //scaffold
+              )),
+        );
+      } else {
+        return Scaffold(
+            backgroundColor: Colors.white,
+            body: Center(
+                child: CircularProgressIndicator(
+                    color: Mycolors.mainShadedColorBlue)));
+      }
     } //end else there is booked appointments
     //   else{
     // return Scaffold(
@@ -853,7 +763,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
 
   CancelAppointment(int index) async {
     String id = BookedAppointments[index].id;
-
+    var ref = BookedAppointments[index].reference;
     //+++++++++++++++++++++++++++++++start Deem+++++++++++++++++++++++++++++++++++
     final snap = await FirebaseFirestore.instance
         .collection("faculty")
@@ -887,10 +797,13 @@ class _sState extends State<FacultyViewBookedAppointment> {
       }
     }
     for (int i = 0; i < groupStudents.length; i++) {
-      final DocumentSnapshot StudentdocRef =
+      final DocumentSnapshot StudentdocSnap =
           await groupStudents[i]['ref'].get();
-      var studentToken = StudentdocRef['token'];
-      sendPushMessege(studentToken, Fname, time);
+      final docData = StudentdocSnap.data() as Map<String, dynamic>;
+      if (docData.containsKey("token")) {
+        var studentToken = StudentdocSnap['token'];
+        sendPushMessege(studentToken, Fname, time);
+      }
     }
 
     sendPushMessege(snap2['token'], projectName!, "");
@@ -905,6 +818,10 @@ class _sState extends State<FacultyViewBookedAppointment> {
       'Booked': false, //string if booked then it should have a student refrence
       "group": FieldValue.delete(),
       'specialty': FieldValue.delete(),
+    });
+
+    groupData?.update({
+      "appointments": FieldValue.arrayRemove([ref]),
     });
   }
 
