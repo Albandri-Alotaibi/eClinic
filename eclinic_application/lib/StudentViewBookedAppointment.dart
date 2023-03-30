@@ -332,17 +332,22 @@ class _StudentViewBookedAppointmentState
                                               Mycolors.mainShadedColorBlue,
                                           collapsedTextColor:
                                               Mycolors.mainShadedColorBlue,
-                                          title: Text(
-                                              BookedAppointments[index].Day +
-                                                  ",  " +
-                                                  BookedAppointments[index]
-                                                      .StringDate() +
-                                                  "  " +
-                                                  BookedAppointments[index]
-                                                      .StringTimeRange(),
-                                              style: TextStyle(
-                                                  color: Mycolors.mainColorBlue,
-                                                  fontSize: 17)),
+                                          title: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 20, bottom: 20),
+                                            child: Text(
+                                                BookedAppointments[index].Day +
+                                                    ",  " +
+                                                    BookedAppointments[index]
+                                                        .StringDate() +
+                                                    "  " +
+                                                    BookedAppointments[index]
+                                                        .StringTimeRange(),
+                                                style: TextStyle(
+                                                    color:
+                                                        Mycolors.mainColorBlue,
+                                                    fontSize: 17)),
+                                          ),
                                           children: [
                                             Padding(
                                               padding: const EdgeInsets.only(
