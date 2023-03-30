@@ -822,11 +822,15 @@ class _StudentViewBookedAppointmentState
         now.month == BookedAppointments2.startTime.month &&
         now.year == BookedAppointments2.startTime.year) {
       // a msg for the faclulty
-      //for the doctor
-      sendPushMessege(
-        snap2['token'],
-        "Your appointment with ${projectName} today at ${BookedAppointments2.OnlyStart()} has been canceled ${reasoneFinal}",
-      );
+      //check if faculty has token and send
+      final docData = snap2.data() as Map<String, dynamic>;
+      if (docData.containsKey("token")) {
+        sendPushMessege(
+          snap2['token'],
+          "Your appointment with ${projectName} today at ${BookedAppointments2.OnlyStart()} has been canceled ${reasoneFinal}",
+        );
+      }
+
       //student notification
       groupData?.update({
         "appointments":
@@ -835,14 +839,21 @@ class _StudentViewBookedAppointmentState
       for (int i = 0; i < studentsArrayOfRef.length; i++) {
         final DocumentSnapshot StudentdocRef =
             await studentsArrayOfRef[i]['ref'].get();
-        var studentToken = StudentdocRef['token'];
-        sendPushMessege(studentToken,
-            "Your appointment with ${Fname}  today at ${BookedAppointments2.OnlyStart()} has been canceled.");
+        final docData = StudentdocRef.data() as Map<String, dynamic>;
+        if (docData.containsKey("token")) {
+          var studentToken = StudentdocRef['token'];
+          sendPushMessege(studentToken,
+              "Your appointment with ${Fname} today at ${BookedAppointments2.OnlyStart()} has been canceled.");
+        }
       }
     } else {
       // a msg for the faclulty
-      sendPushMessege(snap2['token'],
-          "Your appointment with ${projectName} on ${BookedAppointments2.StringDate()} at ${BookedAppointments2.OnlyStart()} has been canceled ${reasoneFinal}");
+      final docData = snap2.data() as Map<String, dynamic>;
+      if (docData.containsKey("token")) {
+        sendPushMessege(snap2['token'],
+            "Your appointment with ${projectName} on ${BookedAppointments2.StringDate()} at ${BookedAppointments2.OnlyStart()} has been canceled ${reasoneFinal}");
+      }
+
       //student notification
 
       groupData?.update({
@@ -852,9 +863,12 @@ class _StudentViewBookedAppointmentState
       for (int i = 0; i < studentsArrayOfRef.length; i++) {
         DocumentSnapshot StudentdocRef =
             await studentsArrayOfRef[i]['ref'].get();
-        var studentToken = StudentdocRef['token'];
-        sendPushMessege(studentToken,
-            "Your appointment with ${Fname} on ${BookedAppointments2.StringDate()} at ${BookedAppointments2.OnlyStart()} has been canceled.");
+        final docData = StudentdocRef.data() as Map<String, dynamic>;
+        if (docData.containsKey("token")) {
+          var studentToken = StudentdocRef['token'];
+          sendPushMessege(studentToken,
+              "Your appointment with ${Fname} on ${BookedAppointments2.StringDate()} at ${BookedAppointments2.OnlyStart()} has been canceled.");
+        }
       }
     }
   } //end cancel function

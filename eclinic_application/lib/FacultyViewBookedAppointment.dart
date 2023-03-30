@@ -805,8 +805,10 @@ class _sState extends State<FacultyViewBookedAppointment> {
         sendPushMessege(studentToken, Fname, time);
       }
     }
-
-    sendPushMessege(snap2['token'], projectName!, "");
+    final docData = snap2.data() as Map<String, dynamic>;
+    if (docData.containsKey("token")) {
+      sendPushMessege(snap2['token'], projectName!, "");
+    }
 
     //await
     FirebaseFirestore.instance

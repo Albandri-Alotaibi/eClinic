@@ -440,7 +440,7 @@ class _viewGPlibraryState extends State<viewGPlibrary> {
                       if (index < GPList.length) {
                         return Card(
                           margin: EdgeInsets.only(bottom: 10, top: 10),
-                          color: Mycolors.mainColorBlue,
+                          color: Mycolors.mainShadedColorBlue,
                           shape: RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.circular(17), // <-- Radius
