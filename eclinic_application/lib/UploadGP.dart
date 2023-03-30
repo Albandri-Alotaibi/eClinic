@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
+import 'package:myapp/screeens/resources/snackbar.dart';
 import 'package:myapp/studenthome.dart';
 import 'package:myapp/style/Mycolors.dart';
 import 'package:open_file/open_file.dart';
@@ -17,8 +18,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:open_file/open_file.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:dio/dio.dart';
-
-
 
 class UploadGP extends StatefulWidget {
   const UploadGP({super.key});
@@ -49,11 +48,11 @@ class _UploadGPState extends State<UploadGP> {
   final formkey = GlobalKey<FormState>();
   RegExp GitHubFormat = new RegExp(r'https://github.com/.*',
       multiLine: false, caseSensitive: false);
-var GPname;
-var Fileurl;
-late String id;
-var CodeLink='';
-var AddedGitHubRepository;
+  var GPname;
+  var Fileurl;
+  late String id;
+  var CodeLink = '';
+  var AddedGitHubRepository;
 
   void initState() {
     super.initState();
@@ -65,122 +64,98 @@ var AddedGitHubRepository;
     bool isshow = false;
   }
 
-
-retrieveForAfterUploadView() async {
-   final FirebaseAuth auth = await FirebaseAuth.instance;
+  retrieveForAfterUploadView() async {
+    final FirebaseAuth auth = await FirebaseAuth.instance;
     final User? user = await auth.currentUser;
     userid = user!.uid;
     email = user.email!;
 
-
-   final snap = await FirebaseFirestore.instance
+    final snap = await FirebaseFirestore.instance
         .collection("student")
         .doc(userid)
         .get();
 
 // group
- var group=await snap['group'];
-  final DocumentSnapshot groupRef = await group.get(); 
-  print(groupRef['projectname']);
-GPname=groupRef['projectname'];
+    var group = await snap['group'];
+    final DocumentSnapshot groupRef = await group.get();
+    print(groupRef['projectname']);
+    GPname = groupRef['projectname'];
 
+    //  final snap2 = await group
+    //       .snapshots()
+    //       .listen((event) async {
+    //         print("INSIDE");
+    //     bool? found;
+    //     if (event.data()!.containsKey('appointments') == true) {
+    //       if (event['appointments'].length == 0) {
+    //         print("NOOO1 Future booked Appoinyments");
+    //         setState(() {
+    //           isExists = false;
+    //         });
+    //       }
 
-
-  //  final snap2 = await group
-  //       .snapshots()
-  //       .listen((event) async {
-  //         print("INSIDE");
-  //     bool? found;
-  //     if (event.data()!.containsKey('appointments') == true) {
-  //       if (event['appointments'].length == 0) {
-  //         print("NOOO1 Future booked Appoinyments");
-  //         setState(() {
-  //           isExists = false;
-  //         });
-  //       }
-
-
-final snap3 = await FirebaseFirestore.instance
+    final snap3 = await FirebaseFirestore.instance
         .collection("GPlibrary")
         .where("group", isEqualTo: group)
         .get()
         .then((QuerySnapshot snapshot) {
-
 //Map<String, dynamic> dataMap = snapshot.data() as Map<String, dynamic>;
 
-print("yes1");
+      print("yes1");
       print(snapshot.size);
-      snapshot.docs.forEach((DocumentSnapshot doc) async{
+      snapshot.docs.forEach((DocumentSnapshot doc) async {
         // print(doc.reference);
         // StudentsArrayOfRef.add(doc.reference);
         print("yes2");
-           Fileurl=await doc['FileUrl'];
-           id=doc.id;
-          
-       final snap4 = await FirebaseFirestore.instance
-        .collection("GPlibrary")
-        .doc(id)
-        .get();
- //print(snap4.id);
-    if (snap4.data()!.containsKey('CodeLink') == true) {
-      CodeLink=snap4['CodeLink'];
-      print("ppppppppppppppppppppppppp");
-      print(CodeLink);
+        Fileurl = await doc['FileUrl'];
+        id = doc.id;
+
+        final snap4 = await FirebaseFirestore.instance
+            .collection("GPlibrary")
+            .doc(id)
+            .get();
+        //print(snap4.id);
+        if (snap4.data()!.containsKey('CodeLink') == true) {
+          CodeLink = snap4['CodeLink'];
+          print("ppppppppppppppppppppppppp");
+          print(CodeLink);
+        }
+      });
+    });
+  } //end method
+
+  Future openFile2({required String url, String? fileName}) async {
+    final file = await downloadFile(url, fileName!);
+    if (file == null) return;
+
+    print('Path: ${file.path}');
+
+    OpenFile.open(file.path);
+  }
+
+  Future<File?> downloadFile(String url, String name) async {
+    final appStorage = await getApplicationDocumentsDirectory();
+    final file = File('${appStorage.path}/$name');
+
+    try {
+      final response = await Dio().get(
+        url,
+        options: Options(
+          responseType: ResponseType.bytes,
+          followRedirects: false,
+          receiveTimeout: 0,
+        ),
+      );
+
+      final raf = file.openSync(mode: FileMode.write);
+      raf.writeFromSync(response.data);
+      await raf.close();
+
+      return file;
+    } catch (e) {
+      return null;
     }
-
-
-
-    });     
-});
-
-
-
-
-
-
-
-}//end method
-
-
-
-
-Future openFile2({required String url, String? fileName}) async{
-      final file= await downloadFile(url, fileName!);
-      if(file==null)return;
-
-      print('Path: ${file.path}');
-
-      OpenFile.open(file.path);
-
-
-}
-
-Future<File?> downloadFile(String url, String name) async{
-final appStorage = await getApplicationDocumentsDirectory();
-final file= File('${appStorage.path}/$name');
-
-try{
-final response= await Dio().get(
-     url,
-     options: Options(
-      responseType: ResponseType.bytes,
-      followRedirects: false,
-      receiveTimeout:0,
-     ),
-);
-
-final raf= file.openSync(mode: FileMode.write);
-raf.writeFromSync(response.data);
-await raf.close();
-
-return file;
-}
-catch(e){
-  return null;
-}
-
-}
-
+  }
 
   retrivegpcategory() async {
     try {
@@ -245,10 +220,10 @@ catch(e){
         .get();
 
 // group
- var group=await snap['group'];
-  final DocumentSnapshot groupRef = await group.get(); 
-  print(groupRef['projectname']);
- 
+    var group = await snap['group'];
+    final DocumentSnapshot groupRef = await group.get();
+    print(groupRef['projectname']);
+
     DateTime now = new DateTime.now();
     Timestamp t = groupRef['Projectcompletiondate'] as Timestamp;
     DateTime graduationDate = t.toDate();
@@ -276,9 +251,9 @@ catch(e){
         .doc(userid)
         .get();
 
-var group=await snap['group'];
-final DocumentSnapshot groupRef = await group.get(); 
-  print(groupRef['projectname']);
+    var group = await snap['group'];
+    final DocumentSnapshot groupRef = await group.get();
+    print(groupRef['projectname']);
 
     bool uploadgp = groupRef['uploadgp'];
 
@@ -289,8 +264,7 @@ final DocumentSnapshot groupRef = await group.get();
   PlatformFile? pickedFile;
 
   Future uploadFile() async {
-
-final snap = await FirebaseFirestore.instance
+    final snap = await FirebaseFirestore.instance
         .collection("student")
         .doc(userid)
         .get();
@@ -303,11 +277,10 @@ final snap = await FirebaseFirestore.instance
 //     });
 
 // var group=await snap['group'];
-// final DocumentSnapshot groupRef = await group.get(); 
+// final DocumentSnapshot groupRef = await group.get();
 
 //COULD BE WRONG**************make group abload true*************************** THE COMMENT ONE ABOVE IS THE OLD
-final snap4 = await snap['group']
-        .update({
+    final snap4 = await snap['group'].update({
       'uploadgp': true,
     });
 
@@ -329,9 +302,9 @@ final snap4 = await snap['group']
     final FileUrl = await ref.getDownloadURL();
     print(FileUrl);
 
-   var group=await snap['group'];
-final DocumentSnapshot groupRef = await group.get(); 
-String projectName = groupRef['projectname'];
+    var group = await snap['group'];
+    final DocumentSnapshot groupRef = await group.get();
+    String projectName = groupRef['projectname'];
 
     //add to firestore
     if (checkboxvalue == true) {
@@ -374,24 +347,9 @@ String projectName = groupRef['projectname'];
       });
 
       //error message
-      showerror(context, "Only pdf format is acceptable");
+      showInSnackBar(context, "Only pdf format is acceptable", onError: true);
+      //showerror(context, "Only pdf format is acceptable");
     } //end else not pdf
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   }
 
   showerror(BuildContext context, String msg) {
@@ -512,6 +470,7 @@ String projectName = groupRef['projectname'];
     }
   }
 
+  FocusNode myFocusNode = new FocusNode();
   @override
   Widget build(BuildContext context) {
     print("Category length ${checklengthforcategory}");
@@ -520,38 +479,100 @@ String projectName = groupRef['projectname'];
     if ((AlreadyUploaded == false) && (graduationDateArrived == true)) {
       return SafeArea(
           child: Scaffold(
-              backgroundColor: Mycolors.BackgroundColor,
+              appBar: AppBar(
+                title: Text(
+                  "GP upload",
+                  style: TextStyle(
+                      //  fontFamily: 'bold',
+                      fontSize: 20,
+                      color: Mycolors.mainColorBlack),
+                ),
+                primary: false,
+                centerTitle: true,
+                backgroundColor: Colors.white,
+                elevation: 0,
+                leading: BackButton(
+                  color: Colors.black,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => studenthome(2),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              backgroundColor: Colors.white,
               body: SingleChildScrollView(
-                child: Center(
-                    child: Column(
-                  children: [
-                    if (pickedFile != null) const SizedBox(height: 20),
-
+                  child: Center(
+                child: Column(children: [
+                  if (pickedFile != null)
                     if (pickedFile != null)
                       Container(
-                        height: 170,
-                        width: 380,
+                        height: 80,
+                        width: 360,
                         child: Card(
                           //Mycolors.mainShadedColorBlue
-                          color: Color.fromARGB(171, 204, 204, 210),
+                          color: Color.fromARGB(0, 232, 232, 232),
                           shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(30), // <-- Radius
-                          ),
+                              borderRadius:
+                                  BorderRadius.circular(13), // <-- Radius
+
+                              side: BorderSide(
+                                  color: Color.fromARGB(255, 211, 211, 211),
+                                  width: 1)),
                           shadowColor: Color.fromARGB(171, 212, 212, 240),
-                          elevation: 40,
+                          elevation: 0,
                           child: Column(
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Image(
+                                      image: AssetImage(
+                                          'assets/images/document.png'),
+                                      width: 50,
+                                      height: 50,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 7),
+                                      child: Column(
+                                        children: [
+                                          GestureDetector(
+                                            child: Text(
+                                              pickedFile!.name,
+                                              style: TextStyle(
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                  color: Mycolors
+                                                      .mainShadedColorBlue,
+                                                  fontSize: 20),
+                                              textAlign: TextAlign.start,
+                                              softWrap: false,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            onTap: () {
+                                              openFile(pickedFile!);
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Spacer(),
                                   IconButton(
                                     //iconSize: 100,
-                                    alignment: Alignment.topLeft,
-                                    color: Color.fromARGB(255, 74, 72, 72),
+                                    alignment: Alignment.topRight,
+                                    color: Color.fromARGB(187, 90, 90, 90),
                                     icon: const Icon(
-                                      Icons.attach_file,
-                                      size: 35,
+                                      Icons.edit,
+                                      size: 30,
                                     ),
                                     // the method which is called
                                     // when button is pressed
@@ -559,485 +580,501 @@ String projectName = groupRef['projectname'];
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 10),
-                              Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: new GestureDetector(
-                                  child: Center(
-                                      child: Text(pickedFile!.name,
-                                          style: TextStyle(
-                                              decoration:
-                                                  TextDecoration.underline,
-                                              color:
-                                                  Mycolors.mainShadedColorBlue,
-                                              fontFamily: 'main',
-                                              fontSize: 20),
-                                          textAlign: TextAlign.end)),
-                                  onTap: () {
-                                    openFile(pickedFile!);
-                                  },
-                                ),
-                              ),
+                              // Padding(
+                              //   padding: const EdgeInsets.all(10),
+                              //   child: new GestureDetector(
+                              //     child: Center(
+                              //         child: Text(pickedFile!.name,
+                              //             style: TextStyle(
+                              //                 decoration:
+                              //                     TextDecoration.underline,
+                              //                 color: Mycolors.mainShadedColorBlue,
+                              //                 fontSize: 20),
+                              //             textAlign: TextAlign.end)),
+                              //     onTap: () {
+                              //       openFile(pickedFile!);
+                              //     },
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),
                       ),
-
-                    if (pickedFile != null) const SizedBox(height: 35),
-
-                    if (pickedFile != null)
-                      Container(
-                        height: 125,
-                        width: 360,
-                        child: Column(children: [
-                          Text(
-                              "Under which category does your project fall? \n",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Mycolors.mainColorBlack,
-                                  fontFamily: 'main',
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15.5)),
-                          DropDownMultiSelect(
-                            decoration: InputDecoration(
-                                hintText: "Graduation project category",
+                  if (pickedFile != null) const SizedBox(height: 45),
+                  if (pickedFile != null)
+                    Container(
+                      height: 125,
+                      width: 360,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Under which category does your project fall?",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    color: Mycolors.mainColorBlack,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15.5)),
+                            SizedBox(
+                              height: 7,
+                            ),
+                            DropDownMultiSelect(
+                              decoration: InputDecoration(
+                                hintText: "Choose a category",
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: isshow ? Colors.red : Colors.grey),
-                                  borderRadius: BorderRadius.circular(25),
+                                      color: isshow
+                                          ? Color.fromARGB(255, 202, 54, 44)
+                                          : Colors.grey),
+                                  borderRadius: BorderRadius.circular(13),
                                 ),
                                 errorBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: isshow
-                                          ? Colors.red
-                                          : Colors.blueAccent),
-                                  borderRadius: BorderRadius.circular(25),
+                                          ? Color.fromARGB(255, 209, 57, 46)
+                                          : Mycolors.mainShadedColorBlue),
+                                  borderRadius: BorderRadius.circular(13),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
+                                      width: 2,
                                       color: isshow
-                                          ? Colors.red
-                                          : Colors.blueAccent),
-                                  borderRadius: BorderRadius.circular(25),
-                                )),
-                            options: options,
-                            whenEmpty: "",
-                            onChanged: (value) {
-                              setState(() {
-                                selectedoptionlist.value = value;
-                                selectedoption.value = "";
-                                selectedoptionlist.value.forEach((element) {
-                                  selectedoption.value =
-                                      selectedoption.value + " " + element;
-                                  checklengthforcategory =
-                                      selectedoptionlist.value.length;
-                                  isshow = selectedoption.value.isEmpty;
+                                          ? Color.fromARGB(255, 209, 57, 46)
+                                          : Mycolors.mainShadedColorBlue),
+                                  borderRadius: BorderRadius.circular(13),
+                                ),
+                              ),
+                              options: options,
+                              whenEmpty: "",
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedoptionlist.value = value;
+                                  selectedoption.value = "";
+                                  selectedoptionlist.value.forEach((element) {
+                                    selectedoption.value =
+                                        selectedoption.value + " " + element;
+                                    checklengthforcategory =
+                                        selectedoptionlist.value.length;
+                                    isshow = selectedoption.value.isEmpty;
 
-                                  if (checklengthforcategory < 1) {
-                                    isshow = true;
-                                  }
-                                  if (checklengthforcategory > 0 ||
-                                      selectedoption.value.isEmpty ||
-                                      selectedoption.value == null) {
-                                    isshow = false;
-                                  }
+                                    if (checklengthforcategory < 1) {
+                                      isshow = true;
+                                    }
+                                    if (checklengthforcategory > 0 ||
+                                        selectedoption.value.isEmpty ||
+                                        selectedoption.value == null) {
+                                      isshow = false;
+                                    }
+                                  });
                                 });
-                              });
-                              checkidcategory(selectedoptionlist.value);
-                              // isshow = selectedoptionlist.value.isEmpty;
-                              checklengthforcategory =
-                                  selectedoptionlist.value.length;
-                              if (checklengthforcategory < 1) {
-                                isshow = true;
-                              }
-                            },
-                            selectedValues: selectedoptionlist.value,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10, top: 7),
-                            child: Visibility(
-                              visible: isshow,
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "You have to select at least one graduation project category",
-                                      style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 211, 56, 45),
-                                          fontSize: 12),
-                                      textAlign: TextAlign.left,
-                                    ),
-                                  ]),
+                                checkidcategory(selectedoptionlist.value);
+                                // isshow = selectedoptionlist.value.isEmpty;
+                                checklengthforcategory =
+                                    selectedoptionlist.value.length;
+                                if (checklengthforcategory < 1) {
+                                  isshow = true;
+                                }
+                              },
+                              selectedValues: selectedoptionlist.value,
                             ),
-                          ),
-                        ]),
-                      ),
-
-                    Form(
-                      key: formkey,
-                      child: Padding(
-                        padding: const EdgeInsets.all(13.0),
-                        child: Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              if (pickedFile != null)
-                                Container(
-                                  // height: 125,
-                                  width: 360,
-                                  child: Column(
-                                    children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10, top: 7),
+                              child: Visibility(
+                                visible: isshow,
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
                                       Text(
-                                          "When did you finish your graduation project? \n",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              color: Mycolors.mainColorBlack,
-                                              fontFamily: 'main',
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15.5)),
-                                      DropdownButtonFormField<String>(
-                                        decoration: InputDecoration(
-                                          hintText: ' Choose a semester:',
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(25),
-                                              borderSide: const BorderSide(
-                                                width: 0,
-                                              )),
-                                        ),
-                                        isExpanded: true,
-                                        items: semester
-                                            .map((String dropdownitems) {
-                                          return DropdownMenuItem<String>(
-                                            value: dropdownitems,
-                                            child: Text(dropdownitems),
-                                          );
-                                        }).toList(),
-                                        onChanged: (String? newselect) {
-                                          setState(() {
-                                            semesterselectedvalue = newselect;
-                                            checkids(semesterselectedvalue);
-                                          });
-                                        },
-                                        value: semesterselectedvalue,
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                        validator: (value) {
-                                          if (value == null ||
-                                              semesterselectedvalue!.isEmpty ||
-                                              semesterselectedvalue == null) {
-                                            return 'Please choose a semester';
-                                          }
-                                        },
+                                        "You have to select at least one graduation project category",
+                                        style: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 211, 56, 45),
+                                            fontSize: 12),
+                                        textAlign: TextAlign.left,
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              if (pickedFile != null)
-                                SizedBox(
-                                  height: 20,
-                                ),
-                              if (pickedFile != null)
-                                Row(
+                                    ]),
+                              ),
+                            ),
+                          ]),
+                    ),
+                  Form(
+                    key: formkey,
+                    child: Padding(
+                      padding: const EdgeInsets.all(0.0),
+                      child: Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            if (pickedFile != null)
+                              Container(
+                                // height: 125,
+                                width: 360,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    SizedBox(
-                                      width: 10,
-                                    ), //SizedBox
-                                    Checkbox(
-                                        value: checkboxvalue,
-                                        onChanged: (newvalue) {
-                                          setState(() {
-                                            checkboxvalue = newvalue!;
-                                          });
-                                        }),
                                     Text(
-                                      'I would like to share GitHub repository link',
-                                      style: TextStyle(fontSize: 17.0),
-                                    ), //Text
-                                    SizedBox(width: 5),
-                                  ],
-                                ),
-                              if (checkboxvalue == true)
-                                Container(
-                                  width: 360,
-                                  child: TextFormField(
-                                    controller: GitHubController,
-                                    decoration: InputDecoration(
-                                        hintText:
-                                            "Please add your GitHub repository link here",
-
-                                        ///*******وش فايدتها؟ */
-                                        labelText: ' GitHub repository link',
+                                        "When did you finish your graduation project?",
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            color: Mycolors.mainColorBlack,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15.5)),
+                                    SizedBox(
+                                      height: 7,
+                                    ),
+                                    DropdownButtonFormField<String>(
+                                      decoration: InputDecoration(
+                                        focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(13.0)),
+                                            borderSide: BorderSide(
+                                                width: 2,
+                                                color: Mycolors
+                                                    .mainShadedColorBlue)),
+                                        hintText: 'Choose a semester',
                                         border: OutlineInputBorder(
                                             borderRadius:
-                                                BorderRadius.circular(25),
-                                            borderSide: const BorderSide(
-                                              width: 0,
-                                            ))),
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    validator: (value) {
-                                      if (value!.isEmpty ||
-                                          GitHubController.text == "") {
-                                        return 'Please add GitHub repository link ';
-                                      } else {
-                                        if (!(GitHubFormat.hasMatch(
-                                            GitHubController.text))) {
-                                          return 'Only GitHub link is acceptable';
+                                                BorderRadius.circular(13),
+                                            borderSide: BorderSide(
+                                              color:
+                                                  Mycolors.mainShadedColorBlue,
+                                              width: 1,
+                                            )),
+                                      ),
+                                      isExpanded: true,
+                                      items:
+                                          semester.map((String dropdownitems) {
+                                        return DropdownMenuItem<String>(
+                                          value: dropdownitems,
+                                          child: Text(dropdownitems),
+                                        );
+                                      }).toList(),
+                                      onChanged: (String? newselect) {
+                                        setState(() {
+                                          semesterselectedvalue = newselect;
+                                          checkids(semesterselectedvalue);
+                                        });
+                                      },
+                                      value: semesterselectedvalue,
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      validator: (value) {
+                                        if (value == null ||
+                                            semesterselectedvalue!.isEmpty ||
+                                            semesterselectedvalue == null) {
+                                          return 'Please choose a semester';
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            if (pickedFile != null)
+                              SizedBox(
+                                height: 20,
+                              ),
+                            if (pickedFile != null)
+                              Row(
+                                children: <Widget>[
+                                  SizedBox(
+                                    width: 10,
+                                  ), //SizedBox
+                                  Checkbox(
+                                      value: checkboxvalue,
+                                      onChanged: (newvalue) {
+                                        setState(() {
+                                          checkboxvalue = newvalue!;
+                                        });
+                                      }),
+
+                                  Text(
+                                    'I would like to share GitHub repository link',
+                                    style: TextStyle(fontSize: 17.0),
+                                  ),
+                                  //Text
+                                  // SizedBox(width: 5),
+                                ],
+                              ),
+                            if (checkboxvalue == true)
+                              Container(
+                                width: 360,
+                                child: Column(
+                                  children: [
+                                    TextFormField(
+                                      focusNode: myFocusNode,
+                                      controller: GitHubController,
+                                      onTap: () {
+                                        setState(() {
+                                          FocusScope.of(context)
+                                              .requestFocus(myFocusNode);
+                                        });
+                                      },
+                                      decoration: InputDecoration(
+                                          hintText:
+                                              "Please add your GitHub repository link here",
+
+                                          ///*******وش فايدتها؟ */
+                                          labelText: 'GitHub repository link',
+                                          labelStyle: TextStyle(
+                                              color: myFocusNode.hasFocus
+                                                  ? Mycolors.mainShadedColorBlue
+                                                  : Colors.black),
+                                          focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(13.0)),
+                                              borderSide: BorderSide(
+                                                  width: 2,
+                                                  color: Mycolors
+                                                      .mainShadedColorBlue)),
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(13),
+                                              borderSide: const BorderSide(
+                                                width: 0,
+                                              ))),
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      validator: (value) {
+                                        if (value!.isEmpty ||
+                                            GitHubController.text == "") {
+                                          return 'Please add GitHub repository link ';
                                         } else {
-                                          if (!(english.hasMatch(
+                                          if (!(GitHubFormat.hasMatch(
                                               GitHubController.text))) {
-                                            return "only english is allowed";
+                                            return 'Only GitHub link is acceptable';
+                                          } else {
+                                            if (!(english.hasMatch(
+                                                GitHubController.text))) {
+                                              return "only english is allowed";
+                                            }
                                           }
                                         }
-                                      }
-                                    },
-                                  ),
+                                      },
+                                    ),
+                                  ],
                                 ),
-                            ],
-                          ),
+                              ),
+                          ],
                         ),
                       ),
                     ),
-
-                    if (pickedFile != null) const SizedBox(height: 15),
-
-                    if (pickedFile != null)
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          textStyle:
-                              TextStyle(fontFamily: 'main', fontSize: 16),
-                          shadowColor: Colors.blue[900],
-                          elevation: 20,
-                          backgroundColor: Mycolors.mainShadedColorBlue,
-                          minimumSize: Size(200, 50),
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(17), // <-- Radius
-                          ),
+                  ),
+                  if (pickedFile != null) const SizedBox(height: 15),
+                  if (pickedFile != null)
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        textStyle: TextStyle(fontSize: 16),
+                        shadowColor: Colors.blue[900],
+                        elevation: 0,
+                        backgroundColor: Mycolors.mainShadedColorBlue,
+                        minimumSize: Size(200, 50),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(17), // <-- Radius
                         ),
-                        child: Text(
-                          "Upload file",
-                        ),
-                        onPressed: () {
-                          // if(checkboxvalue==true){
-                          if (formkey.currentState!.validate() &&
-                              checklengthforcategory > 0) {
-                            uploadFile();
-                            showSucessAlert();
-                            print("category is selected ");
-                          } else if (checklengthforcategory == 0) {
-                            setState(() {
-                              isshow = true;
-                            });
-                          }
-                       
-                        },
                       ),
+                      child: Text(
+                        "Upload",
+                      ),
+                      onPressed: () {
+                        // if(checkboxvalue==true){
+                        if (formkey.currentState!.validate() &&
+                            checklengthforcategory > 0) {
+                          uploadFile();
+                          showSucessAlert();
+                          print("category is selected ");
+                        } else if (checklengthforcategory == 0) {
+                          setState(() {
+                            isshow = true;
+                          });
+                        }
+                      },
+                    ),
+                  if (pickedFile == null) const SizedBox(height: 230),
+                  if (pickedFile == null)
+                    // ElevatedButton(
+                    //   style: ElevatedButton.styleFrom(
+                    //     textStyle:
+                    //         TextStyle( fontSize: 16),
+                    //     shadowColor: Colors.blue[900],
+                    //     elevation: 20,
+                    //     backgroundColor: Mycolors.mainShadedColorBlue,
+                    //     minimumSize: Size(200, 50),
+                    //     shape: RoundedRectangleBorder(
+                    //       borderRadius:
+                    //           BorderRadius.circular(17), // <-- Radius
+                    //     ),
+                    //   ),
+                    //   child: Text(
+                    //     "Select file",
+                    //   ),
+                    //   onPressed: selectFile,
+                    // ),
 
-                   
-
-                    if (pickedFile == null) const SizedBox(height: 230),
-
-                    if (pickedFile == null)
-                      // ElevatedButton(
-                      //   style: ElevatedButton.styleFrom(
-                      //     textStyle:
-                      //         TextStyle(fontFamily: 'main', fontSize: 16),
-                      //     shadowColor: Colors.blue[900],
-                      //     elevation: 20,
-                      //     backgroundColor: Mycolors.mainShadedColorBlue,
-                      //     minimumSize: Size(200, 50),
-                      //     shape: RoundedRectangleBorder(
-                      //       borderRadius:
-                      //           BorderRadius.circular(17), // <-- Radius
-                      //     ),
-                      //   ),
-                      //   child: Text(
-                      //     "Select file",
-                      //   ),
-                      //   onPressed: selectFile,
-                      // ),
-
-
-
-                         Column(
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                     children: [
-                                       IconButton(
-                                          iconSize: 120,
-                                          alignment: Alignment.center,
-                                          color: Color.fromARGB(255, 5, 81, 212),
-                                          icon: const Icon(
-                                            Icons.upload_file,
-                                            size: 120,
-                                          ),
-                                         
-                                          onPressed: selectFile,
-                                        ),
-                                     ],
-                                   ),
-                               new GestureDetector(
-                                  child: Center(
-                                      child: Text("Select a file",
-                                          style: TextStyle(
-                                              
-                                              color:Color.fromARGB(255, 120, 127, 139),
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              iconSize: 120,
+                              alignment: Alignment.center,
+                              color: Color.fromARGB(255, 5, 81, 212),
+                              icon: const Icon(
+                                Icons.upload_file,
+                                size: 120,
+                              ),
+                              onPressed: selectFile,
+                            ),
+                          ],
+                        ),
+                        new GestureDetector(
+                          child: Center(
+                              child: Text("Select a file",
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 120, 127, 139),
 
-                                                  //Mycolors.mainShadedColorBlue,
-                                             // fontFamily: 'main',
-                                              fontSize: 20),
-                                          textAlign: TextAlign.center)),
-                                  onTap: () {
-                                   selectFile();
-                                  //print("clicked");
-                                  },
-                                ),
+                                      //Mycolors.mainShadedColorBlue,
 
-
-
-
-
-
-                  ],
-                ),
-    ]),
-                ))));
+                                      fontSize: 20),
+                                  textAlign: TextAlign.center)),
+                          onTap: () {
+                            selectFile();
+                            //print("clicked");
+                          },
+                        ),
+                      ],
+                    ),
+                ]),
+              ))));
     } else if (AlreadyUploaded == true) {
       return SafeArea(
         child: Scaffold(
+            appBar: AppBar(
+              title: Text(
+                "GP upload",
+                style: TextStyle(
+                    //  fontFamily: 'bold',
+                    fontSize: 20,
+                    color: Mycolors.mainColorBlack),
+              ),
+              primary: false,
+              centerTitle: true,
+              backgroundColor: Colors.white,
+              elevation: 0,
+              leading: BackButton(
+                color: Colors.black,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => studenthome(2),
+                    ),
+                  );
+                },
+              ),
+            ),
             backgroundColor: Mycolors.BackgroundColor,
             body: Container(
               alignment: Alignment.topCenter,
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 30, bottom: 19),
-                    child: Text(
-                      "GP upload",
-                      style: TextStyle(
-                          color: Mycolors.mainColorBlack,
-                          fontFamily: 'main',
-                          fontSize: 24),
-                    ),
-                  ),
-                  Card(
-                    color: Mycolors.mainShadedColorBlue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(17), // <-- Radius
-                    ),
-                    shadowColor: Color.fromARGB(94, 114, 168, 243),
-                    elevation: 20,
-                    child: Padding(
-                      padding: const EdgeInsets.all(30),
-                      child: Text(
-                        "Your GP document has been uploaded by you or one of your group members along with your social media conctacts.\nYou can edit you socials from your profile.",
-                        overflow: TextOverflow.clip,
-                        style: TextStyle(
-                            color: Mycolors.mainColorWhite,
-                            fontFamily: 'main',
-                            fontSize: 17),
+                    padding: const EdgeInsets.only(top: 20),
+                    child: SizedBox(
+                      width: 360,
+                      child: Card(
+                        color: Mycolors.mainShadedColorBlue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(17), // <-- Radius
+                        ),
+                        shadowColor: Color.fromARGB(94, 114, 168, 243),
+                        elevation: 0,
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Text(
+                              "Your GP document has been uploaded by you or one of your group members along with your social media conctacts.\nYou can edit you socials from your profile.",
+                              overflow: TextOverflow.clip,
+                              style: TextStyle(
+                                  color: Mycolors.mainColorWhite, fontSize: 17),
+                              textAlign: TextAlign.center),
+                        ),
                       ),
                     ),
                   ),
-
-                  
-
-
-
-
-          Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                     children: [
-                                       IconButton(
-                                          iconSize: 60,
-                                          alignment: Alignment.center,
-                                          color: Color.fromARGB(255, 5, 81, 212),
-                                          icon: const Icon(
-                                            Icons.file_open,
-                                            size: 60,
-                                          ),
-                                         
-                                         onPressed: (){ 
-                                         openFile2(
-                                url:Fileurl,
-                                fileName:'${GPname}.pdf',
+                  // SizedBox(
+                  //   height: 160,
+                  // ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                              iconSize: 60,
+                              alignment: Alignment.center,
+                              color: Color.fromARGB(255, 5, 81, 212),
+                              icon: const Icon(
+                                Icons.file_open,
+                                size: 60,
+                              ),
+                              onPressed: () {
+                                openFile2(
+                                  url: Fileurl,
+                                  fileName: '${GPname}.pdf',
                                 );
-                                         }
-                                        ),
-                                     ],
-                                   ),
-                               new GestureDetector(
-                                  child: Center(
-                                      child: Text("View your file",
-                                          style: TextStyle(
-                                              
-                                              color:Color.fromARGB(255, 120, 127, 139),
+                              }),
+                        ],
+                      ),
+                      new GestureDetector(
+                        child: Center(
+                            child: Text("View your file",
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 120, 127, 139),
 
-                                                  //Mycolors.mainShadedColorBlue,
-                                             // fontFamily: 'main',
-                                              fontSize: 20),
-                                          textAlign: TextAlign.center)),
-                                  onTap: () {
-                                    openFile2(
-                                url:Fileurl,
-                                fileName:'${GPname}.pdf',
-                                );
-                                  //print("clicked");
-                                  },
-                                ),
-                  ],
-                ),
+                                    //Mycolors.mainShadedColorBlue,
 
-  
+                                    fontSize: 20),
+                                textAlign: TextAlign.center)),
+                        onTap: () {
+                          openFile2(
+                            url: Fileurl,
+                            fileName: '${GPname}.pdf',
+                          );
+                          //print("clicked");
+                        },
+                      ),
+                    ],
+                  ),
 
-
-
-
-  //CODE
-   const SizedBox(height: 10,),
-           if(CodeLink != '')
-          new RichText(
-                                                text: new TextSpan(
-                                                  //text: 'Meeting Link : ',
-                                                  children: [
-                                                    new TextSpan(
-                                                      // style: defaultText,
-                                                      text: "Github repository link : ",
-                                                      style: TextStyle(
-                                                          color: Mycolors
-                                                              .mainColorBlack,
-                                                          fontFamily: 'main',
-                                                          fontSize: 15),
-                                                    ),
-                                                    new TextSpan(
-                                                      //new TextStyle(color: Colors.blue)
-                                                      text: 'Click here \n',
-                                                      style: TextStyle(
-                                                          color: Colors.blue,
-                                                          fontFamily: 'main',
-                                                          fontSize: 15),
-                                                      recognizer:
-                                                          new TapGestureRecognizer()
-                                                            ..onTap = () {
-                                                              launch(CodeLink); //''+BookedAppointments[index].meetingInfo+''
-                                                            },
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-
-
-
-
-
+                  //CODE
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  if (CodeLink != '')
+                    new RichText(
+                      text: new TextSpan(
+                        //text: 'Meeting Link : ',
+                        children: [
+                          new TextSpan(
+                            // style: defaultText,
+                            text: "Github repository link : ",
+                            style: TextStyle(
+                                color: Mycolors.mainColorBlack, fontSize: 15),
+                          ),
+                          new TextSpan(
+                            //new TextStyle(color: Colors.blue)
+                            text: 'Click here \n',
+                            style: TextStyle(color: Colors.blue, fontSize: 15),
+                            recognizer: new TapGestureRecognizer()
+                              ..onTap = () {
+                                launch(
+                                    CodeLink); //''+BookedAppointments[index].meetingInfo+''
+                              },
+                          ),
+                        ],
+                      ),
+                    ),
                 ],
               ),
             )),
@@ -1045,37 +1082,63 @@ String projectName = groupRef['projectname'];
     } else if (graduationDateArrived == false) {
       return SafeArea(
         child: Scaffold(
+            appBar: AppBar(
+              title: Text(
+                "GP upload",
+                style: TextStyle(
+                    //  fontFamily: 'bold',
+                    fontSize: 20,
+                    color: Mycolors.mainColorBlack),
+              ),
+              primary: false,
+              centerTitle: true,
+              backgroundColor: Colors.white,
+              elevation: 0,
+              leading: BackButton(
+                color: Colors.black,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => studenthome(2),
+                    ),
+                  );
+                },
+              ),
+            ),
             backgroundColor: Mycolors.BackgroundColor,
             body: Container(
               alignment: Alignment.topCenter,
               child: Column(
                 children: [
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 30, bottom: 19),
+                  //   child: Text(
+                  //     "GP upload",
+                  //     style: TextStyle(
+                  //         color: Mycolors.mainColorBlack, fontSize: 24),
+                  //   ),
+                  // ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 30, bottom: 19),
-                    child: Text(
-                      "GP upload",
-                      style: TextStyle(
-                          color: Mycolors.mainColorBlack,
-                          fontFamily: 'main',
-                          fontSize: 24),
-                    ),
-                  ),
-                  Card(
-                    color: Mycolors.mainShadedColorBlue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(17), // <-- Radius
-                    ),
-                    shadowColor: Color.fromARGB(94, 114, 168, 243),
-                    elevation: 20,
-                    child: Padding(
-                      padding: const EdgeInsets.all(30),
-                      child: Text(
-                        "You can't upload you GP document now.\nWait till your finish it, to upload a complete documnet.",
-                        overflow: TextOverflow.clip,
-                        style: TextStyle(
-                            color: Mycolors.mainColorWhite,
-                            fontFamily: 'main',
-                            fontSize: 17),
+                    padding: const EdgeInsets.only(top: 20),
+                    child: SizedBox(
+                      width: 360,
+                      child: Card(
+                        color: Mycolors.mainShadedColorBlue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(17), // <-- Radius
+                        ),
+                        shadowColor: Color.fromARGB(94, 114, 168, 243),
+                        elevation: 0,
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Text(
+                            "You can't upload you GP document now.\nWait till your finish it, to upload a complete documnet.",
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                                color: Mycolors.mainColorWhite, fontSize: 17),
+                          ),
+                        ),
                       ),
                     ),
                   ),

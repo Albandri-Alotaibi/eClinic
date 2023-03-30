@@ -92,6 +92,14 @@ class _viewOneGPState extends State<viewOneGP> {
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
+              title: Text(
+                "${GPname}",
+                style: TextStyle(
+                    //  fontFamily: 'bold',
+                    fontSize: 20,
+                    color: Mycolors.mainColorBlack),
+              ),
+              elevation: 0,
               primary: false,
               centerTitle: true,
               backgroundColor: Colors.white,
