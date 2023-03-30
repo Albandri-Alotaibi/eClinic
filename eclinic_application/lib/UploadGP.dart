@@ -15,6 +15,7 @@ import 'package:get/get.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:path_provider/path_provider.dart';
+import 'model/socialLinks.dart';
 import 'package:open_file/open_file.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:dio/dio.dart';
@@ -53,6 +54,9 @@ class _UploadGPState extends State<UploadGP> {
   late String id;
   var CodeLink = '';
   var AddedGitHubRepository;
+   List<socialLinks> SocialLinks = []; 
+     var Students;
+
 
   void initState() {
     super.initState();
@@ -109,6 +113,35 @@ class _UploadGPState extends State<UploadGP> {
         print("yes2");
         Fileurl = await doc['FileUrl'];
         id = doc.id;
+         
+         //for social media 
+         Students = await doc['students'];
+   for (var i = 0; i < Students.length; i++) {
+      //  final DocumentSnapshot docRef2 = await Students[i].get();
+      final DocumentSnapshot docRef2 = await Students[i]['ref'].get();
+      print(docRef2['firstname']);
+      var haveSocialAccount = docRef2['socialmedia'];
+
+      if (haveSocialAccount != 'None') {
+        print("inside not None");
+        var medType = docRef2['socialmedia'];
+        var link = docRef2['socialmediaaccount'];
+        var Firstname = docRef2['firstname'];
+        setState(() {
+          SocialLinks.add(new socialLinks(
+            studentName: Firstname,
+            mediaType: medType,
+            link: link,
+          ));
+        });
+      }
+    }
+    //end social media 
+
+
+
+
+
 
         final snap4 = await FirebaseFirestore.instance
             .collection("GPlibrary")
@@ -1075,6 +1108,123 @@ class _UploadGPState extends State<UploadGP> {
                         ],
                       ),
                     ),
+                
+                if (SocialLinks.length != 0)
+                Expanded(
+                    child: SizedBox(
+                  height: 50,
+                  child: new GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 200,
+                              childAspectRatio: 3,
+                              crossAxisSpacing: 60,
+                              mainAxisSpacing: 10),
+                      itemCount: SocialLinks.length,
+                      itemBuilder: ((context, index) {
+                        if (index < SocialLinks.length) {
+                          if (SocialLinks[index].mediaType == 'WhatsApp') {
+                            return Container(
+                              child: ListView(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                children: <Widget>[
+                                  Row(
+                                    children: [
+                                      Text('     '),
+                                      GestureDetector(
+                                        onTap: () {
+                                          launch(SocialLinks[index].link);
+                                        },
+                                        child: Image.asset(
+                                          'assets/images/whatsapp.png',
+                                          // name: 'ff',
+                                          width: 40,
+                                          height: 40,
+
+                                          //fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      Text('   ' +
+                                          SocialLinks[index].studentName),
+                                    ],
+                                  ),
+                                  //Text("vvvv")
+                                ],
+                              ),
+                              //Text('xxxxxx')
+                            );
+                          } else if (SocialLinks[index].mediaType ==
+                              'Twitter') {
+                            return Container(
+                              child: ListView(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                children: <Widget>[
+                                  Row(
+                                    children: [
+                                      Text('     '),
+                                      GestureDetector(
+                                        onTap: () {
+                                          launch(SocialLinks[index].link);
+                                        },
+                                        child: Image.asset(
+                                          'assets/images/twitter.png', // On click should redirect to an URL
+                                          width: 40,
+                                          height: 40,
+                                          //fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      Text('   ' +
+                                          SocialLinks[index].studentName),
+                                    ],
+                                  ),
+                                  // Text("vvvv")
+                                ],
+                              ),
+                            );
+                          } else if (SocialLinks[index].mediaType ==
+                              'LinkedIn') {
+                            return Container(
+                              child: ListView(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                children: <Widget>[
+                                  Row(
+                                    children: [
+                                      Text('     '),
+                                      GestureDetector(
+                                        onTap: () {
+                                          launch(SocialLinks[index].link);
+                                        },
+                                        child: Image.asset(
+                                          'assets/images/linkedin.png', // On click should redirect to an URL
+                                          width: 40,
+                                          height: 40,
+                                          //fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      Text('   ' +
+                                          SocialLinks[index].studentName),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            );
+                          } else {
+                            return Row();
+                          }
+                        } else {
+                          return Row();
+                        }
+                      })),
+                )),
+                
+                
+                
+                
+                
+                
                 ],
               ),
             )),
