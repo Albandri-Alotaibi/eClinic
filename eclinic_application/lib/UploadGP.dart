@@ -54,9 +54,8 @@ class _UploadGPState extends State<UploadGP> {
   late String id;
   var CodeLink = '';
   var AddedGitHubRepository;
-   List<socialLinks> SocialLinks = []; 
-     var Students;
-
+  List<socialLinks> SocialLinks = [];
+  var Students;
 
   void initState() {
     super.initState();
@@ -114,37 +113,32 @@ class _UploadGPState extends State<UploadGP> {
         Fileurl = await doc['FileUrl'];
         id = doc.id;
 
-   var group = await doc['group'];
-    final DocumentSnapshot groupRef = await group.get();
+        var group = await doc['group'];
+        final DocumentSnapshot groupRef = await group.get();
 
-         //for social media 
-         Students = await groupRef['students'];
-   for (var i = 0; i < Students.length; i++) {
-      //  final DocumentSnapshot docRef2 = await Students[i].get();
-      final DocumentSnapshot docRef2 = await Students[i]['ref'].get();
-      print(docRef2['firstname']);
-      var haveSocialAccount = docRef2['socialmedia'];
+        //for social media
+        Students = await groupRef['students'];
+        for (var i = 0; i < Students.length; i++) {
+          //  final DocumentSnapshot docRef2 = await Students[i].get();
+          final DocumentSnapshot docRef2 = await Students[i]['ref'].get();
+          print(docRef2['firstname']);
+          var haveSocialAccount = docRef2['socialmedia'];
 
-      if (haveSocialAccount != 'None') {
-        print("inside not None");
-        var medType = docRef2['socialmedia'];
-        var link = docRef2['socialmediaaccount'];
-        var Firstname = docRef2['firstname'];
-        setState(() {
-          SocialLinks.add(new socialLinks(
-            studentName: Firstname,
-            mediaType: medType,
-            link: link,
-          ));
-        });
-      }
-    }
-    //end social media 
-
-
-
-
-
+          if (haveSocialAccount != 'None') {
+            print("inside not None");
+            var medType = docRef2['socialmedia'];
+            var link = docRef2['socialmediaaccount'];
+            var Firstname = docRef2['firstname'];
+            setState(() {
+              SocialLinks.add(new socialLinks(
+                studentName: Firstname,
+                mediaType: medType,
+                link: link,
+              ));
+            });
+          }
+        }
+        //end social media
 
         final snap4 = await FirebaseFirestore.instance
             .collection("GPlibrary")
@@ -386,58 +380,6 @@ class _UploadGPState extends State<UploadGP> {
       showInSnackBar(context, "Only pdf format is acceptable", onError: true);
       //showerror(context, "Only pdf format is acceptable");
     } //end else not pdf
-  }
-
-  showerror(BuildContext context, String msg) {
-    return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Stack(
-        children: [
-          Container(
-            padding: EdgeInsets.all(16),
-            height: 90,
-            decoration: BoxDecoration(
-                color: Color(0xFFC72C41),
-                borderRadius: BorderRadius.all(Radius.circular(20))),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 48,
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Text(
-                      //   "Oh snap!",
-                      //   style: TextStyle(
-                      //     color: Colors.white,
-                      //     fontSize: 12,
-                      //   ),
-                      // ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 12, left: 0),
-                        child: Text(
-                          msg,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 17,
-                          ),
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-    ));
   }
 
 //semester functions
@@ -1069,196 +1011,176 @@ class _UploadGPState extends State<UploadGP> {
                     height: 10,
                   ),
                   if (CodeLink != '')
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          IconButton(
-                              iconSize: 60,
-                              alignment: Alignment.center,
-                              color: Color.fromARGB(255, 5, 81, 212),
-                              icon: const Icon(
-                                Icons.code,
-                                size: 60,
-                              ),
-                              onPressed: () {
-                                 launch(
-                                CodeLink);
-                              }),
-                        ],
-                      ),
-                      new GestureDetector(
-                        child: Center(
-                            child: Text("View your Github repository",
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 120, 127, 139),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            IconButton(
+                                iconSize: 60,
+                                alignment: Alignment.center,
+                                color: Color.fromARGB(255, 5, 81, 212),
+                                icon: const Icon(
+                                  Icons.code,
+                                  size: 60,
+                                ),
+                                onPressed: () {
+                                  launch(CodeLink);
+                                }),
+                          ],
+                        ),
+                        new GestureDetector(
+                          child: Center(
+                              child: Text("View your Github repository",
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 120, 127, 139),
 
-                                    //Mycolors.mainShadedColorBlue,
+                                      //Mycolors.mainShadedColorBlue,
 
-                                    fontSize: 20),
-                                textAlign: TextAlign.center)),
-                        onTap: () {
-                           launch(
-                                CodeLink);
-                        },
-                      ),
-                    ],
-                  ),
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                    // new RichText(
-                    //   text: new TextSpan(
-                    //     //text: 'Meeting Link : ',
-                    //     children: [
-                    //       new TextSpan(
-                    //         // style: defaultText,
-                    //         text: "Github repository link : ",
-                    //         style: TextStyle(
-                    //             color: Mycolors.mainColorBlack, fontSize: 15),
-                    //       ),
-                    //       new TextSpan(
-                    //         //new TextStyle(color: Colors.blue)
-                    //         text: 'Click here \n',
-                    //         style: TextStyle(color: Colors.blue, fontSize: 15),
-                    //         recognizer: new TapGestureRecognizer()
-                    //           ..onTap = () {
-                    //             launch(
-                    //                 CodeLink); //''+BookedAppointments[index].meetingInfo+''
-                    //           },
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                
-                if (SocialLinks.length != 0)
-                Expanded(
-                    child: SizedBox(
-                  height: 50,
-                  child: new GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: 200,
-                              childAspectRatio: 3,
-                              crossAxisSpacing: 60,
-                              mainAxisSpacing: 10),
-                      itemCount: SocialLinks.length,
-                      itemBuilder: ((context, index) {
-                        if (index < SocialLinks.length) {
-                          if (SocialLinks[index].mediaType == 'WhatsApp') {
-                            return Container(
-                              child: ListView(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                children: <Widget>[
-                                  Row(
-                                    children: [
-                                      Text('     '),
-                                      GestureDetector(
-                                        onTap: () {
-                                          launch(SocialLinks[index].link);
-                                        },
-                                        child: Image.asset(
-                                          'assets/images/whatsapp.png',
-                                          // name: 'ff',
-                                          width: 40,
-                                          height: 40,
+                                      fontSize: 20),
+                                  textAlign: TextAlign.center)),
+                          onTap: () {
+                            launch(CodeLink);
+                          },
+                        ),
+                      ],
+                    ),
 
-                                          //fit: BoxFit.cover,
-                                        ),
+                  // new RichText(
+                  //   text: new TextSpan(
+                  //     //text: 'Meeting Link : ',
+                  //     children: [
+                  //       new TextSpan(
+                  //         // style: defaultText,
+                  //         text: "Github repository link : ",
+                  //         style: TextStyle(
+                  //             color: Mycolors.mainColorBlack, fontSize: 15),
+                  //       ),
+                  //       new TextSpan(
+                  //         //new TextStyle(color: Colors.blue)
+                  //         text: 'Click here \n',
+                  //         style: TextStyle(color: Colors.blue, fontSize: 15),
+                  //         recognizer: new TapGestureRecognizer()
+                  //           ..onTap = () {
+                  //             launch(
+                  //                 CodeLink); //''+BookedAppointments[index].meetingInfo+''
+                  //           },
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+
+                  if (SocialLinks.length != 0)
+                    Expanded(
+                        child: SizedBox(
+                      height: 50,
+                      child: new GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 200,
+                                  childAspectRatio: 3,
+                                  crossAxisSpacing: 60,
+                                  mainAxisSpacing: 10),
+                          itemCount: SocialLinks.length,
+                          itemBuilder: ((context, index) {
+                            if (index < SocialLinks.length) {
+                              if (SocialLinks[index].mediaType == 'WhatsApp') {
+                                return Container(
+                                  child: ListView(
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap: true,
+                                    children: <Widget>[
+                                      Row(
+                                        children: [
+                                          Text('     '),
+                                          GestureDetector(
+                                            onTap: () {
+                                              launch(SocialLinks[index].link);
+                                            },
+                                            child: Image.asset(
+                                              'assets/images/whatsapp.png',
+                                              // name: 'ff',
+                                              width: 40,
+                                              height: 40,
+
+                                              //fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          Text('   ' +
+                                              SocialLinks[index].studentName),
+                                        ],
                                       ),
-                                      Text('   ' +
-                                          SocialLinks[index].studentName),
+                                      //Text("vvvv")
                                     ],
                                   ),
-                                  //Text("vvvv")
-                                ],
-                              ),
-                              //Text('xxxxxx')
-                            );
-                          } else if (SocialLinks[index].mediaType ==
-                              'Twitter') {
-                            return Container(
-                              child: ListView(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                children: <Widget>[
-                                  Row(
-                                    children: [
-                                      Text('     '),
-                                      GestureDetector(
-                                        onTap: () {
-                                          launch(SocialLinks[index].link);
-                                        },
-                                        child: Image.asset(
-                                          'assets/images/twitter.png', // On click should redirect to an URL
-                                          width: 40,
-                                          height: 40,
-                                          //fit: BoxFit.cover,
-                                        ),
+                                  //Text('xxxxxx')
+                                );
+                              } else if (SocialLinks[index].mediaType ==
+                                  'Twitter') {
+                                return Container(
+                                  child: ListView(
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap: true,
+                                    children: <Widget>[
+                                      Row(
+                                        children: [
+                                          Text('     '),
+                                          GestureDetector(
+                                            onTap: () {
+                                              launch(SocialLinks[index].link);
+                                            },
+                                            child: Image.asset(
+                                              'assets/images/twitter.png', // On click should redirect to an URL
+                                              width: 40,
+                                              height: 40,
+                                              //fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          Text('   ' +
+                                              SocialLinks[index].studentName),
+                                        ],
                                       ),
-                                      Text('   ' +
-                                          SocialLinks[index].studentName),
+                                      // Text("vvvv")
                                     ],
                                   ),
-                                  // Text("vvvv")
-                                ],
-                              ),
-                            );
-                          } else if (SocialLinks[index].mediaType ==
-                              'LinkedIn') {
-                            return Container(
-                              child: ListView(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                children: <Widget>[
-                                  Row(
-                                    children: [
-                                      Text('     '),
-                                      GestureDetector(
-                                        onTap: () {
-                                          launch(SocialLinks[index].link);
-                                        },
-                                        child: Image.asset(
-                                          'assets/images/linkedin.png', // On click should redirect to an URL
-                                          width: 40,
-                                          height: 40,
-                                          //fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      Text('   ' +
-                                          SocialLinks[index].studentName),
+                                );
+                              } else if (SocialLinks[index].mediaType ==
+                                  'LinkedIn') {
+                                return Container(
+                                  child: ListView(
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap: true,
+                                    children: <Widget>[
+                                      Row(
+                                        children: [
+                                          Text('     '),
+                                          GestureDetector(
+                                            onTap: () {
+                                              launch(SocialLinks[index].link);
+                                            },
+                                            child: Image.asset(
+                                              'assets/images/linkedin.png', // On click should redirect to an URL
+                                              width: 40,
+                                              height: 40,
+                                              //fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          Text('   ' +
+                                              SocialLinks[index].studentName),
+                                        ],
+                                      )
                                     ],
-                                  )
-                                ],
-                              ),
-                            );
-                          } else {
-                            return Row();
-                          }
-                        } else {
-                          return Row();
-                        }
-                      })),
-                )),
-                
-                
-                
-                
-                
-                
+                                  ),
+                                );
+                              } else {
+                                return Row();
+                              }
+                            } else {
+                              return Row();
+                            }
+                          })),
+                    )),
                 ],
               ),
             )),
