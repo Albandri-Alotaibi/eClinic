@@ -259,10 +259,25 @@ class _resetpasswordState extends State<resetpassword> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "Email:",
+                                  style: TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                      color: Mycolors.mainColorBlack,
+                                      fontFamily: 'bold',
+                                      fontSize: 13),
+                                  textAlign: TextAlign.start,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 3,
+                              ),
                               TextFormField(
                                   controller: _emailcontrol,
                                   decoration: InputDecoration(
-                                      labelText: 'Email',
+                                      // labelText: 'Email',
                                       hintText: "Email ",
                                       border: OutlineInputBorder(
                                           borderRadius:

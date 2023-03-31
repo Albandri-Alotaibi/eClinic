@@ -467,51 +467,51 @@ class _facultyListFAQState extends State<facultyListFAQ> {
                           // ]),
                         ]),
                         //--------------------------- end dropdowns
-                        InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, 'addcommonissue');
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: Card(
-                                    color: Mycolors.mainColorWhite,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            17), // <-- Radius
-                                        side: BorderSide(
-                                            color:
-                                                Mycolors.mainShadedColorBlue)),
-                                    shadowColor:
-                                        const Color.fromARGB(94, 114, 168, 243),
-                                    child: Padding(
-                                        padding: const EdgeInsets.all(10),
-                                        child: ListTile(
-                                          title: Text("new common issue",
-                                              style: TextStyle(
-                                                  color:
-                                                      Mycolors.mainColorBlack,
-                                                  fontSize: 18)),
+                        // InkWell(
+                        //   onTap: () {
+                        //     Navigator.pushNamed(context, 'addcommonissue');
+                        //   },
+                        //   child: Container(
+                        //     margin: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                        //     child: Row(
+                        //       crossAxisAlignment: CrossAxisAlignment.start,
+                        //       children: [
+                        //         Expanded(
+                        //           child: Card(
+                        //             color: Mycolors.mainColorWhite,
+                        //             shape: RoundedRectangleBorder(
+                        //                 borderRadius: BorderRadius.circular(
+                        //                     17), // <-- Radius
+                        //                 side: BorderSide(
+                        //                     color:
+                        //                         Mycolors.mainShadedColorBlue)),
+                        //             shadowColor:
+                        //                 const Color.fromARGB(94, 114, 168, 243),
+                        //             child: Padding(
+                        //                 padding: const EdgeInsets.all(10),
+                        //                 child: ListTile(
+                        //                   title: Text("new common issue",
+                        //                       style: TextStyle(
+                        //                           color:
+                        //                               Mycolors.mainColorBlack,
+                        //                           fontSize: 18)),
 
-                                          textColor: Mycolors.mainColorBlack,
-                                          trailing: Icon(
-                                            Icons.add,
-                                            color: Mycolors.mainShadedColorBlue,
-                                          ),
+                        //                   textColor: Mycolors.mainColorBlack,
+                        //                   trailing: Icon(
+                        //                     Icons.add,
+                        //                     color: Mycolors.mainShadedColorBlue,
+                        //                   ),
 
-                                          // fontFamily: 'main',
-                                          // fontWeight: FontWeight.w600
-                                          // ),
-                                        )),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
+                        //                   // fontFamily: 'main',
+                        //                   // fontWeight: FontWeight.w600
+                        //                   // ),
+                        //                 )),
+                        //           ),
+                        //         )
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
                         //show message if no results and still loading or user didnt click search
                         noResults || secondLoading || !searchClicked
                             ? SizedBox(

@@ -171,7 +171,7 @@ class _verficationState extends State<verfication> {
                   onPressed: () {
                     checkemailverfication();
                   },
-                  child: Text("I verified my email "),
+                  child: Text("Done "),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 15, bottom: 40),

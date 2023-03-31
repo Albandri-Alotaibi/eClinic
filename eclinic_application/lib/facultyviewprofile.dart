@@ -17,6 +17,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'style/Mycolors.dart';
 import 'package:quickalert/quickalert.dart';
+import 'package:myapp/screeens/resources/dialog.dart';
 
 class facultyviewprofile extends StatefulWidget {
   const facultyviewprofile({super.key});
@@ -73,6 +74,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
   var collageselectedfromDB;
   var departmentselectedfromDB;
   var fixedselectedsemester;
+  var fixedselctedepartment;
   late String docsforsemestername;
   late String docsforcollage;
   late String docfordepatment;
@@ -167,6 +169,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
     var departmentRef = snap["department"];
     final DocumentSnapshot docRef4 = await departmentRef.get();
     departmentselectedfromDB = docRef4["departmentname"];
+    fixedselctedepartment = docRef4["departmentname"];
 
     checkidd(departmentselectedfromDB);
     checkids(semesterselectedfromDB);
@@ -422,11 +425,26 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                             SizedBox(
                               height: 30,
                             ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "First name:",
+                                style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'bold',
+                                    fontSize: 13),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 3,
+                            ),
                             TextFormField(
                               controller: _fnameController,
                               decoration: InputDecoration(
-                                  labelText: '  First Name',
-                                  // hintText: "Enter your first name",
+                                  // labelText: '  First Name',
+                                  hintText: "Enter the first name",
                                   suffixIcon: Icon(Icons.edit),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(13),
@@ -438,11 +456,11 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                               validator: (value) {
                                 if (value!.isEmpty ||
                                     _fnameController.text.isEmpty) {
-                                  return 'Please enter your frist name ';
+                                  return 'Please enter your first name ';
                                 } else {
                                   if (nameRegExp
                                       .hasMatch(_fnameController.text)) {
-                                    return 'Please frist name only letters accepted ';
+                                    return 'Please first name only letters accepted ';
                                   } else {
                                     if (!(english
                                         .hasMatch(_fnameController.text))) {
@@ -455,11 +473,26 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                             SizedBox(
                               height: 8,
                             ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Last name:",
+                                style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'bold',
+                                    fontSize: 13),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 3,
+                            ),
                             TextFormField(
                               controller: _lnameController,
                               decoration: InputDecoration(
-                                  labelText: '  Last Name',
-                                  // hintText: "Enter your last name",
+                                  // labelText: '  Last Name',
+                                  hintText: "Enter your last name",
                                   suffixIcon: Icon(Icons.edit),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(13),
@@ -488,12 +521,27 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                             SizedBox(
                               height: 8,
                             ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Email:",
+                                style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'bold',
+                                    fontSize: 13),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 3,
+                            ),
                             TextFormField(
                               controller: _emailController,
                               readOnly: true,
                               decoration: InputDecoration(
-                                  // hintText: "Enter your KSU email",
-                                  labelText: ' Email',
+                                  hintText: "Enter the email",
+                                  // labelText: ' Email',
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
@@ -556,11 +604,26 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                             // SizedBox(
                             //   height: 8,
                             // ),
-
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Department:",
+                                style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'bold',
+                                    fontSize: 13),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 3,
+                            ),
                             DropdownButtonFormField<String>(
                               decoration: InputDecoration(
                                 suffixIcon: Icon(Icons.edit),
-                                labelText: ' Department',
+                                // labelText: ' Department',
+                                hintText: "Please choose the department",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(13),
                                     borderSide: const BorderSide(
@@ -599,11 +662,26 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                             SizedBox(
                               height: 8,
                             ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Speciality:",
+                                style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'bold',
+                                    fontSize: 13),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 3,
+                            ),
                             DropDownMultiSelect(
                               decoration: InputDecoration(
                                   suffixIcon: Icon(Icons.edit),
-                                  labelText: " Speciality",
-                                  // hintText: "select your specialty",
+                                  // labelText: " Speciality",
+                                  hintText: "choose the specialty",
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                         color:
@@ -679,10 +757,26 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                             SizedBox(
                               height: 8,
                             ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Semester:",
+                                style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'bold',
+                                    fontSize: 13),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 3,
+                            ),
                             DropdownButtonFormField<String>(
                               decoration: InputDecoration(
                                 suffixIcon: Icon(Icons.edit),
-                                labelText: 'semester',
+                                // labelText: 'semester',
+                                hintText: "Please choose the semester",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(13),
                                     borderSide: const BorderSide(
@@ -832,7 +926,9 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                 if (formkey.currentState!.validate() &&
                                     checklengthforspecialty > 0) {
                                   if (semesterselectedvalue ==
-                                      fixedselectedsemester) {
+                                          fixedselectedsemester &&
+                                      departmentselectedvalue ==
+                                          fixedselctedepartment) {
                                     try {
                                       addfacultyinsemester(specalityid, userid);
                                       FirebaseFirestore.instance
@@ -861,11 +957,22 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                           onError: true);
                                     }
                                   } else {
-                                    confirm(context);
+                                    //if semester changed
+                                    if (semesterselectedvalue !=
+                                        fixedselectedsemester) {
+                                      confirm2(context);
+                                    } else {
+                                      if (departmentselectedvalue !=
+                                          fixedselctedepartment) {
+                                        //dep confirm
+                                        confirm2dep(context);
+                                      }
+                                    }
                                   }
+                                  //if department change
                                 }
                               },
-                              child: Text("Save changes"),
+                              child: Text("Save"),
                             ),
                           ],
                         ); //here
@@ -1067,6 +1174,218 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
 
     // show the dialog
   }
+
+  confirm2(BuildContext context) {
+    // set up the buttons
+    buildShowDialog(
+      context: context,
+      title: 'Warning',
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.sd_card_alert_rounded,
+            size: 80,
+            color: Colors.amber,
+          ),
+          SizedBox(
+            height: 4,
+          ),
+          Text(
+              "Changing your semester will affect your current office hours by deleting them & your appointments by canceling them"),
+          SizedBox(
+            height: 8,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+                  //shadowColor: Colors.blue[900],
+                  elevation: 0,
+                  backgroundColor: Mycolors.mainShadedColorBlue,
+                  minimumSize: Size(60, 40),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10), // <-- Radius
+                  ),
+                ),
+                child: Text("Cancel"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+                  // shadowColor: Colors.blue[900],
+                  elevation: 0,
+                  backgroundColor: Mycolors.mainShadedColorBlue,
+                  minimumSize: Size(70, 40),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10), // <-- Radius
+                  ),
+                ),
+                child: Text("confirm"),
+                onPressed: () async {
+                  if (formkey.currentState!.validate() &&
+                      checklengthforspecialty > 0) {
+                    setState(() {
+                      fn = _fnameController.text;
+                      ln = _lnameController.text;
+                      editfacultyarray(editfacultRefspecailty);
+                      if (checklengthforspecialty < 1) {
+                        isshow = true;
+                      }
+                      if (checklengthforspecialty > 0) {
+                        isshow = false;
+                      }
+                    });
+
+                    try {
+                      addfacultyinsemester(specalityid, userid);
+                      FirebaseFirestore.instance
+                          .collection('faculty')
+                          .doc(userid)
+                          .update({
+                        "firstname": fn,
+                        "lastname": ln,
+                        'department': FirebaseFirestore.instance
+                            .collection("department")
+                            .doc(docfordepatment),
+                        'semester': FirebaseFirestore.instance
+                            .collection("semester")
+                            .doc(docsforsemestername),
+                        "specialty": specalityid,
+                        "availablehours": FieldValue.delete(),
+                      });
+
+                      showInSnackBar(context,
+                          "Your information has been updated successfully ");
+                    } on FirebaseAuthException catch (error) {
+                      showInSnackBar(context, "Something wronge",
+                          onError: true);
+                    }
+                    Navigator.pushNamed(context, 'facultyviewprofile');
+                  }
+                },
+              )
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  confirm2dep(BuildContext context) {
+    // set up the buttons
+    buildShowDialog(
+      context: context,
+      title: 'Warning',
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.sd_card_alert_rounded,
+            size: 80,
+            color: Colors.amber,
+          ),
+          SizedBox(
+            height: 4,
+          ),
+          Text(
+              "Changing your department will affect your current office hours by deleting them & your appointments by canceling them"),
+          SizedBox(
+            height: 8,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+                  //shadowColor: Colors.blue[900],
+                  elevation: 0,
+                  backgroundColor: Mycolors.mainShadedColorBlue,
+                  minimumSize: Size(60, 40),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10), // <-- Radius
+                  ),
+                ),
+                child: Text("Cancel"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+                  // shadowColor: Colors.blue[900],
+                  elevation: 0,
+                  backgroundColor: Mycolors.mainShadedColorBlue,
+                  minimumSize: Size(70, 40),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10), // <-- Radius
+                  ),
+                ),
+                child: Text("confirm"),
+                onPressed: () async {
+                  if (formkey.currentState!.validate() &&
+                      checklengthforspecialty > 0) {
+                    setState(() {
+                      fn = _fnameController.text;
+                      ln = _lnameController.text;
+                      editfacultyarray(editfacultRefspecailty);
+                      if (checklengthforspecialty < 1) {
+                        isshow = true;
+                      }
+                      if (checklengthforspecialty > 0) {
+                        isshow = false;
+                      }
+                    });
+
+                    try {
+                      addfacultyinsemester(specalityid, userid);
+                      FirebaseFirestore.instance
+                          .collection('faculty')
+                          .doc(userid)
+                          .update({
+                        "firstname": fn,
+                        "lastname": ln,
+                        'department': FirebaseFirestore.instance
+                            .collection("department")
+                            .doc(docfordepatment),
+                        'semester': FirebaseFirestore.instance
+                            .collection("semester")
+                            .doc(docsforsemestername),
+                        "specialty": specalityid,
+                        "availablehours": FieldValue.delete(),
+                      });
+
+                      showInSnackBar(context,
+                          "Your information has been updated successfully ");
+                    } on FirebaseAuthException catch (error) {
+                      showInSnackBar(context, "Something wronge",
+                          onError: true);
+                    }
+                    Navigator.pushNamed(context, 'facultyviewprofile');
+                  }
+                },
+              )
+            ],
+          ),
+        ],
+      ),
+    );
+  }
   // Widget buildCoverImage() => Container(
   //       color: Colors.grey,
   //       // child: Image.asset(
@@ -1255,6 +1574,117 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
 
     print(ref);
     print(spe);
+  }
+
+  confirmDep(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        //shadowColor: Colors.blue[900],
+        elevation: 0,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(60, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // set up the AlertDialog
+
+    Widget continueButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+        // shadowColor: Colors.blue[900],
+        elevation: 0,
+        backgroundColor: Mycolors.mainShadedColorBlue,
+        minimumSize: Size(70, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // <-- Radius
+        ),
+      ),
+      child: Text("confirm"),
+      onPressed: () async {
+        if (formkey.currentState!.validate() && checklengthforspecialty > 0) {
+          setState(() {
+            fn = _fnameController.text;
+            ln = _lnameController.text;
+            editfacultyarray(editfacultRefspecailty);
+            if (checklengthforspecialty < 1) {
+              isshow = true;
+            }
+            if (checklengthforspecialty > 0) {
+              isshow = false;
+            }
+          });
+
+          try {
+            addfacultyinsemester(specalityid, userid);
+            FirebaseFirestore.instance
+                .collection('faculty')
+                .doc(userid)
+                .update({
+              "firstname": fn,
+              "lastname": ln,
+              'department': FirebaseFirestore.instance
+                  .collection("department")
+                  .doc(docfordepatment),
+              'semester': FirebaseFirestore.instance
+                  .collection("semester")
+                  .doc(docsforsemestername),
+              "specialty": specalityid,
+              "availablehours": FieldValue.delete(),
+            });
+
+            showInSnackBar(
+                context, "Your information has been updated successfully ");
+          } on FirebaseAuthException catch (error) {
+            showInSnackBar(context, "Something wronge", onError: true);
+          }
+          Navigator.pushNamed(context, 'facultyviewprofile');
+        }
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      title: Text(""),
+      content: SizedBox(
+        height: 100,
+        child: Column(
+          children: [
+            Container(
+              alignment: Alignment.topCenter,
+              child: SizedBox(
+                width: 350,
+              ),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Text(
+                "Changing your department will affect your current office hours by deleting them & your appointments by canceling them"),
+          ],
+        ),
+      ),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+
+    // show the dialog
   }
 
   // showSucessAlert() {

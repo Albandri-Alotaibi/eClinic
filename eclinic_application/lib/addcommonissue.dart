@@ -429,7 +429,7 @@ class _addcommonissueState extends State<addcommonissue> {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  "Issue specialty:",
+                                  "Specialty of the question:",
                                   style: TextStyle(
                                       overflow: TextOverflow.ellipsis,
                                       color: Mycolors.mainColorBlack,
@@ -445,7 +445,7 @@ class _addcommonissueState extends State<addcommonissue> {
                               ),
                               DropdownButtonFormField<String>(
                                 decoration: InputDecoration(
-                                  hintText: ' Choose your specialty : ',
+                                  hintText: ' Choose the specialty  ',
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
@@ -472,7 +472,7 @@ class _addcommonissueState extends State<addcommonissue> {
                                   if (value == null ||
                                       specialityselectedvalue!.isEmpty ||
                                       specialityselectedvalue == null) {
-                                    return 'Please choose your specialty';
+                                    return 'Please choose the specialty of the question';
                                   }
                                 },
                               ),
@@ -483,7 +483,7 @@ class _addcommonissueState extends State<addcommonissue> {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  "Issue title:",
+                                  "Title of the question:",
                                   style: TextStyle(
                                       overflow: TextOverflow.ellipsis,
                                       color: Mycolors.mainColorBlack,
@@ -501,7 +501,7 @@ class _addcommonissueState extends State<addcommonissue> {
                                   controller: _issuetitleconstroller,
                                   decoration: InputDecoration(
                                       // labelText: ' issue title :',
-                                      hintText: "Enter issue title",
+                                      hintText: "Enter the title ",
                                       border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(13),
@@ -519,7 +519,7 @@ class _addcommonissueState extends State<addcommonissue> {
                                   validator: (value) {
                                     if (value!.isEmpty ||
                                         _issuetitleconstroller.text == "") {
-                                      return 'Please enter issue title ';
+                                      return 'Please enter the title of the question ';
                                     } else {
                                       if (!(english.hasMatch(
                                           _issuetitleconstroller.text))) {
@@ -538,7 +538,7 @@ class _addcommonissueState extends State<addcommonissue> {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  "Problem:",
+                                  "Question:",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       overflow: TextOverflow.ellipsis,
@@ -559,7 +559,7 @@ class _addcommonissueState extends State<addcommonissue> {
                                 keyboardType: TextInputType.multiline,
                                 decoration: InputDecoration(
                                     //   labelText: ' problem :',
-                                    hintText: "Enter issue description ",
+                                    hintText: "Enter the question ",
                                     border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(13),
                                         borderSide: const BorderSide(
@@ -570,7 +570,7 @@ class _addcommonissueState extends State<addcommonissue> {
                                 validator: (value) {
                                   if (value!.isEmpty ||
                                       _problemController.text == "") {
-                                    return 'Please enter issue description';
+                                    return 'Please enter the question';
                                   } else {
                                     if (!(english
                                         .hasMatch(_problemController.text))) {
@@ -585,7 +585,7 @@ class _addcommonissueState extends State<addcommonissue> {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  "Solution:",
+                                  "Answer:",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       overflow: TextOverflow.ellipsis,
@@ -606,7 +606,7 @@ class _addcommonissueState extends State<addcommonissue> {
                                 keyboardType: TextInputType.multiline,
                                 decoration: InputDecoration(
                                     // labelText: ' Solution :',
-                                    hintText: "Enter the solution ",
+                                    hintText: "Enter the answer ",
                                     border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(13),
                                         borderSide: const BorderSide(
@@ -617,7 +617,7 @@ class _addcommonissueState extends State<addcommonissue> {
                                 validator: (value) {
                                   if (value!.isEmpty ||
                                       _solutioncontroll.text == "") {
-                                    return 'Please enter the solution';
+                                    return 'Please enter the answer';
                                   } else {
                                     if (!(english
                                         .hasMatch(_solutioncontroll.text))) {
@@ -873,7 +873,7 @@ class _addcommonissueState extends State<addcommonissue> {
                                     }
                                     if (exist == false) {
                                       showInSnackBar(context,
-                                          "Another common issue with same title already exists",
+                                          "Another frequently asked question with the same title already exists",
                                           onError: true);
                                     }
                                   }
@@ -1098,7 +1098,8 @@ class _addcommonissueState extends State<addcommonissue> {
       ),
       child: Text("confirm"),
       onPressed: () async {
-        showInSnackBar(context, "Common issue has been added successfully");
+        showInSnackBar(context,
+            "the frequently asked question has been added successfully");
         if (formkey.currentState!.validate()) {
           problem = _problemController.text;
           solution = _solutioncontroll.text;
@@ -1145,7 +1146,7 @@ class _addcommonissueState extends State<addcommonissue> {
                 height: 8,
               ),
               Text(
-                  "You will add common issue under ${specialityselectedvalue} specialty "),
+                  "You will add frequently asked question under ${specialityselectedvalue} specialty "),
             ],
           ),
         ),

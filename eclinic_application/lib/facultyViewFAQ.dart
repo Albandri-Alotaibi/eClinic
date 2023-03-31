@@ -168,15 +168,7 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                                 color: Color.fromRGBO(21, 70, 160, 1),
                                 fontWeight: FontWeight.w500),
                           ),
-                          const Spacer(),
-                          Text(
-                            "  Semester: ${semester?['semestername']}",
-                            style: TextStyle(
-                                // letterSpacing: 0.1,
-                                fontSize: 14,
-                                color: Color.fromRGBO(21, 70, 160, 1),
-                                fontWeight: FontWeight.w500),
-                          ),
+
                           // Text(
                           //   " ${category?['specialityname']}",
                           //   style: TextStyle(
@@ -186,32 +178,6 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                           //       fontWeight: FontWeight.w500),
                           // )
                         ]),
-                        // const Divider(
-                        //   color: Colors.grey,
-                        //   thickness: 1,
-                        // ),
-                        Row(children: [
-                          // const Icon(
-                          //   Icons.timer,
-                          //   color: Colors.grey,
-                          // ),
-                          // Text(
-                          //   "  Semester: ${semester?['semestername']}",
-                          //   style: TextStyle(
-                          //       // letterSpacing: 0.1,
-                          //       fontSize: 14,
-                          //       color: Color.fromRGBO(21, 70, 160, 1),
-                          //       fontWeight: FontWeight.w500),
-                          // ),
-                          // Text(
-                          //   "${semester?['semestername']}",
-                          //   style: TextStyle(
-                          //       // letterSpacing: 0.1,
-                          //       fontSize: 14,
-                          //       color: Mycolors.mainColorBlack,
-                          //       fontWeight: FontWeight.w500),
-                          // )
-                        ]),
                         const Divider(
                           color: Colors.grey,
                           thickness: 1,
@@ -222,16 +188,7 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                           //   color: Colors.grey,
                           // ),
                           Text(
-                            "  Created by: ${widget.commonIssue['createdby'] ?? ""}",
-                            style: TextStyle(
-                                // letterSpacing: 0.1,
-                                fontSize: 14,
-                                color: Color.fromRGBO(21, 70, 160, 1),
-                                fontWeight: FontWeight.w500),
-                          ),
-                          const Spacer(),
-                          Text(
-                            "  last modified by: ${widget.commonIssue['lastmodified'] ?? ""}",
+                            "  Semester: ${semester?['semestername']}",
                             style: TextStyle(
                                 // letterSpacing: 0.1,
                                 fontSize: 14,
@@ -251,6 +208,7 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                           color: Colors.grey,
                           thickness: 1,
                         ),
+
                         Padding(
                             padding: const EdgeInsets.symmetric(vertical: 20),
                             child: Wrap(children: [
@@ -261,7 +219,7 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                                     color: Colors.red,
                                   ),
                                   Text(
-                                    " Problem:",
+                                    " Question:",
                                     style: TextStyle(
                                       // letterSpacing: 2,
                                       fontSize: 15,
@@ -303,7 +261,7 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                                       color: Colors.green,
                                     ),
                                     Text(
-                                      " Solution:",
+                                      " Answer:",
                                       style: TextStyle(
                                         // letterSpacing: 2,
                                         fontSize: 15,
@@ -415,7 +373,39 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                                   onTap: () => launchUrl(
                                       Uri.parse(widget.commonIssue['links'][item]),
                                       mode: LaunchMode.externalApplication)),
-                          ])
+                          ]),
+                        if (widget.commonIssue['links'] != null &&
+                            widget.commonIssue['links'] is List &&
+                            widget.commonIssue['linkname'] is List &&
+                            widget.commonIssue['links'].isNotEmpty)
+                          const Divider(
+                            color: Colors.grey,
+                            thickness: 1,
+                          ),
+
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "  Created by: ${widget.commonIssue['createdby'] ?? ""}",
+                            style: TextStyle(
+                                // letterSpacing: 0.1,
+                                fontSize: 14,
+                                color: Color.fromRGBO(113, 114, 116, 1),
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
+
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "  Last modified by: ${widget.commonIssue['lastmodified'] ?? ""}",
+                            style: TextStyle(
+                                // letterSpacing: 0.1,
+                                fontSize: 14,
+                                color: Color.fromRGBO(113, 114, 116, 1),
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
 
                         // Container(
                         //   margin: const EdgeInsets.only(top: 16),
