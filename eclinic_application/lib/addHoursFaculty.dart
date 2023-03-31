@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/facultyhome.dart';
+import 'package:myapp/screeens/resources/dialog.dart';
 import 'package:myapp/screeens/resources/snackbar.dart';
 //import 'package:simple_time_range_picker/simple_time_range_picker.dart';
 import 'TimeFiles/simple_time_range_picker.dart';
@@ -316,7 +317,7 @@ class _AddHourState extends State<addHoursFaculty> {
       return SafeArea(
         child: Scaffold(
           backgroundColor: Color.fromARGB(255, 255, 255, 255),
-
+          resizeToAvoidBottomInset: false,
           body: Padding(
             padding: const EdgeInsets.only(top: 20),
             child: Column(children: [
@@ -1066,150 +1067,159 @@ class _AddHourState extends State<addHoursFaculty> {
   } //end delete function
 
   showConfirmationDialog(BuildContext context) {
-    // set up the buttons
-    Widget cancelButton = ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontSize: 16),
-        // shadowColor: Colors.blue[900],
-        elevation: 0,
-        backgroundColor: Mycolors.mainShadedColorBlue,
-        minimumSize: Size(60, 40),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10), // <-- Radius
-        ),
-      ),
-      child: Text("Cancel"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
-
-    // set up the AlertDialog
-
-    Widget continueButton = ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontSize: 16),
-        // shadowColor: Colors.blue[900],
-        elevation: 0,
-        backgroundColor: Mycolors.mainShadedColorBlue,
-        minimumSize: Size(70, 40),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10), // <-- Radius
-        ),
-      ),
-      child: Text("Confirm"),
-      onPressed: () {
-        setState(() {
-          meetingmethod = mettingmethoddrop;
-          mettingmethodinfo = _meetingmethodcontroller.text;
-        });
-        if (formkey.currentState!.validate()) {
-          Confirm();
-        }
-      },
-    );
-    AlertDialog alert = AlertDialog(
-      title: Text("Warning"),
-      content: SizedBox(
-        height: 300,
-        child: Form(
-          key: formkey,
+    buildShowDialog(
+        context: context,
+        title: 'Warning',
+        child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                alignment: Alignment.topCenter,
-                child: SizedBox(
-                  width: 350,
-                  child: DropdownButtonFormField(
-                    decoration: InputDecoration(
-                      // suffixIcon: Icon(Icons.edit),
-                      hintText: "Choose meeting method",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(13.0)),
+              const SizedBox(
+                height: 10,
+              ),
+              const Icon(
+                Icons.sd_card_alert_rounded,
+                size: 60,
+                color: Colors.amber,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                "If you press on confirm that means you approved on the entered hours and you know that you CANNOT updated later for this semester",
+                style: TextStyle(fontSize: 14),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Form(
+                key: formkey,
+                child: Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.topCenter,
+                      child: SizedBox(
+                        // width: 350,
+                        child: DropdownButtonFormField(
+                          decoration: const InputDecoration(
+                            // suffixIcon: Icon(Icons.edit),
+                            hintText: "Choose meeting method",
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(13.0)),
+                            ),
+                          ),
+                          items: const [
+                            DropdownMenuItem(
+                                child: Text("In person metting"),
+                                value: "inperson"),
+                            DropdownMenuItem(
+                                child: Text("Online meeting "),
+                                value: "online"),
+                          ],
+                          onChanged: (value) {
+                            setState(() {
+                              mettingmethoddrop = value;
+                            });
+                          },
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (value) {
+                            if (value == null || mettingmethoddrop == null) {
+                              return 'Please Choose meeting method';
+                            }
+                          },
+                        ),
                       ),
-                      // focusedBorder: OutlineInputBorder(
-                      //     borderRadius: BorderRadius.all(Radius.circular(17.0)),
-                      //     borderSide:
-                      //         BorderSide(color: Mycolors.mainShadedColorBlue)),
                     ),
-                    items: const [
-                      DropdownMenuItem(
-                          child: Text("In person metting"), value: "inperson"),
-                      DropdownMenuItem(
-                          child: Text("Online meeting "), value: "online"),
-                    ],
-                    onChanged: (value) {
-                      setState(() {
-                        mettingmethoddrop = value;
-                      });
-                    },
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value == null || mettingmethoddrop == null) {
-                        return 'Please Choose meeting method';
-                      }
-                    },
-                  ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    SizedBox(
+                      // width: 350,
+                      child: TextFormField(
+                          controller: _meetingmethodcontroller,
+                          decoration: const InputDecoration(
+                            labelText: 'Office number/link',
+                            hintText: "Enter your office number/link",
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(13.0)),
+                            ),
+                          ),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (value) {
+                            if (value!.isEmpty ||
+                                _meetingmethodcontroller.text == "") {
+                              return 'Please enter your office number/link';
+                            } else {
+                              if (!(english
+                                  .hasMatch(_meetingmethodcontroller.text))) {
+                                return "only english is allowed";
+                              }
+                              if (mettingmethoddrop == "online") {
+                                if (!(Linkformat.hasMatch(
+                                    _meetingmethodcontroller.text))) {
+                                  return 'Make sure your link format is correct';
+                                }
+                              }
+                            }
+                          }),
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(
-                height: 8,
-              ),
-              SizedBox(
-                width: 350,
-                child: TextFormField(
-                    controller: _meetingmethodcontroller,
-                    decoration: InputDecoration(
-                      labelText: 'Office number/link',
-                      hintText: "Enter your office number/link",
-                      // suffixIcon: Icon(Icons.edit),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(13.0)),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      textStyle: TextStyle(fontSize: 16),
+                      // shadowColor: Colors.blue[900],
+                      elevation: 0,
+                      backgroundColor: Mycolors.mainShadedColorBlue,
+                      minimumSize: Size(60, 40),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10), // <-- Radius
                       ),
-                      // focusedBorder: OutlineInputBorder(
-                      //     borderRadius: BorderRadius.all(Radius.circular(17.0)),
-                      //     borderSide:
-                      //         BorderSide(color: Mycolors.mainShadedColorBlue)),
                     ),
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value!.isEmpty ||
-                          _meetingmethodcontroller.text == "") {
-                        return 'Please enter your office number/link';
-                      } else {
-                        if (!(english
-                            .hasMatch(_meetingmethodcontroller.text))) {
-                          return "only english is allowed";
-                        }
-                        if (mettingmethoddrop == "online") {
-                          if (!(Linkformat.hasMatch(
-                              _meetingmethodcontroller.text))) {
-                            return 'Make sure your link format is correct';
-                          }
-                        }
+                    child: Text("Cancel"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  SizedBox(
+                    width: 2,
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      textStyle: TextStyle(fontSize: 16),
+                      // shadowColor: Colors.blue[900],
+                      elevation: 0,
+                      backgroundColor: Mycolors.mainShadedColorBlue,
+                      minimumSize: Size(70, 40),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10), // <-- Radius
+                      ),
+                    ),
+                    child: Text("Confirm"),
+                    onPressed: () {
+                      setState(() {
+                        meetingmethod = mettingmethoddrop;
+                        mettingmethodinfo = _meetingmethodcontroller.text;
+                      });
+                      if (formkey.currentState!.validate()) {
+                        Confirm();
                       }
-                    }),
-              ),
-              Text(
-                  "if you press on confirm that means you approved on the entered hours and you know that you CANNOT updated later for this semester"),
+                    },
+                  )
+                ],
+              )
             ],
           ),
-        ),
-      ),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-
-    // show the dialog
+        ));
   }
 
   Confirm() async {
@@ -1222,12 +1232,10 @@ class _AddHourState extends State<addHoursFaculty> {
           TimeOfDay endtime = daysOfHelp[k].hours[i].end;
 
           List<timesWithDates> Ranges = hourDivision(starttime, endtime);
-//var ArrayOfAllTheDayRanges = [];
-//print(ArrayOfAllTheDayRanges.length);
+
           ArrayOfAllTheDayRanges.add(Ranges);
-          //print(ArrayOfAllTheDayRanges.length);
         } //end of generating all ranges for one day
-//print(ArrayOfAllTheDayRanges.length);
+
         OneDayGenerating(daysOfHelp[k].title, ArrayOfAllTheDayRanges);
       } //value true
     } //loop on each day
@@ -1241,36 +1249,6 @@ class _AddHourState extends State<addHoursFaculty> {
   } //end confirm
 
   addAvailableHoursToDB(int x) async {
-    //await
-    // FirebaseFirestore.instance
-    //     .collection("faculty")
-    //     .doc(userid)
-    //     .collection('availableHours')
-    //     .doc(daysOfHelp[x].title)
-    //     .set({
-    //   'Day': daysOfHelp[x].title,
-    // });
-
-    // for (int i = 1; i < daysOfHelp[x].hours.length; i++) {
-
-    //   FirebaseFirestore.instance
-    //       .collection("faculty")
-    //       .doc(userid)
-    //       .collection('availableHours')
-    //       .doc(daysOfHelp[x].title)
-    //       .update({
-
-    //     "HoursString2": FieldValue.arrayUnion([
-    //       {
-    //         'starttime':
-    //             "${daysOfHelp[x].hours[i].start.hour}:${daysOfHelp[x].hours[i].start.minute}",
-    //         'endtime':
-    //             "${daysOfHelp[x].hours[i].end.hour}:${daysOfHelp[x].hours[i].end.minute}",
-    //       }
-    //     ]),
-    //   });
-    // }
-
     List hoursArray = [];
     var dateFormat = DateFormat("h:mm a");
     for (int i = 1; i < daysOfHelp[x].hours.length; i++) {
