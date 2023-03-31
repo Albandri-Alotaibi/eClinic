@@ -320,10 +320,10 @@ class _sState extends State<studenthome> {
                 ),
                 label: 'Book appointment'),
             NavigationDestination(
-                selectedIcon: Icon(Icons.school,
+                selectedIcon: Icon(Icons.menu_book,
                     color: Mycolors.mainShadedColorBlue, size: 27),
                 icon: Icon(
-                  Icons.school,
+                  Icons.menu_book,
                   size: 27,
                   color: Color.fromARGB(108, 0, 0, 0),
                 ),

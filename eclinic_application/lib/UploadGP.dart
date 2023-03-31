@@ -67,7 +67,6 @@ class _UploadGPState extends State<UploadGP> {
     retrievesemester();
     retrieveForAfterUploadView();
     bool isshow = false;
-
   }
 
 // CheckCode2() async{
@@ -105,11 +104,11 @@ class _UploadGPState extends State<UploadGP> {
         .get();
 
 // group
-     group = await snap['group'];
+    group = await snap['group'];
     final DocumentSnapshot groupRef = await group.get();
     print(groupRef['projectname']);
     GPname = groupRef['projectname'];
-    groupid=groupRef.id;
+    groupid = groupRef.id;
 
     //  final snap2 = await group
     //       .snapshots()
@@ -166,8 +165,8 @@ class _UploadGPState extends State<UploadGP> {
           }
         }
         //end social media
- print("11ppppppppppppppppppppppppp");
-          print(endSearchForLink);
+        print("11ppppppppppppppppppppppppp");
+        print(endSearchForLink);
         final snap4 = await FirebaseFirestore.instance
             .collection("GPlibrary")
             .doc(id)
@@ -181,18 +180,17 @@ class _UploadGPState extends State<UploadGP> {
           setState(() {
             endSearchForLink = true;
           });
-        print("*********-ppppppppppppppppppppppppp");
+          print("*********-ppppppppppppppppppppppppp");
           print(endSearchForLink);
-          } else {
+        } else {
           setState(() {
             endSearchForLink = true;
           });
         }
       });
     });
-   print("22-ppppppppppppppppppppppppp");
-          print(endSearchForLink);
-  
+    print("22-ppppppppppppppppppppppppp");
+    print(endSearchForLink);
   } //end method
 
   Future openFile2({required String url, String? fileName}) async {
@@ -313,7 +311,7 @@ class _UploadGPState extends State<UploadGP> {
 
   HasUploadedOrNot() async {
     print("33-ppppppppppppppppppppppppp");
-          print(endSearchForLink);
+    print(endSearchForLink);
     final FirebaseAuth auth = await FirebaseAuth.instance;
     final User? user = await auth.currentUser;
     userid = user!.uid;
@@ -329,10 +327,10 @@ class _UploadGPState extends State<UploadGP> {
     print(groupRef['projectname']);
 
     bool uploadgp = groupRef['uploadgp'];
- 
+
     setState(() {
       AlreadyUploaded = uploadgp;
-      });
+    });
     print("**Uploaded**${AlreadyUploaded}*********");
   }
 
@@ -493,12 +491,10 @@ class _UploadGPState extends State<UploadGP> {
     }
   }
 
+  bool onError = false;
   FocusNode myFocusNode = new FocusNode();
   @override
   Widget build(BuildContext context) {
-    
-  
-
     if ((AlreadyUploaded == false) && (graduationDateArrived == true)) {
       return SafeArea(
           child: Scaffold(
@@ -821,17 +817,19 @@ class _UploadGPState extends State<UploadGP> {
 
                                           ///*******وش فايدتها؟ */
                                           labelText: 'GitHub repository link',
-                                          labelStyle: TextStyle(
-                                              color: myFocusNode.hasFocus
-                                                  ? Mycolors.mainShadedColorBlue
-                                                  : Colors.black),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(13.0)),
-                                              borderSide: BorderSide(
-                                                  width: 2,
-                                                  color: Mycolors
-                                                      .mainShadedColorBlue)),
+                                          // labelStyle: TextStyle(
+                                          //     color: (myFocusNode.hasFocus &&
+                                          //             !onError)
+                                          //         ? Mycolors.mainShadedColorBlue
+                                          //         : (myFocusNode.hasFocus &&
+                                          //                 onError)
+                                          //             ? Mycolors.mainColorRed
+                                          //             : Color.fromARGB(
+                                          //                 133, 0, 0, 0)),
+                                          // focusedBorder: OutlineInputBorder(
+                                          //   borderRadius: BorderRadius.all(
+                                          //       Radius.circular(13.0)),
+                                          // ),
                                           border: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(13),
@@ -843,14 +841,17 @@ class _UploadGPState extends State<UploadGP> {
                                       validator: (value) {
                                         if (value!.isEmpty ||
                                             GitHubController.text == "") {
+                                          onError = true;
                                           return 'Please add GitHub repository link ';
                                         } else {
                                           if (!(GitHubFormat.hasMatch(
                                               GitHubController.text))) {
+                                            onError = true;
                                             return 'Only GitHub link is acceptable';
                                           } else {
                                             if (!(english.hasMatch(
                                                 GitHubController.text))) {
+                                              onError = true;
                                               return "only english is allowed";
                                             }
                                           }
@@ -934,7 +935,8 @@ class _UploadGPState extends State<UploadGP> {
                     ),
                 ]),
               ))));
-    } else if (AlreadyUploaded == true && endSearchForLink! == true) {//&& endSearchForLink! == true
+    } else if (AlreadyUploaded == true && endSearchForLink! == true) {
+      //&& endSearchForLink! == true
       return SafeArea(
         child: Scaffold(
             appBar: AppBar(
@@ -1034,9 +1036,6 @@ class _UploadGPState extends State<UploadGP> {
                                     style: TextStyle(
                                         color:
                                             Color.fromARGB(255, 120, 127, 139),
-
-                                        //Mycolors.mainShadedColorBlue,
-
                                         fontSize: 20),
                                     textAlign: TextAlign.center)),
                             onTap: () {
@@ -1105,205 +1104,190 @@ class _UploadGPState extends State<UploadGP> {
                       ),
                     Spacer(),
                     if (SocialLinks.length != 0)
-                      Card(
-                          color: Color.fromARGB(37, 232, 232, 232),
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(13), // <-- Radius
+                      Column(
+                        children: [
+                          Text(
+                            "Students contact links:",
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 120, 127, 139),
+                                fontSize: 15),
+                          ),
+                          Card(
+                              color: Color.fromARGB(37, 232, 232, 232),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(13), // <-- Radius
 
-                              side: const BorderSide(
-                                  color: Color.fromARGB(255, 211, 211, 211),
-                                  width: 1)),
-                          elevation: 0,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 8, bottom: 8),
-                            child: SizedBox(
-                              //  height: 50,
-                              child: GridView.builder(
-                                  scrollDirection: Axis.vertical,
-                                  shrinkWrap: true,
-                                  gridDelegate:
-                                      const SliverGridDelegateWithMaxCrossAxisExtent(
-                                          maxCrossAxisExtent: 200,
-                                          childAspectRatio: 3,
-                                          crossAxisSpacing: 60,
-                                          mainAxisSpacing: 10),
-                                  itemCount: SocialLinks.length,
-                                  itemBuilder: ((context, index) {
-                                    if (index < SocialLinks.length) {
-                                      if (SocialLinks[index].mediaType ==
-                                          'WhatsApp') {
-                                        return Container(
-                                          child: ListView(
-                                            scrollDirection: Axis.vertical,
-                                            shrinkWrap: true,
-                                            children: <Widget>[
-                                              Row(
-                                                children: [
-                                                  Text('     '),
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      launch(SocialLinks[index]
-                                                          .link);
-                                                    },
-                                                    child: Image.asset(
-                                                      'assets/images/whatsapp.png',
-                                                      // name: 'ff',
-                                                      width: 40,
-                                                      height: 40,
+                                  side: const BorderSide(
+                                      color: Color.fromARGB(255, 211, 211, 211),
+                                      width: 1)),
+                              elevation: 0,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 8, bottom: 8),
+                                child: SizedBox(
+                                  //  height: 50,
+                                  child: GridView.builder(
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      gridDelegate:
+                                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                                              maxCrossAxisExtent: 200,
+                                              childAspectRatio: 3,
+                                              crossAxisSpacing: 60,
+                                              mainAxisSpacing: 10),
+                                      itemCount: SocialLinks.length,
+                                      itemBuilder: ((context, index) {
+                                        if (index < SocialLinks.length) {
+                                          if (SocialLinks[index].mediaType ==
+                                              'WhatsApp') {
+                                            return Container(
+                                              child: ListView(
+                                                scrollDirection: Axis.vertical,
+                                                shrinkWrap: true,
+                                                children: <Widget>[
+                                                  Row(
+                                                    children: [
+                                                      Text('     '),
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          launch(
+                                                              SocialLinks[index]
+                                                                  .link);
+                                                        },
+                                                        child: Image.asset(
+                                                          'assets/images/whatsapp.png',
+                                                          // name: 'ff',
+                                                          width: 40,
+                                                          height: 40,
 
-                                                      //fit: BoxFit.cover,
-                                                    ),
+                                                          //fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                      Text('   ' +
+                                                          SocialLinks[index]
+                                                              .studentName),
+                                                    ],
                                                   ),
-                                                  Text('   ' +
-                                                      SocialLinks[index]
-                                                          .studentName),
+                                                  //Text("vvvv")
                                                 ],
                                               ),
-                                              //Text("vvvv")
-                                            ],
-                                          ),
-                                          //Text('xxxxxx')
-                                        );
-                                      } else if (SocialLinks[index].mediaType ==
-                                          'Twitter') {
-                                        return Container(
-                                          child: ListView(
-                                            scrollDirection: Axis.vertical,
-                                            shrinkWrap: true,
-                                            children: <Widget>[
-                                              Row(
-                                                children: [
-                                                  Text('     '),
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      launch(SocialLinks[index]
-                                                          .link);
-                                                    },
-                                                    child: Image.asset(
-                                                      'assets/images/twitter.png', // On click should redirect to an URL
-                                                      width: 40,
-                                                      height: 40,
-                                                      //fit: BoxFit.cover,
-                                                    ),
+                                              //Text('xxxxxx')
+                                            );
+                                          } else if (SocialLinks[index]
+                                                  .mediaType ==
+                                              'Twitter') {
+                                            return Container(
+                                              child: ListView(
+                                                scrollDirection: Axis.vertical,
+                                                shrinkWrap: true,
+                                                children: <Widget>[
+                                                  Row(
+                                                    children: [
+                                                      Text('     '),
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          launch(
+                                                              SocialLinks[index]
+                                                                  .link);
+                                                        },
+                                                        child: Image.asset(
+                                                          'assets/images/twitter.png', // On click should redirect to an URL
+                                                          width: 40,
+                                                          height: 40,
+                                                          //fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                      Text('   ' +
+                                                          SocialLinks[index]
+                                                              .studentName),
+                                                    ],
                                                   ),
-                                                  Text('   ' +
-                                                      SocialLinks[index]
-                                                          .studentName),
+                                                  // Text("vvvv")
                                                 ],
                                               ),
-                                              // Text("vvvv")
-                                            ],
-                                          ),
-                                        );
-                                      } else if (SocialLinks[index].mediaType ==
-                                          'LinkedIn') {
-                                        return Container(
-                                          child: ListView(
-                                            scrollDirection: Axis.vertical,
-                                            shrinkWrap: true,
-                                            children: <Widget>[
-                                              Row(
-                                                children: [
-                                                  Text('     '),
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      launch(SocialLinks[index]
-                                                          .link);
-                                                    },
-                                                    child: Image.asset(
-                                                      'assets/images/linkedin.png', // On click should redirect to an URL
-                                                      width: 40,
-                                                      height: 40,
-                                                      //fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                  Text('   ' +
-                                                      SocialLinks[index]
-                                                          .studentName),
+                                            );
+                                          } else if (SocialLinks[index]
+                                                  .mediaType ==
+                                              'LinkedIn') {
+                                            return Container(
+                                              child: ListView(
+                                                scrollDirection: Axis.vertical,
+                                                shrinkWrap: true,
+                                                children: <Widget>[
+                                                  Row(
+                                                    children: [
+                                                      Text('     '),
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          launch(
+                                                              SocialLinks[index]
+                                                                  .link);
+                                                        },
+                                                        child: Image.asset(
+                                                          'assets/images/linkedin.png', // On click should redirect to an URL
+                                                          width: 40,
+                                                          height: 40,
+                                                          //fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                      Text('   ' +
+                                                          SocialLinks[index]
+                                                              .studentName),
+                                                    ],
+                                                  )
                                                 ],
-                                              )
-                                            ],
-                                          ),
-                                        );
-                                      } else {
-                                        return Row();
-                                      }
-                                    } else {
-                                      return Row();
-                                    }
-                                  })),
-                            ),
-                          )),
-                   SizedBox(
+                                              ),
+                                            );
+                                          } else {
+                                            return Row();
+                                          }
+                                        } else {
+                                          return Row();
+                                        }
+                                      })),
+                                ),
+                              )),
+                        ],
+                      ),
+                    SizedBox(
                       height: 10,
                     ),
 
-  Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .end,
-                                                      children: [
-                                                        Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  bottom: 7),
-                                                          height: 40,
-                                                          width: 100,
-                                                          child:
-                                                              FloatingActionButton
-                                                                  .extended(
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          30), // <-- Radius
-                                                              side: BorderSide(
-                                                                width: 1,
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        169,
-                                                                        43,
-                                                                        34),
-                                                              ),
-                                                            ),
-                                                            splashColor:
-                                                                Colors.red[900],
-                                                            elevation: 0,
-                                                            foregroundColor:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    255,
-                                                                    255,
-                                                                    255),
-                                                            label: Text(
-                                                              'Delete',
-                                                            ), // <-- Text
-                                                            backgroundColor:
-                                                                Colors.red[900],
-                                                            icon: Icon(
-                                                              // <-- Icon
-                                                              Icons.delete,
-                                                              size: 24.0,
-                                                            ),
-                                                            onPressed: () => {
-                                                              showConfirmationDialog(
-                                                                  context)
-                                                            },
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-
-
-
-
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.only(bottom: 7),
+                          height: 40,
+                          width: 100,
+                          child: FloatingActionButton.extended(
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(30), // <-- Radius
+                              side: BorderSide(
+                                width: 1,
+                                color: Color.fromARGB(255, 169, 43, 34),
+                              ),
+                            ),
+                            splashColor: Colors.red[900],
+                            elevation: 0,
+                            foregroundColor: Color.fromARGB(255, 255, 255, 255),
+                            label: Text(
+                              'Delete',
+                            ), // <-- Text
+                            backgroundColor: Colors.red[900],
+                            icon: Icon(
+                              // <-- Icon
+                              Icons.delete,
+                              size: 24.0,
+                            ),
+                            onPressed: () => {showConfirmationDialog(context)},
+                          ),
+                        ),
+                      ],
+                    ),
 
                     SizedBox(
                       height: 20,
@@ -1381,14 +1365,12 @@ class _UploadGPState extends State<UploadGP> {
             )),
       );
     } else {
-      return  Scaffold(
+      return Scaffold(
           backgroundColor: Colors.white,
           body: Center(
               child: CircularProgressIndicator(
-                  color: Mycolors.mainShadedColorBlue))
-                  
-                  );
-      }
+                  color: Mycolors.mainShadedColorBlue)));
+    }
   } //end build
 
   openFile(PlatformFile file) {
@@ -1401,19 +1383,21 @@ class _UploadGPState extends State<UploadGP> {
       type: QuickAlertType.success,
       title: "Uploaded successfully",
       text: 'Thank you!',
-      onConfirmBtnTap: () {
+      onConfirmBtnTap: () async {
+        await Future.delayed(Duration(seconds: 1));
         Navigator.push(
           context,
           MaterialPageRoute(
-             builder: (context) => studenthome(2),
+            builder: (context) => studenthome(2),
           ),
         );
+        // Navigator.pushReplacement(context,
+        //     MaterialPageRoute(builder: (BuildContext context) => super.widget));
       },
     );
   }
 
   showConfirmationDialog(BuildContext context) async {
-
     Widget dontDeleteAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontSize: 16),
@@ -1444,8 +1428,7 @@ class _UploadGPState extends State<UploadGP> {
       ),
       child: Text("Delete"),
       onPressed: () {
-          DeleteGP();
-          
+        DeleteGP();
       },
     );
     AlertDialog alert = AlertDialog(
@@ -1454,8 +1437,8 @@ class _UploadGPState extends State<UploadGP> {
         child: Form(
           key: formkey,
           child: Column(children: [
-            Text("Deleting your GP will remove it from the GP library.\n Are you sure you want to delete it?\n"),
-            
+            Text(
+                "Deleting your GP will remove it from the GP library.\n Are you sure you want to delete it?\n"),
           ]),
         ),
       ),
@@ -1473,34 +1456,18 @@ class _UploadGPState extends State<UploadGP> {
     );
   } //END FUNCTION
 
- DeleteGP() async {
-   
-  await FirebaseFirestore.instance
-            .collection("GPlibrary")
-            .doc(id)
-            .delete();
+  DeleteGP() async {
+    await FirebaseFirestore.instance.collection("GPlibrary").doc(id).delete();
 
-    FirebaseFirestore.instance
-        .collection("studentgroup")
-        .doc(groupid)
-        .update({
+    FirebaseFirestore.instance.collection("studentgroup").doc(groupid).update({
       'uploadgp': false,
     });
 
-
-
-
- Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => studenthome(2),
-          ),
-        );
-
-   
-
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => studenthome(2),
+      ),
+    );
   } //end delete function
-
-
-
 }

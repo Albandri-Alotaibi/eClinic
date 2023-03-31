@@ -240,135 +240,151 @@ class _viewOneGPState extends State<viewOneGP> {
                   Spacer(),
 
                   if (SocialLinks.length != 0)
-                    Card(
-                        color: Color.fromARGB(0, 232, 232, 232),
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(13), // <-- Radius
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Students contact links:",
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 120, 127, 139),
+                              fontSize: 15),
+                        ),
+                        Card(
+                            color: Color.fromARGB(0, 232, 232, 232),
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(13), // <-- Radius
 
-                            side: const BorderSide(
-                                color: Color.fromARGB(187, 211, 211, 211),
-                                width: 1)),
-                        elevation: 0,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 8, bottom: 8),
-                          child: SizedBox(
-                            child: GridView.builder(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                gridDelegate:
-                                    const SliverGridDelegateWithMaxCrossAxisExtent(
-                                        maxCrossAxisExtent: 200,
-                                        childAspectRatio: 3,
-                                        crossAxisSpacing: 60,
-                                        mainAxisSpacing: 10),
-                                itemCount: SocialLinks.length,
-                                itemBuilder: ((context, index) {
-                                  if (index < SocialLinks.length) {
-                                    if (SocialLinks[index].mediaType ==
-                                        'WhatsApp') {
-                                      return Container(
-                                        child: ListView(
-                                          scrollDirection: Axis.vertical,
-                                          shrinkWrap: true,
-                                          children: <Widget>[
-                                            Row(
-                                              children: [
-                                                Text('     '),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    launch(SocialLinks[index]
-                                                        .link);
-                                                  },
-                                                  child: Image.asset(
-                                                    'assets/images/whatsapp.png',
-                                                    // name: 'ff',
-                                                    width: 40,
-                                                    height: 40,
+                                side: const BorderSide(
+                                    color: Color.fromARGB(187, 211, 211, 211),
+                                    width: 1)),
+                            elevation: 0,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 8, bottom: 8),
+                              child: SizedBox(
+                                child: GridView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap: true,
+                                    gridDelegate:
+                                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                                            maxCrossAxisExtent: 200,
+                                            childAspectRatio: 3,
+                                            crossAxisSpacing: 60,
+                                            mainAxisSpacing: 10),
+                                    itemCount: SocialLinks.length,
+                                    itemBuilder: ((context, index) {
+                                      if (index < SocialLinks.length) {
+                                        if (SocialLinks[index].mediaType ==
+                                            'WhatsApp') {
+                                          return Container(
+                                            child: ListView(
+                                              scrollDirection: Axis.vertical,
+                                              shrinkWrap: true,
+                                              children: <Widget>[
+                                                Row(
+                                                  children: [
+                                                    Text('     '),
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        launch(
+                                                            SocialLinks[index]
+                                                                .link);
+                                                      },
+                                                      child: Image.asset(
+                                                        'assets/images/whatsapp.png',
+                                                        // name: 'ff',
+                                                        width: 40,
+                                                        height: 40,
 
-                                                    //fit: BoxFit.cover,
-                                                  ),
+                                                        //fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                    Text('   ' +
+                                                        SocialLinks[index]
+                                                            .studentName),
+                                                  ],
                                                 ),
-                                                Text('   ' +
-                                                    SocialLinks[index]
-                                                        .studentName),
+                                                //Text("vvvv")
                                               ],
                                             ),
-                                            //Text("vvvv")
-                                          ],
-                                        ),
-                                        //Text('xxxxxx')
-                                      );
-                                    } else if (SocialLinks[index].mediaType ==
-                                        'Twitter') {
-                                      return Container(
-                                        child: ListView(
-                                          scrollDirection: Axis.vertical,
-                                          shrinkWrap: true,
-                                          children: <Widget>[
-                                            Row(
-                                              children: [
-                                                Text('     '),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    launch(SocialLinks[index]
-                                                        .link);
-                                                  },
-                                                  child: Image.asset(
-                                                    'assets/images/twitter.png', // On click should redirect to an URL
-                                                    width: 40,
-                                                    height: 40,
-                                                    //fit: BoxFit.cover,
-                                                  ),
+                                            //Text('xxxxxx')
+                                          );
+                                        } else if (SocialLinks[index]
+                                                .mediaType ==
+                                            'Twitter') {
+                                          return Container(
+                                            child: ListView(
+                                              scrollDirection: Axis.vertical,
+                                              shrinkWrap: true,
+                                              children: <Widget>[
+                                                Row(
+                                                  children: [
+                                                    Text('     '),
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        launch(
+                                                            SocialLinks[index]
+                                                                .link);
+                                                      },
+                                                      child: Image.asset(
+                                                        'assets/images/twitter.png', // On click should redirect to an URL
+                                                        width: 40,
+                                                        height: 40,
+                                                        //fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                    Text('   ' +
+                                                        SocialLinks[index]
+                                                            .studentName),
+                                                  ],
                                                 ),
-                                                Text('   ' +
-                                                    SocialLinks[index]
-                                                        .studentName),
+                                                // Text("vvvv")
                                               ],
                                             ),
-                                            // Text("vvvv")
-                                          ],
-                                        ),
-                                      );
-                                    } else if (SocialLinks[index].mediaType ==
-                                        'LinkedIn') {
-                                      return Container(
-                                        child: ListView(
-                                          scrollDirection: Axis.vertical,
-                                          shrinkWrap: true,
-                                          children: <Widget>[
-                                            Row(
-                                              children: [
-                                                Text('     '),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    launch(SocialLinks[index]
-                                                        .link);
-                                                  },
-                                                  child: Image.asset(
-                                                    'assets/images/linkedin.png', // On click should redirect to an URL
-                                                    width: 40,
-                                                    height: 40,
-                                                    //fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                                Text('   ' +
-                                                    SocialLinks[index]
-                                                        .studentName),
+                                          );
+                                        } else if (SocialLinks[index]
+                                                .mediaType ==
+                                            'LinkedIn') {
+                                          return Container(
+                                            child: ListView(
+                                              scrollDirection: Axis.vertical,
+                                              shrinkWrap: true,
+                                              children: <Widget>[
+                                                Row(
+                                                  children: [
+                                                    Text('     '),
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        launch(
+                                                            SocialLinks[index]
+                                                                .link);
+                                                      },
+                                                      child: Image.asset(
+                                                        'assets/images/linkedin.png', // On click should redirect to an URL
+                                                        width: 40,
+                                                        height: 40,
+                                                        //fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                    Text('   ' +
+                                                        SocialLinks[index]
+                                                            .studentName),
+                                                  ],
+                                                )
                                               ],
-                                            )
-                                          ],
-                                        ),
-                                      );
-                                    } else {
-                                      return Row();
-                                    }
-                                  } else {
-                                    return Row();
-                                  }
-                                })),
-                          ),
-                        )),
+                                            ),
+                                          );
+                                        } else {
+                                          return Row();
+                                        }
+                                      } else {
+                                        return Row();
+                                      }
+                                    })),
+                              ),
+                            )),
+                      ],
+                    ),
                   const SizedBox(
                     height: 20,
                   ),
