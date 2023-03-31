@@ -39,6 +39,8 @@ import 'package:myapp/screeens/signUp/screen_shoss_group.dart';
 import 'package:myapp/screeens/signUp/studentsignup.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'UploadGPG.dart';
+
 Future<void> _firebaseMsgBackgroundHanler(RemoteMessage message) async {
   print("handling msg ${message.messageId}");
 }
@@ -122,6 +124,7 @@ class MyApp extends StatelessWidget {
               'StudentViewBookedAppointment': (context) =>
                   StudentViewBookedAppointment(),
               'UploadGP': (context) => UploadGP(),
+              'UploadGPG': (context) => UploadGPG(),
               'addcommonissue': (context) => addcommonissue(),
               'viewGPlibrary': (context) => viewGPlibrary(),
               'commonIssuesList': (context) => CommonIssuesListScreen(),

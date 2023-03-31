@@ -20,13 +20,13 @@ import 'package:open_file/open_file.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:dio/dio.dart';
 
-class UploadGP extends StatefulWidget {
-  const UploadGP({super.key});
+class UploadGPG extends StatefulWidget {
+  const UploadGPG({super.key});
   @override
-  State<UploadGP> createState() => _UploadGPState();
+  State<UploadGPG> createState() => _UploadGPGState();
 }
 
-class _UploadGPState extends State<UploadGP> {
+class _UploadGPGState extends State<UploadGPG> {
   RegExp english = RegExp("^[\u0000-\u007F]+\$");
   final GitHubController = TextEditingController();
   bool checkboxvalue = false;
@@ -42,8 +42,6 @@ class _UploadGPState extends State<UploadGP> {
   var checklengthforcategory = 0;
   bool isshow = false;
   bool? AlreadyUploaded;
-  bool? graduationDateArrived;
-  //bool categoryselected=false;
   List category = [];
   List gpcategoryname = [];
   final formkey = GlobalKey<FormState>();
@@ -62,7 +60,7 @@ class _UploadGPState extends State<UploadGP> {
   void initState() {
     super.initState();
     HasUploadedOrNot();
-    graduationDateCheck();
+   
     retrivegpcategory();
     retrievesemester();
     retrieveForAfterUploadView();
@@ -100,7 +98,7 @@ class _UploadGPState extends State<UploadGP> {
     email = user.email!;
 
     final snap = await FirebaseFirestore.instance
-        .collection("student")
+        .collection("graduate")
         .doc(userid)
         .get();
 
@@ -279,37 +277,7 @@ class _UploadGPState extends State<UploadGP> {
     }
   }
 
-  graduationDateCheck() async {
-    final FirebaseAuth auth = await FirebaseAuth.instance;
-    final User? user = await auth.currentUser;
-    userid = user!.uid;
-    email = user.email!;
-
-    final snap = await FirebaseFirestore.instance
-        .collection("student")
-        .doc(userid)
-        .get();
-
-// group
-    var group = await snap['group'];
-    final DocumentSnapshot groupRef = await group.get();
-    print(groupRef['projectname']);
-
-    DateTime now = new DateTime.now();
-    Timestamp t = groupRef['Projectcompletiondate'] as Timestamp;
-    DateTime graduationDate = t.toDate();
-
-    if (now.isAfter(graduationDate)) {
-      setState(() {
-        graduationDateArrived = true;
-      });
-    } else {
-      setState(() {
-        graduationDateArrived = false;
-      });
-    }
-    print("**Grad date**${graduationDateArrived}*********");
-  } //end function grad date
+ 
 
   HasUploadedOrNot() async {
     print("33-ppppppppppppppppppppppppp");
@@ -320,7 +288,7 @@ class _UploadGPState extends State<UploadGP> {
     email = user.email!;
 
     final snap = await FirebaseFirestore.instance
-        .collection("student")
+        .collection("graduate")
         .doc(userid)
         .get();
 
@@ -340,21 +308,11 @@ class _UploadGPState extends State<UploadGP> {
 
   Future uploadFile() async {
     final snap = await FirebaseFirestore.instance
-        .collection("student")
+        .collection("graduate")
         .doc(userid)
         .get();
 
-// final snap = await FirebaseFirestore.instance
-//         .collection("student")
-//         .doc(userid)
-//         .update({
-//       'uploadgp': true,
-//     });
 
-// var group=await snap['group'];
-// final DocumentSnapshot groupRef = await group.get();
-
-//COULD BE WRONG**************make group abload true*************************** THE COMMENT ONE ABOVE IS THE OLD
     final snap4 = await snap['group'].update({
       'uploadgp': true,
     });
@@ -499,7 +457,7 @@ class _UploadGPState extends State<UploadGP> {
     
   
 
-    if ((AlreadyUploaded == false) && (graduationDateArrived == true)) {
+    if ((AlreadyUploaded == false)) {
       return SafeArea(
           child: Scaffold(
               appBar: AppBar(
@@ -934,7 +892,7 @@ class _UploadGPState extends State<UploadGP> {
                     ),
                 ]),
               ))));
-    } else if (AlreadyUploaded == true && endSearchForLink! == true) {//&& endSearchForLink! == true
+    } else if (AlreadyUploaded == true && endSearchForLink! == true) {
       return SafeArea(
         child: Scaffold(
             appBar: AppBar(
@@ -1313,73 +1271,6 @@ class _UploadGPState extends State<UploadGP> {
               ),
             )),
       );
-    } else if (graduationDateArrived == false) {
-      return SafeArea(
-        child: Scaffold(
-            appBar: AppBar(
-              title: Text(
-                "GP upload",
-                style: TextStyle(
-                    //  fontFamily: 'bold',
-                    fontSize: 20,
-                    color: Mycolors.mainColorBlack),
-              ),
-              primary: false,
-              centerTitle: true,
-              backgroundColor: Colors.white,
-              elevation: 0,
-              leading: BackButton(
-                color: Colors.black,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => studenthome(2),
-                    ),
-                  );
-                },
-              ),
-            ),
-            backgroundColor: Mycolors.BackgroundColor,
-            body: Container(
-              alignment: Alignment.topCenter,
-              child: Column(
-                children: [
-                  // Padding(
-                  //   padding: const EdgeInsets.only(top: 30, bottom: 19),
-                  //   child: Text(
-                  //     "GP upload",
-                  //     style: TextStyle(
-                  //         color: Mycolors.mainColorBlack, fontSize: 24),
-                  //   ),
-                  // ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: SizedBox(
-                      width: 360,
-                      child: Card(
-                        color: Mycolors.mainShadedColorBlue,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(17), // <-- Radius
-                        ),
-                        shadowColor: Color.fromARGB(94, 114, 168, 243),
-                        elevation: 0,
-                        child: Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Text(
-                            "You can't upload you GP document now.\nWait till your finish it, to upload a complete documnet.",
-                            overflow: TextOverflow.clip,
-                            style: TextStyle(
-                                color: Mycolors.mainColorWhite, fontSize: 17),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )),
-      );
     } else {
       return  Scaffold(
           backgroundColor: Colors.white,
@@ -1405,7 +1296,7 @@ class _UploadGPState extends State<UploadGP> {
         Navigator.push(
           context,
           MaterialPageRoute(
-             builder: (context) => studenthome(2),
+             builder: (context) =>  UploadGPG(),
           ),
         );
       },
@@ -1493,7 +1384,7 @@ class _UploadGPState extends State<UploadGP> {
  Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => studenthome(2),
+            builder: (context) => UploadGPG() ,
           ),
         );
 
