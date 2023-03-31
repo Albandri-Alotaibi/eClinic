@@ -85,12 +85,27 @@ class _loginState extends State<login> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Email:",
+                              style: TextStyle(
+                                  overflow: TextOverflow.ellipsis,
+                                  color: Mycolors.mainColorBlack,
+                                  fontFamily: 'bold',
+                                  fontSize: 13),
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 3,
+                          ),
                           TextFormField(
                               controller: _emailController,
                               decoration: InputDecoration(
-                                labelText: ' Email : ',
+                                // labelText: ' Email : ',
                                 prefixIcon: Icon(Icons.email),
-                                hintText: "Enter your KSU email ",
+                                hintText: "Enter the email ",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(13),
                                     borderSide: const BorderSide(
@@ -102,7 +117,7 @@ class _loginState extends State<login> {
                               validator: (value) {
                                 if (value!.isEmpty ||
                                     _emailController.text == "") {
-                                  return 'Please enter your KSU email ';
+                                  return 'Please enter your email ';
                                 } else {
                                   if (!(english
                                       .hasMatch(_emailController.text))) {
@@ -113,11 +128,26 @@ class _loginState extends State<login> {
                           SizedBox(
                             height: 15,
                           ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Password:",
+                              style: TextStyle(
+                                  overflow: TextOverflow.ellipsis,
+                                  color: Mycolors.mainColorBlack,
+                                  fontFamily: 'bold',
+                                  fontSize: 13),
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 3,
+                          ),
                           TextFormField(
                               controller: _passwordController,
                               decoration: InputDecoration(
-                                  labelText: 'Password:',
-                                  hintText: "Enter your password",
+                                  // labelText: 'Password:',
+                                  hintText: "Enter the password",
                                   prefixIcon: Icon(Icons.lock),
                                   suffixIcon: GestureDetector(
                                     onTap: (() {
@@ -140,7 +170,7 @@ class _loginState extends State<login> {
                               validator: (value) {
                                 if (value!.isEmpty ||
                                     _passwordController.text == "") {
-                                  return 'Please enter password ';
+                                  return 'Please enter your password ';
                                 } else {
                                   return null;
                                 }
