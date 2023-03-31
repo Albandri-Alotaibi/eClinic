@@ -149,6 +149,7 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
         title: "Common Issues",
         home: SafeArea(
           child: Scaffold(
+              backgroundColor: Colors.white,
               //show the app bar above
               // appBar: AppBar(
               //   title: const Text("Common Issues"),
@@ -365,7 +366,7 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
           children: [
             Expanded(
               child: Card(
-                color: Mycolors.mainColorBlue,
+                color: Mycolors.mainShadedColorBlue,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(17), // <-- Radius
                 ),

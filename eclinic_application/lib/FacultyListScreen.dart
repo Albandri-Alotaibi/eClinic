@@ -186,31 +186,31 @@ class FacultyListScreenState extends State<FacultyListScreen> {
         home: SafeArea(
           child: Scaffold(
               backgroundColor: Colors.white,
-              appBar: AppBar(
-                primary: false,
-                centerTitle: true,
-                backgroundColor: Mycolors.mainColorWhite,
-                shadowColor: Colors.transparent,
-                iconTheme: const IconThemeData(
-                  color:
-                      Color.fromARGB(255, 12, 12, 12), //change your color here
-                ),
-                title: const Text("Schedule An Appointment"),
-                titleTextStyle: TextStyle(
-                  fontFamily: 'main',
-                  fontSize: 20,
-                  color: Mycolors.mainColorBlack,
-                ),
-                // leading: InkWell(
-                //   onTap: () {
-                //     Navigator.pop(this.context);
-                //   },
-                //   child: const Icon(
-                //     Icons.arrow_back,
-                //     color: Colors.black54,
-                //   ),
-                // ),
-              ),
+              // appBar: AppBar(
+              //   primary: false,
+              //   centerTitle: true,
+              //   backgroundColor: Mycolors.mainColorWhite,
+              //   shadowColor: Colors.transparent,
+              //   iconTheme: const IconThemeData(
+              //     color:
+              //         Color.fromARGB(255, 12, 12, 12), //change your color here
+              //   ),
+              //   title: const Text("Schedule An Appointment"),
+              //   titleTextStyle: TextStyle(
+              //     fontFamily: 'main',
+              //     fontSize: 20,
+              //     color: Mycolors.mainColorBlack,
+              //   ),
+              //   // leading: InkWell(
+              //   //   onTap: () {
+              //   //     Navigator.pop(this.context);
+              //   //   },
+              //   //   child: const Icon(
+              //   //     Icons.arrow_back,
+              //   //     color: Colors.black54,
+              //   //   ),
+              //   // ),
+              // ),
               body: loading || dropdownvalue == null
                   ? const Center(
                       child: CircularProgressIndicator(),

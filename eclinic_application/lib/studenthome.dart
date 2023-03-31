@@ -99,9 +99,9 @@ class _sState extends State<studenthome> {
     ];
     final List<String> appbar = [
       "Booked Appointments",
-      "Schedule appointment",
-      "GP library",
-      "Common Issues"
+      "Schedule An Appointment",
+      "GP Library",
+      "FAQ"
     ];
 
     return SafeArea(
@@ -131,15 +131,45 @@ class _sState extends State<studenthome> {
           ),
           actions: [
             if (widget.selectedIndex == 2)
-              IconButton(
-                icon: const Icon(
-                  Icons.add,
-                  color: Colors.green,
+              // ElevatedButton.icon(
+              //   label: Text(
+              //     'ْUplaod',
+              //   ), // <-- Text
+
+              //   icon: Icon(
+              //     // <-- Icon
+              //     Icons.upload,
+              //     size: 24.0,
+              //   ),
+              //   style: ElevatedButton.styleFrom(
+              //     backgroundColor: Color.fromARGB(0, 255, 255, 255),
+              //     foregroundColor: Color.fromARGB(255, 23, 44, 182),
+              //     elevation: 0,
+              //     shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(30), // <-- Radius
+              //     ),
+              //   ),
+              //   onPressed: () => {
+              //     Navigator.pushNamed(context, 'UploadGP')
+              //     // CancelAppointment(index)
+              //   },
+              // ),
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircleAvatar(
+                  backgroundColor: Mycolors.mainShadedColorBlue,
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.upload,
+                      color: Color.fromARGB(255, 255, 255, 255),
+                    ),
+                    onPressed: () {
+                      // handle the press
+                      Navigator.pushNamed(context, 'UploadGP');
+                    },
+                  ),
                 ),
-                onPressed: () {
-                  // handle the press
-                  Navigator.pushNamed(context, 'UploadGP');
-                },
               ),
           ]),
       backgroundColor: Colors.white,
@@ -306,7 +336,7 @@ class _sState extends State<studenthome> {
                   size: 27,
                   color: Color.fromARGB(108, 0, 0, 0),
                 ),
-                label: 'Common Issues'),
+                label: 'FAQ'),
           ],
         ),
       ),
