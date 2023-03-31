@@ -62,11 +62,7 @@ class _fState extends State<facultyhome> {
     facultyListFAQ(),
   ];
 
-  final List<String> appbar = [
-    "Booked Appointments",
-    "Help Desk Hours",
-    "Common Issues"
-  ];
+  final List<String> appbar = ["Booked Appointments", "Help Desk Hours", "FAQ"];
   @override
   Widget build(BuildContext context) {
     body:
@@ -101,15 +97,43 @@ class _fState extends State<facultyhome> {
             ),
             actions: [
               if (widget.selectedIndex == 2)
-                IconButton(
-                  icon: const Icon(
-                    Icons.add,
-                    color: Colors.green,
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Container(
+                    padding: const EdgeInsets.only(bottom: 7),
+                    height: 20,
+                    width: 100,
+                    child: FloatingActionButton.extended(
+                      heroTag: "btn2",
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30), // <-- Radius
+                        side: BorderSide(
+                          width: 0,
+                          color: Color.fromRGBO(255, 255, 255, 1),
+                        ),
+                      ),
+                      splashColor: Mycolors.mainColorGreen,
+                      elevation: 0,
+                      foregroundColor: Colors.green,
+                      label: Text(
+                        'Add',
+                        style: TextStyle(
+                          color: Colors.green,
+                        ),
+                      ), // <-- Text
+                      backgroundColor: Color.fromRGBO(255, 255, 255, 1),
+
+                      icon: Icon(
+                        // <-- Icon
+                        Icons.add,
+                        color: Colors.green,
+                        size: 20.0,
+                      ),
+                      onPressed: (() {
+                        Navigator.pushNamed(context, 'addcommonissue');
+                      }),
+                    ),
                   ),
-                  tooltip: 'Open shopping cart',
-                  onPressed: () {
-                    // handle the press
-                  },
                 ),
             ]),
         backgroundColor: Color.fromARGB(255, 255, 255, 255),
@@ -309,7 +333,7 @@ class _fState extends State<facultyhome> {
                     size: 27,
                     color: Color.fromARGB(108, 0, 0, 0),
                   ),
-                  label: 'Common Issues'),
+                  label: 'FAQ'),
             ],
           ),
         ),

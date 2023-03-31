@@ -42,6 +42,7 @@ class _editFAQState extends State<editFAQ> {
     // TODO: implement initState
     super.initState();
     getcommonissue();
+    createdname();
     getlink();
     getfacultysemester();
   }
@@ -76,6 +77,9 @@ class _editFAQState extends State<editFAQ> {
   final _linkcontroll = TextEditingController();
   final _linknamecontroll = TextEditingController();
   RegExp english = RegExp("^[\u0000-\u007F]+\$");
+  var fname;
+  var lname;
+  var fullname;
 
   getcommonissue() async {
     snap = await FirebaseFirestore.instance
@@ -192,6 +196,19 @@ class _editFAQState extends State<editFAQ> {
     } catch (e) {
       return null;
     }
+  }
+
+  createdname() async {
+    final snap = await FirebaseFirestore.instance
+        .collection('faculty')
+        .doc(userid)
+        .get();
+    fname = snap['firstname'];
+    lname = snap['lastname'];
+    print("ggggggggggggggggggggggggggggggggggggggg");
+    print(fname);
+    fullname = fname + " " + lname;
+    print(fullname);
   }
 
   Widget build(BuildContext context) {
@@ -429,7 +446,7 @@ class _editFAQState extends State<editFAQ> {
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "Problem:",
+                                "Question:",
                                 style: TextStyle(
                                     overflow: TextOverflow.ellipsis,
                                     color: Mycolors.mainColorBlack,
@@ -450,7 +467,7 @@ class _editFAQState extends State<editFAQ> {
                               decoration: InputDecoration(
                                   suffixIcon: Icon(Icons.edit),
                                   // labelText: ' problem :',
-                                  hintText: "Enter issue description ",
+                                  hintText: "Enter the question ",
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
@@ -461,7 +478,7 @@ class _editFAQState extends State<editFAQ> {
                               validator: (value) {
                                 if (value!.isEmpty ||
                                     _problemController.text == "") {
-                                  return 'Please enter issue description';
+                                  return 'Please enter the question';
                                 } else {
                                   if (!(english
                                       .hasMatch(_problemController.text))) {
@@ -476,7 +493,7 @@ class _editFAQState extends State<editFAQ> {
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "Solution:",
+                                "Answer:",
                                 style: TextStyle(
                                     overflow: TextOverflow.ellipsis,
                                     color: Mycolors.mainColorBlack,
@@ -497,7 +514,7 @@ class _editFAQState extends State<editFAQ> {
                               decoration: InputDecoration(
                                   suffixIcon: Icon(Icons.edit),
                                   // labelText: ' Solution :',
-                                  hintText: "Enter the solution ",
+                                  hintText: "Enter the answer ",
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
@@ -508,7 +525,7 @@ class _editFAQState extends State<editFAQ> {
                               validator: (value) {
                                 if (value!.isEmpty ||
                                     _solutioncontroll.text == "") {
-                                  return 'Please enter the solution';
+                                  return 'Please enter the answer';
                                 } else {
                                   if (!(english
                                       .hasMatch(_solutioncontroll.text))) {
@@ -964,18 +981,38 @@ class _editFAQState extends State<editFAQ> {
               SizedBox(
                 height: 8,
               ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "URL",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      overflow: TextOverflow.ellipsis,
+                      color: Mycolors.mainColorBlack,
+                      // fontFamily: 'bold',
+                      fontSize: 13),
+                  textAlign: TextAlign.start,
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
               SizedBox(
                 width: 350,
                 child: TextFormField(
                     controller: _linknamecontroll,
                     decoration: InputDecoration(
-                        labelText: 'URL name',
+                        // labelText: 'URL name',
                         hintText: "Enter the url name  ",
-                        border: OutlineInputBorder()),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(13),
+                            borderSide: const BorderSide(
+                              width: 0,
+                            ))),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value!.isEmpty || _linknamecontroll.text == "") {
-                        return 'Please enter the link name';
+                        return 'Please enter the url name';
                       } else {
                         if (!(english.hasMatch(_linknamecontroll.text))) {
                           return "only english is allowed";
@@ -986,14 +1023,34 @@ class _editFAQState extends State<editFAQ> {
               SizedBox(
                 height: 8,
               ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "URL",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      overflow: TextOverflow.ellipsis,
+                      color: Mycolors.mainColorBlack,
+                      // fontFamily: 'bold',
+                      fontSize: 13),
+                  textAlign: TextAlign.start,
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
               SizedBox(
                 width: 350,
                 child: TextFormField(
                     controller: _linkcontroll,
                     decoration: InputDecoration(
-                        labelText: 'Link',
+                        // labelText: 'Li',
                         hintText: "Paste the link ",
-                        border: OutlineInputBorder()),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(13),
+                            borderSide: const BorderSide(
+                              width: 0,
+                            ))),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value!.isEmpty || _linkcontroll.text == "") {
@@ -1147,6 +1204,7 @@ class _editFAQState extends State<editFAQ> {
               'linkname': linkname,
               'semester': semesterref,
               'filesurl': filsbefordownload,
+              'lastmodified': fullname,
             });
 
             // Fluttertoast.showToast(

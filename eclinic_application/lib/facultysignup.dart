@@ -429,27 +429,32 @@ class _facultysignupState extends State<facultysignup> {
                             SizedBox(
                               height: 10,
                             ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "First name:",
+                                style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'bold',
+                                    fontSize: 13),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 3,
+                            ),
+
                             TextFormField(
                               controller: _fnameController,
                               decoration: InputDecoration(
                                   // labelText: ' First Name :',
-                                  hintText: "Enter your first name",
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Mycolors.mainColorGray),
-                                    borderRadius: BorderRadius.circular(13),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Mycolors.mainColorRed),
-                                    borderRadius: BorderRadius.circular(13),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Mycolors.mainShadedColorBlue,
-                                    ),
-                                    borderRadius: BorderRadius.circular(13),
-                                  )),
+                                  hintText: "Enter the first name",
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(13),
+                                      borderSide: const BorderSide(
+                                        width: 0,
+                                      ))),
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               validator: (value) {
@@ -472,11 +477,26 @@ class _facultysignupState extends State<facultysignup> {
                             SizedBox(
                               height: 8,
                             ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Last name:",
+                                style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'bold',
+                                    fontSize: 13),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 3,
+                            ),
                             TextFormField(
                               controller: _lnameController,
                               decoration: InputDecoration(
                                   // labelText: ' Last Name : ',
-                                  hintText: "Enter your last name",
+                                  hintText: "Enter the last name",
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
@@ -504,11 +524,26 @@ class _facultysignupState extends State<facultysignup> {
                             SizedBox(
                               height: 8,
                             ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Email:",
+                                style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'bold',
+                                    fontSize: 13),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 3,
+                            ),
                             TextFormField(
                               controller: _emailController,
                               decoration: InputDecoration(
-                                  hintText: "Enter your email",
-                                  labelText: '  Email :',
+                                  hintText: "Enter the email",
+                                  // labelText: '  Email :',
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
@@ -531,11 +566,26 @@ class _facultysignupState extends State<facultysignup> {
                             SizedBox(
                               height: 8,
                             ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Password:",
+                                style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'bold',
+                                    fontSize: 13),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 3,
+                            ),
                             TextFormField(
                                 controller: _passwordController,
                                 decoration: InputDecoration(
-                                    labelText: ' Password :',
-                                    hintText: "Enter your Password",
+                                    // labelText: ' Password :',
+                                    hintText: "Enter the password",
                                     border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(13),
                                         borderSide: const BorderSide(
@@ -581,10 +631,24 @@ class _facultysignupState extends State<facultysignup> {
                             SizedBox(
                               height: 8,
                             ),
-
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Department:",
+                                style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'bold',
+                                    fontSize: 13),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 3,
+                            ),
                             DropdownButtonFormField<String>(
                               decoration: InputDecoration(
-                                hintText: ' Choose your department:',
+                                hintText: ' Choose the department',
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(13),
                                     borderSide: const BorderSide(
@@ -618,9 +682,24 @@ class _facultysignupState extends State<facultysignup> {
                             SizedBox(
                               height: 8,
                             ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Semester:",
+                                style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'bold',
+                                    fontSize: 13),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 3,
+                            ),
                             DropdownButtonFormField<String>(
                               decoration: InputDecoration(
-                                hintText: ' Choose a semester:',
+                                hintText: ' Choose the semester',
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(13),
                                     borderSide: const BorderSide(
@@ -745,11 +824,25 @@ class _facultysignupState extends State<facultysignup> {
                             //           }
                             //         }
                             //       }),
-
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Specialty:",
+                                style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'bold',
+                                    fontSize: 13),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 3,
+                            ),
                             DropDownMultiSelect(
                               decoration: InputDecoration(
                                   // labelText: "select your speciality",
-                                  hintText: "Select your specialty :",
+                                  hintText: "Select the specialty :",
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                         color:
