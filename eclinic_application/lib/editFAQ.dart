@@ -24,6 +24,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:dio/dio.dart';
 import '';
+import 'package:myapp/screeens/resources/dialog.dart';
 
 class editFAQ extends StatefulWidget {
   String value;
@@ -224,7 +225,7 @@ class _editFAQState extends State<editFAQ> {
               ),
               onPressed: () {
                 //delete common issue
-                ConfirmationDialogfordelete(context);
+                confirmdeltewarning(context);
               },
             )
           ],
@@ -1080,6 +1081,85 @@ class _editFAQState extends State<editFAQ> {
     );
 
     // show the dialog
+  }
+
+  confirmdeltewarning(BuildContext context) {
+    // set up the buttons
+    buildShowDialog(
+      context: context,
+      title: 'Warning',
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.sd_card_alert_rounded,
+            size: 80,
+            color: Colors.amber,
+          ),
+          SizedBox(
+            height: 4,
+          ),
+          Text(
+              "Are you sure you want to delete the frequently asked question ?"),
+          SizedBox(
+            height: 8,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
+                  //shadowColor: Colors.blue[900],
+                  elevation: 0,
+                  backgroundColor: Mycolors.mainShadedColorBlue,
+                  minimumSize: Size(60, 40),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10), // <-- Radius
+                  ),
+                ),
+                child: Text("No"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  textStyle: TextStyle(fontSize: 16),
+                  // shadowColor: Colors.blue[900],
+                  elevation: 0,
+                  backgroundColor: Mycolors.mainShadedColorBlue,
+                  minimumSize: Size(60, 40),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10), // <-- Radius
+                  ),
+                ),
+                child: Text("Yes"),
+                onPressed: () async {
+                  await FirebaseFirestore.instance
+                      .collection("commonissue")
+                      .doc(widget.value)
+                      .delete();
+                  // Navigator.pushNamed(context, 'facultyListFAQ');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => facultyhome(_selectedIndex),
+                    ),
+                  );
+                  showInSnackBar(context,
+                      "The frequently asked question has been deleted successfully");
+                },
+              )
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   ConfirmationDialogfordelete(BuildContext context) {
