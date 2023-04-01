@@ -1,14 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
-class ModelStudent {
+class ModelStudent extends Equatable {
   final String firstname;
   final String lastname;
   final String email;
   final String? password;
-  final DocumentReference department;
+  // this field use only when save new student
+  final DocumentReference? department;
   final String? socialmedia;
-  final String? semester;
+  final DocumentReference? semester;
   //final String id;
   final String? socialmediaaccount;
   //final DateTime graduationDate;
@@ -18,7 +19,7 @@ class ModelStudent {
     required this.lastname,
     //required this.id,
     required this.email,
-    required this.department,
+    this.department,
     this.password,
     this.semester,
     this.socialmedia = 'None',
@@ -37,6 +38,8 @@ class ModelStudent {
         department: json['department'],
         semester: json['semester'],
         firstname: json['firstname'],
+        socialmedia: json['socialmedia'],
+        socialmediaaccount: json['socialmediaaccount'],
         //graduationDate: DateTime.parse(json['graduationDate'])
       );
 
@@ -52,6 +55,10 @@ class ModelStudent {
         'group': group,
         'semester': semester
       };
+
+  @override
+  List<Object?> get props =>
+      [firstname, lastname, socialmedia, socialmediaaccount, semester, group];
 }
 
 class ModelSignUp {
@@ -93,14 +100,16 @@ class ModelGroup extends Equatable {
   Map<String, dynamic> toMap() => {
         'department': department,
         'projectname': projectname,
-        'students': students,
+        'students': students.map((e) => e.toMap()).toList(),
         'Projectcompletiondate': Projectcompletiondate,
         'uploadgp': uploadgp
       };
 
   @override
-  // TODO: implement props
   List<Object?> get props => [id];
+
+  DocumentReference get ref =>
+      FirebaseFirestore.instance.collection('studentgroup').doc(id);
 }
 
 class ModelStudentsFromGroupRef {
@@ -113,4 +122,23 @@ class ModelStudentsFromGroupRef {
       ModelStudentsFromGroupRef(json['ref'], json['name']);
 
   Map<String, dynamic> toMap() => {'ref': ref, 'name': name};
+}
+
+class InfoForGetDataForProfileStudent {
+  final ModelGroup modelGroub;
+  final ModelStudent student;
+  final DocumentReference departement;
+
+  InfoForGetDataForProfileStudent(
+      this.modelGroub, this.student, this.departement);
+}
+
+class ModelForSaveChangeProfile {
+  final ModelGroup? modelGroup;
+  final ModelStudent? modelStudent;
+  final ModelStudent? oldmodelStudent;
+  //final DocumentReference? department ;
+  //final Map<String , dynamic>? newUpdatingGroup ;
+  ModelForSaveChangeProfile(
+      this.modelGroup, this.modelStudent, this.oldmodelStudent);
 }

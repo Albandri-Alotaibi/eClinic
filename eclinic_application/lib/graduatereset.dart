@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:myapp/afterreset.dart';
+import 'package:myapp/afterresetgraduate.dart';
 import 'package:myapp/login.dart';
 import 'style/Mycolors.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -12,15 +13,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:myapp/screeens/resources/snackbar.dart';
 
-class resetpassword extends StatefulWidget {
-  const resetpassword({super.key});
+class graduatereset extends StatefulWidget {
+  const graduatereset({super.key});
 
   @override
-  State<resetpassword> createState() => _resetpasswordState();
+  State<graduatereset> createState() => _graduateresetState();
 }
 
-class _resetpasswordState extends State<resetpassword> {
-  @override
+class _graduateresetState extends State<graduatereset> {
   final double profileheight = 244;
   final formkey = GlobalKey<FormState>();
   final _emailcontrol = TextEditingController();
@@ -321,12 +321,16 @@ class _resetpasswordState extends State<resetpassword> {
                                       });
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
-                                              builder: ((context) => afterreset(
-                                                  value: _emailcontrol.text))));
+                                              builder: ((context) =>
+                                                  afterresetgraduate(
+                                                    value: _emailcontrol.text,
+                                                  ))));
                                     } on FirebaseAuthException catch (e) {
                                       print(e.message);
                                       if (e.message ==
                                           "The email address is badly formatted.") {
+                                        // showerror(context,
+                                        //     "please check the email format");
                                         showInSnackBar(context,
                                             "please check the email format",
                                             onError: true);
@@ -399,71 +403,4 @@ class _resetpasswordState extends State<resetpassword> {
       // backgroundImage: AssetImage('assets/images/forgot-password.png'),
       //  Image(image: AssetImage('assets/images/forgot-password.png')),
       );
-
-  showerror(BuildContext context, String msg) {
-    return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Stack(
-        children: [
-          Container(
-            padding: EdgeInsets.all(16),
-            height: 90,
-            decoration: BoxDecoration(
-                color: Color(0xFFC72C41),
-                borderRadius: BorderRadius.all(Radius.circular(20))),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 48,
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Text(
-                      //   "Oh snap!",
-                      //   style: TextStyle(
-                      //     color: Colors.white,
-                      //     fontSize: 12,
-                      //   ),
-                      // ),
-                      Text(
-                        msg,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-    ));
-  }
-
-  // showSucessAlert() {
-  //   QuickAlert.show(
-  //     context: context,
-  //     type: QuickAlertType.success,
-  //     title: _emailcontrol.text,
-  //     text:
-  //         'If this is a registered email, then a reset link will be sent to it.',
-  //     onConfirmBtnTap: () {
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => login(),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
 }

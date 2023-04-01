@@ -69,6 +69,7 @@ dependencies:
   dartz: ^0.10.1
   uuid: ^3.0.7
   equatable: ^2.0.5
+  shared_preferences: ^2.0.20
 dev_dependencies:
   flutter_test:
     sdk: flutter

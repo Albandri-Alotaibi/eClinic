@@ -14,6 +14,7 @@ import 'package:myapp/facultyViewFAQ.dart';
 import 'package:myapp/facultyhome.dart';
 import 'package:myapp/facultyviewprofile.dart';
 import 'package:myapp/graduatelogin.dart';
+import 'package:myapp/graduatereset.dart';
 import 'package:myapp/graduatessignup.dart';
 import 'package:myapp/home.dart';
 import 'package:myapp/innereset.dart';
@@ -25,7 +26,7 @@ import 'package:myapp/studentlogin.dart';
 import 'package:myapp/studentresetpassword.dart';
 import 'package:myapp/screeens/signUp/studentsignup.dart';
 import 'package:myapp/studentverfication.dart';
-import 'package:myapp/studentviewprofile.dart';
+// import 'package:myapp/studentviewprofile.dart';
 import 'package:myapp/style/Mycolors.dart';
 import 'package:myapp/verfication.dart';
 import 'package:myapp/FacultyViewScreen.dart';
@@ -38,8 +39,15 @@ import 'package:myapp/home.dart';
 import 'package:myapp/screeens/signUp/screen_shoss_group.dart';
 import 'package:myapp/screeens/signUp/studentsignup.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:myapp/graduatehome.dart';
 import 'UploadGPG.dart';
+import 'package:myapp/app/constants.dart';
+import 'package:myapp/app/shardPreferense.dart';
+import 'package:myapp/bloc/select_group/bloc.dart';
+import 'package:myapp/screeens/signUp/screen_shoss_group.dart';
+import 'package:myapp/screeens/signUp/studentsignup.dart';
+import 'package:myapp/screeens/profileStudent/studentviewprofile.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 Future<void> _firebaseMsgBackgroundHanler(RemoteMessage message) async {
   print("handling msg ${message.messageId}");
@@ -51,7 +59,10 @@ void main() async {
 
   await FirebaseMessaging.instance.getInitialMessage();
   FirebaseMessaging.onBackgroundMessage(_firebaseMsgBackgroundHanler);
-
+  String? type = await StorageManager.readData('TypeUser');
+  if (type != null) {
+    TypeUser.type = type;
+  }
   runApp(const MyApp());
 }
 
@@ -139,6 +150,8 @@ class MyApp extends StatelessWidget {
               'afterreset': (context) => afterreset(
                     value: '',
                   ),
+              'graduatehome': (context) => graduatehome(),
+              'graduatereset': (context) => graduatereset(),
             }));
   }
 
@@ -156,8 +169,11 @@ class MyApp extends StatelessWidget {
             if (auth.currentUser?.email?.contains("@student.ksu.edu.sa") ??
                 false) {
               return studenthome(0);
-            } else if (auth.currentUser?.email?.isNotEmpty ?? false) {
+            } else if (auth.currentUser?.email?.contains("@ksu.edu.sa") ??
+                false) {
               return facultyhome(0);
+            } else if (auth.currentUser?.email?.isNotEmpty ?? false) {
+              return graduatehome();
             }
           }
           return home();

@@ -527,7 +527,7 @@ class _facultysignupState extends State<facultysignup> {
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "Email:",
+                                "KSU Email:",
                                 style: TextStyle(
                                     overflow: TextOverflow.ellipsis,
                                     color: Mycolors.mainColorBlack,
@@ -542,7 +542,7 @@ class _facultysignupState extends State<facultysignup> {
                             TextFormField(
                               controller: _emailController,
                               decoration: InputDecoration(
-                                  hintText: "Enter the email",
+                                  hintText: "Enter the KSU email",
                                   // labelText: '  Email :',
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(13),
@@ -554,7 +554,7 @@ class _facultysignupState extends State<facultysignup> {
                               validator: (value) {
                                 if (value!.isEmpty ||
                                     _emailController.text == "") {
-                                  return 'Please enter your email ';
+                                  return 'Please enter your KSU email ';
                                 } else {
                                   if (!(ksuEmailRegEx
                                       .hasMatch(_emailController.text))) {

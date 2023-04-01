@@ -3,6 +3,9 @@ import 'style/Mycolors.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:myapp/graduatelogin.dart';
+import 'package:myapp/app/constants.dart';
+import 'package:myapp/app/shardPreferense.dart';
+import 'package:myapp/bloc/select_group/bloc.dart';
 
 class home extends StatefulWidget {
   // This class is the configuration for the state.
@@ -82,6 +85,8 @@ class _homeState extends State<home> {
                     ),
                   ),
                   onPressed: () {
+                    TypeUser.type = 'student';
+                    StorageManager.saveData('TypeUser', 'student');
                     Navigator.pushNamed(context, 'studentlogin');
                   },
                   child: Text('Student'),
@@ -126,6 +131,9 @@ class _homeState extends State<home> {
                 ),
               ),
               onPressed: () {
+                TypeUser.type = 'graduate';
+                // save type user
+                StorageManager.saveData('TypeUser', 'graduate');
                 Navigator.pushNamed(context, 'graduatelogin');
               },
               child: Text('Graduates'),

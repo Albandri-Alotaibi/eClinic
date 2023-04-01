@@ -10,6 +10,9 @@ import 'package:quickalert/quickalert.dart';
 import 'package:myapp/home.dart';
 import 'package:myapp/studentresetpassword.dart';
 import 'package:myapp/screeens/signUp/studentsignup.dart';
+import 'package:myapp/app/constants.dart';
+import 'package:myapp/app/shardPreferense.dart';
+import 'package:myapp/bloc/select_group/bloc.dart';
 
 class studentlogin extends StatefulWidget {
   const studentlogin({super.key});
@@ -249,6 +252,9 @@ class _studentloginState extends State<studentlogin> {
                                 ),
                                 GestureDetector(
                                     onTap: () {
+                                      TypeUser.type = 'student';
+                                      StorageManager.saveData(
+                                          'TypeUser', 'student');
                                       Navigator.pushNamed(
                                           context, "studentsignup");
                                     },

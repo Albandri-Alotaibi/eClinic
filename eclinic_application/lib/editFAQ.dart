@@ -886,7 +886,7 @@ class _editFAQState extends State<editFAQ> {
                                   ConfirmationDialogforupdate(context);
                                 }
                               },
-                              child: Text("Save changes"),
+                              child: Text("Save"),
                             ),
                           ],
                         );
@@ -1162,69 +1162,69 @@ class _editFAQState extends State<editFAQ> {
     );
   }
 
-  ConfirmationDialogfordelete(BuildContext context) {
-    Widget dontCancelAppButton = ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontSize: 16),
-        //shadowColor: Colors.blue[900],
-        elevation: 0,
-        backgroundColor: Mycolors.mainShadedColorBlue,
-        minimumSize: Size(60, 40),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10), // <-- Radius
-        ),
-      ),
-      child: Text("No"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
+  // ConfirmationDialogfordelete(BuildContext context) {
+  //   Widget dontCancelAppButton = ElevatedButton(
+  //     style: ElevatedButton.styleFrom(
+  //       textStyle: TextStyle(fontSize: 16),
+  //       //shadowColor: Colors.blue[900],
+  //       elevation: 0,
+  //       backgroundColor: Mycolors.mainShadedColorBlue,
+  //       minimumSize: Size(60, 40),
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.circular(10), // <-- Radius
+  //       ),
+  //     ),
+  //     child: Text("No"),
+  //     onPressed: () {
+  //       Navigator.of(context).pop();
+  //     },
+  //   );
 
-    Widget YesCancelAppButton = ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(fontSize: 16),
-        // shadowColor: Colors.blue[900],
-        elevation: 0,
-        backgroundColor: Mycolors.mainShadedColorBlue,
-        minimumSize: Size(60, 40),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10), // <-- Radius
-        ),
-      ),
-      child: Text("Yes"),
-      onPressed: () async {
-        await FirebaseFirestore.instance
-            .collection("commonissue")
-            .doc(widget.value)
-            .delete();
-        // Navigator.pushNamed(context, 'facultyListFAQ');
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => facultyhome(_selectedIndex),
-          ),
-        );
-        showInSnackBar(
-            context, "The common issue has been deleted successfully");
-      },
-    );
+  //   Widget YesCancelAppButton = ElevatedButton(
+  //     style: ElevatedButton.styleFrom(
+  //       textStyle: TextStyle(fontSize: 16),
+  //       // shadowColor: Colors.blue[900],
+  //       elevation: 0,
+  //       backgroundColor: Mycolors.mainShadedColorBlue,
+  //       minimumSize: Size(60, 40),
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.circular(10), // <-- Radius
+  //       ),
+  //     ),
+  //     child: Text("Yes"),
+  //     onPressed: () async {
+  //       await FirebaseFirestore.instance
+  //           .collection("commonissue")
+  //           .doc(widget.value)
+  //           .delete();
+  //       // Navigator.pushNamed(context, 'facultyListFAQ');
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(
+  //           builder: (context) => facultyhome(_selectedIndex),
+  //         ),
+  //       );
+  //       showInSnackBar(
+  //           context, "The  has been deleted successfully");
+  //     },
+  //   );
 
-    AlertDialog alert = AlertDialog(
-      // title: Text("LogOut"),
-      content: Text("Are you sure you want to delete the common issue ?"),
-      actions: [
-        dontCancelAppButton,
-        YesCancelAppButton,
-      ],
-    );
+  //   AlertDialog alert = AlertDialog(
+  //     // title: Text("LogOut"),
+  //     content: Text("Are you sure you want to delete the common issue ?"),
+  //     actions: [
+  //       dontCancelAppButton,
+  //       YesCancelAppButton,
+  //     ],
+  //   );
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return alert;
+  //     },
+  //   );
+  // }
 
   ConfirmationDialogforupdate(BuildContext context) {
     Widget dontCancelAppButton = ElevatedButton(
@@ -1296,8 +1296,8 @@ class _editFAQState extends State<editFAQ> {
             //   textColor: Color.fromARGB(255, 248, 249, 250),
             //   fontSize: 18.0,
             // );
-            showInSnackBar(
-                context, "Common issue has been updated successfully");
+            showInSnackBar(context,
+                "The frequently asked question has been updated successfully");
           } on FirebaseAuthException catch (error) {
             // Fluttertoast.showToast(
             //   msg: "Something wronge",
@@ -1316,7 +1316,8 @@ class _editFAQState extends State<editFAQ> {
 
     AlertDialog alert = AlertDialog(
       // title: Text("LogOut"),
-      content: Text("Are you sure you want to update the common issue ?"),
+      content: Text(
+          "Are you sure you want to update the The frequently asked question ?"),
       actions: [
         dontCancelAppButton,
         YesCancelAppButton,

@@ -11,15 +11,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:myapp/screeens/resources/snackbar.dart';
 
-class afterreset extends StatefulWidget {
+class afterresetgraduate extends StatefulWidget {
   String value;
-  afterreset({super.key, required this.value});
+  afterresetgraduate({required this.value});
 
   @override
-  State<afterreset> createState() => _afterresetState();
+  State<afterresetgraduate> createState() => _afterresetgraduateState();
 }
 
-class _afterresetState extends State<afterreset> {
+class _afterresetgraduateState extends State<afterresetgraduate> {
+  static String? get value => null;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -122,7 +124,7 @@ class _afterresetState extends State<afterreset> {
                           try {
                             // await FirebaseAuth.instance
                             //     .sendPasswordResetEmail(email: widget.value);
-                            Navigator.pushNamed(context, "login");
+                            Navigator.pushNamed(context, "graduatelogin");
 
                             setState(() {
                               // ifsend = false;

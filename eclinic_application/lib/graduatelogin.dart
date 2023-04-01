@@ -10,6 +10,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/home.dart';
+import 'package:myapp/app/constants.dart';
+import 'package:myapp/app/shardPreferense.dart';
+import 'package:myapp/bloc/select_group/bloc.dart';
+import 'package:myapp/screeens/resources/snackbar.dart';
 
 class graduatelogin extends StatefulWidget {
   const graduatelogin({super.key});
@@ -141,7 +145,7 @@ class _graduateloginState extends State<graduatelogin> {
                             ),
                             child: GestureDetector(
                                 onTap: () {
-                                  Navigator.pushNamed(context, "resetpassword");
+                                  Navigator.pushNamed(context, "graduatereset");
                                 },
                                 child: Text(
                                   "Forget password ?",
@@ -179,7 +183,7 @@ class _graduateloginState extends State<graduatelogin> {
                                     await FirebaseAuth.instance
                                         .signInWithEmailAndPassword(
                                             email: email, password: password);
-                                    Navigator.pushNamed(context, 'facultyhome')
+                                    Navigator.pushNamed(context, 'graduatehome')
                                         .then((value) async {
                                       final FirebaseAuth auth =
                                           FirebaseAuth.instance;
@@ -218,8 +222,9 @@ class _graduateloginState extends State<graduatelogin> {
                                           "The password is invalid or the user does not have a password." ||
                                       error.message ==
                                           "There is no user record corresponding to this identifier. The user may have been deleted.") {
-                                    showerror(
-                                        context, "invalid email or password ");
+                                    showInSnackBar(
+                                        context, "invalid email or password",
+                                        onError: true);
                                   }
                                 }
                               },
@@ -240,8 +245,13 @@ class _graduateloginState extends State<graduatelogin> {
                                 ),
                                 GestureDetector(
                                     onTap: () {
+                                      TypeUser.type = 'graduate';
+                                      // save type user
+                                      StorageManager.saveData(
+                                          'TypeUser', 'graduate');
+
                                       Navigator.pushNamed(
-                                          context, "graduatessignup");
+                                          context, "studentsignup");
                                     },
                                     child: Text(
                                       " Sign up",

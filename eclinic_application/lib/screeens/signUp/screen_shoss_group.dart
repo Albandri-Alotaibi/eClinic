@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/app/constants.dart';
 import 'package:myapp/bloc/select_group/bloc.dart';
 import 'package:myapp/domain/extension.dart';
 import 'package:myapp/domain/model.dart';
 import 'package:myapp/screeens/resources/snackbar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
-
+import 'package:myapp/app/constants.dart';
+import 'package:myapp/app/shardPreferense.dart';
 import '../resources/dialog.dart';
 
 SizedBox _space = const SizedBox(
@@ -86,8 +88,18 @@ class _GroupSelectionState extends State<GroupSelection> {
 
             if (state is InitStateBlocGroupSelectSignUpDone) {
               //showInSnackBar(context, 'Your account has been registered');
-              Navigator.pushNamedAndRemoveUntil(
-                  context, 'studenthome', (route) => false);
+              if (TypeUser.type == 'student') {
+                TypeUser.type = 'student';
+                StorageManager.saveData('TypeUser', 'student');
+                Navigator.pushNamedAndRemoveUntil(
+                    context, 'studenthome', (route) => false);
+              } else if (TypeUser.type == 'graduate') {
+                TypeUser.type = 'graduate';
+                // save type user
+                StorageManager.saveData('TypeUser', 'graduate');
+                Navigator.pushNamedAndRemoveUntil(
+                    context, 'graduatehome', (route) => false);
+              }
             }
 
             if (state is InitStateBlocGroupSelectAddGroupDone) {
@@ -101,7 +113,7 @@ class _GroupSelectionState extends State<GroupSelection> {
                 _space,
                 TextFormField(
                   controller: _inputNameGroup,
-                  autofocus: true,
+                  autofocus: false,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     label: const Text(' Find your group'),
@@ -184,7 +196,7 @@ class _GroupSelectionState extends State<GroupSelection> {
                                                 child: TextFormField(
                                                   controller:
                                                       _inputAddNameGroup,
-                                                  autofocus: true,
+                                                  autofocus: false,
                                                   keyboardType:
                                                       TextInputType.text,
                                                   decoration: InputDecoration(
@@ -230,163 +242,169 @@ class _GroupSelectionState extends State<GroupSelection> {
                                               ),
                                               _space,
                                               // Project completion date
-                                              Text(
-                                                  " Project completion date : "),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              SizedBox(
-                                                height: 60,
-                                                child: Row(
-                                                  children: [
-                                                    Expanded(
-                                                      //flex: 1,
-                                                      child:
-                                                          DropdownButtonFormField(
-                                                        decoration:
-                                                            InputDecoration(
-                                                          errorStyle: TextStyle(
-                                                              fontSize: 0),
-                                                          hintText: 'month',
-                                                          border:
-                                                              OutlineInputBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              25),
-                                                                  borderSide:
-                                                                      const BorderSide(
-                                                                    width: 0,
-                                                                  )),
-                                                        ),
-                                                        items: const [
-                                                          DropdownMenuItem(
-                                                              child:
-                                                                  Text("Jan"),
-                                                              value: "01"),
-                                                          DropdownMenuItem(
-                                                              child:
-                                                                  Text("Feb"),
-                                                              value: "02"),
-                                                          DropdownMenuItem(
-                                                              child:
-                                                                  Text("Mar"),
-                                                              value: "03"),
-                                                          DropdownMenuItem(
-                                                              child:
-                                                                  Text("Apr"),
-                                                              value: "04"),
-                                                          DropdownMenuItem(
-                                                              child:
-                                                                  Text("May"),
-                                                              value: "05"),
-                                                          DropdownMenuItem(
-                                                              child:
-                                                                  Text("Jun"),
-                                                              value: "06"),
-                                                          DropdownMenuItem(
-                                                              child:
-                                                                  Text("Jul"),
-                                                              value: "07"),
-                                                          DropdownMenuItem(
-                                                              child:
-                                                                  Text("Aug"),
-                                                              value: "08"),
-                                                          DropdownMenuItem(
-                                                              child:
-                                                                  Text("Sep"),
-                                                              value: "09"),
-                                                          DropdownMenuItem(
-                                                              child:
-                                                                  Text("Oct"),
-                                                              value: "10"),
-                                                          DropdownMenuItem(
-                                                              child:
-                                                                  Text("Nov"),
-                                                              value: "11"),
-                                                          DropdownMenuItem(
-                                                              child:
-                                                                  Text("Dec"),
-                                                              value: "12")
-                                                        ],
-                                                        onChanged: (value) {
-                                                          setState(() {
-                                                            month = value;
-                                                            //print(month);
-                                                          });
-                                                        },
-                                                        autovalidateMode:
-                                                            AutovalidateMode
-                                                                .onUserInteraction,
-                                                        validator: (value) {
-                                                          if (value == null ||
-                                                              month == "") {
-                                                            return ' ';
-                                                          }
-                                                        },
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child:
-                                                          DropdownButtonFormField<
-                                                              String>(
-                                                        decoration:
-                                                            InputDecoration(
-                                                          hintText: ' year',
-                                                          errorStyle: TextStyle(
-                                                              fontSize: 0),
-                                                          border:
-                                                              OutlineInputBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              25),
-                                                                  borderSide:
-                                                                      const BorderSide(
-                                                                    width: 0,
-                                                                  )),
-                                                        ),
-                                                        //itemHeight: 60,
 
-                                                        items: years.map((String
-                                                            dropdownitems) {
-                                                          return DropdownMenuItem<
-                                                              String>(
-                                                            value:
-                                                                dropdownitems,
-                                                            child: Text(
-                                                              dropdownitems,
-                                                            ),
-                                                          );
-                                                        }).toList(),
-                                                        onChanged: (String?
-                                                            newselect) {
-                                                          setState(() {
-                                                            selctedyear =
-                                                                newselect;
-                                                            //print(selctedyear);
-                                                          });
-                                                        },
-                                                        value: selctedyear,
-                                                        autovalidateMode:
-                                                            AutovalidateMode
-                                                                .onUserInteraction,
-                                                        validator: (value) {
-                                                          if (value == null ||
-                                                              selctedyear ==
-                                                                  "") {
-                                                            return ' ';
-                                                          }
-                                                        },
-                                                      ),
-                                                    ),
-                                                  ],
+                                              if (TypeUser.type ==
+                                                  'student') ...{
+                                                Text(
+                                                    " Project completion date : "),
+                                                SizedBox(
+                                                  height: 10,
                                                 ),
-                                              ),
+                                                SizedBox(
+                                                  height: 60,
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(
+                                                        //flex: 1,
+                                                        child:
+                                                            DropdownButtonFormField(
+                                                          decoration:
+                                                              InputDecoration(
+                                                            errorStyle:
+                                                                TextStyle(
+                                                                    fontSize:
+                                                                        0),
+                                                            hintText: 'month',
+                                                            border:
+                                                                OutlineInputBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            25),
+                                                                    borderSide:
+                                                                        const BorderSide(
+                                                                      width: 0,
+                                                                    )),
+                                                          ),
+                                                          items: const [
+                                                            DropdownMenuItem(
+                                                                child:
+                                                                    Text("Jan"),
+                                                                value: "01"),
+                                                            DropdownMenuItem(
+                                                                child:
+                                                                    Text("Feb"),
+                                                                value: "02"),
+                                                            DropdownMenuItem(
+                                                                child:
+                                                                    Text("Mar"),
+                                                                value: "03"),
+                                                            DropdownMenuItem(
+                                                                child:
+                                                                    Text("Apr"),
+                                                                value: "04"),
+                                                            DropdownMenuItem(
+                                                                child:
+                                                                    Text("May"),
+                                                                value: "05"),
+                                                            DropdownMenuItem(
+                                                                child:
+                                                                    Text("Jun"),
+                                                                value: "06"),
+                                                            DropdownMenuItem(
+                                                                child:
+                                                                    Text("Jul"),
+                                                                value: "07"),
+                                                            DropdownMenuItem(
+                                                                child:
+                                                                    Text("Aug"),
+                                                                value: "08"),
+                                                            DropdownMenuItem(
+                                                                child:
+                                                                    Text("Sep"),
+                                                                value: "09"),
+                                                            DropdownMenuItem(
+                                                                child:
+                                                                    Text("Oct"),
+                                                                value: "10"),
+                                                            DropdownMenuItem(
+                                                                child:
+                                                                    Text("Nov"),
+                                                                value: "11"),
+                                                            DropdownMenuItem(
+                                                                child:
+                                                                    Text("Dec"),
+                                                                value: "12")
+                                                          ],
+                                                          onChanged: (value) {
+                                                            setState(() {
+                                                              month = value;
+                                                              //print(month);
+                                                            });
+                                                          },
+                                                          autovalidateMode:
+                                                              AutovalidateMode
+                                                                  .onUserInteraction,
+                                                          validator: (value) {
+                                                            if (value == null ||
+                                                                month == "") {
+                                                              return ' ';
+                                                            }
+                                                          },
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Expanded(
+                                                        flex: 1,
+                                                        child:
+                                                            DropdownButtonFormField<
+                                                                String>(
+                                                          decoration:
+                                                              InputDecoration(
+                                                            hintText: ' year',
+                                                            errorStyle:
+                                                                TextStyle(
+                                                                    fontSize:
+                                                                        0),
+                                                            border:
+                                                                OutlineInputBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            25),
+                                                                    borderSide:
+                                                                        const BorderSide(
+                                                                      width: 0,
+                                                                    )),
+                                                          ),
+                                                          //itemHeight: 60,
+
+                                                          items: years.map((String
+                                                              dropdownitems) {
+                                                            return DropdownMenuItem<
+                                                                String>(
+                                                              value:
+                                                                  dropdownitems,
+                                                              child: Text(
+                                                                dropdownitems,
+                                                              ),
+                                                            );
+                                                          }).toList(),
+                                                          onChanged: (String?
+                                                              newselect) {
+                                                            setState(() {
+                                                              selctedyear =
+                                                                  newselect;
+                                                              //print(selctedyear);
+                                                            });
+                                                          },
+                                                          value: selctedyear,
+                                                          autovalidateMode:
+                                                              AutovalidateMode
+                                                                  .onUserInteraction,
+                                                          validator: (value) {
+                                                            if (value == null ||
+                                                                selctedyear ==
+                                                                    "") {
+                                                              return ' ';
+                                                            }
+                                                          },
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              },
 
                                               _space,
                                               Row(
@@ -452,15 +470,21 @@ class _GroupSelectionState extends State<GroupSelection> {
                                                           .validate());
                                                       if (formkey.currentState!
                                                           .validate()) {
-                                                        GPdate = dategp(
-                                                            selctedyear, month);
+                                                        print(TypeUser.type);
+                                                        GPdate =
+                                                            TypeUser.type ==
+                                                                    'graduate'
+                                                                ? null
+                                                                : dategp(
+                                                                    selctedyear,
+                                                                    month);
                                                         //'graduationDate' : (GPdate as DateTime).toIso8601String() ,
-                                                        print('date : $GPdate');
+                                                        //print('date : $GPdate');
 
                                                         ModelGroup modelg = ModelGroup(
                                                             department: widget
                                                                 .generalInfo
-                                                                .department,
+                                                                .department!,
                                                             projectname:
                                                                 _inputAddNameGroup
                                                                     .value.text,
@@ -644,7 +668,7 @@ class _GroupSelectionState extends State<GroupSelection> {
                             height: 60,
                             child: TextFormField(
                               controller: _inputAddNameGroup,
-                              autofocus: true,
+                              autofocus: false,
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                   errorStyle: TextStyle(fontSize: 0),
@@ -679,114 +703,117 @@ class _GroupSelectionState extends State<GroupSelection> {
                             ),
                           ),
                           _space,
-                          const Text(" Project completion date : "),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          SizedBox(
-                            height: 60,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: DropdownButtonFormField(
-                                    value: modelGroup.Projectcompletiondate
-                                            ?.convertToWordMonth()
-                                        .toString(),
-                                    decoration: InputDecoration(
-                                      errorStyle: TextStyle(fontSize: 0),
-                                      hintText: 'month',
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25),
-                                          borderSide: const BorderSide(
-                                            width: 0,
-                                          )),
-                                    ),
-                                    items: const [
-                                      DropdownMenuItem(
-                                          child: Text("Jan"), value: "01"),
-                                      DropdownMenuItem(
-                                          child: Text("Feb"), value: "02"),
-                                      DropdownMenuItem(
-                                          child: Text("Mar"), value: "03"),
-                                      DropdownMenuItem(
-                                          child: Text("Apr"), value: "04"),
-                                      DropdownMenuItem(
-                                          child: Text("May"), value: "05"),
-                                      DropdownMenuItem(
-                                          child: Text("Jun"), value: "06"),
-                                      DropdownMenuItem(
-                                          child: Text("Jul"), value: "07"),
-                                      DropdownMenuItem(
-                                          child: Text("Aug"), value: "08"),
-                                      DropdownMenuItem(
-                                          child: Text("Sep"), value: "09"),
-                                      DropdownMenuItem(
-                                          child: Text("Oct"), value: "10"),
-                                      DropdownMenuItem(
-                                          child: Text("Nov"), value: "11"),
-                                      DropdownMenuItem(
-                                          child: Text("Dec"), value: "12")
-                                    ],
-                                    onChanged: (value) {
-                                      setState(() {
-                                        month = value;
-                                        //print(month);
-                                      });
-                                    },
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    validator: (value) {
-                                      if (value == null || month == "") {
-                                        return ' ';
-                                      }
-                                    },
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: DropdownButtonFormField<String>(
-                                    //value: modelGroup.graduationdate?.convertToWordYears(),
-
-                                    decoration: InputDecoration(
-                                      errorStyle: TextStyle(fontSize: 0),
-                                      hintText: 'year',
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25),
-                                          borderSide: const BorderSide(
-                                            width: 0,
-                                          )),
-                                    ),
-                                    items: years.map((String dropdownitems) {
-                                      return DropdownMenuItem<String>(
-                                        value: dropdownitems,
-                                        child: Text(dropdownitems),
-                                      );
-                                    }).toList(),
-                                    onChanged: (String? newselect) {
-                                      setState(() {
-                                        selctedyear = newselect;
-                                        //print(selctedyear);
-                                      });
-                                    },
-                                    value: selctedyear,
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    validator: (value) {
-                                      if (value == null || selctedyear == "") {
-                                        return ' ';
-                                      }
-                                    },
-                                  ),
-                                ),
-                              ],
+                          if (TypeUser.type == 'student') ...{
+                            const Text(" Project completion date : "),
+                            const SizedBox(
+                              height: 10,
                             ),
-                          ),
+                            SizedBox(
+                              height: 60,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: DropdownButtonFormField(
+                                      value: modelGroup.Projectcompletiondate
+                                              ?.convertToWordMonth()
+                                          .toString(),
+                                      decoration: InputDecoration(
+                                        errorStyle: TextStyle(fontSize: 0),
+                                        hintText: 'month',
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            borderSide: const BorderSide(
+                                              width: 0,
+                                            )),
+                                      ),
+                                      items: const [
+                                        DropdownMenuItem(
+                                            child: Text("Jan"), value: "01"),
+                                        DropdownMenuItem(
+                                            child: Text("Feb"), value: "02"),
+                                        DropdownMenuItem(
+                                            child: Text("Mar"), value: "03"),
+                                        DropdownMenuItem(
+                                            child: Text("Apr"), value: "04"),
+                                        DropdownMenuItem(
+                                            child: Text("May"), value: "05"),
+                                        DropdownMenuItem(
+                                            child: Text("Jun"), value: "06"),
+                                        DropdownMenuItem(
+                                            child: Text("Jul"), value: "07"),
+                                        DropdownMenuItem(
+                                            child: Text("Aug"), value: "08"),
+                                        DropdownMenuItem(
+                                            child: Text("Sep"), value: "09"),
+                                        DropdownMenuItem(
+                                            child: Text("Oct"), value: "10"),
+                                        DropdownMenuItem(
+                                            child: Text("Nov"), value: "11"),
+                                        DropdownMenuItem(
+                                            child: Text("Dec"), value: "12")
+                                      ],
+                                      onChanged: (value) {
+                                        setState(() {
+                                          month = value;
+                                          //print(month);
+                                        });
+                                      },
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      validator: (value) {
+                                        if (value == null || month == "") {
+                                          return ' ';
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: DropdownButtonFormField<String>(
+                                      //value: modelGroup.graduationdate?.convertToWordYears(),
+
+                                      decoration: InputDecoration(
+                                        errorStyle: TextStyle(fontSize: 0),
+                                        hintText: 'year',
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            borderSide: const BorderSide(
+                                              width: 0,
+                                            )),
+                                      ),
+                                      items: years.map((String dropdownitems) {
+                                        return DropdownMenuItem<String>(
+                                          value: dropdownitems,
+                                          child: Text(dropdownitems),
+                                        );
+                                      }).toList(),
+                                      onChanged: (String? newselect) {
+                                        setState(() {
+                                          selctedyear = newselect;
+                                          //print(selctedyear);
+                                        });
+                                      },
+                                      value: selctedyear,
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      validator: (value) {
+                                        if (value == null ||
+                                            selctedyear == "") {
+                                          return ' ';
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          },
                           _space,
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -829,12 +856,14 @@ class _GroupSelectionState extends State<GroupSelection> {
                                   //if(formkey.currentState.)
                                   //if(formkey.currentState.validate())
                                   if (formkey.currentState!.validate()) {
-                                    GPdate = dategp(selctedyear, month);
+                                    GPdate = TypeUser.type == 'graduate'
+                                        ? null
+                                        : dategp(selctedyear, month);
                                     //'graduationDate' : (GPdate as DateTime).toIso8601String() ,
-                                    print('date : $GPdate');
+                                    //print('date : $GPdate');
                                     ModelGroup modelg = ModelGroup(
                                         department:
-                                            widget.generalInfo.department,
+                                            widget.generalInfo.department!,
                                         projectname:
                                             _inputAddNameGroup.value.text,
                                         students: const [],

@@ -14,6 +14,8 @@ import 'package:myapp/login.dart';
 import 'package:myapp/studentlogin.dart';
 import 'package:myapp/viewGPlibrary.dart';
 import 'style/Mycolors.dart';
+import 'package:myapp/app/constants.dart';
+import 'package:myapp/app/shardPreferense.dart';
 
 class studenthome extends StatefulWidget {
   // This class is the configuration for the state.
@@ -42,11 +44,11 @@ class _sState extends State<studenthome> {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
 
-    while (user != null && user.email != null) {
-      userid = user.uid;
-      email = user.email!;
-      break;
-    }
+    // while (user != null && user.email != null) {
+    //   userid = user.uid;
+    //   email = user.email!;
+    //   break;
+    // }
 
     super.initState();
 
