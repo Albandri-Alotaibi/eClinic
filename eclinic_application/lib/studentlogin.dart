@@ -65,7 +65,6 @@ class _studentloginState extends State<studentlogin> {
           child: Container(
             child: Column(
               children: [
-           
                 Padding(
                   padding: const EdgeInsets.all(11.0),
                   child: Image.asset(
@@ -168,7 +167,7 @@ class _studentloginState extends State<studentlogin> {
                               style: ElevatedButton.styleFrom(
                                 textStyle: TextStyle(fontSize: 16),
                                 shadowColor: Colors.blue[900],
-                                elevation: 16,
+                                elevation: 0,
                                 backgroundColor: Mycolors.mainShadedColorBlue,
                                 minimumSize: Size(150, 50),
                                 shape: RoundedRectangleBorder(
