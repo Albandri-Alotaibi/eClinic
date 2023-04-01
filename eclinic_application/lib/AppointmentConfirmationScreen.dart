@@ -193,7 +193,7 @@ class AppointmentConfirmationScreenState
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Image(
-              image: AssetImage('./assets/images/eClinicLogo-blue.png'),
+              image: AssetImage('./assets/images/eClinicLogo-blue1.png'),
               height: 50,
             ),
             const Center(child: CircularProgressIndicator()),
@@ -461,10 +461,9 @@ class AppointmentConfirmationScreenState
 
     print("ddddeeeeeeeeeemmmmmmmmmm22222");
 
-    if (now.isAfter(At4Pm) ||
-        (StartTimeDate.day == now.day &&
-            StartTimeDate.month == now.month &&
-            StartTimeDate.year == now.year)) {
+    if ((StartTimeDate.day == now.day &&
+        StartTimeDate.month == now.month &&
+        StartTimeDate.year == now.year)) {
       // to chsek if the student book the appointment in after 4pm or in the morning -same day- of the appointment
       print("in the If ###################");
 
@@ -490,7 +489,11 @@ class AppointmentConfirmationScreenState
 
         String facultymsg =
             "You have a new appointment at ${formattedDateTime.format(widget.appointment['starttime']!.toDate())}";
-        sendPushMessege(facultyToken, facultymsg);
+
+        if (widget.faculty.containsKey("token")) {
+          sendPushMessege(facultyToken, facultymsg);
+        }
+
         // print("ddddeeeeeeeeeemmmmmmmmmm3333");
 
         for (int i = 0; i < groupStudents.length; i++) {
@@ -498,8 +501,11 @@ class AppointmentConfirmationScreenState
               "New appointment at ${formattedDateTime.format(widget.appointment['starttime']!.toDate())}";
           final DocumentSnapshot StudentdocRef =
               await groupStudents[i]['ref'].get();
-          var studentToken = StudentdocRef['token'];
-          sendPushMessege(studentToken, studentMsg);
+          final docData = StudentdocRef.data() as Map<String, dynamic>;
+          if (docData.containsKey("token")) {
+            var studentToken = StudentdocRef['token'];
+            sendPushMessege(studentToken, studentMsg);
+          }
         }
       }
     }
