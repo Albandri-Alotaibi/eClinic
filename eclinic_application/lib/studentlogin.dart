@@ -89,7 +89,7 @@ class _studentloginState extends State<studentlogin> {
                                   hintText: "Enter your KSU email ",
                                   prefixIcon: Icon(Icons.email),
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
+                                      borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),
@@ -126,7 +126,7 @@ class _studentloginState extends State<studentlogin> {
                                         : Icons.visibility),
                                   ),
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
+                                      borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),
