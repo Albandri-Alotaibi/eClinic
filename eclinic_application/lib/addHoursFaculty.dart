@@ -516,12 +516,19 @@ class _AddHourState extends State<addHoursFaculty> {
                                       as Map<String, dynamic>;
                                   String mettingmethoddrop2 =
                                       muser['meetingmethod'];
+                                  String meetingmeth;
                                   var metingmethodinfotext;
                                   if (mettingmethoddrop2 == "inperson") {
+                                    meetingmeth = "In-person";
                                     metingmethodinfotext = Text(
-                                        "Office number: " +
-                                            muser['mettingmethodinfo']);
+                                      "Office Number: " +
+                                          muser['mettingmethodinfo'],
+                                      style: TextStyle(
+                                          color: Mycolors.mainColorBlack,
+                                          fontSize: 16),
+                                    );
                                   } else {
+                                    meetingmeth = "Online";
                                     metingmethodinfotext = RichText(
                                       text: TextSpan(children: [
                                         TextSpan(
@@ -585,14 +592,12 @@ class _AddHourState extends State<addHoursFaculty> {
                                                               .start,
                                                       children: [
                                                         Text(
-                                                          "Meeting method: " +
-                                                              mettingmethoddrop2 +
+                                                          "Meeting Method: " +
+                                                              meetingmeth +
                                                               " meeting",
                                                           style: TextStyle(
                                                               color: Mycolors
                                                                   .mainColorBlack,
-                                                              // fontFamily:
-                                                              //     'main',
                                                               fontSize: 16),
                                                         ),
                                                         metingmethodinfotext
@@ -733,7 +738,7 @@ class _AddHourState extends State<addHoursFaculty> {
     _meetingmethodcontroller2 =
         TextEditingController(text: metingmethodinfotext);
     AlertDialog alert = AlertDialog(
-      title: Text("Edit meething method"),
+      title: Text("Edit Meething Method"),
       content: SizedBox(
           height: 180,
           child: Column(

@@ -13,6 +13,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multiselect/multiselect.dart';
+import 'package:myapp/style/Mycolors.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 
@@ -265,7 +266,9 @@ class _studentsignupState extends State<studentsignup> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
+            backgroundColor: Colors.white,
             primary: false,
             centerTitle: true,
             shadowColor: Colors.transparent,
@@ -274,7 +277,7 @@ class _studentsignupState extends State<studentsignup> {
             ),
             title: Text('Create account'),
             titleTextStyle: TextStyle(
-              fontFamily: 'bold',
+              color: Mycolors.mainColorBlack,
               fontSize: 24,
             ),
           ),
@@ -282,11 +285,14 @@ class _studentsignupState extends State<studentsignup> {
               child: SingleChildScrollView(
                   child: Column(
             children: [
-              // Image.asset(
-              //   "assets/images/eClinicLogo-blue1.png",
-              //   width: 300,
-              //   height: 200,
-              // ),
+              Padding(
+                padding: const EdgeInsets.only(top: 2),
+                child: Image.asset(
+                  "assets/images/eClinicLogo-blue1.png",
+                  width: 300,
+                  height: 120,
+                ),
+              ),
               Padding(
                   padding: const EdgeInsets.only(top: 10.0),
                   child: Form(
@@ -302,7 +308,7 @@ class _studentsignupState extends State<studentsignup> {
                                   labelText: ' First Name :',
                                   hintText: "Enter your first name",
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
+                                      borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),
@@ -334,7 +340,7 @@ class _studentsignupState extends State<studentsignup> {
                                   labelText: ' Last Name :',
                                   hintText: "Enter your last name",
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
+                                      borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),
@@ -366,7 +372,7 @@ class _studentsignupState extends State<studentsignup> {
                                   hintText: "Enter your email",
                                   labelText: ' Email :',
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
+                                      borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),
@@ -395,7 +401,7 @@ class _studentsignupState extends State<studentsignup> {
                                     labelText: ' Password :',
                                     hintText: "Enter your Password",
                                     border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(25),
+                                        borderRadius: BorderRadius.circular(13),
                                         borderSide: const BorderSide(
                                           width: 0,
                                         ))),
@@ -443,7 +449,7 @@ class _studentsignupState extends State<studentsignup> {
                               decoration: InputDecoration(
                                 hintText: ' Choose your department :',
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
+                                    borderRadius: BorderRadius.circular(13),
                                     borderSide: const BorderSide(
                                       width: 0,
                                     )),
@@ -579,7 +585,7 @@ class _studentsignupState extends State<studentsignup> {
                                 hintText:
                                     'Choose how can other communicate with you',
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
+                                    borderRadius: BorderRadius.circular(13),
                                     borderSide: const BorderSide(
                                       width: 0,
                                     )),
@@ -618,7 +624,7 @@ class _studentsignupState extends State<studentsignup> {
                                       hintText: "Enter your link account",
                                       border: OutlineInputBorder(
                                           borderRadius:
-                                              BorderRadius.circular(25),
+                                              BorderRadius.circular(13),
                                           borderSide: const BorderSide(
                                             width: 0,
                                           ))),
@@ -662,8 +668,8 @@ class _studentsignupState extends State<studentsignup> {
                               style: ElevatedButton.styleFrom(
                                 textStyle:
                                     TextStyle(fontFamily: 'main', fontSize: 16),
-                                shadowColor: Colors.blue[900],
-                                elevation: 16,
+                                backgroundColor: Mycolors.mainShadedColorBlue,
+                                elevation: 0,
                                 minimumSize: Size(150, 50),
                                 shape: RoundedRectangleBorder(
                                   borderRadius:

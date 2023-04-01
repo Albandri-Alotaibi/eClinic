@@ -5,6 +5,7 @@ import 'package:myapp/domain/extension.dart';
 import 'package:myapp/domain/model.dart';
 import 'package:myapp/screeens/resources/snackbar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:myapp/style/Mycolors.dart';
 import 'package:uuid/uuid.dart';
 import 'package:myapp/app/constants.dart';
 import 'package:myapp/app/shardPreferense.dart';
@@ -76,6 +77,17 @@ class _GroupSelectionState extends State<GroupSelection> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
+          backgroundColor: Colors.white,
+          primary: false,
+          centerTitle: true,
+          shadowColor: Colors.transparent,
+          iconTheme: IconThemeData(
+            color: Color.fromARGB(255, 12, 12, 12), //change your color here
+          ),
+          titleTextStyle: TextStyle(
+            color: Mycolors.mainColorBlack,
+            fontSize: 24,
+          ),
           title: const Text('Group Selecte'),
         ),
         body: Container(
@@ -551,8 +563,8 @@ class _GroupSelectionState extends State<GroupSelection> {
                   style: ElevatedButton.styleFrom(
                     textStyle:
                         const TextStyle(fontFamily: 'main', fontSize: 16),
-                    shadowColor: Colors.blue[900],
-                    elevation: 16,
+                    backgroundColor: Mycolors.mainShadedColorBlue,
+                    elevation: 0,
                     minimumSize: const Size(150, 50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(17), // <-- Radius
@@ -594,10 +606,10 @@ class _GroupSelectionState extends State<GroupSelection> {
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 5),
         decoration: BoxDecoration(
-            color: color,
+            color: Color.fromARGB(149, 224, 224, 224),
             boxShadow: [
               BoxShadow(
-                  color: Colors.black.withOpacity(.05),
+                  color: Color.fromARGB(0, 0, 0, 0).withOpacity(.0),
                   offset: const Offset(4, 5),
                   blurRadius: 6,
                   spreadRadius: 1)

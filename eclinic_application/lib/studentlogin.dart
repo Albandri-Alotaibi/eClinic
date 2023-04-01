@@ -55,7 +55,7 @@ class _studentloginState extends State<studentlogin> {
           title: Text('Welcome back'),
 
           titleTextStyle: TextStyle(
-            fontFamily: 'bold',
+            fontWeight: FontWeight.bold,
             fontSize: 24,
             color: Mycolors.mainColorBlack,
           ),
@@ -65,16 +65,7 @@ class _studentloginState extends State<studentlogin> {
           child: Container(
             child: Column(
               children: [
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 30),
-                //   child: Text(
-                //     "Welcome back",
-                //     style: TextStyle(
-                //         color: Mycolors.mainColorBlack,
-                //         fontFamily: 'main',
-                //         fontSize: 24),
-                //   ),
-                // ),
+           
                 Padding(
                   padding: const EdgeInsets.all(11.0),
                   child: Image.asset(
@@ -163,8 +154,8 @@ class _studentloginState extends State<studentlogin> {
                                 child: Text(
                                   "Forget password ?",
                                   style: TextStyle(
+                                      fontWeight: FontWeight.bold,
                                       color: Mycolors.mainColorGray,
-                                      fontFamily: 'bold',
                                       fontSize: 14),
                                 )),
                           ),
@@ -175,8 +166,7 @@ class _studentloginState extends State<studentlogin> {
                             padding: const EdgeInsets.only(top: 30),
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                textStyle:
-                                    TextStyle(fontFamily: 'main', fontSize: 16),
+                                textStyle: TextStyle(fontSize: 16),
                                 shadowColor: Colors.blue[900],
                                 elevation: 16,
                                 backgroundColor: Mycolors.mainShadedColorBlue,
@@ -247,7 +237,6 @@ class _studentloginState extends State<studentlogin> {
                                   "You don't have an account ? ",
                                   style: TextStyle(
                                       color: Mycolors.mainColorBlack,
-                                      fontFamily: 'main',
                                       fontSize: 14),
                                 ),
                                 GestureDetector(
@@ -262,7 +251,7 @@ class _studentloginState extends State<studentlogin> {
                                       " Sign up",
                                       style: TextStyle(
                                           color: Mycolors.mainColorBlack,
-                                          fontFamily: 'bold',
+                                          fontWeight: FontWeight.bold,
                                           fontSize: 14),
                                     )),
                               ],

@@ -183,7 +183,7 @@ class _fState extends State<facultyhome> {
               ListTile(
                 leading: Icon(Icons.edit_note, color: Mycolors.mainColorBlue),
                 title: Text(
-                  "My profile",
+                  "My Profile",
                   style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 15,
@@ -202,7 +202,7 @@ class _fState extends State<facultyhome> {
               ListTile(
                 leading: Icon(Icons.password, color: Mycolors.mainColorBlue),
                 title: Text(
-                  "Reset password",
+                  "Reset Password",
                   style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 15,
@@ -221,7 +221,7 @@ class _fState extends State<facultyhome> {
               ListTile(
                 leading: Icon(Icons.logout, color: Mycolors.mainColorBlue),
                 title: Text(
-                  "Log out",
+                  "Log Out",
                   style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 15,
@@ -239,51 +239,6 @@ class _fState extends State<facultyhome> {
               ),
             ])),
         body: _pages[widget.selectedIndex],
-        //-------------------------Nav Bar------------------------------
-        // bottomNavigationBar: Container(
-        //   decoration: BoxDecoration(
-        //     color: Color.fromARGB(71, 229, 229, 229),
-        //     // borderRadius: BorderRadius.only(
-        //     //     topLeft: Radius.circular(45),
-        //     //     topRight: Radius.circular(45),
-        //     //     bottomLeft: Radius.circular(45),
-        //     //     bottomRight: Radius.circular(45)),
-        //   ),
-        //   child: Padding(
-        //     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-        //     child: GNav(
-        //       selectedIndex: widget.selectedIndex,
-        //       onTabChange: (index) {
-        //         print(index);
-        //         setState(() {
-        //           widget.selectedIndex = index;
-        //         });
-        //       },
-
-        //       backgroundColor: Color.fromARGB(0, 229, 229, 229),
-        //       color: Mycolors.mainColorBlack,
-        //       activeColor: Mycolors.mainColorWhite,
-        //       tabBackgroundColor: Mycolors.mainShadedColorBlue,
-        //       gap: 8,
-        //       padding: EdgeInsets.all(10),
-        //       //curve: Curves.easeInOut,
-        //       tabs: [
-        //         GButton(
-        //           icon: Icons.group,
-        //           text: 'Appointments',
-        //         ),
-        //         GButton(
-        //           icon: Icons.schedule,
-        //           text: 'Available Hours ',
-        //         ),
-        //         GButton(
-        //           icon: Icons.question_answer,
-        //           text: 'FAQ',
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ),
 
         //---------------------------Nav bar------------------------------
         bottomNavigationBar: NavigationBarTheme(
@@ -379,7 +334,7 @@ class _fState extends State<facultyhome> {
 
     AlertDialog alert = AlertDialog(
       // title: Text("LogOut"),
-      content: Text("Are you sure you want to logout ?"),
+      content: Text("Are you sure you want to logout?"),
       actions: [
         dontCancelAppButton,
         YesCancelAppButton,
