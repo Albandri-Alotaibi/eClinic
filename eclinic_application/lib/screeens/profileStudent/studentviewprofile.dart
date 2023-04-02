@@ -194,7 +194,6 @@ class _studentviewprofileState extends State<studentviewprofile> {
               ),
               // backgroundColor: Mycolors.BackgroundColor,
               body: SingleChildScrollView(
-                clipBehavior: Clip.none,
                 child: Column(
                   children: [
                     Padding(
@@ -233,17 +232,30 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                         SizedBox(
                                           height: 15,
                                         ),
+                                        Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "  First Name:",
+                                              style: TextStyle(
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  color:
+                                                      Mycolors.mainColorBlack,
+                                                  fontFamily: 'bold',
+                                                  fontSize: 13),
+                                              textAlign: TextAlign.start,
+                                            )),
                                         TextFormField(
                                           //initialValue: BlocProfileStudent.get(context).modelStudent?.firstname,
                                           controller: _fnameController,
 
                                           decoration: InputDecoration(
-                                              labelText: ' First Name',
+                                              //labelText: ' First Name',
                                               // hintText: "Enter your first name",
                                               suffixIcon: Icon(Icons.edit),
                                               border: OutlineInputBorder(
                                                   borderRadius:
-                                                      BorderRadius.circular(25),
+                                                      BorderRadius.circular(13),
                                                   borderSide: const BorderSide(
                                                     width: 0,
                                                   ))),
@@ -267,17 +279,30 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                           },
                                         ),
                                         const SizedBox(
-                                          height: 8,
+                                          height: 3,
                                         ),
+                                        Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "  Last Name:",
+                                              style: TextStyle(
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  color:
+                                                      Mycolors.mainColorBlack,
+                                                  fontFamily: 'bold',
+                                                  fontSize: 13),
+                                              textAlign: TextAlign.start,
+                                            )),
                                         TextFormField(
                                           controller: _lnamecontroller,
                                           decoration: InputDecoration(
-                                              labelText: 'Last Name',
+                                              //   labelText: 'Last Name',
                                               // hintText: "Enter your last name",
                                               suffixIcon: Icon(Icons.edit),
                                               border: OutlineInputBorder(
                                                   borderRadius:
-                                                      BorderRadius.circular(25),
+                                                      BorderRadius.circular(13),
                                                   borderSide: const BorderSide(
                                                     width: 0,
                                                   ))),
@@ -300,33 +325,59 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                             }
                                           },
                                         ),
-                                        SizedBox(
-                                          height: 8,
+                                        const SizedBox(
+                                          height: 3,
                                         ),
+                                        Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "  Email:",
+                                              style: TextStyle(
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  color:
+                                                      Mycolors.mainColorBlack,
+                                                  fontFamily: 'bold',
+                                                  fontSize: 13),
+                                              textAlign: TextAlign.start,
+                                            )),
                                         TextFormField(
                                           controller: _emailController,
                                           readOnly: true,
                                           decoration: InputDecoration(
                                               // hintText: "Enter your KSU email",
-                                              labelText: 'Email',
+                                              // labelText: 'Email',
                                               border: OutlineInputBorder(
                                                   borderRadius:
-                                                      BorderRadius.circular(25),
+                                                      BorderRadius.circular(13),
                                                   borderSide: const BorderSide(
                                                     width: 0,
                                                   ))),
                                         ),
 
-                                        SizedBox(
-                                          height: 8,
+                                        const SizedBox(
+                                          height: 3,
                                         ),
+                                        Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              " Social Media:",
+                                              style: TextStyle(
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  color:
+                                                      Mycolors.mainColorBlack,
+                                                  fontFamily: 'bold',
+                                                  fontSize: 13),
+                                              textAlign: TextAlign.start,
+                                            )),
                                         DropdownButtonFormField(
                                             decoration: InputDecoration(
                                               suffixIcon: Icon(Icons.edit),
-                                              labelText: "Social media contact",
+                                              // labelText: "Social Media",
                                               border: OutlineInputBorder(
                                                   borderRadius:
-                                                      BorderRadius.circular(25),
+                                                      BorderRadius.circular(13),
                                                   borderSide: const BorderSide(
                                                     width: 0,
                                                   )),
@@ -352,18 +403,32 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                                 _socialmediaccount.text = "";
                                               });
                                             }),
-                                        SizedBox(
-                                          height: 8,
+                                        const SizedBox(
+                                          height: 3,
                                         ),
                                         if (social != null && social != "None")
                                           Column(
                                             children: [
+                                              Align(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Text(
+                                                    " Link:",
+                                                    style: TextStyle(
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        color: Mycolors
+                                                            .mainColorBlack,
+                                                        fontFamily: 'bold',
+                                                        fontSize: 13),
+                                                    textAlign: TextAlign.start,
+                                                  )),
                                               TextFormField(
                                                   key: const Key('link'),
                                                   controller:
                                                       _socialmediaccount,
                                                   decoration: InputDecoration(
-                                                      labelText: 'Link account',
+                                                      // labelText: 'Link account',
                                                       hintText:
                                                           "Enter your link account",
                                                       suffixIcon:
@@ -373,7 +438,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
-                                                                          25),
+                                                                          13),
                                                               borderSide:
                                                                   const BorderSide(
                                                                 width: 0,
@@ -431,7 +496,19 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                             ],
                                           ),
                                         ////////////////////group information (department,project name , project completion date)
-
+                                        Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "  Department:",
+                                              style: TextStyle(
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  color:
+                                                      Mycolors.mainColorBlack,
+                                                  fontFamily: 'bold',
+                                                  fontSize: 13),
+                                              textAlign: TextAlign.start,
+                                            )),
                                         TextFormField(
                                           key: const Key('department'),
                                           controller: _depertement,
@@ -456,13 +533,13 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                                             DepartmentChangeScreen())));
                                           },
                                           decoration: InputDecoration(
-                                              labelText: 'Department',
+                                              // labelText: 'Department',
                                               // hintText: "Enter your first name",
                                               suffixIcon:
                                                   const Icon(Icons.edit),
                                               border: OutlineInputBorder(
                                                   borderRadius:
-                                                      BorderRadius.circular(25),
+                                                      BorderRadius.circular(13),
                                                   borderSide: const BorderSide(
                                                     width: 0,
                                                   ))),
@@ -556,15 +633,29 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                     ],
                                   ),
                                   _spacer,
+                                  Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        " Group Name:",
+                                        style: TextStyle(
+                                            overflow: TextOverflow.ellipsis,
+                                            color: Mycolors.mainColorBlack,
+                                            fontFamily: 'bold',
+                                            fontSize: 13),
+                                        textAlign: TextAlign.start,
+                                      )),
+                                  const SizedBox(
+                                    height: 3,
+                                  ),
                                   TextFormField(
                                     controller: _groupName,
                                     decoration: InputDecoration(
-                                        labelText: 'group Name',
+                                        //  labelText: 'group Name',
                                         // hintText: "Enter your last name",
                                         suffixIcon: Icon(Icons.edit),
                                         border: OutlineInputBorder(
                                             borderRadius:
-                                                BorderRadius.circular(25),
+                                                BorderRadius.circular(13),
                                             borderSide: const BorderSide(
                                               width: 0,
                                             ))),
@@ -585,7 +676,14 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                   _spacer,
                                   if (TypeUser.type == 'student') ...{
                                     Text(
-                                        " ${BlocProfileStudent.get(context).currentGroup?.projectname} completion date : "),
+                                      " ${BlocProfileStudent.get(context).currentGroup?.projectname} completion date:",
+                                      style: TextStyle(
+                                          overflow: TextOverflow.ellipsis,
+                                          color: Mycolors.mainColorBlack,
+                                          fontFamily: 'bold',
+                                          fontSize: 13),
+                                      textAlign: TextAlign.start,
+                                    ),
                                     const SizedBox(
                                       height: 10,
                                     ),
@@ -609,7 +707,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                                 border: OutlineInputBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            25),
+                                                            13),
                                                     borderSide:
                                                         const BorderSide(
                                                       width: 0,
@@ -683,7 +781,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                                 border: OutlineInputBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            25),
+                                                            13),
                                                     borderSide:
                                                         const BorderSide(
                                                       width: 0,

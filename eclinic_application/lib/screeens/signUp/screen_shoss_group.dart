@@ -76,6 +76,7 @@ class _GroupSelectionState extends State<GroupSelection> {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -150,7 +151,7 @@ class _GroupSelectionState extends State<GroupSelection> {
                     // enable border stayle
 
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
+                      borderRadius: BorderRadius.circular(13),
                       borderSide: BorderSide(
                           width: 5, color: Colors.black.withOpacity(.5)),
                     ),
@@ -243,7 +244,7 @@ class _GroupSelectionState extends State<GroupSelection> {
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
-                                                                          25),
+                                                                          13),
                                                               borderSide:
                                                                   const BorderSide(
                                                                 width: 0,
@@ -287,7 +288,7 @@ class _GroupSelectionState extends State<GroupSelection> {
                                                                 OutlineInputBorder(
                                                                     borderRadius:
                                                                         BorderRadius.circular(
-                                                                            25),
+                                                                            13),
                                                                     borderSide:
                                                                         const BorderSide(
                                                                       width: 0,
@@ -379,7 +380,7 @@ class _GroupSelectionState extends State<GroupSelection> {
                                                                 OutlineInputBorder(
                                                                     borderRadius:
                                                                         BorderRadius.circular(
-                                                                            25),
+                                                                            13),
                                                                     borderSide:
                                                                         const BorderSide(
                                                                       width: 0,
@@ -438,9 +439,9 @@ class _GroupSelectionState extends State<GroupSelection> {
                                                               fontFamily:
                                                                   'main',
                                                               fontSize: 16),
-                                                      shadowColor:
-                                                          Colors.blue[900],
-                                                      elevation: 16,
+                                                      backgroundColor: Mycolors
+                                                          .mainShadedColorBlue,
+                                                      elevation: 0,
                                                       minimumSize:
                                                           const Size(100, 50),
                                                       shape:
@@ -466,9 +467,9 @@ class _GroupSelectionState extends State<GroupSelection> {
                                                               fontFamily:
                                                                   'main',
                                                               fontSize: 16),
-                                                      shadowColor:
-                                                          Colors.blue[900],
-                                                      elevation: 16,
+                                                      backgroundColor: Mycolors
+                                                          .mainShadedColorBlue,
+                                                      elevation: 0,
                                                       minimumSize:
                                                           const Size(100, 50),
                                                       shape:
@@ -612,7 +613,7 @@ class _GroupSelectionState extends State<GroupSelection> {
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 5),
         decoration: BoxDecoration(
-            color: Color.fromARGB(149, 224, 224, 224),
+            color: Color.fromARGB(107, 224, 224, 224),
             boxShadow: [
               BoxShadow(
                   color: Color.fromARGB(0, 0, 0, 0).withOpacity(.0),
@@ -633,7 +634,7 @@ class _GroupSelectionState extends State<GroupSelection> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Completion date: " +
+                      "Completion Date: " +
                           (modelGroup.Projectcompletiondate?.convertToWord() ??
                               ''),
                       style: TextStyle(fontSize: 14),
@@ -654,7 +655,8 @@ class _GroupSelectionState extends State<GroupSelection> {
                         (index) => modelGroup.students
                             .map((e) => Text(
                                   '${e.name}${modelGroup.students.last == e ? '' : ','}',
-                                  style: TextStyle(color: Colors.blue),
+                                  style: TextStyle(
+                                      color: Mycolors.mainShadedColorBlue),
                                 ))
                             .toList()[index]),
                   ),
@@ -707,7 +709,7 @@ class _GroupSelectionState extends State<GroupSelection> {
                                   ),
                                   // enable border stayle
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
+                                      borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),
@@ -741,7 +743,7 @@ class _GroupSelectionState extends State<GroupSelection> {
                                         hintText: 'month',
                                         border: OutlineInputBorder(
                                             borderRadius:
-                                                BorderRadius.circular(25),
+                                                BorderRadius.circular(13),
                                             borderSide: const BorderSide(
                                               width: 0,
                                             )),
@@ -800,7 +802,7 @@ class _GroupSelectionState extends State<GroupSelection> {
                                         hintText: 'year',
                                         border: OutlineInputBorder(
                                             borderRadius:
-                                                BorderRadius.circular(25),
+                                                BorderRadius.circular(13),
                                             borderSide: const BorderSide(
                                               width: 0,
                                             )),
@@ -840,8 +842,8 @@ class _GroupSelectionState extends State<GroupSelection> {
                                 style: ElevatedButton.styleFrom(
                                   textStyle: const TextStyle(
                                       fontFamily: 'main', fontSize: 16),
-                                  shadowColor: Colors.blue[900],
-                                  elevation: 16,
+                                  backgroundColor: Mycolors.mainShadedColorBlue,
+                                  elevation: 0,
                                   minimumSize: const Size(100, 50),
                                   shape: RoundedRectangleBorder(
                                     borderRadius:
@@ -860,8 +862,8 @@ class _GroupSelectionState extends State<GroupSelection> {
                                 style: ElevatedButton.styleFrom(
                                   textStyle: const TextStyle(
                                       fontFamily: 'main', fontSize: 16),
-                                  shadowColor: Colors.blue[900],
-                                  elevation: 16,
+                                  backgroundColor: Mycolors.mainShadedColorBlue,
+                                  elevation: 0,
                                   minimumSize: const Size(100, 50),
                                   shape: RoundedRectangleBorder(
                                     borderRadius:
@@ -923,7 +925,7 @@ class _GroupSelectionState extends State<GroupSelection> {
                       : Icons.radio_button_off,
                   color: BlocGroupSelect.get(context).modelGroupSelected ==
                           modelGroup
-                      ? Colors.blue
+                      ? Mycolors.mainShadedColorBlue
                       : null,
                 ));
           }),

@@ -4,6 +4,7 @@ import 'package:myapp/bloc/profileStudent/bloc.dart';
 import 'package:myapp/domain/extension.dart';
 import 'package:myapp/screeens/profileStudent/componants/text_header.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:myapp/style/Mycolors.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../app/constants.dart';
@@ -79,478 +80,486 @@ class _DepartmentChangeScreenState extends State<DepartmentChangeScreen> {
       }
     }, builder: (context, snapshot) {
       return WillPopScope(
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: AppBar(
-            title: const Center(
-              child: Text('Department Edit'),
+        child: SafeArea(
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            resizeToAvoidBottomInset: false,
+            appBar: AppBar(
+              backgroundColor: Colors.white,
+              primary: false,
+              centerTitle: true,
+              shadowColor: Colors.transparent,
+              iconTheme: IconThemeData(
+                color: Color.fromARGB(255, 12, 12, 12), //change your color here
+              ),
+              titleTextStyle: TextStyle(
+                color: Mycolors.mainColorBlack,
+                fontSize: 24,
+              ),
+              title: Text('Edit Department'),
             ),
-          ),
-          body: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20),
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: Column(
-              children: [
-                _spacer,
-                const TextHeader(text: 'Choos department'),
-                _spacer,
-                DropdownButtonFormField<DocumentReference>(
-                  decoration: InputDecoration(
-                    hintText: ' Choose your department :',
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                        borderSide: const BorderSide(
-                          width: 0,
-                        )),
+            body: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: Column(
+                children: [
+                  _spacer,
+                  const TextHeader(text: 'Choos department'),
+                  _spacer,
+                  DropdownButtonFormField<DocumentReference>(
+                    decoration: InputDecoration(
+                      hintText: ' Choose your department :',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(13),
+                          borderSide: const BorderSide(
+                            width: 0,
+                          )),
+                    ),
+                    isExpanded: true,
+                    items: BlocProfileStudent.get(context)
+                        .allDepartments
+                        .map((DocumentReference dropdownitems) {
+                      return DropdownMenuItem<DocumentReference>(
+                        value: dropdownitems,
+                        child: Text(dropdownitems.toStringNameDepartement()),
+                      );
+                    }).toList(),
+                    onChanged: (DocumentReference? newselect) {
+                      BlocProfileStudent.get(context)
+                          .changeSelectDepatment(newselect);
+                      BlocGroupSelect.get(context).getAllGroups(newselect!);
+                    },
+                    value: BlocProfileStudent.get(context).departmentSelect,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                   ),
-                  isExpanded: true,
-                  items: BlocProfileStudent.get(context)
-                      .allDepartments
-                      .map((DocumentReference dropdownitems) {
-                    return DropdownMenuItem<DocumentReference>(
-                      value: dropdownitems,
-                      child: Text(dropdownitems.toStringNameDepartement()),
-                    );
-                  }).toList(),
-                  onChanged: (DocumentReference? newselect) {
-                    BlocProfileStudent.get(context)
-                        .changeSelectDepatment(newselect);
-                    BlocGroupSelect.get(context).getAllGroups(newselect!);
-                  },
-                  value: BlocProfileStudent.get(context).departmentSelect,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                ),
-                _spacer,
-                BlocConsumer<BlocGroupSelect, StateBlocGroupSelect>(
-                    listener: (context, state) {},
-                    builder: (context, snapshot) {
-                      return (BlocProfileStudent.get(context)
-                                      .departmentSelect ==
-                                  null ||
-                              BlocProfileStudent.get(context)
-                                      .departmentSelect ==
-                                  BlocProfileStudent.get(context)
-                                      .currentDepartment)
-                          ? const SizedBox()
-                          : Expanded(
-                              child: Column(
-                                children: [
-                                  //_spacer ,
-                                  const TextHeader(text: 'Find your new group'),
-                                  _spacer,
-                                  TextFormField(
-                                    controller: _inputNameGroup,
-                                    autofocus: false,
-                                    keyboardType: TextInputType.text,
-                                    decoration: InputDecoration(
-                                      label: const Text(' Find your group'),
-                                      suffixIcon: const Icon(Icons.search),
-                                      filled: true,
-                                      fillColor: Colors.black.withOpacity(0.01),
-                                      //border: InputBorder.none,
+                  _spacer,
+                  BlocConsumer<BlocGroupSelect, StateBlocGroupSelect>(
+                      listener: (context, state) {},
+                      builder: (context, snapshot) {
+                        return (BlocProfileStudent.get(context)
+                                        .departmentSelect ==
+                                    null ||
+                                BlocProfileStudent.get(context)
+                                        .departmentSelect ==
+                                    BlocProfileStudent.get(context)
+                                        .currentDepartment)
+                            ? const SizedBox()
+                            : Expanded(
+                                child: Column(
+                                  children: [
+                                    //_spacer ,
+                                    const TextHeader(
+                                        text: 'Find your new group'),
+                                    _spacer,
+                                    TextFormField(
+                                      controller: _inputNameGroup,
+                                      autofocus: false,
+                                      keyboardType: TextInputType.text,
+                                      decoration: InputDecoration(
+                                        // label: const Text(' Find your group'),
+                                        suffixIcon: const Icon(Icons.search),
+                                        filled: true,
+                                        fillColor:
+                                            Colors.black.withOpacity(0.01),
+                                        //border: InputBorder.none,
 
-                                      //contentPadding: const EdgeInsets.only(
-                                      //    left: 14.0, bottom: 10.0, top: 10.0, right: 14.0),
-                                      //hintStyle:    TextStyle(color: Colors.grey.withOpacity(.5)) ,
-                                      labelStyle: const TextStyle(
-                                        color: Colors.black,
-                                      ),
-                                      errorStyle:
-                                          const TextStyle(color: Colors.red),
-                                      // enable border stayle
+                                        //contentPadding: const EdgeInsets.only(
+                                        //    left: 14.0, bottom: 10.0, top: 10.0, right: 14.0),
+                                        //hintStyle:    TextStyle(color: Colors.grey.withOpacity(.5)) ,
+                                        labelStyle: const TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                        errorStyle:
+                                            const TextStyle(color: Colors.red),
+                                        // enable border stayle
 
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(25),
-                                        borderSide: BorderSide(
-                                            width: 5,
-                                            color:
-                                                Colors.black.withOpacity(.5)),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(13),
+                                          borderSide: BorderSide(
+                                              width: 5,
+                                              color:
+                                                  Colors.black.withOpacity(.5)),
+                                        ),
                                       ),
                                     ),
-                                  ),
 
-                                  //_space,
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  if (BlocGroupSelect.get(context)
-                                          .modelGroupSelected !=
-                                      null)
-                                    _buildItem(
-                                        context,
-                                        BlocGroupSelect.get(context)
-                                            .modelGroupSelected!),
-                                  const Divider(),
+                                    //_space,
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    if (BlocGroupSelect.get(context)
+                                            .modelGroupSelected !=
+                                        null)
+                                      _buildItem(
+                                          context,
+                                          BlocGroupSelect.get(context)
+                                              .modelGroupSelected!),
+                                    const Divider(),
 
-                                  Expanded(
-                                    child: SingleChildScrollView(
-                                      child:
-                                          BlocGroupSelect.get(context).loading
-                                              ? const Center(
-                                                  child:
-                                                      CircularProgressIndicator(),
-                                                )
-                                              : Column(
-                                                  children: [
-                                                    Column(
-                                                      children: BlocGroupSelect
-                                                              .get(context)
-                                                          .listAllGroupsForSearching
-                                                          .where((element) =>
-                                                              element !=
-                                                              BlocGroupSelect.get(
-                                                                      context)
-                                                                  .modelGroupSelected)
-                                                          .map((e) =>
-                                                              _buildItem(
-                                                                  context, e))
-                                                          .toList(),
-                                                    ),
-                                                    const Divider(),
-                                                    if (BlocGroupSelect.get(
-                                                                context)
-                                                            .modelGroupAddNews ==
-                                                        null)
-                                                      InkWell(
-                                                        onTap: () {
-                                                          _inputAddNameGroup
-                                                                  .text =
-                                                              _inputNameGroup
-                                                                  .value.text;
-                                                          buildShowDialog(
-                                                              context: context,
-                                                              title:
-                                                                  'Create New Group',
-                                                              child: Form(
-                                                                key: formkey,
-                                                                child: Column(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .start,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .min,
-                                                                  children: [
-                                                                    _spacer,
-                                                                    Text(
-                                                                        "Project name : "),
-                                                                    SizedBox(
-                                                                      height:
-                                                                          10,
-                                                                    ),
-
-                                                                    SizedBox(
-                                                                      height:
-                                                                          60,
-                                                                      child:
-                                                                          TextFormField(
-                                                                        controller:
-                                                                            _inputAddNameGroup,
-                                                                        autofocus:
-                                                                            false,
-                                                                        keyboardType:
-                                                                            TextInputType.text,
-                                                                        decoration: InputDecoration(
-                                                                            errorStyle: TextStyle(fontSize: 0),
-                                                                            //label: const Text('create name project'),
-                                                                            filled: true,
-                                                                            fillColor: Colors.black.withOpacity(0.01),
-                                                                            contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0, right: 14.0),
-                                                                            hintStyle: TextStyle(color: Colors.grey.withOpacity(.5)),
-                                                                            labelStyle: const TextStyle(
-                                                                              color: Colors.black,
-                                                                            ),
-                                                                            // enable border stayle
-                                                                            border: OutlineInputBorder(
-                                                                                borderRadius: BorderRadius.circular(25),
-                                                                                borderSide: const BorderSide(
-                                                                                  width: 0,
-                                                                                ))),
-                                                                        autovalidateMode:
-                                                                            AutovalidateMode.onUserInteraction,
-                                                                        validator:
-                                                                            (v) {
-                                                                          if (v?.trim() ==
-                                                                              '') {
-                                                                            return ' ';
-                                                                          }
-                                                                        },
-                                                                      ),
-                                                                    ),
-                                                                    _spacer,
-                                                                    // Project completion date
-                                                                    if (TypeUser
-                                                                            .type ==
-                                                                        'student') ...{
+                                    Expanded(
+                                      child: SingleChildScrollView(
+                                        child:
+                                            BlocGroupSelect.get(context).loading
+                                                ? const Center(
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  )
+                                                : Column(
+                                                    children: [
+                                                      Column(
+                                                        children: BlocGroupSelect
+                                                                .get(context)
+                                                            .listAllGroupsForSearching
+                                                            .where((element) =>
+                                                                element !=
+                                                                BlocGroupSelect.get(
+                                                                        context)
+                                                                    .modelGroupSelected)
+                                                            .map((e) =>
+                                                                _buildItem(
+                                                                    context, e))
+                                                            .toList(),
+                                                      ),
+                                                      const Divider(),
+                                                      if (BlocGroupSelect.get(
+                                                                  context)
+                                                              .modelGroupAddNews ==
+                                                          null)
+                                                        InkWell(
+                                                          onTap: () {
+                                                            _inputAddNameGroup
+                                                                    .text =
+                                                                _inputNameGroup
+                                                                    .value.text;
+                                                            buildShowDialog(
+                                                                context:
+                                                                    context,
+                                                                title:
+                                                                    'Create New Group',
+                                                                child: Form(
+                                                                  key: formkey,
+                                                                  child: Column(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .start,
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .min,
+                                                                    children: [
+                                                                      _spacer,
                                                                       Text(
-                                                                          " Project completion date : "),
+                                                                          "Project Name: "),
                                                                       SizedBox(
                                                                         height:
                                                                             10,
                                                                       ),
+
                                                                       SizedBox(
                                                                         height:
                                                                             60,
                                                                         child:
-                                                                            Row(
-                                                                          children: [
-                                                                            Expanded(
-                                                                              //flex: 1,
-                                                                              child: DropdownButtonFormField(
-                                                                                decoration: InputDecoration(
-                                                                                  errorStyle: TextStyle(fontSize: 0),
-                                                                                  hintText: 'month',
-                                                                                  border: OutlineInputBorder(
-                                                                                      borderRadius: BorderRadius.circular(25),
-                                                                                      borderSide: const BorderSide(
-                                                                                        width: 0,
-                                                                                      )),
-                                                                                ),
-                                                                                items: const [
-                                                                                  DropdownMenuItem(child: Text("Jan"), value: "01"),
-                                                                                  DropdownMenuItem(child: Text("Feb"), value: "02"),
-                                                                                  DropdownMenuItem(child: Text("Mar"), value: "03"),
-                                                                                  DropdownMenuItem(child: Text("Apr"), value: "04"),
-                                                                                  DropdownMenuItem(child: Text("May"), value: "05"),
-                                                                                  DropdownMenuItem(child: Text("Jun"), value: "06"),
-                                                                                  DropdownMenuItem(child: Text("Jul"), value: "07"),
-                                                                                  DropdownMenuItem(child: Text("Aug"), value: "08"),
-                                                                                  DropdownMenuItem(child: Text("Sep"), value: "09"),
-                                                                                  DropdownMenuItem(child: Text("Oct"), value: "10"),
-                                                                                  DropdownMenuItem(child: Text("Nov"), value: "11"),
-                                                                                  DropdownMenuItem(child: Text("Dec"), value: "12")
-                                                                                ],
-                                                                                onChanged: (value) {
-                                                                                  setState(() {
-                                                                                    month = value;
-                                                                                    //print(month);
-                                                                                  });
-                                                                                },
-                                                                                autovalidateMode: AutovalidateMode.onUserInteraction,
-                                                                                validator: (value) {
-                                                                                  if (value == null || month == "") {
-                                                                                    return ' ';
-                                                                                  }
-                                                                                },
+                                                                            TextFormField(
+                                                                          controller:
+                                                                              _inputAddNameGroup,
+                                                                          autofocus:
+                                                                              false,
+                                                                          keyboardType:
+                                                                              TextInputType.text,
+                                                                          decoration: InputDecoration(
+                                                                              errorStyle: TextStyle(fontSize: 0),
+                                                                              //label: const Text('create name project'),
+                                                                              filled: true,
+                                                                              fillColor: Colors.black.withOpacity(0.01),
+                                                                              contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0, right: 14.0),
+                                                                              hintStyle: TextStyle(color: Colors.grey.withOpacity(.5)),
+                                                                              labelStyle: const TextStyle(
+                                                                                color: Colors.black,
                                                                               ),
-                                                                            ),
-                                                                            SizedBox(
-                                                                              width: 10,
-                                                                            ),
-                                                                            Expanded(
-                                                                              flex: 1,
-                                                                              child: DropdownButtonFormField<String>(
-                                                                                decoration: InputDecoration(
-                                                                                  hintText: ' year',
-                                                                                  errorStyle: TextStyle(fontSize: 0),
-                                                                                  border: OutlineInputBorder(
-                                                                                      borderRadius: BorderRadius.circular(25),
-                                                                                      borderSide: const BorderSide(
-                                                                                        width: 0,
-                                                                                      )),
-                                                                                ),
-                                                                                //itemHeight: 60,
-
-                                                                                items: years.map((String dropdownitems) {
-                                                                                  return DropdownMenuItem<String>(
-                                                                                    value: dropdownitems,
-                                                                                    child: Text(
-                                                                                      dropdownitems,
-                                                                                    ),
-                                                                                  );
-                                                                                }).toList(),
-                                                                                onChanged: (String? newselect) {
-                                                                                  setState(() {
-                                                                                    selctedyear = newselect;
-                                                                                    //print(selctedyear);
-                                                                                  });
-                                                                                },
-                                                                                value: selctedyear,
-                                                                                autovalidateMode: AutovalidateMode.onUserInteraction,
-                                                                                validator: (value) {
-                                                                                  if (value == null || selctedyear == "") {
-                                                                                    return ' ';
-                                                                                  }
-                                                                                },
-                                                                              ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                    },
-
-                                                                    _spacer,
-                                                                    Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        ElevatedButton(
-                                                                          style:
-                                                                              ElevatedButton.styleFrom(
-                                                                            textStyle:
-                                                                                const TextStyle(fontFamily: 'main', fontSize: 16),
-                                                                            shadowColor:
-                                                                                Colors.blue[900],
-                                                                            elevation:
-                                                                                16,
-                                                                            minimumSize:
-                                                                                const Size(100, 50),
-                                                                            shape:
-                                                                                RoundedRectangleBorder(
-                                                                              borderRadius: BorderRadius.circular(17), // <-- Radius
-                                                                            ),
-                                                                          ),
-                                                                          onPressed:
-                                                                              () {
-                                                                            Navigator.pop(context);
-                                                                          },
-                                                                          child:
-                                                                              const Text('Cancel'),
-                                                                        ),
-                                                                        SizedBox(
-                                                                          width:
-                                                                              10,
-                                                                        ),
-                                                                        ElevatedButton(
-                                                                          style:
-                                                                              ElevatedButton.styleFrom(
-                                                                            textStyle:
-                                                                                const TextStyle(fontFamily: 'main', fontSize: 16),
-                                                                            shadowColor:
-                                                                                Colors.blue[900],
-                                                                            elevation:
-                                                                                16,
-                                                                            minimumSize:
-                                                                                const Size(100, 50),
-                                                                            shape:
-                                                                                RoundedRectangleBorder(
-                                                                              borderRadius: BorderRadius.circular(17), // <-- Radius
-                                                                            ),
-                                                                          ),
-                                                                          onPressed:
-                                                                              () async {
-                                                                            formkey.currentState!.save();
-                                                                            //formkey.currentState!.validate() ;
-                                                                            //if(formkey.currentState.)
-                                                                            print(formkey.currentState!.validate());
-                                                                            if (formkey.currentState!.validate()) {
-                                                                              //GPdate = dategp(
-                                                                              //    selctedyear, month);
-                                                                              //'graduationDate' : (GPdate as DateTime).toIso8601String() ,
-                                                                              //print('date : $GPdate');
-                                                                              GPdate = TypeUser.type == 'graduate' ? null : dategp(selctedyear, month);
-
-                                                                              ModelGroup modelg = ModelGroup(department: BlocProfileStudent.get(context).departmentSelect!, projectname: _inputAddNameGroup.value.text, students: const [], Projectcompletiondate: GPdate, id: Uuid().v4());
-                                                                              BlocGroupSelect.get(context).addNewGroup(modelg);
-                                                                              Navigator.pop(context);
-                                                                              _inputNameGroup.text = modelg.projectname;
-                                                                              BlocGroupSelect.get(context).selectGroup(modelg);
+                                                                              // enable border stayle
+                                                                              border: OutlineInputBorder(
+                                                                                  borderRadius: BorderRadius.circular(13),
+                                                                                  borderSide: const BorderSide(
+                                                                                    width: 0,
+                                                                                  ))),
+                                                                          autovalidateMode:
+                                                                              AutovalidateMode.onUserInteraction,
+                                                                          validator:
+                                                                              (v) {
+                                                                            if (v?.trim() ==
+                                                                                '') {
+                                                                              return ' ';
                                                                             }
                                                                           },
-                                                                          child:
-                                                                              const Text('Create'),
                                                                         ),
-                                                                      ],
-                                                                    ),
-                                                                  ],
+                                                                      ),
+                                                                      _spacer,
+                                                                      // Project completion date
+                                                                      if (TypeUser
+                                                                              .type ==
+                                                                          'student') ...{
+                                                                        Text(
+                                                                            " Project completion date : "),
+                                                                        SizedBox(
+                                                                          height:
+                                                                              10,
+                                                                        ),
+                                                                        SizedBox(
+                                                                          height:
+                                                                              60,
+                                                                          child:
+                                                                              Row(
+                                                                            children: [
+                                                                              Expanded(
+                                                                                //flex: 1,
+                                                                                child: DropdownButtonFormField(
+                                                                                  decoration: InputDecoration(
+                                                                                    errorStyle: TextStyle(fontSize: 0),
+                                                                                    hintText: 'month',
+                                                                                    border: OutlineInputBorder(
+                                                                                        borderRadius: BorderRadius.circular(13),
+                                                                                        borderSide: const BorderSide(
+                                                                                          width: 0,
+                                                                                        )),
+                                                                                  ),
+                                                                                  items: const [
+                                                                                    DropdownMenuItem(child: Text("Jan"), value: "01"),
+                                                                                    DropdownMenuItem(child: Text("Feb"), value: "02"),
+                                                                                    DropdownMenuItem(child: Text("Mar"), value: "03"),
+                                                                                    DropdownMenuItem(child: Text("Apr"), value: "04"),
+                                                                                    DropdownMenuItem(child: Text("May"), value: "05"),
+                                                                                    DropdownMenuItem(child: Text("Jun"), value: "06"),
+                                                                                    DropdownMenuItem(child: Text("Jul"), value: "07"),
+                                                                                    DropdownMenuItem(child: Text("Aug"), value: "08"),
+                                                                                    DropdownMenuItem(child: Text("Sep"), value: "09"),
+                                                                                    DropdownMenuItem(child: Text("Oct"), value: "10"),
+                                                                                    DropdownMenuItem(child: Text("Nov"), value: "11"),
+                                                                                    DropdownMenuItem(child: Text("Dec"), value: "12")
+                                                                                  ],
+                                                                                  onChanged: (value) {
+                                                                                    setState(() {
+                                                                                      month = value;
+                                                                                      //print(month);
+                                                                                    });
+                                                                                  },
+                                                                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                                                                  validator: (value) {
+                                                                                    if (value == null || month == "") {
+                                                                                      return ' ';
+                                                                                    }
+                                                                                  },
+                                                                                ),
+                                                                              ),
+                                                                              SizedBox(
+                                                                                width: 10,
+                                                                              ),
+                                                                              Expanded(
+                                                                                flex: 1,
+                                                                                child: DropdownButtonFormField<String>(
+                                                                                  decoration: InputDecoration(
+                                                                                    hintText: ' year',
+                                                                                    errorStyle: TextStyle(fontSize: 0),
+                                                                                    border: OutlineInputBorder(
+                                                                                        borderRadius: BorderRadius.circular(13),
+                                                                                        borderSide: const BorderSide(
+                                                                                          width: 0,
+                                                                                        )),
+                                                                                  ),
+                                                                                  //itemHeight: 60,
+
+                                                                                  items: years.map((String dropdownitems) {
+                                                                                    return DropdownMenuItem<String>(
+                                                                                      value: dropdownitems,
+                                                                                      child: Text(
+                                                                                        dropdownitems,
+                                                                                      ),
+                                                                                    );
+                                                                                  }).toList(),
+                                                                                  onChanged: (String? newselect) {
+                                                                                    setState(() {
+                                                                                      selctedyear = newselect;
+                                                                                      //print(selctedyear);
+                                                                                    });
+                                                                                  },
+                                                                                  value: selctedyear,
+                                                                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                                                                  validator: (value) {
+                                                                                    if (value == null || selctedyear == "") {
+                                                                                      return ' ';
+                                                                                    }
+                                                                                  },
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                      },
+
+                                                                      _spacer,
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          ElevatedButton(
+                                                                            style:
+                                                                                ElevatedButton.styleFrom(
+                                                                              textStyle: const TextStyle(fontFamily: 'main', fontSize: 16),
+                                                                              backgroundColor: Mycolors.mainShadedColorBlue,
+                                                                              elevation: 0,
+                                                                              minimumSize: const Size(100, 50),
+                                                                              shape: RoundedRectangleBorder(
+                                                                                borderRadius: BorderRadius.circular(17), // <-- Radius
+                                                                              ),
+                                                                            ),
+                                                                            onPressed:
+                                                                                () {
+                                                                              Navigator.pop(context);
+                                                                            },
+                                                                            child:
+                                                                                const Text('Cancel'),
+                                                                          ),
+                                                                          SizedBox(
+                                                                            width:
+                                                                                10,
+                                                                          ),
+                                                                          ElevatedButton(
+                                                                            style:
+                                                                                ElevatedButton.styleFrom(
+                                                                              textStyle: const TextStyle(fontFamily: 'main', fontSize: 16),
+                                                                              backgroundColor: Mycolors.mainShadedColorBlue,
+                                                                              elevation: 0,
+                                                                              minimumSize: const Size(100, 50),
+                                                                              shape: RoundedRectangleBorder(
+                                                                                borderRadius: BorderRadius.circular(17), // <-- Radius
+                                                                              ),
+                                                                            ),
+                                                                            onPressed:
+                                                                                () async {
+                                                                              formkey.currentState!.save();
+                                                                              //formkey.currentState!.validate() ;
+                                                                              //if(formkey.currentState.)
+                                                                              print(formkey.currentState!.validate());
+                                                                              if (formkey.currentState!.validate()) {
+                                                                                //GPdate = dategp(
+                                                                                //    selctedyear, month);
+                                                                                //'graduationDate' : (GPdate as DateTime).toIso8601String() ,
+                                                                                //print('date : $GPdate');
+                                                                                GPdate = TypeUser.type == 'graduate' ? null : dategp(selctedyear, month);
+
+                                                                                ModelGroup modelg = ModelGroup(department: BlocProfileStudent.get(context).departmentSelect!, projectname: _inputAddNameGroup.value.text, students: const [], Projectcompletiondate: GPdate, id: Uuid().v4());
+                                                                                BlocGroupSelect.get(context).addNewGroup(modelg);
+                                                                                Navigator.pop(context);
+                                                                                _inputNameGroup.text = modelg.projectname;
+                                                                                BlocGroupSelect.get(context).selectGroup(modelg);
+                                                                              }
+                                                                            },
+                                                                            child:
+                                                                                const Text('Create'),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ));
+                                                          },
+                                                          child: Container(
+                                                            height: 60,
+                                                            alignment: Alignment
+                                                                .center,
+                                                            width:
+                                                                MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          17),
+                                                              border: Border.all(
+                                                                  color: Colors
+                                                                      .green
+                                                                      .withOpacity(
+                                                                          .8)),
+                                                            ),
+                                                            child: Row(
+                                                              children: [
+                                                                const Icon(
+                                                                  Icons.add_box,
+                                                                  size: 50,
+                                                                  color: Colors
+                                                                      .green,
                                                                 ),
-                                                              ));
-                                                        },
-                                                        child: Container(
-                                                          height: 60,
-                                                          alignment:
-                                                              Alignment.center,
-                                                          width: MediaQuery.of(
-                                                                  context)
-                                                              .size
-                                                              .width,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        17),
-                                                            border: Border.all(
-                                                                color: Colors
-                                                                    .green
-                                                                    .withOpacity(
-                                                                        .8)),
-                                                          ),
-                                                          child: Row(
-                                                            children: [
-                                                              const Icon(
-                                                                Icons.add_box,
-                                                                size: 50,
-                                                                color: Colors
-                                                                    .green,
-                                                              ),
-                                                              const SizedBox(
-                                                                width: 10,
-                                                              ),
-                                                              Text(
-                                                                'Create new group ',
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        16,
-                                                                    color: Colors
-                                                                        .green),
-                                                              )
-                                                            ],
+                                                                const SizedBox(
+                                                                  width: 10,
+                                                                ),
+                                                                Text(
+                                                                  'Create new group ',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          16,
+                                                                      color: Colors
+                                                                          .green),
+                                                                )
+                                                              ],
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                  ],
-                                                ),
+                                                    ],
+                                                  ),
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            );
-                    }),
-                _spacer,
-                (BlocProfileStudent.get(context).departmentSelect == null ||
-                        BlocProfileStudent.get(context).departmentSelect ==
-                            BlocProfileStudent.get(context).currentDepartment)
-                    ? const SizedBox()
-                    : ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          textStyle:
-                              const TextStyle(fontFamily: 'main', fontSize: 16),
-                          shadowColor: Colors.blue[900],
-                          elevation: 16,
-                          minimumSize: const Size(150, 50),
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(17), // <-- Radius
+                                  ],
+                                ),
+                              );
+                      }),
+                  _spacer,
+                  (BlocProfileStudent.get(context).departmentSelect == null ||
+                          BlocProfileStudent.get(context).departmentSelect ==
+                              BlocProfileStudent.get(context).currentDepartment)
+                      ? const SizedBox()
+                      : ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            textStyle: const TextStyle(
+                                fontFamily: 'main', fontSize: 16),
+                            backgroundColor: Mycolors.mainShadedColorBlue,
+                            elevation: 0,
+                            minimumSize: const Size(150, 50),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(17), // <-- Radius
+                            ),
                           ),
-                        ),
-                        onPressed: () async {
-                          if (BlocGroupSelect.get(context).modelGroupSelected !=
-                              null) {
-                            BlocProfileStudent.get(context).changeCurrentGroup(
-                                BlocGroupSelect.get(context)
-                                    .modelGroupSelected!);
-                            BlocProfileStudent.get(context)
-                                .changeCurrentDepartment(
-                                    BlocProfileStudent.get(context)
-                                        .departmentSelect);
+                          onPressed: () async {
+                            if (BlocGroupSelect.get(context)
+                                    .modelGroupSelected !=
+                                null) {
+                              BlocProfileStudent.get(context)
+                                  .changeCurrentGroup(
+                                      BlocGroupSelect.get(context)
+                                          .modelGroupSelected!);
+                              BlocProfileStudent.get(context)
+                                  .changeCurrentDepartment(
+                                      BlocProfileStudent.get(context)
+                                          .departmentSelect);
 
-                            Navigator.pop(context);
-                            print('selected££££££££');
-                          } else {
-                            showInSnackBar(context, 'Please select a group',
-                                onError: true);
-                          }
-                        },
-                        child: const Text('Select group'),
-                      ),
-                _spacer,
-              ],
+                              Navigator.pop(context);
+                              print('selected££££££££');
+                            } else {
+                              showInSnackBar(context, 'Please select a group',
+                                  onError: true);
+                            }
+                          },
+                          child: const Text('Select group'),
+                        ),
+                  _spacer,
+                ],
+              ),
             ),
           ),
         ),
@@ -573,10 +582,10 @@ class _DepartmentChangeScreenState extends State<DepartmentChangeScreen> {
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 5),
         decoration: BoxDecoration(
-            color: color,
+            color: Color.fromARGB(107, 224, 224, 224),
             boxShadow: [
               BoxShadow(
-                  color: Colors.black.withOpacity(.05),
+                  color: Colors.black.withOpacity(.0),
                   offset: const Offset(4, 5),
                   blurRadius: 6,
                   spreadRadius: 1)
@@ -615,7 +624,8 @@ class _DepartmentChangeScreenState extends State<DepartmentChangeScreen> {
                         (index) => modelGroup.students
                             .map((e) => Text(
                                   '${e.name}${modelGroup.students.last == e ? '' : ','}',
-                                  style: TextStyle(color: Colors.blue),
+                                  style: TextStyle(
+                                      color: Mycolors.mainShadedColorBlue),
                                 ))
                             .toList()[index]),
                   ),
@@ -666,7 +676,7 @@ class _DepartmentChangeScreenState extends State<DepartmentChangeScreen> {
                                   ),
                                   // enable border stayle
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
+                                      borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),
@@ -700,7 +710,7 @@ class _DepartmentChangeScreenState extends State<DepartmentChangeScreen> {
                                         hintText: 'month',
                                         border: OutlineInputBorder(
                                             borderRadius:
-                                                BorderRadius.circular(25),
+                                                BorderRadius.circular(13),
                                             borderSide: const BorderSide(
                                               width: 0,
                                             )),
@@ -757,7 +767,7 @@ class _DepartmentChangeScreenState extends State<DepartmentChangeScreen> {
                                         errorStyle: TextStyle(fontSize: 0),
                                         border: OutlineInputBorder(
                                             borderRadius:
-                                                BorderRadius.circular(25),
+                                                BorderRadius.circular(13),
                                             borderSide: const BorderSide(
                                               width: 0,
                                             )),
@@ -801,8 +811,8 @@ class _DepartmentChangeScreenState extends State<DepartmentChangeScreen> {
                                 style: ElevatedButton.styleFrom(
                                   textStyle: const TextStyle(
                                       fontFamily: 'main', fontSize: 16),
-                                  shadowColor: Colors.blue[900],
-                                  elevation: 16,
+                                  backgroundColor: Mycolors.mainShadedColorBlue,
+                                  elevation: 0,
                                   minimumSize: const Size(100, 50),
                                   shape: RoundedRectangleBorder(
                                     borderRadius:
@@ -821,8 +831,8 @@ class _DepartmentChangeScreenState extends State<DepartmentChangeScreen> {
                                 style: ElevatedButton.styleFrom(
                                   textStyle: const TextStyle(
                                       fontFamily: 'main', fontSize: 16),
-                                  shadowColor: Colors.blue[900],
-                                  elevation: 16,
+                                  backgroundColor: Mycolors.mainShadedColorBlue,
+                                  elevation: 0,
                                   minimumSize: const Size(100, 50),
                                   shape: RoundedRectangleBorder(
                                     borderRadius:
@@ -887,7 +897,7 @@ class _DepartmentChangeScreenState extends State<DepartmentChangeScreen> {
                       : Icons.radio_button_off,
                   color: BlocGroupSelect.get(context).modelGroupSelected ==
                           modelGroup
-                      ? Colors.blue
+                      ? Mycolors.mainShadedColorBlue
                       : null,
                 ));
           }),

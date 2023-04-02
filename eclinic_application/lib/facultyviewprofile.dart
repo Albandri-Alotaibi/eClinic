@@ -363,7 +363,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
         ),
         backgroundColor: Mycolors.BackgroundColor,
         body: SingleChildScrollView(
-          clipBehavior: Clip.none,
+       
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Form(

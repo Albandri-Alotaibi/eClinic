@@ -82,10 +82,21 @@ class _studentloginState extends State<studentlogin> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              " KSU email:",
+                              style: TextStyle(
+                                  overflow: TextOverflow.ellipsis,
+                                  color: Mycolors.mainColorBlack,
+                                  fontFamily: 'bold',
+                                  fontSize: 13),
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
                           TextFormField(
                               controller: _emailController,
                               decoration: InputDecoration(
-                                  labelText: 'KSU email :',
                                   hintText: "Enter your KSU email ",
                                   prefixIcon: Icon(Icons.email),
                                   border: OutlineInputBorder(
@@ -109,10 +120,20 @@ class _studentloginState extends State<studentlogin> {
                           SizedBox(
                             height: 15,
                           ),
+                          Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                " Password:",
+                                style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'bold',
+                                    fontSize: 13),
+                                textAlign: TextAlign.start,
+                              )),
                           TextFormField(
                               controller: _passwordController,
                               decoration: InputDecoration(
-                                  labelText: 'Password : ',
                                   hintText: "Enter your password",
                                   prefixIcon: Icon(Icons.lock),
                                   suffixIcon: GestureDetector(

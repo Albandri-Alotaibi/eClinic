@@ -79,14 +79,24 @@ class _graduateloginState extends State<graduatelogin> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                " Email:",
+                                style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'bold',
+                                    fontSize: 13),
+                                textAlign: TextAlign.start,
+                              )),
                           TextFormField(
                               controller: _emailController,
                               decoration: InputDecoration(
-                                labelText: 'Email : ',
                                 prefixIcon: Icon(Icons.email),
                                 hintText: "Enter your email ",
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
+                                    borderRadius: BorderRadius.circular(13),
                                     borderSide: const BorderSide(
                                       width: 0,
                                     )),
@@ -107,10 +117,20 @@ class _graduateloginState extends State<graduatelogin> {
                           SizedBox(
                             height: 15,
                           ),
+                          Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                " Password:",
+                                style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'bold',
+                                    fontSize: 13),
+                                textAlign: TextAlign.start,
+                              )),
                           TextFormField(
                               controller: _passwordController,
                               decoration: InputDecoration(
-                                  labelText: 'Password:',
                                   hintText: "Enter your password",
                                   prefixIcon: Icon(Icons.lock),
                                   suffixIcon: GestureDetector(
@@ -124,7 +144,7 @@ class _graduateloginState extends State<graduatelogin> {
                                         : Icons.visibility),
                                   ),
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
+                                      borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),

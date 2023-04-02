@@ -5,6 +5,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:myapp/app/constants.dart';
 import 'package:myapp/bloc/select_group/bloc.dart';
 import 'package:myapp/domain/extension.dart';
 import 'package:myapp/domain/model.dart';
@@ -302,10 +303,22 @@ class _studentsignupState extends State<studentsignup> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                " First Name:",
+                                style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'bold',
+                                    fontSize: 13),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
                             TextFormField(
                               controller: _fnameController,
                               decoration: InputDecoration(
-                                  labelText: ' First Name :',
+                                  //   labelText: 'First Name :',
                                   hintText: "Enter your first name",
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(13),
@@ -334,10 +347,22 @@ class _studentsignupState extends State<studentsignup> {
                             SizedBox(
                               height: 8,
                             ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                " Last Name:",
+                                style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'bold',
+                                    fontSize: 13),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
                             TextFormField(
                               controller: _lnamecontroller,
                               decoration: InputDecoration(
-                                  labelText: ' Last Name :',
+                                  //  labelText: ' Last Name :',
                                   hintText: "Enter your last name",
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(13),
@@ -366,11 +391,38 @@ class _studentsignupState extends State<studentsignup> {
                             SizedBox(
                               height: 8,
                             ),
+                            if (TypeUser.type == 'student') ...{
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  " KSU Email:",
+                                  style: TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                      color: Mycolors.mainColorBlack,
+                                      fontFamily: 'bold',
+                                      fontSize: 13),
+                                  textAlign: TextAlign.start,
+                                ),
+                              ),
+                            } else ...{
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  " Email:",
+                                  style: TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                      color: Mycolors.mainColorBlack,
+                                      fontFamily: 'bold',
+                                      fontSize: 13),
+                                  textAlign: TextAlign.start,
+                                ),
+                              )
+                            },
                             TextFormField(
                               controller: _emailController,
                               decoration: InputDecoration(
                                   hintText: "Enter your email",
-                                  labelText: ' Email :',
+                                  //  labelText: ' Email :',
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
@@ -395,10 +447,22 @@ class _studentsignupState extends State<studentsignup> {
                             SizedBox(
                               height: 8,
                             ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                " Password:",
+                                style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'bold',
+                                    fontSize: 13),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
                             TextFormField(
                                 controller: _passwordController,
                                 decoration: InputDecoration(
-                                    labelText: ' Password :',
+                                    // labelText: ' Password :',
                                     hintText: "Enter your Password",
                                     border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(13),
@@ -445,6 +509,18 @@ class _studentsignupState extends State<studentsignup> {
                             SizedBox(
                               height: 8,
                             ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                " Department:",
+                                style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'bold',
+                                    fontSize: 13),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
                             DropdownButtonFormField<String>(
                               decoration: InputDecoration(
                                 hintText: ' Choose your department :',
@@ -481,104 +557,17 @@ class _studentsignupState extends State<studentsignup> {
                             SizedBox(
                               height: 8,
                             ),
-
-                            /*Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: DropdownButtonFormField(
-                                    decoration: InputDecoration(
-                                      hintText: 'Choose month :',
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25),
-                                          borderSide: const BorderSide(
-                                            width: 0,
-                                          )),
-                                    ),
-                                    items: const [
-                                      DropdownMenuItem(
-                                          child: Text("Jan"), value: "01"),
-                                      DropdownMenuItem(
-                                          child: Text("Feb"), value: "02"),
-                                      DropdownMenuItem(
-                                          child: Text("Mar"), value: "03"),
-                                      DropdownMenuItem(
-                                          child: Text("Apr"), value: "04"),
-                                      DropdownMenuItem(
-                                          child: Text("May"), value: "05"),
-                                      DropdownMenuItem(
-                                          child: Text("Jun"), value: "06"),
-                                      DropdownMenuItem(
-                                          child: Text("Jul"), value: "07"),
-                                      DropdownMenuItem(
-                                          child: Text("Aug"), value: "08"),
-                                      DropdownMenuItem(
-                                          child: Text("Sep"), value: "09"),
-                                      DropdownMenuItem(
-                                          child: Text("Oct"), value: "10"),
-                                      DropdownMenuItem(
-                                          child: Text("Nov"), value: "11"),
-                                      DropdownMenuItem(
-                                          child: Text("Dec"), value: "12")
-                                    ],
-                                    onChanged: (value) {
-                                      setState(() {
-                                        month = value;
-                                        print(month);
-                                      });
-                                    },
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    validator: (value) {
-                                      if (value == null || month == "") {
-                                        return 'Please Choose month';
-                                      }
-                                    },
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: DropdownButtonFormField<String>(
-                                    decoration: InputDecoration(
-                                      hintText: ' Choose year :',
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25),
-                                          borderSide: const BorderSide(
-                                            width: 0,
-                                          )),
-                                    ),
-                                    items: years.map((String dropdownitems) {
-                                      return DropdownMenuItem<String>(
-                                        value: dropdownitems,
-                                        child: Text(dropdownitems),
-                                      );
-                                    }).toList(),
-                                    onChanged: (String? newselect) {
-                                      setState(() {
-                                        selctedyear = newselect;
-                                        print(selctedyear);
-                                      });
-                                    },
-                                    value: selctedyear,
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    validator: (value) {
-                                      if (value == null ||
-                                          selctedyear == "") {
-                                        return 'Please choose year';
-                                      }
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),*/
-                            SizedBox(
-                              height: 8,
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                " Social Media:",
+                                style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'bold',
+                                    fontSize: 13),
+                                textAlign: TextAlign.start,
+                              ),
                             ),
                             DropdownButtonFormField(
                               decoration: InputDecoration(
@@ -616,11 +605,23 @@ class _studentsignupState extends State<studentsignup> {
                             SizedBox(
                               height: 8,
                             ),
-                            if (social != null && social != "None")
+                            if (social != null && social != "None") ...{
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  " Social Media Link:",
+                                  style: TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                      color: Mycolors.mainColorBlack,
+                                      fontFamily: 'bold',
+                                      fontSize: 13),
+                                  textAlign: TextAlign.start,
+                                ),
+                              ),
                               TextFormField(
                                   controller: _socialmedialink2,
                                   decoration: InputDecoration(
-                                      labelText: 'Link account',
+                                      // labelText: 'Link account',
                                       hintText: "Enter your link account",
                                       border: OutlineInputBorder(
                                           borderRadius:
@@ -661,6 +662,7 @@ class _studentsignupState extends State<studentsignup> {
                                       }
                                     }
                                   }),
+                            },
                             SizedBox(
                               height: 12,
                             ),

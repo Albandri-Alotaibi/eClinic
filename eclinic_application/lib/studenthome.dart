@@ -572,8 +572,7 @@ class _sState extends State<studenthome> {
     Widget dontCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
         shape: RoundedRectangleBorder(
@@ -589,8 +588,7 @@ class _sState extends State<studenthome> {
     Widget YesCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-        shadowColor: Colors.blue[900],
-        elevation: 20,
+        elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
         shape: RoundedRectangleBorder(
