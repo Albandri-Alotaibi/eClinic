@@ -170,6 +170,43 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                           color: Colors.grey,
                           thickness: 1,
                         ),
+
+                        Row(children: [
+                          Text(
+                            "  Created by: ${widget.commonIssue['createdby'] ?? ""}",
+                            style: const TextStyle(
+                                letterSpacing: 0.1,
+                                fontSize: 14,
+                                fontFamily: "main",
+                                color: Color.fromRGBO(21, 70, 160, 1),
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ]),
+                        const Divider(
+                          color: Colors.grey,
+                          thickness: 1,
+                        ),
+
+                        Row(children: [
+                          if (widget.commonIssue['lastmodified'] != null &&
+                              widget.commonIssue['lastmodified'] != "")
+                            Text(
+                              "  Last modified by: ${widget.commonIssue['lastmodified'] ?? ""}",
+                              style: const TextStyle(
+                                  letterSpacing: 0.1,
+                                  fontSize: 14,
+                                  fontFamily: "main",
+                                  color: Color.fromRGBO(21, 70, 160, 1),
+                                  fontWeight: FontWeight.w500),
+                            ),
+                        ]),
+                        if (widget.commonIssue['lastmodified'] != null &&
+                            widget.commonIssue['lastmodified'] != "")
+                          const Divider(
+                            color: Colors.grey,
+                            thickness: 1,
+                          ),
+
                         Padding(
                             padding: const EdgeInsets.symmetric(vertical: 20),
                             child: Row(
@@ -181,7 +218,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                   ),
                                   Expanded(
                                       child: Text(
-                                    "  Problem:\n\n${widget.commonIssue['problem']}",
+                                    "  Question:\n\n${widget.commonIssue['problem']}",
                                     // "  Problem:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                                     style: const TextStyle(
                                       // letterSpacing: 1.5,
@@ -210,7 +247,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                 ),
                                 Expanded(
                                     child: Text(
-                                  "  Solution:\n\n${widget.commonIssue['solution']})",
+                                  "  Answer:\n\n${widget.commonIssue['solution']})",
                                   // "  Solution:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                                   style: const TextStyle(
                                     // letterSpacing: 2,
