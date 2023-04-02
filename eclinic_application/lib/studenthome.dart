@@ -14,6 +14,8 @@ import 'package:myapp/login.dart';
 import 'package:myapp/studentlogin.dart';
 import 'package:myapp/viewGPlibrary.dart';
 import 'style/Mycolors.dart';
+import 'package:myapp/app/constants.dart';
+import 'package:myapp/app/shardPreferense.dart';
 
 class studenthome extends StatefulWidget {
   // This class is the configuration for the state.
@@ -42,11 +44,11 @@ class _sState extends State<studenthome> {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
 
-    while (user != null && user.email != null) {
-      userid = user.uid;
-      email = user.email!;
-      break;
-    }
+    // while (user != null && user.email != null) {
+    //   userid = user.uid;
+    //   email = user.email!;
+    //   break;
+    // }
 
     super.initState();
 
@@ -131,30 +133,6 @@ class _sState extends State<studenthome> {
           ),
           actions: [
             if (widget.selectedIndex == 2)
-              // ElevatedButton.icon(
-              //   label: Text(
-              //     'ْUplaod',
-              //   ), // <-- Text
-
-              //   icon: Icon(
-              //     // <-- Icon
-              //     Icons.upload,
-              //     size: 24.0,
-              //   ),
-              //   style: ElevatedButton.styleFrom(
-              //     backgroundColor: Color.fromARGB(0, 255, 255, 255),
-              //     foregroundColor: Color.fromARGB(255, 23, 44, 182),
-              //     elevation: 0,
-              //     shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(30), // <-- Radius
-              //     ),
-              //   ),
-              //   onPressed: () => {
-              //     Navigator.pushNamed(context, 'UploadGP')
-              //     // CancelAppointment(index)
-              //   },
-              // ),
-
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CircleAvatar(
@@ -221,7 +199,7 @@ class _sState extends State<studenthome> {
             ListTile(
               leading: Icon(Icons.edit_note, color: Mycolors.mainColorBlue),
               title: Text(
-                "My profile",
+                "My Profile",
                 style: TextStyle(
                     fontSize: 15,
                     color: Mycolors.mainColorBlack,
@@ -241,7 +219,7 @@ class _sState extends State<studenthome> {
             ListTile(
               leading: Icon(Icons.password, color: Mycolors.mainColorBlue),
               title: Text(
-                "Reset password",
+                "Reset Password",
                 style: TextStyle(
                     fontSize: 16,
                     color: Mycolors.mainColorBlack,
@@ -260,7 +238,7 @@ class _sState extends State<studenthome> {
             ListTile(
               leading: Icon(Icons.logout, color: Mycolors.mainColorBlue),
               title: Text(
-                "Log out",
+                "Log Out",
                 style: TextStyle(
                     fontSize: 16,
                     color: Mycolors.mainColorBlack,
@@ -318,7 +296,7 @@ class _sState extends State<studenthome> {
                   size: 27,
                   color: Color.fromARGB(108, 0, 0, 0),
                 ),
-                label: 'Book appointment'),
+                label: 'Book Appointment'),
             NavigationDestination(
                 selectedIcon: Icon(Icons.menu_book,
                     color: Mycolors.mainShadedColorBlue, size: 27),
@@ -327,7 +305,7 @@ class _sState extends State<studenthome> {
                   size: 27,
                   color: Color.fromARGB(108, 0, 0, 0),
                 ),
-                label: 'GP library'),
+                label: 'GP Library'),
             NavigationDestination(
                 selectedIcon: Icon(Icons.question_answer_outlined,
                     color: Mycolors.mainShadedColorBlue, size: 27),

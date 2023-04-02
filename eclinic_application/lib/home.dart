@@ -3,6 +3,9 @@ import 'style/Mycolors.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:myapp/graduatelogin.dart';
+import 'package:myapp/app/constants.dart';
+import 'package:myapp/app/shardPreferense.dart';
+import 'package:myapp/bloc/select_group/bloc.dart';
 
 class home extends StatefulWidget {
   // This class is the configuration for the state.
@@ -30,7 +33,7 @@ class _homeState extends State<home> {
         child: Scaffold(
       backgroundColor: Mycolors.BackgroundColor,
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/KSU3.jpg"),
             fit: BoxFit.fill,
@@ -40,12 +43,20 @@ class _homeState extends State<home> {
         ),
         child: Column(children: [
           Padding(
-            padding: const EdgeInsets.only(top: 200, right: 120),
+            padding: const EdgeInsets.only(top: 10),
+            child: Image.asset(
+              "assets/images/logo.png",
+              scale: 5,
+              opacity: AlwaysStoppedAnimation(0.3),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 120, right: 120),
             child: Text(
               "Welcome  ",
               style: TextStyle(
-                  // fontFamily: 'bold',
-                  fontSize: 50,
+                  fontFamily: 'bold',
+                  fontSize: 47,
                   color: Mycolors.mainColorWhite),
             ),
           ),
@@ -54,39 +65,18 @@ class _homeState extends State<home> {
             child: Text(
               "Join us, let's make success happen! ",
               style: TextStyle(
-                  // fontFamily: 'main',
+                  fontFamily: 'main',
                   fontSize: 20,
                   color: Mycolors.mainColorWhite),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(
-              top: 280,
+              top: 220,
             ),
-            child: Row(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Mycolors.mainColorWhite,
-                    textStyle: TextStyle(fontSize: 16),
-                    // shadowColor: Colors.blue[900],
-                    elevation: 0,
-
-                    backgroundColor: Color.fromARGB(135, 21, 70, 160),
-                    minimumSize: Size(140, 50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(17), // <-- Radius
-                      side: BorderSide(
-                          width: 2, color: Mycolors.mainShadedColorBlue),
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, 'studentlogin');
-                  },
-                  child: Text('Student'),
-                ),
-                const SizedBox(width: 16),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Mycolors.mainColorWhite,
@@ -106,31 +96,56 @@ class _homeState extends State<home> {
                   },
                   child: Text('Faculty Member'),
                 ),
+                const SizedBox(height: 10),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Mycolors.mainColorWhite,
+                    textStyle: TextStyle(fontSize: 16),
+                    // shadowColor: Colors.blue[900],
+                    elevation: 0,
+
+                    backgroundColor: Color.fromARGB(135, 21, 70, 160),
+                    minimumSize: Size(140, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(17), // <-- Radius
+                      side: BorderSide(
+                          width: 2, color: Mycolors.mainShadedColorBlue),
+                    ),
+                  ),
+                  onPressed: () {
+                    TypeUser.type = 'student';
+                    StorageManager.saveData('TypeUser', 'student');
+                    Navigator.pushNamed(context, 'studentlogin');
+                  },
+                  child: Text('Student'),
+                ),
+                const SizedBox(height: 10),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Mycolors.mainColorWhite,
+                    textStyle: TextStyle(fontSize: 16),
+                    // shadowColor: Colors.blue[900],
+                    elevation: 0,
+                    backgroundColor: Color.fromARGB(135, 21, 70, 160),
+                    minimumSize: Size(140, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(17), // <-- Radius
+                      side: BorderSide(
+                          width: 2, color: Mycolors.mainShadedColorBlue),
+                    ),
+                  ),
+                  onPressed: () {
+                    TypeUser.type = 'graduate';
+                    // save type user
+                    StorageManager.saveData('TypeUser', 'graduate');
+                    Navigator.pushNamed(context, 'graduatelogin');
+                  },
+                  child: Text('Graduate'),
+                ),
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Mycolors.mainColorWhite,
-                textStyle: TextStyle(fontSize: 16),
-                // shadowColor: Colors.blue[900],
-                elevation: 0,
-                backgroundColor: Color.fromARGB(135, 21, 70, 160),
-                minimumSize: Size(140, 50),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(17), // <-- Radius
-                  side:
-                      BorderSide(width: 2, color: Mycolors.mainShadedColorBlue),
-                ),
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, 'graduatelogin');
-              },
-              child: Text('Graduates'),
-            ),
-          ),
+          Row()
         ]),
       ),
     ));

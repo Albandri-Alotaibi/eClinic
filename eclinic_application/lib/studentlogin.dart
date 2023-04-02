@@ -10,6 +10,9 @@ import 'package:quickalert/quickalert.dart';
 import 'package:myapp/home.dart';
 import 'package:myapp/studentresetpassword.dart';
 import 'package:myapp/screeens/signUp/studentsignup.dart';
+import 'package:myapp/app/constants.dart';
+import 'package:myapp/app/shardPreferense.dart';
+import 'package:myapp/bloc/select_group/bloc.dart';
 
 class studentlogin extends StatefulWidget {
   const studentlogin({super.key});
@@ -52,7 +55,7 @@ class _studentloginState extends State<studentlogin> {
           title: Text('Welcome back'),
 
           titleTextStyle: TextStyle(
-            fontFamily: 'bold',
+            fontWeight: FontWeight.bold,
             fontSize: 24,
             color: Mycolors.mainColorBlack,
           ),
@@ -62,16 +65,6 @@ class _studentloginState extends State<studentlogin> {
           child: Container(
             child: Column(
               children: [
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 30),
-                //   child: Text(
-                //     "Welcome back",
-                //     style: TextStyle(
-                //         color: Mycolors.mainColorBlack,
-                //         fontFamily: 'main',
-                //         fontSize: 24),
-                //   ),
-                // ),
                 Padding(
                   padding: const EdgeInsets.all(11.0),
                   child: Image.asset(
@@ -96,7 +89,7 @@ class _studentloginState extends State<studentlogin> {
                                   hintText: "Enter your KSU email ",
                                   prefixIcon: Icon(Icons.email),
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
+                                      borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),
@@ -133,7 +126,7 @@ class _studentloginState extends State<studentlogin> {
                                         : Icons.visibility),
                                   ),
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
+                                      borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),
@@ -160,8 +153,8 @@ class _studentloginState extends State<studentlogin> {
                                 child: Text(
                                   "Forget password ?",
                                   style: TextStyle(
+                                      fontWeight: FontWeight.bold,
                                       color: Mycolors.mainColorGray,
-                                      fontFamily: 'bold',
                                       fontSize: 14),
                                 )),
                           ),
@@ -172,10 +165,9 @@ class _studentloginState extends State<studentlogin> {
                             padding: const EdgeInsets.only(top: 30),
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                textStyle:
-                                    TextStyle(fontFamily: 'main', fontSize: 16),
+                                textStyle: TextStyle(fontSize: 16),
                                 shadowColor: Colors.blue[900],
-                                elevation: 16,
+                                elevation: 0,
                                 backgroundColor: Mycolors.mainShadedColorBlue,
                                 minimumSize: Size(150, 50),
                                 shape: RoundedRectangleBorder(
@@ -244,11 +236,13 @@ class _studentloginState extends State<studentlogin> {
                                   "You don't have an account ? ",
                                   style: TextStyle(
                                       color: Mycolors.mainColorBlack,
-                                      fontFamily: 'main',
                                       fontSize: 14),
                                 ),
                                 GestureDetector(
                                     onTap: () {
+                                      TypeUser.type = 'student';
+                                      StorageManager.saveData(
+                                          'TypeUser', 'student');
                                       Navigator.pushNamed(
                                           context, "studentsignup");
                                     },
@@ -256,7 +250,7 @@ class _studentloginState extends State<studentlogin> {
                                       " Sign up",
                                       style: TextStyle(
                                           color: Mycolors.mainColorBlack,
-                                          fontFamily: 'bold',
+                                          fontWeight: FontWeight.bold,
                                           fontSize: 14),
                                     )),
                               ],

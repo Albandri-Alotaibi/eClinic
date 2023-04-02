@@ -1,9 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp/app/constants.dart';
+import 'package:myapp/app/shardPreferense.dart';
 import 'package:myapp/data/repository_impl.dart';
 import 'package:myapp/domain/extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../domain/model.dart';
 
 class BlocGroupSelect extends Cubit<StateBlocGroupSelect> {
@@ -14,6 +17,13 @@ class BlocGroupSelect extends Cubit<StateBlocGroupSelect> {
   final RepositoryImpl _repositoryImpl = RepositoryImpl();
 
   List<ModelGroup> listAllGroups = [];
+
+  // reset for manage  profile user
+  resetDepartment() {
+    modelGroupSelected = null;
+    modelGroupAddNews = null;
+    emit(InitStateBlocGroupSelect());
+  }
 
   getAllGroups(DocumentReference ref) async {
     (await _repositoryImpl.getAllGroup(ref))
@@ -85,12 +95,14 @@ class BlocGroupSelect extends Cubit<StateBlocGroupSelect> {
   List<ModelGroup> listAllGroupsForSearching = [];
 
   serachGroup(String input) {
+    print(input);
     if (input.trim() == '') {
       listAllGroupsForSearching = listAllGroups;
     } else {
       listAllGroupsForSearching = listAllGroups
-          .where((element) => (element.projectname.arabicEquatable().trim())
-              .contains(input.arabicEquatable().trim()))
+          .where((element) =>
+              (element.projectname.arabicEquatable().toUpperCase().trim())
+                  .contains(input.arabicEquatable().toUpperCase().trim()))
           .toList();
     }
     emit(InitStateBlocGroupSelect());

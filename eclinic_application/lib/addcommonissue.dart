@@ -1096,7 +1096,7 @@ class _addcommonissueState extends State<addcommonissue> {
           borderRadius: BorderRadius.circular(10), // <-- Radius
         ),
       ),
-      child: Text("confirm"),
+      child: Text("Confirm"),
       onPressed: () async {
         showInSnackBar(context,
             "the frequently asked question has been added successfully");

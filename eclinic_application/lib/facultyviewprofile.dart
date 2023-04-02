@@ -524,7 +524,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "Email:",
+                                "KSU Email:",
                                 style: TextStyle(
                                     overflow: TextOverflow.ellipsis,
                                     color: Mycolors.mainColorBlack,
@@ -1096,7 +1096,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
           borderRadius: BorderRadius.circular(10), // <-- Radius
         ),
       ),
-      child: Text("confirm"),
+      child: Text("Confirm"),
       onPressed: () async {
         if (formkey.currentState!.validate() && checklengthforspecialty > 0) {
           setState(() {
@@ -1230,7 +1230,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                     borderRadius: BorderRadius.circular(10), // <-- Radius
                   ),
                 ),
-                child: Text("confirm"),
+                child: Text("Confirm"),
                 onPressed: () async {
                   if (formkey.currentState!.validate() &&
                       checklengthforspecialty > 0) {
@@ -1336,7 +1336,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                     borderRadius: BorderRadius.circular(10), // <-- Radius
                   ),
                 ),
-                child: Text("confirm"),
+                child: Text("Confirm"),
                 onPressed: () async {
                   if (formkey.currentState!.validate() &&
                       checklengthforspecialty > 0) {
@@ -1608,7 +1608,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
           borderRadius: BorderRadius.circular(10), // <-- Radius
         ),
       ),
-      child: Text("confirm"),
+      child: Text("Confirm"),
       onPressed: () async {
         if (formkey.currentState!.validate() && checklengthforspecialty > 0) {
           setState(() {

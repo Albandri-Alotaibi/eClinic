@@ -6,12 +6,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:myapp/bloc/select_group/bloc.dart';
+import 'package:myapp/domain/extension.dart';
 import 'package:myapp/domain/model.dart';
 import 'package:myapp/screeens/signUp/screen_shoss_group.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multiselect/multiselect.dart';
+import 'package:myapp/style/Mycolors.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 
@@ -50,7 +52,6 @@ class _studentsignupState extends State<studentsignup> {
   var socialmediaaccount;
   var checklengthforspeciality = 0;
   bool isshow = false;
-  bool exist = true;
 
   late String semstername;
   Rx<List<String>> selectedoptionlist = Rx<List<String>>([]);
@@ -104,6 +105,8 @@ class _studentsignupState extends State<studentsignup> {
   Future checkidd(String? departmentename) async {
     try {
       await FirebaseFirestore.instance
+          // .collection('collage')
+          // .doc("CCIS")
           .collection("department")
           .get()
           .then((querySnapshot) {
@@ -215,35 +218,6 @@ class _studentsignupState extends State<studentsignup> {
   //     });
   //   });
   // }
-  getemails(var email1) async {
-    try {
-      await FirebaseFirestore.instance
-          .collection("student")
-          .get()
-          .then((querySnapshot) {
-        querySnapshot.docs.forEach((element) {
-          setState(() {
-            if (email1 == element["email"]) {
-              setState(() {
-                exist = false;
-                print("there is account");
-                print(exist);
-              });
-            } else {
-              setState(() {
-                exist = true;
-                print("new account");
-                print(exist);
-              });
-            }
-          });
-        });
-      });
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
 
   final formkey = GlobalKey<FormState>();
   final _fnameController = TextEditingController();
@@ -269,9 +243,6 @@ class _studentsignupState extends State<studentsignup> {
   RegExp idRegEx = RegExp(r'^[0-9]+$');
   RegExp countRegEx = RegExp(r'^\d{9}$');
   RegExp countRegEx10 = RegExp(r'^\d{10}$');
-  RegExp ksuStudentEmail = new RegExp(r'4[\d]{8}@student.ksu.edu.sa$',
-      multiLine: false, caseSensitive: false);
-
   //https://iwtsp.com/966591356970?fbclid=PAAaZvXSh0XdYn3drgv1lQLEIyU_-_pJ6SLCKzopLNfd0bgHTZ8fec3ua6mc4
   //https://api.whatsapp.com/send/?phone=%2B966542806668&text&type=phone_number&app_absent=0
   //wa.me/ above
@@ -295,7 +266,9 @@ class _studentsignupState extends State<studentsignup> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
+            backgroundColor: Colors.white,
             primary: false,
             centerTitle: true,
             shadowColor: Colors.transparent,
@@ -304,7 +277,7 @@ class _studentsignupState extends State<studentsignup> {
             ),
             title: Text('Create account'),
             titleTextStyle: TextStyle(
-              fontFamily: 'bold',
+              color: Mycolors.mainColorBlack,
               fontSize: 24,
             ),
           ),
@@ -312,11 +285,14 @@ class _studentsignupState extends State<studentsignup> {
               child: SingleChildScrollView(
                   child: Column(
             children: [
-              // Image.asset(
-              //   "assets/images/eClinicLogo-blue1.png",
-              //   width: 300,
-              //   height: 200,
-              // ),
+              Padding(
+                padding: const EdgeInsets.only(top: 2),
+                child: Image.asset(
+                  "assets/images/eClinicLogo-blue1.png",
+                  width: 300,
+                  height: 120,
+                ),
+              ),
               Padding(
                   padding: const EdgeInsets.only(top: 10.0),
                   child: Form(
@@ -332,7 +308,7 @@ class _studentsignupState extends State<studentsignup> {
                                   labelText: ' First Name :',
                                   hintText: "Enter your first name",
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
+                                      borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),
@@ -364,7 +340,7 @@ class _studentsignupState extends State<studentsignup> {
                                   labelText: ' Last Name :',
                                   hintText: "Enter your last name",
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
+                                      borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),
@@ -373,11 +349,11 @@ class _studentsignupState extends State<studentsignup> {
                               validator: (value) {
                                 if (value!.isEmpty ||
                                     _lnamecontroller.text == "") {
-                                  return 'Please enter your last name ';
+                                  return 'Please enter your full name ';
                                 } else {
                                   if (nameRegExp
                                       .hasMatch(_lnamecontroller.text)) {
-                                    return 'Please last name only letters accepted ';
+                                    return 'Please full name only letters accepted ';
                                   } else {
                                     if (!(english
                                         .hasMatch(_lnamecontroller.text))) {
@@ -393,10 +369,10 @@ class _studentsignupState extends State<studentsignup> {
                             TextFormField(
                               controller: _emailController,
                               decoration: InputDecoration(
-                                  hintText: "Enter your KSU email",
-                                  labelText: ' KSU Email :',
+                                  hintText: "Enter your email",
+                                  labelText: ' Email :',
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25),
+                                      borderRadius: BorderRadius.circular(13),
                                       borderSide: const BorderSide(
                                         width: 0,
                                       ))),
@@ -406,20 +382,14 @@ class _studentsignupState extends State<studentsignup> {
                                 if (value!.isEmpty ||
                                     _emailController.text == "") {
                                   return 'Please enter your KSU email ';
-                                } else {
-                                  if (!(ksuStudentEmail
-                                      .hasMatch(_emailController.text))) {
-                                    return 'Please write email format correctly,ID@student.ksu.edu.sa';
-                                  } else {
-                                    if (!(english
-                                        .hasMatch(_emailController.text))) {
-                                      return "only english is allowed";
-                                    }
-                                  }
                                 }
-                              },
-                              onChanged: (value) {
-                                getemails(_emailController.text);
+                                if (!(english
+                                    .hasMatch(_emailController.text))) {
+                                  return "only english is allowed";
+                                }
+                                if (!value.isValidEmail()) {
+                                  return "Check your email";
+                                }
                               },
                             ),
                             SizedBox(
@@ -431,7 +401,7 @@ class _studentsignupState extends State<studentsignup> {
                                     labelText: ' Password :',
                                     hintText: "Enter your Password",
                                     border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(25),
+                                        borderRadius: BorderRadius.circular(13),
                                         borderSide: const BorderSide(
                                           width: 0,
                                         ))),
@@ -479,7 +449,7 @@ class _studentsignupState extends State<studentsignup> {
                               decoration: InputDecoration(
                                 hintText: ' Choose your department :',
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
+                                    borderRadius: BorderRadius.circular(13),
                                     borderSide: const BorderSide(
                                       width: 0,
                                     )),
@@ -511,12 +481,111 @@ class _studentsignupState extends State<studentsignup> {
                             SizedBox(
                               height: 8,
                             ),
+
+                            /*Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: DropdownButtonFormField(
+                                    decoration: InputDecoration(
+                                      hintText: 'Choose month :',
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                          borderSide: const BorderSide(
+                                            width: 0,
+                                          )),
+                                    ),
+                                    items: const [
+                                      DropdownMenuItem(
+                                          child: Text("Jan"), value: "01"),
+                                      DropdownMenuItem(
+                                          child: Text("Feb"), value: "02"),
+                                      DropdownMenuItem(
+                                          child: Text("Mar"), value: "03"),
+                                      DropdownMenuItem(
+                                          child: Text("Apr"), value: "04"),
+                                      DropdownMenuItem(
+                                          child: Text("May"), value: "05"),
+                                      DropdownMenuItem(
+                                          child: Text("Jun"), value: "06"),
+                                      DropdownMenuItem(
+                                          child: Text("Jul"), value: "07"),
+                                      DropdownMenuItem(
+                                          child: Text("Aug"), value: "08"),
+                                      DropdownMenuItem(
+                                          child: Text("Sep"), value: "09"),
+                                      DropdownMenuItem(
+                                          child: Text("Oct"), value: "10"),
+                                      DropdownMenuItem(
+                                          child: Text("Nov"), value: "11"),
+                                      DropdownMenuItem(
+                                          child: Text("Dec"), value: "12")
+                                    ],
+                                    onChanged: (value) {
+                                      setState(() {
+                                        month = value;
+                                        print(month);
+                                      });
+                                    },
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    validator: (value) {
+                                      if (value == null || month == "") {
+                                        return 'Please Choose month';
+                                      }
+                                    },
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: DropdownButtonFormField<String>(
+                                    decoration: InputDecoration(
+                                      hintText: ' Choose year :',
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                          borderSide: const BorderSide(
+                                            width: 0,
+                                          )),
+                                    ),
+                                    items: years.map((String dropdownitems) {
+                                      return DropdownMenuItem<String>(
+                                        value: dropdownitems,
+                                        child: Text(dropdownitems),
+                                      );
+                                    }).toList(),
+                                    onChanged: (String? newselect) {
+                                      setState(() {
+                                        selctedyear = newselect;
+                                        print(selctedyear);
+                                      });
+                                    },
+                                    value: selctedyear,
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    validator: (value) {
+                                      if (value == null ||
+                                          selctedyear == "") {
+                                        return 'Please choose year';
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),*/
+                            SizedBox(
+                              height: 8,
+                            ),
                             DropdownButtonFormField(
                               decoration: InputDecoration(
                                 hintText:
                                     'Choose how can other communicate with you',
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25),
+                                    borderRadius: BorderRadius.circular(13),
                                     borderSide: const BorderSide(
                                       width: 0,
                                     )),
@@ -555,7 +624,7 @@ class _studentsignupState extends State<studentsignup> {
                                       hintText: "Enter your link account",
                                       border: OutlineInputBorder(
                                           borderRadius:
-                                              BorderRadius.circular(25),
+                                              BorderRadius.circular(13),
                                           borderSide: const BorderSide(
                                             width: 0,
                                           ))),
@@ -599,8 +668,8 @@ class _studentsignupState extends State<studentsignup> {
                               style: ElevatedButton.styleFrom(
                                 textStyle:
                                     TextStyle(fontFamily: 'main', fontSize: 16),
-                                shadowColor: Colors.blue[900],
-                                elevation: 16,
+                                backgroundColor: Mycolors.mainShadedColorBlue,
+                                elevation: 0,
                                 minimumSize: Size(150, 50),
                                 shape: RoundedRectangleBorder(
                                   borderRadius:
@@ -609,11 +678,11 @@ class _studentsignupState extends State<studentsignup> {
                               ),
                               onPressed: () async {
                                 setState(() {
-                                  getemails(_emailController.text);
                                   fname = _fnameController.text;
                                   lname = _lnamecontroller.text;
                                   email = _emailController.text;
                                   password = _passwordController.text;
+
                                   GPtitle = _projecttitle.text;
                                   socialmedia = social;
                                   socialmediaaccount = _socialmedialink2.text;
@@ -621,8 +690,10 @@ class _studentsignupState extends State<studentsignup> {
 
                                 try {
                                   //todo this change to formkey.currentState!.validate()
-                                  if (formkey.currentState!.validate() &&
-                                      exist) {
+                                  if (formkey.currentState!.validate()) {
+                                    //print('data : == ${formkey.currentState!.}') ;
+                                    //GPdate = dategp(selctedyear, month);
+
                                     DocumentReference refDep = FirebaseFirestore
                                         .instance
                                         .collection("department")
@@ -649,9 +720,37 @@ class _studentsignupState extends State<studentsignup> {
                                                   'socialmediaaccount':
                                                       socialmediaaccount
                                                 }))));
-                                  } else {
-                                    showerror(context,
-                                        "The email address is already in use by another account");
+
+                                    /*
+                                    GPdate = dategp(selctedyear, month);
+                                    await FirebaseAuth.instance
+                                        .createUserWithEmailAndPassword(
+                                            email: email, password: password)
+                                        .then((value) async {
+                                      final FirebaseAuth auth =
+                                          FirebaseAuth.instance;
+                                      final User? user = auth.currentUser;
+                                      final Uid = user!.uid;
+
+                                      await FirebaseFirestore.instance
+                                          .collection('student')
+                                          .doc(Uid)
+                                          .set({
+                                        'firstname': fname,
+                                        "lastname": lname,
+                                        'email': email,
+                                        'department': FirebaseFirestore
+                                            .instance
+                                            .collection("department")
+                                            .doc(docfordepatment),
+                                        'graduationDate': GPdate,
+                                        'socialmedia': socialmedia,
+                                        'socialmediaaccount':
+                                            socialmediaaccount,
+                                      });
+                                    });
+
+                                     */
                                   }
                                 } on FirebaseAuthException catch (error) {
                                   print(error.message);
@@ -679,21 +778,21 @@ class _studentsignupState extends State<studentsignup> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    "Already have an account ? ",
-                                    style: TextStyle(
-                                        fontFamily: 'main', fontSize: 14),
-                                  ),
-                                  GestureDetector(
-                                      onTap: () {
-                                        Navigator.pushNamed(
-                                            context, "studentlogin");
-                                      },
-                                      child: Text(
-                                        " Log in",
-                                        style: TextStyle(
-                                            fontFamily: 'bold', fontSize: 14),
-                                      )),
+                                  // Text(
+                                  //   "Already have an account ? ",
+                                  //   style: TextStyle(
+                                  //       fontFamily: 'main', fontSize: 14),
+                                  // ),
+                                  // GestureDetector(
+                                  //     onTap: () {
+                                  //       Navigator.pushNamed(
+                                  //           context, "studentlogin");
+                                  //     },
+                                  //     child: Text(
+                                  //       " Log in",
+                                  //       style: TextStyle(
+                                  //           fontFamily: 'bold', fontSize: 14),
+                                  //     )),
                                 ],
                               ),
                             )
