@@ -394,18 +394,18 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                                 fontWeight: FontWeight.w400),
                           ),
                         ),
-
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "  Last modified by: ${widget.commonIssue['lastmodified'] ?? ""}",
-                            style: TextStyle(
-                                // letterSpacing: 0.1,
-                                fontSize: 14,
-                                color: Color.fromRGBO(113, 114, 116, 1),
-                                fontWeight: FontWeight.w400),
+                        if (widget.commonIssue['lastmodified'] != null)
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "  Last modified by: ${widget.commonIssue['lastmodified'] ?? ""}",
+                              style: TextStyle(
+                                  // letterSpacing: 0.1,
+                                  fontSize: 14,
+                                  color: Color.fromRGBO(113, 114, 116, 1),
+                                  fontWeight: FontWeight.w400),
+                            ),
                           ),
-                        ),
 
                         // Container(
                         //   margin: const EdgeInsets.only(top: 16),

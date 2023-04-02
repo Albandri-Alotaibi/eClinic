@@ -43,7 +43,8 @@ class _sState extends State<studenthome> {
   void initState() {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
-
+    userid = user!.uid;
+    email = user.email!;
     // while (user != null && user.email != null) {
     //   userid = user.uid;
     //   email = user.email!;
@@ -52,12 +53,12 @@ class _sState extends State<studenthome> {
 
     super.initState();
 
-    getusername();
     //++++++++++++++++++++++++++DEEM++++++++++++++++++++++++++++++++
     requestPremission();
     getToken();
     initInfo();
     setSemester();
+    getusername();
   }
 
   getusername() async {
@@ -70,10 +71,10 @@ class _sState extends State<studenthome> {
         fname = snap['firstname'];
         lname = snap['lastname'];
       });
-      setState(() {
-        havename = true;
-      });
-      break;
+      // setState(() {
+      //   havename = true;
+      // });
+      //break;
     }
   }
 

@@ -1116,7 +1116,7 @@ class _addcommonissueState extends State<addcommonissue> {
             "linkname": linkname,
             "filesurl": fileurltoDB,
             'createdby': fullname,
-            'lastmodified': fullname,
+            'lastmodified': null,
           });
           // Navigator.pushNamed(context, 'facultyListFAQ');
           Navigator.push(
