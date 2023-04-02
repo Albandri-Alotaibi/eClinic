@@ -7,25 +7,26 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/facultyhome.dart';
+import 'package:myapp/graduatehome.dart';
 import 'package:myapp/login.dart';
 import 'package:myapp/addHoursFaculty.dart';
-import 'package:myapp/studenthome.dart';
 import 'dart:async';
 import 'style/Mycolors.dart';
 import 'package:myapp/screeens/resources/snackbar.dart';
 
-class studentverfication extends StatefulWidget {
-  const studentverfication({super.key});
+class graduateverfication extends StatefulWidget {
+  const graduateverfication({super.key});
 
   @override
-  State<studentverfication> createState() => _studentverficationState();
+  State<graduateverfication> createState() => _graduateverficationState();
 }
 
-class _studentverficationState extends State<studentverfication> {
+class _graduateverficationState extends State<graduateverfication> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   String? email = '';
   String? userid = '';
   User? user;
+
   Timer timer = Timer.periodic(Duration(seconds: 3), (timer) {});
   @override
   void initState() {
@@ -33,8 +34,11 @@ class _studentverficationState extends State<studentverfication> {
     userid = user!.uid;
     email = user.email!;
     user.sendEmailVerification();
-    if (mounted) Timer timer = Timer.periodic(Duration(seconds: 1), (timer) {});
+    if (mounted) {
+      Timer timer = Timer.periodic(Duration(seconds: 1), (timer) {});
+    }
     checkemailverfication();
+
     super.initState();
   }
 
@@ -51,11 +55,10 @@ class _studentverficationState extends State<studentverfication> {
       timer.cancel();
       // Navigator.of(context).pushReplacement(
       //     MaterialPageRoute(builder: (context) => addHoursFaculty()));
-
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => studenthome(0),
+          builder: (context) => graduatehome(),
         ),
       );
     }
