@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:myapp/screeens/resources/snackbar.dart';
 import 'style/Mycolors.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:myapp/home.dart';
@@ -205,8 +206,9 @@ class _studentloginState extends State<studentlogin> {
                                   if (formkey.currentState!.validate()) {
                                     if (!(_emailController.text
                                         .contains("student"))) {
-                                      showerror(
-                                          context, "invalid email or password");
+                                      showInSnackBar(
+                                          context, "invalid email or password",
+                                          onError: true);
                                     } else {
                                       await FirebaseAuth.instance
                                           .signInWithEmailAndPassword(
@@ -243,8 +245,9 @@ class _studentloginState extends State<studentlogin> {
                                           "The password is invalid or the user does not have a password." ||
                                       error.message ==
                                           "There is no user record corresponding to this identifier. The user may have been deleted.") {
-                                    showerror(
-                                        context, "invalid email or password");
+                                    showInSnackBar(
+                                        context, "invalid email or password",
+                                        onError: true);
                                   }
                                 }
                               },

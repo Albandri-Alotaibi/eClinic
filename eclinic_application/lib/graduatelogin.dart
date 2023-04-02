@@ -202,29 +202,29 @@ class _graduateloginState extends State<graduatelogin> {
                                   if (formkey.currentState!.validate()) {
                                     await FirebaseAuth.instance
                                         .signInWithEmailAndPassword(
-                                            email: email, password: password)
-                                        // Navigator.pushNamed(context, 'graduatehome')
+                                            email: email, password: password);
+                                    Navigator.pushNamed(context, 'graduatehome')
                                         .then((value) async {
                                       final FirebaseAuth auth =
                                           FirebaseAuth.instance;
                                       final User? user = auth.currentUser;
                                       final Uid = user!.uid;
                                       ///////////////verfication code ///////////////////////////////////////////////
-                                      if (user.emailVerified) {
-                                        TypeUser.type = 'graduate';
-                                        // save type user
-                                        StorageManager.saveData(
-                                            'TypeUser', 'graduate');
-                                        Navigator.pushNamedAndRemoveUntil(
-                                            context,
-                                            'graduatehome',
-                                            (route) => false);
-                                      } else {
-                                        if (!(user.emailVerified)) {
-                                          Navigator.pushNamed(
-                                              context, 'graduateverfication');
-                                        }
-                                      }
+                                      // if (user.emailVerified) {
+                                      //   TypeUser.type = 'graduate';
+                                      //   // save type user
+                                      //   StorageManager.saveData(
+                                      //       'TypeUser', 'graduate');
+                                      //   Navigator.pushNamedAndRemoveUntil(
+                                      //       context,
+                                      //       'graduatehome',
+                                      //       (route) => false);
+                                      // } else {
+                                      //   if (!(user.emailVerified)) {
+                                      //     Navigator.pushNamed(
+                                      //         context, 'graduateverfication');
+                                      //   }
+                                      // }
                                     });
                                   }
                                 } on FirebaseAuthException catch (error) {
