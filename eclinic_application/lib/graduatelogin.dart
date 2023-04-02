@@ -168,7 +168,7 @@ class _graduateloginState extends State<graduatelogin> {
                                   Navigator.pushNamed(context, "graduatereset");
                                 },
                                 child: Text(
-                                  "Forget password ?",
+                                  "Forgot password ?",
                                   style: TextStyle(
                                       color: Mycolors.mainColorGray,
                                       fontFamily: 'bold',

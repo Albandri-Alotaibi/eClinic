@@ -173,7 +173,7 @@ class _studentloginState extends State<studentlogin> {
                                       context, "studentresetpassword");
                                 },
                                 child: Text(
-                                  "Forget password ?",
+                                  "Forgot password ?",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Mycolors.mainColorGray,

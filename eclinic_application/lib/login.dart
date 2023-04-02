@@ -184,7 +184,7 @@ class _loginState extends State<login> {
                                   Navigator.pushNamed(context, "resetpassword");
                                 },
                                 child: Text(
-                                  "Forget password ?",
+                                  "Forgot password ?",
                                   style: TextStyle(
                                       color: Mycolors.mainColorGray,
                                       fontFamily: 'bold',
