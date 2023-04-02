@@ -1365,7 +1365,6 @@ class _UploadGPGState extends State<UploadGPG> {
   } //END FUNCTION
 
  DeleteGP() async {
-   
   await FirebaseFirestore.instance
             .collection("GPlibrary")
             .doc(id)
@@ -1387,7 +1386,7 @@ class _UploadGPGState extends State<UploadGPG> {
             builder: (context) => UploadGPG() ,
           ),
         );
-
+showInSnackBar(context, "Your project has been successfully deleted");
    
 
   } //end delete function

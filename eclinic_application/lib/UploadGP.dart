@@ -1377,7 +1377,17 @@ class _UploadGPState extends State<UploadGP> {
     OpenFile.open(file.path!);
   }
 
-  showSucessAlert() {
+  showSucessAlert() async {
+// showInSnackBar(context, "Your project has been successfully Uploaded to the library");
+//     await Future.delayed(Duration(seconds: 1));
+//         Navigator.push(
+//           context,
+//           MaterialPageRoute(
+//             builder: (context) => studenthome(2),
+//           ),
+//         );
+
+
     QuickAlert.show(
       context: context,
       type: QuickAlertType.success,
@@ -1398,10 +1408,11 @@ class _UploadGPState extends State<UploadGP> {
   }
 
   showConfirmationDialog(BuildContext context) async {
+
     Widget dontDeleteAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontSize: 16),
-        shadowColor: Colors.blue[900],
+        //shadowColor: Colors.blue[900],
         elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
@@ -1409,16 +1420,17 @@ class _UploadGPState extends State<UploadGP> {
           borderRadius: BorderRadius.circular(10), // <-- Radius
         ),
       ),
-      child: Text("Cancle"),
+      child: Text("No"),
       onPressed: () {
         Navigator.of(context).pop();
       },
     );
 
+
     Widget YesDeleteButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontSize: 16),
-        shadowColor: Colors.blue[900],
+       // shadowColor: Colors.blue[900],
         elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
@@ -1426,22 +1438,18 @@ class _UploadGPState extends State<UploadGP> {
           borderRadius: BorderRadius.circular(10), // <-- Radius
         ),
       ),
-      child: Text("Delete"),
+      child: Text("Yes"),
       onPressed: () {
         DeleteGP();
       },
     );
+
+
+
     AlertDialog alert = AlertDialog(
-      content: SizedBox(
-        height: 190,
-        child: Form(
-          key: formkey,
-          child: Column(children: [
-            Text(
-                "Deleting your GP will remove it from the GP library.\n Are you sure you want to delete it?\n"),
-          ]),
-        ),
-      ),
+      content: Text(
+                "Are you sure you want to delete your project from the GP library?"),
+        
       actions: [
         dontDeleteAppButton,
         YesDeleteButton,
@@ -1457,6 +1465,7 @@ class _UploadGPState extends State<UploadGP> {
   } //END FUNCTION
 
   DeleteGP() async {
+    
     await FirebaseFirestore.instance.collection("GPlibrary").doc(id).delete();
 
     FirebaseFirestore.instance.collection("studentgroup").doc(groupid).update({
@@ -1469,5 +1478,7 @@ class _UploadGPState extends State<UploadGP> {
         builder: (context) => studenthome(2),
       ),
     );
+      showInSnackBar(context, "Your project has been successfully deleted");
+
   } //end delete function
 }
