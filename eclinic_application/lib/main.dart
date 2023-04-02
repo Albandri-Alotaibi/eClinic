@@ -16,6 +16,7 @@ import 'package:myapp/facultyviewprofile.dart';
 import 'package:myapp/graduatelogin.dart';
 import 'package:myapp/graduatereset.dart';
 import 'package:myapp/graduatessignup.dart';
+import 'package:myapp/graduateverfication.dart';
 import 'package:myapp/home.dart';
 import 'package:myapp/innereset.dart';
 import 'package:myapp/login.dart';
@@ -152,6 +153,7 @@ class MyApp extends StatelessWidget {
                   ),
               'graduatehome': (context) => graduatehome(),
               'graduatereset': (context) => graduatereset(),
+              'graduateverfication': (context) => graduateverfication(),
             }));
   }
 

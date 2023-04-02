@@ -349,11 +349,11 @@ class _studentsignupState extends State<studentsignup> {
                               validator: (value) {
                                 if (value!.isEmpty ||
                                     _lnamecontroller.text == "") {
-                                  return 'Please enter your full name ';
+                                  return 'Please enter your last name ';
                                 } else {
                                   if (nameRegExp
                                       .hasMatch(_lnamecontroller.text)) {
-                                    return 'Please full name only letters accepted ';
+                                    return 'Please last name only letters accepted ';
                                   } else {
                                     if (!(english
                                         .hasMatch(_lnamecontroller.text))) {

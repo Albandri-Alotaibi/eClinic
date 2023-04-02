@@ -198,8 +198,11 @@ class _studentloginState extends State<studentlogin> {
                                         Navigator.pushNamed(
                                             context, 'studenthome');
                                         // if (user.emailVerified) {
-                                        //   Navigator.pushNamed(
-                                        //       context, 'studenthome');
+                                        //                           if (TypeUser.type == 'student') {
+                                        // TypeUser.type = 'student';
+                                        // StorageManager.saveData('TypeUser', 'student');
+                                        // Navigator.pushNamedAndRemoveUntil(
+                                        //     context, 'studenthome', (route) => false);
                                         // } else {
                                         //   Navigator.pushNamed(
                                         //       context, 'studentverfication');

@@ -3,6 +3,7 @@ import 'package:myapp/app/constants.dart';
 import 'package:myapp/bloc/select_group/bloc.dart';
 import 'package:myapp/domain/extension.dart';
 import 'package:myapp/domain/model.dart';
+import 'package:myapp/graduateverfication.dart';
 import 'package:myapp/screeens/resources/snackbar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myapp/style/Mycolors.dart';
@@ -104,13 +105,18 @@ class _GroupSelectionState extends State<GroupSelection> {
                 TypeUser.type = 'student';
                 StorageManager.saveData('TypeUser', 'student');
                 Navigator.pushNamedAndRemoveUntil(
-                    context, 'studenthome', (route) => false);
-              } else if (TypeUser.type == 'graduate') {
+                    context, 'studentverfication', (route) => false);
+              }
+              if (TypeUser.type == 'graduate') {
                 TypeUser.type = 'graduate';
                 // save type user
                 StorageManager.saveData('TypeUser', 'graduate');
-                Navigator.pushNamedAndRemoveUntil(
-                    context, 'graduatehome', (route) => false);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => graduateverfication(),
+                  ),
+                );
               }
             }
 
