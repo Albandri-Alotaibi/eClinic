@@ -624,9 +624,9 @@
               dateDropdown2.disabled = false;
               dateDropdown2.options[dateDropdown2.selectedIndex].disabled = false;
               dateDropdown2.options[dateDropdown2.selectedIndex].hidden = false;
-              if (dateDropdown2.options[dateDropdown2.selectedIndex - 1]) {
-                dateDropdown2.options[dateDropdown2.selectedIndex - 1].disabled = false;
-                dateDropdown2.options[dateDropdown2.selectedIndex - 1].hidden = false;
+              if (dateDropdown2.options[dateDropdown2.selectedIndex + 1]) {
+                dateDropdown2.options[dateDropdown2.selectedIndex + 1].disabled = false;
+                dateDropdown2.options[dateDropdown2.selectedIndex + 1].hidden = false;
               }
 
               semesterDropdown.value = semester[0];
