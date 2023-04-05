@@ -624,10 +624,19 @@
               dateDropdown2.disabled = false;
               dateDropdown2.options[dateDropdown2.selectedIndex].disabled = false;
               dateDropdown2.options[dateDropdown2.selectedIndex].hidden = false;
-              if (dateDropdown2.options[dateDropdown2.selectedIndex + 1]) {
-                dateDropdown2.options[dateDropdown2.selectedIndex + 1].disabled = false;
-                dateDropdown2.options[dateDropdown2.selectedIndex + 1].hidden = false;
+              //2024/2025: 1: 2024 2:2025, 
+              if (dateDropdown2.selectedIndex == dateDropdown1.selectedIndex) {
+                if (dateDropdown2.options[dateDropdown2.selectedIndex + 1]) {
+                  dateDropdown2.options[dateDropdown2.selectedIndex + 1].disabled = false;
+                  dateDropdown2.options[dateDropdown2.selectedIndex + 1].hidden = false;
+                }
+              } else {
+                if (dateDropdown2.options[dateDropdown2.selectedIndex - 1]) {
+                  dateDropdown2.options[dateDropdown2.selectedIndex - 1].disabled = false;
+                  dateDropdown2.options[dateDropdown2.selectedIndex - 1].hidden = false;
+                }
               }
+
 
               semesterDropdown.value = semester[0];
             } else {
@@ -714,7 +723,7 @@
             console.log(err.message)
           })
 
-       window.location.replace("login.html")
+        window.location.replace("login.html")
       }
 
 
@@ -728,7 +737,7 @@
       }
       else {
         signOut(auth)
-         window.location.replace("login.html")
+          window.location.replace("login.html")
           .then(() => {
             console.log("user log out")
           })
