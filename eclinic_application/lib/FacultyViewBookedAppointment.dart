@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:myapp/facultyhome.dart';
+import 'package:myapp/screeens/resources/snackbar.dart';
 import 'package:simple_time_range_picker/simple_time_range_picker.dart';
 import 'model/Appointment.dart';
 import 'model/checkbox_state.dart';
@@ -745,7 +746,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
             },
             "notification": <String, dynamic>{
               "title": "Appointment cancelation",
-              "body": "your appointment with $Fname$time has been canceled ",
+              "body": "Your appointment with $Fname$time has been canceled.",
               "android_channel_id": "dbfood",
             },
             "to": token,
@@ -807,7 +808,9 @@ class _sState extends State<FacultyViewBookedAppointment> {
     }
     final docData = snap2.data() as Map<String, dynamic>;
     if (docData.containsKey("token")) {
-      sendPushMessege(snap2['token'], projectName!, "");
+      // sendPushMessege(snap2['token'], projectName!, "");
+      showInSnackBar(
+          context, "Your appointment with $projectName has been successfully canceled.");
     }
 
     //await

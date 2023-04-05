@@ -50,100 +50,105 @@ class _homeState extends State<home> {
               opacity: AlwaysStoppedAnimation(0.3),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 120, right: 120),
-            child: Text(
-              "Welcome  ",
-              style: TextStyle(
+          Spacer(
+            flex: 3,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Welcome  ",
+                //textAlign: TextAlign.left,
+                style: TextStyle(
                   fontFamily: 'bold',
                   fontSize: 47,
-                  color: Mycolors.mainColorWhite),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10, right: 20),
-            child: Text(
-              "Join us, let's make success happen! ",
-              style: TextStyle(
-                  fontFamily: 'main',
-                  fontSize: 20,
-                  color: Mycolors.mainColorWhite),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 220,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Mycolors.mainColorWhite,
-                    textStyle: TextStyle(fontSize: 16),
-                    // shadowColor: Colors.blue[900],
-                    elevation: 0,
-                    backgroundColor: Color.fromARGB(135, 21, 70, 160),
-                    minimumSize: Size(140, 50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(17), // <-- Radius
-                      side: BorderSide(
-                          width: 2, color: Mycolors.mainShadedColorBlue),
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, 'login');
-                  },
-                  child: Text('Faculty Member'),
+                  color: Mycolors.mainColorWhite,
                 ),
-                const SizedBox(height: 10),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Mycolors.mainColorWhite,
-                    textStyle: TextStyle(fontSize: 16),
-                    // shadowColor: Colors.blue[900],
-                    elevation: 0,
+              ),
+              Text(
+                "Join us, let's make success happen! ",
+                style: TextStyle(
+                    fontFamily: 'main',
+                    fontSize: 20,
+                    color: Mycolors.mainColorWhite),
+              ),
+            ],
+          ),
+          Spacer(
+            flex: 1,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Mycolors.mainColorWhite,
+                  textStyle: TextStyle(fontSize: 16),
+                  // shadowColor: Colors.blue[900],
+                  elevation: 0,
+                  backgroundColor: Color.fromARGB(135, 21, 70, 160),
+                  minimumSize: Size(250, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(17), // <-- Radius
+                    side: BorderSide(
+                        width: 2, color: Mycolors.mainShadedColorBlue),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, 'login');
+                },
+                child: Text('Faculty Member'),
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Mycolors.mainColorWhite,
+                  textStyle: TextStyle(fontSize: 16),
+                  // shadowColor: Colors.blue[900],
+                  elevation: 0,
 
-                    backgroundColor: Color.fromARGB(135, 21, 70, 160),
-                    minimumSize: Size(140, 50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(17), // <-- Radius
-                      side: BorderSide(
-                          width: 2, color: Mycolors.mainShadedColorBlue),
-                    ),
+                  backgroundColor: Color.fromARGB(135, 21, 70, 160),
+                  minimumSize: Size(250, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(17), // <-- Radius
+                    side: BorderSide(
+                        width: 2, color: Mycolors.mainShadedColorBlue),
                   ),
-                  onPressed: () {
-                    TypeUser.type = 'student';
-                    StorageManager.saveData('TypeUser', 'student');
-                    Navigator.pushNamed(context, 'studentlogin');
-                  },
-                  child: Text('Student'),
                 ),
-                const SizedBox(height: 10),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Mycolors.mainColorWhite,
-                    textStyle: TextStyle(fontSize: 16),
-                    // shadowColor: Colors.blue[900],
-                    elevation: 0,
-                    backgroundColor: Color.fromARGB(135, 21, 70, 160),
-                    minimumSize: Size(140, 50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(17), // <-- Radius
-                      side: BorderSide(
-                          width: 2, color: Mycolors.mainShadedColorBlue),
-                    ),
+                onPressed: () {
+                  TypeUser.type = 'student';
+                  StorageManager.saveData('TypeUser', 'student');
+                  Navigator.pushNamed(context, 'studentlogin');
+                },
+                child: Text('Student'),
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Mycolors.mainColorWhite,
+                  textStyle: TextStyle(fontSize: 16),
+                  // shadowColor: Colors.blue[900],
+                  elevation: 0,
+                  backgroundColor: Color.fromARGB(135, 21, 70, 160),
+                  minimumSize: Size(250, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(17), // <-- Radius
+                    side: BorderSide(
+                        width: 2, color: Mycolors.mainShadedColorBlue),
                   ),
-                  onPressed: () {
-                    TypeUser.type = 'graduate';
-                    // save type user
-                    StorageManager.saveData('TypeUser', 'graduate');
-                    Navigator.pushNamed(context, 'graduatelogin');
-                  },
-                  child: Text('Graduate'),
                 ),
-              ],
-            ),
+                onPressed: () {
+                  TypeUser.type = 'graduate';
+                  // save type user
+                  StorageManager.saveData('TypeUser', 'graduate');
+                  Navigator.pushNamed(context, 'graduatelogin');
+                },
+                child: Text('Graduate'),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 75,
           ),
           Row()
         ]),

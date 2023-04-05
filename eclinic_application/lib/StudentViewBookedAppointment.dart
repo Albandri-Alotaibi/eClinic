@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp/screeens/resources/snackbar.dart';
 import 'model/StudentAppointment.dart';
 
 import 'package:flutter/foundation.dart';
@@ -821,6 +822,10 @@ class _StudentViewBookedAppointmentState
     if (now.day == BookedAppointments2.startTime.day &&
         now.month == BookedAppointments2.startTime.month &&
         now.year == BookedAppointments2.startTime.year) {
+//show a msg for the student
+      showInSnackBar(context,
+          "Your appointment with ${Fname} today at ${BookedAppointments2.OnlyStart()} has been successfully canceled.");
+
       // a msg for the faclulty
       //check if faculty has token and send
       final docData = snap2.data() as Map<String, dynamic>;
@@ -840,13 +845,15 @@ class _StudentViewBookedAppointmentState
         final DocumentSnapshot StudentdocRef =
             await studentsArrayOfRef[i]['ref'].get();
         final docData = StudentdocRef.data() as Map<String, dynamic>;
-        if (docData.containsKey("token")) {
+        if (docData.containsKey("token") && StudentdocRef.id != userid) {
           var studentToken = StudentdocRef['token'];
           sendPushMessege(studentToken,
               "Your appointment with ${Fname} today at ${BookedAppointments2.OnlyStart()} has been canceled.");
         }
       }
     } else {
+      showInSnackBar(context,
+          "Your appointment with ${Fname} on ${BookedAppointments2.StringDate()} at ${BookedAppointments2.OnlyStart()} has been successfully canceled.");
       // a msg for the faclulty
       final docData = snap2.data() as Map<String, dynamic>;
       if (docData.containsKey("token")) {
@@ -864,7 +871,13 @@ class _StudentViewBookedAppointmentState
         DocumentSnapshot StudentdocRef =
             await studentsArrayOfRef[i]['ref'].get();
         final docData = StudentdocRef.data() as Map<String, dynamic>;
-        if (docData.containsKey("token")) {
+
+        if (docData.containsKey("token") && StudentdocRef.id != userid) {
+          print("in if student -----------------------------");
+          print("userid");
+          print(userid);
+          print("StudentdocRef.id");
+          print(StudentdocRef.id);
           var studentToken = StudentdocRef['token'];
           sendPushMessege(studentToken,
               "Your appointment with ${Fname} on ${BookedAppointments2.StringDate()} at ${BookedAppointments2.OnlyStart()} has been canceled.");

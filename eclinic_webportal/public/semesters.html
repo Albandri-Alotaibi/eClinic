@@ -144,7 +144,7 @@
                 <option selected disabled>choose a year</option>
               </select>
               <span class="input-group-text">/</span>
-              <select class="form-select" name="year" id="secondyear">
+              <select class="form-select" name="year" id="secondyear" disabled>
                 <option selected disabled>choose a year</option>
               </select>
             </div>
@@ -207,7 +207,7 @@
     }, 2000);
 
     //get all faculty members of one semester
-    async function getFaculty (semesterId) {
+    async function getFaculty (semesterId, buttonElem) {
 
 
       //fix duplicated loading.
@@ -266,9 +266,11 @@
 
 
       if (!found) {
+        buttonElem.classList.replace('btn-primary', 'btn-secondary');
         document.getElementById('specialityList').style.display = 'none';
         document.getElementById('facultyListData').innerHTML += '<li class="list-group-item list-group-item-warning">No faculty is found to be listed under this semester!</li>';
       } else {
+        buttonElem.classList.replace('btn-secondary', 'btn-primary');
         document.getElementById('specialityList').style.display = 'block';
         document.getElementById('facultyListData').innerHTML += '<li class="list-group-item list-group-item-info text-center text-white" style="background-color:#0084bd;">Semester Faculty List</li>';
         document.getElementById('facultyListData').innerHTML += '<li id="no-faculty" class="list-group-item list-group-item-warning" style="display:none">No faculty is found to be listed under this sepciality!</li>';
@@ -320,12 +322,12 @@
         let text = detail.semestername;
         const myArray = text.split(" ");
 
-        // semestersFacultyList[doc.id] = detail.facultymembers ?? [];
+        let semestersFacultyMemebers = detail.facultymembers ?? [];
 
         box.innerHTML += '<tr>' + '<td><span id="semester-' + doc.id + '">' + myArray[0] + '</span></td>' + '<td><span id="year-' + doc.id + '"">' + myArray[1] + '</span></td>' +
           '<td class="d-flex justify-content-between">' +
           '<button id="' + doc.id + '-ref" type="button" class=" update logbut btn btn-primary mx-2" style="border:0;font-size: 18px;" data-ref="' + doc.id + '">✎</button>' +
-          '<button id="' + doc.id + '-sesmster" type="button" class=" show-faculty logbut btn btn-primary mx-2" style="border:0"  data-semester="' + doc.id + '"><i class="fa fa-users" aria-hidden="true"></i></button>' +
+          '<button id="' + doc.id + '-sesmster" type="button" class=" show-faculty btn ' + (semestersFacultyMemebers.length == 0 ? 'btn-secondary' : 'logbut btn-primary') + ' mx-2" style="border:0"  data-semester="' + doc.id + '"><i class="fa fa-users" aria-hidden="true"></i></button>' +
           '</td>' + '</tr>';
       });
 
@@ -337,7 +339,7 @@
       // ********************** set years********************************************************************
 
       let earliestYear = 2050;
-      let currentYear1 = new Date().getFullYear();
+      let currentYear1 = new Date("2018-01-01").getFullYear();
       while (currentYear1 <= earliestYear) {
         var dateOption = document.createElement("option");
         dateOption.text = currentYear1;
@@ -346,24 +348,47 @@
         currentYear1 += 1;
       }
 
-      let currentYear2 = new Date().getFullYear();
+      let currentYear2 = new Date("2018-01-01").getFullYear();
       while (currentYear2 <= earliestYear) {
         var dateOption = document.createElement("option");
         dateOption.text = currentYear2;
         dateOption.value = currentYear2;
+        dateOption.classList.add("dropdown-option-" + currentYear2);
+        dateOption.disabled = true;
+        dateOption.hidden = true;
         dateDropdown2.add(dateOption);
         currentYear2 += 1;
       }
       // ********************** reset function********************************************************************
       const resetForm = () => {
         semesterDropdown.value = "choose a semester"
+
+        $('#secondyear option').attr("disabled", true).attr('hidden', true);
+
         dateDropdown1.value = "choose a year"
         dateDropdown2.value = "choose a year"
+        dateDropdown2.disabled = true;
       }
 
+      dateDropdown1.addEventListener('change', function () {
+        $('#secondyear option').attr("disabled", true).attr('hidden', true);
+
+        if (dateDropdown1.selectedIndex > 0) {
+          dateDropdown2.disabled = false;
+          dateDropdown2.options[dateDropdown1.selectedIndex].disabled = false;
+          dateDropdown2.options[dateDropdown1.selectedIndex].hidden = false;
+          if (dateDropdown2.options[dateDropdown1.selectedIndex + 1]) {
+            dateDropdown2.options[dateDropdown1.selectedIndex + 1].disabled = false;
+            dateDropdown2.options[dateDropdown1.selectedIndex + 1].hidden = false;
+          }
+
+          dateDropdown2.selectedIndex = dateDropdown1.selectedIndex;
+        }
+      });
       // ********************** 1-CLICK ADD BUTTON WITH VALUE(ADD NEW SEMESTER/YEAR)************************************
       addnewbtn.addEventListener('click', function () {
         resetForm();
+
         addUpdatediv.style.display = "block";
         addDBbtn.style.display = "block";
         updateDBbtn.style.display = "none";
@@ -512,7 +537,7 @@
             box.innerHTML += '<tr class="table-success">' + '<td><span id="semester-' + docRef.id + '">' + myArray[0] + '</span></td>' + '<td><span id="year-' + docRef.id + '"">' + myArray[1] + '</span></td>' +
               '<td class="d-flex justify-content-between">' +
               '<button id="' + doc.id + '-ref" type="button" class=" update logbut btn btn-primary mx-2" style=" border:0;font-size: 18px;" data-ref="' + docRef.id + '">✎</button>' +
-              '<button id="' + doc.id + '-semester" type="button" class=" show-faculty logbut btn btn-primary mx-2" style=" border:0"  data-semester="' + docRef.id + '"><i class="fa fa-users" aria-hidden="true"></i></button>' +
+              '<button id="' + doc.id + '-semester" type="button" class=" show-faculty  btn btn-secondary mx-2" style=" border:0"  data-semester="' + docRef.id + '"><i class="fa fa-users" aria-hidden="true"></i></button>' +
               '</td>' + '</tr>';
 
             document.getElementById("semester-year").style.display = "none";
@@ -531,6 +556,18 @@
         for (var i = 0; i < updatebtn.length; i++) {
           showFacultyListbtn.item(i).addEventListener('click', async function (event) {
             document.getElementById("facultyList").style.display = "none";
+            var elem = event.target;
+            if (!elem) {
+              elem = event.currentTarget;
+              if (elem.tagName == "li") {
+                elem = event.parentElement.target;
+                if (!elem) {
+                  elem = event.parentElement.currentTarget;
+                }
+              }
+            }
+
+
             let docSemester = event.target.dataset.semester;
             if (!docSemester) {
               docSemester = event.currentTarget.dataset.semester;
@@ -539,7 +576,7 @@
             console.log("docSemester:show-press:" + docSemester);
             specialityList.value = 0;
             document.getElementById('specialityList').disabled = true;
-            await getFaculty(docSemester);
+            await getFaculty(docSemester, elem);
           });
 
           updatebtn.item(i).addEventListener('click', async function (event) {
@@ -548,7 +585,6 @@
             updateDBbtn.style.display = "block";
             canclebtn.style.display = "block";
             facultylistdiv.style.display = "none";
-
 
             // **************************HOW I CAN RETRIVE DATA IN DROP DOWN TO UPDATE IT ? ********************
 
@@ -570,6 +606,7 @@
 
               const semester = details.semestername.split(" ");
 
+
               if (semester[1].indexOf('/') != -1) {
                 const dates = semester[1].split("/");
                 dateDropdown1.value = dates[0];
@@ -578,6 +615,28 @@
                 dateDropdown1.value = semester[1];
                 dateDropdown2.value = 'choose a year';
               }
+
+
+              console.log("dateDropdown2.selectedIndex" + dateDropdown2.selectedIndex);
+
+              $('#secondyear option').attr("disabled", true).attr('hidden', true);
+
+              dateDropdown2.disabled = false;
+              dateDropdown2.options[dateDropdown2.selectedIndex].disabled = false;
+              dateDropdown2.options[dateDropdown2.selectedIndex].hidden = false;
+              //2024/2025: 1: 2024 2:2025, 
+              if (dateDropdown2.selectedIndex == dateDropdown1.selectedIndex) {
+                if (dateDropdown2.options[dateDropdown2.selectedIndex + 1]) {
+                  dateDropdown2.options[dateDropdown2.selectedIndex + 1].disabled = false;
+                  dateDropdown2.options[dateDropdown2.selectedIndex + 1].hidden = false;
+                }
+              } else {
+                if (dateDropdown2.options[dateDropdown2.selectedIndex - 1]) {
+                  dateDropdown2.options[dateDropdown2.selectedIndex - 1].disabled = false;
+                  dateDropdown2.options[dateDropdown2.selectedIndex - 1].hidden = false;
+                }
+              }
+
 
               semesterDropdown.value = semester[0];
             } else {
@@ -678,7 +737,7 @@
       }
       else {
         signOut(auth)
-       window.location.replace("login.html")
+          window.location.replace("login.html")
           .then(() => {
             console.log("user log out")
           })
