@@ -20,6 +20,7 @@ import 'package:myapp/login.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 
 class addHoursFaculty extends StatefulWidget {
   const addHoursFaculty({super.key});
@@ -36,6 +37,7 @@ class _AddHourState extends State<addHoursFaculty> {
   //   super.initState();
   //   getusers();
   // }
+  final functions = FirebaseFunctions.instance;
   FocusNode myFocusNode = new FocusNode();
   var muser;
   int _selectedIndex = 1;
@@ -1231,19 +1233,32 @@ class _AddHourState extends State<addHoursFaculty> {
     for (var k = 0; k < daysOfHelp.length; k++) {
       if (daysOfHelp[k].value == true) {
         addAvailableHoursToDB(k);
-        var ArrayOfAllTheDayRanges = [];
-        for (var i = 1; i < daysOfHelp[k].hours.length; i++) {
-          TimeOfDay starttime = daysOfHelp[k].hours[i].start;
-          TimeOfDay endtime = daysOfHelp[k].hours[i].end;
+        // var ArrayOfAllTheDayRanges = [];
+        // for (var i = 1; i < daysOfHelp[k].hours.length; i++) {
+        //   TimeOfDay starttime = daysOfHelp[k].hours[i].start;
+        //   TimeOfDay endtime = daysOfHelp[k].hours[i].end;
 
-          List<timesWithDates> Ranges = hourDivision(starttime, endtime);
+        //   List<timesWithDates> Ranges = hourDivision(starttime, endtime);
 
-          ArrayOfAllTheDayRanges.add(Ranges);
-        } //end of generating all ranges for one day
+        //   ArrayOfAllTheDayRanges.add(Ranges);
+        // } //end of generating all ranges for one day
 
-        OneDayGenerating(daysOfHelp[k].title, ArrayOfAllTheDayRanges);
+        //  OneDayGenerating(daysOfHelp[k].title, ArrayOfAllTheDayRanges);
       } //value true
     } //loop on each day
+
+    try {
+      final result = FirebaseFunctions.instance
+          .httpsCallable('generatingAppointments')
+          .call();
+      print("generatingAppointments No error");
+    } on FirebaseFunctionsException catch (error) {
+      print("generatingAppointments error");
+      print(error.code);
+      print(error.details);
+      print(error.message);
+    }
+
     await Future.delayed(Duration(seconds: 1));
     Navigator.push(
       context,
@@ -1265,9 +1280,27 @@ class _AddHourState extends State<addHoursFaculty> {
           daysOfHelp[x].hours[i].end.hour.toString() +
               ":" +
               daysOfHelp[x].hours[i].end.minute.toString());
+
+      String indicator = daysOfHelp[x].hours[i].start.hour >= 12 ? 'PM' : 'AM';
+      int hour = daysOfHelp[x].hours[i].start.hour % 12 == 0
+          ? 12
+          : daysOfHelp[x].hours[i].start.hour % 12;
+
+      String hourString = hour.toString().padLeft(2, '0');
+      String minuteString =
+          daysOfHelp[x].hours[i].start.minute.toString().padLeft(2, '0');
+
+      String indicator2 = daysOfHelp[x].hours[i].end.hour >= 12 ? 'PM' : 'AM';
+      int hour2 = daysOfHelp[x].hours[i].end.hour % 12 == 0
+          ? 12
+          : daysOfHelp[x].hours[i].end.hour % 12;
+
+      String hourString2 = hour2.toString().padLeft(2, '0');
+      String minuteString2 =
+          daysOfHelp[x].hours[i].end.minute.toString().padLeft(2, '0');
       Map map = {
-        'startTime': "${dateFormat.format(tempDateS)}",
-        'endTime': "${dateFormat.format(tempDateE)}"
+        'startTime': "${hourString}:${minuteString} ${indicator}",
+        'endTime': "${hourString2}:${minuteString2} ${indicator2}"
       };
       hoursArray.add(map);
     }

@@ -83,7 +83,7 @@ exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async
                                         var token = oneStudent.data().token;
                                         functions.logger.info("token");
                                         functions.logger.info(token);
-                                        if (token != null) {
+                                        if (token != null || token != "") {
                                             // functions.logger.info("in  if(token != null)");
                                             const response = await admin.messaging().sendToDevice(token, payload);
                                         }
@@ -104,7 +104,7 @@ exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async
 
                             }
                         };
-                        if (token != null) {
+                        if (doc.data().token != null || doc.data().token != "") {
                             // functions.logger.info("in  if(token != null)");
                             const response = await admin.messaging().sendToDevice(doc.data().token, payload);
                         }
@@ -125,7 +125,7 @@ exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async
 });
 
 // updated
-exports.gpAndEndonsemesterreminder = functions.pubsub.schedule('0 21 * * *').onRun(async (context) => {
+exports.gpAndEndofsemesterreminder = functions.pubsub.schedule('0 21 * * *').onRun(async (context) => {
     functions.logger.info("Hello logs", { structuredData: true });
     //response.send("Hello Firebase");
     const StudentsSnapshot = await admin.firestore().collection('studentgroup').get().then((querySnapshot) => {
@@ -237,28 +237,26 @@ exports.updateFaculty = functions.firestore
         var presemestername = preSemesterSnap.data().semestername;
 
 
+        // if the faculty member changed the department all the appointments will be chanced
+        const departmentRef = await admin.firestore().collection('department');
 
-        //return the name of the previous value
-        functions.logger.info("previousValue");
-        // (await semesterRef.doc(doc.id).get()).data()
-        // previousValue.semester.get().then( (onesemesterDoc) => {
-        //     functions.logger.info("onesemesterDoc");
-        //     functions.logger.info(onesemesterDoc);
-        //     presemestername = onesemesterDoc.data().semestername
-        // });
-        functions.logger.info(presemestername);
+        var newDepartmentSnap = await departmentRef.doc(newValue.department.id).get();
+        var newDepartmentname = newDepartmentSnap.data().departmentname;
+        functions.logger.info(newValue.department.id);
 
 
-        // return the name of the new value
-        functions.logger.info("newValue");
-        functions.logger.info(newsemestername);
+        var preDepartmentSnap = await departmentRef.doc(previousValue.department.id).get();
+        var preDepartmentname = preDepartmentSnap.data().departmentname;
+        const departmentIsUpdated = newDepartmentname !== preDepartmentname;
+        functions.logger.info("departmentIsUpdated");
+        functions.logger.info(departmentIsUpdated);
 
 
         const semesterIsUpdated = newsemestername !== presemestername;
-        functions.logger.info("semesterIsUpdated");
-        functions.logger.info(semesterIsUpdated);
+        // functions.logger.info("semesterIsUpdated");
+        // functions.logger.info(semesterIsUpdated);
 
-        if (semesterIsUpdated === true) {
+        if (semesterIsUpdated === true || departmentIsUpdated === true) {
             functions.logger.info("in semesterIsUpdated change to ==");
             var facultyAppointmentSnap = await appointmentRef.get().then(
                 (querySnapshot) => {
@@ -304,18 +302,6 @@ exports.updateFaculty = functions.firestore
                                 };
                                 //store the appointment refrence
 
-                                // functions.logger.info("appointmentRef");
-                                // functions.logger.info(appointmentRef);
-                                // var studentsRef = doc.data().student;
-                                // for (let i = 0; i < studentsRef.length; i++) {
-                                //     var oneS = studentsRef[i].get().then(async (oneStudentDoc) => {
-                                //         var token = oneStudentDoc.data().token
-                                //         functions.logger.info(token);
-                                //         const response = await admin.messaging().sendToDevice(token, payload);
-                                //         //delete the appointment from the students appointment array
-                                //         studentsRef[i].update({ "appointments": admin.firestore.FieldValue.arrayRemove(appointmentRef) })
-                                //     });
-                                // }
                                 var appointmentRef = doc.ref;
                                 var groupData = doc.data().group;
                                 functions.logger.info("Student group ID");
@@ -337,7 +323,8 @@ exports.updateFaculty = functions.firestore
                                         });
                                     }
                                     //delete the appointment from the array
-                                    oneGroup.update({ "appointments": admin.firestore.FieldValue.arrayRemove(appointmentRef) })
+                                    const gRef = await admin.firestore().collection('studentgroup').doc(groupData.id);
+                                    gRef.update({ "appointments": admin.firestore.FieldValue.arrayRemove(appointmentRef) })
                                 });
                             }
                         }
@@ -418,6 +405,182 @@ exports.updateFaculty = functions.firestore
 
         }
 
+
+
     });
 
 
+
+//a Funtion to create appointments in the backend
+exports.generatingAppointments = functions.https.onCall(async (data, context) => {
+    // const functions = require("firebase-functions");
+    functions.logger.log("generatingAppointments Is running");
+
+    const uid = context.auth.uid;
+    const facultySnap = await admin.firestore().collection('faculty').doc(uid).get();
+    var availablehours = facultySnap.data().availablehours;
+    //get the faculty semester start and end dates
+    var startDate;
+    var endDate;
+    await facultySnap.data().semester.get().then((sem) => {
+        functions.logger.log(sem.data().semestername);
+        startDate = sem.data().startdate;
+        endDate = sem.data().enddate;
+
+    });
+    // functions.logger.log(startDate);
+    // functions.logger.log(endDate);
+    // functions.logger.log("availablehours");
+    // functions.logger.log(availablehours);
+
+    for (var i = 0; i < availablehours.length; i++) {//loop on all the days
+        functions.logger.log("for loop availablehours.length");
+        var ArrayOfAllTheDayRanges = [];
+        for (var j = 0; j < availablehours[i]['time'].length; j++) {//loop for one day and multi periods of time 
+            // functions.logger.log("for loop availablehours[i][time].length");
+            // functions.logger.log(availablehours[i]['time'].length);
+            functions.logger.log(availablehours[i]['Day']);
+            var startTimeAsString = availablehours[i]['time'][j]['startTime'];
+            var endTimeAsString = availablehours[i]['time'][j]['endTime'];
+
+
+            var StartArrayTemp = startTimeAsString.split(" ");
+            var StartArray = StartArrayTemp[0].split(":");
+
+            // get hours and minutes
+            var Shours = parseInt(StartArray[0]);
+            var Sminutes = parseInt(StartArray[1]);
+            // get am/pm designation
+            var designation = StartArrayTemp[1];
+            if (Shours === 12 && designation === "AM") {
+                Shours -= 12;
+            }
+            if (designation === "PM" && Shours < 12) {
+                Shours += 12;
+            }
+
+            // functions.logger.log("Start hours");
+            // functions.logger.log(Shours);
+
+            var EndArrayTemp = endTimeAsString.split(" ");
+            var EndArray = EndArrayTemp[0].split(":");
+
+            // get hours and minutes
+            var Ehours = parseInt(EndArray[0]);
+            var Eminutes = parseInt(EndArray[1]);
+            // get am/pm designation
+            var designation = EndArrayTemp[1];
+            if (Ehours === 12 && designation === "AM") {
+                Ehours -= 12;
+            }
+            if (designation === "PM" && Ehours < 12) {
+                Ehours += 12;
+            }
+
+
+            const now = new Date();
+            var start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), Shours, Sminutes);
+            var end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), Ehours, Eminutes);
+            // functions.logger.log("start");
+            // functions.logger.log(start);
+            // functions.logger.log("end");
+            // functions.logger.log(end);
+            var Ranges = [];
+
+            var current1 = start;
+            var current2 = new Date(current1.getTime() + 25 * 60000); // 25 minutes in milliseconds
+            // while (Ranges.length > 0) {
+            //     Ranges.pop();
+            // } //to remove all the array values in Ranges array
+            // functions.logger.log("current1");
+            // functions.logger.log(current1);
+            while (current1 < end && current2 < end) {
+                functions.logger.log("In while");
+                ArrayOfAllTheDayRanges.push({ StartOfRange: current1, EndOfRange: current2 });//add the ranges for one day in this function
+                current1 = new Date(current2.getTime() + 5 * 60000); // 5 minutes in milliseconds
+                current2 = new Date(current1.getTime() + 25 * 60000); // 25 minutes in milliseconds
+            }
+
+
+            functions.logger.log("ArrayOfAllTheDayRanges");
+            functions.logger.log(ArrayOfAllTheDayRanges);
+
+        }//for one day
+
+        OneDayGenerating(availablehours[i]['Day'], ArrayOfAllTheDayRanges, startDate.toDate(), endDate.toDate(), uid);
+
+    }//for All days
+
+
+});
+
+async function OneDayGenerating(day, ArrayOfAllTheDayRanges, startDateT, endDateT, uid) {
+    // return 1;
+    let startTime = startDateT.getTime();
+    let StartDate = new Date(startTime + 3 * 60 * 60 * 1000);// add 3h bcz it on UTC time not saudi time
+    let endTime = endDateT.getTime();
+    let EndDate = new Date(endTime + 3 * 60 * 60 * 1000);// add 3h bcz it on UTC time not saudi time
+    //calculate the diff in days 
+    const days = (Sdate, Edate) => {
+        let difference = Edate.getTime() - Sdate.getTime();
+        let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
+        return TotalDays;
+    }
+
+    console.log(StartDate + " day ");
+    console.log(EndDate + " day ");
+
+    let diff = days(StartDate, EndDate)
+    console.log(diff + " days ");
+
+    var AllActualDatesWithRanges = [];
+
+    for (var i = 0; i < diff; i++) {
+        var newDate = new Date(StartDate.getFullYear(), StartDate.getMonth(), StartDate.getDate() + i);
+        console.log(newDate + " date ");
+
+        var dayname = newDate.toLocaleString('en-us', { weekday: 'short' });
+
+        if ((dayname == 'Sun' && day == 'Sunday') ||
+            (dayname == 'Mon' && day == 'Monday') ||
+            (dayname == 'Tue' && day == 'Tuesday') ||
+            (dayname == 'Wed' && day == 'Wednesday') ||
+            (dayname == 'Thu' && day == 'Thursday')) {
+            console.log(dayname + " dayname " + day + "day");
+            for (var j = 0; j < ArrayOfAllTheDayRanges.length; j++) {
+                console.log("inside for");
+                var start = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), ArrayOfAllTheDayRanges[j].StartOfRange.getHours(),
+                    ArrayOfAllTheDayRanges[j].StartOfRange.getMinutes());
+                console.log("Start");
+                console.log(start);
+                var end = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), ArrayOfAllTheDayRanges[j].EndOfRange.getHours(),
+                    ArrayOfAllTheDayRanges[j].EndOfRange.getMinutes());
+                AllActualDatesWithRanges.push({ StartOfRange: start, EndOfRange: end });
+            }// end of for loop of the ArrayOfAllTheDayRanges 
+        }
+    }// end of loop of all day semester
+    const firestore = admin.firestore;
+
+    for (var i = 0; i < AllActualDatesWithRanges.length; i++) {
+        // -3hours to be in UTC time bafore adding to database
+        let startTime = AllActualDatesWithRanges[i].StartOfRange.getTime();
+        let StartDate = new Date(startTime - 3 * 60 * 60 * 1000);// - 3h 
+        let endTime = AllActualDatesWithRanges[i].EndOfRange.getTime();
+        let EndDate = new Date(endTime - 3 * 60 * 60 * 1000);// - 3h 
+
+
+        var startTimestamp = firestore.Timestamp.fromDate(StartDate);
+        var endTimestamp = firestore.Timestamp.fromDate(EndDate);
+        console.log("startTimestamp");
+        console.log(startTimestamp);
+
+        console.log("uid");
+        console.log(uid);
+       await admin.firestore().collection('faculty').doc(uid).collection('appointment').doc().set({
+        'starttime': startTimestamp, //Start timestamp
+        'endtime': endTimestamp,
+        'Booked':
+            false, 
+       })
+    }
+}
