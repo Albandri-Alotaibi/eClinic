@@ -943,7 +943,7 @@ class _AddHourState extends State<addHoursFaculty> {
                           color: Mycolors.mainColorBlack,
                           // fontFamily: 'Semibold',
                           fontWeight: FontWeight.w400,
-                          fontSize: 12.5),
+                          fontSize: 12),
                     ),
                   ),
                   Padding(
