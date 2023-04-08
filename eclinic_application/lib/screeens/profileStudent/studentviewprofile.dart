@@ -999,7 +999,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                   }
                                 } else {
                                   showInSnackBar(
-                                      context, 'pleas check fields !',
+                                      context, 'Pleas check fields',
                                       onError: true);
                                 }
                               },
