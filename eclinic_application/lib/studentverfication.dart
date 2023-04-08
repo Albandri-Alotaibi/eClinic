@@ -31,11 +31,11 @@ class _studentverficationState extends State<studentverfication> {
   @override
   void initState() {
     final User? user = auth.currentUser;
-    if (user != null) {
-      userid = user.uid;
-      email = user.email!;
-      user.sendEmailVerification();
-    }
+    //if (user != null) {
+    userid = user!.uid;
+    email = user.email!;
+    user.sendEmailVerification();
+    // }
 
     if (mounted) Timer timer = Timer.periodic(Duration(seconds: 1), (timer) {});
     checkemailverfication();
