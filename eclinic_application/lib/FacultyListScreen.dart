@@ -172,59 +172,20 @@ class FacultyListScreenState extends State<FacultyListScreen> {
   Widget build(BuildContext context) {
     themeData = Theme.of(context);
 
-    Future.delayed(
-        Duration.zero,
-        () => {
-              if (!isItVisible &&
-                  dropdownvalue == null &&
-                  specialityList.isNotEmpty)
-                showMenu(context)
-            });
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: SafeArea(
           child: Scaffold(
               backgroundColor: Colors.white,
-              // appBar: AppBar(
-              //   primary: false,
-              //   centerTitle: true,
-              //   backgroundColor: Mycolors.mainColorWhite,
-              //   shadowColor: Colors.transparent,
-              //   iconTheme: const IconThemeData(
-              //     color:
-              //         Color.fromARGB(255, 12, 12, 12), //change your color here
-              //   ),
-              //   title: const Text("Schedule An Appointment"),
-              //   titleTextStyle: TextStyle(
-              //     fontFamily: 'main',
-              //     fontSize: 20,
-              //     color: Mycolors.mainColorBlack,
-              //   ),
-              //   // leading: InkWell(
-              //   //   onTap: () {
-              //   //     Navigator.pop(this.context);
-              //   //   },
-              //   //   child: const Icon(
-              //   //     Icons.arrow_back,
-              //   //     color: Colors.black54,
-              //   //   ),
-              //   // ),
-              // ),
-              body: loading || dropdownvalue == null
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
+              body: (loading || dropdownvalue == null ) && (!facultyLoading  && facultyList.isNotEmpty)
+                  ? _showMenu(this)
                   : ListView(
                       padding: const EdgeInsets.all(24),
                       children: <Widget>[
                         Column(children: [
-                          // Text(
-                          //   "Choose Faculty",
-                          //   style: TextStyle(
-                          //       color: themeData.colorScheme.primary,
-                          //       fontWeight: FontWeight.w400),
-                          // ),
+
+                          if(!facultyLoading  && facultyList.isNotEmpty)
                           SafeArea(
                             child: Container(
                               padding: const EdgeInsets.only(bottom: 20),
@@ -260,10 +221,8 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                                         facultyLoading
                                             ? 'Wait...'
                                             : (facultyList.isEmpty
-                                                ? "No appointments found for you currently."
-                                                : (dropdownvalue == null
-                                                    ? 'Please select speciality first...'
-                                                    : 'There are no appointments available with the selected speciality.')),
+                                                ? "No appointments found for you currently in all specialities."
+                                                : 'There are no appointments available with the selected speciality.'),
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
                                             fontWeight: FontWeight.w600,
@@ -353,7 +312,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  facultyName,
+                                  "Dr. $facultyName",
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 16,
@@ -408,57 +367,49 @@ class FacultyListScreenState extends State<FacultyListScreen> {
     }
   }
 
-  void showMenu(thisContext) {
-    setState(() {
-      isItVisible = true;
-    });
-
-    showDialog(
-        context: thisContext,
-        builder: (context) {
-          return WillPopScope(
-              onWillPop: () {
-                return Future.value(false);
-              },
-              child: SimpleDialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15), // <-- Radius
-                ),
+  _showMenu(thisContext) {
+    return specialityList.isEmpty || facultyLoading
+        ? const Center(
+            child: CircularProgressIndicator(),
+          )
+        : ListView(
+            children: <Widget>[
+              const ListTile(
                 title: Text(
-                  specialityList.isEmpty ? 'Wait...' : 'Choose a Speciality',
+                  'Choose a Speciality',
                   textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
                 ),
-                children: [
-                  for (var item = 0; item < specialityList.length; item++)
-                    SimpleDialogOption(
-                        padding: const EdgeInsets.all(0),
-                        onPressed: () {
+                // style: ListTileStyle(f),
+              ),
+              for (var item = 0; item < specialityList.length; item++)
+                Card(
+                  color: const Color.fromRGBO(21, 70, 160, 1),
+                  borderOnForeground: true,
+
+                  child: ListTile(
+                        contentPadding: const EdgeInsets.all(0),
+                        title: Text(
+                          specialityList[item]!['specialityname'],
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        onTap: () {
                           setState(() {
                             isItVisible = false;
                             dropdownvalue = specialityList[item];
                           });
-                          Navigator.of(context, rootNavigator: true).pop();
                         },
-                        child: Card(
-                          color: const Color.fromRGBO(21, 70, 160, 1),
-                          borderOnForeground: true,
-                          child: Padding(
-                              padding: const EdgeInsets.all(5),
-                              child: Text(
-                                specialityList[item]!['specialityname'],
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600),
-                              )),
-                        )
-/*                  Text(
-                    specialityList[item]!['specialityname'],
-                  ),*/
-                        ),
-                ],
-              ));
-        });
+                      ),
+                ),
+            ],
+          );
+
+
   }
 }

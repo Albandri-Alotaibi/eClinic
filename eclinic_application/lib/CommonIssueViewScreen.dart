@@ -171,41 +171,6 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                           thickness: 1,
                         ),
 
-                        Row(children: [
-                          Text(
-                            "  Created by: ${widget.commonIssue['createdby'] ?? ""}",
-                            style: const TextStyle(
-                                letterSpacing: 0.1,
-                                fontSize: 14,
-                                fontFamily: "main",
-                                color: Color.fromRGBO(21, 70, 160, 1),
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ]),
-                        const Divider(
-                          color: Colors.grey,
-                          thickness: 1,
-                        ),
-
-                        Row(children: [
-                          if (widget.commonIssue['lastmodified'] != null &&
-                              widget.commonIssue['lastmodified'] != "")
-                            Text(
-                              "  Last modified by: ${widget.commonIssue['lastmodified'] ?? ""}",
-                              style: const TextStyle(
-                                  letterSpacing: 0.1,
-                                  fontSize: 14,
-                                  fontFamily: "main",
-                                  color: Color.fromRGBO(21, 70, 160, 1),
-                                  fontWeight: FontWeight.w500),
-                            ),
-                        ]),
-                        if (widget.commonIssue['lastmodified'] != null &&
-                            widget.commonIssue['lastmodified'] != "")
-                          const Divider(
-                            color: Colors.grey,
-                            thickness: 1,
-                          ),
 
                         Padding(
                             padding: const EdgeInsets.symmetric(vertical: 20),
@@ -258,7 +223,9 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                 ))
                               ],
                             )),
-                        if (widget.commonIssue['filesurl'] != null)
+                         if (widget.commonIssue['filesurl'] != null &&
+                            widget.commonIssue['filesurl'] is List &&
+                            widget.commonIssue['filesurl'].isNotEmpty)
                           const Divider(
                             color: Colors.grey,
                             thickness: 1,
@@ -311,10 +278,14 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                       }),
                           ]),
 
-                        const Divider(
-                          color: Colors.grey,
-                          thickness: 1,
-                        ),
+                        if (widget.commonIssue['links'] != null &&
+                            widget.commonIssue['links'] is List &&
+                            widget.commonIssue['linkname'] is List &&
+                            widget.commonIssue['links'].isNotEmpty)
+                          const Divider(
+                            color: Colors.grey,
+                            thickness: 1,
+                          ),
 
                         /**
                          * links
@@ -344,7 +315,41 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                   onTap: () => launchUrl(
                                       Uri.parse(widget.commonIssue['links'][item]),
                                       mode: LaunchMode.externalApplication)),
-                          ])
+                          ]),
+
+
+                                         const Divider(
+                          color: Colors.grey,
+                          thickness: 1,
+                        ),
+
+                        Column(children: [
+                          Text(
+                            "  Created by: ${widget.commonIssue['createdby'] ?? ""}",
+                            style: const TextStyle(
+                                letterSpacing: 0.1,
+                                fontSize: 14,
+                                fontFamily: "main",
+
+                                color: Colors.black54,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          if(widget.commonIssue['lastmodified'] != null &&
+                              widget.commonIssue['lastmodified'] != "")
+                          Text(
+                            "    Last modified by: ${widget.commonIssue['lastmodified'] ?? ""}",
+                            style: const TextStyle(
+                                letterSpacing: 0.1,
+                                fontSize: 14,
+                                fontFamily: "main",
+
+                                color: Colors.black54,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ]),
+
+
+
 
                         // Container(
                         //   margin: const EdgeInsets.only(top: 16),
