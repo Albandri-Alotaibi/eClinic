@@ -1010,7 +1010,7 @@ class _facultysignupState extends State<facultysignup> {
                                         "The email address is badly formatted.") {
                                       //error message
                                       showInSnackBar(
-                                          context, "check the email format",
+                                          context, "Check the email format",
                                           onError: true);
                                     }
 

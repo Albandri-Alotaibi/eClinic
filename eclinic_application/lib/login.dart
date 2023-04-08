@@ -221,7 +221,7 @@ class _loginState extends State<login> {
                                       // showerror(
                                       //     context, "invalid email or password");
                                       showInSnackBar(
-                                          context, "invalid email or password",
+                                          context, "Invalid email or password",
                                           onError: true);
                                     } else {
                                       await FirebaseAuth.instance
@@ -270,7 +270,7 @@ class _loginState extends State<login> {
                                     // showerror(
                                     //     context, "invalid email or password ");
                                     showInSnackBar(
-                                        context, "invalid email or password",
+                                        context, "Invalid email or password",
                                         onError: true);
                                   }
                                 }

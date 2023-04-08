@@ -332,7 +332,7 @@ class _graduateresetState extends State<graduatereset> {
                                         // showerror(context,
                                         //     "please check the email format");
                                         showInSnackBar(context,
-                                            "please check the email format",
+                                            "Please check the email format",
                                             onError: true);
                                       }
                                       if (e.message ==

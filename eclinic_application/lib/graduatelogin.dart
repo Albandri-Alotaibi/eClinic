@@ -249,7 +249,7 @@ class _graduateloginState extends State<graduatelogin> {
                                       error.message ==
                                           "There is no user record corresponding to this identifier. The user may have been deleted.") {
                                     showInSnackBar(
-                                        context, "invalid email or password",
+                                        context, "Invalid email or password",
                                         onError: true);
                                   }
                                 }
