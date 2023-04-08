@@ -60,12 +60,11 @@ class _UploadGPGState extends State<UploadGPG> {
   void initState() {
     super.initState();
     HasUploadedOrNot();
-   
+
     retrivegpcategory();
     retrievesemester();
     retrieveForAfterUploadView();
     bool isshow = false;
-
   }
 
 // CheckCode2() async{
@@ -103,11 +102,11 @@ class _UploadGPGState extends State<UploadGPG> {
         .get();
 
 // group
-     group = await snap['group'];
+    group = await snap['group'];
     final DocumentSnapshot groupRef = await group.get();
     print(groupRef['projectname']);
     GPname = groupRef['projectname'];
-    groupid=groupRef.id;
+    groupid = groupRef.id;
 
     //  final snap2 = await group
     //       .snapshots()
@@ -164,8 +163,8 @@ class _UploadGPGState extends State<UploadGPG> {
           }
         }
         //end social media
- print("11ppppppppppppppppppppppppp");
-          print(endSearchForLink);
+        print("11ppppppppppppppppppppppppp");
+        print(endSearchForLink);
         final snap4 = await FirebaseFirestore.instance
             .collection("GPlibrary")
             .doc(id)
@@ -179,18 +178,17 @@ class _UploadGPGState extends State<UploadGPG> {
           setState(() {
             endSearchForLink = true;
           });
-        print("*********-ppppppppppppppppppppppppp");
+          print("*********-ppppppppppppppppppppppppp");
           print(endSearchForLink);
-          } else {
+        } else {
           setState(() {
             endSearchForLink = true;
           });
         }
       });
     });
-   print("22-ppppppppppppppppppppppppp");
-          print(endSearchForLink);
-  
+    print("22-ppppppppppppppppppppppppp");
+    print(endSearchForLink);
   } //end method
 
   Future openFile2({required String url, String? fileName}) async {
@@ -277,11 +275,9 @@ class _UploadGPGState extends State<UploadGPG> {
     }
   }
 
- 
-
   HasUploadedOrNot() async {
     print("33-ppppppppppppppppppppppppp");
-          print(endSearchForLink);
+    print(endSearchForLink);
     final FirebaseAuth auth = await FirebaseAuth.instance;
     final User? user = await auth.currentUser;
     userid = user!.uid;
@@ -297,10 +293,10 @@ class _UploadGPGState extends State<UploadGPG> {
     print(groupRef['projectname']);
 
     bool uploadgp = groupRef['uploadgp'];
- 
+
     setState(() {
       AlreadyUploaded = uploadgp;
-      });
+    });
     print("**Uploaded**${AlreadyUploaded}*********");
   }
 
@@ -311,7 +307,6 @@ class _UploadGPGState extends State<UploadGPG> {
         .collection("graduate")
         .doc(userid)
         .get();
-
 
     final snap4 = await snap['group'].update({
       'uploadgp': true,
@@ -454,9 +449,6 @@ class _UploadGPGState extends State<UploadGPG> {
   FocusNode myFocusNode = new FocusNode();
   @override
   Widget build(BuildContext context) {
-    
-  
-
     if ((AlreadyUploaded == false)) {
       return SafeArea(
           child: Scaffold(
@@ -472,17 +464,12 @@ class _UploadGPGState extends State<UploadGPG> {
                 centerTitle: true,
                 backgroundColor: Colors.white,
                 elevation: 0,
-                leading: BackButton(
-                  color: Colors.black,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => studenthome(2),
-                      ),
-                    );
-                  },
-                ),
+                // leading: BackButton(
+                //   color: Colors.black,
+                //   onPressed: () {
+                //     Navigator.of(context).pop();
+                //   },
+                // ),
               ),
               backgroundColor: Colors.white,
               body: SingleChildScrollView(
@@ -907,17 +894,12 @@ class _UploadGPGState extends State<UploadGPG> {
               centerTitle: true,
               backgroundColor: Colors.white,
               elevation: 0,
-              leading: BackButton(
-                color: Colors.black,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => studenthome(2),
-                    ),
-                  );
-                },
-              ),
+              // leading: BackButton(
+              //   color: Colors.black,
+              //   onPressed: () {
+              //     Navigator.of(context).pop();
+              //   },
+              // ),
             ),
             backgroundColor: Mycolors.BackgroundColor,
             body: Center(
@@ -1193,75 +1175,44 @@ class _UploadGPGState extends State<UploadGPG> {
                                   })),
                             ),
                           )),
-                   SizedBox(
+                    SizedBox(
                       height: 10,
                     ),
 
-  Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .end,
-                                                      children: [
-                                                        Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  bottom: 7),
-                                                          height: 40,
-                                                          width: 100,
-                                                          child:
-                                                              FloatingActionButton
-                                                                  .extended(
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          30), // <-- Radius
-                                                              side: BorderSide(
-                                                                width: 1,
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        169,
-                                                                        43,
-                                                                        34),
-                                                              ),
-                                                            ),
-                                                            splashColor:
-                                                                Colors.red[900],
-                                                            elevation: 0,
-                                                            foregroundColor:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    255,
-                                                                    255,
-                                                                    255),
-                                                            label: Text(
-                                                              'Delete',
-                                                            ), // <-- Text
-                                                            backgroundColor:
-                                                                Colors.red[900],
-                                                            icon: Icon(
-                                                              // <-- Icon
-                                                              Icons.delete,
-                                                              size: 24.0,
-                                                            ),
-                                                            onPressed: () => {
-                                                              showConfirmationDialog(
-                                                                  context)
-                                                            },
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-
-
-
-
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.only(bottom: 7),
+                          height: 40,
+                          width: 100,
+                          child: FloatingActionButton.extended(
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(30), // <-- Radius
+                              side: BorderSide(
+                                width: 1,
+                                color: Color.fromARGB(255, 169, 43, 34),
+                              ),
+                            ),
+                            splashColor: Colors.red[900],
+                            elevation: 0,
+                            foregroundColor: Color.fromARGB(255, 255, 255, 255),
+                            label: Text(
+                              'Delete',
+                            ), // <-- Text
+                            backgroundColor: Colors.red[900],
+                            icon: Icon(
+                              // <-- Icon
+                              Icons.delete,
+                              size: 24.0,
+                            ),
+                            onPressed: () => {showConfirmationDialog(context)},
+                          ),
+                        ),
+                      ],
+                    ),
 
                     SizedBox(
                       height: 20,
@@ -1272,14 +1223,12 @@ class _UploadGPGState extends State<UploadGPG> {
             )),
       );
     } else {
-      return  Scaffold(
+      return Scaffold(
           backgroundColor: Colors.white,
           body: Center(
               child: CircularProgressIndicator(
-                  color: Mycolors.mainShadedColorBlue))
-                  
-                  );
-      }
+                  color: Mycolors.mainShadedColorBlue)));
+    }
   } //end build
 
   openFile(PlatformFile file) {
@@ -1296,7 +1245,7 @@ class _UploadGPGState extends State<UploadGPG> {
         Navigator.push(
           context,
           MaterialPageRoute(
-             builder: (context) =>  UploadGPG(),
+            builder: (context) => UploadGPG(),
           ),
         );
       },
@@ -1304,7 +1253,6 @@ class _UploadGPGState extends State<UploadGPG> {
   }
 
   showConfirmationDialog(BuildContext context) async {
-
     Widget dontDeleteAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontSize: 16),
@@ -1335,8 +1283,7 @@ class _UploadGPGState extends State<UploadGPG> {
       ),
       child: Text("Delete"),
       onPressed: () {
-          DeleteGP();
-          
+        DeleteGP();
       },
     );
     AlertDialog alert = AlertDialog(
@@ -1345,8 +1292,8 @@ class _UploadGPGState extends State<UploadGPG> {
         child: Form(
           key: formkey,
           child: Column(children: [
-            Text("Deleting your GP will remove it from the GP library.\n Are you sure you want to delete it?\n"),
-            
+            Text(
+                "Deleting your GP will remove it from the GP library.\n Are you sure you want to delete it?\n"),
           ]),
         ),
       ),
@@ -1364,33 +1311,19 @@ class _UploadGPGState extends State<UploadGPG> {
     );
   } //END FUNCTION
 
- DeleteGP() async {
-  await FirebaseFirestore.instance
-            .collection("GPlibrary")
-            .doc(id)
-            .delete();
+  DeleteGP() async {
+    await FirebaseFirestore.instance.collection("GPlibrary").doc(id).delete();
 
-    FirebaseFirestore.instance
-        .collection("studentgroup")
-        .doc(groupid)
-        .update({
+    FirebaseFirestore.instance.collection("studentgroup").doc(groupid).update({
       'uploadgp': false,
     });
 
-
-
-
- Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => UploadGPG() ,
-          ),
-        );
-showInSnackBar(context, "Your project has been successfully deleted");
-   
-
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => UploadGPG(),
+      ),
+    );
+    showInSnackBar(context, "Your project has been successfully deleted");
   } //end delete function
-
-
-
 }
