@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myapp/domain/extension.dart';
 import 'package:myapp/model/GPlist.dart';
 
 import 'package:myapp/style/Mycolors.dart';
@@ -92,6 +93,8 @@ class _viewGPlibraryState extends State<viewGPlibrary> {
       return semester;
     }).toList();
 
+    //to sort the semesters from old to new
+    semesterList.sortBySemesterAndYear();
     //add all semesters option to dropdown
     semesterList.insert(
         0, <String, dynamic>{"semestername": "All Semesters", "id": "0"});
