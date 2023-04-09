@@ -363,7 +363,6 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
         ),
         backgroundColor: Mycolors.BackgroundColor,
         body: SingleChildScrollView(
-       
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Form(
@@ -1534,43 +1533,71 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
         .doc(docsforsemestername)
         .get();
     int index = 0;
-    List faculty = snap.data()!["facultymembers"] as List;
-    print(docsforsemestername);
+    if (snap.data()!.containsKey('facultymembers') == true) {
+      List faculty = snap.data()!["facultymembers"] as List;
+      // print(docsforsemestername);
 
-    faculty.forEach(
-      (element) async {
-        print("hiiiiiiiiiiiiiiiiiiiiiiiiiii");
-        print(ref);
-        print(element["faculty"]);
-        if (element["faculty"] == ref) {
-          // flag = false;
-          print("yeeeeeeeeeeeeeesssssssssssssssssssssssss");
-          element["specialty"] = spe;
-          await FirebaseFirestore.instance
-              .collection('semester')
-              .doc(docsforsemestername)
-              .update({
-            "facultymembers": faculty,
-          });
-        }
-        index++;
-        if (element["faculty"] != ref && index == faculty.length) {
-          print("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+      faculty.forEach(
+        (element) async {
+          print("hiiiiiiiiiiiiiiiiiiiiiiiiiii");
+          print(ref);
+          print(element["faculty"]);
+          if (element["faculty"] == ref) {
+            // flag = false;
+            print("yeeeeeeeeeeeeeesssssssssssssssssssssssss");
+            element["specialty"] = spe;
+            await FirebaseFirestore.instance
+                .collection('semester')
+                .doc(docsforsemestername)
+                .update({
+              "facultymembers": faculty,
+            });
+          }
+          index++;
+          if (element["faculty"] != ref && index == faculty.length) {
+            print("kkkkkkkkkkkkkkkkkkkkkkkkkWHY??????");
 
-          await FirebaseFirestore.instance
-              .collection('semester')
-              .doc(docsforsemestername)
-              .update({
-            "facultymembers": FieldValue.arrayUnion([
-              {
-                'faculty': ref,
-                'specialty': spe,
-              }
-            ]),
-          });
-        }
-      },
-    );
+            await FirebaseFirestore.instance
+                .collection('semester')
+                .doc(docsforsemestername)
+                .update({
+              "facultymembers": FieldValue.arrayUnion([
+                {
+                  'faculty': ref,
+                  'specialty': spe,
+                }
+              ]),
+            });
+          }
+
+          // if (snap.data()!.containsKey('facultymembers') == false) {
+          //   await FirebaseFirestore.instance
+          //       .collection('semester')
+          //       .doc(docsforsemestername)
+          //       .update({
+          //     "facultymembers": FieldValue.arrayUnion([
+          //       {
+          //         'faculty': ref,
+          //         'specialty': spe,
+          //       }
+          //     ]),
+          //   });
+          // }
+        },
+      );
+    } else {
+      await FirebaseFirestore.instance
+          .collection('semester')
+          .doc(docsforsemestername)
+          .update({
+        "facultymembers": FieldValue.arrayUnion([
+          {
+            'faculty': ref,
+            'specialty': spe,
+          }
+        ]),
+      });
+    }
 
     print(ref);
     print(spe);
@@ -1646,7 +1673,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
           } on FirebaseAuthException catch (error) {
             showInSnackBar(context, "Something wronge", onError: true);
           }
-          Navigator.pushNamed(context, 'facultyviewprofile');
+          Navigator.pushNamed(context, 'facultyviewprofilfe');
         }
       },
     );

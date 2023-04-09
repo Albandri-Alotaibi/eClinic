@@ -3,6 +3,7 @@ import 'package:myapp/app/constants.dart';
 import 'package:myapp/bloc/select_group/bloc.dart';
 import 'package:myapp/domain/extension.dart';
 import 'package:myapp/domain/model.dart';
+import 'package:myapp/graduatehome.dart';
 import 'package:myapp/graduateverfication.dart';
 import 'package:myapp/screeens/resources/snackbar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -95,7 +96,7 @@ class _GroupSelectionState extends State<GroupSelection> {
         body: Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),
           child: BlocConsumer<BlocGroupSelect, StateBlocGroupSelect>(
-              listener: (context, state) {
+              listener: (context, state) async {
             if (state is InitStateBlocGroupSelectError) {
               showInSnackBar(context, state.error, onError: true);
             }
@@ -105,13 +106,16 @@ class _GroupSelectionState extends State<GroupSelection> {
               if (TypeUser.type == 'student') {
                 TypeUser.type = 'student';
                 StorageManager.saveData('TypeUser', 'student');
+
                 Navigator.pushNamedAndRemoveUntil(
                     context, 'studentverfication', (route) => false);
               }
+
               if (TypeUser.type == 'graduate') {
                 TypeUser.type = 'graduate';
                 // save type user
                 StorageManager.saveData('TypeUser', 'graduate');
+                // await Future.delayed(Duration(seconds: 1), () {});
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -127,52 +131,60 @@ class _GroupSelectionState extends State<GroupSelection> {
                   .serachGroup(_inputAddNameGroup.value.text);
             }
           }, builder: (context, snapshot) {
-            return Column(
-              children: [
-                _space,
-                TextFormField(
-                  controller: _inputNameGroup,
-                  autofocus: false,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    label: const Text(' Find your group'),
-                    suffixIcon: const Icon(Icons.search),
-                    filled: true,
-                    fillColor: Colors.black.withOpacity(0.01),
-                    //border: InputBorder.none,
+            // return Column(
+            return BlocGroupSelect.get(context).loading
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Column(
+                    children: [
+                      _space,
+                      TextFormField(
+                        controller: _inputNameGroup,
+                        autofocus: false,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          label: const Text(' Find your group'),
+                          suffixIcon: const Icon(Icons.search),
+                          filled: true,
+                          fillColor: Colors.black.withOpacity(0.01),
+                          //border: InputBorder.none,
 
-                    contentPadding: const EdgeInsets.only(
-                        left: 14.0, bottom: 10.0, top: 10.0, right: 14.0),
-                    //hintStyle:    TextStyle(color: Colors.grey.withOpacity(.5)) ,
-                    labelStyle: const TextStyle(
-                      color: Colors.black,
-                    ),
-                    errorStyle: const TextStyle(color: Colors.red),
-                    // enable border stayle
+                          contentPadding: const EdgeInsets.only(
+                              left: 14.0, bottom: 10.0, top: 10.0, right: 14.0),
+                          //hintStyle:    TextStyle(color: Colors.grey.withOpacity(.5)) ,
+                          labelStyle: const TextStyle(
+                            color: Colors.black,
+                          ),
+                          errorStyle: const TextStyle(color: Colors.red),
+                          // enable border stayle
 
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(13),
-                      borderSide: BorderSide(
-                          width: 5, color: Colors.black.withOpacity(.5)),
-                    ),
-                  ),
-                ),
-                //_space,
-                const SizedBox(
-                  height: 5,
-                ),
-                if (BlocGroupSelect.get(context).modelGroupSelected != null)
-                  _buildItem(context,
-                      BlocGroupSelect.get(context).modelGroupSelected!),
-                const Divider(),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(13),
+                            borderSide: BorderSide(
+                                width: 5, color: Colors.black.withOpacity(.5)),
+                          ),
+                        ),
+                      ),
+                      //_space,
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      if (BlocGroupSelect.get(context).modelGroupSelected !=
+                          null)
+                        _buildItem(context,
+                            BlocGroupSelect.get(context).modelGroupSelected!),
+                      const Divider(),
 
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: BlocGroupSelect.get(context).loading
-                        ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
-                        : Column(
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child:
+                              // BlocGroupSelect.get(context).loading
+                              //     ? const Center(
+                              //         child: CircularProgressIndicator(),
+                              //       )
+                              // :
+                              Column(
                             children: [
                               Column(
                                 children: BlocGroupSelect.get(context)
@@ -563,41 +575,42 @@ class _GroupSelectionState extends State<GroupSelection> {
                                 ),
                             ],
                           ),
-                  ),
-                ),
-                _space,
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    textStyle:
-                        const TextStyle(fontFamily: 'main', fontSize: 16),
-                    backgroundColor: Mycolors.mainShadedColorBlue,
-                    elevation: 0,
-                    minimumSize: const Size(150, 50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(17), // <-- Radius
-                    ),
-                  ),
-                  onPressed: () async {
-                    if (BlocGroupSelect.get(context).modelGroupSelected !=
-                        null) {
-                      ModelSignUp modelSignUp = ModelSignUp(
-                          modelGroup:
-                              BlocGroupSelect.get(context).modelGroupSelected!,
-                          modelStudent: widget.generalInfo,
-                          password: widget.generalInfo.password!,
-                          email: widget.generalInfo.email);
+                        ),
+                      ),
+                      _space,
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          textStyle:
+                              const TextStyle(fontFamily: 'main', fontSize: 16),
+                          backgroundColor: Mycolors.mainShadedColorBlue,
+                          elevation: 0,
+                          minimumSize: const Size(150, 50),
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(17), // <-- Radius
+                          ),
+                        ),
+                        onPressed: () async {
+                          if (BlocGroupSelect.get(context).modelGroupSelected !=
+                              null) {
+                            ModelSignUp modelSignUp = ModelSignUp(
+                                modelGroup: BlocGroupSelect.get(context)
+                                    .modelGroupSelected!,
+                                modelStudent: widget.generalInfo,
+                                password: widget.generalInfo.password!,
+                                email: widget.generalInfo.email);
 
-                      BlocGroupSelect.get(context).signUp(modelSignUp);
-                    } else {
-                      showInSnackBar(context, 'Please select a group',
-                          onError: true);
-                    }
-                  },
-                  child: const Text('Sign up'),
-                ),
-                _space,
-              ],
-            );
+                            BlocGroupSelect.get(context).signUp(modelSignUp);
+                          } else {
+                            showInSnackBar(context, 'Please select a group',
+                                onError: true);
+                          }
+                        },
+                        child: const Text('Sign up'),
+                      ),
+                      _space,
+                    ],
+                  );
           }),
         ),
       ),

@@ -22,23 +22,21 @@ class graduateverfication extends StatefulWidget {
 }
 
 class _graduateverficationState extends State<graduateverfication> {
+  bool ifnull = true;
   final FirebaseAuth auth = FirebaseAuth.instance;
   String? email = '';
   String? userid = '';
   User? user;
-
   Timer timer = Timer.periodic(Duration(seconds: 3), (timer) {});
   @override
   void initState() {
     final User? user = auth.currentUser;
+
     userid = user!.uid;
     email = user.email!;
     user.sendEmailVerification();
-    if (mounted) {
-      Timer timer = Timer.periodic(Duration(seconds: 1), (timer) {});
-    }
+    if (mounted) Timer timer = Timer.periodic(Duration(seconds: 1), (timer) {});
     checkemailverfication();
-
     super.initState();
   }
 
@@ -47,7 +45,25 @@ class _graduateverficationState extends State<graduateverfication> {
     super.dispose();
   }
 
-  int _selectedIndex = 1;
+  // checknull() async{
+  //   FirebaseFirestore.instance.collection("graduate").
+  //    userid = user!.uid;
+  //   email = user?.email;
+  //   user?.sendEmailVerification();
+  //   // if (mounted) Timer timer = Timer.periodic(Duration(seconds: 1), (timer) {});
+  //   checkemailverfication();
+  //   // StreamBuilder<User?>(
+  //   //     stream: FirebaseAuth.instance.authStateChanges(),
+  //   //     builder: ((context, snapshot) {
+  //   //       if (snapshot.hasData) {
+  //   //         return ifnull = false;
+  //   //       } else {
+  //   //         return CircularProgressIndicator();
+  //   //       }
+  //   //     }));
+
+  // }
+
   Future<void> checkemailverfication() async {
     user = auth.currentUser;
     await user!.reload();

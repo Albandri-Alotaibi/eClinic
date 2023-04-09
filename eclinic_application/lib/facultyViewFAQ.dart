@@ -37,6 +37,7 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
   Map<String, dynamic>? semester;
   Map<String, dynamic>? category;
   Map<String, dynamic>? createdby;
+  Map<String, dynamic>? lastmodified;
 
   @override
   void initState() {
@@ -62,6 +63,17 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
 
     // createdby =
     //     await widget.commonIssue['createdby'].get() as Map<String, dynamic>;
+    DocumentSnapshot CreatedbyData =
+        await widget.commonIssue['createdby'].get();
+    if (CreatedbyData.exists) {
+      createdby = CreatedbyData.data() as Map<String, dynamic>;
+    }
+
+    DocumentSnapshot lastmodifiedData =
+        await widget.commonIssue['lastmodified'].get();
+    if (lastmodifiedData.exists) {
+      lastmodified = lastmodifiedData.data() as Map<String, dynamic>;
+    }
 
     setState(() {
       loading = false;
@@ -386,7 +398,7 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "  Created by: ${widget.commonIssue['createdby'] ?? ""}",
+                            "  Created by: ${createdby?['firstname'] ?? ""} ${createdby?['lastname'] ?? ""} ",
                             style: TextStyle(
                                 // letterSpacing: 0.1,
                                 fontSize: 14,
@@ -394,18 +406,18 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                                 fontWeight: FontWeight.w400),
                           ),
                         ),
-                        if (widget.commonIssue['lastmodified'] != null)
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "  Last modified by: ${widget.commonIssue['lastmodified'] ?? ""}",
-                              style: TextStyle(
-                                  // letterSpacing: 0.1,
-                                  fontSize: 14,
-                                  color: Color.fromRGBO(113, 114, 116, 1),
-                                  fontWeight: FontWeight.w400),
-                            ),
+                        // if (lastmodified != null)
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "  Last modified by: ${lastmodified?['firstname'] ?? ""} ${lastmodified?['lastname'] ?? ""} ",
+                            style: TextStyle(
+                                // letterSpacing: 0.1,
+                                fontSize: 14,
+                                color: Color.fromRGBO(113, 114, 116, 1),
+                                fontWeight: FontWeight.w400),
                           ),
+                        ),
 
                         // Container(
                         //   margin: const EdgeInsets.only(top: 16),

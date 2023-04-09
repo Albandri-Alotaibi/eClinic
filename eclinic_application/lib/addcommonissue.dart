@@ -47,6 +47,7 @@ class _addcommonissueState extends State<addcommonissue> {
   var fname;
   var lname;
   var fullname;
+  var facultyRef;
   List links = [];
   List linkname = [];
   // List file = [];
@@ -104,6 +105,7 @@ class _addcommonissueState extends State<addcommonissue> {
         .collection('faculty')
         .doc(userid)
         .get();
+    facultyRef = FirebaseFirestore.instance.collection("faculty").doc(userid);
     fname = snap['firstname'];
     lname = snap['lastname'];
     print("ggggggggggggggggggggggggggggggggggggggg");
@@ -1115,7 +1117,7 @@ class _addcommonissueState extends State<addcommonissue> {
             "links": links,
             "linkname": linkname,
             "filesurl": fileurltoDB,
-            'createdby': fullname,
+            'createdby': facultyRef,
             'lastmodified': null,
           });
           // Navigator.pushNamed(context, 'facultyListFAQ');
