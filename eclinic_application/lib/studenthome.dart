@@ -62,20 +62,22 @@ class _sState extends State<studenthome> {
   }
 
   getusername() async {
-    while (userid != '') {
-      final snap = await FirebaseFirestore.instance
-          .collection('student')
-          .doc(userid)
-          .get();
-      setState(() {
-        fname = snap['firstname'];
-        lname = snap['lastname'];
-      });
-      // setState(() {
-      //   havename = true;
-      // });
-      //break;
-    }
+    // while (userid != '') {
+    print("Uid");
+    print(userid);
+    final snap = await FirebaseFirestore.instance
+        .collection('student')
+        .doc(userid)
+        .get();
+    setState(() {
+      fname = snap['firstname'];
+      lname = snap['lastname'];
+    });
+    // setState(() {
+    //   havename = true;
+    // });
+    //break;
+    //}
   }
 
   final double profileheight = 144;

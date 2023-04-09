@@ -95,6 +95,8 @@ class _homeState extends State<home> {
                   ),
                 ),
                 onPressed: () {
+                  TypeUser.type = 'faculty';
+                  StorageManager.saveData('TypeUser', 'faculty');
                   Navigator.pushNamed(context, 'login');
                 },
                 child: Text('Faculty Member'),

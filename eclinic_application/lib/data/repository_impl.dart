@@ -206,7 +206,7 @@ class RepositoryImpl extends Repository {
       }
       if (modelForSaveChangeProfile.modelGroup == null &&
           modelForSaveChangeProfile.modelStudent == null) {
-        return Left(Failure('No thing to change !! '));
+        return Left(Failure('No changes have been made'));
       }
       return const Right('Saved successfully');
     } catch (e) {

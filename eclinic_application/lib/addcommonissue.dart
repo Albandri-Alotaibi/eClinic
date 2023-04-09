@@ -1099,7 +1099,7 @@ class _addcommonissueState extends State<addcommonissue> {
       child: Text("Confirm"),
       onPressed: () async {
         showInSnackBar(context,
-            "the frequently asked question has been added successfully");
+            "The frequently asked question has been added successfully");
         if (formkey.currentState!.validate()) {
           problem = _problemController.text;
           solution = _solutioncontroll.text;

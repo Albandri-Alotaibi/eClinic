@@ -966,7 +966,7 @@ class _AddHourState extends State<addHoursFaculty> {
                   elevation: 0,
                   surfaceTintColor: Color.fromARGB(0, 221, 221, 221),
                   backgroundColor: Color.fromARGB(0, 221, 221, 221),
-                  foregroundColor: Mycolors.mainColorGreen),
+                  foregroundColor: Colors.green),
               child: Text("+ Add"),
               onPressed: () => TimeRangePicker.show(
                 context: context,

@@ -331,7 +331,7 @@ class _studentresetpasswordState extends State<studentresetpassword> {
                                       if (e.message ==
                                           "The email address is badly formatted.") {
                                         showInSnackBar(context,
-                                            "please check the email format",
+                                            "Please check the email format",
                                             onError: true);
                                       }
                                       if (e.message ==

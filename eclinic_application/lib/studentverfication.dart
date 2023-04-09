@@ -27,12 +27,16 @@ class _studentverficationState extends State<studentverfication> {
   String? userid = '';
   User? user;
   Timer timer = Timer.periodic(Duration(seconds: 3), (timer) {});
+
   @override
   void initState() {
     final User? user = auth.currentUser;
+    //if (user != null) {
     userid = user!.uid;
     email = user.email!;
     user.sendEmailVerification();
+    // }
+
     if (mounted) Timer timer = Timer.periodic(Duration(seconds: 1), (timer) {});
     checkemailverfication();
     super.initState();

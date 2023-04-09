@@ -207,7 +207,7 @@ class _studentloginState extends State<studentlogin> {
                                     if (!(_emailController.text
                                         .contains("student"))) {
                                       showInSnackBar(
-                                          context, "invalid email or password",
+                                          context, "Invalid email or password",
                                           onError: true);
                                     } else {
                                       await FirebaseAuth.instance
@@ -246,7 +246,7 @@ class _studentloginState extends State<studentlogin> {
                                       error.message ==
                                           "There is no user record corresponding to this identifier. The user may have been deleted.") {
                                     showInSnackBar(
-                                        context, "invalid email or password",
+                                        context, "Invalid email or password",
                                         onError: true);
                                   }
                                 }
