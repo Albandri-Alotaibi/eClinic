@@ -175,6 +175,7 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                         //------------------------- dropdowns [speciality/semester]
                         Column(children: [
                           Row(children: [
+                             Expanded(child:
                             Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
@@ -186,7 +187,7 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                                 margin: const EdgeInsets.only(bottom: 8),
                                 child: DropdownButton<Map<String, dynamic>?>(
                                     // icon: const Icon(Icons.face),
-
+  isExpanded: true,
                                     underline: const SizedBox(),
                                     disabledHint: Row(children: const [
                                       Text("Wait ... "),
@@ -225,8 +226,9 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                                           initCommonIssues();
                                         });
                                       }
-                                    })),
-                            const Spacer(),
+                                    }))),
+                            const SizedBox(width: 20,),
+                            Expanded(child:
                             Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
@@ -238,6 +240,7 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                                 margin: const EdgeInsets.only(bottom: 8),
                                 child: DropdownButton<Map<String, dynamic>?>(
                                     // icon: const Icon(Icons.pages),
+                                    isExpanded: true,
                                     disabledHint: Row(children: const [
                                       Text("Wait ... "),
                                       SizedBox(
@@ -273,7 +276,7 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                                           initCommonIssues();
                                         });
                                       }
-                                    })),
+                                    }))),
                           ]),
                           // Row(children: [
                           //   Expanded(
@@ -291,7 +294,7 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                                 height: 800,
                                 //if no semester/speciality is selected, show message, if no results show message
                                 child: Padding(
-                                    padding: const EdgeInsets.all(15),
+                                    padding: const EdgeInsets.all(0),
                                     child: Text(
                                         //if common issues list is loading from database
                                         secondLoading

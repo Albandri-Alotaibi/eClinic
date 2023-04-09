@@ -2,12 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:convert';
-import 'package:myapp/style/Mycolors.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class AppointmentConfirmationScreen extends StatefulWidget {
@@ -31,7 +28,7 @@ class AppointmentConfirmationScreenState
   late List students; //<----- DELETE ???
 
   late ThemeData themeData;
-  var formattedDate = DateFormat('dd-MM-yyyy hh:mm a');
+  var formattedDate = DateFormat('dd-MM-yyyy');
   var formattedDateTime = DateFormat('hh:mm a');
   var currentProgressStatus = "";
 
@@ -278,7 +275,8 @@ class AppointmentConfirmationScreenState
                             ),
                             ListTile(
                               title: Text(
-                                "Time: ${formattedDate.format(widget.appointment['starttime']!.toDate())}-${formattedDateTime.format(widget.appointment['endtime']!.toDate())}",
+                                "Date: ${formattedDate.format(widget.appointment['starttime']!.toDate())}"
+                                "\nTime: ${formattedDateTime.format(widget.appointment['starttime']!.toDate())}-${formattedDateTime.format(widget.appointment['endtime']!.toDate())}",
                                 style: const TextStyle(
                                     fontSize: 15,
                                     color: Color.fromRGBO(21, 70, 160, 1),
@@ -377,9 +375,10 @@ class AppointmentConfirmationScreenState
           child: ElevatedButton.icon(
               style: ButtonStyle(
                   backgroundColor: MaterialStateColor.resolveWith(
-                      (states) => Colors.transparent),
+                      (states) => const Color.fromRGBO(21, 70, 160, 1)),
                   shadowColor: MaterialStateColor.resolveWith(
                       (states) => Colors.transparent),
+                  elevation: MaterialStateProperty.all(0),
                   padding: MaterialStateProperty.all(
                       const EdgeInsets.symmetric(vertical: 16))),
               onPressed: () {

@@ -171,7 +171,6 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                           thickness: 1,
                         ),
 
-
                         Padding(
                             padding: const EdgeInsets.symmetric(vertical: 20),
                             child: Row(
@@ -182,20 +181,32 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                     color: Colors.red,
                                   ),
                                   Expanded(
-                                      child: Text(
-                                    "  Question:\n\n${widget.commonIssue['problem']}",
-                                    // "  Problem:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                                    style: const TextStyle(
-                                      // letterSpacing: 1.5,
-                                      fontSize: 15,
-                                      fontFamily: "main",
-                                      color: Color.fromRGBO(21, 70, 160, 1),
-                                    ),
+                                      child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                        const Text("Question: ",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Color.fromRGBO(
+                                                  21, 70, 160, 1),
+                                            )),
+                                        Text(
+                                          "\n${widget.commonIssue['problem']}",
+                                          // "  Problem:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                                          style: const TextStyle(
+                                            // letterSpacing: 1.5,
+                                            fontSize: 15,
+                                            fontFamily: "main",
+                                            color:
+                                                Color.fromRGBO(21, 70, 160, 1),
+                                          ),
 
-                                    // decoration: const InputDecoration(
-                                    //   prefixIcon: Icon(Icons.collections),
-                                    // ),
-                                  ))
+                                          // decoration: const InputDecoration(
+                                          //   prefixIcon: Icon(Icons.collections),
+                                          // ),
+                                        )
+                                      ]))
                                 ])),
                         const Divider(
                           color: Colors.grey,
@@ -211,19 +222,30 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                   color: Colors.green,
                                 ),
                                 Expanded(
-                                    child: Text(
-                                  "  Answer:\n\n${widget.commonIssue['solution']})",
-                                  // "  Solution:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                                  style: const TextStyle(
-                                    // letterSpacing: 2,
-                                    fontSize: 15,
-                                    fontFamily: "main",
-                                    color: Color.fromRGBO(21, 70, 160, 1),
-                                  ),
-                                ))
+                                    child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                      const Text("Answer: ",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color:
+                                                Color.fromRGBO(21, 70, 160, 1),
+                                          )),
+                                      Text(
+                                        "\n${widget.commonIssue['solution']})",
+                                        // "  Solution:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                                        style: const TextStyle(
+                                          // letterSpacing: 2,
+                                          fontSize: 15,
+                                          fontFamily: "main",
+                                          color: Color.fromRGBO(21, 70, 160, 1),
+                                        ),
+                                      )
+                                    ]))
                               ],
                             )),
-                         if (widget.commonIssue['filesurl'] != null &&
+                        if (widget.commonIssue['filesurl'] != null &&
                             widget.commonIssue['filesurl'] is List &&
                             widget.commonIssue['filesurl'].isNotEmpty)
                           const Divider(
@@ -317,8 +339,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                       mode: LaunchMode.externalApplication)),
                           ]),
 
-
-                                         const Divider(
+                        const Divider(
                           color: Colors.grey,
                           thickness: 1,
                         ),
@@ -330,26 +351,21 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                 letterSpacing: 0.1,
                                 fontSize: 14,
                                 fontFamily: "main",
-
                                 color: Colors.black54,
                                 fontWeight: FontWeight.w500),
                           ),
-                          if(widget.commonIssue['lastmodified'] != null &&
+                          if (widget.commonIssue['lastmodified'] != null &&
                               widget.commonIssue['lastmodified'] != "")
-                          Text(
-                            "    Last modified by: ${widget.commonIssue['lastmodified'] ?? ""}",
-                            style: const TextStyle(
-                                letterSpacing: 0.1,
-                                fontSize: 14,
-                                fontFamily: "main",
-
-                                color: Colors.black54,
-                                fontWeight: FontWeight.w500),
-                          ),
+                            Text(
+                              "    Last modified by: ${widget.commonIssue['lastmodified'] ?? ""}",
+                              style: const TextStyle(
+                                  letterSpacing: 0.1,
+                                  fontSize: 14,
+                                  fontFamily: "main",
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.w500),
+                            ),
                         ]),
-
-
-
 
                         // Container(
                         //   margin: const EdgeInsets.only(top: 16),

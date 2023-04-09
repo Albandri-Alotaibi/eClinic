@@ -312,7 +312,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Dr. $facultyName",
+                                  facultyName,
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 16,

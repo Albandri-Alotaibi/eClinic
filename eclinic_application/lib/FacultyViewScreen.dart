@@ -1,6 +1,5 @@
 import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/services.dart';
 import 'package:myapp/AppointmentConfirmationScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/style/Mycolors.dart';
@@ -28,7 +27,7 @@ class FacultyViewScreenState extends State<FacultyViewScreen> {
   late DateTime kToday;
   late DateTime kFirstDay;
   late DateTime kLastDay;
-  var formattedDate = DateFormat('dd-MM-yyyy hh:mm a');
+  var formattedDate = DateFormat('dd-MM-yyyy');
   var formattedDateTime = DateFormat('hh:mm a');
 
   var loading = false;
@@ -254,7 +253,7 @@ class FacultyViewScreenState extends State<FacultyViewScreen> {
             builder: (context, value, _) {
               return ListView.builder(
                 shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
+                // physics: const NeverScrollableScrollPhysics(),
                 itemCount: value.length,
                 itemBuilder: (context, index) {
                   return Container(
@@ -318,7 +317,10 @@ class FacultyViewScreenState extends State<FacultyViewScreen> {
       var alert = AlertDialog(
         title: const Text("Booking appointment for your group:"),
         content: Text(
-            "Faculty: (${widget.faculty['firstname']} ${widget.faculty['lastname']}). \nTime: ${formattedDate.format(appointment['starttime']?.toDate() ?? DateTime.now())} until ${formattedDateTime.format(appointment['endtime']?.toDate() ?? DateTime.now())}.\nSpeciality: ${widget.speciality['specialityname']} \nMeeting: ${meetingValues(widget.faculty['meetingmethod'])} (${widget.faculty['mettingmethodinfo']}).   \n\nAre you sure?"),
+            "Faculty: (${widget.faculty['firstname']} ${widget.faculty['lastname']}). "
+                "\nDate: ${formattedDate.format(appointment['starttime']?.toDate() ?? DateTime.now())}"
+                "\nTime: ${formattedDateTime.format(appointment['starttime']?.toDate() ?? DateTime.now())} until ${formattedDateTime.format(appointment['endtime']?.toDate() ?? DateTime.now())}."
+                "\nSpeciality: ${widget.speciality['specialityname']} \nMeeting: ${meetingValues(widget.faculty['meetingmethod'])} (${widget.faculty['mettingmethodinfo']}).   \n\nAre you sure?"),
         actions: [
           cancelButton,
           continueButton,
