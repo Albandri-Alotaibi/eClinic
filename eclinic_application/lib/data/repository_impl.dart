@@ -16,7 +16,7 @@ class RepositoryImpl extends Repository {
       Map<String, dynamic> dataStudent = {};
       dataStudent.addAll(modelSignUp.modelStudent.toMap());
       //print(modelSignUp.modelGroup.id!) ;
-      addNewGroup(modelSignUp.modelGroup).then((value) async {
+      await addNewGroup(modelSignUp.modelGroup).then((value) async {
         dataStudent['group'] = FirebaseFirestore.instance
             .collection('studentgroup')
             .doc(modelSignUp.modelGroup.id!);
