@@ -58,19 +58,18 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
       category = categoryData.data() as Map<String, dynamic>;
     }
 
-
     //get issue creator from reference
-    if(widget.commonIssue['createdby'] != null) {
-      DocumentSnapshot creatorData = await widget.commonIssue['createdby']
-          .get();
+    if (widget.commonIssue['createdby'] != null) {
+      DocumentSnapshot creatorData =
+          await widget.commonIssue['createdby'].get();
       if (creatorData.exists) {
         creator = creatorData.data() as Map<String, dynamic>;
       }
     }
 
-    if(widget.commonIssue['lastmodified'] != null) {
-      DocumentSnapshot modifierData = await widget.commonIssue['lastmodified']
-          .get();
+    if (widget.commonIssue['lastmodified'] != null) {
+      DocumentSnapshot modifierData =
+          await widget.commonIssue['lastmodified'].get();
       if (modifierData.exists) {
         modifier = modifierData.data() as Map<String, dynamic>;
       }
@@ -205,7 +204,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                        const Text("Question",
+                                        const Text("Question:",
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Color.fromRGBO(
@@ -246,7 +245,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                      const Text("Answer",
+                                      const Text("Answer:",
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color:
