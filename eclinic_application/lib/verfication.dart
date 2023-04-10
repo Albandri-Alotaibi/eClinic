@@ -42,7 +42,7 @@ class _verficationState extends State<verfication> {
     super.dispose();
   }
 
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
   Future<void> checkemailverfication() async {
     user = auth.currentUser;
     await user!.reload();
