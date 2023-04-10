@@ -104,7 +104,7 @@ class _sState extends State<studenthome> {
     ];
     final List<String> appbar = [
       "Booked Appointments",
-      "Schedule An Appointment",
+      "Book An Appointment",
       "GP Library",
       "FAQ"
     ];
