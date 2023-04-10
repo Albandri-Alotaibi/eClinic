@@ -575,10 +575,10 @@ class _facultyListFAQState extends State<facultyListFAQ> {
                                             ? ''
                                             //if loading is done but dropdowns are null
                                             : (specialityDropdownValue == null
-                                                ? 'Please select speciality to find common issues.'
+                                                ? 'Please select speciality to find FAQ.'
                                                 //if no search clicked then tell user to click search, otherwise if it's clicked, no results are found
                                                 : (searchClicked
-                                                    ? 'There are no common issues available ${specialityDropdownValue?['id'] == '0' && semesterDropdownValue?['id'] == "0" ? 'currently.' : 'with the selected options.'}'
+                                                    ? 'There are no FAQ available ${specialityDropdownValue?['id'] == '0' && semesterDropdownValue?['id'] == "0" ? 'currently.' : '.'}'
                                                     : 'Please click search to continue..')),
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
@@ -587,7 +587,7 @@ class _facultyListFAQState extends State<facultyListFAQ> {
                                             fontSize: 18,
                                             color: Colors.black54))))
                             : ciempty
-                                ? Text("There are no common issues available",
+                                ? Text("There are no FAQ available",
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
                                         fontWeight: FontWeight.w600,

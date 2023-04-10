@@ -63,16 +63,20 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
 
     // createdby =
     //     await widget.commonIssue['createdby'].get() as Map<String, dynamic>;
-    DocumentSnapshot CreatedbyData =
-        await widget.commonIssue['createdby'].get();
-    if (CreatedbyData.exists) {
-      createdby = CreatedbyData.data() as Map<String, dynamic>;
+    if (widget.commonIssue['createdby'] != null) {
+      DocumentSnapshot CreatedbyData =
+          await widget.commonIssue['createdby'].get();
+      if (CreatedbyData.exists) {
+        createdby = CreatedbyData.data() as Map<String, dynamic>;
+      }
     }
 
-    DocumentSnapshot lastmodifiedData =
-        await widget.commonIssue['lastmodified'].get();
-    if (lastmodifiedData.exists) {
-      lastmodified = lastmodifiedData.data() as Map<String, dynamic>;
+    if (widget.commonIssue['lastmodified'] != null) {
+      DocumentSnapshot lastmodifiedData =
+          await widget.commonIssue['lastmodified'].get();
+      if (lastmodifiedData.exists) {
+        lastmodified = lastmodifiedData.data() as Map<String, dynamic>;
+      }
     }
 
     setState(() {
@@ -174,9 +178,10 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                           // ),
                           Text(
                             "  Speciality: ${category?['specialityname']}",
-                            style: TextStyle(
+                            style: const TextStyle(
                                 // letterSpacing: 0.1,
                                 fontSize: 14,
+                                fontFamily: "main",
                                 color: Color.fromRGBO(21, 70, 160, 1),
                                 fontWeight: FontWeight.w500),
                           ),
@@ -199,14 +204,13 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                           //   Icons.timer,
                           //   color: Colors.grey,
                           // ),
-                          Text(
-                            "  Semester: ${semester?['semestername']}",
-                            style: TextStyle(
-                                // letterSpacing: 0.1,
-                                fontSize: 14,
-                                color: Color.fromRGBO(21, 70, 160, 1),
-                                fontWeight: FontWeight.w500),
-                          ),
+                          Text("  Semester: ${semester?['semestername']}",
+                              style: const TextStyle(
+                                  // letterSpacing: 0.1,
+                                  fontSize: 14,
+                                  fontFamily: "main",
+                                  color: Color.fromRGBO(21, 70, 160, 1),
+                                  fontWeight: FontWeight.w500)),
                           // Text(
                           //   "${semester?['semestername']}",
                           //   style: TextStyle(
@@ -233,9 +237,7 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                                   Text(
                                     " Question:",
                                     style: TextStyle(
-                                      // letterSpacing: 2,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.bold,
                                       color: Color.fromRGBO(21, 70, 160, 1),
                                     ),
                                   )
@@ -245,11 +247,11 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                                   child: Text(
                                 "\n${widget.commonIssue['problem']}",
                                 // "  Problem:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   // letterSpacing: 1.5,
                                   fontSize: 15,
-
-                                  color: Mycolors.mainColorBlack,
+                                  fontFamily: "main",
+                                  color: Color.fromRGBO(21, 70, 160, 1),
                                 ),
 
                                 // decoration: const InputDecoration(
@@ -275,9 +277,7 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                                     Text(
                                       " Answer:",
                                       style: TextStyle(
-                                        // letterSpacing: 2,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
+                                        fontWeight: FontWeight.bold,
                                         color: Color.fromRGBO(21, 70, 160, 1),
                                       ),
                                     )
@@ -287,11 +287,11 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                                   child: Text(
                                     "\n${widget.commonIssue['solution']}",
                                     // "  Solution:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                                    style: TextStyle(
-                                      // letterSpacing: 2,
+                                    style: const TextStyle(
+                                      // letterSpacing: 1.5,
                                       fontSize: 15,
-
-                                      color: Mycolors.mainColorBlack,
+                                      fontFamily: "main",
+                                      color: Color.fromRGBO(21, 70, 160, 1),
                                     ),
                                   ),
                                 ),
@@ -398,26 +398,51 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "  Created by: ${createdby?['firstname'] ?? ""} ${createdby?['lastname'] ?? ""} ",
-                            style: TextStyle(
-                                // letterSpacing: 0.1,
+                            " Created by: ${createdby?['firstname'] ?? ""} ${createdby?['lastname'] ?? ""}",
+                            style: const TextStyle(
+                                letterSpacing: 0.1,
                                 fontSize: 14,
-                                color: Color.fromRGBO(113, 114, 116, 1),
-                                fontWeight: FontWeight.w400),
+                                fontFamily: "main",
+                                color: Colors.black54,
+                                fontWeight: FontWeight.w500),
                           ),
                         ),
-                        // if (lastmodified != null)
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "  Last modified by: ${lastmodified?['firstname'] ?? ""} ${lastmodified?['lastname'] ?? ""} ",
-                            style: TextStyle(
-                                // letterSpacing: 0.1,
-                                fontSize: 14,
-                                color: Color.fromRGBO(113, 114, 116, 1),
-                                fontWeight: FontWeight.w400),
+                        if (widget.commonIssue['lastmodified'] != null &&
+                            widget.commonIssue['lastmodified'] != "")
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "  Last modified by: ${lastmodified?['firstname'] ?? ""} ${lastmodified?['lastname'] ?? ""}",
+                              style: const TextStyle(
+                                  letterSpacing: 0.1,
+                                  fontSize: 14,
+                                  fontFamily: "main",
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.w500),
+                            ),
                           ),
-                        ),
+                        // Column(children: [
+                        //   Text(
+                        //     " Created by: ${createdby?['firstname'] ?? ""} ${createdby?['lastname'] ?? ""}",
+                        //     style: const TextStyle(
+                        //         letterSpacing: 0.1,
+                        //         fontSize: 14,
+                        //         fontFamily: "main",
+                        //         color: Colors.black54,
+                        //         fontWeight: FontWeight.w500),
+                        //   ),
+                        //   if (widget.commonIssue['lastmodified'] != null &&
+                        //       widget.commonIssue['lastmodified'] != "")
+                        //     Text(
+                        //       "  Last modified by: ${lastmodified?['firstname'] ?? ""} ${lastmodified?['lastname'] ?? ""}",
+                        //       style: const TextStyle(
+                        //           letterSpacing: 0.1,
+                        //           fontSize: 14,
+                        //           fontFamily: "main",
+                        //           color: Colors.black54,
+                        //           fontWeight: FontWeight.w500),
+                        //     ),
+                        // ]),
 
                         // Container(
                         //   margin: const EdgeInsets.only(top: 16),

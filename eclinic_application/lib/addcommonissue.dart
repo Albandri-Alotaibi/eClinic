@@ -245,7 +245,12 @@ class _addcommonissueState extends State<addcommonissue> {
               iconTheme: IconThemeData(
                 color: Color.fromARGB(255, 12, 12, 12), //change your color here
               ),
-              title: Text(''),
+              title: Text('Add FAQ',
+                  style: TextStyle(
+                      // fontFamily: ,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                      color: Mycolors.mainColorBlack)),
 
               titleTextStyle: TextStyle(
                 // fontFamily: 'main',

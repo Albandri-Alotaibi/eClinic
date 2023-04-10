@@ -22,6 +22,7 @@ class facultysignup extends StatefulWidget {
 
 class _facultysignupState extends State<facultysignup> {
   final formkey = GlobalKey<FormState>();
+  bool _obsecuretext = true;
   List<String> options = [];
   List<String> semester = [];
   List<String> semesteraftersort = [];
@@ -582,16 +583,60 @@ class _facultysignupState extends State<facultysignup> {
                             SizedBox(
                               height: 3,
                             ),
+                            // TextFormField(
+                            //     controller: _passwordController,
+                            //     decoration: InputDecoration(
+                            //         // labelText: 'Password:',
+                            //         hintText: "Enter the password",
+                            //         prefixIcon: Icon(Icons.lock),
+                            //         suffixIcon: GestureDetector(
+                            //           onTap: (() {
+                            //             setState(() {
+                            //               _obsecuretext = !_obsecuretext;
+                            //             });
+                            //           }),
+                            //           child: Icon(_obsecuretext
+                            //               ? Icons.visibility_off
+                            //               : Icons.visibility),
+                            //         ),
+                            //         border: OutlineInputBorder(
+                            //             borderRadius: BorderRadius.circular(13),
+                            //             borderSide: const BorderSide(
+                            //               width: 0,
+                            //             ))),
+                            //     obscureText: _obsecuretext,
+                            //     autovalidateMode:
+                            //         AutovalidateMode.onUserInteraction,
+                            //     validator: (value) {
+                            //       if (value!.isEmpty ||
+                            //           _passwordController.text == "") {
+                            //         return 'Please enter your password ';
+                            //       } else {
+                            //         return null;
+                            //       }
+                            //     }),
                             TextFormField(
                                 controller: _passwordController,
                                 decoration: InputDecoration(
                                     // labelText: ' Password :',
                                     hintText: "Enter the password",
+                                    prefixIcon: Icon(Icons.lock),
+                                    suffixIcon: GestureDetector(
+                                      onTap: (() {
+                                        setState(() {
+                                          _obsecuretext = !_obsecuretext;
+                                        });
+                                      }),
+                                      child: Icon(_obsecuretext
+                                          ? Icons.visibility_off
+                                          : Icons.visibility),
+                                    ),
                                     border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(13),
                                         borderSide: const BorderSide(
                                           width: 0,
                                         ))),
+                                obscureText: _obsecuretext,
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) {

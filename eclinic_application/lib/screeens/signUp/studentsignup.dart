@@ -9,6 +9,8 @@ import 'package:myapp/app/constants.dart';
 import 'package:myapp/bloc/select_group/bloc.dart';
 import 'package:myapp/domain/extension.dart';
 import 'package:myapp/domain/model.dart';
+import 'package:myapp/graduatelogin.dart';
+import 'package:myapp/screeens/resources/snackbar.dart';
 import 'package:myapp/screeens/signUp/screen_shoss_group.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -18,6 +20,8 @@ import 'package:myapp/style/Mycolors.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 
+import '../../app/shardPreferense.dart';
+
 class studentsignup extends StatefulWidget {
   const studentsignup({super.key});
 
@@ -26,6 +30,7 @@ class studentsignup extends StatefulWidget {
 }
 
 class _studentsignupState extends State<studentsignup> {
+  bool _obsecuretext = true;
   List<String> options = [];
   List<String> collage = [];
   List<String> department = [];
@@ -395,7 +400,7 @@ class _studentsignupState extends State<studentsignup> {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  " KSU Email:",
+                                  " Email:",
                                   style: TextStyle(
                                       overflow: TextOverflow.ellipsis,
                                       color: Mycolors.mainColorBlack,
@@ -433,14 +438,14 @@ class _studentsignupState extends State<studentsignup> {
                               validator: (value) {
                                 if (value!.isEmpty ||
                                     _emailController.text == "") {
-                                  return 'Please enter your KSU email ';
+                                  return 'Please enter your email ';
                                 }
                                 if (!(english
                                     .hasMatch(_emailController.text))) {
                                   return "only english is allowed";
                                 }
                                 if (!value.isValidEmail()) {
-                                  return "Check your email";
+                                  return "Check your email format";
                                 }
                               },
                             ),
@@ -464,11 +469,23 @@ class _studentsignupState extends State<studentsignup> {
                                 decoration: InputDecoration(
                                     // labelText: ' Password :',
                                     hintText: "Enter your Password",
+                                    prefixIcon: Icon(Icons.lock),
+                                    suffixIcon: GestureDetector(
+                                      onTap: (() {
+                                        setState(() {
+                                          _obsecuretext = !_obsecuretext;
+                                        });
+                                      }),
+                                      child: Icon(_obsecuretext
+                                          ? Icons.visibility_off
+                                          : Icons.visibility),
+                                    ),
                                     border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(13),
                                         borderSide: const BorderSide(
                                           width: 0,
                                         ))),
+                                obscureText: _obsecuretext,
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) {
@@ -692,7 +709,13 @@ class _studentsignupState extends State<studentsignup> {
 
                                 try {
                                   //todo this change to formkey.currentState!.validate()
-                                  if (formkey.currentState!.validate()) {
+                                  if ((await FirebaseAuth.instance
+                                          .fetchSignInMethodsForEmail(email))
+                                      .isNotEmpty) {
+                                    showInSnackBar(context,
+                                        "The email address is already in use by another user",
+                                        onError: true);
+                                  } else if (formkey.currentState!.validate()) {
                                     //print('data : == ${formkey.currentState!.}') ;
                                     //GPdate = dategp(selctedyear, month);
 
@@ -733,7 +756,6 @@ class _studentsignupState extends State<studentsignup> {
                                           FirebaseAuth.instance;
                                       final User? user = auth.currentUser;
                                       final Uid = user!.uid;
-
                                       await FirebaseFirestore.instance
                                           .collection('student')
                                           .doc(Uid)
@@ -751,22 +773,10 @@ class _studentsignupState extends State<studentsignup> {
                                             socialmediaaccount,
                                       });
                                     });
-
                                      */
                                   }
-                                } on FirebaseAuthException catch (error) {
-                                  print(error.message);
-                                  if (error.message ==
-                                      "The email address is badly formatted.") {
-                                    showerror(
-                                        context, "check the email format");
-                                  }
-
-                                  if (error.message ==
-                                      "The email address is already in use by another account.") {
-                                    showerror(context,
-                                        "The email address is already in use by another account");
-                                  }
+                                } catch (error) {
+                                  //without message
                                 }
                               },
                               child: const Text('Next'),
@@ -780,21 +790,43 @@ class _studentsignupState extends State<studentsignup> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  // Text(
-                                  //   "Already have an account ? ",
-                                  //   style: TextStyle(
-                                  //       fontFamily: 'main', fontSize: 14),
-                                  // ),
-                                  // GestureDetector(
-                                  //     onTap: () {
-                                  //       Navigator.pushNamed(
-                                  //           context, "studentlogin");
-                                  //     },
-                                  //     child: Text(
-                                  //       " Log in",
-                                  //       style: TextStyle(
-                                  //           fontFamily: 'bold', fontSize: 14),
-                                  //     )),
+                                  Text(
+                                    "Already have an account ? ",
+                                    style: TextStyle(
+                                        fontFamily: 'main', fontSize: 14),
+                                  ),
+                                  GestureDetector(
+                                      onTap: () {
+                                        if (TypeUser.type == 'student') {
+                                          TypeUser.type = 'student';
+                                          StorageManager.saveData(
+                                              'TypeUser', 'student');
+
+                                          Navigator.pushNamedAndRemoveUntil(
+                                              context,
+                                              'studentlogin',
+                                              (route) => false);
+                                        }
+                                        if (TypeUser.type == 'graduate') {
+                                          TypeUser.type = 'graduate';
+                                          // save type user
+                                          StorageManager.saveData(
+                                              'TypeUser', 'graduate');
+
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  graduatelogin(),
+                                            ),
+                                          );
+                                        }
+                                      },
+                                      child: Text(
+                                        " Log in",
+                                        style: TextStyle(
+                                            fontFamily: 'bold', fontSize: 14),
+                                      )),
                                 ],
                               ),
                             )

@@ -83,6 +83,11 @@ class _studentverficationState extends State<studentverfication> {
             fontSize: 24,
             color: Mycolors.mainColorBlack,
           ),
+          leading: BackButton(
+            onPressed: () {
+              Navigator.pushNamed(context, 'studentlogin');
+            },
+          ),
         ),
         backgroundColor: Mycolors.BackgroundColor,
         body: SingleChildScrollView(

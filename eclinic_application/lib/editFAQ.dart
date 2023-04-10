@@ -81,6 +81,7 @@ class _editFAQState extends State<editFAQ> {
   var fname;
   var lname;
   var fullname;
+  var facultyRef;
 
   getcommonissue() async {
     snap = await FirebaseFirestore.instance
@@ -204,6 +205,7 @@ class _editFAQState extends State<editFAQ> {
         .collection('faculty')
         .doc(userid)
         .get();
+    facultyRef = FirebaseFirestore.instance.collection("faculty").doc(userid);
     fname = snap['firstname'];
     lname = snap['lastname'];
     print("ggggggggggggggggggggggggggggggggggggggg");
@@ -1284,7 +1286,7 @@ class _editFAQState extends State<editFAQ> {
               'linkname': linkname,
               'semester': semesterref,
               'filesurl': filsbefordownload,
-              'lastmodified': fullname,
+              'lastmodified': facultyRef,
             });
 
             // Fluttertoast.showToast(
