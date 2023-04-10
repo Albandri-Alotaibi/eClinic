@@ -33,6 +33,8 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
 
   Map<String, dynamic>? semester;
   Map<String, dynamic>? category;
+  Map<String, dynamic>? creator;
+  Map<String, dynamic>? modifier;
 
   @override
   void initState() {
@@ -54,6 +56,24 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
         await widget.commonIssue['issuecategory'].get();
     if (categoryData.exists) {
       category = categoryData.data() as Map<String, dynamic>;
+    }
+
+
+    //get issue creator from reference
+    if(widget.commonIssue['createdby'] != null) {
+      DocumentSnapshot creatorData = await widget.commonIssue['createdby']
+          .get();
+      if (creatorData.exists) {
+        creator = creatorData.data() as Map<String, dynamic>;
+      }
+    }
+
+    if(widget.commonIssue['lastmodified'] != null) {
+      DocumentSnapshot modifierData = await widget.commonIssue['lastmodified']
+          .get();
+      if (modifierData.exists) {
+        modifier = modifierData.data() as Map<String, dynamic>;
+      }
     }
 
     setState(() {
@@ -185,7 +205,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                        const Text("Question: ",
+                                        const Text("Question",
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Color.fromRGBO(
@@ -226,7 +246,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                      const Text("Answer: ",
+                                      const Text("Answer",
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color:
@@ -346,7 +366,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
 
                         Column(children: [
                           Text(
-                            "  Created by: ${widget.commonIssue['createdby'] ?? ""}",
+                            "  Created by: ${creator?['firstname'] ?? ""} ${creator?['lastname'] ?? ""}",
                             style: const TextStyle(
                                 letterSpacing: 0.1,
                                 fontSize: 14,
@@ -357,7 +377,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                           if (widget.commonIssue['lastmodified'] != null &&
                               widget.commonIssue['lastmodified'] != "")
                             Text(
-                              "    Last modified by: ${widget.commonIssue['lastmodified'] ?? ""}",
+                              "    Last modified by: ${modifier?['firstname'] ?? ""} ${modifier?['lastname'] ?? ""}",
                               style: const TextStyle(
                                   letterSpacing: 0.1,
                                   fontSize: 14,
