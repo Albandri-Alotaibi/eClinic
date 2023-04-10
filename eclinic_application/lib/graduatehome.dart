@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp/UploadGPG.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
@@ -68,131 +69,131 @@ class _graduatehomeState extends State<graduatehome> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: AppBar(),
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
-      drawer: Drawer(
-          width: 210,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                bottomLeft: Radius.zero,
-                topLeft: Radius.zero,
-                bottomRight: Radius.circular(40),
-                topRight: Radius.circular(40)),
-          ),
-          child: ListView(children: [
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(70), // <-- Radius
+            appBar: AppBar(
+              iconTheme: IconThemeData(
+                color: Color.fromARGB(255, 12, 12, 12), //change your color here
               ),
-              shadowColor: Color.fromARGB(94, 253, 254, 254),
+              title: Text(
+                "GP upload",
+                style: TextStyle(
+                    //  fontFamily: 'bold',
+                    fontSize: 20,
+                    color: Mycolors.mainColorBlack),
+              ),
+              primary: false,
+              centerTitle: true,
+              backgroundColor: Colors.white,
               elevation: 0,
-              child: DrawerHeader(
-                  child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      bottom: 0,
+            ),
+            backgroundColor: Color.fromARGB(255, 255, 255, 255),
+            drawer: Drawer(
+                surfaceTintColor: Colors.black,
+                width: 210,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.zero,
+                      topLeft: Radius.zero,
+                      bottomRight: Radius.circular(40),
+                      topRight: Radius.circular(40)),
+                ),
+                child: ListView(children: [
+                  Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(70), // <-- Radius
                     ),
-                    child: Image.asset(
-                      "assets/images/User1.png",
-                      width: 100,
-                      height: 100,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  //  if (havename)
+                    shadowColor: Color.fromARGB(94, 253, 254, 254),
+                    elevation: 0,
+                    child: DrawerHeader(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            bottom: 0,
+                          ),
+                          child: Image.asset(
+                            "assets/images/User1.png",
+                            width: 100,
+                            height: 100,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        //  if (havename)
 
-                  Center(
-                    child: Text("${fname} ${lname}",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                            color: Mycolors.mainColorBlack)),
+                        Center(
+                          child: Text("${fname} ${lname}",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                  color: Mycolors.mainColorBlack)),
+                        ),
+                      ],
+                    )),
                   ),
-                ],
-              )),
-            ),
-            ListTile(
-              leading: Icon(Icons.edit_note, color: Mycolors.mainColorBlue),
-              title: Text(
-                "My profile",
-                style: TextStyle(
-                    fontSize: 15,
-                    color: Mycolors.mainColorBlack,
-                    fontWeight: FontWeight.w400),
-              ),
-              // hoverColor: Mycolors.mainColorBlue,
-              onTap: (() {
-                Navigator.pushNamed(context, 'studentviewprofile');
-              }),
-            ),
-            Divider(
-              color: Mycolors.mainColorBlue,
-              thickness: 1,
-              endIndent: 15,
-              indent: 15,
-            ),
-            ListTile(
-              leading: Icon(Icons.password, color: Mycolors.mainColorBlue),
-              title: Text(
-                "Reset password",
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Mycolors.mainColorBlack,
-                    fontWeight: FontWeight.w400),
-              ),
-              onTap: (() {
-                Navigator.pushNamed(context, 'innereset');
-              }),
-            ),
-            Divider(
-              color: Mycolors.mainColorBlue,
-              thickness: 1,
-              endIndent: 15,
-              indent: 15,
-            ),
-            ListTile(
-              leading: Icon(Icons.logout, color: Mycolors.mainColorBlue),
-              title: Text(
-                "Log out",
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Mycolors.mainColorBlack,
-                    fontWeight: FontWeight.w400),
-              ),
-              onTap: (() {
-                showConfirmationDialog(context);
-              }),
-            ),
-            Divider(
-              color: Mycolors.mainColorBlue,
-              thickness: 1,
-              endIndent: 15,
-              indent: 15,
-            ),
-          ])),
-      body: Column(children: [
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-            shadowColor: Colors.blue[900],
-            elevation: 20,
-            backgroundColor: Mycolors.mainShadedColorBlue,
-            minimumSize: Size(60, 40),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10), // <-- Radius
-            ),
-          ),
-          child: Text("upload gp"),
-          onPressed: () {
-            Navigator.pushNamed(context, "UploadGPG");
-          },
-        )
-      ]),
-    ));
+                  ListTile(
+                    leading:
+                        Icon(Icons.edit_note, color: Mycolors.mainColorBlue),
+                    title: Text(
+                      "My profile",
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: Mycolors.mainColorBlack,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    // hoverColor: Mycolors.mainColorBlue,
+                    onTap: (() {
+                      Navigator.pushNamed(context, 'studentviewprofile');
+                    }),
+                  ),
+                  Divider(
+                    color: Mycolors.mainColorBlue,
+                    thickness: 1,
+                    endIndent: 15,
+                    indent: 15,
+                  ),
+                  ListTile(
+                    leading:
+                        Icon(Icons.password, color: Mycolors.mainColorBlue),
+                    title: Text(
+                      "Reset password",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Mycolors.mainColorBlack,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    onTap: (() {
+                      Navigator.pushNamed(context, 'innereset');
+                    }),
+                  ),
+                  Divider(
+                    color: Mycolors.mainColorBlue,
+                    thickness: 1,
+                    endIndent: 15,
+                    indent: 15,
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.logout, color: Mycolors.mainColorBlue),
+                    title: Text(
+                      "Log out",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Mycolors.mainColorBlack,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    onTap: (() {
+                      showConfirmationDialog(context);
+                    }),
+                  ),
+                  Divider(
+                    color: Mycolors.mainColorBlue,
+                    thickness: 1,
+                    endIndent: 15,
+                    indent: 15,
+                  ),
+                ])),
+            body: UploadGPG()));
   }
 
   showConfirmationDialog(BuildContext context) {

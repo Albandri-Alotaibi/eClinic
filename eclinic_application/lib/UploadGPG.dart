@@ -452,25 +452,25 @@ class _UploadGPGState extends State<UploadGPG> {
     if ((AlreadyUploaded == false)) {
       return SafeArea(
           child: Scaffold(
-              appBar: AppBar(
-                title: Text(
-                  "GP upload",
-                  style: TextStyle(
-                      //  fontFamily: 'bold',
-                      fontSize: 20,
-                      color: Mycolors.mainColorBlack),
-                ),
-                primary: false,
-                centerTitle: true,
-                backgroundColor: Colors.white,
-                elevation: 0,
-                // leading: BackButton(
-                //   color: Colors.black,
-                //   onPressed: () {
-                //     Navigator.of(context).pop();
-                //   },
-                // ),
-              ),
+              // appBar: AppBar(
+              //   title: Text(
+              //     "GP upload",
+              //     style: TextStyle(
+              //         //  fontFamily: 'bold',
+              //         fontSize: 20,
+              //         color: Mycolors.mainColorBlack),
+              //   ),
+              //   primary: false,
+              //   centerTitle: true,
+              //   backgroundColor: Colors.white,
+              //   elevation: 0,
+              //   // leading: BackButton(
+              //   //   color: Colors.black,
+              //   //   onPressed: () {
+              //   //     Navigator.pushNamed(context, 'graduatelogin');
+              //   //   },
+              //   // ),
+              // ),
               backgroundColor: Colors.white,
               body: SingleChildScrollView(
                   child: Center(
@@ -882,25 +882,25 @@ class _UploadGPGState extends State<UploadGPG> {
     } else if (AlreadyUploaded == true && endSearchForLink! == true) {
       return SafeArea(
         child: Scaffold(
-            appBar: AppBar(
-              title: Text(
-                "GP upload",
-                style: TextStyle(
-                    //  fontFamily: 'bold',
-                    fontSize: 20,
-                    color: Mycolors.mainColorBlack),
-              ),
-              primary: false,
-              centerTitle: true,
-              backgroundColor: Colors.white,
-              elevation: 0,
-              // leading: BackButton(
-              //   color: Colors.black,
-              //   onPressed: () {
-              //     Navigator.of(context).pop();
-              //   },
-              // ),
-            ),
+            // appBar: AppBar(
+            //   title: Text(
+            //     "GP upload",
+            //     style: TextStyle(
+            //         //  fontFamily: 'bold',
+            //         fontSize: 20,
+            //         color: Mycolors.mainColorBlack),
+            //   ),
+            //   primary: false,
+            //   centerTitle: true,
+            //   backgroundColor: Colors.white,
+            //   elevation: 0,
+            //   // leading: BackButton(
+            //   //   color: Colors.black,
+            //   //   onPressed: () {
+            //   //     Navigator.pushNamed(context, 'graduatelogin');
+            //   //   },
+            //   // ),
+            // ),
             backgroundColor: Mycolors.BackgroundColor,
             body: Center(
               // width: 360,
