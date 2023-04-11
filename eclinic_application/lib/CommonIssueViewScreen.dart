@@ -364,7 +364,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                         ),
 
                         Column(
-                            //crossAxisAlignment: CrossAxisAlignment.start,
+                            //crossAxisAlignment: CrossAxisAlignment.start, 
                             children: [
                               Text(
                                 "  Created by: ${creator?['firstname'] ?? ""} ${creator?['lastname'] ?? ""}",
