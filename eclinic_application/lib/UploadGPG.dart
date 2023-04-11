@@ -4,6 +4,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
+import 'package:myapp/graduatehome.dart';
+import 'package:myapp/loading.dart';
 import 'package:myapp/screeens/resources/snackbar.dart';
 import 'package:myapp/studenthome.dart';
 import 'package:myapp/style/Mycolors.dart';
@@ -572,27 +574,31 @@ class _UploadGPGState extends State<UploadGPG> {
                             DropDownMultiSelect(
                               decoration: InputDecoration(
                                 hintText: "Choose a category",
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: isshow
-                                          ? Color.fromARGB(255, 202, 54, 44)
-                                          : Colors.grey),
-                                  borderRadius: BorderRadius.circular(13),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: isshow
-                                          ? Color.fromARGB(255, 209, 57, 46)
-                                          : Mycolors.mainShadedColorBlue),
-                                  borderRadius: BorderRadius.circular(13),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      width: 2,
-                                      color: isshow
-                                          ? Color.fromARGB(255, 209, 57, 46)
-                                          : Mycolors.mainShadedColorBlue),
-                                  borderRadius: BorderRadius.circular(13),
+                                // enabledBorder: OutlineInputBorder(
+                                //   borderSide: BorderSide(
+                                //       color: isshow
+                                //           ? Color.fromARGB(255, 202, 54, 44)
+                                //           : Colors.grey),
+                                //   borderRadius: BorderRadius.circular(13),
+                                // ),
+                                // errorBorder: OutlineInputBorder(
+                                //   borderSide: BorderSide(
+                                //       color: isshow
+                                //           ? Color.fromARGB(255, 209, 57, 46)
+                                //           : Mycolors.mainShadedColorBlue),
+                                //   borderRadius: BorderRadius.circular(13),
+                                // ),
+                                // focusedBorder: OutlineInputBorder(
+                                //   borderSide: BorderSide(
+                                //       width: 2,
+                                //       color: isshow
+                                //           ? Color.fromARGB(255, 209, 57, 46)
+                                //           : Mycolors.mainShadedColorBlue),
+                                //   borderRadius: BorderRadius.circular(13),
+                                // ),
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(13.0)),
                                 ),
                               ),
                               options: options,
@@ -675,22 +681,26 @@ class _UploadGPGState extends State<UploadGPG> {
                                     ),
                                     DropdownButtonFormField<String>(
                                       decoration: InputDecoration(
-                                        focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(13.0)),
-                                            borderSide: BorderSide(
-                                                width: 2,
-                                                color: Mycolors
-                                                    .mainShadedColorBlue)),
+                                        // focusedBorder: OutlineInputBorder(
+                                        //     borderRadius: BorderRadius.all(
+                                        //         Radius.circular(13.0)),
+                                        //     borderSide: BorderSide(
+                                        //         width: 2,
+                                        //         color: Mycolors
+                                        //             .mainShadedColorBlue)),
                                         hintText: 'Choose a semester',
+                                        // border: OutlineInputBorder(
+                                        //     borderRadius:
+                                        //         BorderRadius.circular(13),
+                                        //     borderSide: BorderSide(
+                                        //       color:
+                                        //           Mycolors.mainShadedColorBlue,
+                                        //       width: 1,
+                                        //     )),
                                         border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(13),
-                                            borderSide: BorderSide(
-                                              color:
-                                                  Mycolors.mainShadedColorBlue,
-                                              width: 1,
-                                            )),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(13.0)),
+                                        ),
                                       ),
                                       isExpanded: true,
                                       items:
@@ -761,28 +771,29 @@ class _UploadGPGState extends State<UploadGPG> {
                                         });
                                       },
                                       decoration: InputDecoration(
-                                          hintText:
-                                              "Please add your GitHub repository link here",
+                                        hintText:
+                                            "Please add your GitHub repository link here",
 
-                                          ///*******وش فايدتها؟ */
-                                          labelText: 'GitHub repository link',
-                                          labelStyle: TextStyle(
-                                              color: myFocusNode.hasFocus
-                                                  ? Mycolors.mainShadedColorBlue
-                                                  : Colors.black),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(13.0)),
-                                              borderSide: BorderSide(
-                                                  width: 2,
-                                                  color: Mycolors
-                                                      .mainShadedColorBlue)),
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(13),
-                                              borderSide: const BorderSide(
-                                                width: 0,
-                                              ))),
+                                        ///*******وش فايدتها؟ */
+                                        labelText: 'GitHub repository link',
+                                        // labelStyle: TextStyle(
+                                        //     color: myFocusNode.hasFocus
+                                        //         ? Mycolors.mainShadedColorBlue
+                                        //         : Colors.black),
+                                        // focusedBorder: OutlineInputBorder(
+                                        //     borderRadius: BorderRadius.all(
+                                        //         Radius.circular(13.0)),
+                                        //     borderSide: BorderSide(
+                                        //         width: 2,
+                                        //         color: Mycolors
+                                        //             .mainShadedColorBlue)),
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(13),
+                                            borderSide: const BorderSide(
+                                              width: 0,
+                                            )),
+                                      ),
                                       autovalidateMode:
                                           AutovalidateMode.onUserInteraction,
                                       validator: (value) {
@@ -1245,7 +1256,7 @@ class _UploadGPGState extends State<UploadGPG> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => UploadGPG(),
+            builder: (context) => Loading(),
           ),
         );
       },
@@ -1321,7 +1332,7 @@ class _UploadGPGState extends State<UploadGPG> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => UploadGPG(),
+        builder: (context) => graduatehome(),
       ),
     );
     showInSnackBar(context, "Your project has been successfully deleted");

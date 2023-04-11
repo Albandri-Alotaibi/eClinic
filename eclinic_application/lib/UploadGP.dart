@@ -623,13 +623,6 @@ class _UploadGPState extends State<UploadGP> {
                             DropDownMultiSelect(
                               decoration: InputDecoration(
                                 hintText: "Choose a category",
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: isshow
-                                          ? Color.fromARGB(255, 202, 54, 44)
-                                          : Colors.grey),
-                                  borderRadius: BorderRadius.circular(13),
-                                ),
                                 errorBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: isshow
@@ -637,13 +630,9 @@ class _UploadGPState extends State<UploadGP> {
                                           : Mycolors.mainShadedColorBlue),
                                   borderRadius: BorderRadius.circular(13),
                                 ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      width: 2,
-                                      color: isshow
-                                          ? Color.fromARGB(255, 209, 57, 46)
-                                          : Mycolors.mainShadedColorBlue),
-                                  borderRadius: BorderRadius.circular(13),
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(13.0)),
                                 ),
                               ),
                               options: options,
@@ -726,22 +715,11 @@ class _UploadGPState extends State<UploadGP> {
                                     ),
                                     DropdownButtonFormField<String>(
                                       decoration: InputDecoration(
-                                        focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(13.0)),
-                                            borderSide: BorderSide(
-                                                width: 2,
-                                                color: Mycolors
-                                                    .mainShadedColorBlue)),
                                         hintText: 'Choose a semester',
                                         border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(13),
-                                            borderSide: BorderSide(
-                                              color:
-                                                  Mycolors.mainShadedColorBlue,
-                                              width: 1,
-                                            )),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(13.0)),
+                                        ),
                                       ),
                                       isExpanded: true,
                                       items:
@@ -812,30 +790,29 @@ class _UploadGPState extends State<UploadGP> {
                                         });
                                       },
                                       decoration: InputDecoration(
-                                          hintText:
-                                              "Please add your GitHub repository link here",
+                                        hintText:
+                                            "Please add your GitHub repository link here",
 
-                                          ///*******وش فايدتها؟ */
-                                          labelText: 'GitHub repository link',
-                                          // labelStyle: TextStyle(
-                                          //     color: (myFocusNode.hasFocus &&
-                                          //             !onError)
-                                          //         ? Mycolors.mainShadedColorBlue
-                                          //         : (myFocusNode.hasFocus &&
-                                          //                 onError)
-                                          //             ? Mycolors.mainColorRed
-                                          //             : Color.fromARGB(
-                                          //                 133, 0, 0, 0)),
-                                          // focusedBorder: OutlineInputBorder(
-                                          //   borderRadius: BorderRadius.all(
-                                          //       Radius.circular(13.0)),
-                                          // ),
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(13),
-                                              borderSide: const BorderSide(
-                                                width: 0,
-                                              ))),
+                                        ///*******وش فايدتها؟ */
+                                        labelText: 'GitHub repository link',
+                                        // labelStyle: TextStyle(
+                                        //     color: (myFocusNode.hasFocus &&
+                                        //             !onError)
+                                        //         ? Mycolors.mainShadedColorBlue
+                                        //         : (myFocusNode.hasFocus &&
+                                        //                 onError)
+                                        //             ? Mycolors.mainColorRed
+                                        //             : Color.fromARGB(
+                                        //                 133, 0, 0, 0)),
+                                        // focusedBorder: OutlineInputBorder(
+                                        //   borderRadius: BorderRadius.all(
+                                        //       Radius.circular(13.0)),
+                                        // ),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(13.0)),
+                                        ),
+                                      ),
                                       autovalidateMode:
                                           AutovalidateMode.onUserInteraction,
                                       validator: (value) {
@@ -1387,7 +1364,6 @@ class _UploadGPState extends State<UploadGP> {
 //           ),
 //         );
 
-
     QuickAlert.show(
       context: context,
       type: QuickAlertType.success,
@@ -1408,7 +1384,6 @@ class _UploadGPState extends State<UploadGP> {
   }
 
   showConfirmationDialog(BuildContext context) async {
-
     Widget dontDeleteAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontSize: 16),
@@ -1426,11 +1401,10 @@ class _UploadGPState extends State<UploadGP> {
       },
     );
 
-
     Widget YesDeleteButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontSize: 16),
-       // shadowColor: Colors.blue[900],
+        // shadowColor: Colors.blue[900],
         elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
@@ -1444,12 +1418,9 @@ class _UploadGPState extends State<UploadGP> {
       },
     );
 
-
-
     AlertDialog alert = AlertDialog(
       content: Text(
-                "Are you sure you want to delete your project from the GP library?"),
-        
+          "Are you sure you want to delete your project from the GP library?"),
       actions: [
         dontDeleteAppButton,
         YesDeleteButton,
@@ -1465,7 +1436,6 @@ class _UploadGPState extends State<UploadGP> {
   } //END FUNCTION
 
   DeleteGP() async {
-    
     await FirebaseFirestore.instance.collection("GPlibrary").doc(id).delete();
 
     FirebaseFirestore.instance.collection("studentgroup").doc(groupid).update({
@@ -1478,7 +1448,6 @@ class _UploadGPState extends State<UploadGP> {
         builder: (context) => studenthome(2),
       ),
     );
-      showInSnackBar(context, "Your project has been successfully deleted");
-
+    showInSnackBar(context, "Your project has been successfully deleted");
   } //end delete function
 }
