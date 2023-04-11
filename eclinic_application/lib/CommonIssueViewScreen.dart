@@ -150,6 +150,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                     //     height: 180),
 
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Row(children: [
                           // const Icon(
@@ -364,10 +365,10 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                         ),
 
                         Column(
-                            //crossAxisAlignment: CrossAxisAlignment.start, 
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "  Created by: ${creator?['firstname'] ?? ""} ${creator?['lastname'] ?? ""}",
+                                "Created by: ${creator?['firstname'] ?? ""} ${creator?['lastname'] ?? ""}",
                                 style: const TextStyle(
                                     letterSpacing: 0.1,
                                     fontSize: 14,
@@ -378,7 +379,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                               if (widget.commonIssue['lastmodified'] != null &&
                                   widget.commonIssue['lastmodified'] != "")
                                 Text(
-                                  "    Last modified by: ${modifier?['firstname'] ?? ""} ${modifier?['lastname'] ?? ""}",
+                                  "Last modified by: ${modifier?['firstname'] ?? ""} ${modifier?['lastname'] ?? ""}",
                                   style: const TextStyle(
                                       letterSpacing: 0.1,
                                       fontSize: 14,
