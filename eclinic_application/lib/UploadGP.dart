@@ -659,7 +659,7 @@ class _UploadGPState extends State<UploadGP> {
                                   });
                                 });
                                 checkidcategory(selectedoptionlist.value);
-                                // isshow = selectedoptionlist.value.isEmpty;
+                                isshow = selectedoptionlist.value.isEmpty;
                                 checklengthforcategory =
                                     selectedoptionlist.value.length;
                                 if (checklengthforcategory < 1) {

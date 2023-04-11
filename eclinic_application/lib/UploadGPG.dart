@@ -625,7 +625,7 @@ class _UploadGPGState extends State<UploadGPG> {
                                   });
                                 });
                                 checkidcategory(selectedoptionlist.value);
-                                // isshow = selectedoptionlist.value.isEmpty;
+                                isshow = selectedoptionlist.value.isEmpty;
                                 checklengthforcategory =
                                     selectedoptionlist.value.length;
                                 if (checklengthforcategory < 1) {
