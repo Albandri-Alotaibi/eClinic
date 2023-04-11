@@ -363,28 +363,30 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                           thickness: 1,
                         ),
 
-                        Column(children: [
-                          Text(
-                            "  Created by: ${creator?['firstname'] ?? ""} ${creator?['lastname'] ?? ""}",
-                            style: const TextStyle(
-                                letterSpacing: 0.1,
-                                fontSize: 14,
-                                fontFamily: "main",
-                                color: Colors.black54,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          if (widget.commonIssue['lastmodified'] != null &&
-                              widget.commonIssue['lastmodified'] != "")
-                            Text(
-                              "    Last modified by: ${modifier?['firstname'] ?? ""} ${modifier?['lastname'] ?? ""}",
-                              style: const TextStyle(
-                                  letterSpacing: 0.1,
-                                  fontSize: 14,
-                                  fontFamily: "main",
-                                  color: Colors.black54,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                        ]),
+                        Column(
+                            //crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "  Created by: ${creator?['firstname'] ?? ""} ${creator?['lastname'] ?? ""}",
+                                style: const TextStyle(
+                                    letterSpacing: 0.1,
+                                    fontSize: 14,
+                                    fontFamily: "main",
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              if (widget.commonIssue['lastmodified'] != null &&
+                                  widget.commonIssue['lastmodified'] != "")
+                                Text(
+                                  "    Last modified by: ${modifier?['firstname'] ?? ""} ${modifier?['lastname'] ?? ""}",
+                                  style: const TextStyle(
+                                      letterSpacing: 0.1,
+                                      fontSize: 14,
+                                      fontFamily: "main",
+                                      color: Colors.black54,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                            ]),
 
                         // Container(
                         //   margin: const EdgeInsets.only(top: 16),
