@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'dart:typed_data';
+import 'package:myapp/app/constants.dart';
 
 extension DateToString on DateTime {
   convertToWord() {
@@ -48,6 +50,16 @@ extension MapExtension<K, V> on Map<K, V> {
 extension StringEmtyToNull on String {
   String? toNullIfEmplty() {
     return isEmpty ? null : this;
+  }
+}
+
+extension MapExtensionGraduate on Map<String, dynamic> {
+  Map<String, dynamic> removeIfValueIsSemesterWhenGraduate() {
+    return TypeUser.type == 'graduate'
+        ? Map.fromEntries(entries.where((entry) {
+            return entry.key != 'semester';
+          }))
+        : this;
   }
 }
 

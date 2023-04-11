@@ -27,7 +27,7 @@ class _graduateverficationState extends State<graduateverfication> {
   String? email = '';
   String? userid = '';
   User? user;
-  Timer timer = Timer.periodic(Duration(seconds: 3), (timer) {});
+  // Timer timer = Timer.periodic(Duration(seconds: 3), (timer) {});
   @override
   void initState() {
     final User? user = auth.currentUser;
@@ -35,40 +35,21 @@ class _graduateverficationState extends State<graduateverfication> {
     userid = user!.uid;
     email = user.email!;
     user.sendEmailVerification();
-    if (mounted) Timer timer = Timer.periodic(Duration(seconds: 1), (timer) {});
-    checkemailverfication();
+    // if (mounted) Timer timer = Timer.periodic(Duration(seconds: 1), (timer) {});
+    // checkemailverfication();
     super.initState();
   }
 
-  void dispose() {
-    timer.cancel();
-    super.dispose();
-  }
-
-  // checknull() async{
-  //   FirebaseFirestore.instance.collection("graduate").
-  //    userid = user!.uid;
-  //   email = user?.email;
-  //   user?.sendEmailVerification();
-  //   // if (mounted) Timer timer = Timer.periodic(Duration(seconds: 1), (timer) {});
-  //   checkemailverfication();
-  //   // StreamBuilder<User?>(
-  //   //     stream: FirebaseAuth.instance.authStateChanges(),
-  //   //     builder: ((context, snapshot) {
-  //   //       if (snapshot.hasData) {
-  //   //         return ifnull = false;
-  //   //       } else {
-  //   //         return CircularProgressIndicator();
-  //   //       }
-  //   //     }));
-
+  // void dispose() {
+  //   timer.cancel();
+  //   super.dispose();
   // }
 
   Future<void> checkemailverfication() async {
     user = auth.currentUser;
     await user!.reload();
     if (user!.emailVerified) {
-      timer.cancel();
+      // timer.cancel();
       // Navigator.of(context).pushReplacement(
       //     MaterialPageRoute(builder: (context) => addHoursFaculty()));
       Navigator.push(
@@ -77,7 +58,20 @@ class _graduateverficationState extends State<graduateverfication> {
           builder: (context) => graduatehome(),
         ),
       );
+    } else {
+      // ignore: use_build_context_synchronously
+      showInSnackBar(context, "Please check your email to verify your account",
+          onError: true);
     }
+  }
+
+  Future<bool> currentuseremailverified() async {
+    user = auth.currentUser;
+    user!.reload();
+    if (user != null && user!.emailVerified) {
+      user!.reload().then((_) => user == FirebaseAuth.instance.currentUser);
+    }
+    return user?.emailVerified ?? false;
   }
 
   @override
@@ -97,6 +91,11 @@ class _graduateverficationState extends State<graduateverfication> {
             fontFamily: 'main',
             fontSize: 24,
             color: Mycolors.mainColorBlack,
+          ),
+          leading: BackButton(
+            onPressed: () {
+              Navigator.pushNamed(context, 'graduatelogin');
+            },
           ),
         ),
         backgroundColor: Mycolors.BackgroundColor,
@@ -189,8 +188,24 @@ class _graduateverficationState extends State<graduateverfication> {
                       borderRadius: BorderRadius.circular(17), // <-- Radius
                     ),
                   ),
-                  onPressed: () {
-                    checkemailverfication();
+                  onPressed: () async {
+                    // user!.reload();
+                    // await Future.delayed(Duration(seconds: 10), () {});
+                    if (await currentuseremailverified()) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => graduatehome(),
+                        ),
+                      );
+                    } else {
+                      // ignore: use_build_context_synchronously
+                      showInSnackBar(context,
+                          "Please check your email to verify your account",
+                          onError: true);
+                    }
+
+                    // checkemailverfication();
                   },
                   child: Text("Done "),
                 ),

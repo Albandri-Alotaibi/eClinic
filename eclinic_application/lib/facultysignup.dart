@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multiselect/multiselect.dart';
 import 'package:intl/intl.dart';
+import 'package:myapp/domain/extension.dart';
 import 'style/Mycolors.dart';
 import 'package:myapp/screeens/resources/snackbar.dart';
 
@@ -24,7 +25,8 @@ class _facultysignupState extends State<facultysignup> {
   final formkey = GlobalKey<FormState>();
   bool _obsecuretext = true;
   List<String> options = [];
-  List<String> semester = [];
+  // List<String> semester = [];
+  List<Map<String, dynamic>?> semester = [];
   List<String> semesteraftersort = [];
   List<String> collage = [];
   List<String> department = [];
@@ -99,7 +101,7 @@ class _facultysignupState extends State<facultysignup> {
               print(element['semestername']);
               // print("ppppppppppppppppppppppppppppppppppppppp");
               // print(sn);
-              semester.add(element['semestername']);
+              semester.add(element.data());
               // print("ppppppppppppppppppppppppppppppppppppppp");
               // print(semester);
             }
@@ -123,17 +125,14 @@ class _facultysignupState extends State<facultysignup> {
               if (Dateoftoday.isAfter(enddate)) {
                 print("rrrrrrrrrrrrrreeeeeeeeeeeeeeemmmmmmmmmmmoooveeeeeee");
                 print(element['semestername']);
-                semester.remove(element['semestername']);
+                semester.remove(element.data());
               }
             }
           });
           //calling sort function
-
-          semester.sort();
         });
-        print(semester);
       });
-      sortsemester(semester);
+      semester.sortBySemesterAndYear();
     } catch (e) {
       print(e.toString());
       return null;
@@ -556,13 +555,13 @@ class _facultysignupState extends State<facultysignup> {
                                 if (value!.isEmpty ||
                                     _emailController.text == "") {
                                   return 'Please enter your KSU email ';
+                                  // }
+                                  //else {
+                                  //   if (!(ksuEmailRegEx
+                                  //       .hasMatch(_emailController.text))) {
+                                  //     return 'Please write email format correctly, example@ksu.edu.sa ';
+                                  //   }
                                 }
-                                //else {
-                                //   if (!(ksuEmailRegEx
-                                //       .hasMatch(_emailController.text))) {
-                                //     return 'Please write email format correctly, example@ksu.edu.sa ';
-                                //   }
-                                // }
                               },
                             ),
                             SizedBox(
@@ -743,9 +742,44 @@ class _facultysignupState extends State<facultysignup> {
                             SizedBox(
                               height: 3,
                             ),
+                            // DropdownButtonFormField<String>(
+                            //   decoration: InputDecoration(
+                            //     hintText: ' Choose the semester',
+                            //     border: OutlineInputBorder(
+                            //         borderRadius: BorderRadius.circular(13),
+                            //         borderSide: const BorderSide(
+                            //           width: 0,
+                            //         )),
+                            //   ),
+                            //   isExpanded: true,
+                            //   items: semester.map((String dropdownitems) {
+                            //     return DropdownMenuItem<String>(
+                            //       value: dropdownitems,
+                            //       child: Text(dropdownitems),
+                            //     );
+                            //   }).toList(),
+                            //   onChanged: (String? newselect) {
+                            //     setState(() {
+                            //       semesterselectedvalue = newselect;
+                            //       checkids(semesterselectedvalue);
+                            //     });
+                            //   },
+                            //   value: semesterselectedvalue,
+                            //   autovalidateMode:
+                            //       AutovalidateMode.onUserInteraction,
+                            //   validator: (value) {
+                            //     if (value == null ||
+                            //         semesterselectedvalue!.isEmpty ||
+                            //         semesterselectedvalue == null) {
+                            //       return 'Please choose a semester';
+                            //     }
+                            //   },
+                            // ),
                             DropdownButtonFormField<String>(
                               decoration: InputDecoration(
-                                hintText: ' Choose the semester',
+                                suffixIcon: Icon(Icons.edit),
+                                // labelText: 'semester',
+                                hintText: "Please choose the semester",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(13),
                                     borderSide: const BorderSide(
@@ -753,7 +787,10 @@ class _facultysignupState extends State<facultysignup> {
                                     )),
                               ),
                               isExpanded: true,
-                              items: semester.map((String dropdownitems) {
+                              items: semester
+                                  .map((e) => e!['semestername'])
+                                  .toList()
+                                  .map((dropdownitems) {
                                 return DropdownMenuItem<String>(
                                   value: dropdownitems,
                                   child: Text(dropdownitems),
@@ -762,6 +799,7 @@ class _facultysignupState extends State<facultysignup> {
                               onChanged: (String? newselect) {
                                 setState(() {
                                   semesterselectedvalue = newselect;
+
                                   checkids(semesterselectedvalue);
                                 });
                               },

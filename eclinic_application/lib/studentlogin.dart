@@ -86,7 +86,7 @@ class _studentloginState extends State<studentlogin> {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              " KSU email:",
+                              " email:",
                               style: TextStyle(
                                   overflow: TextOverflow.ellipsis,
                                   color: Mycolors.mainColorBlack,
@@ -98,7 +98,7 @@ class _studentloginState extends State<studentlogin> {
                           TextFormField(
                               controller: _emailController,
                               decoration: InputDecoration(
-                                  hintText: "Enter your KSU email ",
+                                  hintText: "Enter your email ",
                                   prefixIcon: Icon(Icons.email),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(13),
@@ -110,7 +110,7 @@ class _studentloginState extends State<studentlogin> {
                               validator: (value) {
                                 if (value!.isEmpty ||
                                     _emailController.text == "") {
-                                  return 'Please enter your KSU email ';
+                                  return 'Please enter your email ';
                                 } else {
                                   if (!(english
                                       .hasMatch(_emailController.text))) {
@@ -204,35 +204,39 @@ class _studentloginState extends State<studentlogin> {
                                 });
                                 try {
                                   if (formkey.currentState!.validate()) {
-                                    if (!(_emailController.text
-                                        .contains("student"))) {
-                                      showInSnackBar(
-                                          context, "Invalid email or password",
-                                          onError: true);
-                                    } else {
-                                      await FirebaseAuth.instance
-                                          .signInWithEmailAndPassword(
-                                              email: email, password: password)
-                                          .then((value) async {
-                                        final FirebaseAuth auth =
-                                            FirebaseAuth.instance;
-                                        final User? user = auth.currentUser;
-                                        final Uid = user!.uid;
-                                        Navigator.pushNamed(
-                                            context, 'studenthome');
-                                        // if (user.emailVerified) {
-                                        //                           if (TypeUser.type == 'student') {
-                                        // TypeUser.type = 'student';
-                                        // StorageManager.saveData('TypeUser', 'student');
-                                        // Navigator.pushNamedAndRemoveUntil(
-                                        //     context, 'studenthome', (route) => false);
-                                        // } else {
-                                        //   Navigator.pushNamed(
-                                        //       context, 'studentverfication');
-                                        // }
-                                      });
-                                    }
+                                    // if (!(_emailController.text
+                                    //     .contains("student"))) {
+                                    //   showInSnackBar(
+                                    //       context, "Invalid email or password",
+                                    //       onError: true);
+                                    // } else {
+                                    await FirebaseAuth.instance
+                                        .signInWithEmailAndPassword(
+                                            email: email, password: password)
+                                        .then((value) async {
+                                      final FirebaseAuth auth =
+                                          FirebaseAuth.instance;
+                                      final User? user = auth.currentUser;
+                                      final Uid = user!.uid;
+                                      // Navigator.pushNamed(
+                                      //     context, 'studenthome');
+                                      if (user.emailVerified) {
+                                        if (TypeUser.type == 'student') {
+                                          TypeUser.type = 'student';
+                                          StorageManager.saveData(
+                                              'TypeUser', 'student');
+                                          Navigator.pushNamedAndRemoveUntil(
+                                              context,
+                                              'studenthome',
+                                              (route) => false);
+                                        } else {
+                                          Navigator.pushNamed(
+                                              context, 'studentverfication');
+                                        }
+                                      }
+                                    });
                                   }
+                                  // }
                                 } on FirebaseAuthException catch (error) {
                                   // print(error.message);
                                   // if (error.message ==

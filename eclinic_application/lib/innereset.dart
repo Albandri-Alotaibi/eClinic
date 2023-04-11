@@ -33,7 +33,7 @@ class _inneresetState extends State<innereset> {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
     email = user?.email!;
-    FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    // FirebaseAuth.instance.sendPasswordResetEmail(email: email);
   }
 
   Widget build(BuildContext context) {
@@ -71,221 +71,222 @@ class _inneresetState extends State<innereset> {
               SizedBox(
                 height: 40,
               ),
-              Column(
-                children: [
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Reset link has been sent on this email:",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          overflow: TextOverflow.ellipsis,
-                          color: Mycolors.mainColorBlack,
-                          fontFamily: 'bold',
-                          fontSize: 17),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    email,
-                    style: TextStyle(
-                        fontFamily: 'main',
-                        fontSize: 16,
-                        color: Mycolors.mainColorBlack),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      "  Please check your email and click \nin the received link to reset password",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          overflow: TextOverflow.ellipsis,
-                          color: Mycolors.mainColorGray,
-                          fontFamily: 'main',
-                          fontSize: 17),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 60,
-                  ),
-                  Image(
-                    image: AssetImage('assets/images/checkmailbox .png'),
-                    width: 180,
-                    height: 180,
-                  ),
-                  SizedBox(
-                    height: 80,
-                  ),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(20.0),
-                  //   child: Text(
-                  //     "We have sent you the reset link has been sent on this email:",
-                  //     style: TextStyle(
-                  //         fontFamily: 'main',
-                  //         fontSize: 16,
-                  //         color: Mycolors.mainColorBlack),
-                  //   ),
-                  // ),
-                  // Text(
-                  //   email,
-                  //   style: TextStyle(
-                  //       fontFamily: 'bold',
-                  //       fontSize: 16,
-                  //       color: Mycolors.mainColorBlack),
-                  // ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15, bottom: 40),
-                    child: Row(
+              ifsend
+                  ? Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Reset link has been sent on this email:",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                overflow: TextOverflow.ellipsis,
+                                color: Mycolors.mainColorBlack,
+                                fontFamily: 'bold',
+                                fontSize: 17),
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          email,
+                          style: TextStyle(
+                              fontFamily: 'main',
+                              fontSize: 16,
+                              color: Mycolors.mainColorBlack),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "  Please check your email and click \nin the received link to reset password",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                overflow: TextOverflow.ellipsis,
+                                color: Mycolors.mainColorGray,
+                                fontFamily: 'main',
+                                fontSize: 17),
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 60,
+                        ),
+                        Image(
+                          image: AssetImage('assets/images/checkmailbox .png'),
+                          width: 180,
+                          height: 180,
+                        ),
+                        SizedBox(
+                          height: 80,
+                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.all(20.0),
+                        //   child: Text(
+                        //     "We have sent you the reset link has been sent on this email:",
+                        //     style: TextStyle(
+                        //         fontFamily: 'main',
+                        //         fontSize: 16,
+                        //         color: Mycolors.mainColorBlack),
+                        //   ),
+                        // ),
+                        // Text(
+                        //   email,
+                        //   style: TextStyle(
+                        //       fontFamily: 'bold',
+                        //       fontSize: 16,
+                        //       color: Mycolors.mainColorBlack),
+                        // ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 15, bottom: 40),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Didn't receive the reset link ? ",
+                                style: TextStyle(
+                                    color: Mycolors.mainColorBlack,
+                                    fontFamily: 'main',
+                                    fontSize: 14),
+                              ),
+                              GestureDetector(
+                                  onTap: () async {
+                                    try {
+                                      await FirebaseAuth.instance
+                                          .sendPasswordResetEmail(email: email);
+
+                                      setState(() {
+                                        ifsend = true;
+                                        showInSnackBar(context,
+                                            "Another link has been sent ");
+                                      });
+                                    } on FirebaseAuthException catch (e) {
+                                      return;
+                                    }
+                                    print(email);
+                                  },
+                                  child: Text(
+                                    " Resend",
+                                    style: TextStyle(
+                                        color: Mycolors.mainColorBlack,
+                                        fontFamily: 'bold',
+                                        fontSize: 14),
+                                  )),
+                            ],
+                          ),
+                        ),
+                        // ElevatedButton(
+                        //   style: ElevatedButton.styleFrom(
+                        //     textStyle:
+                        //         TextStyle(fontFamily: 'main', fontSize: 16),
+                        //     //shadowColor: Colors.blue[900],
+                        //     elevation: 0,
+                        //     backgroundColor: Mycolors.mainShadedColorBlue,
+                        //     minimumSize: Size(150, 50),
+                        //     shape: RoundedRectangleBorder(
+                        //       borderRadius:
+                        //           BorderRadius.circular(17), // <-- Radius
+                        //     ),
+                        //   ),
+                        //   onPressed: () async {
+                        //     try {
+                        //       await FirebaseAuth.instance
+                        //           .sendPasswordResetEmail(email: email);
+
+                        //       setState(() {
+                        //         ifsend = true;
+                        //       });
+                        //     } on FirebaseAuthException catch (e) {
+                        //       return;
+                        //     }
+                        //     print(email);
+                        //   },
+                        //   child: Text("Resend"),
+                        // ),
+                      ],
+                    )
+                  : Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "Didn't receive the reset link ? ",
-                          style: TextStyle(
-                              color: Mycolors.mainColorBlack,
-                              fontFamily: 'main',
-                              fontSize: 14),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Reset your password?",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                overflow: TextOverflow.ellipsis,
+                                color: Mycolors.mainColorBlack,
+                                fontFamily: 'bold',
+                                fontSize: 17),
+                            textAlign: TextAlign.start,
+                          ),
                         ),
-                        GestureDetector(
-                            onTap: () async {
-                              try {
-                                await FirebaseAuth.instance
-                                    .sendPasswordResetEmail(email: email);
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "     Please click on send below to\n receive password reset instruction link ",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                overflow: TextOverflow.ellipsis,
+                                color: Mycolors.mainColorGray,
+                                fontFamily: 'main',
+                                fontSize: 17),
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        Image(
+                          image: AssetImage('assets/images/enteremail.png'),
+                          width: 180,
+                          height: 180,
+                        ),
+                        SizedBox(
+                          height: 80,
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            textStyle:
+                                TextStyle(fontFamily: 'main', fontSize: 16),
+                            // shadowColor: Colors.blue[900],
+                            elevation: 0,
+                            backgroundColor: Mycolors.mainShadedColorBlue,
+                            minimumSize: Size(150, 50),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(17), // <-- Radius
+                            ),
+                          ),
+                          onPressed: () async {
+                            try {
+                              await FirebaseAuth.instance
+                                  .sendPasswordResetEmail(email: email);
+                              // showSucessAlert();
+                              setState(() {
+                                ifsend = true;
+                              });
+                            } on FirebaseAuthException catch (e) {
+                              print(e);
+                              return;
+                            }
 
-                                setState(() {
-                                  ifsend = true;
-                                  showInSnackBar(
-                                      context, "Another link has been sent ");
-                                });
-                              } on FirebaseAuthException catch (e) {
-                                return;
-                              }
-                              print(email);
-                            },
-                            child: Text(
-                              " Resend",
-                              style: TextStyle(
-                                  color: Mycolors.mainColorBlack,
-                                  fontFamily: 'bold',
-                                  fontSize: 14),
-                            )),
+                            print(email);
+                          },
+                          child: Text("Send"),
+                        ),
                       ],
                     ),
-                  ),
-                  // ElevatedButton(
-                  //   style: ElevatedButton.styleFrom(
-                  //     textStyle:
-                  //         TextStyle(fontFamily: 'main', fontSize: 16),
-                  //     //shadowColor: Colors.blue[900],
-                  //     elevation: 0,
-                  //     backgroundColor: Mycolors.mainShadedColorBlue,
-                  //     minimumSize: Size(150, 50),
-                  //     shape: RoundedRectangleBorder(
-                  //       borderRadius:
-                  //           BorderRadius.circular(17), // <-- Radius
-                  //     ),
-                  //   ),
-                  //   onPressed: () async {
-                  //     try {
-                  //       await FirebaseAuth.instance
-                  //           .sendPasswordResetEmail(email: email);
-
-                  //       setState(() {
-                  //         ifsend = true;
-                  //       });
-                  //     } on FirebaseAuthException catch (e) {
-                  //       return;
-                  //     }
-                  //     print(email);
-                  //   },
-                  //   child: Text("Resend"),
-                  // ),
-                ],
-              ),
-              // : Column(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: [
-              //       Align(
-              //         alignment: Alignment.center,
-              //         child: Text(
-              //           "Reset your password?",
-              //           style: TextStyle(
-              //               fontWeight: FontWeight.w500,
-              //               overflow: TextOverflow.ellipsis,
-              //               color: Mycolors.mainColorBlack,
-              //               fontFamily: 'bold',
-              //               fontSize: 17),
-              //           textAlign: TextAlign.start,
-              //         ),
-              //       ),
-              //       SizedBox(
-              //         height: 10,
-              //       ),
-              //       Align(
-              //         alignment: Alignment.center,
-              //         child: Text(
-              //           "     Please click on send below to\n receive password reset instruction link ",
-              //           style: TextStyle(
-              //               fontWeight: FontWeight.w500,
-              //               overflow: TextOverflow.ellipsis,
-              //               color: Mycolors.mainColorGray,
-              //               fontFamily: 'main',
-              //               fontSize: 17),
-              //           textAlign: TextAlign.start,
-              //         ),
-              //       ),
-              //       SizedBox(
-              //         height: 40,
-              //       ),
-              //       Image(
-              //         image: AssetImage('assets/images/enteremail.png'),
-              //         width: 180,
-              //         height: 180,
-              //       ),
-              //       SizedBox(
-              //         height: 80,
-              //       ),
-              //       ElevatedButton(
-              //         style: ElevatedButton.styleFrom(
-              //           textStyle:
-              //               TextStyle(fontFamily: 'main', fontSize: 16),
-              //           // shadowColor: Colors.blue[900],
-              //           elevation: 0,
-              //           backgroundColor: Mycolors.mainShadedColorBlue,
-              //           minimumSize: Size(150, 50),
-              //           shape: RoundedRectangleBorder(
-              //             borderRadius:
-              //                 BorderRadius.circular(17), // <-- Radius
-              //           ),
-              //         ),
-              //         onPressed: () async {
-              //           try {
-              //             await FirebaseAuth.instance
-              //                 .sendPasswordResetEmail(email: email);
-              //             // showSucessAlert();
-              //             setState(() {
-              //               ifsend = true;
-              //             });
-              //           } on FirebaseAuthException catch (e) {
-              //             print(e);
-              //             return;
-              //           }
-
-              //           print(email);
-              //         },
-              //         child: Text("Send"),
-              //       ),
-              //     ],
-              //   ),
             ],
           ),
         )),

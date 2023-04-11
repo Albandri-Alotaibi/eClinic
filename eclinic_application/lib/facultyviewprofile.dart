@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multiselect/multiselect.dart';
+import 'package:myapp/domain/extension.dart';
 import 'package:myapp/login.dart';
 import 'package:myapp/screeens/resources/snackbar.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -49,10 +50,13 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
 
   List<String> options = [];
   List<String> specality = [];
+  List<String> fixspecality = [];
   List specalityid = [];
+  List fixspecalityid = [];
   List editfacultRefspecailty = [];
   List specialitybefore = [];
-  List<String> semester = [];
+  // List<String> semester = [];
+  List<Map<String, dynamic>?> semester = [];
   List<String> collage = [];
   List<String> department = [];
   String? email = '';
@@ -75,6 +79,10 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
   var departmentselectedfromDB;
   var fixedselectedsemester;
   var fixedselctedepartment;
+  var fixedfn;
+  var fixdln;
+  bool fix = true;
+  bool fix2 = false;
   late String docsforsemestername;
   late String docsforcollage;
   late String docfordepatment;
@@ -163,6 +171,8 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
     fixedselectedsemester = docRef2["semestername"];
     final fname = snap['firstname'];
     final lname = snap['lastname'];
+    fixedfn = snap['firstname'];
+    fixdln = snap['lastname'];
     _fnameController = TextEditingController(text: fname);
     _lnameController = TextEditingController(text: lname);
 
@@ -199,7 +209,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
             print(sy);
             if ((sn.contains(s)) || (sn.contains(sy))) {
               print(sn);
-              semester.add(element['semestername']);
+              semester.add(element.data());
             }
 
             // if (Dateoftoday.year <= enddate.year) {
@@ -213,7 +223,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
               // after && becuase if faculty was choose semester that the end date become in the past
               if (Dateoftoday.isAfter(enddate) &&
                   element['semestername'] != semesterselectedfromDB) {
-                semester.remove(element['semestername']);
+                semester.remove(element.data());
               }
 
               // if (Dateoftoday.month == enddate.month &&
@@ -249,6 +259,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
         //print(count);
         // print(semester);
       });
+      semester.sortBySemesterAndYear();
     } catch (e) {
       print(e.toString());
       return null;
@@ -705,6 +716,8 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                               whenEmpty: "",
                               onChanged: (value) {
                                 setState(() {
+                                  fix = false;
+                                  fix2 = true;
                                   selectedoptionlist.value = value;
                                   selectedoption.value = "";
                                   selectedoptionlist.value.forEach((element) {
@@ -783,7 +796,10 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                     )),
                               ),
                               isExpanded: true,
-                              items: semester.map((String dropdownitems) {
+                              items: semester
+                                  .map((e) => e!['semestername'])
+                                  .toList()
+                                  .map((dropdownitems) {
                                 return DropdownMenuItem<String>(
                                   value: dropdownitems,
                                   child: Text(dropdownitems),
@@ -797,15 +813,15 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                 });
                               },
                               value: semesterselectedvalue,
-                              // autovalidateMode:
-                              //     AutovalidateMode.onUserInteraction,
-                              // validator: (value) {
-                              //   if (value == null ||
-                              //       semesterselectedvalue!.isEmpty ||
-                              //       semesterselectedvalue == null) {
-                              //     return 'Please choose a semester';
-                              //   }
-                              // },
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (value) {
+                                if (value == null ||
+                                    semesterselectedvalue!.isEmpty ||
+                                    semesterselectedvalue == null) {
+                                  return 'Please choose a semester';
+                                }
+                              },
                             ),
                             SizedBox(
                               height: 8,
@@ -924,7 +940,23 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                 });
                                 if (formkey.currentState!.validate() &&
                                     checklengthforspecialty > 0) {
-                                  if (semesterselectedvalue ==
+                                  print("0000000000000000000");
+                                  print(specalityid);
+                                  print("999999999999999999999");
+                                  print(fixspecalityid);
+                                  if (fn == fixedfn &&
+                                      ln == fixdln &&
+                                      fix &&
+                                      semesterselectedvalue ==
+                                          fixedselectedsemester &&
+                                      departmentselectedvalue ==
+                                          fixedselctedepartment) {
+                                    showInSnackBar(
+                                        context, "No change have been made",
+                                        onError: true);
+                                  }
+                                  if ((fn != fixedfn || ln != fixdln || fix2) &&
+                                      semesterselectedvalue ==
                                           fixedselectedsemester &&
                                       departmentselectedvalue ==
                                           fixedselctedepartment) {
@@ -939,9 +971,6 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                         'department': FirebaseFirestore.instance
                                             .collection("department")
                                             .doc(docfordepatment),
-                                        // 'collage': FirebaseFirestore.instance
-                                        //     .collection("collage")
-                                        //     .doc(docsforcollage),
                                         'semester': FirebaseFirestore.instance
                                             .collection("semester")
                                             .doc(docsforsemestername),
@@ -955,21 +984,22 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                           context, "Something wronge",
                                           onError: true);
                                     }
-                                  } else {
-                                    //if semester changed
-                                    if (semesterselectedvalue !=
-                                        fixedselectedsemester) {
-                                      confirm2(context);
-                                    } else {
-                                      if (departmentselectedvalue !=
-                                          fixedselctedepartment) {
-                                        //dep confirm
-                                        confirm2dep(context);
-                                      }
-                                    }
                                   }
-                                  //if department change
+                                  // }
+
+                                  if (semesterselectedvalue !=
+                                      fixedselectedsemester) {
+                                    confirm2(context);
+                                  }
+                                  if (departmentselectedvalue !=
+                                      fixedselctedepartment) {
+                                    //dep confirm
+                                    confirm2dep(context);
+                                  }
+
+                                  //if semester changed
                                 }
+                                //if department change
                               },
                               child: Text("Save"),
                             ),

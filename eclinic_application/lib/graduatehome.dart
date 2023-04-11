@@ -87,7 +87,6 @@ class _graduatehomeState extends State<graduatehome> {
             ),
             backgroundColor: Color.fromARGB(255, 255, 255, 255),
             drawer: Drawer(
-                surfaceTintColor: Colors.black,
                 width: 210,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
