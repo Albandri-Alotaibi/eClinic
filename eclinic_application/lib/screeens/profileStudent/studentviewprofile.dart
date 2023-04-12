@@ -620,7 +620,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 20, vertical: 10),
                                           child: Text(
-                                            'change group',
+                                            'Change Group',
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleMedium!
