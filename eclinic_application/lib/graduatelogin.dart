@@ -210,21 +210,21 @@ class _graduateloginState extends State<graduatelogin> {
                                       final User? user = auth.currentUser;
                                       final Uid = user!.uid;
                                       ///////////////verfication code ///////////////////////////////////////////////
-                                      // if (user.emailVerified) {
-                                      //   TypeUser.type = 'graduate';
-                                      //   // save type user
-                                      //   StorageManager.saveData(
-                                      //       'TypeUser', 'graduate');
-                                      //   Navigator.pushNamedAndRemoveUntil(
-                                      //       context,
-                                      //       'graduatehome',
-                                      //       (route) => false);
-                                      // } else {
-                                      //   if (!(user.emailVerified)) {
-                                      //     Navigator.pushNamed(
-                                      //         context, 'graduateverfication');
-                                      //   }
-                                      // }
+                                      if (user.emailVerified) {
+                                        TypeUser.type = 'graduate';
+                                        // save type user
+                                        StorageManager.saveData(
+                                            'TypeUser', 'graduate');
+                                        Navigator.pushNamedAndRemoveUntil(
+                                            context,
+                                            'graduatehome',
+                                            (route) => false);
+                                      } else {
+                                        if (!(user.emailVerified)) {
+                                          Navigator.pushNamed(
+                                              context, 'graduateverfication');
+                                        }
+                                      }
                                     });
                                   }
                                 } on FirebaseAuthException catch (error) {

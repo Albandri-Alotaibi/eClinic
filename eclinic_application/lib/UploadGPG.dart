@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
+import 'package:myapp/domain/extension.dart';
 import 'package:myapp/graduatehome.dart';
 import 'package:myapp/loading.dart';
 import 'package:myapp/screeens/resources/snackbar.dart';
@@ -34,7 +35,8 @@ class _UploadGPGState extends State<UploadGPG> {
   bool checkboxvalue = false;
   var semesterselectedvalue;
   var year;
-  List<String> semester = [];
+  //List<String> semester = [];
+  List<Map<String, dynamic>?> semester = [];
   late String docsforsemestername;
   String? email = '';
   String? userid = '';
@@ -402,7 +404,8 @@ class _UploadGPGState extends State<UploadGPG> {
             // String sn = element['semestername'];
             // var startdate = element['startdate'];
             // startdate.toString();
-            semester.add(element['semestername']); //من عندي
+           // semester.add(element['semestername']); //من عندي
+            semester.add(element.data());
             // if (startdate != null) {
             //   if ((sn.contains(s))) {
             //     print(sn);
@@ -422,6 +425,7 @@ class _UploadGPGState extends State<UploadGPG> {
         });
         print(semester);
       });
+      semester.sortBySemesterAndYear();
     } catch (e) {
       print(e.toString());
       return null;
@@ -508,31 +512,29 @@ class _UploadGPGState extends State<UploadGPG> {
                                       height: 50,
                                     ),
                                   ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 7),
-                                      child: Column(
-                                        children: [
-                                          GestureDetector(
-                                            child: Text(
-                                              pickedFile!.name,
-                                              style: TextStyle(
-                                                  decoration:
-                                                      TextDecoration.underline,
-                                                  color: Mycolors
-                                                      .mainShadedColorBlue,
-                                                  fontSize: 20),
-                                              textAlign: TextAlign.start,
-                                              softWrap: false,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                            onTap: () {
-                                              openFile(pickedFile!);
-                                            },
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 7),
+                                    child: Column(
+                                      children: [
+                                        GestureDetector(
+                                          child: Text(
+                                            pickedFile!.name,
+                                            style: TextStyle(
+                                                decoration:
+                                                    TextDecoration.underline,
+                                                color: Mycolors
+                                                    .mainShadedColorBlue,
+                                                fontSize: 20),
+                                            textAlign: TextAlign.start,
+                                            softWrap: false,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
                                           ),
-                                        ],
-                                      ),
+                                          onTap: () {
+                                            openFile(pickedFile!);
+                                          },
+                                        ),
+                                      ],
                                     ),
                                   ),
                                   Spacer(),
@@ -625,7 +627,7 @@ class _UploadGPGState extends State<UploadGPG> {
                                   });
                                 });
                                 checkidcategory(selectedoptionlist.value);
-                                // isshow = selectedoptionlist.value.isEmpty;
+                                isshow = selectedoptionlist.value.isEmpty;
                                 checklengthforcategory =
                                     selectedoptionlist.value.length;
                                 if (checklengthforcategory < 1) {
@@ -658,166 +660,152 @@ class _UploadGPGState extends State<UploadGPG> {
                     key: formkey,
                     child: Padding(
                       padding: const EdgeInsets.all(0.0),
-                      child: Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            if (pickedFile != null)
-                              Container(
-                                // height: 125,
-                                width: 360,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                        "When did you finish your graduation project?",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            color: Mycolors.mainColorBlack,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15.5)),
-                                    SizedBox(
-                                      height: 7,
-                                    ),
-                                    DropdownButtonFormField<String>(
-                                      decoration: InputDecoration(
-                                        // focusedBorder: OutlineInputBorder(
-                                        //     borderRadius: BorderRadius.all(
-                                        //         Radius.circular(13.0)),
-                                        //     borderSide: BorderSide(
-                                        //         width: 2,
-                                        //         color: Mycolors
-                                        //             .mainShadedColorBlue)),
-                                        hintText: 'Choose a semester',
-                                        // border: OutlineInputBorder(
-                                        //     borderRadius:
-                                        //         BorderRadius.circular(13),
-                                        //     borderSide: BorderSide(
-                                        //       color:
-                                        //           Mycolors.mainShadedColorBlue,
-                                        //       width: 1,
-                                        //     )),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(13.0)),
-                                        ),
-                                      ),
-                                      isExpanded: true,
-                                      items:
-                                          semester.map((String dropdownitems) {
-                                        return DropdownMenuItem<String>(
-                                          value: dropdownitems,
-                                          child: Text(dropdownitems),
-                                        );
-                                      }).toList(),
-                                      onChanged: (String? newselect) {
-                                        setState(() {
-                                          semesterselectedvalue = newselect;
-                                          checkids(semesterselectedvalue);
-                                        });
-                                      },
-                                      value: semesterselectedvalue,
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      validator: (value) {
-                                        if (value == null ||
-                                            semesterselectedvalue!.isEmpty ||
-                                            semesterselectedvalue == null) {
-                                          return 'Please choose a semester';
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            if (pickedFile != null)
-                              SizedBox(
-                                height: 20,
-                              ),
-                            if (pickedFile != null)
-                              Row(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          if (pickedFile != null)
+                            Container(
+                              // height: 125,
+                              width: 360,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  SizedBox(
-                                    width: 10,
-                                  ), //SizedBox
-                                  Checkbox(
-                                      value: checkboxvalue,
-                                      onChanged: (newvalue) {
-                                        setState(() {
-                                          checkboxvalue = newvalue!;
-                                        });
-                                      }),
-
                                   Text(
-                                    'I would like to share GitHub repository link',
-                                    style: TextStyle(fontSize: 17.0),
+                                      "When did you finish your graduation project?",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          color: Mycolors.mainColorBlack,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.5)),
+                                  SizedBox(
+                                    height: 7,
                                   ),
-                                  //Text
-                                  // SizedBox(width: 5),
+                                  DropdownButtonFormField<String>(
+                               decoration: InputDecoration(
+                                      hintText: 'Choose a semester',
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(13.0)),
+                                      ),
+                                    ),
+                              isExpanded: true,
+                              items: semester
+                                  .map((e) => e!['semestername'])
+                                  .toList()
+                                  .map((dropdownitems) {
+                                return DropdownMenuItem<String>(
+                                  value: dropdownitems,
+                                  child: Text(dropdownitems),
+                                );
+                              }).toList(),
+                              onChanged: (String? newselect) {
+                                setState(() {
+                                  semesterselectedvalue = newselect;
+
+                                  checkids(semesterselectedvalue);
+                                });
+                              },
+                              value: semesterselectedvalue,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (value) {
+                                if (value == null ||
+                                    semesterselectedvalue!.isEmpty ||
+                                    semesterselectedvalue == null) {
+                                  return 'Please choose a semester';
+                                }
+                              },
+                            ),
                                 ],
                               ),
-                            if (checkboxvalue == true)
-                              Container(
-                                width: 360,
-                                child: Column(
-                                  children: [
-                                    TextFormField(
-                                      focusNode: myFocusNode,
-                                      controller: GitHubController,
-                                      onTap: () {
-                                        setState(() {
-                                          FocusScope.of(context)
-                                              .requestFocus(myFocusNode);
-                                        });
-                                      },
-                                      decoration: InputDecoration(
-                                        hintText:
-                                            "Please add your GitHub repository link here",
+                            ),
+                          if (pickedFile != null)
+                            SizedBox(
+                              height: 20,
+                            ),
+                          if (pickedFile != null)
+                            Row(
+                              children: <Widget>[
+                                SizedBox(
+                                  width: 10,
+                                ), //SizedBox
+                                Checkbox(
+                                    value: checkboxvalue,
+                                    onChanged: (newvalue) {
+                                      setState(() {
+                                        checkboxvalue = newvalue!;
+                                      });
+                                    }),
 
-                                        ///*******وش فايدتها؟ */
-                                        labelText: 'GitHub repository link',
-                                        // labelStyle: TextStyle(
-                                        //     color: myFocusNode.hasFocus
-                                        //         ? Mycolors.mainShadedColorBlue
-                                        //         : Colors.black),
-                                        // focusedBorder: OutlineInputBorder(
-                                        //     borderRadius: BorderRadius.all(
-                                        //         Radius.circular(13.0)),
-                                        //     borderSide: BorderSide(
-                                        //         width: 2,
-                                        //         color: Mycolors
-                                        //             .mainShadedColorBlue)),
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(13),
-                                            borderSide: const BorderSide(
-                                              width: 0,
-                                            )),
-                                      ),
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      validator: (value) {
-                                        if (value!.isEmpty ||
-                                            GitHubController.text == "") {
-                                          return 'Please add GitHub repository link ';
+                                Text(
+                                  'I would like to share GitHub repository link',
+                                  style: TextStyle(fontSize: 17.0),
+                                ),
+                                //Text
+                                // SizedBox(width: 5),
+                              ],
+                            ),
+                          if (checkboxvalue == true)
+                            Container(
+                              width: 360,
+                              child: Column(
+                                children: [
+                                  TextFormField(
+                                    focusNode: myFocusNode,
+                                    controller: GitHubController,
+                                    onTap: () {
+                                      setState(() {
+                                        FocusScope.of(context)
+                                            .requestFocus(myFocusNode);
+                                      });
+                                    },
+                                    decoration: InputDecoration(
+                                      hintText:
+                                          "Please add your GitHub repository link here",
+
+                                      ///*******وش فايدتها؟ */
+                                      labelText: 'GitHub repository link',
+                                      // labelStyle: TextStyle(
+                                      //     color: myFocusNode.hasFocus
+                                      //         ? Mycolors.mainShadedColorBlue
+                                      //         : Colors.black),
+                                      // focusedBorder: OutlineInputBorder(
+                                      //     borderRadius: BorderRadius.all(
+                                      //         Radius.circular(13.0)),
+                                      //     borderSide: BorderSide(
+                                      //         width: 2,
+                                      //         color: Mycolors
+                                      //             .mainShadedColorBlue)),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(13),
+                                          borderSide: const BorderSide(
+                                            width: 0,
+                                          )),
+                                    ),
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    validator: (value) {
+                                      if (value!.isEmpty ||
+                                          GitHubController.text == "") {
+                                        return 'Please add GitHub repository link ';
+                                      } else {
+                                        if (!(GitHubFormat.hasMatch(
+                                            GitHubController.text))) {
+                                          return 'Only GitHub link is acceptable';
                                         } else {
-                                          if (!(GitHubFormat.hasMatch(
+                                          if (!(english.hasMatch(
                                               GitHubController.text))) {
-                                            return 'Only GitHub link is acceptable';
-                                          } else {
-                                            if (!(english.hasMatch(
-                                                GitHubController.text))) {
-                                              return "only english is allowed";
-                                            }
+                                            return "only english is allowed";
                                           }
                                         }
-                                      },
-                                    ),
-                                  ],
-                                ),
+                                      }
+                                    },
+                                  ),
+                                ],
                               ),
-                          ],
-                        ),
+                            ),
+                        ],
                       ),
                     ),
                   ),

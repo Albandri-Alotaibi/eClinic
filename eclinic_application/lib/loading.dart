@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/UploadGPG.dart';
+import 'package:myapp/graduatehome.dart';
 import 'package:myapp/style/Mycolors.dart';
 
 class Loading extends StatefulWidget {
@@ -30,7 +31,7 @@ class _Loading extends State<Loading> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => UploadGPG(),
+        builder: (context) => graduatehome(),
       ),
     );
   }
