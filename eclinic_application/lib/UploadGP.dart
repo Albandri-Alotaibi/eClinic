@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
+import 'package:myapp/domain/extension.dart';
 import 'package:myapp/screeens/resources/snackbar.dart';
 import 'package:myapp/studenthome.dart';
 import 'package:myapp/style/Mycolors.dart';
@@ -32,7 +33,9 @@ class _UploadGPState extends State<UploadGP> {
   bool checkboxvalue = false;
   var semesterselectedvalue;
   var year;
-  List<String> semester = [];
+  //List<String> semester = [];
+List<Map<String, dynamic>?> semester = [];
+
   late String docsforsemestername;
   String? email = '';
   String? userid = '';
@@ -445,7 +448,8 @@ class _UploadGPState extends State<UploadGP> {
             // String sn = element['semestername'];
             // var startdate = element['startdate'];
             // startdate.toString();
-            semester.add(element['semestername']); //من عندي
+            //semester.add(element['semestername']); //من عندي
+            semester.add(element.data());
             // if (startdate != null) {
             //   if ((sn.contains(s))) {
             //     print(sn);
@@ -465,6 +469,7 @@ class _UploadGPState extends State<UploadGP> {
         });
         print(semester);
       });
+       semester.sortBySemesterAndYear();
     } catch (e) {
       print(e.toString());
       return null;
@@ -710,38 +715,55 @@ class _UploadGPState extends State<UploadGP> {
                                   SizedBox(
                                     height: 7,
                                   ),
-                                  DropdownButtonFormField<String>(
-                                    decoration: InputDecoration(
+                                
+                             DropdownButtonFormField<String>(
+                               decoration: InputDecoration(
                                       hintText: 'Choose a semester',
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(13.0)),
                                       ),
                                     ),
-                                    isExpanded: true,
-                                    items: semester.map((String dropdownitems) {
-                                      return DropdownMenuItem<String>(
-                                        value: dropdownitems,
-                                        child: Text(dropdownitems),
-                                      );
-                                    }).toList(),
-                                    onChanged: (String? newselect) {
-                                      setState(() {
-                                        semesterselectedvalue = newselect;
-                                        checkids(semesterselectedvalue);
-                                      });
-                                    },
-                                    value: semesterselectedvalue,
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    validator: (value) {
-                                      if (value == null ||
-                                          semesterselectedvalue!.isEmpty ||
-                                          semesterselectedvalue == null) {
-                                        return 'Please choose a semester';
-                                      }
-                                    },
-                                  ),
+                              isExpanded: true,
+                              items: semester
+                                  .map((e) => e!['semestername'])
+                                  .toList()
+                                  .map((dropdownitems) {
+                                return DropdownMenuItem<String>(
+                                  value: dropdownitems,
+                                  child: Text(dropdownitems),
+                                );
+                              }).toList(),
+                              onChanged: (String? newselect) {
+                                setState(() {
+                                  semesterselectedvalue = newselect;
+
+                                  checkids(semesterselectedvalue);
+                                });
+                              },
+                              value: semesterselectedvalue,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (value) {
+                                if (value == null ||
+                                    semesterselectedvalue!.isEmpty ||
+                                    semesterselectedvalue == null) {
+                                  return 'Please choose a semester';
+                                }
+                              },
+                            ),
+
+
+
+
+
+
+
+
+
+
+
+
                                 ],
                               ),
                             ),
