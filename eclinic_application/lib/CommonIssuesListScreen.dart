@@ -175,108 +175,117 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                         //------------------------- dropdowns [speciality/semester]
                         Column(children: [
                           Row(children: [
-                             Expanded(child:
-                            Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
-                                      color: Mycolors.mainShadedColorBlue,
-                                      width: 1),
-                                ),
-                                padding: const EdgeInsets.all(10),
-                                margin: const EdgeInsets.only(bottom: 8),
-                                child: DropdownButton<Map<String, dynamic>?>(
-                                    // icon: const Icon(Icons.face),
-  isExpanded: true,
-                                    underline: const SizedBox(),
-                                    disabledHint: Row(children: const [
-                                      Text("Wait ... "),
-                                      SizedBox(
-                                          height: 15.0,
-                                          width: 15.0,
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 3,
-                                          ))
-                                    ]),
-                                    hint: Text(
-                                      "Select Speciality",
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          color: themeData.colorScheme.primary,
-                                          fontWeight: FontWeight.w400),
+                            Expanded(
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                          color: Mycolors.mainShadedColorBlue,
+                                          width: 1),
                                     ),
+                                    padding: const EdgeInsets.all(10),
+                                    margin: const EdgeInsets.only(bottom: 8),
+                                    child: DropdownButton<
+                                            Map<String, dynamic>?>(
+                                        // icon: const Icon(Icons.face),
+                                        isExpanded: true,
+                                        underline: const SizedBox(),
+                                        disabledHint: Row(children: const [
+                                          Text("Wait ... "),
+                                          SizedBox(
+                                              height: 15.0,
+                                              width: 15.0,
+                                              child: CircularProgressIndicator(
+                                                strokeWidth: 3,
+                                              ))
+                                        ]),
+                                        hint: Text(
+                                          "Choose Speciality",
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color:
+                                                  themeData.colorScheme.primary,
+                                              fontWeight: FontWeight.w400),
+                                        ),
 
-                                    // borderRadius: BorderRadius.circular(25),
-                                    value: specialityDropdownValue,
-                                    items: specialityList
-                                        .map((Map<String, dynamic>? item) {
-                                      return DropdownMenuItem(
-                                          value: item,
-                                          child: Text(
-                                              item?['specialityname'] ?? "--"));
-                                    }).toList(),
-                                    onChanged: (newValue) {
-                                      if (newValue != null) {
-                                        setState(() {
-                                          //reset variables, to remove results and show messages
-                                          specialityDropdownValue = newValue;
-                                          commonIssuesList = [];
-                                          searchClicked = false;
-                                          noResults = true;
-                                          initCommonIssues();
-                                        });
-                                      }
-                                    }))),
-                            const SizedBox(width: 20,),
-                            Expanded(child:
-                            Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
-                                      color: Mycolors.mainShadedColorBlue,
-                                      width: 1),
-                                ),
-                                padding: const EdgeInsets.all(10),
-                                margin: const EdgeInsets.only(bottom: 8),
-                                child: DropdownButton<Map<String, dynamic>?>(
-                                    // icon: const Icon(Icons.pages),
-                                    isExpanded: true,
-                                    disabledHint: Row(children: const [
-                                      Text("Wait ... "),
-                                      SizedBox(
-                                          height: 15.0,
-                                          width: 15.0,
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 3,
-                                          ))
-                                    ]),
-                                    underline: const SizedBox(),
-                                    hint: Text(
-                                      "Select Semester",
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          color: themeData.colorScheme.primary,
-                                          fontWeight: FontWeight.w400),
+                                        // borderRadius: BorderRadius.circular(25),
+                                        value: specialityDropdownValue,
+                                        items: specialityList
+                                            .map((Map<String, dynamic>? item) {
+                                          return DropdownMenuItem(
+                                              value: item,
+                                              child: Text(
+                                                  item?['specialityname'] ??
+                                                      "--"));
+                                        }).toList(),
+                                        onChanged: (newValue) {
+                                          if (newValue != null) {
+                                            setState(() {
+                                              //reset variables, to remove results and show messages
+                                              specialityDropdownValue =
+                                                  newValue;
+                                              commonIssuesList = [];
+                                              searchClicked = false;
+                                              noResults = true;
+                                              initCommonIssues();
+                                            });
+                                          }
+                                        }))),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                          color: Mycolors.mainShadedColorBlue,
+                                          width: 1),
                                     ),
-                                    value: semesterDropdownValue,
-                                    items: semesterList
-                                        .map((Map<String, dynamic>? item) {
-                                      return DropdownMenuItem(
-                                          value: item,
-                                          child: Text(
-                                              item?['semestername'] ?? "--"));
-                                    }).toList(),
-                                    onChanged: (newValue) {
-                                      if (newValue != null) {
-                                        setState(() {
-                                          //reset variables, to remove results and show messages
-                                          semesterDropdownValue = newValue;
-                                          commonIssuesList = [];
-                                          searchClicked = false;
-                                          initCommonIssues();
-                                        });
-                                      }
-                                    }))),
+                                    padding: const EdgeInsets.all(10),
+                                    margin: const EdgeInsets.only(bottom: 8),
+                                    child: DropdownButton<
+                                            Map<String, dynamic>?>(
+                                        // icon: const Icon(Icons.pages),
+                                        isExpanded: true,
+                                        disabledHint: Row(children: const [
+                                          Text("Wait ... "),
+                                          SizedBox(
+                                              height: 15.0,
+                                              width: 15.0,
+                                              child: CircularProgressIndicator(
+                                                strokeWidth: 3,
+                                              ))
+                                        ]),
+                                        underline: const SizedBox(),
+                                        hint: Text(
+                                          "Choose Semester",
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color:
+                                                  themeData.colorScheme.primary,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                        value: semesterDropdownValue,
+                                        items: semesterList
+                                            .map((Map<String, dynamic>? item) {
+                                          return DropdownMenuItem(
+                                              value: item,
+                                              child: Text(
+                                                  item?['semestername'] ??
+                                                      "--"));
+                                        }).toList(),
+                                        onChanged: (newValue) {
+                                          if (newValue != null) {
+                                            setState(() {
+                                              //reset variables, to remove results and show messages
+                                              semesterDropdownValue = newValue;
+                                              commonIssuesList = [];
+                                              searchClicked = false;
+                                              initCommonIssues();
+                                            });
+                                          }
+                                        }))),
                           ]),
                           // Row(children: [
                           //   Expanded(
@@ -304,7 +313,7 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                                                 ? 'Please select speciality to find common issues.'
                                                 //if no search clicked then tell user to click search, otherwise if it's clicked, no results are found
                                                 : (searchClicked
-                                                    ? 'There are no common issues available ${specialityDropdownValue?['id'] == '0' && semesterDropdownValue?['id'] == "0" ? 'currently.' : 'with the selected options.'}'
+                                                    ? 'There are no FAQs available ${specialityDropdownValue?['id'] == '0' && semesterDropdownValue?['id'] == "0" ? 'currently.' : 'with the selected options.'}'
                                                     : 'Please click search to continue..')),
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
