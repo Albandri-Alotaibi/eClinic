@@ -172,45 +172,46 @@ class FacultyListScreenState extends State<FacultyListScreen> {
   Widget build(BuildContext context) {
     themeData = Theme.of(context);
 
-
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: SafeArea(
           child: Scaffold(
               backgroundColor: Colors.white,
-              body: (loading || dropdownvalue == null ) && (!facultyLoading  && facultyList.isNotEmpty)
+              body: (loading || dropdownvalue == null) &&
+                      (!facultyLoading && facultyList.isNotEmpty)
                   ? _showMenu(this)
                   : ListView(
                       padding: const EdgeInsets.all(24),
                       children: <Widget>[
                         Column(children: [
-
-                          if(!facultyLoading  && facultyList.isNotEmpty)
-                          SafeArea(
-                            child: Container(
-                              padding: const EdgeInsets.only(bottom: 20),
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  textStyle: const TextStyle(
-                                      fontFamily: 'main', fontSize: 16),
-                                  // shadowColor: Colors.blue[900],
-                                  elevation: 20,
-                                  backgroundColor: Mycolors.mainShadedColorBlue,
-                                  minimumSize: const Size(200, 50),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(17), // <-- Radius
+                          if (!facultyLoading && facultyList.isNotEmpty)
+                            SafeArea(
+                              child: Container(
+                                padding: const EdgeInsets.only(bottom: 20),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    textStyle: const TextStyle(
+                                        fontFamily: 'main', fontSize: 16),
+                                    // shadowColor: Colors.blue[900],
+                                    elevation: 20,
+                                    backgroundColor:
+                                        Mycolors.mainShadedColorBlue,
+                                    minimumSize: const Size(200, 50),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          17), // <-- Radius
+                                    ),
                                   ),
+                                  child:
+                                      const Text("Choose Another Speciality"),
+                                  onPressed: () {
+                                    setState(() {
+                                      dropdownvalue = null;
+                                    });
+                                  },
                                 ),
-                                child: const Text("Select Another Speciality"),
-                                onPressed: () {
-                                  setState(() {
-                                    dropdownvalue = null;
-                                  });
-                                },
                               ),
                             ),
-                          ),
                         ]),
                         SizedBox(
                             height: 800,
@@ -388,28 +389,25 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                 Card(
                   color: const Color.fromRGBO(21, 70, 160, 1),
                   borderOnForeground: true,
-
                   child: ListTile(
-                        contentPadding: const EdgeInsets.all(0),
-                        title: Text(
-                          specialityList[item]!['specialityname'],
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        onTap: () {
-                          setState(() {
-                            isItVisible = false;
-                            dropdownvalue = specialityList[item];
-                          });
-                        },
-                      ),
+                    contentPadding: const EdgeInsets.all(0),
+                    title: Text(
+                      specialityList[item]!['specialityname'],
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    onTap: () {
+                      setState(() {
+                        isItVisible = false;
+                        dropdownvalue = specialityList[item];
+                      });
+                    },
+                  ),
                 ),
             ],
           );
-
-
   }
 }
