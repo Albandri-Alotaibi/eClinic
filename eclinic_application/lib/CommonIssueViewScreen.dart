@@ -368,7 +368,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Created by: ${creator?['firstname'] ?? ""} ${creator?['lastname'] ?? ""}",
+                                "  Created by: ${creator?['firstname'] ?? ""} ${creator?['lastname'] ?? ""}",
                                 style: const TextStyle(
                                     letterSpacing: 0.1,
                                     fontSize: 14,
@@ -379,7 +379,7 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
                               if (widget.commonIssue['lastmodified'] != null &&
                                   widget.commonIssue['lastmodified'] != "")
                                 Text(
-                                  "Last modified by: ${modifier?['firstname'] ?? ""} ${modifier?['lastname'] ?? ""}",
+                                  "  Last modified by: ${modifier?['firstname'] ?? ""} ${modifier?['lastname'] ?? ""}",
                                   style: const TextStyle(
                                       letterSpacing: 0.1,
                                       fontSize: 14,
