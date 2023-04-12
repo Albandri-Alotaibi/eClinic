@@ -923,7 +923,7 @@ class _UploadGPGState extends State<UploadGPG> {
                           child: Padding(
                             padding: const EdgeInsets.all(20),
                             child: Text(
-                                "Your GP document has been uploaded by you or one of your group members along with your social media conctacts.\nYou can edit you socials from your profile.",
+                                "Your GP document has been uploaded by you or one of your group members along with your social media contact links.\nYou can edit you socials from your profile.",
                                 overflow: TextOverflow.clip,
                                 style: TextStyle(
                                     color: Mycolors.mainColorWhite,
