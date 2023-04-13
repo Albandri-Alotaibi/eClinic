@@ -122,6 +122,7 @@ class _StudentViewBookedAppointmentState
             final DocumentSnapshot docRef2 = await appdbarray[i].get();
 // *******************CHECK IN APPOINTMENT IS IN FUTURE ****************************
             if(docRef2.exists) {
+              Timestamp? t1 = docRef2['starttime'] as Timestamp?;
               DateTime? StartTimeDate = t1?.toDate();
               if (StartTimeDate != null && now.isBefore(StartTimeDate)) {
                 found = true;
