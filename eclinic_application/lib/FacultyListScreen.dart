@@ -112,9 +112,11 @@ class FacultyListScreenState extends State<FacultyListScreen> {
 
   void initFaculty() async {
     if (student?['department']?['ref'] == null) {
-      setState(() {
-        facultyLoading = false;
-      });
+      if(mounted) {
+        setState(() {
+          facultyLoading = false;
+        });
+      }
       return;
     }
     var faculty = FirebaseFirestore.instance.collection('faculty');
@@ -159,14 +161,18 @@ class FacultyListScreenState extends State<FacultyListScreen> {
         continue;
       }
 
-      setState(() {
-        facultyList.add(faculty);
-      });
+      if(mounted) {
+        setState(() {
+          facultyList.add(faculty);
+        });
+      }
     }
 
-    setState(() {
-      facultyLoading = false;
-    });
+    if(mounted) {
+      setState(() {
+        facultyLoading = false;
+      });
+    }
   }
 
   @override
@@ -210,9 +216,11 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                                       : "Choose Speciality"),
                                   onPressed: () {
                                     if (facultyList.isNotEmpty) {
-                                      setState(() {
-                                        dropdownvalue = null;
-                                      });
+                                      if(mounted) {
+                                        setState(() {
+                                          dropdownvalue = null;
+                                        });
+                                      }
                                     } else {
                                       showInSnackBar(context,
                                           "No appointments available for you currently.", color: const Color.fromRGBO(
@@ -429,10 +437,12 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                     ),
                     onTap: () {
                       if (hasResults(specialityList[item])) {
-                        setState(() {
-                          isItVisible = false;
-                          dropdownvalue = specialityList[item];
-                        });
+                        if(mounted) {
+                          setState(() {
+                            isItVisible = false;
+                            dropdownvalue = specialityList[item];
+                          });
+                        }
                       } else {
                         showInSnackBar(
                             context,
