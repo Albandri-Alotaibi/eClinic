@@ -27,7 +27,7 @@ class _graduateverficationState extends State<graduateverfication> {
   String? email = '';
   String? userid = '';
   User? user;
-  // Timer timer = Timer.periodic(Duration(seconds: 3), (timer) {});
+
   @override
   void initState() {
     user = auth.currentUser;
@@ -35,35 +35,9 @@ class _graduateverficationState extends State<graduateverfication> {
     userid = user?.uid;
     email = user?.email;
     user?.sendEmailVerification();
-    // if (mounted) Timer timer = Timer.periodic(Duration(seconds: 1), (timer) {});
-    // checkemailverfication();
+
     super.initState();
   }
-
-  // void dispose() {
-  //   timer.cancel();
-  //   super.dispose();
-  // }
-
-  // Future<void> checkemailverfication() async {
-  //   user = auth.currentUser;
-  //   await user!.reload();
-  //   if (user!.emailVerified) {
-  //     // timer.cancel();
-  //     // Navigator.of(context).pushReplacement(
-  //     //     MaterialPageRoute(builder: (context) => addHoursFaculty()));
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(
-  //         builder: (context) => graduatehome(),
-  //       ),
-  //     );
-  //   } else {
-  //     // ignore: use_build_context_synchronously
-  //     showInSnackBar(context, "Please check your email to verify your account",
-  //         onError: true);
-  //   }
-  // }
 
   Future<bool> currentuseremailverified() async {
     user = auth.currentUser;
@@ -193,8 +167,6 @@ class _graduateverficationState extends State<graduateverfication> {
                     ),
                   ),
                   onPressed: () async {
-                    // user!.reload();
-                    // await Future.delayed(Duration(seconds: 10), () {});
                     print(user);
                     print(await currentuseremailverified());
                     user = auth.currentUser;

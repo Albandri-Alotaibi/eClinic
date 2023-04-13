@@ -86,7 +86,7 @@ class _studentloginState extends State<studentlogin> {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              " email:",
+                              " Email:",
                               style: TextStyle(
                                   overflow: TextOverflow.ellipsis,
                                   color: Mycolors.mainColorBlack,
@@ -216,7 +216,7 @@ class _studentloginState extends State<studentlogin> {
                                         .then((value) async {
                                       final FirebaseAuth auth =
                                           FirebaseAuth.instance;
-                                      final User? user = auth.currentUser;
+                                      User? user = auth.currentUser;
                                       final Uid = user!.uid;
                                       // Navigator.pushNamed(
                                       //     context, 'studenthome');
@@ -225,14 +225,12 @@ class _studentloginState extends State<studentlogin> {
                                           TypeUser.type = 'student';
                                           StorageManager.saveData(
                                               'TypeUser', 'student');
-                                          Navigator.pushNamedAndRemoveUntil(
-                                              context,
-                                              'studenthome',
-                                              (route) => false);
-                                        } else {
                                           Navigator.pushNamed(
-                                              context, 'studentverfication');
+                                              context, 'studenthome');
                                         }
+                                      } else {
+                                        Navigator.pushNamed(
+                                            context, 'studentverfication');
                                       }
                                     });
                                   }

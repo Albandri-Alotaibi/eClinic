@@ -226,23 +226,23 @@ class _loginState extends State<login> {
                                     } else {
                                       await FirebaseAuth.instance
                                           .signInWithEmailAndPassword(
-                                              email: email, password: password);
-                                      Navigator.pushNamed(
-                                              context, 'facultyhome')
+                                              email: email, password: password)
+                                          // Navigator.pushNamed(
+                                          //         context, 'facultyhome')
                                           .then((value) async {
                                         final FirebaseAuth auth =
                                             FirebaseAuth.instance;
                                         final User? user = auth.currentUser;
                                         final Uid = user!.uid;
-                                        // if (user.emailVerified) {
-                                        //   Navigator.pushNamed(
-                                        //       context, 'facultyhome');
-                                        // } else {
-                                        //   if (!(user.emailVerified)) {
-                                        //     Navigator.pushNamed(
-                                        //         context, 'verfication');
-                                        //   }
-                                        // }
+                                        if (user.emailVerified) {
+                                          Navigator.pushNamed(
+                                              context, 'facultyhome');
+                                        } else {
+                                          if (!(user.emailVerified)) {
+                                            Navigator.pushNamed(
+                                                context, 'verfication');
+                                          }
+                                        }
                                       });
                                     }
                                   }

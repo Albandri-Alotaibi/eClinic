@@ -555,12 +555,11 @@ class _facultysignupState extends State<facultysignup> {
                                 if (value!.isEmpty ||
                                     _emailController.text == "") {
                                   return 'Please enter your KSU email ';
-                                  // }
-                                  //else {
-                                  //   if (!(ksuEmailRegEx
-                                  //       .hasMatch(_emailController.text))) {
-                                  //     return 'Please write email format correctly, example@ksu.edu.sa ';
-                                  //   }
+                                } else {
+                                  if (!(ksuEmailRegEx
+                                      .hasMatch(_emailController.text))) {
+                                    return 'Please write email format correctly, example@ksu.edu.sa ';
+                                  }
                                 }
                               },
                             ),
