@@ -102,7 +102,7 @@ class _StudentViewBookedAppointmentState
       if (event.data()!.containsKey('appointments') == true) {
         if (event['appointments'].length == 0) {
           print("NOOO1 Future booked Appoinyments");
-          if(mounted) {
+          if (mounted) {
             setState(() {
               isExists = false;
             });
@@ -121,7 +121,7 @@ class _StudentViewBookedAppointmentState
 
             final DocumentSnapshot docRef2 = await appdbarray[i].get();
 // *******************CHECK IN APPOINTMENT IS IN FUTURE ****************************
-            if(docRef2.exists) {
+            if (docRef2.exists) {
               Timestamp? t1 = docRef2['starttime'] as Timestamp?;
               DateTime? StartTimeDate = t1?.toDate();
               if (StartTimeDate != null && now.isBefore(StartTimeDate)) {
@@ -134,7 +134,7 @@ class _StudentViewBookedAppointmentState
       else {
         //or null   --- if (event.data()!.containsKey("name")==false)
         print("NOOO2 Future booked Appoinyments");
-        if(mounted) {
+        if (mounted) {
           setState(() {
             isExists = false;
           });
@@ -142,14 +142,14 @@ class _StudentViewBookedAppointmentState
       }
       if (found == true) {
         print("Future booked Appoinyments Exists");
-        if(mounted) {
+        if (mounted) {
           setState(() {
             isExists = true;
           });
         }
       } else if (found == false) {
         print("NOOO3 Future booked Appoinyments");
-        if(mounted) {
+        if (mounted) {
           setState(() {
             isExists = false;
           });
@@ -191,7 +191,7 @@ class _StudentViewBookedAppointmentState
 
 // *******************CHECK IN APPOINTMENT IS IN FUTURE ****************************
 
-          if(docRef2.exists) {
+          if (docRef2.exists) {
             Timestamp? t1 = docRef2['starttime'] as Timestamp?;
             DateTime? StartTimeDate = t1?.toDate();
             if (StartTimeDate != null && now.isBefore(StartTimeDate)) {
@@ -208,21 +208,22 @@ class _StudentViewBookedAppointmentState
               // var studentsrefrences = docRef2['student'];
               var specialityRef = docRef2['specialty'];
               final DocumentSnapshot docRef4 = await specialityRef.get();
-              String specialityName = docRef4['specialityname']; //specialityname
+              String specialityName =
+                  docRef4['specialityname']; //specialityname
               print(specialityName);
 
 // *******************END APPOINTMENT INFO ****************************
 
 // *******************START FACULTY NEEDED INFO ****************************
               final DocumentSnapshot docRef3 =
-              await appdbarray[i].parent.parent.get();
+                  await appdbarray[i].parent.parent.get();
               String facultyName =
                   docRef3['firstname'] + ' ' + docRef3['lastname'];
               String meetingMethod = docRef3['meetingmethod'];
               String meetingInfo = docRef3['mettingmethodinfo'];
 // *******************END FACULTY NEEDED INFO ****************************
 
-              if(mounted) {
+              if (mounted) {
                 setState(() {
                   BookedAppointments.add(new StudentAppointment(
                     appointmentId: docRef2.id,
@@ -256,7 +257,7 @@ class _StudentViewBookedAppointmentState
                 for (int j = i + 1; j < BookedAppointments.length; j++) {
                   if ((BookedAppointments[i].appointmentId ==
                       BookedAppointments[j].appointmentId)) {
-                    if(mounted) {
+                    if (mounted) {
                       setState(() {
                         dynamic res = BookedAppointments.removeAt(j);
                       });
@@ -379,7 +380,7 @@ class _StudentViewBookedAppointmentState
                                                     //  Text("XXXXXXXX\n",
                                                     //         style: TextStyle(color: Colors.black,)),
                                                     Text(
-                                                        "With : Dr." +
+                                                        "With :" +
                                                             BookedAppointments[
                                                                     index]
                                                                 .FacultyName +
@@ -719,7 +720,7 @@ class _StudentViewBookedAppointmentState
                     child: Text("other commitment"), value: "other commitment")
               ],
               onChanged: (value) {
-                if(mounted) {
+                if (mounted) {
                   setState(() {
                     reasone = value;
                   });

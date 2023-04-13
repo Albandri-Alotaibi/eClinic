@@ -112,7 +112,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
 
   void initFaculty() async {
     if (student?['department']?['ref'] == null) {
-      if(mounted) {
+      if (mounted) {
         setState(() {
           facultyLoading = false;
         });
@@ -161,14 +161,14 @@ class FacultyListScreenState extends State<FacultyListScreen> {
         continue;
       }
 
-      if(mounted) {
+      if (mounted) {
         setState(() {
           facultyList.add(faculty);
         });
       }
     }
 
-    if(mounted) {
+    if (mounted) {
       setState(() {
         facultyLoading = false;
       });
@@ -216,15 +216,16 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                                       : "Choose Speciality"),
                                   onPressed: () {
                                     if (facultyList.isNotEmpty) {
-                                      if(mounted) {
+                                      if (mounted) {
                                         setState(() {
                                           dropdownvalue = null;
                                         });
                                       }
                                     } else {
                                       showInSnackBar(context,
-                                          "No appointments available for you currently.", color: const Color.fromRGBO(
-                                                    21, 70, 160, 1) );
+                                          "No appointments available for you currently.",
+                                          color: const Color.fromRGBO(
+                                              21, 70, 160, 1));
                                     }
                                   },
                                 ),
@@ -374,7 +375,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
   }
 
   List getResults() {
-    if(facultyLoading) return [];
+    if (facultyLoading) return [];
 
     if (dropdownvalue != null) {
       var results = [];
@@ -405,7 +406,8 @@ class FacultyListScreenState extends State<FacultyListScreen> {
   _showMenu(thisContext) {
     return specialityList.isEmpty || facultyLoading
         ? const Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+                color: Color.fromRGBO(21, 70, 160, 1)),
           )
         : ListView(
             children: <Widget>[
@@ -437,7 +439,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                     ),
                     onTap: () {
                       if (hasResults(specialityList[item])) {
-                        if(mounted) {
+                        if (mounted) {
                           setState(() {
                             isItVisible = false;
                             dropdownvalue = specialityList[item];
@@ -448,8 +450,8 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                             context,
                             "No Appointments available in (" +
                                 specialityList[item]?['specialityname'] +
-                                ")" , color: const Color.fromRGBO(
-                                                    21, 70, 160, 1));
+                                ")",
+                            color: Color.fromARGB(255, 179, 114, 17));
                       }
                     },
                   ),
