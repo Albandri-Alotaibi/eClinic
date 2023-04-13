@@ -828,7 +828,7 @@ class _StudentViewBookedAppointmentState
         .collection("faculty")
         .doc(FacultytId) //its the faclulty doc id???????????
         .get();
-    String Fname = "Dr." + snap2['firstname'] + " " + snap2['lastname'];
+    String Fname =  snap2['firstname'] + " " + snap2['lastname'];
     // today date and time
     DateTime now = new DateTime.now();
     //at the same day

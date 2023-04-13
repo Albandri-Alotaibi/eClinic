@@ -780,7 +780,7 @@ class _sState extends State<FacultyViewBookedAppointment> {
         .collection("faculty")
         .doc(userid)
         .get();
-    String Fname = " Dr." + snap2['firstname'] + ' ' + snap2['lastname'];
+    String Fname = snap2['firstname'] + ' ' + snap2['lastname'];
     String time = " on " +
         BookedAppointments[index].StringDate() +
         " at " +

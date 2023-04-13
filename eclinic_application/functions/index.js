@@ -291,12 +291,12 @@ exports.updateFaculty = functions.firestore
                                     minute: '2-digit',
                                 });
 
-                                functions.logger.info("your appointment with Dr.", Fname, "date", startdate.getDate(), "/", startdate.getMonth(), "/", startdate.getFullYear(), "time", StartTimeForAppointment, "-", endTimeForAppointment);
+                                functions.logger.info("your appointment with ", Fname, "date", startdate.getDate(), "/", startdate.getMonth(), "/", startdate.getFullYear(), "time", StartTimeForAppointment, "-", endTimeForAppointment);
                                 var month = startdate.getMonth() + 1;
                                 const payload = {
                                     notification: {
                                         title: 'Appointment cancelation',
-                                        body: `your appointment with Dr.${Fname} on ${startdate.getDate()}/${month}/${startdate.getFullYear()} at ${StartTimeForAppointment} - ${endTimeForAppointment} has been canceled `,
+                                        body: `your appointment with ${Fname} on ${startdate.getDate()}/${month}/${startdate.getFullYear()} at ${StartTimeForAppointment} - ${endTimeForAppointment} has been canceled `,
                                         //icon: follower.photoURL
                                     }
                                 };
@@ -369,7 +369,7 @@ exports.updateFaculty = functions.firestore
                                 const payload = {
                                     notification: {
                                         title: 'Meetting method',
-                                        body: `Dr. ${Fname}'s meeting method has changed for the upcoming appointments; please check it on the application.`,
+                                        body: `${Fname}'s meeting method has changed for the upcoming appointments; please check it on the application.`,
                                         //icon: follower.photoURL
                                     }
 
