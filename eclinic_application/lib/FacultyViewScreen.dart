@@ -165,7 +165,8 @@ class FacultyViewScreenState extends State<FacultyViewScreen> {
             ),
             body: loading
                 ? const Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(color: Color.fromRGBO(
+                                                    21, 70, 160, 1)),
                   )
                 : calendarBox()));
   }
@@ -183,11 +184,19 @@ class FacultyViewScreenState extends State<FacultyViewScreen> {
         ),
       if (appointmentModels.isEmpty)
         ElevatedButton(
-            style: ButtonStyle(
-                backgroundColor: MaterialStateColor.resolveWith(
-                    (states) => const Color.fromRGBO(21, 70, 160, 1)),
-                padding: MaterialStateProperty.all(
-                    const EdgeInsets.symmetric(vertical: 16, horizontal: 16))),
+            style:  ElevatedButton.styleFrom(
+                                    textStyle: const TextStyle(
+                                        fontFamily: 'main', fontSize: 16),
+                                    // shadowColor: Colors.blue[900],
+                                    elevation: 20,
+                                    backgroundColor: Mycolors.mainShadedColorBlue,
+                                    shadowColor: Colors.transparent,
+                                    minimumSize: const Size(200, 50),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          17), // <-- Radius
+                                    ),
+                                  ),
             onPressed: () {
               Navigator.pop(context);
             },
