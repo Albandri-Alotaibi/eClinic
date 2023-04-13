@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myapp/FacultyViewScreen.dart';
+import 'package:myapp/screeens/resources/snackbar.dart';
 import 'dart:async';
 import 'package:myapp/style/Mycolors.dart';
 
@@ -18,7 +20,6 @@ class FacultyListScreenState extends State<FacultyListScreen> {
   Map<String, dynamic>? dropdownvalue;
   List facultyList = [];
   List<Map<String, dynamic>?> specialityList = [];
-  var loading = false;
   var facultyLoading = true;
   String? userid;
   String? email;
@@ -111,9 +112,11 @@ class FacultyListScreenState extends State<FacultyListScreen> {
 
   void initFaculty() async {
     if (student?['department']?['ref'] == null) {
-      setState(() {
-        facultyLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          facultyLoading = false;
+        });
+      }
       return;
     }
     var faculty = FirebaseFirestore.instance.collection('faculty');
@@ -158,14 +161,18 @@ class FacultyListScreenState extends State<FacultyListScreen> {
         continue;
       }
 
-      setState(() {
-        facultyList.add(faculty);
-      });
+      if (mounted) {
+        setState(() {
+          facultyList.add(faculty);
+        });
+      }
     }
 
-    setState(() {
-      facultyLoading = false;
-    });
+    if (mounted) {
+      setState(() {
+        facultyLoading = false;
+      });
+    }
   }
 
   @override
@@ -177,14 +184,14 @@ class FacultyListScreenState extends State<FacultyListScreen> {
         home: SafeArea(
           child: Scaffold(
               backgroundColor: Colors.white,
-              body: (loading || dropdownvalue == null) &&
+              body: dropdownvalue == null &&
                       (!facultyLoading && facultyList.isNotEmpty)
                   ? _showMenu(this)
                   : ListView(
                       padding: const EdgeInsets.all(24),
                       children: <Widget>[
                         Column(children: [
-                          if (!facultyLoading && facultyList.isNotEmpty)
+                          if (facultyList.isNotEmpty && !facultyLoading)
                             SafeArea(
                               child: Container(
                                 padding: const EdgeInsets.only(bottom: 20),
@@ -194,20 +201,32 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                                         fontFamily: 'main', fontSize: 16),
                                     // shadowColor: Colors.blue[900],
                                     elevation: 20,
-                                    backgroundColor:
-                                        Mycolors.mainShadedColorBlue,
+                                    backgroundColor: facultyList.isNotEmpty
+                                        ? Mycolors.mainShadedColorBlue
+                                        : Mycolors.mainColorGray,
+                                    shadowColor: Colors.transparent,
                                     minimumSize: const Size(200, 50),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(
                                           17), // <-- Radius
                                     ),
                                   ),
-                                  child:
-                                      const Text("Choose Another Speciality"),
+                                  child: Text(facultyList.isNotEmpty
+                                      ? "Choose Another Speciality"
+                                      : "Choose Speciality"),
                                   onPressed: () {
-                                    setState(() {
-                                      dropdownvalue = null;
-                                    });
+                                    if (facultyList.isNotEmpty) {
+                                      if (mounted) {
+                                        setState(() {
+                                          dropdownvalue = null;
+                                        });
+                                      }
+                                    } else {
+                                      showInSnackBar(context,
+                                          "No appointments available for you currently.",
+                                          color: const Color.fromRGBO(
+                                              21, 70, 160, 1));
+                                    }
                                   },
                                 ),
                               ),
@@ -218,18 +237,22 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                             child: getResults().isEmpty
                                 ? Padding(
                                     padding: const EdgeInsets.all(15),
-                                    child: Text(
-                                        facultyLoading
-                                            ? 'Wait...'
-                                            : (facultyList.isEmpty
-                                                ? "No appointments found for you currently in all specialities."
-                                                : 'There are no appointments available with the selected speciality.'),
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            height: 2,
-                                            fontSize: 18,
-                                            color: Colors.black54)))
+                                    child: facultyLoading
+                                        ? const Center(
+                                            child: CircularProgressIndicator(
+                                                color: Color.fromRGBO(
+                                                    21, 70, 160, 1)),
+                                          )
+                                        : Text(
+                                            (facultyList.isEmpty
+                                                ? "No appointments found for you currently (0 appointments in all specialities)."
+                                                : 'There are no appointments available with the selected speciality (${dropdownvalue?['specialityname']}).'),
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                height: 2,
+                                                fontSize: 18,
+                                                color: Colors.black54)))
                                 : ListView.builder(
                                     itemCount: getResults().length,
                                     itemBuilder: (context, index) {
@@ -275,6 +298,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
               facultyList = [];
               facultyLoading = true;
               initFaculty();
+              // dropdownvalue = null;
             }));
       },
       child: Container(
@@ -351,6 +375,8 @@ class FacultyListScreenState extends State<FacultyListScreen> {
   }
 
   List getResults() {
+    if (facultyLoading) return [];
+
     if (dropdownvalue != null) {
       var results = [];
       for (Map r in facultyList) {
@@ -368,10 +394,20 @@ class FacultyListScreenState extends State<FacultyListScreen> {
     }
   }
 
+  bool hasResults(specialty) {
+    return facultyList.firstWhere(
+            (t) => t?['specialty']
+                ?.map((e) => e['id'])
+                ?.contains(specialty?['id']),
+            orElse: () => null) !=
+        null;
+  }
+
   _showMenu(thisContext) {
     return specialityList.isEmpty || facultyLoading
         ? const Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+                color: Color.fromRGBO(21, 70, 160, 1)),
           )
         : ListView(
             children: <Widget>[
@@ -387,7 +423,9 @@ class FacultyListScreenState extends State<FacultyListScreen> {
               ),
               for (var item = 0; item < specialityList.length; item++)
                 Card(
-                  color: const Color.fromRGBO(21, 70, 160, 1),
+                  color: hasResults(specialityList[item])
+                      ? const Color.fromRGBO(21, 70, 160, 1)
+                      : const Color.fromARGB(255, 140, 142, 145),
                   borderOnForeground: true,
                   child: ListTile(
                     contentPadding: const EdgeInsets.all(0),
@@ -400,10 +438,21 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                           fontWeight: FontWeight.w500),
                     ),
                     onTap: () {
-                      setState(() {
-                        isItVisible = false;
-                        dropdownvalue = specialityList[item];
-                      });
+                      if (hasResults(specialityList[item])) {
+                        if (mounted) {
+                          setState(() {
+                            isItVisible = false;
+                            dropdownvalue = specialityList[item];
+                          });
+                        }
+                      } else {
+                        showInSnackBar(
+                            context,
+                            "No Appointments available in (" +
+                                specialityList[item]?['specialityname'] +
+                                ")",
+                            color: Color.fromARGB(255, 179, 114, 17));
+                      }
                     },
                   ),
                 ),

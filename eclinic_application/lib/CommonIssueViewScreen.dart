@@ -94,7 +94,9 @@ class CommonIssueViewScreenState extends State<CommonIssueViewScreen> {
             //   image: AssetImage('./assets/images/eClinicLogo-blue.png'),
             //   height: 80,
             // ),
-            Center(child: CircularProgressIndicator()),
+            Center(
+                child: CircularProgressIndicator(
+                    color: Color.fromRGBO(21, 70, 160, 1))),
             SizedBox(height: 20),
             // Text(
             //   "Fetching the issue information, Please wait.....\n\n ",

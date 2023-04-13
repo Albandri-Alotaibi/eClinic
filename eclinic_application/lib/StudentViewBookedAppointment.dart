@@ -102,9 +102,11 @@ class _StudentViewBookedAppointmentState
       if (event.data()!.containsKey('appointments') == true) {
         if (event['appointments'].length == 0) {
           print("NOOO1 Future booked Appoinyments");
-          setState(() {
-            isExists = false;
-          });
+          if (mounted) {
+            setState(() {
+              isExists = false;
+            });
+          }
         } else {
           found = false;
 
@@ -119,10 +121,12 @@ class _StudentViewBookedAppointmentState
 
             final DocumentSnapshot docRef2 = await appdbarray[i].get();
 // *******************CHECK IN APPOINTMENT IS IN FUTURE ****************************
-            Timestamp t1 = docRef2['starttime'] as Timestamp;
-            DateTime StartTimeDate = t1.toDate();
-            if ((now.isBefore(StartTimeDate))) {
-              found = true;
+            if (docRef2.exists) {
+              Timestamp? t1 = docRef2['starttime'] as Timestamp?;
+              DateTime? StartTimeDate = t1?.toDate();
+              if (StartTimeDate != null && now.isBefore(StartTimeDate)) {
+                found = true;
+              }
             }
           } //END FOR
         } //end else array size is not zero
@@ -130,20 +134,26 @@ class _StudentViewBookedAppointmentState
       else {
         //or null   --- if (event.data()!.containsKey("name")==false)
         print("NOOO2 Future booked Appoinyments");
-        setState(() {
-          isExists = false;
-        });
+        if (mounted) {
+          setState(() {
+            isExists = false;
+          });
+        }
       }
       if (found == true) {
         print("Future booked Appoinyments Exists");
-        setState(() {
-          isExists = true;
-        });
+        if (mounted) {
+          setState(() {
+            isExists = true;
+          });
+        }
       } else if (found == false) {
         print("NOOO3 Future booked Appoinyments");
-        setState(() {
-          isExists = false;
-        });
+        if (mounted) {
+          setState(() {
+            isExists = false;
+          });
+        }
       }
     });
 
@@ -181,75 +191,82 @@ class _StudentViewBookedAppointmentState
 
 // *******************CHECK IN APPOINTMENT IS IN FUTURE ****************************
 
-          Timestamp t1 = docRef2['starttime'] as Timestamp;
-          DateTime StartTimeDate = t1.toDate();
-          if ((now.isBefore(StartTimeDate))) {
-            print(
-                "22222222222222222222222222222222222222222222222222222222222222222");
-            print(docRef2.reference);
-            // if appointment is in the future
+          if (docRef2.exists) {
+            Timestamp? t1 = docRef2['starttime'] as Timestamp?;
+            DateTime? StartTimeDate = t1?.toDate();
+            if (StartTimeDate != null && now.isBefore(StartTimeDate)) {
+              print(
+                  "22222222222222222222222222222222222222222222222222222222222222222");
+              print(docRef2.reference);
+              // if appointment is in the future
 
 // *******************START APPOINTMENT INFO ****************************
-            print("*****************************0");
-            String dayname = DateFormat("EEE").format(StartTimeDate);
-            Timestamp t2 = docRef2['endtime'] as Timestamp;
-            DateTime EndTimeDate = t2.toDate();
-            // var studentsrefrences = docRef2['student'];
-            var specialityRef = docRef2['specialty'];
-            final DocumentSnapshot docRef4 = await specialityRef.get();
-            String specialityName = docRef4['specialityname']; //specialityname
-            print(specialityName);
+              print("*****************************0");
+              String dayname = DateFormat("EEE").format(StartTimeDate);
+              Timestamp t2 = docRef2['endtime'] as Timestamp;
+              DateTime EndTimeDate = t2.toDate();
+              // var studentsrefrences = docRef2['student'];
+              var specialityRef = docRef2['specialty'];
+              final DocumentSnapshot docRef4 = await specialityRef.get();
+              String specialityName =
+                  docRef4['specialityname']; //specialityname
+              print(specialityName);
 
 // *******************END APPOINTMENT INFO ****************************
 
 // *******************START FACULTY NEEDED INFO ****************************
-            final DocumentSnapshot docRef3 =
-                await appdbarray[i].parent.parent.get();
-            String facultyName =
-                docRef3['firstname'] + ' ' + docRef3['lastname'];
-            String meetingMethod = docRef3['meetingmethod'];
-            String meetingInfo = docRef3['mettingmethodinfo'];
+              final DocumentSnapshot docRef3 =
+                  await appdbarray[i].parent.parent.get();
+              String facultyName =
+                  docRef3['firstname'] + ' ' + docRef3['lastname'];
+              String meetingMethod = docRef3['meetingmethod'];
+              String meetingInfo = docRef3['mettingmethodinfo'];
 // *******************END FACULTY NEEDED INFO ****************************
 
-            setState(() {
-              BookedAppointments.add(new StudentAppointment(
-                appointmentId: docRef2.id,
-                appointmentReference: docRef2.reference,
-                FacultytId: docRef3.id,
-                Day: dayname,
-                startTime: StartTimeDate,
-                endTime: EndTimeDate,
-                FacultyName: facultyName,
-                specialityn: specialityName,
-                meetingMethod: meetingMethod,
-                meetingInfo: meetingInfo,
-                //studentsArrayOfReference: studentsrefrences
-              ));
-            });
-
-            for (int i = 0; i < BookedAppointments.length; i++) {
-              for (int j = i + 1; j < BookedAppointments.length; j++) {
-                var temp;
-                if ((BookedAppointments[i].startTime)
-                    .isAfter(BookedAppointments[j].startTime)) {
-                  temp = BookedAppointments[i];
-                  BookedAppointments[i] = BookedAppointments[j];
-                  BookedAppointments[j] = temp;
-                }
+              if (mounted) {
+                setState(() {
+                  BookedAppointments.add(new StudentAppointment(
+                    appointmentId: docRef2.id,
+                    appointmentReference: docRef2.reference,
+                    FacultytId: docRef3.id,
+                    Day: dayname,
+                    startTime: StartTimeDate,
+                    endTime: EndTimeDate,
+                    FacultyName: facultyName,
+                    specialityn: specialityName,
+                    meetingMethod: meetingMethod,
+                    meetingInfo: meetingInfo,
+                    //studentsArrayOfReference: studentsrefrences
+                  ));
+                });
               }
-            } //end for date sorting
 
-            for (int i = 0; i < BookedAppointments.length; i++) {
-              for (int j = i + 1; j < BookedAppointments.length; j++) {
-                if ((BookedAppointments[i].appointmentId ==
-                    BookedAppointments[j].appointmentId)) {
-                  setState(() {
-                    dynamic res = BookedAppointments.removeAt(j);
-                  });
+              for (int i = 0; i < BookedAppointments.length; i++) {
+                for (int j = i + 1; j < BookedAppointments.length; j++) {
+                  var temp;
+                  if ((BookedAppointments[i].startTime)
+                      .isAfter(BookedAppointments[j].startTime)) {
+                    temp = BookedAppointments[i];
+                    BookedAppointments[i] = BookedAppointments[j];
+                    BookedAppointments[j] = temp;
+                  }
                 }
-              }
-            } //end deleting duplicate
-          } //end for loop
+              } //end for date sorting
+
+              for (int i = 0; i < BookedAppointments.length; i++) {
+                for (int j = i + 1; j < BookedAppointments.length; j++) {
+                  if ((BookedAppointments[i].appointmentId ==
+                      BookedAppointments[j].appointmentId)) {
+                    if (mounted) {
+                      setState(() {
+                        dynamic res = BookedAppointments.removeAt(j);
+                      });
+                    }
+                  }
+                }
+              } //end deleting duplicate
+            } //end for loop
+          }
         } //end if appointment is in the future
       } else {
         print("appointments array does not exist");
@@ -347,7 +364,7 @@ class _StudentViewBookedAppointmentState
                                                 style: TextStyle(
                                                     color:
                                                         Mycolors.mainColorBlue,
-                                                    fontSize: 16)),
+                                                    fontSize: 17)),
                                           ),
                                           children: [
                                             Padding(
@@ -363,7 +380,7 @@ class _StudentViewBookedAppointmentState
                                                     //  Text("XXXXXXXX\n",
                                                     //         style: TextStyle(color: Colors.black,)),
                                                     Text(
-                                                        "With : Dr." +
+                                                        "With :" +
                                                             BookedAppointments[
                                                                     index]
                                                                 .FacultyName +
@@ -703,9 +720,11 @@ class _StudentViewBookedAppointmentState
                     child: Text("other commitment"), value: "other commitment")
               ],
               onChanged: (value) {
-                setState(() {
-                  reasone = value;
-                });
+                if (mounted) {
+                  setState(() {
+                    reasone = value;
+                  });
+                }
               },
               autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (value) {

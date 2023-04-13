@@ -166,7 +166,8 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
               body: firstLoading
                   //show progress bar during dropdowns loading
                   ? const Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                          color: Color.fromRGBO(21, 70, 160, 1)),
                     )
                   //when loading if done, show everything.
                   : ListView(
@@ -188,6 +189,12 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                                     child: DropdownButton<
                                             Map<String, dynamic>?>(
                                         // icon: const Icon(Icons.face),
+                                        icon: const Icon(
+                                          // Add this
+                                          Icons.arrow_drop_down, // Add this
+                                          color: Color.fromRGBO(
+                                              21, 70, 160, 1), // Add this
+                                        ),
                                         isExpanded: true,
                                         underline: const SizedBox(),
                                         disabledHint: Row(children: const [
@@ -200,7 +207,7 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                                               ))
                                         ]),
                                         hint: Text(
-                                          "Choose Speciality",
+                                          "Select Speciality",
                                           style: TextStyle(
                                               fontSize: 14,
                                               color:
@@ -247,6 +254,12 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                                     child: DropdownButton<
                                             Map<String, dynamic>?>(
                                         // icon: const Icon(Icons.pages),
+                                        icon: const Icon(
+                                          // Add this
+                                          Icons.arrow_drop_down, // Add this
+                                          color: Color.fromRGBO(
+                                              21, 70, 160, 1), // Add this
+                                        ),
                                         isExpanded: true,
                                         disabledHint: Row(children: const [
                                           Text("Wait ... "),
@@ -259,7 +272,7 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                                         ]),
                                         underline: const SizedBox(),
                                         hint: Text(
-                                          "Choose Semester",
+                                          "Select Semester",
                                           style: TextStyle(
                                               fontSize: 14,
                                               color:
@@ -313,7 +326,7 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                                                 ? 'Please select speciality to find common issues.'
                                                 //if no search clicked then tell user to click search, otherwise if it's clicked, no results are found
                                                 : (searchClicked
-                                                    ? 'There are no FAQs available ${specialityDropdownValue?['id'] == '0' && semesterDropdownValue?['id'] == "0" ? 'currently.' : 'with the selected options.'}'
+                                                    ? 'There are no common issues available ${specialityDropdownValue?['id'] == '0' && semesterDropdownValue?['id'] == "0" ? 'currently.' : 'with the selected options.'}'
                                                     : 'Please click search to continue..')),
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
