@@ -105,7 +105,7 @@ class _DepartmentChangeScreenState extends State<DepartmentChangeScreen> {
               child: Column(
                 children: [
                   _spacer,
-                  const TextHeader(text: 'Choos department'),
+                  const TextHeader(text: 'Choose department'),
                   _spacer,
                   DropdownButtonFormField<DocumentReference>(
                     decoration: InputDecoration(
