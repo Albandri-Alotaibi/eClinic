@@ -451,7 +451,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                             "No Appointments available in (" +
                                 specialityList[item]?['specialityname'] +
                                 ")",
-                            color: Color.fromARGB(255, 179, 114, 17));
+                            onError: true);
                       }
                     },
                   ),
