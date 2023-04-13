@@ -22,47 +22,34 @@ class studentverfication extends StatefulWidget {
 }
 
 class _studentverficationState extends State<studentverfication> {
+  bool ifnull = true;
   final FirebaseAuth auth = FirebaseAuth.instance;
   String? email = '';
   String? userid = '';
   User? user;
-  Timer timer = Timer.periodic(Duration(seconds: 3), (timer) {});
 
   @override
   void initState() {
-    final User? user = auth.currentUser;
-    //if (user != null) {
-    userid = user!.uid;
-    email = user.email!;
-    user.sendEmailVerification();
-    // }
+    user = auth.currentUser;
 
-    if (mounted) Timer timer = Timer.periodic(Duration(seconds: 1), (timer) {});
-    checkemailverfication();
+    userid = user?.uid;
+    email = user?.email;
+    user?.sendEmailVerification();
+
     super.initState();
   }
 
-  void dispose() {
-    timer.cancel();
-    super.dispose();
-  }
-
-  int _selectedIndex = 1;
-  Future<void> checkemailverfication() async {
+  Future<bool> currentuseremailverified() async {
     user = auth.currentUser;
     await user!.reload();
-    if (user!.emailVerified) {
-      timer.cancel();
-      // Navigator.of(context).pushReplacement(
-      //     MaterialPageRoute(builder: (context) => addHoursFaculty()));
+    print(user);
+    if (user != null && user!.emailVerified) {
+      print("0000000000000000000000000000000000");
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => studenthome(0),
-        ),
-      );
+      user!.reload().then((_) => user == FirebaseAuth.instance.currentUser);
     }
+
+    return user?.emailVerified ?? false;
   }
 
   @override
@@ -179,8 +166,25 @@ class _studentverficationState extends State<studentverfication> {
                       borderRadius: BorderRadius.circular(17), // <-- Radius
                     ),
                   ),
-                  onPressed: () {
-                    checkemailverfication();
+                  onPressed: () async {
+                    print(user);
+                    print(await currentuseremailverified());
+                    user = auth.currentUser;
+                    if (await currentuseremailverified()) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => studenthome(0),
+                        ),
+                      );
+                    } else {
+                      // ignore: use_build_context_synchronously
+                      showInSnackBar(context,
+                          "Please check your email to verify your account",
+                          onError: true);
+                    }
+
+                    // checkemailverfication();
                   },
                   child: Text("Done "),
                 ),

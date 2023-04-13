@@ -30,11 +30,11 @@ class _graduateverficationState extends State<graduateverfication> {
   // Timer timer = Timer.periodic(Duration(seconds: 3), (timer) {});
   @override
   void initState() {
-    final User? user = auth.currentUser;
+    user = auth.currentUser;
 
-    userid = user!.uid;
-    email = user.email!;
-    user.sendEmailVerification();
+    userid = user?.uid;
+    email = user?.email;
+    user?.sendEmailVerification();
     // if (mounted) Timer timer = Timer.periodic(Duration(seconds: 1), (timer) {});
     // checkemailverfication();
     super.initState();
@@ -45,32 +45,36 @@ class _graduateverficationState extends State<graduateverfication> {
   //   super.dispose();
   // }
 
-  Future<void> checkemailverfication() async {
-    user = auth.currentUser;
-    await user!.reload();
-    if (user!.emailVerified) {
-      // timer.cancel();
-      // Navigator.of(context).pushReplacement(
-      //     MaterialPageRoute(builder: (context) => addHoursFaculty()));
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => graduatehome(),
-        ),
-      );
-    } else {
-      // ignore: use_build_context_synchronously
-      showInSnackBar(context, "Please check your email to verify your account",
-          onError: true);
-    }
-  }
+  // Future<void> checkemailverfication() async {
+  //   user = auth.currentUser;
+  //   await user!.reload();
+  //   if (user!.emailVerified) {
+  //     // timer.cancel();
+  //     // Navigator.of(context).pushReplacement(
+  //     //     MaterialPageRoute(builder: (context) => addHoursFaculty()));
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (context) => graduatehome(),
+  //       ),
+  //     );
+  //   } else {
+  //     // ignore: use_build_context_synchronously
+  //     showInSnackBar(context, "Please check your email to verify your account",
+  //         onError: true);
+  //   }
+  // }
 
   Future<bool> currentuseremailverified() async {
     user = auth.currentUser;
-    user!.reload();
+    await user!.reload();
+    print(user);
     if (user != null && user!.emailVerified) {
+      print("0000000000000000000000000000000000");
+
       user!.reload().then((_) => user == FirebaseAuth.instance.currentUser);
     }
+
     return user?.emailVerified ?? false;
   }
 
@@ -191,6 +195,9 @@ class _graduateverficationState extends State<graduateverfication> {
                   onPressed: () async {
                     // user!.reload();
                     // await Future.delayed(Duration(seconds: 10), () {});
+                    print(user);
+                    print(await currentuseremailverified());
+                    user = auth.currentUser;
                     if (await currentuseremailverified()) {
                       Navigator.push(
                         context,

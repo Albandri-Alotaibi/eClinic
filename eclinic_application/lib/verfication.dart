@@ -21,42 +21,34 @@ class verfication extends StatefulWidget {
 }
 
 class _verficationState extends State<verfication> {
+  bool ifnull = true;
   final FirebaseAuth auth = FirebaseAuth.instance;
   String? email = '';
   String? userid = '';
   User? user;
-  Timer timer = Timer.periodic(Duration(seconds: 3), (timer) {});
+  int _selectedIndex = 0;
   @override
   void initState() {
-    final User? user = auth.currentUser;
-    userid = user!.uid;
-    email = user.email!;
-    user.sendEmailVerification();
-    Timer timer = Timer.periodic(Duration(seconds: 1), (timer) {});
-    checkemailverfication();
+    user = auth.currentUser;
+
+    userid = user?.uid;
+    email = user?.email;
+    user?.sendEmailVerification();
+
     super.initState();
   }
 
-  void dispose() {
-    timer.cancel();
-    super.dispose();
-  }
-
-  int _selectedIndex = 0;
-  Future<void> checkemailverfication() async {
+  Future<bool> currentuseremailverified() async {
     user = auth.currentUser;
     await user!.reload();
-    if (user!.emailVerified) {
-      timer.cancel();
-      // Navigator.of(context).pushReplacement(
-      //     MaterialPageRoute(builder: (context) => addHoursFaculty()));
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => facultyhome(_selectedIndex),
-        ),
-      );
+    print(user);
+    if (user != null && user!.emailVerified) {
+      print("0000000000000000000000000000000000");
+
+      user!.reload().then((_) => user == FirebaseAuth.instance.currentUser);
     }
+
+    return user?.emailVerified ?? false;
   }
 
   @override
@@ -76,6 +68,11 @@ class _verficationState extends State<verfication> {
             fontFamily: 'main',
             fontSize: 24,
             color: Mycolors.mainColorBlack,
+          ),
+          leading: BackButton(
+            onPressed: () {
+              Navigator.pushNamed(context, 'login');
+            },
           ),
         ),
         backgroundColor: Mycolors.BackgroundColor,
@@ -168,8 +165,25 @@ class _verficationState extends State<verfication> {
                       borderRadius: BorderRadius.circular(17), // <-- Radius
                     ),
                   ),
-                  onPressed: () {
-                    checkemailverfication();
+                  onPressed: () async {
+                    print(user);
+                    print(await currentuseremailverified());
+                    user = auth.currentUser;
+                    if (await currentuseremailverified()) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => facultyhome(_selectedIndex),
+                        ),
+                      );
+                    } else {
+                      // ignore: use_build_context_synchronously
+                      showInSnackBar(context,
+                          "Please check your email to verify your account",
+                          onError: true);
+                    }
+
+                    // checkemailverfication();
                   },
                   child: Text("Done "),
                 ),
