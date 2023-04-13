@@ -425,7 +425,7 @@ class FacultyListScreenState extends State<FacultyListScreen> {
                 Card(
                   color: hasResults(specialityList[item])
                       ? const Color.fromRGBO(21, 70, 160, 1)
-                      : Mycolors.mainColorGray,
+                      : const Color.fromARGB(255, 140, 142, 145),
                   borderOnForeground: true,
                   child: ListTile(
                     contentPadding: const EdgeInsets.all(0),
