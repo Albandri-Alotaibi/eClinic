@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
+import 'package:myapp/studenthome.dart';
 import 'dart:convert';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -193,9 +194,7 @@ class AppointmentConfirmationScreenState
               image: AssetImage('./assets/images/eClinicLogo-blue1.png'),
               height: 50,
             ),
-            const Center(child: CircularProgressIndicator(
-                                                color: Color.fromRGBO(
-                                                    21, 70, 160, 1))),
+            const Center(child: CircularProgressIndicator()),
             const SizedBox(height: 40),
             Text(
               "Booking an appointment with ${widget.faculty['firstname']} ${widget.faculty['lastname']}\n\nPlease wait.....\n\n ", //(${currentProgressStatus})
@@ -388,6 +387,33 @@ class AppointmentConfirmationScreenState
               },
               icon: const Icon(Icons.arrow_back),
               label: Text("Back",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: themeData.colorScheme.onPrimary,
+                      letterSpacing: 0.5))),
+        ),
+        Positioned(
+          top: 30,
+          right: 30,
+          child: ElevatedButton.icon(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateColor.resolveWith(
+                      (states) => const Color.fromRGBO(21, 70, 160, 1)),
+                  shadowColor: MaterialStateColor.resolveWith(
+                      (states) => Colors.transparent),
+                  elevation: MaterialStateProperty.all(0),
+                  padding: MaterialStateProperty.all(
+                      const EdgeInsets.symmetric(vertical: 16))),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => studenthome(0),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.home),
+              label: Text("Home",
                   style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: themeData.colorScheme.onPrimary,
