@@ -646,12 +646,14 @@ class _GroupSelectionState extends State<GroupSelection> {
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Completion Date: " +
-                          (modelGroup.Projectcompletiondate?.convertToWord() ??
-                              ''),
-                      style: TextStyle(fontSize: 14),
-                    ),
+                    if (TypeUser.type == 'student')
+                      Text(
+                        "Completion Date: " +
+                            (modelGroup.Projectcompletiondate
+                                    ?.convertToWord() ??
+                                ''),
+                        style: TextStyle(fontSize: 14),
+                      ),
                     Text(
                       "Created by you",
                       style: TextStyle(fontSize: 14, color: Colors.green),
