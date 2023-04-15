@@ -1,88 +1,80 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Poppins:wght@400;500;600&display=swap'); */
-body {
-  padding: 3;
-  background: #e5e5e5;
-  /* font: 13px/1.4 Geneva, 'Lucida Sans', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif; */
-  overflow-y: hidden;
-  overflow-x: hidden;
-  
+html, body {
+    /* padding: 3; */
+    /* background: #e5e5e5; */
+    /* font: 13px/1.4 Geneva, 'Lucida Sans', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif; */
+    /* overflow-y: hidden;
+    overflow-x: hidden; */
+    min-height: 100%;
+    height: 100%;
 }
 
-
-.logbut{
-  background-image: linear-gradient( #0084BD 0%, #0084BD 100%);
-  
-
+.logbut {
+    background-image: linear-gradient(#0084bd 0%, #0084bd 100%);
 }
-
 
 .logbut:hover {
-  background-image: linear-gradient( #037caf 0%, #037caf 100%);
-
+    background-image: linear-gradient(#037caf 0%, #037caf 100%);
 }
 
-.resetbut{
-  background-image: linear-gradient( #0084BD 0%, #0084BD 100%);
+.resetbut {
+    background-image: linear-gradient(#0084bd 0%, #0084bd 100%);
 }
 
 .resetbut:hover {
-  background-image: linear-gradient( #037caf 0%, #037caf 100%);
-
+    background-image: linear-gradient(#037caf 0%, #037caf 100%);
 }
 
 .divider:after,
 .divider:before {
-content: "";
-flex: 1;
-height: 1px;
-background: #eee;
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
 }
-.h-custom {
-height: calc(100% - 73px);
-}
-@media (max-width: 450px) {
-.h-custom {
-height: 100%;
-}
-body {
-  overflow-y:auto;
- 
-    
+/* .h-custom {
+    height: calc(100% - 73px);
+} */
+/* @media (max-width: 450px) {
+    .h-custom {
+        height: 100%;
+    }
+    body {
+        overflow-y: auto;
+    }
+} */
 
-}
-.footer_eClinic{
-  height:min-content;
-  bottom: 0;
-  font-size: smaller;
+.footer_eClinic {
+    color: #fff;
+    background-color: #0084bd;
 }
 
+.footer_eClinic_mobile {
+  border-top: #0084bd 1px solid;
+    color: #0084bd;
+    /* background-color: #0084bd; */
 }
 
-.py-4{
-  background-color: #0084BD;
+a {
+    color: #0084bd;
 }
 
-.foget{
-  color: #0084BD;
-}
-
-#innerreset{
-  box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
-  background: hsl(0 0% 100%);
-  color: rgb(0, 0, 0);
-  line-height: 1.5;
-  /* font-size: 100%; */
-  /* font: 13px/1.4 Geneva, 'Lucida Sans', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif; */
-  width: 100%;
-  height: 100%;
-  place-items: center;
-  text-align: center;
-  padding: 3ch;
-  border-radius: 2ch;
-  border: 1px solid hsl(0 0% 83%);
-  margin-left: 40%;
-  margin-top: 10%;
-  display: block;
-  font-weight: 400;
-  
-}
+/* #innerreset {
+    box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
+    background: hsl(0 0% 100%);
+    color: rgb(0, 0, 0);
+    line-height: 1.5;
+    /* font-size: 100%; */
+    /* font: 13px/1.4 Geneva, 'Lucida Sans', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif; */
+    width: 100%;
+    height: 100%;
+    place-items: center;
+    text-align: center;
+    padding: 3ch;
+    border-radius: 2ch;
+    border: 1px solid hsl(0 0% 83%);
+    margin-left: 40%;
+    margin-top: 10%;
+    display: block;
+    font-weight: 400;
+} */

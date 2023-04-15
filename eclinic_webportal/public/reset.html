@@ -19,8 +19,8 @@
 
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
 
 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -34,209 +34,201 @@
 
 </head>
 
-<body class="Site d-flex flex-column min-vh-100"  id="index">
-  <main class="site-wrapper">
-
-
-
-
-
-
-
-    <section class="vh-100">
-      <div class="container-fluid h-custom">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-          <div class="col-md-9 col-lg-6 col-xl-5">
-            <img src="img/eClinicLogo-blue.png" class="img-fluid" alt="Sample image">
-          </div>
-          <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-            <form class="resetform">
-              <div class="align-items-center justify-content-center ">
-                <p class="lead fw-normal display-6">Reset Your Password</p><br>
-                <p id="resetguied" class="lead fw-normal display-7 ">Enter the email associated with your account and
-                  we'll send an email to reset your password</p>
-                <p id="aftersend" class="lead fw-normal display-7 text-danger" style="display: none;"> </p>
-               <p id="return" class="display-9text-dark" style="display:none; font-weight: bold;">If you want 
-                to re-enter your email click <a href="#" id="here">here</a> </p>
-              </div>
-
-              <div class="divider d-flex align-items-center my-4">
-              </div>
-
-              <!-- Email input -->
-              <div class="txt_field form-outline mb-4" id="emailbox">
-                <input name="email" class="form-control form-control-lg" placeholder="Enter a valid email address">
-                <label class="form-label" for="form3Example3">Email address</label>
-              </div>
-
-
-              <div class="d-flex justify-content-between align-items-center">
-                <!-- Simple link -->
-
-                <a href="login.html" class="foget"  id="relog">Return to login</a>
-
-              </div>
-
-
-              
-
-
-              <div class="text-center text-lg-start mt-lg-4 pt-lg-2 ">
-                <button class="resetbut btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;"
-                  id="afterclick">Send</button>
-
-
-
-              </div>
-
-            </form>
-          </div>
+<body id="index" class="mt-auto">
+  <main class="d-flex flex-column flex-md-row justify-content-center align-items-center h-100">
+    <div class="col-md-3 col-8">
+      <img src="img/eClinicLogo-blue.png" class="img-fluid " alt="Sample image">
+    </div>
+    <div class="col-md-8 col-lg-6 col-xl-4 offset-md-1">
+      <form class="resetform p-3">
+        <div class="align-items-center justify-content-center ">
+          <p class="lead fw-normal display-6">Reset Your Password</p><br>
+          <p id="resetguied" class="lead fw-normal display-7 ">Enter the email associated with your account and
+            we'll send an email to reset your password</p>
+          <p id="aftersend" class="lead fw-normal display-7 text-danger" style="display: none;"> </p>
+          <p id="return" class="display-9text-dark" style="display:none; font-weight: bold;">If you want
+            to re-enter your email click <a href="#" id="here">here</a> </p>
         </div>
-      </div>
-      <div class="footer_eClinic text-center text-md-start  py-4 px-4 px-xl-5 ">
-        <!-- Copyright -->
-        <footer class=" mt-auto ">
-          <p class="text-white" style="text-align: center;">Copyright &copy; All Rights Reserved to King Saud
-            University.Made with 🤍 by eClinic Teams.
-          </p>
-        </footer>
-        <!-- Copyright -->
+
+        <div class="divider d-flex align-items-center my-4">
+        </div>
+
+        <!-- Email input -->
+        <div class="txt_field form-outline mb-4" id="emailbox">
+          <input name="email" class="form-control form-control-lg" placeholder="Enter a valid email address">
+          <label class="form-label" for="form3Example3">Email address</label>
+        </div>
 
 
-      </div>
-    </section>
+        <div class="d-flex justify-content-between align-items-center">
+          <!-- Simple link -->
 
+          <a href="login.html" class="foget" id="relog">Return to login</a>
 
-
-
-
-
-
-    <!-- MDB -->
-    <script type="text/javascript" src="js/mdb.min.js"></script>
-    <!-- Custom scripts -->
-    <script type="text/javascript"></script>
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-      crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-      crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
-      integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
-      crossorigin="anonymous"></script>
+        </div>
 
 
 
 
 
+        <div class="text-center text-lg-start mt-lg-4 pt-lg-2 ">
+          <button class="resetbut btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;"
+            id="afterclick">Send</button>
+
+
+
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+
+
+  <footer class="d-none d-md-block fixed-bottom footer_eClinic py-3">
+    <div class="container">
+      <!-- <p class="float-end mb-1">
+          <a href="#">Back to top</a>
+        </p> -->
+      <p style="text-align: center;">Copyright &copy; All Rights Reserved to King Saud University. Made with 🤍 by
+        eClinic Teams.
+      </p>
+    </div>
+  </footer>
+  <footer class="footer_eClinic_mobile mx-2 p-2 d-md-none mt-5 -mb-3">
+    <div class="container">
+      <p style="text-align: center;">Copyright &copy; All Rights Reserved to King Saud University. Made with 🤍 by
+        eClinic Teams.
+      </p>
+    </div>
+  </footer>
+
+
+
+  <!-- MDB -->
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+  <!-- Custom scripts -->
+  <script type="text/javascript"></script>
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+    integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+    crossorigin="anonymous"></script>
 
 
 
 
 
 
-    <script type="module">
-      // Import the functions you need from the SDKs you need
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
-      // TODO: Add SDKs for Firebase products that you want to use
-      // https://firebase.google.com/docs/web/setup#available-libraries
-      import { getFirestore, doc, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
-      // Your web app's Firebase configuration
-      import { getAuth, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"; //import for authentication +signout
-      const firebaseConfig = {
-        apiKey: "AIzaSyD6JcSscRU6XaF3SaCF_U3ggXAFYUnKKq8",
-        authDomain: "eclinic-d5dec.firebaseapp.com",
-        projectId: "eclinic-d5dec",
-        storageBucket: "eclinic-d5dec.appspot.com",
-        messagingSenderId: "148819771062",
-        appId: "1:148819771062:web:f66c9a362b2fc34f247017"
-      };
-
-      // Initialize Firebase services 
-      const app = initializeApp(firebaseConfig);
-      const db = getFirestore()
-      const auth = getAuth()
-      
-      //////////////////////////////////reset password //////////////////////////////////
-
-      const resetform = document.querySelector('.resetform')
-      resetform.addEventListener('submit', (e) => {
-        e.preventDefault()
-        //extract admin input 
-        const email = resetform.email.value
-        const box = document.getElementById("emailbox")
-        const guide = document.getElementById("resetguied")
-        const after = document.getElementById("aftersend")
-        const afterclicksend = document.getElementById("afterclick")
-        const returnE = document.getElementById("return");
-        const here = document.getElementById("here");
 
 
-        if (email.length < 1) {
-          alert("Please enter your email")
-          
-        }
 
-        else {//send email to admin so he can reset his password
-          sendPasswordResetEmail(auth, email)
-            .then(() => {
-              after.innerHTML = "We have sent you the reset link on this email "  + email;
-              box.style.display = "none";
-              guide.style.display = "none";
-              afterclicksend.style.display = "none";
-              after.style.display = "block";
-              returnE.style.display = "block";
-             
-            })
-            .catch((error) => {
-              const errorCode = error.code;
-              const errorMessage = error.message;
-             
-              if ( errorMessage ==="Firebase: Error (auth/invalid-email).")
-              {
+
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+    import { getFirestore, doc, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+    // Your web app's Firebase configuration
+    import { getAuth, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"; //import for authentication +signout
+    const firebaseConfig = {
+      apiKey: "AIzaSyD6JcSscRU6XaF3SaCF_U3ggXAFYUnKKq8",
+      authDomain: "eclinic-d5dec.firebaseapp.com",
+      projectId: "eclinic-d5dec",
+      storageBucket: "eclinic-d5dec.appspot.com",
+      messagingSenderId: "148819771062",
+      appId: "1:148819771062:web:f66c9a362b2fc34f247017"
+    };
+
+    // Initialize Firebase services 
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore()
+    const auth = getAuth()
+
+    //////////////////////////////////reset password //////////////////////////////////
+
+    const resetform = document.querySelector('.resetform')
+    resetform.addEventListener('submit', (e) => {
+      e.preventDefault()
+      //extract admin input 
+      const email = resetform.email.value
+      const box = document.getElementById("emailbox")
+      const guide = document.getElementById("resetguied")
+      const after = document.getElementById("aftersend")
+      const afterclicksend = document.getElementById("afterclick")
+      const returnE = document.getElementById("return");
+      const here = document.getElementById("here");
+
+
+      if (email.length < 1) {
+        alert("Please enter your email")
+
+      }
+
+      else {//send email to admin so he can reset his password
+        sendPasswordResetEmail(auth, email)
+          .then(() => {
+            after.innerHTML = "We have sent you the reset link on this email " + email;
+            box.style.display = "none";
+            guide.style.display = "none";
+            afterclicksend.style.display = "none";
+            after.style.display = "block";
+            returnE.style.display = "block";
+
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+
+            if (errorMessage === "Firebase: Error (auth/invalid-email).") {
               alert("Please check the email format")
-              }
+            }
 
 
 
-            else if(errorMessage === "Firebase: Error (auth/user-not-found)." ||  errorMessage ==="Firebase: Error (auth/invalid-email)."){
-                after.innerHTML = "Email : "+ email+ " <br> If this is a registered email, then a reset link will be sent to it. ";
+            else if (errorMessage === "Firebase: Error (auth/user-not-found)." || errorMessage === "Firebase: Error (auth/invalid-email).") {
+              after.innerHTML = "Email : " + email + " <br> If this is a registered email, then a reset link will be sent to it. ";
               box.style.display = "none";
               guide.style.display = "none";
               afterclicksend.style.display = "none";
               after.style.display = "block";
               returnE.style.display = "block";
-              }
-              else 
-              if(errorMessage === "Firebase: Error (auth/too-many-requests)."){
-              alert("We have sent the reset password link multiple time ,Please check your email")
             }
-              
-            });
-        }
-        
+            else
+              if (errorMessage === "Firebase: Error (auth/too-many-requests).") {
+                alert("We have sent the reset password link multiple time ,Please check your email")
+              }
 
-            here.addEventListener("click", function(){
-              box.style.display = "block";
-              guide.style.display = "block";
-              afterclicksend.style.display = "block";
-              after.style.display = "none";
-              returnE.style.display = "none";
+          });
+      }
 
-       })
 
-       
+      here.addEventListener("click", function () {
+        box.style.display = "block";
+        guide.style.display = "block";
+        afterclicksend.style.display = "block";
+        after.style.display = "none";
+        returnE.style.display = "none";
 
       })
 
 
 
+    })
 
 
 
-    </script>
+
+
+
+  </script>
   </main>
 </body>
 
