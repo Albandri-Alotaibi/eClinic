@@ -165,8 +165,8 @@ class FacultyViewScreenState extends State<FacultyViewScreen> {
             ),
             body: loading
                 ? const Center(
-                    child: CircularProgressIndicator(color: Color.fromRGBO(
-                                                    21, 70, 160, 1)),
+                    child: CircularProgressIndicator(
+                        color: Color.fromRGBO(21, 70, 160, 1)),
                   )
                 : calendarBox()));
   }
@@ -177,26 +177,24 @@ class FacultyViewScreenState extends State<FacultyViewScreen> {
         const Padding(
           padding: EdgeInsets.all(20),
           child: Text(
-            "No appointments available for this faculty. Go back and choose another faculty with available appointments.",
+            "No appointments available for this faculty member. Go back and choose another faculty member with available appointments.",
             style: TextStyle(fontSize: 18, color: Colors.black54),
             textAlign: TextAlign.center,
           ),
         ),
       if (appointmentModels.isEmpty)
         ElevatedButton(
-            style:  ElevatedButton.styleFrom(
-                                    textStyle: const TextStyle(
-                                        fontFamily: 'main', fontSize: 16),
-                                    // shadowColor: Colors.blue[900],
-                                    elevation: 20,
-                                    backgroundColor: Mycolors.mainShadedColorBlue,
-                                    shadowColor: Colors.transparent,
-                                    minimumSize: const Size(200, 50),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          17), // <-- Radius
-                                    ),
-                                  ),
+            style: ElevatedButton.styleFrom(
+              textStyle: const TextStyle(fontFamily: 'main', fontSize: 16),
+              // shadowColor: Colors.blue[900],
+              elevation: 20,
+              backgroundColor: Mycolors.mainShadedColorBlue,
+              shadowColor: Colors.transparent,
+              minimumSize: const Size(200, 50),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(17), // <-- Radius
+              ),
+            ),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -327,9 +325,9 @@ class FacultyViewScreenState extends State<FacultyViewScreen> {
         title: const Text("Booking appointment for your group:"),
         content: Text(
             "Faculty: (${widget.faculty['firstname']} ${widget.faculty['lastname']}). "
-                "\nDate: ${formattedDate.format(appointment['starttime']?.toDate() ?? DateTime.now())}"
-                "\nTime: ${formattedDateTime.format(appointment['starttime']?.toDate() ?? DateTime.now())} until ${formattedDateTime.format(appointment['endtime']?.toDate() ?? DateTime.now())}."
-                "\nSpeciality: ${widget.speciality['specialityname']} \nMeeting: ${meetingValues(widget.faculty['meetingmethod'])} (${widget.faculty['mettingmethodinfo']}).   \n\nAre you sure?"),
+            "\nDate: ${formattedDate.format(appointment['starttime']?.toDate() ?? DateTime.now())}"
+            "\nTime: ${formattedDateTime.format(appointment['starttime']?.toDate() ?? DateTime.now())} until ${formattedDateTime.format(appointment['endtime']?.toDate() ?? DateTime.now())}."
+            "\nSpeciality: ${widget.speciality['specialityname']} \nMeeting: ${meetingValues(widget.faculty['meetingmethod'])} (${widget.faculty['mettingmethodinfo']}).   \n\nAre you sure?"),
         actions: [
           cancelButton,
           continueButton,

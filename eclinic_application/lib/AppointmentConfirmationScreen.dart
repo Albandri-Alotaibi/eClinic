@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:myapp/studenthome.dart';
+import 'package:myapp/style/Mycolors.dart';
 import 'dart:convert';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -223,153 +224,188 @@ class AppointmentConfirmationScreenState
               color: const Color.fromRGBO(21, 70, 160, 1),
             )),
         Positioned(
-          left: 30,
-          right: 30,
-          top: MediaQuery.of(context).size.height * 0.15,
-          child: ListView(
-            shrinkWrap: true,
-            children: <Widget>[
-              Card(
-                child: Container(
-                  padding: const EdgeInsets.only(top: 16, bottom: 16),
-                  child: Column(
-                    children: <Widget>[
-                      const Image(
-                          image: AssetImage('./assets/images/check-mark.png'),
-                          height: 100),
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 24, top: 0),
-                        child: const Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 2.0, horizontal: 10.0),
-                            child: Text(
-                              "The selected appointment is now booked for your group.",
-                              style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w600),
-                              textAlign: TextAlign.center,
-                            )),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(left: 16, right: 16),
-                        child: Column(
-                          children: <Widget>[
-                            ListTile(
-                              title: Text(
-                                "Faculty: ${widget.faculty['firstname']} ${widget.faculty['lastname']}",
-                                style: const TextStyle(
-                                    fontSize: 15,
-                                    color: Color.fromRGBO(21, 70, 160, 1),
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              // title: const Text("Faculty",
-                              //     style: TextStyle(
-                              //         fontSize: 12,
-                              //         color: Colors.lightBlueAccent)),
-                              leading: const Icon(
-                                Icons.face_outlined,
-                                color: Colors.black45,
-                              ),
-                            ),
-                            const Divider(
-                              color: Colors.grey,
-                              thickness: 1,
-                            ),
-                            ListTile(
-                              title: Text(
-                                "Date: ${formattedDate.format(widget.appointment['starttime']!.toDate())}"
-                                "\nTime: ${formattedDateTime.format(widget.appointment['starttime']!.toDate())}-${formattedDateTime.format(widget.appointment['endtime']!.toDate())}",
-                                style: const TextStyle(
-                                    fontSize: 15,
-                                    color: Color.fromRGBO(21, 70, 160, 1),
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              // title: const Text("Time",
-                              //     style: TextStyle(
-                              //         fontSize: 12,
-                              //         color: Colors.lightBlueAccent)),
-                              leading: const Icon(
-                                Icons.timer,
-                                color: Colors.black45,
-                              ),
-                            ),
-                            const Divider(
-                              color: Colors.grey,
-                              thickness: 1,
-                            ),
-                            ListTile(
-                              title: Text(
-                                "Speciality: ${widget.speciality['specialityname']}",
-                                style: const TextStyle(
-                                    fontSize: 15,
-                                    color: Color.fromRGBO(21, 70, 160, 1),
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              // title: const Text("Speciality",
-                              //     style: TextStyle(
-                              //         fontSize: 12,
-                              //         color: Colors.lightBlueAccent)),
-                              leading: const Icon(
-                                Icons.collections,
-                                color: Colors.black45,
-                              ),
-                            ),
-                            const Divider(
-                              color: Colors.grey,
-                              thickness: 1,
-                            ),
-                            ListTile(
-                              title: Row(children: [
-                                Text(
-                                  "Meeting: ${meetingValues(widget.faculty['meetingmethod'])}",
-                                  style: const TextStyle(
-                                      fontSize: 15,
-                                      color: Color.fromRGBO(21, 70, 160, 1),
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                Text(
-                                  widget.faculty['meetingmethod'] == "online"
-                                      ? " (Click Me)"
-                                      : " (${widget.faculty['mettingmethodinfo'] ?? "--"})",
+            left: 30,
+            right: 30,
+            top: MediaQuery.of(context).size.height * 0.15,
+            child: Column(children: [
+              ListView(
+                shrinkWrap: true,
+                children: <Widget>[
+                  Card(
+                    child: Container(
+                      padding: const EdgeInsets.only(top: 16, bottom: 16),
+                      child: Column(
+                        children: <Widget>[
+                          const Image(
+                              image:
+                                  AssetImage('./assets/images/check-mark.png'),
+                              height: 100),
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 24, top: 0),
+                            child: const Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 2.0, horizontal: 10.0),
+                                child: Text(
+                                  "The selected appointment is now booked for your group.",
                                   style: TextStyle(
-                                      decoration:
-                                          widget.faculty['meetingmethod'] ==
-                                                  "online"
-                                              ? TextDecoration.underline
-                                              : null,
-                                      fontSize: 15,
-                                      color:
-                                          const Color.fromRGBO(21, 70, 160, 1),
+                                      fontSize: 17,
                                       fontWeight: FontWeight.w600),
+                                  textAlign: TextAlign.center,
+                                )),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(left: 16, right: 16),
+                            child: Column(
+                              children: <Widget>[
+                                ListTile(
+                                  title: Text(
+                                    "Faculty: ${widget.faculty['firstname']} ${widget.faculty['lastname']}",
+                                    style: const TextStyle(
+                                        fontSize: 15,
+                                        color: Color.fromRGBO(21, 70, 160, 1),
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  // title: const Text("Faculty",
+                                  //     style: TextStyle(
+                                  //         fontSize: 12,
+                                  //         color: Colors.lightBlueAccent)),
+                                  leading: const Icon(
+                                    Icons.face_outlined,
+                                    color: Colors.black45,
+                                  ),
                                 ),
-                              ]),
-                              onTap: () => {
-                                if (widget.faculty['meetingmethod'] ==
-                                        "online" &&
-                                    widget.faculty['mettingmethodinfo'] != "")
-                                  {
-                                    launchUrlString(
-                                        widget.faculty['mettingmethodinfo'])
-                                  }
-                              },
-                              // title: const Text("Meeting",
-                              //     style: TextStyle(
-                              //         fontSize: 12,
-                              //         color: Colors.lightBlueAccent)),
-                              leading: const Icon(
-                                Icons.meeting_room,
-                                color: Colors.black45,
-                              ),
+                                const Divider(
+                                  color: Colors.grey,
+                                  thickness: 1,
+                                ),
+                                ListTile(
+                                  title: Text(
+                                    "Date: ${formattedDate.format(widget.appointment['starttime']!.toDate())}"
+                                    "\nTime: ${formattedDateTime.format(widget.appointment['starttime']!.toDate())}-${formattedDateTime.format(widget.appointment['endtime']!.toDate())}",
+                                    style: const TextStyle(
+                                        fontSize: 15,
+                                        color: Color.fromRGBO(21, 70, 160, 1),
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  // title: const Text("Time",
+                                  //     style: TextStyle(
+                                  //         fontSize: 12,
+                                  //         color: Colors.lightBlueAccent)),
+                                  leading: const Icon(
+                                    Icons.timer,
+                                    color: Colors.black45,
+                                  ),
+                                ),
+                                const Divider(
+                                  color: Colors.grey,
+                                  thickness: 1,
+                                ),
+                                ListTile(
+                                  title: Text(
+                                    "Speciality: ${widget.speciality['specialityname']}",
+                                    style: const TextStyle(
+                                        fontSize: 15,
+                                        color: Color.fromRGBO(21, 70, 160, 1),
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  // title: const Text("Speciality",
+                                  //     style: TextStyle(
+                                  //         fontSize: 12,
+                                  //         color: Colors.lightBlueAccent)),
+                                  leading: const Icon(
+                                    Icons.collections,
+                                    color: Colors.black45,
+                                  ),
+                                ),
+                                const Divider(
+                                  color: Colors.grey,
+                                  thickness: 1,
+                                ),
+                                ListTile(
+                                  title: Row(children: [
+                                    Text(
+                                      "Meeting: ${meetingValues(widget.faculty['meetingmethod'])}",
+                                      style: const TextStyle(
+                                          fontSize: 15,
+                                          color: Color.fromRGBO(21, 70, 160, 1),
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    Text(
+                                      widget.faculty['meetingmethod'] ==
+                                              "online"
+                                          ? " (Click Me)"
+                                          : " (${widget.faculty['mettingmethodinfo'] ?? "--"})",
+                                      style: TextStyle(
+                                          decoration:
+                                              widget.faculty['meetingmethod'] ==
+                                                      "online"
+                                                  ? TextDecoration.underline
+                                                  : null,
+                                          fontSize: 15,
+                                          color: const Color.fromRGBO(
+                                              21, 70, 160, 1),
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ]),
+                                  onTap: () => {
+                                    if (widget.faculty['meetingmethod'] ==
+                                            "online" &&
+                                        widget.faculty['mettingmethodinfo'] !=
+                                            "")
+                                      {
+                                        launchUrlString(
+                                            widget.faculty['mettingmethodinfo'])
+                                      }
+                                  },
+                                  // title: const Text("Meeting",
+                                  //     style: TextStyle(
+                                  //         fontSize: 12,
+                                  //         color: Colors.lightBlueAccent)),
+                                  leading: const Icon(
+                                    Icons.meeting_room,
+                                    color: Colors.black45,
+                                  ),
+                                ),
+
+                              ],
                             ),
-                          ],
-                        ),
-                      )
-                    ],
+                          )
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
-        ),
+                const SizedBox(height: 10,),
+                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      textStyle: const TextStyle(
+                                          fontFamily: 'main', fontSize: 16),
+                                      // shadowColor: Colors.blue[900],
+                                      elevation: 20,
+                                      backgroundColor:
+                                          Mycolors.mainShadedColorBlue,
+                                      shadowColor: Colors.transparent,
+                                      minimumSize: const Size(200, 50),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            17), // <-- Radius
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => studenthome(0),
+                                        ),
+                                      );
+                                    },
+                                    child: const Text("OK",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white,
+                                            letterSpacing: 0.5))),
+            ])),
         Positioned(
           top: 30,
           left: 30,
@@ -386,39 +422,35 @@ class AppointmentConfirmationScreenState
                 Navigator.pop(context);
               },
               icon: const Icon(Icons.arrow_back),
-              label: Text("Back",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      color: themeData.colorScheme.onPrimary,
-                      letterSpacing: 0.5))),
+              label: const Text(" ")),
         ),
-        Positioned(
-          top: 30,
-          right: 30,
-          child: ElevatedButton.icon(
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateColor.resolveWith(
-                      (states) => const Color.fromRGBO(21, 70, 160, 1)),
-                  shadowColor: MaterialStateColor.resolveWith(
-                      (states) => Colors.transparent),
-                  elevation: MaterialStateProperty.all(0),
-                  padding: MaterialStateProperty.all(
-                      const EdgeInsets.symmetric(vertical: 16))),
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => studenthome(0),
-                  ),
-                );
-              },
-              icon: const Icon(Icons.home),
-              label: Text("Home",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      color: themeData.colorScheme.onPrimary,
-                      letterSpacing: 0.5))),
-        ),
+        // Positioned(
+        //   top: 30,
+        //   right: 30,
+        //   child: ElevatedButton.icon(
+        //       style: ButtonStyle(
+        //           backgroundColor: MaterialStateColor.resolveWith(
+        //               (states) => const Color.fromRGBO(21, 70, 160, 1)),
+        //           shadowColor: MaterialStateColor.resolveWith(
+        //               (states) => Colors.transparent),
+        //           elevation: MaterialStateProperty.all(0),
+        //           padding: MaterialStateProperty.all(
+        //               const EdgeInsets.symmetric(vertical: 16))),
+        //       onPressed: () {
+        //         Navigator.pushReplacement(
+        //           context,
+        //           MaterialPageRoute(
+        //             builder: (context) => studenthome(0),
+        //           ),
+        //         );
+        //       },
+        //       icon: const Icon(Icons.home),
+        //       label: Text("Home",
+        //           style: TextStyle(
+        //               fontWeight: FontWeight.w600,
+        //               color: themeData.colorScheme.onPrimary,
+        //               letterSpacing: 0.5))),
+        // ),
       ],
     ));
   }
