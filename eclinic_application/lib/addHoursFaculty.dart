@@ -910,7 +910,7 @@ class _AddHourState extends State<addHoursFaculty> {
                 // print(_startTime.hour);
                 // print(_endTime.hour);
                 showerror(context,
-                    "The time you choosed is out of the working hours", x);
+                    "The time you choose is out of the working hours", x);
               } else
                 _timeFormated(_startTime, _endTime, x);
             },
@@ -990,7 +990,7 @@ class _AddHourState extends State<addHoursFaculty> {
                         startend.end.minute == _endTime.minute) {
                       showerror(
                           context,
-                          "The new time you choosed is the same for the previos one",
+                          "The new time you choose is the same for the previos one",
                           x);
                       flag = false;
                     }
@@ -1047,10 +1047,8 @@ class _AddHourState extends State<addHoursFaculty> {
                         _endTime.hour > 17) {
                       // print(_startTime.hour);
                       // print(_endTime.hour);
-                      showerror(
-                          context,
-                          "The time you choosed is out of the working hours",
-                          x);
+                      showerror(context,
+                          "The time you choose is out of the working hours", x);
                       flag = false;
                     }
                   }
