@@ -195,7 +195,8 @@ class AppointmentConfirmationScreenState
               image: AssetImage('./assets/images/eClinicLogo-blue1.png'),
               height: 50,
             ),
-            const Center(child: CircularProgressIndicator()),
+            const Center(child: CircularProgressIndicator(
+                        color: Color.fromRGBO(21, 70, 160, 1))),
             const SizedBox(height: 40),
             Text(
               "Booking an appointment with ${widget.faculty['firstname']} ${widget.faculty['lastname']}\n\nPlease wait.....\n\n ", //(${currentProgressStatus})
