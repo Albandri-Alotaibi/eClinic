@@ -602,12 +602,14 @@ class _DepartmentChangeScreenState extends State<DepartmentChangeScreen> {
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Completion date: " +
-                          (modelGroup.Projectcompletiondate?.convertToWord() ??
-                              ''),
-                      style: TextStyle(fontSize: 14),
-                    ),
+                    if (TypeUser.type == 'student')
+                      Text(
+                        "Completion date: " +
+                            (modelGroup.Projectcompletiondate
+                                    ?.convertToWord() ??
+                                ''),
+                        style: TextStyle(fontSize: 14),
+                      ),
                     Text(
                       "Created by you",
                       style: TextStyle(fontSize: 14, color: Colors.green),
