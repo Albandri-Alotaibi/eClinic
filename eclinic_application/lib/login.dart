@@ -18,6 +18,18 @@ class login extends StatefulWidget {
 }
 
 class _loginState extends State<login> {
+  bool exist = false;
+  checkemail(String email1) async {
+    final snap = await FirebaseFirestore.instance
+        .collection("faculty")
+        .where("ksuemail", isEqualTo: email1)
+        .get();
+    if (snap.size > 0) {
+      print("exxiissttteeeeeee");
+      exist = true;
+    }
+  }
+
   var email = '';
   var password = '';
   final formkey = GlobalKey<FormState>();
@@ -124,6 +136,7 @@ class _loginState extends State<login> {
                                     return "only english is allowed";
                                   }
                                 }
+                                checkemail(_emailController.text);
                               }),
                           SizedBox(
                             height: 15,
@@ -216,24 +229,17 @@ class _loginState extends State<login> {
                                 });
                                 try {
                                   if (formkey.currentState!.validate()) {
-                                    if (_emailController.text
-                                        .contains("student")) {
-                                      // showerror(
-                                      //     context, "invalid email or password");
-                                      showInSnackBar(
-                                          context, "Invalid email or password",
-                                          onError: true);
-                                    } else {
-                                      await FirebaseAuth.instance
-                                          .signInWithEmailAndPassword(
-                                              email: email, password: password)
-                                          // Navigator.pushNamed(
-                                          //         context, 'facultyhome')
-                                          .then((value) async {
-                                        final FirebaseAuth auth =
-                                            FirebaseAuth.instance;
-                                        final User? user = auth.currentUser;
-                                        final Uid = user!.uid;
+                                    await FirebaseAuth.instance
+                                        .signInWithEmailAndPassword(
+                                            email: email, password: password)
+                                        // Navigator.pushNamed(
+                                        //         context, 'facultyhome')
+                                        .then((value) async {
+                                      final FirebaseAuth auth =
+                                          FirebaseAuth.instance;
+                                      final User? user = auth.currentUser;
+                                      final Uid = user!.uid;
+                                      if (exist) {
                                         if (user.emailVerified) {
                                           Navigator.pushNamed(
                                               context, 'facultyhome');
@@ -243,8 +249,12 @@ class _loginState extends State<login> {
                                                 context, 'verfication');
                                           }
                                         }
-                                      });
-                                    }
+                                      } else {
+                                        showInSnackBar(context,
+                                            "Invalid email or password",
+                                            onError: true);
+                                      }
+                                    });
                                   }
                                 } on FirebaseAuthException catch (error) {
                                   print(error.message);

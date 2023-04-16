@@ -23,6 +23,18 @@ class studentlogin extends StatefulWidget {
 }
 
 class _studentloginState extends State<studentlogin> {
+  bool exist = false;
+  checkemail(String email1) async {
+    final snap = await FirebaseFirestore.instance
+        .collection("student")
+        .where("email", isEqualTo: email1)
+        .get();
+    if (snap.size > 0) {
+      print("exxiissttteeeeeee");
+      exist = true;
+    }
+  }
+
   @override
   var email = '';
   var password = '';
@@ -117,6 +129,7 @@ class _studentloginState extends State<studentlogin> {
                                     return "only english is allowed";
                                   }
                                 }
+                                checkemail(_emailController.text);
                               }),
                           SizedBox(
                             height: 15,
@@ -220,17 +233,23 @@ class _studentloginState extends State<studentlogin> {
                                       final Uid = user!.uid;
                                       // Navigator.pushNamed(
                                       //     context, 'studenthome');
-                                      if (user.emailVerified) {
-                                        if (TypeUser.type == 'student') {
-                                          TypeUser.type = 'student';
-                                          StorageManager.saveData(
-                                              'TypeUser', 'student');
+                                      if (exist) {
+                                        if (user.emailVerified) {
+                                          if (TypeUser.type == 'student') {
+                                            TypeUser.type = 'student';
+                                            StorageManager.saveData(
+                                                'TypeUser', 'student');
+                                            Navigator.pushNamed(
+                                                context, 'studenthome');
+                                          }
+                                        } else {
                                           Navigator.pushNamed(
-                                              context, 'studenthome');
+                                              context, 'studentverfication');
                                         }
                                       } else {
-                                        Navigator.pushNamed(
-                                            context, 'studentverfication');
+                                        showInSnackBar(context,
+                                            "Invalid email or password",
+                                            onError: true);
                                       }
                                     });
                                   }

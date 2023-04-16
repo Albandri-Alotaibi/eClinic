@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myapp/CommonIssueViewScreen.dart';
+import 'package:myapp/domain/extension.dart';
 import 'package:myapp/style/Mycolors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:myapp/facultyViewFAQ.dart';
@@ -243,7 +244,7 @@ class _facultyListFAQState extends State<facultyListFAQ> {
 
       return semester;
     }).toList();
-
+    semesterList.sortBySemesterAndYear();
     //add all semesters option to dropdown
     semesterList.insert(
         0, <String, dynamic>{"semestername": "All Semesters", "id": "0"});

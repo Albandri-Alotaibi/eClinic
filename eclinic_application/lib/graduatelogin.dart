@@ -23,6 +23,18 @@ class graduatelogin extends StatefulWidget {
 }
 
 class _graduateloginState extends State<graduatelogin> {
+  bool exist = false;
+  checkemail(String email1) async {
+    final snap = await FirebaseFirestore.instance
+        .collection("graduate")
+        .where("email", isEqualTo: email1)
+        .get();
+    if (snap.size > 0) {
+      print("exxiissttteeeeeee");
+      exist = true;
+    }
+  }
+
   var email = '';
   var password = '';
   final formkey = GlobalKey<FormState>();
@@ -113,6 +125,7 @@ class _graduateloginState extends State<graduatelogin> {
                                     return "only english is allowed";
                                   }
                                 }
+                                checkemail(_emailController.text);
                               }),
                           SizedBox(
                             height: 15,
@@ -209,21 +222,27 @@ class _graduateloginState extends State<graduatelogin> {
                                           FirebaseAuth.instance;
                                       final User? user = auth.currentUser;
                                       final Uid = user!.uid;
-                                      ///////////////verfication code ///////////////////////////////////////////////
-                                      if (user.emailVerified) {
-                                        TypeUser.type = 'graduate';
-                                        // save type user
-                                        StorageManager.saveData(
-                                            'TypeUser', 'graduate');
-                                        Navigator.pushNamedAndRemoveUntil(
-                                            context,
-                                            'graduatehome',
-                                            (route) => false);
-                                      } else {
-                                        if (!(user.emailVerified)) {
-                                          Navigator.pushNamed(
-                                              context, 'graduateverfication');
+                                      if (exist) {
+                                        ///////////////verfication code ///////////////////////////////////////////////
+                                        if (user.emailVerified) {
+                                          TypeUser.type = 'graduate';
+                                          // save type user
+                                          StorageManager.saveData(
+                                              'TypeUser', 'graduate');
+                                          Navigator.pushNamedAndRemoveUntil(
+                                              context,
+                                              'graduatehome',
+                                              (route) => false);
+                                        } else {
+                                          if (!(user.emailVerified)) {
+                                            Navigator.pushNamed(
+                                                context, 'graduateverfication');
+                                          }
                                         }
+                                      } else {
+                                        showInSnackBar(context,
+                                            "Invalid email or password",
+                                            onError: true);
                                       }
                                     });
                                   }
