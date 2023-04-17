@@ -690,7 +690,7 @@ class _StudentViewBookedAppointmentState
         child: Form(
           key: formkey,
           child: Column(children: [
-            Text("Choose a  reason to cancel your appointment with Dr." +
+            Text("Choose a  reason to cancel your appointment with " +
                 BookedAppointments[index].FacultyName +
                 " on " +
                 BookedAppointments[index].StringDate() +
@@ -828,7 +828,7 @@ class _StudentViewBookedAppointmentState
         .collection("faculty")
         .doc(FacultytId) //its the faclulty doc id???????????
         .get();
-    String Fname =  snap2['firstname'] + " " + snap2['lastname'];
+    String Fname = snap2['firstname'] + " " + snap2['lastname'];
     // today date and time
     DateTime now = new DateTime.now();
     //at the same day
