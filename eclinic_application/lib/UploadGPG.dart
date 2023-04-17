@@ -404,7 +404,7 @@ class _UploadGPGState extends State<UploadGPG> {
             // String sn = element['semestername'];
             // var startdate = element['startdate'];
             // startdate.toString();
-           // semester.add(element['semestername']); //من عندي
+            // semester.add(element['semestername']); //من عندي
             semester.add(element.data());
             // if (startdate != null) {
             //   if ((sn.contains(s))) {
@@ -512,29 +512,31 @@ class _UploadGPGState extends State<UploadGPG> {
                                       height: 50,
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 7),
-                                    child: Column(
-                                      children: [
-                                        GestureDetector(
-                                          child: Text(
-                                            pickedFile!.name,
-                                            style: TextStyle(
-                                                decoration:
-                                                    TextDecoration.underline,
-                                                color: Mycolors
-                                                    .mainShadedColorBlue,
-                                                fontSize: 20),
-                                            textAlign: TextAlign.start,
-                                            softWrap: false,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
+                                  Flexible(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 7),
+                                      child: Column(
+                                        children: [
+                                          GestureDetector(
+                                            child: Text(
+                                              pickedFile!.name,
+                                              style: TextStyle(
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                  color: Mycolors
+                                                      .mainShadedColorBlue,
+                                                  fontSize: 20),
+                                              textAlign: TextAlign.start,
+                                              softWrap: false,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            onTap: () {
+                                              openFile(pickedFile!);
+                                            },
                                           ),
-                                          onTap: () {
-                                            openFile(pickedFile!);
-                                          },
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   Spacer(),
@@ -681,41 +683,41 @@ class _UploadGPGState extends State<UploadGPG> {
                                     height: 7,
                                   ),
                                   DropdownButtonFormField<String>(
-                               decoration: InputDecoration(
+                                    decoration: InputDecoration(
                                       hintText: 'Choose a semester',
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(13.0)),
                                       ),
                                     ),
-                              isExpanded: true,
-                              items: semester
-                                  .map((e) => e!['semestername'])
-                                  .toList()
-                                  .map((dropdownitems) {
-                                return DropdownMenuItem<String>(
-                                  value: dropdownitems,
-                                  child: Text(dropdownitems),
-                                );
-                              }).toList(),
-                              onChanged: (String? newselect) {
-                                setState(() {
-                                  semesterselectedvalue = newselect;
+                                    isExpanded: true,
+                                    items: semester
+                                        .map((e) => e!['semestername'])
+                                        .toList()
+                                        .map((dropdownitems) {
+                                      return DropdownMenuItem<String>(
+                                        value: dropdownitems,
+                                        child: Text(dropdownitems),
+                                      );
+                                    }).toList(),
+                                    onChanged: (String? newselect) {
+                                      setState(() {
+                                        semesterselectedvalue = newselect;
 
-                                  checkids(semesterselectedvalue);
-                                });
-                              },
-                              value: semesterselectedvalue,
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              validator: (value) {
-                                if (value == null ||
-                                    semesterselectedvalue!.isEmpty ||
-                                    semesterselectedvalue == null) {
-                                  return 'Please choose a semester';
-                                }
-                              },
-                            ),
+                                        checkids(semesterselectedvalue);
+                                      });
+                                    },
+                                    value: semesterselectedvalue,
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    validator: (value) {
+                                      if (value == null ||
+                                          semesterselectedvalue!.isEmpty ||
+                                          semesterselectedvalue == null) {
+                                        return 'Please choose a semester';
+                                      }
+                                    },
+                                  ),
                                 ],
                               ),
                             ),
