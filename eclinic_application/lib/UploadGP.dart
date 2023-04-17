@@ -34,7 +34,7 @@ class _UploadGPState extends State<UploadGP> {
   var semesterselectedvalue;
   var year;
   //List<String> semester = [];
-List<Map<String, dynamic>?> semester = [];
+  List<Map<String, dynamic>?> semester = [];
 
   late String docsforsemestername;
   String? email = '';
@@ -149,9 +149,9 @@ List<Map<String, dynamic>?> semester = [];
         Students = await groupRef['students'];
         for (var i = 0; i < Students.length; i++) {
           //  final DocumentSnapshot docRef2 = await Students[i].get();
-          if(Students[i]['ref'] != null) {
+          if (Students[i]['ref'] != null) {
             final DocumentSnapshot docRef2 = await Students[i]['ref'].get();
-            if(docRef2.exists) {
+            if (docRef2.exists) {
               print(docRef2['firstname']);
               var haveSocialAccount = docRef2['socialmedia'];
 
@@ -473,7 +473,7 @@ List<Map<String, dynamic>?> semester = [];
         });
         print(semester);
       });
-       semester.sortBySemesterAndYear();
+      semester.sortBySemesterAndYear();
     } catch (e) {
       print(e.toString());
       return null;
@@ -566,29 +566,31 @@ List<Map<String, dynamic>?> semester = [];
                                       height: 50,
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 7),
-                                    child: Column(
-                                      children: [
-                                        GestureDetector(
-                                          child: Text(
-                                            pickedFile!.name,
-                                            style: TextStyle(
-                                                decoration:
-                                                    TextDecoration.underline,
-                                                color: Mycolors
-                                                    .mainShadedColorBlue,
-                                                fontSize: 20),
-                                            textAlign: TextAlign.start,
-                                            softWrap: false,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
+                                  Flexible(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 7),
+                                      child: Column(
+                                        children: [
+                                          GestureDetector(
+                                            child: Text(
+                                              pickedFile!.name,
+                                              style: TextStyle(
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                  color: Mycolors
+                                                      .mainShadedColorBlue,
+                                                  fontSize: 20),
+                                              textAlign: TextAlign.start,
+                                              softWrap: false,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            onTap: () {
+                                              openFile(pickedFile!);
+                                            },
                                           ),
-                                          onTap: () {
-                                            openFile(pickedFile!);
-                                          },
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   Spacer(),
@@ -719,55 +721,42 @@ List<Map<String, dynamic>?> semester = [];
                                   SizedBox(
                                     height: 7,
                                   ),
-                                
-                             DropdownButtonFormField<String>(
-                               decoration: InputDecoration(
+                                  DropdownButtonFormField<String>(
+                                    decoration: InputDecoration(
                                       hintText: 'Choose a semester',
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(13.0)),
                                       ),
                                     ),
-                              isExpanded: true,
-                              items: semester
-                                  .map((e) => e!['semestername'])
-                                  .toList()
-                                  .map((dropdownitems) {
-                                return DropdownMenuItem<String>(
-                                  value: dropdownitems,
-                                  child: Text(dropdownitems),
-                                );
-                              }).toList(),
-                              onChanged: (String? newselect) {
-                                setState(() {
-                                  semesterselectedvalue = newselect;
+                                    isExpanded: true,
+                                    items: semester
+                                        .map((e) => e!['semestername'])
+                                        .toList()
+                                        .map((dropdownitems) {
+                                      return DropdownMenuItem<String>(
+                                        value: dropdownitems,
+                                        child: Text(dropdownitems),
+                                      );
+                                    }).toList(),
+                                    onChanged: (String? newselect) {
+                                      setState(() {
+                                        semesterselectedvalue = newselect;
 
-                                  checkids(semesterselectedvalue);
-                                });
-                              },
-                              value: semesterselectedvalue,
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              validator: (value) {
-                                if (value == null ||
-                                    semesterselectedvalue!.isEmpty ||
-                                    semesterselectedvalue == null) {
-                                  return 'Please choose a semester';
-                                }
-                              },
-                            ),
-
-
-
-
-
-
-
-
-
-
-
-
+                                        checkids(semesterselectedvalue);
+                                      });
+                                    },
+                                    value: semesterselectedvalue,
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    validator: (value) {
+                                      if (value == null ||
+                                          semesterselectedvalue!.isEmpty ||
+                                          semesterselectedvalue == null) {
+                                        return 'Please choose a semester';
+                                      }
+                                    },
+                                  ),
                                 ],
                               ),
                             ),
