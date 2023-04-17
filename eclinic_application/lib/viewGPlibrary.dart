@@ -154,10 +154,16 @@ class _viewGPlibraryState extends State<viewGPlibrary> {
 
       //get gp name
       // List arrayOfStudent = doc['Students'];
-      final DocumentSnapshot group = await doc["group"].get();
-      String GPName = group['projectname'];
-      gps['projectname'] = GPName;
-      // print(gps['projectname']);
+      gps['projectname'] =  "--";
+
+      if(doc["group"] != null) {
+        final DocumentSnapshot group = await doc["group"].get();
+        if(group.exists) {
+          String GPName = group?['projectname'] ?? "---";
+          gps['projectname'] = GPName;
+        }
+        // print(gps['projectname']);
+      }
 
       //get GP category and store the category names in a string w/o the last name so we dont hav , at the end
       List GPcatRef = doc['GPcategory'];

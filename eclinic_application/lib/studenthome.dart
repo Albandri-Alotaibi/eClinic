@@ -395,13 +395,13 @@ class _sState extends State<studenthome> {
         .get()
         .then((QuerySnapshot snapshot) {
       snapshot.docs.forEach((DocumentSnapshot doc) async {
-        Timestamp t1 = doc['startdate'] as Timestamp;
-        DateTime StartTimeDate = t1.toDate();
+        Timestamp? t1 = doc['startdate'] as Timestamp?;
+        DateTime? StartTimeDate = t1?.toDate();
 
-        Timestamp t2 = doc['enddate'] as Timestamp;
-        DateTime EndTimeDate = t2.toDate();
+        Timestamp? t2 = doc['enddate'] as Timestamp?;
+        DateTime? EndTimeDate = t2?.toDate();
 
-        if (now.isAfter(StartTimeDate) && now.isBefore(EndTimeDate)) {
+        if (StartTimeDate != null &&  EndTimeDate != null && now.isAfter(StartTimeDate) && now.isBefore(EndTimeDate)) {
           semester = doc.reference;
         }
       });

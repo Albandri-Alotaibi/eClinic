@@ -149,22 +149,26 @@ List<Map<String, dynamic>?> semester = [];
         Students = await groupRef['students'];
         for (var i = 0; i < Students.length; i++) {
           //  final DocumentSnapshot docRef2 = await Students[i].get();
-          final DocumentSnapshot docRef2 = await Students[i]['ref'].get();
-          print(docRef2['firstname']);
-          var haveSocialAccount = docRef2['socialmedia'];
+          if(Students[i]['ref'] != null) {
+            final DocumentSnapshot docRef2 = await Students[i]['ref'].get();
+            if(docRef2.exists) {
+              print(docRef2['firstname']);
+              var haveSocialAccount = docRef2['socialmedia'];
 
-          if (haveSocialAccount != 'None') {
-            print("inside not None");
-            var medType = docRef2['socialmedia'];
-            var link = docRef2['socialmediaaccount'];
-            var Firstname = docRef2['firstname'];
-            setState(() {
-              SocialLinks.add(new socialLinks(
-                studentName: Firstname,
-                mediaType: medType,
-                link: link,
-              ));
-            });
+              if (haveSocialAccount != 'None') {
+                print("inside not None");
+                var medType = docRef2['socialmedia'];
+                var link = docRef2['socialmediaaccount'];
+                var Firstname = docRef2['firstname'];
+                setState(() {
+                  SocialLinks.add(new socialLinks(
+                    studentName: Firstname,
+                    mediaType: medType,
+                    link: link,
+                  ));
+                });
+              }
+            }
           }
         }
         //end social media
