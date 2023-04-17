@@ -1,6 +1,7 @@
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:myapp/app/constants.dart';
 import 'package:myapp/bloc/profileStudent/bloc.dart';
 import 'package:myapp/bloc/select_group/bloc.dart';
@@ -83,17 +84,16 @@ class _studentviewprofileState extends State<studentviewprofile> {
   RegExp countRegEx = RegExp(r'^\d{9}$');
   RegExp countRegEx10 = RegExp(r'^\d{10}$');
   RegExp english = RegExp("^[\u0000-\u007F]+\$");
+  RegExp httpsProtocol = RegExp("^https?://");
 
-  RegExp whatsappformat =
-      RegExp(r'https://iwtsp.com/.*', multiLine: false, caseSensitive: false);
 
-  RegExp whatsapp2format = RegExp(r'https://api.whatsapp.com/.*',
+  RegExp whatsappformat = RegExp(r'(?:https://|http://)?(api\.whatsapp|iwtsp)\.com/.*',
       multiLine: false, caseSensitive: false);
 
-  RegExp linkedinformat = RegExp(r'https://www.linkedin.com/.*',
+  RegExp linkedinformat = RegExp(r'(?:http://|https://)?(?:\www.|\w+.)?linkedin\.com/.*',
       multiLine: false, caseSensitive: false);
 
-  RegExp twitterformat = RegExp(r'https://mobile.twitter.com/.*',
+  RegExp twitterformat = RegExp(r'(?:http://|https://)?(?:www\.|mobile\.)?twitter\.com/([a-zA-Z0-9_]+)',
       multiLine: false, caseSensitive: false);
 
   @override
@@ -264,7 +264,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                           validator: (value) {
                                             if (value!.isEmpty ||
                                                 _fnameController.text.isEmpty) {
-                                              return 'Please enter your frist name ';
+                                              return 'Please enter your first name ';
                                             } else {
                                               if (nameRegExp.hasMatch(
                                                   _fnameController.text)) {
@@ -453,21 +453,17 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                                             "") {
                                                       return 'Please enter your link account';
                                                     } else {
-                                                      if (!(english.hasMatch(
-                                                          _socialmediaccount
-                                                              .text))) {
-                                                        return "only english is allowed";
-                                                      }
+                                                      // if (!(english.hasMatch(
+                                                      //     _socialmediaccount
+                                                      //         .text))) {
+                                                      //   return "only english is allowed";
+                                                      // }
                                                       if (social ==
                                                           "WhatsApp") {
                                                         if (!(whatsappformat.hasMatch(
                                                                 _socialmediaccount
-                                                                    .text)) &&
-                                                            !(whatsapp2format
-                                                                .hasMatch(
-                                                                    _socialmediaccount
-                                                                        .text))) {
-                                                          return 'Make sure your link account related to selected social media';
+                                                                    .text))) {
+                                                          return 'Make sure to use valid Whatsapp link.';
                                                         }
                                                       }
                                                       if (social ==
@@ -476,7 +472,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                                             .hasMatch(
                                                                 _socialmediaccount
                                                                     .text))) {
-                                                          return 'Make sure your link account related to selected social media';
+                                                          return 'Make sure to use valid LinkedIn link.';
                                                         }
                                                       }
                                                       if (social == "Twitter") {
@@ -484,7 +480,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                                             .hasMatch(
                                                                 _socialmediaccount
                                                                     .text))) {
-                                                          return 'Make sure your link account related to selected social media';
+                                                          return 'Make sure to use valid Twitter profile link.';
                                                         }
                                                       }
                                                     }
@@ -877,9 +873,8 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                           .modelStudent!
                                           .semester,
                                       socialmedia: social,
-                                      socialmediaaccount: _socialmediaccount
-                                          .value.text
-                                          .toNullIfEmplty(),
+                                      socialmediaaccount: _socialmediaccount.value.text != "" ? (httpsProtocol.hasMatch(_socialmediaccount.value.text) ? _socialmediaccount.value.text :  "https://${_socialmediaccount.value.text}") : null,
+
                                       group: BlocProfileStudent.get(context)
                                           .currentGroup!
                                           .ref);
@@ -999,7 +994,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                   }
                                 } else {
                                   showInSnackBar(
-                                      context, 'Pleas check fields',
+                                      context, 'Please check fields',
                                       onError: true);
                                 }
                               },
