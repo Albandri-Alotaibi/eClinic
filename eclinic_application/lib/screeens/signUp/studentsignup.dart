@@ -254,6 +254,8 @@ class _studentsignupState extends State<studentsignup> {
   //wa.me/ above
   //https://mobile.twitter.com/10Deem
   //https://www.linkedin.com/in/asmaa-alqahtani-08a114190
+  RegExp ksuStudentEmail = new RegExp(r'4[\d]{8}@student.ksu.edu.sa$',
+      multiLine: false, caseSensitive: false);
 
   RegExp whatsappformat = new RegExp(r'https://iwtsp.com/.*',
       multiLine: false, caseSensitive: false);
@@ -444,8 +446,16 @@ class _studentsignupState extends State<studentsignup> {
                                     .hasMatch(_emailController.text))) {
                                   return "only english is allowed";
                                 }
-                                if (!value.isValidEmail()) {
-                                  return "Check your email format";
+                                if (TypeUser.type == 'graduate') {
+                                  if (!value.isValidEmail()) {
+                                    return "Check your email format";
+                                  }
+                                }
+                                if (TypeUser.type == 'student') {
+                                  if (!(ksuStudentEmail
+                                      .hasMatch(_emailController.text))) {
+                                    return 'Please write email format correctly,ID@student.ksu.edu.sa';
+                                  }
                                 }
                               },
                             ),
@@ -709,13 +719,15 @@ class _studentsignupState extends State<studentsignup> {
 
                                 try {
                                   //todo this change to formkey.currentState!.validate()
+
                                   if ((await FirebaseAuth.instance
                                           .fetchSignInMethodsForEmail(email))
                                       .isNotEmpty) {
                                     showInSnackBar(context,
                                         "The email address is already in use by another user",
                                         onError: true);
-                                  } else if (formkey.currentState!.validate()) {
+                                  }
+                                  if (formkey.currentState!.validate()) {
                                     //print('data : == ${formkey.currentState!.}') ;
                                     //GPdate = dategp(selctedyear, month);
 

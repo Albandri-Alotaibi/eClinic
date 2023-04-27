@@ -337,8 +337,12 @@ class _resetpasswordState extends State<resetpassword> {
                                         setState(() {
                                           ifsend = true;
                                           //reset2
-                                          Navigator.pushNamed(
-                                              context, 'afterreset');
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: ((context) =>
+                                                      afterreset(
+                                                          value: _emailcontrol
+                                                              .text))));
                                         });
                                       }
                                     }

@@ -341,8 +341,13 @@ class _graduateresetState extends State<graduatereset> {
                                         setState(() {
                                           ifsend = true;
                                           //reset2
-                                          Navigator.pushNamed(
-                                              context, 'afterreset');
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: ((context) =>
+                                                      afterresetgraduate(
+                                                        value:
+                                                            _emailcontrol.text,
+                                                      ))));
                                         });
                                       }
                                     }

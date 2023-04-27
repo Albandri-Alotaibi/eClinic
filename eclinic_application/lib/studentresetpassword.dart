@@ -340,8 +340,12 @@ class _studentresetpasswordState extends State<studentresetpassword> {
                                         setState(() {
                                           ifsend = true;
                                           //reset2
-                                          Navigator.pushNamed(
-                                              context, 'afterreset');
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: ((context) =>
+                                                      afterresetstudent(
+                                                          value: _emailcontrol
+                                                              .text))));
                                         });
                                       }
                                     }
