@@ -364,7 +364,7 @@ class _StudentViewBookedAppointmentState
                                                 style: TextStyle(
                                                     color:
                                                         Mycolors.mainColorBlue,
-                                                    fontSize: 17)),
+                                                    fontSize: 16)),
                                           ),
                                           children: [
                                             Padding(
