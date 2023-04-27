@@ -6,7 +6,7 @@ admin.initializeApp(functions.config().firebase);
 // Create and deploy your first functions
 // https://firebase.google.com/docs/functions/get-started
 
-exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async (context) => {
+exports.appointmentreminder = functions.region("europe-west1").pubsub.schedule('0 16 * * *').timeZone('Asia/Riyadh').onRun(async (context) => {
     functions.logger.info("Hello logs", { structuredData: true });
 
 
@@ -16,9 +16,10 @@ exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async
     //make a loop on faculty collection to get the appointments 
     const facultySnapshot = await admin.firestore().collection('faculty').get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {//loop on the faculty members
-            // functions.logger.info("before calling appointment collection", { structuredData: true });
-            //faculty doc id
-            //    functions.logger.info(doc.id);
+            functions.logger.info("before calling appointment collection", { structuredData: true });
+          //  faculty doc id
+        //   functions.logger.info("F id");
+        //        functions.logger.info(doc.id);
 
             //get the appointment ref that are booked
             const appontmentRef = facultyRef.doc(doc.id).collection('appointment').where("Booked", '==', true);
@@ -28,22 +29,27 @@ exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async
                     functions.logger.info('subcollection exists');
                     var numOfBookedAppointments = 0;
                     sub.forEach(async (subDoc) => {//loop on booked appointments only
-
+                        functions.logger.info("booked appointments");functions.logger.info(subDoc.id);
                         //today date
                         var today = new Date();
-
+                        functions.logger.info('today');
+                        functions.logger.info(today);
                         //appointment start date and time
                         var appointmentDate = new Date(subDoc.data().starttime.toDate());
-
+                        functions.logger.info('appointmentDate');
+                        functions.logger.info(appointmentDate);
 
                         // To calculate the time difference of two dates
                         var Difference_In_Time = (appointmentDate.getTime() - today.getTime()) / 1000;
                         Difference_In_Time /= (60 * 60);
                         //get the time in hours
                         Diff_in_hours = Math.abs(Math.round(Difference_In_Time));
-
+                        functions.logger.info('Diff_in_hours');
+                        functions.logger.info(Diff_in_hours);
                         //if the appointment will start in the comming 24h then we will send a notification to the dr and students
                         if (Diff_in_hours <= 24 && Diff_in_hours > 0) {
+                            // functions.logger.info('Diff_in_hours');
+                            // functions.logger.info(Diff_in_hours);
                             // count the numder of appointments a faculty have to send it later
                             numOfBookedAppointments = numOfBookedAppointments + 1;
 
@@ -125,7 +131,7 @@ exports.appointmentreminder = functions.pubsub.schedule('0 5 * * *').onRun(async
 });
 
 // updated
-exports.gpAndEndofsemesterreminder = functions.pubsub.schedule('0 21 * * *').onRun(async (context) => {
+exports.gpAndEndofsemesterreminder = functions.pubsub.schedule('0 8 * * *').timeZone('Asia/Riyadh').onRun(async (context) => {
     functions.logger.info("Hello logs", { structuredData: true });
     //response.send("Hello Firebase");
     const StudentsSnapshot = await admin.firestore().collection('studentgroup').get().then((querySnapshot) => {
@@ -576,11 +582,11 @@ async function OneDayGenerating(day, ArrayOfAllTheDayRanges, startDateT, endDate
 
         console.log("uid");
         console.log(uid);
-       await admin.firestore().collection('faculty').doc(uid).collection('appointment').doc().set({
-        'starttime': startTimestamp, //Start timestamp
-        'endtime': endTimestamp,
-        'Booked':
-            false, 
-       })
+        await admin.firestore().collection('faculty').doc(uid).collection('appointment').doc().set({
+            'starttime': startTimestamp, //Start timestamp
+            'endtime': endTimestamp,
+            'Booked':
+                false,
+        })
     }
 }
