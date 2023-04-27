@@ -1096,9 +1096,17 @@ class _UploadGPGState extends State<UploadGPG> {
                                                       //fit: BoxFit.cover,
                                                     ),
                                                   ),
-                                                  Text('   ' +
-                                                      SocialLinks[index]
-                                                          .studentName),
+                                                   GestureDetector(
+                                                      onTap: () {
+                                                        launch(
+                                                            SocialLinks[index]
+                                                                .link);
+                                                      },
+                                                      child:  Text('   ' +
+                                                        SocialLinks[index]
+                                                            .studentName) ,
+                                                    ),
+
                                                 ],
                                               ),
                                               //Text("vvvv")
@@ -1128,9 +1136,17 @@ class _UploadGPGState extends State<UploadGPG> {
                                                       //fit: BoxFit.cover,
                                                     ),
                                                   ),
-                                                  Text('   ' +
-                                                      SocialLinks[index]
-                                                          .studentName),
+                                                  GestureDetector(
+                                                      onTap: () {
+                                                        launch(
+                                                            SocialLinks[index]
+                                                                .link);
+                                                      },
+                                                      child:  Text('   ' +
+                                                        SocialLinks[index]
+                                                            .studentName) ,
+                                                    ),
+
                                                 ],
                                               ),
                                               // Text("vvvv")
@@ -1159,9 +1175,17 @@ class _UploadGPGState extends State<UploadGPG> {
                                                       //fit: BoxFit.cover,
                                                     ),
                                                   ),
-                                                  Text('   ' +
-                                                      SocialLinks[index]
-                                                          .studentName),
+                                                  GestureDetector(
+                                                      onTap: () {
+                                                        launch(
+                                                            SocialLinks[index]
+                                                                .link);
+                                                      },
+                                                      child:  Text('   ' +
+                                                        SocialLinks[index]
+                                                            .studentName) ,
+                                                    ),
+
                                                 ],
                                               )
                                             ],

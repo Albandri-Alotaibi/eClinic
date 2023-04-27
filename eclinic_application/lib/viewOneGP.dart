@@ -303,9 +303,21 @@ class _viewOneGPState extends State<viewOneGP> {
                                                         //fit: BoxFit.cover,
                                                       ),
                                                     ),
-                                                    Text('   ' +
+                                                 GestureDetector(
+                                                      onTap: () {
+                                                        launch(
+                                                            SocialLinks[index]
+                                                                .link);
+                                                      },
+                                                      child:  Text('   ' +
                                                         SocialLinks[index]
-                                                            .studentName),
+                                                            .studentName) ,
+                                                    ),
+
+
+
+
+
                                                   ],
                                                 ),
                                                 //Text("vvvv")
@@ -337,9 +349,16 @@ class _viewOneGPState extends State<viewOneGP> {
                                                         //fit: BoxFit.cover,
                                                       ),
                                                     ),
-                                                    Text('   ' +
+                                                     GestureDetector(
+                                                      onTap: () {
+                                                        launch(
+                                                            SocialLinks[index]
+                                                                .link);
+                                                      },
+                                                      child:  Text('   ' +
                                                         SocialLinks[index]
-                                                            .studentName),
+                                                            .studentName) ,
+                                                    ),
                                                   ],
                                                 ),
                                                 // Text("vvvv")
@@ -370,9 +389,17 @@ class _viewOneGPState extends State<viewOneGP> {
                                                         //fit: BoxFit.cover,
                                                       ),
                                                     ),
-                                                    Text('   ' +
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        launch(
+                                                            SocialLinks[index]
+                                                                .link);
+                                                      },
+                                                      child:  Text('   ' +
                                                         SocialLinks[index]
-                                                            .studentName),
+                                                            .studentName) ,
+                                                    ),
+
                                                   ],
                                                 )
                                               ],
