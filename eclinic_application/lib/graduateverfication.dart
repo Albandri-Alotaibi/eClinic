@@ -171,6 +171,7 @@ class _graduateverficationState extends State<graduateverfication> {
                     print(await currentuseremailverified());
                     user = auth.currentUser;
                     if (await currentuseremailverified()) {
+                      await user!.getIdToken(true);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
