@@ -170,6 +170,7 @@ class _verficationState extends State<verfication> {
                     print(await currentuseremailverified());
                     user = auth.currentUser;
                     if (await currentuseremailverified()) {
+                      await user!.getIdToken(true);
                       Navigator.push(
                         context,
                         MaterialPageRoute(

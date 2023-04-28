@@ -171,7 +171,7 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                     )
                   //when loading if done, show everything.
                   : ListView(
-                      padding: const EdgeInsets.all(24),
+                      padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
                       children: <Widget>[
                         //------------------------- dropdowns [speciality/semester]
                         Column(children: [
@@ -179,13 +179,13 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                             Expanded(
                                 child: Container(
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
+                                      borderRadius: BorderRadius.circular(10),
                                       border: Border.all(
                                           color: Mycolors.mainShadedColorBlue,
                                           width: 1),
                                     ),
                                     padding: const EdgeInsets.all(10),
-                                    margin: const EdgeInsets.only(bottom: 8),
+                                    margin: const EdgeInsets.only(bottom: 0),
                                     child: DropdownButton<
                                             Map<String, dynamic>?>(
                                         // icon: const Icon(Icons.face),
@@ -250,7 +250,7 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                                           width: 1),
                                     ),
                                     padding: const EdgeInsets.all(10),
-                                    margin: const EdgeInsets.only(bottom: 8),
+                                    margin: const EdgeInsets.only(bottom: 0),
                                     child: DropdownButton<
                                             Map<String, dynamic>?>(
                                         // icon: const Icon(Icons.pages),
@@ -309,7 +309,7 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                           // ]),
                         ]),
                         //--------------------------- end dropdowns
-
+                        const SizedBox(height: 10,),
                         //show message if no results and still loading or user didnt click search
                         noResults || secondLoading || !searchClicked
                             ? SizedBox(
@@ -337,6 +337,7 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
                             :
                             //show all items if no loading and there are result from search
                             ListView.builder(
+
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemCount: commonIssuesList.length,
@@ -385,7 +386,7 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
             (value) => setState(() {}));
       },
       child: Container(
-        margin: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+        margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -393,11 +394,11 @@ class CommonIssuesListScreenState extends State<CommonIssuesListScreen> {
               child: Card(
                 color: Mycolors.mainShadedColorBlue,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(17), // <-- Radius
+                  borderRadius: BorderRadius.circular(18), // <-- Radius
                 ),
                 shadowColor: const Color.fromARGB(94, 114, 168, 243),
                 child: Padding(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(15),
                     child: ListTile(
                       title: Text(title, style: const TextStyle(fontSize: 18)),
                       subtitle: Text(
