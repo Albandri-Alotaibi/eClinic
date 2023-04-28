@@ -427,7 +427,17 @@
                 } else if (new Date(start).getFullYear() == today.getFullYear() && new Date(start).getMonth() == today.getMonth() && new Date(start).getDate() < today.getDate()) {
                     alert("Please choose dates that is in the future");
                     flag = false;
-                } else if (start >= end) {
+                } else if (new Date(end).getFullYear() < today.getFullYear()) {//alert if the end date in the past
+                    alert("Please choose dates that is in the future");
+                    flag = false;
+                } else if (new Date(end).getFullYear() == today.getFullYear() && new Date(end).getMonth() < today.getMonth()) {
+                    alert("Please choose dates that is in the future");
+                    flag = false;
+                } else if (new Date(end).getFullYear() == today.getFullYear() && new Date(end).getMonth() == today.getMonth() && new Date(end).getDate() < today.getDate()) {
+                    alert("Please choose dates that is in the future");
+                    flag = false;
+                }
+                else if (start >= end) {
                     alert("Please choose a start date that is before the end date");
                     flag = false;
                 } else if (myArray[1].length == 9) {
@@ -439,7 +449,7 @@
                     }
 
 
-                } 
+                }
                 // else if (myArray[1].length == 4) {
                 //     years = myArray[1];
                 //     if (new Date(start).getFullYear() != years || new Date(end).getFullYear() != years) {
@@ -456,7 +466,7 @@
                         enddate: Timestamp.fromDate(new Date(end + "T23:59:59")),
 
                     });
-                   
+
                     successMessage('Dates has been added successfully.');
                 }
             }
@@ -475,20 +485,30 @@
             var years = [];
             const myArray = text.split(" ");
             var flag = true;
-            
-            if ( new Date(dateString) < today && start != dateString) {
+
+            if (new Date(dateString) < today && start != dateString) {
                 alert("Start date connot be changed for a date that has been reached");
                 flag = false;
-            } else if (new Date(start).getFullYear() < today.getFullYear()) {//alert if the start date in the past
+            } else if (new Date(start).getFullYear() < today.getFullYear() && start != dateString) {//alert if the start date in the past
                 alert("Please choose dates that is in the future");
                 flag = false;
-            } else if (new Date(start).getFullYear() == today.getFullYear() && new Date(start).getMonth() < today.getMonth()) {
+            } else if (new Date(start).getFullYear() == today.getFullYear() && new Date(start).getMonth() < today.getMonth() && start != dateString) {
                 alert("Please choose dates that is in the future");
                 flag = false;
-            } else if (new Date(start).getFullYear() == today.getFullYear() && new Date(start).getMonth() == today.getMonth() && new Date(start).getDate() < today.getDate()) {
+            } else if (new Date(start).getFullYear() == today.getFullYear() && new Date(start).getMonth() == today.getMonth() && new Date(start).getDate() < today.getDate() && start != dateString) {
                 alert("Please choose dates that is in the future");
                 flag = false;
-            } else if (start >= end) {
+            } else if (new Date(end).getFullYear() < today.getFullYear()) {//alert if the end date in the past
+                alert("Please choose dates that is in the future");
+                flag = false;
+            } else if (new Date(end).getFullYear() == today.getFullYear() && new Date(end).getMonth() < today.getMonth()) {
+                alert("Please choose dates that is in the future");
+                flag = false;
+            } else if (new Date(end).getFullYear() == today.getFullYear() && new Date(end).getMonth() == today.getMonth() && new Date(end).getDate() < today.getDate()) {
+                alert("Please choose dates that is in the future");
+                flag = false;
+            }
+            else if (start >= end) {
                 alert("Please choose a start date that is before the end date");
                 flag = false;
             } else if (start == dateString && end == dateString2) {
@@ -503,7 +523,7 @@
                 }
 
 
-            } 
+            }
             // else if (myArray[1].length == 4) {
             //     years = myArray[1];
             //     if (new Date(start).getFullYear() != years || new Date(end).getFullYear() != years) {
@@ -518,10 +538,10 @@
                 await updateDoc(docRefup, { // we update the time to a smester 
                     startdate: Timestamp.fromDate(new Date(start + "T00:00:00")),
                     enddate: Timestamp.fromDate(new Date(end + "T23:59:59")),
-                    
+
                 });
 
-                
+
                 successMessage('Dates has been updated successfully.');
             }
         })
@@ -610,7 +630,7 @@
         function Confirm() {
             //put this in the link  onclick='Confirm();'
 
-           
+
 
             if (confirm("Are you sure to want to cancle your work?") == true) {
                 document.getElementById("selectsemester").value = "default";
