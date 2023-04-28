@@ -273,7 +273,7 @@
         let dateString2 = "";
 
         //-------------------------------get the semesters and add them in the drop down menu-------------------
-        async function getSemesters() {
+        async function getSemesters () {
             const querySnapshot = await getDocs(collection(db, "semester"));
             querySnapshot.forEach((doc) => { //loop for all doc in the collection
                 // doc.data() is never undefined for query doc snapshots
@@ -299,7 +299,7 @@
         };
 
         //-----------------after choosing the semester we should check if she already added the time frame befor or not -----------
-        async function CheckChosenSemester() {
+        async function CheckChosenSemester () {
             startDatecal.value = null; //if the admin choose a semester that has a start/end date 
             endDatecal.value = null;   //then go back for one that dose not have we delet the old data
 
@@ -461,11 +461,16 @@
                 // }
                 if (flag) {
 
-                    await updateDoc(docRefadd, { // we add the new time to a smester that dosenot have a time frame
-                        startdate: Timestamp.fromDate(new Date(start + "T00:00:00")),
-                        enddate: Timestamp.fromDate(new Date(end + "T23:59:59")),
-
-                    });
+                    try {
+                        await updateDoc(docRefadd, { // we add the new time to a smester that dosenot have a time frame
+                            startdate: Timestamp.fromDate(new Date(start + "T00:00:00")),
+                            enddate: Timestamp.fromDate(new Date(end + "T23:59:59")),
+                        });
+                    } catch (e) {
+                        //in case there is an error! we dont update the page.
+                        alert('We caught an error during update, refresh the page and try again!');
+                        return;
+                    }
 
                     successMessage('Dates has been added successfully.');
                 }
@@ -534,13 +539,16 @@
 
             // } 
             if (flag) {
-
-                await updateDoc(docRefup, { // we update the time to a smester 
-                    startdate: Timestamp.fromDate(new Date(start + "T00:00:00")),
-                    enddate: Timestamp.fromDate(new Date(end + "T23:59:59")),
-
-                });
-
+                try {
+                    await updateDoc(docRefup, { // we update the time to a smester 
+                        startdate: Timestamp.fromDate(new Date(start + "T00:00:00")),
+                        enddate: Timestamp.fromDate(new Date(end + "T23:59:59")),
+                    });
+                } catch (e) {
+                    //in case there is an error! we dont update the page.
+                    alert('We caught an error during update, refresh the page and try again!');
+                    return;
+                }
 
                 successMessage('Dates has been updated successfully.');
             }
@@ -588,7 +596,7 @@
 
 
 
-        function successMessage(message) {
+        function successMessage (message) {
             document.getElementById("Mycontent").style.display = "none";
             addbtn.style.display = "none";
             updatebtn.style.display = "none";
@@ -619,7 +627,7 @@
     </script>
     <script>
         // start: java sript for profile icons 
-        function menuToggle() {
+        function menuToggle () {
             const toggleMenu = document.querySelector(".menu");
             toggleMenu.classList.toggle("active");
         }
@@ -627,7 +635,7 @@
     </script>
 
     <script type="text/javascript">
-        function Confirm() {
+        function Confirm () {
             //put this in the link  onclick='Confirm();'
 
 
