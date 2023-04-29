@@ -41,6 +41,7 @@ eClinic system is a system that will help in improving the process of managing t
 
 ### Built With
 
+<span>
 <a href="https://www.w3.org/TR/html5/" title="HTML5">
 <img src="https://github.com/get-icon/geticon/raw/master/icons/html-5.svg" alt="HTML5" width="60px" height="60px"></a> 
 
@@ -69,8 +70,14 @@ eClinic system is a system that will help in improving the process of managing t
 <a href="https://code.visualstudio.com/" title="Visual Studio Code">
 <img src="https://github.com/get-icon/geticon/raw/master/icons/visual-studio-code.svg" alt="Visual Studio Code" width="50px" height="50px"></a>
 
+
 <a href="https://www.firebase.com/" title="Firebase">
 <img src="https://github.com/get-icon/geticon/raw/master/icons/firebase.svg" alt="Firebase" width="50px" height="50px"></a>
+
+ <a href="https://developer.android.com/studio" title="Android Studio">
+<img src="https://skillicons.dev/icons?i=androidstudio" alt="androidstudio" width="50px" height="50px"></a>
+</span>
+
 
 
 <!-- GETTING STARTED -->
