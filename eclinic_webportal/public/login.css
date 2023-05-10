@@ -59,7 +59,7 @@ a {
     color: #0084bd;
 }
 
-/* #innerreset {
+ #innerreset {
     box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
     background: hsl(0 0% 100%);
     color: rgb(0, 0, 0);
@@ -77,4 +77,4 @@ a {
     margin-top: 10%;
     display: block;
     font-weight: 400;
-} */
+} 
