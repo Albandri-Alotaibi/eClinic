@@ -719,46 +719,46 @@ class _studentsignupState extends State<studentsignup> {
 
                                 try {
                                   //todo this change to formkey.currentState!.validate()
-
-                                  if ((await FirebaseAuth.instance
-                                          .fetchSignInMethodsForEmail(email))
-                                      .isNotEmpty) {
-                                    showInSnackBar(context,
-                                        "The email address is already in use by another user",
-                                        onError: true);
-                                  }
                                   if (formkey.currentState!.validate()) {
-                                    //print('data : == ${formkey.currentState!.}') ;
-                                    //GPdate = dategp(selctedyear, month);
+                                    if ((await FirebaseAuth.instance
+                                            .fetchSignInMethodsForEmail(email))
+                                        .isNotEmpty) {
+                                      showInSnackBar(context,
+                                          "The email address is already in use by another user",
+                                          onError: true);
+                                    } else {
+                                      //print('data : == ${formkey.currentState!.}') ;
+                                      //GPdate = dategp(selctedyear, month);
 
-                                    DocumentReference refDep = FirebaseFirestore
-                                        .instance
-                                        .collection("department")
-                                        .doc(docfordepatment);
-                                    BlocGroupSelect.get(context)
-                                        .getAllGroups(refDep);
-                                    BlocGroupSelect.get(context)
-                                        .selectGroup(null);
-                                    //Navigator.pushNamed(context, GroupSelection.route) ;
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                GroupSelection(
-                                                    generalInfo:
-                                                        // this object not contant group remamber this
-                                                        ModelStudent.fromJson({
-                                                  'email': email,
-                                                  'password': password,
-                                                  'firstname': fname,
-                                                  'lastname': lname,
-                                                  'department': refDep,
-                                                  'socialmedia': socialmedia,
-                                                  'socialmediaaccount':
-                                                      socialmediaaccount
-                                                }))));
+                                      DocumentReference refDep =
+                                          FirebaseFirestore.instance
+                                              .collection("department")
+                                              .doc(docfordepatment);
+                                      BlocGroupSelect.get(context)
+                                          .getAllGroups(refDep);
+                                      BlocGroupSelect.get(context)
+                                          .selectGroup(null);
+                                      //Navigator.pushNamed(context, GroupSelection.route) ;
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  GroupSelection(
+                                                      generalInfo:
+                                                          // this object not contant group remamber this
+                                                          ModelStudent
+                                                              .fromJson({
+                                                    'email': email,
+                                                    'password': password,
+                                                    'firstname': fname,
+                                                    'lastname': lname,
+                                                    'department': refDep,
+                                                    'socialmedia': socialmedia,
+                                                    'socialmediaaccount':
+                                                        socialmediaaccount
+                                                  }))));
 
-                                    /*
+                                      /*
                                     GPdate = dategp(selctedyear, month);
                                     await FirebaseAuth.instance
                                         .createUserWithEmailAndPassword(
@@ -786,6 +786,7 @@ class _studentsignupState extends State<studentsignup> {
                                       });
                                     });
                                      */
+                                    }
                                   }
                                 } catch (error) {
                                   //without message

@@ -323,7 +323,7 @@ class _facultysignupState extends State<facultysignup> {
   }
 
   addfacultyRefonspeciality(List sp, uid) async {
-    print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+    print("&&&&&&&&&&&&&&&&&&&&hhhhiiiii888888&&&&&&&&&&&&&&&&&&&&&&");
     print(sp);
     final ref = FirebaseFirestore.instance.collection("faculty").doc(uid);
     faculty.add(ref);
@@ -1203,6 +1203,7 @@ class _facultysignupState extends State<facultysignup> {
   }
 
   addfacultyinsemester(List spe, var fid) async {
+    print("hhhhhhhhhhhhhhhhhhh33333333333333333333");
     var ref = FirebaseFirestore.instance.collection("faculty").doc(fid);
     print(ref);
 

@@ -86,15 +86,20 @@ class _studentviewprofileState extends State<studentviewprofile> {
   RegExp english = RegExp("^[\u0000-\u007F]+\$");
   RegExp httpsProtocol = RegExp("^https?://");
 
+  RegExp whatsappformat = RegExp(
+      r'(?:https://|http://)?(api\.whatsapp|iwtsp)\.com/.*',
+      multiLine: false,
+      caseSensitive: false);
 
-  RegExp whatsappformat = RegExp(r'(?:https://|http://)?(api\.whatsapp|iwtsp)\.com/.*',
-      multiLine: false, caseSensitive: false);
+  RegExp linkedinformat = RegExp(
+      r'(?:http://|https://)?(?:\www.|\w+.)?linkedin\.com/.*',
+      multiLine: false,
+      caseSensitive: false);
 
-  RegExp linkedinformat = RegExp(r'(?:http://|https://)?(?:\www.|\w+.)?linkedin\.com/.*',
-      multiLine: false, caseSensitive: false);
-
-  RegExp twitterformat = RegExp(r'(?:http://|https://)?(?:www\.|mobile\.)?twitter\.com/([a-zA-Z0-9_]+)',
-      multiLine: false, caseSensitive: false);
+  RegExp twitterformat = RegExp(
+      r'(?:http://|https://)?(?:www\.|mobile\.)?twitter\.com/([a-zA-Z0-9_]+)',
+      multiLine: false,
+      caseSensitive: false);
 
   @override
   Widget build(BuildContext context) {
@@ -125,19 +130,35 @@ class _studentviewprofileState extends State<studentviewprofile> {
               // Navigator.pushNamed(context, 'studentviewprofile');
             }
 
-            _fnameController.text =
-                BlocProfileStudent.get(context).modelStudent?.firstname ?? '';
-            _lnamecontroller.text =
-                BlocProfileStudent.get(context).modelStudent?.lastname ?? '';
-            _emailController.text =
-                BlocProfileStudent.get(context).modelStudent?.email ?? '';
-            _socialmediaccount.text = BlocProfileStudent.get(context)
-                    .modelStudent
-                    ?.socialmediaaccount ??
-                '';
-            social =
-                BlocProfileStudent.get(context).modelStudent?.socialmedia ??
-                    'None';
+            // _fnameController.text =
+            //     BlocProfileStudent.get(context).modelStudent?.firstname ?? '';
+            // _lnamecontroller.text =
+            //     BlocProfileStudent.get(context).modelStudent?.lastname ?? '';
+            // _emailController.text =
+            //     BlocProfileStudent.get(context).modelStudent?.email ?? '';
+            // _socialmediaccount.text = BlocProfileStudent.get(context)
+            //         .modelStudent
+            //         ?.socialmediaaccount ??
+            //     '';
+            // social =
+            //     BlocProfileStudent.get(context).modelStudent?.socialmedia ??
+            //         'None';
+            if (!(state is InitStateBlocProfileStudentChangeCurrentDepartment ||
+                state is InitStateBlocProfileStudentChangeCurrentGroup)) {
+              _fnameController.text =
+                  BlocProfileStudent.get(context).modelStudent?.firstname ?? '';
+              _lnamecontroller.text =
+                  BlocProfileStudent.get(context).modelStudent?.lastname ?? '';
+              _emailController.text =
+                  BlocProfileStudent.get(context).modelStudent?.email ?? '';
+              _socialmediaccount.text = BlocProfileStudent.get(context)
+                      .modelStudent
+                      ?.socialmediaaccount ??
+                  '';
+              social =
+                  BlocProfileStudent.get(context).modelStudent?.socialmedia ??
+                      'None';
+            }
             _groupName.text =
                 BlocProfileStudent.get(context).currentGroup?.projectname ?? '';
             _depertement.text = BlocProfileStudent.get(context)
@@ -222,7 +243,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     const TextHeader(
-                                      text: 'Personal info',
+                                      text: 'Personal information',
                                     ),
                                     Column(
                                       mainAxisAlignment:
@@ -460,7 +481,8 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                                       // }
                                                       if (social ==
                                                           "WhatsApp") {
-                                                        if (!(whatsappformat.hasMatch(
+                                                        if (!(whatsappformat
+                                                            .hasMatch(
                                                                 _socialmediaccount
                                                                     .text))) {
                                                           return 'Make sure to use valid Whatsapp link.';
@@ -561,7 +583,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       const TextHeader(
-                                        text: 'Group info',
+                                        text: 'Group information',
                                       ),
                                       InkWell(
                                         onTap: () async {
@@ -873,8 +895,14 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                           .modelStudent!
                                           .semester,
                                       socialmedia: social,
-                                      socialmediaaccount: _socialmediaccount.value.text != "" ? (httpsProtocol.hasMatch(_socialmediaccount.value.text) ? _socialmediaccount.value.text :  "https://${_socialmediaccount.value.text}") : null,
-
+                                      socialmediaaccount: _socialmediaccount
+                                                  .value.text !=
+                                              ""
+                                          ? (httpsProtocol.hasMatch(
+                                                  _socialmediaccount.value.text)
+                                              ? _socialmediaccount.value.text
+                                              : "https://${_socialmediaccount.value.text}")
+                                          : null,
                                       group: BlocProfileStudent.get(context)
                                           .currentGroup!
                                           .ref);
@@ -993,8 +1021,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                                         modelGroupChangedField);
                                   }
                                 } else {
-                                  showInSnackBar(
-                                      context, 'Please check fields',
+                                  showInSnackBar(context, 'Please check fields',
                                       onError: true);
                                 }
                               },

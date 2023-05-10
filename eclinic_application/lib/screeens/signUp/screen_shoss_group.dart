@@ -267,6 +267,11 @@ class _GroupSelectionState extends State<GroupSelection> {
                                                   validator: (v) {
                                                     if (v?.trim() == '') {
                                                       return ' ';
+                                                    } else {
+                                                      BlocGroupSelect.get(
+                                                              context)
+                                                          .errorWhenCreateNewGroup(
+                                                              null);
                                                     }
                                                   },
                                                 ),
@@ -361,6 +366,10 @@ class _GroupSelectionState extends State<GroupSelection> {
                                                               month = value;
                                                               //print(month);
                                                             });
+                                                            BlocGroupSelect.get(
+                                                                    context)
+                                                                .errorWhenCreateNewGroup(
+                                                                    null);
                                                           },
                                                           autovalidateMode:
                                                               AutovalidateMode
@@ -418,6 +427,10 @@ class _GroupSelectionState extends State<GroupSelection> {
                                                                   newselect;
                                                               //print(selctedyear);
                                                             });
+                                                            BlocGroupSelect.get(
+                                                                    context)
+                                                                .errorWhenCreateNewGroup(
+                                                                    null);
                                                           },
                                                           value: selctedyear,
                                                           autovalidateMode:
@@ -436,7 +449,24 @@ class _GroupSelectionState extends State<GroupSelection> {
                                                   ),
                                                 ),
                                               },
-
+                                              _space,
+                                              BlocBuilder<BlocGroupSelect,
+                                                      StateBlocGroupSelect>(
+                                                  builder: (context, snapshot) {
+                                                return BlocGroupSelect.get(
+                                                                context)
+                                                            .errorWhenCreateGroupMessage !=
+                                                        null
+                                                    ? Text(
+                                                        BlocGroupSelect.get(
+                                                                context)
+                                                            .errorWhenCreateGroupMessage!,
+                                                        style: TextStyle(
+                                                            color: Colors.red,
+                                                            fontSize: 12),
+                                                      )
+                                                    : SizedBox();
+                                              }),
                                               _space,
                                               Row(
                                                 mainAxisAlignment:
@@ -465,6 +495,10 @@ class _GroupSelectionState extends State<GroupSelection> {
                                                     ),
                                                     onPressed: () {
                                                       Navigator.pop(context);
+                                                      BlocGroupSelect.get(
+                                                              context)
+                                                          .errorWhenCreateNewGroup(
+                                                              null);
                                                     },
                                                     child: const Text('Cancel'),
                                                   ),
@@ -501,6 +535,11 @@ class _GroupSelectionState extends State<GroupSelection> {
                                                           .validate());
                                                       if (formkey.currentState!
                                                           .validate()) {
+                                                        BlocGroupSelect.get(
+                                                                context)
+                                                            .errorWhenCreateNewGroup(
+                                                                null);
+
                                                         print(TypeUser.type);
                                                         GPdate =
                                                             TypeUser.type ==
@@ -534,6 +573,11 @@ class _GroupSelectionState extends State<GroupSelection> {
                                                                 context)
                                                             .selectGroup(
                                                                 modelg);
+                                                      } else {
+                                                        BlocGroupSelect.get(
+                                                                context)
+                                                            .errorWhenCreateNewGroup(
+                                                                'Please fill all fields');
                                                       }
                                                     },
                                                     child: const Text('Create'),

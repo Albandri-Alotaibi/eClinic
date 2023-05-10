@@ -73,28 +73,32 @@ class BlocProfileStudent extends Cubit<StateBlocProfileStudent> {
       //  allDepartments.remove(departement);
       //}
       //print(r) ;
-      emit(InitStateBlocProfileStudent());
+      // emit(InitStateBlocProfileStudent());
+      emit(InitStateBlocProfileStudentChangeCurrentDepartment());
     });
   }
 
   changeSelectDepatment(DocumentReference? input) {
     departmentSelect = input ?? allDepartments.last;
 
-    emit(InitStateBlocProfileStudent());
+    // emit(InitStateBlocProfileStudent());
+    emit(InitStateBlocProfileStudentChangeCurrentDepartment());
   }
 
   // when select department
   DocumentReference? currentDepartment;
   changeCurrentDepartment(DocumentReference? input) {
     currentDepartment = input;
-    emit(InitStateBlocProfileStudent());
+    // emit(InitStateBlocProfileStudent());
+    emit(InitStateBlocProfileStudentChangeCurrentDepartment());
   }
 
   // when select group
   ModelGroup? currentGroup;
   changeCurrentGroup(ModelGroup? input) {
     currentGroup = input;
-    emit(InitStateBlocProfileStudent());
+    // emit(InitStateBlocProfileStudent());
+    emit(InitStateBlocProfileStudentChangeCurrentGroup());
   }
 
   // save changed
@@ -158,6 +162,12 @@ class BlocProfileStudent extends Cubit<StateBlocProfileStudent> {
 abstract class StateBlocProfileStudent {}
 
 class InitStateBlocProfileStudent extends StateBlocProfileStudent {}
+
+class InitStateBlocProfileStudentChangeCurrentGroup
+    extends StateBlocProfileStudent {}
+
+class InitStateBlocProfileStudentChangeCurrentDepartment
+    extends StateBlocProfileStudent {}
 
 class InitStateBlocProfileStudentStartLoading extends StateBlocProfileStudent {}
 

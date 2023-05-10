@@ -107,6 +107,12 @@ class BlocGroupSelect extends Cubit<StateBlocGroupSelect> {
     }
     emit(InitStateBlocGroupSelect());
   }
+
+  String? errorWhenCreateGroupMessage;
+  errorWhenCreateNewGroup(String? input) {
+    errorWhenCreateGroupMessage = input;
+    emit(InitStateBlocGroupSelect());
+  }
 }
 
 abstract class StateBlocGroupSelect {}
