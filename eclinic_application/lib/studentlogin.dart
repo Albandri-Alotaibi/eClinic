@@ -98,7 +98,7 @@ class _studentloginState extends State<studentlogin> {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              " Email:",
+                              " KSU Email:",
                               style: TextStyle(
                                   overflow: TextOverflow.ellipsis,
                                   color: Mycolors.mainColorBlack,
@@ -110,7 +110,7 @@ class _studentloginState extends State<studentlogin> {
                           TextFormField(
                               controller: _emailController,
                               decoration: InputDecoration(
-                                  hintText: "Enter your email ",
+                                  hintText: "Enter the KSU email ",
                                   prefixIcon: Icon(Icons.email),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(13),
@@ -122,7 +122,7 @@ class _studentloginState extends State<studentlogin> {
                               validator: (value) {
                                 if (value!.isEmpty ||
                                     _emailController.text == "") {
-                                  return 'Please enter your email ';
+                                  return 'Please enter the KSU email ';
                                 } else {
                                   if (!(english
                                       .hasMatch(_emailController.text))) {

@@ -402,7 +402,7 @@ class _studentsignupState extends State<studentsignup> {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  " Email:",
+                                  " KSU Email:",
                                   style: TextStyle(
                                       overflow: TextOverflow.ellipsis,
                                       color: Mycolors.mainColorBlack,
@@ -410,6 +410,40 @@ class _studentsignupState extends State<studentsignup> {
                                       fontSize: 13),
                                   textAlign: TextAlign.start,
                                 ),
+                              ),
+                              TextFormField(
+                                controller: _emailController,
+                                decoration: InputDecoration(
+                                    hintText: "Enter the KSU email",
+                                    //  labelText: ' Email :',
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(13),
+                                        borderSide: const BorderSide(
+                                          width: 0,
+                                        ))),
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value!.isEmpty ||
+                                      _emailController.text == "") {
+                                    return 'Please enter your email ';
+                                  }
+                                  if (!(english
+                                      .hasMatch(_emailController.text))) {
+                                    return "only english is allowed";
+                                  }
+                                  if (TypeUser.type == 'graduate') {
+                                    if (!value.isValidEmail()) {
+                                      return "Check your email format";
+                                    }
+                                  }
+                                  if (TypeUser.type == 'student') {
+                                    if (!(ksuStudentEmail
+                                        .hasMatch(_emailController.text))) {
+                                      return 'Please write email format correctly,ID@student.ksu.edu.sa';
+                                    }
+                                  }
+                                },
                               ),
                             } else ...{
                               Align(
@@ -423,42 +457,77 @@ class _studentsignupState extends State<studentsignup> {
                                       fontSize: 13),
                                   textAlign: TextAlign.start,
                                 ),
-                              )
-                            },
-                            TextFormField(
-                              controller: _emailController,
-                              decoration: InputDecoration(
-                                  hintText: "Enter your email",
-                                  //  labelText: ' Email :',
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(13),
-                                      borderSide: const BorderSide(
-                                        width: 0,
-                                      ))),
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              validator: (value) {
-                                if (value!.isEmpty ||
-                                    _emailController.text == "") {
-                                  return 'Please enter your email ';
-                                }
-                                if (!(english
-                                    .hasMatch(_emailController.text))) {
-                                  return "only english is allowed";
-                                }
-                                if (TypeUser.type == 'graduate') {
-                                  if (!value.isValidEmail()) {
-                                    return "Check your email format";
+                              ),
+                              TextFormField(
+                                controller: _emailController,
+                                decoration: InputDecoration(
+                                    hintText: "Enter your email",
+                                    //  labelText: ' Email :',
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(13),
+                                        borderSide: const BorderSide(
+                                          width: 0,
+                                        ))),
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value!.isEmpty ||
+                                      _emailController.text == "") {
+                                    return 'Please enter your email ';
                                   }
-                                }
-                                if (TypeUser.type == 'student') {
-                                  if (!(ksuStudentEmail
+                                  if (!(english
                                       .hasMatch(_emailController.text))) {
-                                    return 'Please write email format correctly,ID@student.ksu.edu.sa';
+                                    return "only english is allowed";
                                   }
-                                }
-                              },
-                            ),
+                                  if (TypeUser.type == 'graduate') {
+                                    if (!value.isValidEmail()) {
+                                      return "Check your email format";
+                                    }
+                                  }
+                                  if (TypeUser.type == 'student') {
+                                    if (!(ksuStudentEmail
+                                        .hasMatch(_emailController.text))) {
+                                      return 'Please write email format correctly,ID@student.ksu.edu.sa';
+                                    }
+                                  }
+                                },
+                              ),
+                            },
+
+                            // TextFormField(
+                            //   controller: _emailController,
+                            //   decoration: InputDecoration(
+                            //       hintText: "Enter your email",
+                            //       //  labelText: ' Email :',
+                            //       border: OutlineInputBorder(
+                            //           borderRadius: BorderRadius.circular(13),
+                            //           borderSide: const BorderSide(
+                            //             width: 0,
+                            //           ))),
+                            //   autovalidateMode:
+                            //       AutovalidateMode.onUserInteraction,
+                            //   validator: (value) {
+                            //     if (value!.isEmpty ||
+                            //         _emailController.text == "") {
+                            //       return 'Please enter your email ';
+                            //     }
+                            //     if (!(english
+                            //         .hasMatch(_emailController.text))) {
+                            //       return "only english is allowed";
+                            //     }
+                            //     if (TypeUser.type == 'graduate') {
+                            //       if (!value.isValidEmail()) {
+                            //         return "Check your email format";
+                            //       }
+                            //     }
+                            //     if (TypeUser.type == 'student') {
+                            //       if (!(ksuStudentEmail
+                            //           .hasMatch(_emailController.text))) {
+                            //         return 'Please write email format correctly,ID@student.ksu.edu.sa';
+                            //       }
+                            //     }
+                            //   },
+                            // ),
                             SizedBox(
                               height: 8,
                             ),
