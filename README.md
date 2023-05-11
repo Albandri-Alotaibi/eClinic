@@ -93,4 +93,4 @@ To be able to access the web portal you can use this link [eClinic](https://ecli
 
 To be able to use the mobile application you should
 1. Use an Android device
-2. Download this [file](ADD APK)
+2. Download the APK
