@@ -37,7 +37,8 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-eClinic system is a system that will help in improving the process of managing the help desk at KSU
+eClinic is a system that enhances the guidance process for both students and experts to resolve the graduation project issues more efficiently and effectively by providing consultations scheduling, search previously resolved frequently asked questioned and browse previous graduation projects.
+
 
 ### Built With
 
