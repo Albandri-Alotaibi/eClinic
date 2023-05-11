@@ -195,8 +195,9 @@ class AppointmentConfirmationScreenState
               image: AssetImage('./assets/images/eClinicLogo-blue1.png'),
               height: 50,
             ),
-            const Center(child: CircularProgressIndicator(
-                        color: Color.fromRGBO(21, 70, 160, 1))),
+            const Center(
+                child: CircularProgressIndicator(
+                    color: Color.fromRGBO(21, 70, 160, 1))),
             const SizedBox(height: 40),
             Text(
               "Booking an appointment with ${widget.faculty['firstname']} ${widget.faculty['lastname']}\n\nPlease wait.....\n\n ", //(${currentProgressStatus})
@@ -367,7 +368,6 @@ class AppointmentConfirmationScreenState
                                     color: Colors.black45,
                                   ),
                                 ),
-
                               ],
                             ),
                           )
@@ -377,35 +377,35 @@ class AppointmentConfirmationScreenState
                   ),
                 ],
               ),
-                const SizedBox(height: 10,),
-                ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      textStyle: const TextStyle(
-                                          fontFamily: 'main', fontSize: 16),
-                                      // shadowColor: Colors.blue[900],
-                                      elevation: 20,
-                                      backgroundColor:
-                                          Mycolors.mainShadedColorBlue,
-                                      shadowColor: Colors.transparent,
-                                      minimumSize: const Size(200, 50),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            17), // <-- Radius
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => studenthome(0),
-                                        ),
-                                      );
-                                    },
-                                    child: const Text("OK",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white,
-                                            letterSpacing: 0.5))),
+              const SizedBox(
+                height: 10,
+              ),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    textStyle:
+                        const TextStyle(fontFamily: 'main', fontSize: 16),
+                    // shadowColor: Colors.blue[900],
+                    elevation: 20,
+                    backgroundColor: Mycolors.mainShadedColorBlue,
+                    shadowColor: Colors.transparent,
+                    minimumSize: const Size(200, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(17), // <-- Radius
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => studenthome(0),
+                      ),
+                    );
+                  },
+                  child: const Text("OK",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                          letterSpacing: 0.5))),
             ])),
         Positioned(
           top: 30,
@@ -511,6 +511,11 @@ class AppointmentConfirmationScreenState
     var facultyName =
         "${widget.faculty['firstname']} ${widget.faculty['lastname']}";
     DateTime StartTimeDate = widget.appointment['starttime'].toDate();
+    DateTime AdayBefor = new DateTime(
+      StartTimeDate.year,
+      StartTimeDate.month,
+      StartTimeDate.day - 1,
+    );
     DateTime now = new DateTime.now();
     DateTime TimeFromNowTo24Hours = now.add(Duration(hours: 24));
     DateTime At4Pm = new DateTime(now.year, now.month, now.day, 16, 0, 0);
@@ -520,6 +525,16 @@ class AppointmentConfirmationScreenState
     await Future.delayed(Duration(seconds: 1));
 
     print("ddddeeeeeeeeeemmmmmmmmmm22222");
+    print("StartTimeDate.day == now.day ");
+    print(StartTimeDate.day == now.day);
+    print("tartTimeDate.isAfter(At4Pm)");
+    print(StartTimeDate.isAfter(At4Pm));
+    print("now == AdayBefor");
+    print((now.day == AdayBefor.day &&
+        AdayBefor.month == now.month &&
+        AdayBefor.year == now.year));
+    print(now);
+    print(AdayBefor);
 
     if ((StartTimeDate.day == now.day &&
         StartTimeDate.month == now.month &&
@@ -566,6 +581,48 @@ class AppointmentConfirmationScreenState
             var studentToken = StudentdocRef['token'];
             sendPushMessege(studentToken, studentMsg);
           }
+        }
+      }
+    } else if (StartTimeDate.isAfter(At4Pm) &&
+        (now.day == AdayBefor.day &&
+            AdayBefor.month == now.month &&
+            AdayBefor.year == now.year)) {
+      print("in the If 222222###################");
+      //send to the faculty
+      var facultyToken = widget.faculty['token'];
+
+      //get the grop name and students
+      String? projectName;
+      late List groupStudents;
+      DocumentReference? groupData = student?["group"];
+      if (groupData != null) {
+        var gData = await groupData.get();
+
+        if (gData.exists) {
+          group = gData.data() as Map<String, dynamic>;
+          projectName = group?['projectname'];
+          groupStudents = group?['students'];
+        }
+      }
+
+      String facultymsg =
+          "You have a new appointment at ${formattedDateTime.format(widget.appointment['starttime']!.toDate())}";
+
+      if (widget.faculty.containsKey("token")) {
+        sendPushMessege(facultyToken, facultymsg);
+      }
+
+      // print("ddddeeeeeeeeeemmmmmmmmmm3333");
+
+      for (int i = 0; i < groupStudents.length; i++) {
+        String studentMsg =
+            "New appointment at ${formattedDateTime.format(widget.appointment['starttime']!.toDate())}";
+        final DocumentSnapshot StudentdocRef =
+            await groupStudents[i]['ref'].get();
+        final docData = StudentdocRef.data() as Map<String, dynamic>;
+        if (docData.containsKey("token")) {
+          var studentToken = StudentdocRef['token'];
+          sendPushMessege(studentToken, studentMsg);
         }
       }
     }
