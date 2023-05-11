@@ -128,7 +128,7 @@ class _afterresetstudentState extends State<afterresetstudent> {
                               TypeUser.type = 'student';
                               StorageManager.saveData('TypeUser', 'student');
                               Navigator.pushNamedAndRemoveUntil(
-                                  context, 'studenthome', (route) => false);
+                                  context, 'studentlogin', (route) => false);
                             }
                             setState(() {
                               // ifsend = false;
