@@ -1096,17 +1096,15 @@ class _UploadGPGState extends State<UploadGPG> {
                                                       //fit: BoxFit.cover,
                                                     ),
                                                   ),
-                                                   GestureDetector(
-                                                      onTap: () {
-                                                        launch(
-                                                            SocialLinks[index]
-                                                                .link);
-                                                      },
-                                                      child:  Text('   ' +
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      launch(SocialLinks[index]
+                                                          .link);
+                                                    },
+                                                    child: Text('   ' +
                                                         SocialLinks[index]
-                                                            .studentName) ,
-                                                    ),
-
+                                                            .studentName),
+                                                  ),
                                                 ],
                                               ),
                                               //Text("vvvv")
@@ -1137,16 +1135,14 @@ class _UploadGPGState extends State<UploadGPG> {
                                                     ),
                                                   ),
                                                   GestureDetector(
-                                                      onTap: () {
-                                                        launch(
-                                                            SocialLinks[index]
-                                                                .link);
-                                                      },
-                                                      child:  Text('   ' +
+                                                    onTap: () {
+                                                      launch(SocialLinks[index]
+                                                          .link);
+                                                    },
+                                                    child: Text('   ' +
                                                         SocialLinks[index]
-                                                            .studentName) ,
-                                                    ),
-
+                                                            .studentName),
+                                                  ),
                                                 ],
                                               ),
                                               // Text("vvvv")
@@ -1176,16 +1172,14 @@ class _UploadGPGState extends State<UploadGPG> {
                                                     ),
                                                   ),
                                                   GestureDetector(
-                                                      onTap: () {
-                                                        launch(
-                                                            SocialLinks[index]
-                                                                .link);
-                                                      },
-                                                      child:  Text('   ' +
+                                                    onTap: () {
+                                                      launch(SocialLinks[index]
+                                                          .link);
+                                                    },
+                                                    child: Text('   ' +
                                                         SocialLinks[index]
-                                                            .studentName) ,
-                                                    ),
-
+                                                            .studentName),
+                                                  ),
                                                 ],
                                               )
                                             ],
@@ -1281,7 +1275,7 @@ class _UploadGPGState extends State<UploadGPG> {
     Widget dontDeleteAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontSize: 16),
-        shadowColor: Colors.blue[900],
+        //shadowColor: Colors.blue[900],
         elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
@@ -1289,7 +1283,7 @@ class _UploadGPGState extends State<UploadGPG> {
           borderRadius: BorderRadius.circular(10), // <-- Radius
         ),
       ),
-      child: Text("Cancle"),
+      child: Text("No"),
       onPressed: () {
         Navigator.of(context).pop();
       },
@@ -1298,7 +1292,7 @@ class _UploadGPGState extends State<UploadGPG> {
     Widget YesDeleteButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(fontSize: 16),
-        shadowColor: Colors.blue[900],
+        // shadowColor: Colors.blue[900],
         elevation: 0,
         backgroundColor: Mycolors.mainShadedColorBlue,
         minimumSize: Size(60, 40),
@@ -1306,22 +1300,15 @@ class _UploadGPGState extends State<UploadGPG> {
           borderRadius: BorderRadius.circular(10), // <-- Radius
         ),
       ),
-      child: Text("Delete"),
+      child: Text("Yes"),
       onPressed: () {
         DeleteGP();
       },
     );
+
     AlertDialog alert = AlertDialog(
-      content: SizedBox(
-        height: 190,
-        child: Form(
-          key: formkey,
-          child: Column(children: [
-            Text(
-                "Deleting your GP will remove it from the GP library.\n Are you sure you want to delete it?\n"),
-          ]),
-        ),
-      ),
+      content: Text(
+          "Are you sure you want to delete your project from the GP library?"),
       actions: [
         dontDeleteAppButton,
         YesDeleteButton,
@@ -1335,6 +1322,65 @@ class _UploadGPGState extends State<UploadGPG> {
       },
     );
   } //END FUNCTION
+
+  // showConfirmationDialog(BuildContext context) async {
+  //   Widget dontDeleteAppButton = ElevatedButton(
+  //     style: ElevatedButton.styleFrom(
+  //       textStyle: TextStyle(fontSize: 16),
+  //       // shadowColor: Colors.blue[900],
+  //       elevation: 0,
+  //       backgroundColor: Mycolors.mainShadedColorBlue,
+  //       minimumSize: Size(60, 40),
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.circular(10), // <-- Radius
+  //       ),
+  //     ),
+  //     child: Text("No"),
+  //     onPressed: () {
+  //       Navigator.of(context).pop();
+  //     },
+  //   );
+
+  //   Widget YesDeleteButton = ElevatedButton(
+  //     style: ElevatedButton.styleFrom(
+  //       textStyle: TextStyle(fontSize: 16),
+  //       // shadowColor: Colors.blue[900],
+  //       elevation: 0,
+  //       backgroundColor: Mycolors.mainShadedColorBlue,
+  //       minimumSize: Size(60, 40),
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.circular(10), // <-- Radius
+  //       ),
+  //     ),
+  //     child: Text("Yes"),
+  //     onPressed: () {
+  //       DeleteGP();
+  //     },
+  //   );
+  //   AlertDialog alert = AlertDialog(
+  //     content: SizedBox(
+  //       height: 190,
+  //       child: Form(
+  //         key: formkey,
+  //         child: Column(children: [
+  //           Text(
+  //               "Are you sure you want to delete your project from the GP library?"),
+  //         ]),
+  //       ),
+  //     ),
+  //     actions: [
+  //       dontDeleteAppButton,
+  //       YesDeleteButton,
+  //     ],
+  //   );
+
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return alert;
+  //     },
+  //   );
+  // } //END FUNCTION
 
   DeleteGP() async {
     await FirebaseFirestore.instance.collection("GPlibrary").doc(id).delete();
