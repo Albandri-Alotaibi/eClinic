@@ -88,10 +88,45 @@ To be able to use the web portal or application you can follow this instructions
 
 ### Web Portal
 
+#### Using Web hosting link
 To be able to access the web portal you can use this link [eClinic](https://eclinic-app.com/login.html)
 
-### Mobile Application
+#### Using the executable code
+To run the web Portal, you need the following
+* You should have
+   * Visual studio code 
+   * Live server extension
+   * Stable internet connection
+* Follow these steps to run the code
+   1. Import the code in VS
+   2. Run the server
 
+
+
+### Mobile Application
+#### Using APK file
 To be able to use the mobile application you should
-1. Use an Android device
+1. Download APK file on your Android smartphone
 2. Download the APK
+3. Tap on the APK file and tap Yes when prompted
+4. The app will begin installing on your device, after completing the installation open it
+
+#### Using flutter code
+To run the mobile application, you need the following
+* You should have
+   * Visual studio code 
+   * Android emulator
+   * Flutter SDK
+   * Stable internet connection
+* Follow these steps to run the code
+   1.	Import the code in VS
+   2. Run the emulator
+   3. Run the code
+
+
+
+
+
+
+
+
