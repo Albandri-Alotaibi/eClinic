@@ -165,17 +165,9 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                     top: 5, bottom: 16, right: 7, left: 7),
                 child: Column(
                   children: <Widget>[
-                    // const Image(
-                    //     image: AssetImage('./assets/images/check-mark.png'),
-                    //     height: 180),
-
                     Column(
                       children: <Widget>[
                         Row(children: [
-                          // const Icon(
-                          //   Icons.collections_bookmark,
-                          //   color: Colors.grey,
-                          // ),
                           Text(
                             "  Speciality: ${category?['specialityname']}",
                             style: const TextStyle(
@@ -185,25 +177,12 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                                 color: Color.fromRGBO(21, 70, 160, 1),
                                 fontWeight: FontWeight.w500),
                           ),
-
-                          // Text(
-                          //   " ${category?['specialityname']}",
-                          //   style: TextStyle(
-                          //       // letterSpacing: 0.1,
-                          //       fontSize: 14,
-                          //       color: Mycolors.mainColorBlack,
-                          //       fontWeight: FontWeight.w500),
-                          // )
                         ]),
                         const Divider(
                           color: Colors.grey,
                           thickness: 1,
                         ),
                         Row(children: [
-                          // const Icon(
-                          //   Icons.timer,
-                          //   color: Colors.grey,
-                          // ),
                           Text("  Semester: ${semester?['semestername']}",
                               style: const TextStyle(
                                   // letterSpacing: 0.1,
@@ -211,14 +190,6 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                                   fontFamily: "main",
                                   color: Color.fromRGBO(21, 70, 160, 1),
                                   fontWeight: FontWeight.w500)),
-                          // Text(
-                          //   "${semester?['semestername']}",
-                          //   style: TextStyle(
-                          //       // letterSpacing: 0.1,
-                          //       fontSize: 14,
-                          //       color: Mycolors.mainColorBlack,
-                          //       fontWeight: FontWeight.w500),
-                          // )
                         ]),
                         const Divider(
                           color: Colors.grey,
@@ -243,21 +214,22 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                                   )
                                 ],
                               ),
-                              Expanded(
-                                  child: Text(
-                                "\n${widget.commonIssue['problem']}",
-                                // "  Problem:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                                style: const TextStyle(
-                                  // letterSpacing: 1.5,
-                                  fontSize: 15,
-                                  fontFamily: "main",
-                                  color: Color.fromRGBO(21, 70, 160, 1),
-                                ),
-
-                                // decoration: const InputDecoration(
-                                //   prefixIcon: Icon(Icons.collections),
-                                // ),
-                              ))
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      "\n${widget.commonIssue['problem']}",
+                                      // "  Problem:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                                      style: const TextStyle(
+                                        // letterSpacing: 1.5,
+                                        fontSize: 15,
+                                        fontFamily: "main",
+                                        color: Color.fromRGBO(21, 70, 160, 1),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
                             ])),
                         const Divider(
                           color: Colors.grey,
@@ -283,17 +255,21 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                                     )
                                   ],
                                 ),
-                                Expanded(
-                                  child: Text(
-                                    "\n${widget.commonIssue['solution']}",
-                                    // "  Solution:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                                    style: const TextStyle(
-                                      // letterSpacing: 1.5,
-                                      fontSize: 15,
-                                      fontFamily: "main",
-                                      color: Color.fromRGBO(21, 70, 160, 1),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "\n${widget.commonIssue['solution']}",
+                                        // "  Solution:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                                        style: const TextStyle(
+                                          // letterSpacing: 1.5,
+                                          fontSize: 15,
+                                          fontFamily: "main",
+                                          color: Color.fromRGBO(21, 70, 160, 1),
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
                               ],
                             )),
@@ -412,7 +388,7 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              "  Last modified by: ${lastmodified?['firstname'] ?? ""} ${lastmodified?['lastname'] ?? ""}",
+                              " Last modified by: ${lastmodified?['firstname'] ?? ""} ${lastmodified?['lastname'] ?? ""}",
                               style: const TextStyle(
                                   letterSpacing: 0.1,
                                   fontSize: 14,
