@@ -72,29 +72,6 @@ class _UploadGPState extends State<UploadGP> {
     bool isshow = false;
   }
 
-// CheckCode2() async{
-//    print("222NewMethod*********-ppppppppppppppppppppppppp");
-//           print(endSearchForLink);
-//   final snap4 = await FirebaseFirestore.instance
-//             .collection("GPlibrary")
-//             .doc(id)
-//             .get();
-
-//         if (snap4.data()!.containsKey('CodeLink') == true) {
-//           CodeLink = snap4['CodeLink'];
-//           print("ppppppppppppppppppppppppp");
-//           print(CodeLink);
-//           setState(() {
-//             endSearchForLink = true;
-//           });
-//         print("NewMethod*********-ppppppppppppppppppppppppp");
-//           print(endSearchForLink);
-//           } else {
-//           setState(() {
-//             endSearchForLink = true;
-//           });
-//         }
-// }
   retrieveForAfterUploadView() async {
     final FirebaseAuth auth = await FirebaseAuth.instance;
     final User? user = await auth.currentUser;
@@ -442,33 +419,9 @@ class _UploadGPState extends State<UploadGP> {
           .then((querySnapshot) {
         querySnapshot.docs.forEach((element) {
           setState(() {
-            // DateTime now = DateTime.now();
-            // year = now.year;
-            // print(year);
-            // DateTime Dateoftoday = DateTime.now();
-
-            // String s = year.toString();
-            // print(s);
-            // String sn = element['semestername'];
-            // var startdate = element['startdate'];
-            // startdate.toString();
-            //semester.add(element['semestername']); //من عندي
+           
             semester.add(element.data());
-            // if (startdate != null) {
-            //   if ((sn.contains(s))) {
-            //     print(sn);
-            //     semester.add(element['semestername']);
-            //     print("ppppppppppppppppppppppppppppppppppppppp");
-            //     print(semester);
-            //   }
-
-            //   Timestamp t = element['enddate'];
-            //   DateTime enddate = t.toDate();
-
-            //   if (Dateoftoday.isAfter(enddate)) {
-            //     semester.remove(element['semestername']);
-            //   }
-            // }
+         
           });
         });
         print(semester);
@@ -804,21 +757,9 @@ class _UploadGPState extends State<UploadGP> {
                                       hintText:
                                           "Please add your GitHub repository link here",
 
-                                      ///*******وش فايدتها؟ */
+                                     
                                       labelText: 'GitHub repository link',
-                                      // labelStyle: TextStyle(
-                                      //     color: (myFocusNode.hasFocus &&
-                                      //             !onError)
-                                      //         ? Mycolors.mainShadedColorBlue
-                                      //         : (myFocusNode.hasFocus &&
-                                      //                 onError)
-                                      //             ? Mycolors.mainColorRed
-                                      //             : Color.fromARGB(
-                                      //                 133, 0, 0, 0)),
-                                      // focusedBorder: OutlineInputBorder(
-                                      //   borderRadius: BorderRadius.all(
-                                      //       Radius.circular(13.0)),
-                                      // ),
+                                     
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(13.0)),
@@ -1340,14 +1281,7 @@ class _UploadGPState extends State<UploadGP> {
               alignment: Alignment.topCenter,
               child: Column(
                 children: [
-                  // Padding(
-                  //   padding: const EdgeInsets.only(top: 30, bottom: 19),
-                  //   child: Text(
-                  //     "GP upload",
-                  //     style: TextStyle(
-                  //         color: Mycolors.mainColorBlack, fontSize: 24),
-                  //   ),
-                  // ),
+               
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: SizedBox(
@@ -1389,14 +1323,7 @@ class _UploadGPState extends State<UploadGP> {
   }
 
   showSucessAlert() async {
-// showInSnackBar(context, "Your project has been successfully Uploaded to the library");
-//     await Future.delayed(Duration(seconds: 1));
-//         Navigator.push(
-//           context,
-//           MaterialPageRoute(
-//             builder: (context) => studenthome(2),
-//           ),
-//         );
+
 
     QuickAlert.show(
       context: context,

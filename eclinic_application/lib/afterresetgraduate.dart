@@ -152,9 +152,7 @@ class _afterresetgraduateState extends State<afterresetgraduate> {
                             GestureDetector(
                                 onTap: () async {
                                   try {
-                                    // await FirebaseAuth.instance
-                                    //     .sendPasswordResetEmail(
-                                    //         email: widget.value);
+                                
 
                                     setState(() async {
                                       await FirebaseAuth.instance

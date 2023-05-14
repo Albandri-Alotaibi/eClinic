@@ -186,12 +186,7 @@ class _viewOneGPState extends State<viewOneGP> {
                     ),
                   ),
 
-                  // ElevatedButton(
-                  //     child: Text('Open file'),
-                  //     onPressed: () => openFile(
-                  //           url: Fileurl,
-                  //           fileName: '${GPname}.pdf',
-                  //         )),
+                
 
                   if (CodeLink != '')
                     Card(

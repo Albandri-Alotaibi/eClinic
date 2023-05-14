@@ -321,68 +321,8 @@ class _sState extends State<studenthome> {
           ],
         ),
       ),
-      // body: Padding(
-      //     padding: const EdgeInsets.all(100.0),
-      //     child: Column(
-      //       children: [
-      //         Row(
-      //           mainAxisAlignment: MainAxisAlignment.center,
-      //           children: <Widget>[
-      //             ElevatedButton(
-      //               onPressed: () {
-      //                 // Navigator.pushNamed(context, 'viewfaculty');
-      //                 Navigator.pushNamed(context, 'FacultyListScreen');
-      //               },
-      //               child: Text('Schdule'),
-      //             ),
-      //             const SizedBox(width: 16),
-      //             ElevatedButton(
-      //               onPressed: () {
-      //                 Navigator.pushNamed(
-      //                     context, 'StudentViewBookedAppointment');
-      //               },
-      //               child: Text('view'),
-      //             ),
-      //           ],
-      //         ),
-      //         Row(
-      //           mainAxisAlignment: MainAxisAlignment.center,
-      //           children: <Widget>[
-      //             ElevatedButton(
-      //               onPressed: () {
-      //                 // Navigator.pushNamed(context, 'viewfaculty');
-      //                 Navigator.pushNamed(context, 'UploadGP');
-      //               },
-      //               child: Text('Upload GP'),
-      //             ),
-      //             const SizedBox(width: 16),
-      //             Expanded(
-      //               child: ElevatedButton(
-      //                 onPressed: () {
-      //                   // Navigator.pushNamed(context, 'viewfaculty');
-      //                   Navigator.pushNamed(context, 'viewGPlibrary');
-      //                 },
-      //                 child: Text('GP library'),
-      //               ),
-      //             ),
-      //           ],
-      //         ),
-      //         //---------- add  common issue button
-      //         Row(
-      //             mainAxisAlignment: MainAxisAlignment.center,
-      //             children: <Widget>[
-      //               Expanded(
-      //                 child: ElevatedButton(
-      //                   onPressed: () {
-      //                     Navigator.pushNamed(context, 'commonIssuesList');
-      //                   },
-      //                   child: Text('Common Issues'),
-      //                 ),
-      //               ),
-      //             ])
-      //         //-------------- end row of common issues button
-      //       ],
-      //     )),
+     
+ 
     ));
   } //end build
 
@@ -492,19 +432,7 @@ class _sState extends State<studenthome> {
           MaterialPageRoute<void>(builder: (context) => studenthome(0)),
         );
       },
-      // onDidReceiveBackgroundNotificationResponse:
-      //     (NotificationResponse notificationResponse) async {
-      //   final String? payload = notificationResponse.payload;
-      //   //   //   if (notificationResponse.payload != null) {
-      //   //   //     debugPrint('notification payload: $payload');
-      //   //   //   }
-      //   //
-      //   //
-      //   await Navigator.push(
-      //     context,
-      //     MaterialPageRoute<void>(builder: (context) => studenthome()),
-      //   );
-      // },
+     
     );
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {

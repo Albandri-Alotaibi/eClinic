@@ -248,20 +248,7 @@ class _graduateloginState extends State<graduatelogin> {
                                   }
                                 } on FirebaseAuthException catch (error) {
                                   print(error.message);
-                                  // if (error.message ==
-                                  //     "The email address is badly formatted.") {
-                                  //   Fluttertoast.showToast(
-                                  //     msg: "check the email format",
-                                  //     gravity: ToastGravity.TOP,
-                                  //     toastLength: Toast.LENGTH_SHORT,
-                                  //     timeInSecForIosWeb: 2,
-                                  //     backgroundColor:
-                                  //         Color.fromARGB(255, 239, 91, 91),
-                                  //     textColor:
-                                  //         Color.fromARGB(255, 250, 248, 248),
-                                  //     fontSize: 18.0,
-                                  //   );
-                                  // }
+                               
 
                                   if (error.message ==
                                           "The password is invalid or the user does not have a password." ||

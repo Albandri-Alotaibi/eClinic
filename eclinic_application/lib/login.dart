@@ -70,16 +70,8 @@ class _loginState extends State<login> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 30),
-                //   child: Text(
-                //     "Welcome back",
-                //     style: TextStyle(
-                //         color: Mycolors.mainColorBlack,
-                //         fontFamily: 'main',
-                //         fontSize: 24),
-                //   ),
-                // ),
+          
+               
                 Padding(
                   padding: const EdgeInsets.all(11.0),
                   child: Image.asset(
@@ -258,20 +250,7 @@ class _loginState extends State<login> {
                                   }
                                 } on FirebaseAuthException catch (error) {
                                   print(error.message);
-                                  // if (error.message ==
-                                  //     "The email address is badly formatted.") {
-                                  //   Fluttertoast.showToast(
-                                  //     msg: "check the email format",
-                                  //     gravity: ToastGravity.TOP,
-                                  //     toastLength: Toast.LENGTH_SHORT,
-                                  //     timeInSecForIosWeb: 2,
-                                  //     backgroundColor:
-                                  //         Color.fromARGB(255, 239, 91, 91),
-                                  //     textColor:
-                                  //         Color.fromARGB(255, 250, 248, 248),
-                                  //     fontSize: 18.0,
-                                  //   );
-                                  // }
+                               
 
                                   if (error.message ==
                                           "The password is invalid or the user does not have a password." ||
@@ -347,13 +326,7 @@ class _loginState extends State<login> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Text(
-                      //   "Oh snap!",
-                      //   style: TextStyle(
-                      //     color: Colors.white,
-                      //     fontSize: 12,
-                      //   ),
-                      // ),
+                 
                       Text(
                         msg,
                         style: TextStyle(

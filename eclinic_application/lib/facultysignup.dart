@@ -581,38 +581,8 @@ class _facultysignupState extends State<facultysignup> {
                             SizedBox(
                               height: 3,
                             ),
-                            // TextFormField(
-                            //     controller: _passwordController,
-                            //     decoration: InputDecoration(
-                            //         // labelText: 'Password:',
-                            //         hintText: "Enter the password",
-                            //         prefixIcon: Icon(Icons.lock),
-                            //         suffixIcon: GestureDetector(
-                            //           onTap: (() {
-                            //             setState(() {
-                            //               _obsecuretext = !_obsecuretext;
-                            //             });
-                            //           }),
-                            //           child: Icon(_obsecuretext
-                            //               ? Icons.visibility_off
-                            //               : Icons.visibility),
-                            //         ),
-                            //         border: OutlineInputBorder(
-                            //             borderRadius: BorderRadius.circular(13),
-                            //             borderSide: const BorderSide(
-                            //               width: 0,
-                            //             ))),
-                            //     obscureText: _obsecuretext,
-                            //     autovalidateMode:
-                            //         AutovalidateMode.onUserInteraction,
-                            //     validator: (value) {
-                            //       if (value!.isEmpty ||
-                            //           _passwordController.text == "") {
-                            //         return 'Please enter your password ';
-                            //       } else {
-                            //         return null;
-                            //       }
-                            //     }),
+                      
+                         
                             TextFormField(
                                 controller: _passwordController,
                                 decoration: InputDecoration(
@@ -741,39 +711,7 @@ class _facultysignupState extends State<facultysignup> {
                             SizedBox(
                               height: 3,
                             ),
-                            // DropdownButtonFormField<String>(
-                            //   decoration: InputDecoration(
-                            //     hintText: ' Choose the semester',
-                            //     border: OutlineInputBorder(
-                            //         borderRadius: BorderRadius.circular(13),
-                            //         borderSide: const BorderSide(
-                            //           width: 0,
-                            //         )),
-                            //   ),
-                            //   isExpanded: true,
-                            //   items: semester.map((String dropdownitems) {
-                            //     return DropdownMenuItem<String>(
-                            //       value: dropdownitems,
-                            //       child: Text(dropdownitems),
-                            //     );
-                            //   }).toList(),
-                            //   onChanged: (String? newselect) {
-                            //     setState(() {
-                            //       semesterselectedvalue = newselect;
-                            //       checkids(semesterselectedvalue);
-                            //     });
-                            //   },
-                            //   value: semesterselectedvalue,
-                            //   autovalidateMode:
-                            //       AutovalidateMode.onUserInteraction,
-                            //   validator: (value) {
-                            //     if (value == null ||
-                            //         semesterselectedvalue!.isEmpty ||
-                            //         semesterselectedvalue == null) {
-                            //       return 'Please choose a semester';
-                            //     }
-                            //   },
-                            // ),
+                           
                             DropdownButtonFormField<String>(
                               decoration: InputDecoration(
                                 suffixIcon: Icon(Icons.edit),
@@ -820,93 +758,7 @@ class _facultysignupState extends State<facultysignup> {
                               height: 4,
                             ),
 
-                            // TextFormField(
-                            //     controller: _meetingmethodcontroller,
-                            //     decoration: InputDecoration(
-                            //         labelText:
-                            //             "Enter your metting method(office number or Zoom link )",
-                            //         border: OutlineInputBorder()),
-                            //     autovalidateMode: AutovalidateMode.onUserInteraction,
-                            //     validator: (value) {
-                            //       if (value!.isEmpty ||
-                            //           _meetingmethodcontroller.text == "") {
-                            //         return 'Please enter your metting method';
-                            //       } else {
-                            //         if (!(english
-                            //             .hasMatch(_meetingmethodcontroller.text))) {
-                            //           return "only english is allowed";
-                            //         }
-                            //       }
-                            //     }),
-                            // DropdownButtonFormField(
-                            //   decoration: InputDecoration(
-                            //     // suffixIcon: Icon(Icons.edit),
-                            //     hintText: "Choose meeting method",
-                            //     border: OutlineInputBorder(),
-                            //   ),
-                            //   items: const [
-                            //     DropdownMenuItem(
-                            //         child: Text("In person metting"),
-                            //         value: "inperson"),
-                            //     DropdownMenuItem(
-                            //         child: Text("Online meeting "), value: "online"),
-                            //   ],
-                            //   onChanged: (value) {
-                            //     setState(() {
-                            //       mettingmethoddrop = value;
-                            //     });
-                            //   },
-                            //   autovalidateMode: AutovalidateMode.onUserInteraction,
-                            //   validator: (value) {
-                            //     if (value == null || mettingmethoddrop == null) {
-                            //       return 'Please Choose meeting method';
-                            //     }
-                            //   },
-                            // ),
-
-                            // if (mettingmethoddrop != null &&
-                            //     mettingmethoddrop == "inperson")
-                            //   TextFormField(
-                            //       controller: _meetingmethodcontroller,
-                            //       decoration: InputDecoration(
-                            //           labelText: 'Office number',
-                            //           hintText: "Enter your office number",
-                            //           // suffixIcon: Icon(Icons.edit),
-                            //           border: OutlineInputBorder()),
-                            //       autovalidateMode: AutovalidateMode.onUserInteraction,
-                            //       validator: (value) {
-                            //         if (value!.isEmpty ||
-                            //             _meetingmethodcontroller.text == "") {
-                            //           return 'Please enter your office number';
-                            //         } else {
-                            //           if (!(english
-                            //               .hasMatch(_meetingmethodcontroller.text))) {
-                            //             return "only english is allowed";
-                            //           }
-                            //         }
-                            //       }),
-
-                            // if (mettingmethoddrop != null &&
-                            //     mettingmethoddrop == "online")
-                            //   TextFormField(
-                            //       controller: _meetingmethodcontroller,
-                            //       decoration: InputDecoration(
-                            //           labelText: 'meeting link',
-                            //           hintText: "Enter your meeting link",
-                            //           // suffixIcon: Icon(Icons.edit),
-                            //           border: OutlineInputBorder()),
-                            //       autovalidateMode: AutovalidateMode.onUserInteraction,
-                            //       validator: (value) {
-                            //         if (value!.isEmpty ||
-                            //             _meetingmethodcontroller.text == "") {
-                            //           return 'Please enter your meeting link';
-                            //         } else {
-                            //           if (!(english
-                            //               .hasMatch(_meetingmethodcontroller.text))) {
-                            //             return "only english is allowed";
-                            //           }
-                            //         }
-                            //       }),
+                           
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
@@ -1033,9 +885,7 @@ class _facultysignupState extends State<facultysignup> {
                                     lname = _lnameController.text;
                                     email = _emailController.text;
                                     password = _passwordController.text;
-                                    // meetingmethod = mettingmethoddrop;
-                                    // mettingmethodinfo =
-                                    //     _meetingmethodcontroller.text;
+                                    
 
                                     if (checklengthforspeciality < 1) {
                                       isshow = true;

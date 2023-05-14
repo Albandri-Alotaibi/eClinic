@@ -86,16 +86,7 @@ class _graduatessignupState extends State<graduatessignup> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Padding(
-                  //   padding: const EdgeInsets.only(top: 30, bottom: 10),
-                  //   child: Text(
-                  //     "Create account",
-                  //     style: TextStyle(
-                  //         color: Mycolors.mainColorBlack,
-                  //         fontFamily: 'main',
-                  //         fontSize: 24),
-                  //   ),
-                  // ),
+                 
                   Image.asset(
                     "assets/images/eClinicLogo-blue1.png",
                     width: 300,

@@ -106,23 +106,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
   RegExp ksuEmailRegEx = new RegExp(r'^([a-z\d\._]+)@ksu.edu.sa$',
       multiLine: false, caseSensitive: false);
   RegExp english = RegExp("^[\u0000-\u007F]+\$");
-  // retrivecollage() async {
-  //   try {
-  //     await FirebaseFirestore.instance
-  //         .collection('collage')
-  //         .get()
-  //         .then((querySnapshot) {
-  //       querySnapshot.docs.forEach((element) {
-  //         setState(() {
-  //           collage.add(element['collagename']);
-  //         });
-  //       });
-  //     });
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
+
 
   retriveAllspecilty() async {
     try {
@@ -212,10 +196,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
               semester.add(element.data());
             }
 
-            // if (Dateoftoday.year <= enddate.year) {
-            //   if (Dateoftoday.month > enddate.month) {
-            //     semester.remove(element['semestername']);
-            //   }
+          
 
             if (startdate != null) {
               Timestamp t = element['enddate'];
@@ -226,38 +207,11 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                 semester.remove(element.data());
               }
 
-              // if (Dateoftoday.month == enddate.month &&
-              //     Dateoftoday.day > enddate.day) {
-              //   if (sn.contains(sy)) {
-              //     semester.add(element['semestername']);
-              //   }
-              // }
+             
             }
           });
         });
-        // var count = 0;
-
-        // for (var i = 0; i < forenddate.length; i++) {
-        //   print("ggggggggggggggggggggggggggggg");
-        //   print(forenddate[i]);
-        //   Timestamp t = forenddate[i];
-        //   DateTime enddate = t.toDate();
-        //   DateTime now = DateTime.now();
-        //   year = now.year;
-        //   DateTime Dateoftoday = DateTime.now();
-        //   var secondyear = year + 1;
-        //   String s = year.toString();
-        //   String sy = secondyear.toString();
-        //   if (Dateoftoday.month == enddate.month &&
-        //       Dateoftoday.day > enddate.day) {
-        //     count++;
-        //   }
-        //    if (startdate != null) {
-        // forenddate.add(element['enddate']);
-        //}
-        // }
-        //print(count);
-        // print(semester);
+     
       });
       semester.sortBySemesterAndYear();
     } catch (e) {
@@ -385,23 +339,18 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                         .doc(userid)
                         .get(),
                     builder: (context, snapshot) {
-                      // if (snapshot.connectionState == ConnectionState.waiting) {
-                      //   return Center(child: CircularProgressIndicator());
-                      // }
+                    
                       if (snapshot.hasData) {
                         print("snapshot");
                         print(snapshot);
                         final cuser =
                             snapshot.data!.data() as Map<String, dynamic>;
 
-                        // final fname = cuser['firstname'];
-                        // final lname = cuser['lastname'];
                         final ksuemail = cuser['ksuemail'];
 
                         fnDrawer = cuser['firstname'];
                         lnDrawer = cuser['lastname'];
-                        // _fnameController = TextEditingController(text: fname);
-                        // _lnameController = TextEditingController(text: lname);
+                        
                         final _emailController =
                             TextEditingController(text: ksuemail);
                         // _meetingmethodcontroller =
@@ -410,18 +359,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
 
                         departmentselectedvalue = departmentselectedfromDB;
                         semesterselectedvalue = semesterselectedfromDB;
-                        //  print("/////////////////ممههههممم//////////////////");
-                        // print(departmentselectedvalue);
-                        // print("//////////////////////////////////");
-                        // print(departmentselectedfromDB);
-                        // print("/////////////////ممههههممم//////////////////");
-                        // print(semesterselectedvalue);
-                        // print("//////////////////////////////////");
-                        // print(semesterselectedfromDB);
-                        // print("/////////////////ممههههممم//////////////////");
-                        // print(collageselectedvalue);
-                        // print("//////////////////////////////////");
-                        // print(collageselectedfromDB);
+                        
 
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -563,57 +501,15 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                                 if (value!.isEmpty ||
                                     _emailController.text == "") {
                                   return 'Please enter your email ';
-                                  // } else {
-                                  //   if (!(ksuEmailRegEx
-                                  //       .hasMatch(_emailController.text))) {
-                                  //     return 'Please write email format correctly, example@ksu.edu.sa ';
-                                  //   }
+                               
                                 }
                               },
                             ),
                             SizedBox(
                               height: 8,
                             ),
-                            // DropdownButtonFormField<String>(
-                            //   decoration: InputDecoration(
-                            //     suffixIcon: Icon(Icons.edit),
-                            //     labelText: 'College',
-                            //     border: OutlineInputBorder(
-                            //         borderRadius: BorderRadius.circular(25),
-                            //         borderSide: const BorderSide(
-                            //           width: 0,
-                            //         )),
-                            //   ),
-                            //   isExpanded: true,
-                            //   items: collage.map((String dropdownitems) {
-                            //     return DropdownMenuItem<String>(
-                            //       value: dropdownitems,
-                            //       child: Text(dropdownitems),
-                            //     );
-                            //   }).toList(),
-
-                            //   onChanged: (String? newselect) {
-                            //     setState(() {
-                            //       collageselectedvalue = newselect;
-                            //       collageselectedfromDB = newselect;
-                            //       checkidc(collageselectedvalue);
-                            //     });
-                            //   },
-                            //   value: collageselectedvalue,
-
-                            //   // autovalidateMode:
-                            //   //     AutovalidateMode.onUserInteraction,
-                            //   // validator: (value) {
-                            //   //   if (value == null ||
-                            //   //       collageselectedvalue!.isEmpty ||
-                            //   //       collageselectedvalue == null) {
-                            //   //     return 'Please choose your collage';
-                            //   //   }
-                            //   // },
-                            // ),
-                            // SizedBox(
-                            //   height: 8,
-                            // ),
+                          
+                            
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
@@ -659,15 +555,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                               },
                               value: departmentselectedvalue,
 
-                              // autovalidateMode:
-                              //     AutovalidateMode.onUserInteraction,
-                              // validator: (value) {
-                              //   if (value == null ||
-                              //       departmentselectedvalue!.isEmpty ||
-                              //       departmentselectedvalue == null) {
-                              //     return 'Please choose your department';
-                              //   }
-                              // },
+                            
                             ),
                             SizedBox(
                               height: 8,
@@ -826,93 +714,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                             SizedBox(
                               height: 8,
                             ),
-                            // TextFormField(
-                            //     controller: _meetingmethodcontroller,
-                            //     decoration: InputDecoration(
-                            //         suffixIcon: Icon(Icons.edit),
-                            //         labelText: "Metting method",
-                            //         border: OutlineInputBorder()),
-                            //     autovalidateMode:
-                            //         AutovalidateMode.onUserInteraction,
-                            //     validator: (value) {
-                            //       if (value!.isEmpty ||
-                            //           _meetingmethodcontroller.text == "") {
-                            //         return 'Please enter your metting method';
-                            //       } else {
-                            //         if (!(english.hasMatch(
-                            //             _meetingmethodcontroller.text))) {
-                            //           return "only english is allowed";
-                            //         }
-                            //       }
-                            //     }),
-                            // DropdownButtonFormField(
-                            //     decoration: InputDecoration(
-                            //       suffixIcon: Icon(Icons.edit),
-                            //       hintText: "Choose meeting method",
-                            //       border: OutlineInputBorder(),
-                            //     ),
-                            //     items: const [
-                            //       DropdownMenuItem(
-                            //           child: Text("In person metting"),
-                            //           value: "inperson"),
-                            //       DropdownMenuItem(
-                            //           child: Text("Online meeting "),
-                            //           value: "online"),
-                            //     ],
-                            //     value: mettingmethoddrop,
-                            //     onChanged: (value) {
-                            //       setState(() {
-                            //         mettingmethoddrop = value;
-                            //         _meetingmethodcontroller.text = "";
-                            //       });
-                            //     }),
-                            // SizedBox(
-                            //   height: 8,
-                            // ),
-                            // if (mettingmethoddrop != null &&
-                            //     mettingmethoddrop == "inperson")
-                            //   TextFormField(
-                            //       controller: _meetingmethodcontroller,
-                            //       decoration: InputDecoration(
-                            //           labelText: 'Office number',
-                            //           hintText: "Enter your office number",
-                            //           suffixIcon: Icon(Icons.edit),
-                            //           border: OutlineInputBorder()),
-                            //       autovalidateMode:
-                            //           AutovalidateMode.onUserInteraction,
-                            //       validator: (value) {
-                            //         if (value!.isEmpty ||
-                            //             _meetingmethodcontroller.text == "") {
-                            //           return 'Please enter your office number';
-                            //         } else {
-                            //           if (!(english.hasMatch(
-                            //               _meetingmethodcontroller.text))) {
-                            //             return "only english is allowed";
-                            //           }
-                            //         }
-                            //       }),
-                            // if (mettingmethoddrop != null &&
-                            //     mettingmethoddrop == "online")
-                            //   TextFormField(
-                            //       controller: _meetingmethodcontroller,
-                            //       decoration: InputDecoration(
-                            //           labelText: 'meeting link',
-                            //           hintText: "Enter your meeting link",
-                            //           suffixIcon: Icon(Icons.edit),
-                            //           border: OutlineInputBorder()),
-                            //       autovalidateMode:
-                            //           AutovalidateMode.onUserInteraction,
-                            //       validator: (value) {
-                            //         if (value!.isEmpty ||
-                            //             _meetingmethodcontroller.text == "") {
-                            //           return 'Please enter your meeting link';
-                            //         } else {
-                            //           if (!(english.hasMatch(
-                            //               _meetingmethodcontroller.text))) {
-                            //             return "only english is allowed";
-                            //           }
-                            //         }
-                            //       }),
+                         
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 textStyle:
@@ -1011,80 +813,10 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                 SizedBox(
                   height: 12,
                 ),
-                // ElevatedButton(
-                //   style: ElevatedButton.styleFrom(
-                //     textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-                //     shadowColor: Colors.blue[900],
-                //     elevation: 16,
-                //     backgroundColor: Mycolors.mainShadedColorBlue,
-                //     minimumSize: Size(150, 50),
-                //     shape: RoundedRectangleBorder(
-                //       borderRadius: BorderRadius.circular(17), // <-- Radius
-                //     ),
-                //   ),
-                //   onPressed: () {
-                //     if (formkey.currentState!.validate() &&
-                //         checklengthforspecialty > 0) {
-                //       // if (semesterselectedvalue != fixedselectedsemester) {
-                //       //   confirm(context);
-                //       // } else {
-                //       setState(() {
-                //         fn = _fnameController.text;
-                //         ln = _lnameController.text;
-                //         editfacultyarray(editfacultRefspecailty);
-                //         if (checklengthforspecialty < 1) {
-                //           isshow = true;
-                //         }
-                //         if (checklengthforspecialty > 0) {
-                //           isshow = false;
-                //         }
-                //       });
-                //       try {
-                //         addfacultyinsemester(specalityid, userid);
-                //         FirebaseFirestore.instance
-                //             .collection('faculty')
-                //             .doc(userid)
-                //             .update({
-                //           "firstname": fn,
-                //           "lastname": ln,
-                //           'department': FirebaseFirestore.instance
-                //               .collection("department")
-                //               .doc(docfordepatment),
-                //           // 'collage': FirebaseFirestore.instance
-                //           //     .collection("collage")
-                //           //     .doc(docsforcollage),
-                //           'semester': FirebaseFirestore.instance
-                //               .collection("semester")
-                //               .doc(docsforsemestername),
-                //           "specialty": specalityid,
-                //         });
-
-                //         Fluttertoast.showToast(
-                //           msg:
-                //               " Your information has been updated successfully",
-                //           toastLength: Toast.LENGTH_SHORT,
-                //           gravity: ToastGravity.CENTER,
-                //           timeInSecForIosWeb: 2,
-                //           backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                //           textColor: Color.fromARGB(255, 248, 249, 250),
-                //           fontSize: 18.0,
-                //         );
-                //       } on FirebaseAuthException catch (error) {
-                //         Fluttertoast.showToast(
-                //           msg: "Something wronge",
-                //           toastLength: Toast.LENGTH_SHORT,
-                //           gravity: ToastGravity.CENTER,
-                //           timeInSecForIosWeb: 5,
-                //           backgroundColor: Color.fromARGB(255, 127, 166, 233),
-                //           textColor: Color.fromARGB(255, 252, 253, 255),
-                //           fontSize: 18.0,
-                //         );
-                //       }
-                //     }
-                //     // }
-                //   },
-                //   child: Text("Save changes"),
-                // ),
+              
+              
+              
+             
               ]),
             ), ////here
           ),
@@ -1415,15 +1147,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
       ),
     );
   }
-  // Widget buildCoverImage() => Container(
-  //       color: Colors.grey,
-  //       // child: Image.asset(
-  //       //   'assets/images/profilebackground.png.png',
-  //       //   width: double.infinity,
-  //       //   height: coverheight,
-  //       //   fit: BoxFit.cover,
-  //       // ),
-  //     );
+
 
   Widget buildprofileImage() => CircleAvatar(
         radius: profileheight / 2,
@@ -1464,33 +1188,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
     }
   }
 
-  // checkspecialityforfaculty(List<String?> specialityoption) async {
-  //   editfacultRefspecailty.clear();
-  //   specalityid.length = 0;
-  //   try {
-  //     await FirebaseFirestore.instance
-  //         .collection('facultyspeciality')
-  //         .get()
-  //         .then((querySnapshot) {
-  //       querySnapshot.docs.forEach((element) {
-  //         setState(() {
-  //           for (var i = 0; i < specialityoption.length; i++) {
-  //             if (element['specialityname'] == specialityoption[i]) {
-  //               final ref = FirebaseFirestore.instance
-  //                   .collection("facultyspeciality")
-  //                   .doc(element.id);
-  //               editfacultRefspecailty.add(element['specialityname']);
-  //               editfacultyarray(editfacultRefspecailty);
-  //             }
-  //           }
-  //         });
-  //       });
-  //     });
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
+  
 
   checkids(String? semstername) async {
     try {
@@ -1512,25 +1210,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
     }
   }
 
-  // checkidc(String? collagename) async {
-  //   try {
-  //     await FirebaseFirestore.instance
-  //         .collection('collage')
-  //         .get()
-  //         .then((querySnapshot) {
-  //       querySnapshot.docs.forEach((element) {
-  //         setState(() {
-  //           if (collagename == element['collagename']) {
-  //             docsforcollage = element.id;
-  //           }
-  //         });
-  //       });
-  //     });
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
+ 
 
   checkidd(String? departmentename) async {
     try {
@@ -1600,19 +1280,6 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
             });
           }
 
-          // if (snap.data()!.containsKey('facultymembers') == false) {
-          //   await FirebaseFirestore.instance
-          //       .collection('semester')
-          //       .doc(docsforsemestername)
-          //       .update({
-          //     "facultymembers": FieldValue.arrayUnion([
-          //       {
-          //         'faculty': ref,
-          //         'specialty': spe,
-          //       }
-          //     ]),
-          //   });
-          // }
         },
       );
     } else {
@@ -1744,22 +1411,6 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
     // show the dialog
   }
 
-  // showSucessAlert() {
-  //   QuickAlert.show(
-  //     context: context,
-  //     type: QuickAlertType.success,
-  //     title: "",
-  //     text: " Your information has been updated successfully",
-  //     onConfirmBtnTap: () {
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => facultyviewprofile(),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
 
   showerror(BuildContext context, String msg) {
     return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -1780,13 +1431,7 @@ class _facultyviewprofileState extends State<facultyviewprofile> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Text(
-                      //   "Oh snap!",
-                      //   style: TextStyle(
-                      //     color: Colors.white,
-                      //     fontSize: 12,
-                      //   ),
-                      // ),
+                  
                       Text(
                         msg,
                         style: TextStyle(

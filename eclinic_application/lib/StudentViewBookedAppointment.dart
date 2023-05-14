@@ -567,45 +567,15 @@ class _StudentViewBookedAppointmentState
                                                   ]),
                                             ),
 
-                                            //crossAxisAlignment: CrossAxisAlignment.start,
-                                            // Row(
-                                            //     crossAxisAlignment:
-                                            //         CrossAxisAlignment.end,
-                                            //     mainAxisAlignment:
-                                            //         MainAxisAlignment.end,
-                                            //     verticalDirection:
-                                            //         VerticalDirection.up,
-                                            //     children: <Widget>[
-                                            //       IconButton(
-                                            //         icon: Icon(Icons.cancel),
-                                            //         onPressed: () => {
-                                            //           showConfirmationDialog(
-                                            //               context, index)
-                                            //           //CancelAppointment(index)
-                                            //         },
-                                            //       ),
-                                            //     ])
+                                          
+                                         
                                           ],
                                         ));
 
-                                    //       }),
-                                    //     )
-                                    //     ;
-                                    //   },
-                                    // )
-
-                                    // );
-                                    //}
                                   } //index smaller than length
                                   else {
                                     return Row();
-                                    // return Column(
-                                    //         children: <Widget>[
-                                    //         Text("inside else"),
-                                    //         Text("${BookedAppointments.length}"),
-                                    //         Text("${numOfDaysOfHelp}"),
-
-                                    //         ]);
+                                   
                                   }
                                 })),
                           ),
@@ -624,27 +594,7 @@ class _StudentViewBookedAppointmentState
   final formkey = GlobalKey<FormState>();
   showConfirmationDialog(BuildContext context, int index) async {
 // ---------------START OF CHECKING IF THE CANCEL IS ALLOWED----------------------------------------------------------
-    // String appointmentId2 = BookedAppointments[index].appointmentId;
-    // String FacultytId2 = BookedAppointments[index].FacultytId;
-    // DateTime now = new DateTime.now();
-
-    // final DocumentSnapshot docRef = await FirebaseFirestore.instance
-    //     .collection("faculty")
-    //     .doc(FacultytId2)
-    //     .collection('appointment')
-    //     .doc(appointmentId2)
-    //     .get();
-
-    // Timestamp t3 = docRef['starttime'] as Timestamp;
-    // DateTime StartTimeDate = t3.toDate();
-
-    // DateTime TimeFromNowTo10Hours = now.add(Duration(hours: 10));
-    // print(
-    //     "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    // print(TimeFromNowTo10Hours);
-
-    // if (StartTimeDate.isAfter(TimeFromNowTo10Hours)) {
-    /////CAN CANCLE
+   
 
     Widget dontCancelAppButton = ElevatedButton(
       style: ElevatedButton.styleFrom(

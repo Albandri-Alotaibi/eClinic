@@ -41,11 +41,7 @@ class _graduatehomeState extends State<graduatehome> {
     final User? user = auth.currentUser;
     userid = user?.uid;
     email = user?.email;
-    // while (user != null && user.email != null) {
-    //   userid = user.uid;
-    //   email = user.email!;
-    //   break;
-    // }
+ 
     getusername();
   }
 
@@ -59,10 +55,7 @@ class _graduatehomeState extends State<graduatehome> {
         fname = snap['firstname'];
         lname = snap['lastname'];
       });
-      // setState(() {
-      //   havename = true;
-      // });
-      // break;
+   
     }
   }
 
