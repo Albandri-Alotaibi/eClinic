@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="stylesheet" href="index.css">
+  <!-- <link rel="stylesheet" href="index.css"> -->
 
   <!-- Latest compiled and minified CSS -->
   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
@@ -15,7 +15,7 @@
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
 
   <!-- Latest compiled JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -41,115 +41,343 @@
 
 
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+  <style>
+    * {
+      font-family: "Roboto", sans-serif;
+    }
+
+
+    #navbarSupportedContent {
+      background-color: transparent;
+      margin-right: 100px;
+    }
+
+    #navbarSupportedContent .nav-link {
+      color: white;
+    }
+
+    #navbarSupportedContent .nav-link:hover {
+      border-bottom: 1px solid #0084bd;
+      padding-bottom: 5px;
+    }
+
+    @media screen and (max-width: 480px) {
+      #allcontent {
+        margin-top: 40px;
+      }
+
+
+
+    }
+
+    .navbar .navbar-nav .nav-link {
+      color: #ffffff;
+      font-size: 1.1em;
+    }
+
+    .navbar .navbar-nav .nav-item {
+      position: relative;
+    }
+
+    .navbar .navbar-nav .nav-item::after {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      background-color: #0084bd;
+      width: 0%;
+      content: "";
+      height: 4px;
+      transition: all 0.5s;
+    }
+
+    .navbar-toggler {
+      background-color: #0084bd;
+      border: none;
+      outline: none;
+    }
+
+    .navbar-toggler span {
+      display: block;
+      width: 22px;
+      height: 2ps;
+      border: 1px;
+    }
+
+    h1,
+    h5 {
+      font-family: "Nunito", sans-serif;
+    }
+
+    p {
+      font-family: "Nunito", sans-serif;
+      text-align: center;
+    }
+
+
+    .footer_eClinic {
+      margin-top: 400px;
+      margin-left: -10px;
+
+      color: white;
+    }
+
+    #onebox {
+      background-color: #0084bd;
+    }
+
+    .box-homepage {
+      display: inline-block !important;
+    }
+
+    .box-homepage img {
+      height: 10%;
+      width: 40%
+    }
+
+    .action {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+    }
+
+    .vr {
+      display: inline-block;
+    }
+
+    .hr {
+      display: none;
+    }
+
+    .logo {
+      display: block;
+    }
+
+
+
+
+
+    @media screen and (max-width: 992px) {
+
+
+      #navbarSupportedContent {
+        padding: 5px;
+        background-color: white;
+      }
+
+      #navbarSupportedContent .nav-link {
+        color: black;
+      }
+
+      .action {
+        display: none;
+      }
+
+      .logo {
+        display: none;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      #onebox {
+        margin-bottom: 30px;
+      }
+
+      footer {
+        display: none;
+      }
+
+
+
+      .box-homepage img {
+        height: 10%;
+        width: 20%
+      }
+
+      .vr {
+        display: none;
+      }
+
+      .hr {
+        margin: 4px 0;
+        display: inline-block;
+        border-top: 1px solid white;
+      }
+
+
+
+    }
+
+    .menu {
+      position: absolute;
+      top: 30px;
+      right: 10px;
+      padding: 0px 15px;
+      background: #fff;
+      width: 200px;
+      box-sizing: 0 5px 25px rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
+      transition: 0.5s;
+      visibility: hidden;
+      opacity: 0;
+      box-shadow: 1px 1px 10px 1px #ebebeb;
+    }
+
+    .active {
+      top: 80px;
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .action .menu::before {
+      content: "";
+      position: absolute;
+      top: -5px;
+      right: 28px;
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      transform: rotate(45deg);
+    }
+
+    .action .menu ul li {
+      list-style: none;
+      padding: 16px 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+    }
+
+    .action .menu ul li img {
+      max-width: 20px;
+      margin-right: 10px;
+      opacity: 0.5;
+      transition: 0.5s;
+    }
+
+    .action .menu ul li:hover img {
+      opacity: 1;
+    }
+
+    .action .menu ul li a {
+      display: inline-block;
+      text-decoration: none;
+      color: #555;
+      font-weight: 500;
+      transition: 0.5s;
+    }
+
+    .action .menu ul li:hover a {
+      color: #0084bd;
+    }
+  </style>
 </head>
 
 <body id="index">
-  <nav class="navbar navbar-expand-sm fixed-top navbar-light " style="box-shadow: none; ">
-    <div class="container-fluid">
+  <nav class="navbar navbar-expand-lg fixed-top navbar-light " style="box-shadow: none; ">
+    <div class="container-fluid position-relative">
 
-      <img src="img/logo.png" width="10%" height="30%" alt="Logo" loading="lazy" />
+      <div class="" style="width:400px">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <i class='bx bx-menu' style='color:#ffffff'></i>
+        </button>
+        <img src="img/logo.png" class="pb-2 logo" alt="eClinic" style="width:200px" loading="lazy" />
+      </div>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <i class='bx bx-menu' style='color:#ffffff'></i>
 
-      </button>
-
-
-      <div class="collapse navbar-collapse justify-content-center mt-2" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
+      <div class="w-100 collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+        <ul class="navbar-nav ">
           <li class="nav-item ">
-            <a class="text-white nav-link active " aria-current="page" href="#">Home</a>
+            <span class="nav-link" style="text-decoration:underline" aria-current="page" href="#">Home</span>
+          </li>
+          <li class="nav-item hover-zoom">
+            <a class="nav-link" href="semesters.html" accesskey="s">Semesters</a>
           </li>
           <li class="nav-item">
-            <a class="text-white nav-link" href="semesters.html" accesskey="s">Semesters</a>
+            <a class="nav-link" href="faculty.html" accesskey="f">Faculty Members Speciality</a>
           </li>
           <li class="nav-item">
-            <a class="text-white nav-link" href="faculty.html" accesskey="f">Faculty Members Speciality</a>
+            <a class="nav-link" href="GPCategory.html" accesskey="g">Graduation Projects Category</a>
           </li>
           <li class="nav-item">
-            <a class="text-white nav-link" href="GPCategory.html" accesskey="g">Graduation Projects Category</a>
-          </li>
-          <li class="nav-item">
-            <a class="text-white nav-link" href="timeframe.html" accesskey="p">Help Desk Dates</a>
+            <a class="nav-link" href="timeframe.html" accesskey="p">Help Desk Dates</a>
           </li>
 
+          <li class="d-block d-lg-none mt-3" style="border-top:1px solid #ccc">
+            <img src="img/logout.png" style="width: 15px; margin-right: 4px;" /><a href="#" class="logout">Log Out</a>
+          </li>
+          <li class="d-block d-lg-none">
+            <img src="img/lock.png" style="width: 15px;margin-right: 4px;" /><a href="resetinner.html">Reset
+              Password</a>
+          </li>
         </ul>
       </div>
 
 
       <!-- Start profil icons  -->
-      <div class="action ml-auto" style="font-size: 14px;">
-
-        <div class="profile" onclick="menuToggle();">
-
-          <img src="img/user.png" />
-
-        </div>
-
+      <div class="action" style="width:70px; font-size: 14px;">
+        <img src="img/user.png" class="rounded-circle border  border-3 border-primary" style="width:50px"
+          onclick="menuToggle()" />
         <div class="menu">
-
           <ul>
-
             <li>
-
               <img src="img/logout.png" /><a href="#" class="logout">Log Out</a>
-
             </li>
-
             <li>
-
               <img src="img/lock.png" /><a href="resetinner.html">Reset Password</a>
-
             </li>
-
           </ul>
-
         </div>
 
       </div>
-      <!-- end profil icons  -->
     </div>
+    <!-- end profil icons  -->
+
   </nav>
 
 
   <div class="d-flex justify-content-start align-items-center bg-image"
     style="background-image:url(img/ksu.jpg); height:100vh; ">
-    <div class="mask" style="   backdrop-filter: blur(0px); background-color: rgba(0,0,0,0.75);">
-      <div class="d-flex align-items-center h-100 m-lg-5">
+    <div class="mask" style="backdrop-filter: blur(0px); background-color: rgba(0,0,0,0.75);">
+      <div id="allcontent" class="d-flex align-items-center h-100 m-lg-5">
         <div class="container">
-          <div class="row">
-            <div class="col-5">
+          <div class="row p-md-0 p-2">
+            <div class="col-md-5 col-12 mb-md-0 mb-4">
               <div class="row">
                 <div class="col-md-auto">
                   <h1 class="text-white display-1">eClinic</h1>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-9 col-12">
                   <h5 class="text-white display-7">Manage GPs with ease in one place</h5>
                 </div>
               </div>
             </div>
-            <div id="onebox" class="col-7 rounded-8">
+            <div id="onebox" class="col-lg-7 col-12 rounded-8">
 
-              <div class="col-3  text-white " style="margin-left: 3.5%; margin-right: 3.5%;">
-                <img src="img/faculty.png" class="mx-auto d-block" style="height: 10%; width: 40%; ">
+              <div class="col-md-3 col-12 box-homepage  text-white " style="margin-left: 3.5%; margin-right: 3.5%;">
+                <img src="img/faculty.png" class="mx-auto d-block">
                 <p class="responsive-font-example">Catogrize Faculty Member and Their Common Issues Based on Their
                   Speciality</p>
               </div>
 
               <div class="vr" style="height: 80%;"></div>
+              <div class="hr col-12"></div>
 
-              <div class="col-3 text-white " style="margin-left: 3.5%; margin-right: 3.5%;">
-                <img src="img/calender.png" class="mx-auto d-block" style="height: 10%; width: 40%; ">
+              <div class="col-md-3 col-12 box-homepage text-white " style="margin-left: 3.5%; margin-right: 3.5%;">
+                <img src="img/calender.png" class="mx-auto d-block">
                 <p class="responsive-font-example">Manage Semesters <br>and Their Help Desk Dates</p>
               </div>
 
-              <div class="vr" style="height: 80%;"></div>
+              <div class="vr " style="height: 80%;"></div>
+              <div class="hr col-12"></div>
 
-              <div class="col-3 text-white " style="margin-left: 3.5%; margin-right: 3%;">
-                <img src="img/graduation.png" class="mx-auto d-block" style="height: 10%; width: 40%">
+              <div class="col-md-3 col-12 box-homepage text-white " style="margin-left: 3.5%; margin-right: 3%;">
+                <img src="img/graduation.png" class="mx-auto d-block">
                 <p class="responsive-font-example">Arrange The Graduation Projects Library</p>
               </div>
 
@@ -176,26 +404,26 @@
   </footer>
 
   <!-- MDB -->
-  <script type="text/javascript" src="js/mdb.min.js"></script>
   <!-- Custom scripts -->
   <script type="text/javascript"></script>
   <!-- JavaScript Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
     crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" -->
+  <!-- integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+  crossorigin="anonymous"></script> -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
     integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
-    integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
-    crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script> -->
 
-
-
-
-  <!-- <script src=”https://code.jquery.com/jquery-3.2.1.slim.min.js”
+  <script src=”https://code.jquery.com/jquery-3.2.1.slim.min.js”
     integrity=”sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN” crossorigin=”anonymous”>
     </script>
+
+  <!--
   <script src=”https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js”
     integrity=”sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q” crossorigin=”anonymous”>
     </script>
@@ -205,12 +433,9 @@
   <script>
     // start: java sript for profile icons
 
-    function menuToggle() {
-
+    function menuToggle () {
       const toggleMenu = document.querySelector(".menu");
-
       toggleMenu.classList.toggle("active");
-
     }
 
 // End: java sript for profile icons
@@ -223,7 +448,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
-    import { getFirestore, doc, collection, getDocs, getDoc, addDoc , setDoc} from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+    import { getFirestore, doc, collection, getDocs, getDoc, addDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
     // Your web app's Firebase configuration
     import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"; //import for authentication +signout
     const firebaseConfig = {
@@ -256,7 +481,7 @@
             console.log(err.message)
           })
 
-        window.location.replace("login.html")
+         window.location.replace("login.html")
       }
 
 
@@ -272,14 +497,14 @@
       }
       else {
         signOut(auth)
-        window.location.replace("login.html")
+          window.location.replace("login.html")
           .then(() => {
             //console.log("user log out")
           })
           .catch((err) => {
             console.log(err.message)
           })
-        //window.location.replace("login.html")
+        window.location.replace("login.html")
       }
       console.log("the user status change :", user)
     })
@@ -291,7 +516,7 @@
         found = true;
       }
     });
-    
+
     if (!found) {
       await setDoc(doc(db, "admin", uid), {
         email: email

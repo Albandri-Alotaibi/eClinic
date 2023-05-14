@@ -3,7 +3,7 @@
 
 <head>
 
-  <link rel="stylesheet" href="login.css">
+  <!-- <link rel="stylesheet" href="login.css"> -->
   <link rel="stylesheet" href="index.css">
 
   <meta charset="UTF-8">
@@ -12,293 +12,494 @@
   <title>reset password</title>
 
   <link rel="icon" href="img/eClinicLogo-blue.png" type="image/x-icon" />
- 
+
 
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
- 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
   <!-- MDB -->
   <link rel="stylesheet" href="css/mdb.min.css" />
   <!-- MDB icon -->
- 
+
 
   <!-- for the logos in the sidebar -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    .resetbut {
+      background-image: linear-gradient(#0084bd 0%, #0084bd 100%);
+    }
 
+    .resetbut:hover {
+      background-image: linear-gradient(#037caf 0%, #037caf 100%);
+    }
+
+    #innerreset {
+      box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
+      background: hsl(0 0% 100%);
+      color: rgb(0, 0, 0);
+      line-height: 1.5;
+      /* font-size: 100%; */
+      /* font: 13px/1.4 Geneva, 'Lucida Sans', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif; */
+      width: 100%;
+      height: 100%;
+      place-items: center;
+      text-align: center;
+      padding: 3ch;
+      border-radius: 2ch;
+      border: 1px solid hsl(0 0% 83%);
+      margin-left: 40%;
+      margin-top: 10%;
+      display: block;
+      font-weight: 400;
+    }
+
+
+    body {
+      background-color: #e5e5e5;
+    }
+
+    .action .menu {
+      position: absolute;
+      top: 30px;
+      right: 10px;
+      padding: 0px 15px;
+      background: #fff;
+      width: 200px;
+      box-sizing: 0 5px 25px rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
+      transition: 0.5s;
+      visibility: hidden;
+      z-index: 999;
+      opacity: 0;
+      box-shadow: 1px 1px 10px 1px #ebebeb;
+    }
+
+    .action .menu::before {
+      content: "";
+      position: absolute;
+      top: -5px;
+      right: 28px;
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      transform: rotate(45deg);
+    }
+
+    .action .menu ul li {
+      list-style: none;
+      padding: 16px 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+    }
+
+    .action .menu ul li img {
+      max-width: 20px;
+      margin-right: 10px;
+      opacity: 0.5;
+      transition: 0.5s;
+    }
+
+    .action .menu ul li:hover img {
+      opacity: 1;
+    }
+
+    .action .menu ul li a {
+      display: inline-block;
+      text-decoration: none;
+      color: #555;
+      font-weight: 500;
+      transition: 0.5s;
+    }
+
+    .action .menu ul li:hover a {
+      color: #0084bd;
+    }
+
+    .action {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+    }
+
+    #sidebarContainer {
+      flex: 0 0 auto;
+      width: 25%;
+    }
+
+    #rightContainer {
+      flex: 0 0 auto;
+      width: 75%;
+      background-color: transparent;
+    }
+
+    .sidebar {
+      flex-direction: column !important;
+    }
+
+    .sidebar li {
+      display: inline-block;
+    }
+
+    #closeFacultyList {
+      display: none;
+    }
+
+    .firstMiddleRow {
+      width: 65%;
+      margin-left: 4px;
+      margin-right: 2px;
+    }
+
+    .secondMiddleRow {
+      width: 33%;
+      margin-right: 2px;
+    }
+
+    .footer {
+      position: absolute;
+      padding: 30px;
+      text-align: left;
+      bottom: 0;
+      margin-top: 10px;
+      color: #fff;
+    }
+
+    #navbarSupportedContent .nav-link:hover {
+      color: #0084BD;
+    }
+
+    #popup {
+      display: block;
+    }
+
+    @media screen and (max-width: 992px) {
+
+      body {
+        background-color: #fff;
+      }
+
+      #innerreset {
+        margin: 40px 0;
+        border: 0;
+        box-shadow: none;
+      }
+
+      .firstMiddleRow,
+      .secondMiddleRow {
+        border: 0;
+        width: 100%;
+        margin: 0;
+      }
+
+      .action {
+        display: none;
+      }
+
+      .xlogo {
+        display: none !important;
+      }
+
+      #rightContainer {
+        width: 99%;
+      }
+
+      #closeFacultyList {
+        display: block;
+      }
+
+      #popup {
+        margin: 0;
+        border: 0;
+        padding: 5px;
+        display: none;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+      }
+
+      .sidebar {
+        background-color: white;
+        height: auto !important;
+        margin-top: 50px;
+        width: 100%;
+        border: 1px #ccc solid;
+        padding-bottom: 20px;
+      }
+
+      #sidebarContainer {
+        background-color: transparent;
+        position: absolute !important;
+        left: 0;
+        top: 0;
+        flex: 0 0 auto;
+        width: 100%;
+      }
+
+      #navbarSupportedContent {
+        background-color: #fff;
+        color: #000 !important;
+      }
+
+      #navbarSupportedContent .nav-link {
+        color: black;
+      }
+    }
+
+    .logbut {
+      background-image: linear-gradient(#0084BD 0%, #0084BD 100%);
+    }
+
+
+    .logbut:hover {
+      background-image: linear-gradient(#037caf 0%, #037caf 100%);
+    }
+  </style>
 </head>
 
 
 
 </head>
 
-<body class="Site d-flex flex-column min-vh-100"  id="index" style="background: #e5e5e5;">
-  <main class="site-wrapper">
-
-          <!-- Start profil icons  -->
-          <div class="action" style="z-index: 99999; font-size: 14px;">
-            <div class=" profile" onclick="menuToggle();">
-
-                <img src="img/user.png"  />
-
-            </div>
-
-            <div class="menu" >
-
-                <ul>
-
-                    <li>
+<body>
+  <main class="relative">
 
 
-                        <img src="img/logout.png" /><a href="#" class="logout">Log Out</a>
-
-
-                    </li>
-
-                    <li>
-
-                        <img src="img/lock.png" /><a href="resetinner.html">Reset Password</a>
-
-                    </li>
-
-                </ul>
-
-            </div>
-
-        </div>
-        <!-- end profil icons  -->
-          
-    <div class="row" style="margin-top: 1.5%;">
-      
-      <!-- side menu -->
-      <div class="col-md-3" style="display: block; ">
-        <nav class="sidebar ">
-          <img class="logo" src="img/logo.png" alt="logo brand" height="10%" width="50%">
-          <a href="index.html" accesskey="h"><i class="fa fa-fw fa-home"></i> Home</a>
-          <a href="semesters.html" accesskey="s"><i class="fa fa-calendar"></i> Semesters</a>
-          <a href="faculty.html" accesskey="m"><i class="fa fa-group"></i> Faculty Members Speciality </a>
-          <a href="GPCategory.html" accesskey="g"><i class="fa fa-graduation-cap"></i> Graduation Projects
-            Category
-          </a>
-          <a href="timeframe.html" accesskey="p"><i class="fa fa-clock-o"></i> Help Desk Dates</a>
-          <footer class="footer_eClinic">
-            <p class="text-white text-justify position-absolute bottom-0 display-10"> Copyright &copy; All
-              Rights
-              Reserved to
-              King Saud University.Made by eClinic Teams</p>
-          </footer>
-        </nav>
+    <!-- Start profile icons  -->
+    <div class="action">
+      <div class=" profile" onclick="menuToggle();">
+        <img src="img/user.png" />
       </div>
+      <div class="menu">
+        <ul>
+          <li>
+            <img src="img/logout.png" /><a href="#" class="logout">Log Out</a>
+          </li>
+          <li>
+            <img src="img/lock.png" /><a href="resetinner.html">Reset Password</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- end profil icons  -->
 
 
-      <!-- side menu -->
+    <div class="container-fluid" style="margin-top: 50px;">
+      <div class="row">
+        <!--***************************************** SHOW DATA IN HERE AFTER RETRIVING****************************************  -->
+        <div id="sidebarContainer">
+          <!-- side menu -->
+          <nav class=" navbar navbar-expand-lg " style="box-shadow: none">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"> <i
+                class='navbar-toggler-icon' style='color:#000'></i>
+            </button>
 
 
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
+              <ul class="sidebar navbar-nav mr-auto">
+                <li class="xlogo">
+                  <img class=" logo" src="img/logo.png" alt="logo brand" height="auto" width="200px"
+                    style="margin-bottom:20px">
+                </li>
+                <li class="nav-item active"><a class="nav-link" href="index.html"><i
+                      class="fa fa-fw fa-home"></i>Home</a></li>
+                <li class="nav-item "><a class="nav-link" href="semesters.html"><i class="fa fa-calendar"></i>
+                    Semesters</a></li>
+                <li class="nav-item "><a class="nav-link" href="faculty.html"><i class="fa fa-group"></i> Faculty
+                    Members
+                    Speciality </a></li>
+                <li class="nav-item "><a class="nav-link" href="GPCategory.html"><i
+                      class="fa fa-graduation-cap"></i>Graduation Projects Category</a></li>
+                <li class="nav-item "><a class="nav-link" href="timeframe.html"><i class="fa fa-clock-o"></i> Help Desk
+                    Dates</a></li>
+                <li class="nav-item d-block d-lg-none"><a class="nav-link logout" href="#"><i
+                      class="fa fa fa-sign-out"></i> Logout</a>
+                </li>
+                <li class="nav-item d-block d-lg-none"><a class="nav-link " href="resetinner.html"><i
+                      class="fa fa-refresh"></i>
+                    Reset Password</a></li>
 
-    <section class="vh-100" >
-      <div class="container-fluid h-custom "  >
-        <div class="row d-flex justify-content-center align-items-center h-100" >
-          <!-- <div class="col-md-9 col-lg-6 col-xl-5">
-            <img src="img/eClinicLogo-blue.png" class="img-fluid" alt="Sample image">
-          </div> -->
-          <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-            <form class="resetform" id="innerreset">
-              <div class="align-items-center justify-content-center ">
-                <h4 class="" >Reset Your Password</h4><br>
+                <li class="footer display-10 d-none d-lg-block">
+                  Copyright &copy; All
+                  Rights
+                  Reserved to
+                  King Saud University.Made by eClinic Teams
+                </li>
+              </ul>
+            </div>
 
-                <p id="aftersend" class="lead fw-normal display-7 text-danger" style="display: none;"> </p>
-              </div>
+          </nav>
+        </div>
 
-              
+        <div class="col-9" id="rightContainer">
+          <div class="row d-flex align-items-center">
+            <div class="col-md-8 col-lg-6">
+              <form class="resetform" id="innerreset">
+                <div class="align-items-center justify-content-center ">
+                  <h4 class="">Reset Your Password</h4><br>
+                  <p id="aftersend" class="lead fw-normal display-7 text-danger" style="display: none;"> </p>
+                </div>
 
-
-
-
-              <div class="col-md-12 text-center">
-                <button class="resetbut btn btn-primary btn-lg " style="padding-left: 2.5rem; padding-right: 2.5rem;"
-                  id="afterclick">Send reset password link </button>
-
-              </div>
-              <!-- <a href="index.html" class="foget" style="display: none;" id="rehome"> Return to homepage</a> -->
-            </form>
+                <div class="col-md-12 text-center">
+                  <button class="resetbut btn btn-primary btn-lg " style="padding-left: 2.5rem; padding-right: 2.5rem;"
+                    id="afterclick">Send reset password link </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-      <!-- <div class="text-center text-md-start  py-4 px-4 px-xl-5 "> -->
-        <!-- Copyright -->
-        <!-- <footer class="footer_eClinic mt-auto">
-          <p class="text-white" style="text-align: center;">Copyright &copy; All rights reserved to King Saud
-            University. This website made with 🤍 by eClinic teams.
-          </p>
-        </footer> -->
-        <!-- Copyright -->
 
 
-      <!-- </div> -->
-    </section>
+  </main>
 
 
 
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
 
+  <script>
+    // start: java sript for profile icons
 
+    function menuToggle () {
 
+      const toggleMenu = document.querySelector(".menu");
 
-    <!-- MDB -->
-    <script type="text/javascript" src="js/mdb.min.js"></script>
-    <!-- Custom scripts -->
-    <script type="text/javascript"></script>
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-      crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-      crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
-      integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
-      crossorigin="anonymous"></script>
+      toggleMenu.classList.toggle("active");
 
-
-
-
-
-    <script>
-      // start: java sript for profile icons
-
-      function menuToggle() {
-
-        const toggleMenu = document.querySelector(".menu");
-
-        toggleMenu.classList.toggle("active");
-
-      }
+    }
 
   // End: java sript for profile icons
-    </script>
+  </script>
 
 
 
 
 
-    <script type="module">
-      // Import the functions you need from the SDKs you need
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
-      // TODO: Add SDKs for Firebase products that you want to use
-      // https://firebase.google.com/docs/web/setup#available-libraries
-      import { getFirestore, doc, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
-      // Your web app's Firebase configuration
-      import { getAuth, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"; //import for authentication +signout
-      const firebaseConfig = {
-        apiKey: "AIzaSyD6JcSscRU6XaF3SaCF_U3ggXAFYUnKKq8",
-        authDomain: "eclinic-d5dec.firebaseapp.com",
-        projectId: "eclinic-d5dec",
-        storageBucket: "eclinic-d5dec.appspot.com",
-        messagingSenderId: "148819771062",
-        appId: "1:148819771062:web:f66c9a362b2fc34f247017"
-      };
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+    import { getFirestore, doc, collection, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+    // Your web app's Firebase configuration
+    import { getAuth, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"; //import for authentication +signout
+    const firebaseConfig = {
+      apiKey: "AIzaSyD6JcSscRU6XaF3SaCF_U3ggXAFYUnKKq8",
+      authDomain: "eclinic-d5dec.firebaseapp.com",
+      projectId: "eclinic-d5dec",
+      storageBucket: "eclinic-d5dec.appspot.com",
+      messagingSenderId: "148819771062",
+      appId: "1:148819771062:web:f66c9a362b2fc34f247017"
+    };
 
-      // Initialize Firebase services 
-      const app = initializeApp(firebaseConfig);
-      const db = getFirestore()
-      const auth = getAuth()
-      var email = ""
-      var uid = ""
-
-
+    // Initialize Firebase services 
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore()
+    const auth = getAuth()
+    var email = ""
+    var uid = ""
 
 
 
-      
-      /////////////////////////there is authentication for each page in inner reset password /////////////////////////
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          console.log("the same user")
-          email = user.email; 
-          uid = user.uid;
 
 
-        }
-        else {
-          signOut(auth)
-          window.location.replace("login.html")
-            .then(() => {
-              console.log("user log out")
-            })
-            .catch((err) => {
-              console.log(err.message)
-            })
-        }
-        console.log("the user status change :", user)
-      })
 
-     
-
-      //////////////////////////////////reset password //////////////////////////////////
-
-      const resetform = document.querySelector('.resetform')
-
-      resetform.addEventListener('submit', (e) => {
-        e.preventDefault()
-        const after = document.getElementById("aftersend")
-        //  const returnhome=document.getElementById("rehome")
-        const afterclicksend = document.getElementById("afterclick")
+    /////////////////////////there is authentication for each page in inner reset password /////////////////////////
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("the same user")
+        email = user.email;
+        uid = user.uid;
 
 
-        //send email to admin so he can reset his password
-        sendPasswordResetEmail(auth, email)
+      }
+      else {
+        signOut(auth)
+           window.location.replace("login.html")
           .then(() => {
-            after.innerHTML = "We have sent you the reset link on this email " + email;
-            afterclicksend.style.display = "none";
-            after.style.display = "block";
-           
-
+            console.log("user log out")
           })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            if (errorMessage === "Firebase: Error (auth/too-many-requests).") {
-              alert("We have sent the reset password link multiple time , Please check your email")
-            }
-            
-          });
+          .catch((err) => {
+            console.log(err.message)
+          })
+      }
+      console.log("the user status change :", user)
+    })
+
+
+
+    //////////////////////////////////reset password //////////////////////////////////
+
+    const resetform = document.querySelector('.resetform')
+
+    resetform.addEventListener('submit', (e) => {
+      e.preventDefault()
+      const after = document.getElementById("aftersend")
+      //  const returnhome=document.getElementById("rehome")
+      const afterclicksend = document.getElementById("afterclick")
+
+
+      //send email to admin so he can reset his password
+      sendPasswordResetEmail(auth, email)
+        .then(() => {
+          after.innerHTML = "We have sent you the reset link on this email " + email;
+          afterclicksend.style.display = "none";
+          after.style.display = "block";
+
+
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          if (errorMessage === "Firebase: Error (auth/too-many-requests).") {
+            alert("We have sent the reset password link multiple time , Please check your email")
+          }
+
+        });
+    }
+
+    )
+
+    ///////////////////////////////logout//////////////////////////
+    const logout = document.querySelector('.logout')
+    logout.addEventListener("click", () => {
+      const conf = confirm("Are you sure you want to log out?")
+
+      if (conf === true) {
+        signOut(auth)
+          .then(() => {
+            //console.log("user log out")
+          })
+          .catch((err) => {
+            console.log(err.message)
+          })
+
+         window.location.replace("login.html")
       }
 
-      )
 
-      ///////////////////////////////logout//////////////////////////
-      const logout = document.querySelector('.logout')
-      logout.addEventListener("click", () => {
-        const conf = confirm("Are you sure you want to log out?")
-
-        if (conf === true) {
-          signOut(auth)
-            .then(() => {
-              //console.log("user log out")
-            })
-            .catch((err) => {
-              console.log(err.message)
-            })
-
-          window.location.replace("login.html")
-        }
+    });
 
 
-      });
-
-
-    </script>
+  </script>
   </main>
 </body>
 
