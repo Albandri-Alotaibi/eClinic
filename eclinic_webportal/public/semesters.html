@@ -290,7 +290,7 @@
       <div class="menu">
         <ul>
           <li>
-            <img src="img/logout.png" /><a href="#" class="logout">Log Out</a>
+            <img src="img/logout.png" /><a href="#" class="xlogout" onclick="">Log Out</a>
           </li>
           <li>
             <img src="img/lock.png" /><a href="resetinner.html">Reset Password</a>
@@ -1006,9 +1006,8 @@
 
     };
     ////////////////////////////////////////logout/////////////////////////////////
-    const logout = document.querySelector('.logout')
-    logout.addEventListener("click", () => {
-      const conf = confirm("Are you sure you want to log out?")
+    $('body').on('click', '.xlogout, .logout', () => {
+      const conf = confirm("Are you sure you want to log out?");
 
       if (conf === true) {
         signOut(auth)
@@ -1019,7 +1018,7 @@
             console.log(err.message)
           })
 
-         window.location.replace("login.html")
+        window.location.replace("login.html")
       }
 
 
@@ -1033,8 +1032,8 @@
       }
       else {
         signOut(auth)
-          window.location.replace("login.html")
           .then(() => {
+            window.location.replace("login.html")
             console.log("user log out")
           })
           .catch((err) => {
