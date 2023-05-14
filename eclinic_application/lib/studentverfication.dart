@@ -127,19 +127,8 @@ class _studentverficationState extends State<studentverfication> {
                 SizedBox(
                   height: 10,
                 ),
-                // Align(
-                //   alignment: Alignment.center,
-                //   child: Text(
-                //     "  Please check your email and click \nin the received link to verify your account",
-                //     style: TextStyle(
-                //         fontWeight: FontWeight.w500,
-                //         overflow: TextOverflow.ellipsis,
-                //         color: Mycolors.mainColorGray,
-                //         fontFamily: 'main',
-                //         fontSize: 17),
-                //     textAlign: TextAlign.start,
-                //   ),
-                // ),
+           
+              
                 SizedBox(
                   height: 70,
                 ),

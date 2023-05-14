@@ -53,158 +53,8 @@ class _resetpasswordState extends State<resetpassword> {
               SizedBox(
                 height: 70,
               ),
-              // Align(
-              //   alignment: Alignment.center,
-              //   child: Text(
-              //     "Forget your password?",
-              //     style: TextStyle(
-              //         fontWeight: FontWeight.w500,
-              //         overflow: TextOverflow.ellipsis,
-              //         color: Mycolors.mainColorBlack,
-              //         fontFamily: 'bold',
-              //         fontSize: 17),
-              //     textAlign: TextAlign.start,
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: 50,
-              // ),
-              // Image(
-              //   image: AssetImage('assets/images/forgot-password.png'),
-              //   width: 180,
-              //   height: 180,
-              // ),
-              // SizedBox(
-              //   height: 40,
-              // ),
-              // ifsend
-              //     ? Column(
-              //         mainAxisAlignment: MainAxisAlignment.center,
-              //         children: [
-              //           Align(
-              //             alignment: Alignment.center,
-              //             child: Text(
-              //               "Reset link has been sent on this email:",
-              //               style: TextStyle(
-              //                   fontWeight: FontWeight.w500,
-              //                   overflow: TextOverflow.ellipsis,
-              //                   color: Mycolors.mainColorBlack,
-              //                   fontFamily: 'bold',
-              //                   fontSize: 17),
-              //               textAlign: TextAlign.start,
-              //             ),
-              //           ),
-              //           SizedBox(
-              //             height: 10,
-              //           ),
-              //           Text(
-              //             _emailcontrol.text,
-              //             style: TextStyle(
-              //                 fontFamily: 'main',
-              //                 fontSize: 16,
-              //                 color: Mycolors.mainColorBlack),
-              //           ),
-              //           SizedBox(
-              //             height: 10,
-              //           ),
-              //           Align(
-              //             alignment: Alignment.center,
-              //             child: Text(
-              //               "  Please check your email and click \nin the received link to reset password",
-              //               style: TextStyle(
-              //                   fontWeight: FontWeight.w500,
-              //                   overflow: TextOverflow.ellipsis,
-              //                   color: Mycolors.mainColorGray,
-              //                   fontFamily: 'main',
-              //                   fontSize: 17),
-              //               textAlign: TextAlign.start,
-              //             ),
-              //           ),
-              //           SizedBox(
-              //             height: 60,
-              //           ),
-              //           Image(
-              //             image: AssetImage('assets/images/checkmailbox .png'),
-              //             width: 180,
-              //             height: 180,
-              //           ),
-              //           SizedBox(
-              //             height: 80,
-              //           ),
-              //           SizedBox(
-              //             height: 20,
-              //           ),
-              //           ElevatedButton(
-              //             style: ElevatedButton.styleFrom(
-              //               textStyle:
-              //                   TextStyle(fontFamily: 'main', fontSize: 16),
-              //               //shadowColor: Colors.blue[900],
-              //               elevation: 0,
-              //               backgroundColor: Mycolors.mainShadedColorBlue,
-              //               minimumSize: Size(150, 50),
-              //               shape: RoundedRectangleBorder(
-              //                 borderRadius:
-              //                     BorderRadius.circular(17), // <-- Radius
-              //               ),
-              //             ),
-              //             onPressed: () async {
-              //               try {
-              //                 // await FirebaseAuth.instance
-              //                 //     .sendPasswordResetEmail(email: email);
-              //                 Navigator.pushNamed(context, "login");
-
-              //                 setState(() {
-              //                   // ifsend = false;
-              //                   // _emailcontrol.text = "";
-              //                 });
-              //               } on FirebaseAuthException catch (e) {
-              //                 return;
-              //               }
-              //               print(email);
-              //             },
-              //             child: Text("Login"),
-              //           ),
-              //           Padding(
-              //             padding: const EdgeInsets.only(top: 15, bottom: 40),
-              //             child: Row(
-              //               mainAxisAlignment: MainAxisAlignment.center,
-              //               children: [
-              //                 Text(
-              //                   "Didn't receive the reset link ? ",
-              //                   style: TextStyle(
-              //                       color: Mycolors.mainColorBlack,
-              //                       fontFamily: 'main',
-              //                       fontSize: 14),
-              //                 ),
-              //                 GestureDetector(
-              //                     onTap: () async {
-              //                       try {
-              //                         await FirebaseAuth.instance
-              //                             .sendPasswordResetEmail(email: email);
-
-              //                         setState(() {
-              //                           ifsend = true;
-              //                           showInSnackBar(context,
-              //                               "Another link has been sent ");
-              //                         });
-              //                       } on FirebaseAuthException catch (e) {
-              //                         return;
-              //                       }
-              //                       print(email);
-              //                     },
-              //                     child: Text(
-              //                       " Resend",
-              //                       style: TextStyle(
-              //                           color: Mycolors.mainColorBlack,
-              //                           fontFamily: 'bold',
-              //                           fontSize: 14),
-              //                     )),
-              //               ],
-              //             ),
-              //           ),
-              //         ],
-              //       )
-              //     :
+              
+        
               SizedBox(
                 width: 600,
                 child: Column(
@@ -352,36 +202,7 @@ class _resetpasswordState extends State<resetpassword> {
                                 },
                                 child: Text("Send "),
                               ),
-                              // Padding(
-                              //   padding: const EdgeInsets.only(
-                              //       top: 15, bottom: 40),
-                              //   child: Row(
-                              //     mainAxisAlignment:
-                              //         MainAxisAlignment.center,
-                              //     children: [
-                              //       Text(
-                              //         "Remember password ? ",
-                              //         style: TextStyle(
-                              //             color: Mycolors.mainColorBlack,
-                              //             fontFamily: 'main',
-                              //             fontSize: 14),
-                              //       ),
-                              //       GestureDetector(
-                              //           onTap: () {
-                              //             Navigator.pushNamed(
-                              //                 context, "login");
-                              //           },
-                              //           child: Text(
-                              //             " Log in",
-                              //             style: TextStyle(
-                              //                 color:
-                              //                     Mycolors.mainColorBlack,
-                              //                 fontFamily: 'bold',
-                              //                 fontSize: 14),
-                              //           )),
-                              //     ],
-                              //   ),
-                              // ),
+                            
                             ],
                           ),
                         ),
@@ -423,13 +244,8 @@ class _resetpasswordState extends State<resetpassword> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Text(
-                      //   "Oh snap!",
-                      //   style: TextStyle(
-                      //     color: Colors.white,
-                      //     fontSize: 12,
-                      //   ),
-                      // ),
+          
+                    
                       Text(
                         msg,
                         style: TextStyle(
@@ -453,21 +269,5 @@ class _resetpasswordState extends State<resetpassword> {
     ));
   }
 
-  // showSucessAlert() {
-  //   QuickAlert.show(
-  //     context: context,
-  //     type: QuickAlertType.success,
-  //     title: _emailcontrol.text,
-  //     text:
-  //         'If this is a registered email, then a reset link will be sent to it.',
-  //     onConfirmBtnTap: () {
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => login(),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
+  
 }

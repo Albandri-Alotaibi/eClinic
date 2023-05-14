@@ -255,12 +255,7 @@ class _studentloginState extends State<studentlogin> {
                                   }
                                   // }
                                 } on FirebaseAuthException catch (error) {
-                                  // print(error.message);
-                                  // if (error.message ==
-                                  //     "The email address is badly formatted.") {
-                                  //   showerror(
-                                  //       context, "check the email format");
-                                  // }
+                               
 
                                   if (error.message ==
                                           "The password is invalid or the user does not have a password." ||

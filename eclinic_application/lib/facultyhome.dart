@@ -76,9 +76,7 @@ class _fState extends State<facultyhome> {
           }
         }));
 
-    // final ButtonStyle style =
-    //     ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
-
+   
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -349,26 +347,4 @@ class _fState extends State<facultyhome> {
     );
   }
 }
-// body: Container(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             ElevatedButton(
-//               style: style,
-//               onPressed: () {
-//                 Navigator.pushNamed(context, 'addHoursFaculty');
-//               },
-//               child: Text('addHoursFaculty'),
-//             ),
-//             //const SizedBox(width: 16),
-//             ElevatedButton(
-//               style: style,
-//               onPressed: () {
-//                 Navigator.pushNamed(context, 'FacultyViewBookedAppointment');
-//               },
-//               child: Text('BookedAppointment'),
-//             ),
-//             //const SizedBox(width: 16),
-//           ],
-//         ),
-//       ),
+

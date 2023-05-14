@@ -93,11 +93,7 @@ class _AddHourState extends State<addHoursFaculty> {
     print(semester);
 
     final DocumentSnapshot docRef2 = await semester.get();
-    //String id = docRef2.id.substring(1);
-    // final DocumentSnapshot docForSem = await FirebaseFirestore.instance
-    //     .collection("semester")
-    //     .doc(docRef2.id)
-    //     .get();
+    
     print(docRef2.exists);
     print('***********************print dates***********************');
     print(docRef2['semestername']);
@@ -124,7 +120,7 @@ class _AddHourState extends State<addHoursFaculty> {
     IsHoursExists(); // use a helper method because initState() cannot be async
 
     getusers();
-    //PrintViewHours();
+   
   }
 
   Future<bool?> IsSemesterDatesExists() async {
@@ -205,12 +201,7 @@ class _AddHourState extends State<addHoursFaculty> {
   bool viewHexist = false; // <--  DELETE
   Future getavailableHours() async {
     String string = "";
-    // await Future.delayed(Duration(seconds: 1));
-
-    // final FirebaseAuth auth = await FirebaseAuth.instance;
-    // final User? user = await auth.currentUser;
-    // userid = user!.uid;
-    // email = user.email!;
+  
 
     if (isExists == true) {
       final snap = await FirebaseFirestore.instance
@@ -232,17 +223,14 @@ class _AddHourState extends State<addHoursFaculty> {
           "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  DEEM  ${availableHours[i].hours.length}");
 
       for (int j = 0; j < availableHours[i].hours.length; j++) {
-        // TimeOfDay stime = TimeOfDay.fromDateTime(
-        //     format.parse(availableHours[i].hours[j]['startTime']));
+  
         string = string +
             "\n Start: " +
             availableHours[i].hours[j]['startTime'] +
             " - End: " +
             availableHours[i].hours[j]['endTime'];
       }
-      // print("(((((((((())))))))))))))))))))))))");
-      // print(availableHours[i].title);
-      // print(string);
+   
       availableHours[i].allhours =
           string; //store the value of all the hours in a string in the array
       string = ""; //to delete old values of the previos day
@@ -251,14 +239,12 @@ class _AddHourState extends State<addHoursFaculty> {
     print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
     print(availableHours.length);
 
-    // setState(() {
-    //   viewHexist = true;
-    // });
+ 
   }
 
 //I DONT call it any more so  DELETE IT
   PrintViewHours() async {
-    //await Future.delayed(Duration(seconds: 2));
+  
     String string = "";
 
     print("++++++++++++++++++++++++++++++++++    ${availableHours.length}");
@@ -267,8 +253,7 @@ class _AddHourState extends State<addHoursFaculty> {
           "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  DEEM  ${availableHours[i].hours.length}");
 
       for (int j = 0; j < availableHours[i].hours.length; j++) {
-        // TimeOfDay stime = TimeOfDay.fromDateTime(
-        //     format.parse(availableHours[i].hours[j]['startTime']));
+       
         string = string +
             "\n Start: " +
             availableHours[i].hours[j]['startTime'] +
@@ -289,7 +274,7 @@ class _AddHourState extends State<addHoursFaculty> {
 
   @override
   Widget build(BuildContext context) {
-    //PrintViewHours();
+
     IsValueChecked();
 
     if (isSemesterDateExists == false) {
@@ -450,11 +435,7 @@ class _AddHourState extends State<addHoursFaculty> {
                                               borderRadius:
                                                   BorderRadius.circular(
                                                       17), // <-- Radius
-                                              // side: BorderSide(
-                                              //   width: 1,
-                                              //   color:
-                                              //       Mycolors.mainShadedColorBlue,
-                                              // ),
+                                            
                                             ),
                                             shadowColor: Color.fromARGB(
                                                 0, 250, 250, 250),
@@ -472,9 +453,7 @@ class _AddHourState extends State<addHoursFaculty> {
                                                   style: TextStyle(
                                                       color: Mycolors
                                                           .mainShadedColorBlue,
-                                                      // fontFamily: 'Semibold',
-                                                      // fontWeight:
-                                                      //     FontWeight.w500,
+                                                      
                                                       fontSize: 17),
                                                 ),
                                               ),
@@ -489,8 +468,7 @@ class _AddHourState extends State<addHoursFaculty> {
                                                     style: TextStyle(
                                                         color: Mycolors
                                                             .mainColorBlack,
-                                                        // fontFamily:
-                                                        //     'Semibold',
+                                                       
                                                         fontWeight:
                                                             FontWeight.w500,
                                                         fontSize: 16),
@@ -501,7 +479,7 @@ class _AddHourState extends State<addHoursFaculty> {
                                       );
                                     }),
                                   );
-                                  // }
+                             
                                   return Center(
                                       child: CircularProgressIndicator(
                                           color: Mycolors.mainShadedColorBlue));
@@ -553,15 +531,12 @@ class _AddHourState extends State<addHoursFaculty> {
                                       ]),
                                     );
 
-                                    // metingmethodinfotext =
-                                    //     "Link: " + muser['mettingmethodinfo'];
+                                    
                                   }
 
                                   return Container(
                                     child: Card(
-                                      //color: Color.fromARGB(76, 221, 221, 221),
-                                      //Mycolors.mainShadedColorBlue
-                                      //color: Color.fromARGB(171, 255, 255, 255),
+                                    
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(
                                             17), // <-- Radius
@@ -715,15 +690,6 @@ class _AddHourState extends State<addHoursFaculty> {
             "mettingmethodinfo": mmi,
           });
 
-          // Fluttertoast.showToast(
-          //   msg: "Your meeting method has been updated successfully",
-          //   toastLength: Toast.LENGTH_SHORT,
-          //   gravity: ToastGravity.CENTER,
-          //   timeInSecForIosWeb: 2,
-          //   backgroundColor: Color.fromARGB(255, 127, 166, 233),
-          //   textColor: Color.fromARGB(255, 248, 249, 250),
-          //   fontSize: 18.0,
-          // );
           showInSnackBar(
               context, "Your meeting method has been updated successfully");
           Navigator.push(
@@ -758,11 +724,7 @@ class _AddHourState extends State<addHoursFaculty> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(13.0)),
                             ),
-                            // focusedBorder: OutlineInputBorder(
-                            //     borderRadius:
-                            //         BorderRadius.all(Radius.circular(17.0)),
-                            //     borderSide: BorderSide(
-                            //         color: Mycolors.mainShadedColorBlue)),
+                        
                           ),
                           items: const [
                             DropdownMenuItem(
@@ -798,11 +760,7 @@ class _AddHourState extends State<addHoursFaculty> {
                                 controller: _meetingmethodcontroller2,
                                 decoration: InputDecoration(
                                   labelText: 'Office number/link',
-                                  // labelStyle:
-                                  // TextStyle(
-                                  //     color: myFocusNode.hasFocus
-                                  //         ? Color.fromARGB(255, 18, 45, 128)
-                                  //         : Colors.black),
+                               
                                   hintText: "Enter your office number/link",
                                   hintStyle:
                                       TextStyle(color: Mycolors.mainColorBlack),
@@ -812,12 +770,7 @@ class _AddHourState extends State<addHoursFaculty> {
                                         BorderRadius.all(Radius.circular(13.0)),
                                   ),
 
-                                  // focusedBorder: OutlineInputBorder(
-                                  //   borderRadius:
-                                  //       BorderRadius.all(Radius.circular(17.0)),
-                                  //   borderSide: BorderSide(
-                                  //       color: Mycolors.mainShadedColorBlue),
-                                  // ),
+                               
                                 ),
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
@@ -852,7 +805,7 @@ class _AddHourState extends State<addHoursFaculty> {
     );
 
     showDialog(
-      // barrierDismissible: false,
+
       context: context,
       builder: (BuildContext context) {
         return alert;
@@ -1231,17 +1184,7 @@ class _AddHourState extends State<addHoursFaculty> {
     for (var k = 0; k < daysOfHelp.length; k++) {
       if (daysOfHelp[k].value == true) {
         addAvailableHoursToDB(k);
-        // var ArrayOfAllTheDayRanges = [];
-        // for (var i = 1; i < daysOfHelp[k].hours.length; i++) {
-        //   TimeOfDay starttime = daysOfHelp[k].hours[i].start;
-        //   TimeOfDay endtime = daysOfHelp[k].hours[i].end;
-
-        //   List<timesWithDates> Ranges = hourDivision(starttime, endtime);
-
-        //   ArrayOfAllTheDayRanges.add(Ranges);
-        // } //end of generating all ranges for one day
-
-        //  OneDayGenerating(daysOfHelp[k].title, ArrayOfAllTheDayRanges);
+      
       } //value true
     } //loop on each day
 
@@ -1421,15 +1364,7 @@ class _AddHourState extends State<addHoursFaculty> {
         daysOfHelp[x].value = false;
       });
 
-    //return Get.snackbar("h", msg);
-    // Flushbar(
-    //   //flushbarPosition: FlushbarPosition.TOP,
-    //   backgroundColor: Colors.red,
-    //   duration: Duration(seconds: 3),
-    //   messageText: Text(
-    //     msg,
-    //   ),
-    // )..show(context);
+ 
 
     return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         elevation: 0,
@@ -1460,51 +1395,6 @@ class _AddHourState extends State<addHoursFaculty> {
           ],
         )));
 
-    // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    //   content: Stack(
-    //     children: [
-    //       Container(
-    //         padding: EdgeInsets.all(16),
-    //         height: 90,
-    //         decoration: BoxDecoration(
-    //             color: Color(0xFFC72C41),
-    //             borderRadius: BorderRadius.all(Radius.circular(20))),
-    //         child: Row(
-    //           children: [
-    //             SizedBox(
-    //               width: 48,
-    //             ),
-    //             Expanded(
-    //               child: Column(
-    //                 crossAxisAlignment: CrossAxisAlignment.start,
-    //                 children: [
-    //                   Text(
-    //                     "Oh snap!",
-    //                     style: TextStyle(
-    //                       color: Colors.white,
-    //                       fontSize: 12,
-    //                     ),
-    //                   ),
-    //                   Text(
-    //                     msg,
-    //                     style: TextStyle(
-    //                       color: Colors.white,
-    //                       fontSize: 12,
-    //                     ),
-    //                     maxLines: 2,
-    //                     overflow: TextOverflow.ellipsis,
-    //                   )
-    //                 ],
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    //   behavior: SnackBarBehavior.floating,
-    //   backgroundColor: Colors.transparent,
-    //   elevation: 0,
-    // ));
+   
   }
 } //en

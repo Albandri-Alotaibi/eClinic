@@ -96,16 +96,11 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
-            // Image(
-            //   image: AssetImage('./assets/images/eClinicLogo-blue.png'),
-            //   height: 80,
-            // ),
+      
+          
             Center(child: CircularProgressIndicator()),
             SizedBox(height: 20),
-            // Text(
-            //   "Fetching the issue information, Please wait.....\n\n ",
-            //   textAlign: TextAlign.center,
-            // ),
+           
           ],
         ),
       );
@@ -260,9 +255,9 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                                     Expanded(
                                       child: Text(
                                         "\n${widget.commonIssue['solution']}",
-                                        // "  Solution:\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                                       
                                         style: const TextStyle(
-                                          // letterSpacing: 1.5,
+                                         
                                           fontSize: 15,
                                           fontFamily: "main",
                                           color: Color.fromRGBO(21, 70, 160, 1),
@@ -397,59 +392,7 @@ class _facultyViewFAQState extends State<facultyViewFAQ> {
                                   fontWeight: FontWeight.w500),
                             ),
                           ),
-                        // Column(children: [
-                        //   Text(
-                        //     " Created by: ${createdby?['firstname'] ?? ""} ${createdby?['lastname'] ?? ""}",
-                        //     style: const TextStyle(
-                        //         letterSpacing: 0.1,
-                        //         fontSize: 14,
-                        //         fontFamily: "main",
-                        //         color: Colors.black54,
-                        //         fontWeight: FontWeight.w500),
-                        //   ),
-                        //   if (widget.commonIssue['lastmodified'] != null &&
-                        //       widget.commonIssue['lastmodified'] != "")
-                        //     Text(
-                        //       "  Last modified by: ${lastmodified?['firstname'] ?? ""} ${lastmodified?['lastname'] ?? ""}",
-                        //       style: const TextStyle(
-                        //           letterSpacing: 0.1,
-                        //           fontSize: 14,
-                        //           fontFamily: "main",
-                        //           color: Colors.black54,
-                        //           fontWeight: FontWeight.w500),
-                        //     ),
-                        // ]),
-
-                        // Container(
-                        //   margin: const EdgeInsets.only(top: 16),
-                        //   width: MediaQuery.of(context).size.width,
-                        //   decoration: BoxDecoration(
-                        //     borderRadius:
-                        //         const BorderRadius.all(Radius.circular(24)),
-                        //     boxShadow: [
-                        //       BoxShadow(
-                        //         color:
-                        //             Color.fromRGBO(21, 70, 160, 1).withAlpha(18),
-                        //         blurRadius: 3,
-                        //         offset: const Offset(0, 1),
-                        //       ),
-                        //     ],
-                        //   ),
-                        //   // child: ElevatedButton(
-                        //   //     style: ButtonStyle(
-                        //   //         padding: MaterialStateProperty.all(
-                        //   //             const EdgeInsets.symmetric(
-                        //   //                 vertical: 16))),
-                        //   //     onPressed: () {
-                        //   //       Navigator.pushNamed(context, 'studenthome');
-                        //   //     },
-                        //   //     child: Text("Back to Home.",
-                        //   //         style: TextStyle(
-                        //   //             fontWeight: FontWeight.w600,
-                        //   //             color:
-                        //   //                 themeData.colorScheme.onPrimary,
-                        //   //             letterSpacing: 0.5))),
-                        // ),
+                       
                       ],
                     )
                   ],

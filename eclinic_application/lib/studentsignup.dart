@@ -485,77 +485,12 @@ class _studentsignupState extends State<studentsignup> {
                                       }
                                     }
                                   }),
-                              // SizedBox(
-                              //   height: 8,
-                              // ),
-                              // TextFormField(
-                              //   controller: _idController,
-                              //   decoration: InputDecoration(
-                              //       labelText: 'Student ID',
-                              //       hintText: "Enter your ID number",
-                              //       border: OutlineInputBorder()),
-                              //   autovalidateMode:
-                              //       AutovalidateMode.onUserInteraction,
-                              //   validator: (value) {
-                              //     if (value!.isEmpty ||
-                              //         _idController.text == "") {
-                              //       return 'Please enter your ID  ';
-                              //     } else {
-                              //       if (!(idRegEx.hasMatch(_idController.text))) {
-                              //         return 'Please ID number only number accepted ';
-                              //       } else {
-                              //         if (!(countRegEx
-                              //             .hasMatch(_idController.text))) {
-                              //           return 'Please ID number must be only 9 numbers';
-                              //         } else {
-                              //           if (!(english
-                              //               .hasMatch(_idController.text))) {
-                              //             return "only english is allowed";
-                              //           }
-                              //         }
-                              //       }
-                              //     }
-                              //   },
-                              // ),
+                             
                               SizedBox(
                                 height: 8,
                               ),
-                              // DropdownButtonFormField<String>(
-                              //   decoration: InputDecoration(
-                              //     hintText: ' Choose your collage :',
-                              //     border: OutlineInputBorder(
-                              //         borderRadius: BorderRadius.circular(25),
-                              //         borderSide: const BorderSide(
-                              //           width: 0,
-                              //         )),
-                              //   ),
-                              //   isExpanded: true,
-                              //   items: collage.map((String dropdownitems) {
-                              //     return DropdownMenuItem<String>(
-                              //       value: dropdownitems,
-                              //       child: Text(dropdownitems),
-                              //     );
-                              //   }).toList(),
-                              //   onChanged: (String? newselect) {
-                              //     setState(() {
-                              //       collageselectedvalue = newselect;
-                              //       checkidc(collageselectedvalue);
-                              //     });
-                              //   },
-                              //   value: collageselectedvalue,
-                              //   autovalidateMode:
-                              //       AutovalidateMode.onUserInteraction,
-                              //   validator: (value) {
-                              //     if (value == null ||
-                              //         collageselectedvalue!.isEmpty ||
-                              //         collageselectedvalue == null) {
-                              //       return 'Please choose your collage';
-                              //     }
-                              //   },
-                              // ),
-                              // SizedBox(
-                              //   height: 8,
-                              // ),
+                             
+                           
                               DropdownButtonFormField<String>(
                                 decoration: InputDecoration(
                                   hintText: ' Choose your department :',
@@ -693,67 +628,6 @@ class _studentsignupState extends State<studentsignup> {
                                 ],
                               )
 
-                              // DropdownButtonFormField(
-                              //   decoration: InputDecoration(
-                              //     hintText: 'Choose month',
-                              //     border: OutlineInputBorder(),
-                              //   ),
-
-                              //   items: const [
-                              //     DropdownMenuItem(
-                              //         child: Text(nowyear), value: nowyear),
-                              //     DropdownMenuItem(
-                              //         child: Text(nextyear), value: nextyear),
-                              //   ],
-                              //   onChanged: (value) {
-                              //     setState(() {
-                              //       year = value;
-                              //     });
-                              //   },
-                              //   autovalidateMode:
-                              //       AutovalidateMode.onUserInteraction,
-                              //   validator: (value) {
-                              //     if (value == null || month == "") {
-                              //       return 'Please Choose month';
-                              //     }
-                              //   },
-                              // ),
-
-                              // TextFormField(
-                              //   controller: _date,
-                              //   readOnly: true,
-                              //   decoration: InputDecoration(
-                              //     hintText: 'Enter your graduation date',
-                              //     labelText: "Graduation date",
-                              //     border: OutlineInputBorder(),
-                              //   ),
-                              //   onTap: () async {
-                              //     DateTime? pickerdate = await showDatePicker(
-                              //       context: context,
-                              //       initialDate: DateTime.now(),
-                              //       firstDate: DateTime.now(),
-                              //       lastDate: DateTime(2100),
-                              //     );
-
-                              //     if (pickerdate != null) {
-                              //       setState(() {
-                              //         _date.text = DateFormat('dd-MM-yyyy')
-                              //             .format(pickerdate);
-                              //         date = pickerdate;
-                              //         // 2022-12-20 00:00:00.000
-                              //         print(date);
-                              //       });
-                              //     }
-                              //   },
-                              //   autovalidateMode:
-                              //       AutovalidateMode.onUserInteraction,
-                              //   validator: ((value) {
-                              //     if (_date.text == "" || date == null)
-                              //       return 'Please enter your graduation date ';
-
-                              //     return null;
-                              //   }),
-                              // ),
                               ,
                               SizedBox(
                                 height: 8,
@@ -786,94 +660,7 @@ class _studentsignupState extends State<studentsignup> {
                               SizedBox(
                                 height: 8,
                               ),
-                              // DropDownMultiSelect(
-                              //   decoration: InputDecoration(
-                              //       hintText:
-                              //           "Select your graduation project category",
-                              //       enabledBorder: OutlineInputBorder(
-                              //         borderSide: BorderSide(
-                              //             color: isshow
-                              //                 ? Colors.red
-                              //                 : Colors.grey),
-                              //         borderRadius: BorderRadius.circular(25),
-                              //       ),
-                              //       errorBorder: OutlineInputBorder(
-                              //         borderSide: BorderSide(
-                              //             color: isshow
-                              //                 ? Colors.red
-                              //                 : Colors.blueAccent),
-                              //         borderRadius: BorderRadius.circular(25),
-                              //       ),
-                              //       focusedBorder: OutlineInputBorder(
-                              //         borderSide: BorderSide(
-                              //             color: isshow
-                              //                 ? Colors.red
-                              //                 : Colors.blueAccent),
-                              //         borderRadius: BorderRadius.circular(25),
-                              //       )
-                              //       // border: OutlineInputBorder(
-                              //       //     borderSide: BorderSide(
-                              //       //         color: isshow ? Colors.red : Colors.grey)
-                              //       ),
-                              //   options: options,
-                              //   whenEmpty: "",
-                              //   onChanged: (value) {
-                              //     setState(() {
-                              //       selectedoptionlist.value = value;
-                              //       selectedoption.value = "";
-                              //       selectedoptionlist.value.forEach((element) {
-                              //         selectedoption.value =
-                              //             selectedoption.value + " " + element;
-                              //         checklengthforspeciality =
-                              //             selectedoptionlist.value.length;
-                              //         isshow = selectedoption.value.isEmpty;
-
-                              //         if (checklengthforspeciality < 1) {
-                              //           isshow = true;
-                              //         }
-                              //         if (checklengthforspeciality > 0 ||
-                              //             selectedoption.value.isEmpty ||
-                              //             selectedoption.value == null) {
-                              //           isshow = false;
-                              //         }
-                              //       });
-                              //     });
-                              //     checkidcategory(selectedoptionlist.value);
-                              //     // isshow = selectedoptionlist.value.isEmpty;
-                              //     checklengthforspeciality =
-                              //         selectedoptionlist.value.length;
-                              //     if (checklengthforspeciality < 1) {
-                              //       isshow = true;
-                              //     }
-                              //   },
-                              //   selectedValues: selectedoptionlist.value,
-                              // ),
-                              // SizedBox(
-                              //   height: 2,
-                              // ),
-                              // Padding(
-                              //   padding:
-                              //       const EdgeInsets.only(left: 10, top: 7),
-                              //   child: Visibility(
-                              //     visible: isshow,
-                              //     child: Row(
-                              //         mainAxisAlignment:
-                              //             MainAxisAlignment.start,
-                              //         children: [
-                              //           Text(
-                              //             "Please choose your graduation project category",
-                              //             style: TextStyle(
-                              //                 color: Color.fromARGB(
-                              //                     255, 211, 56, 45),
-                              //                 fontSize: 12),
-                              //             textAlign: TextAlign.left,
-                              //           ),
-                              //         ]),
-                              //   ),
-                              // ),
-                              // SizedBox(
-                              //   height: 8,
-                              // ),
+                        
                               DropdownButtonFormField(
                                 decoration: InputDecoration(
                                   hintText:
@@ -912,37 +699,8 @@ class _studentsignupState extends State<studentsignup> {
                               SizedBox(
                                 height: 8,
                               ),
-                              // if (social != null && social == "WhatsApp")
-                              //   TextFormField(
-                              //     controller: _socialmedialink1,
-                              //     decoration: InputDecoration(
-                              //         labelText: 'phone number',
-                              //         hintText: "Enter your number",
-                              //         border: OutlineInputBorder()),
-                              //     autovalidateMode:
-                              //         AutovalidateMode.onUserInteraction,
-                              //     validator: ((value) {
-                              //       if (value!.isEmpty ||
-                              //           _socialmedialink1.text == "") {
-                              //         return 'Please enter your phone number';
-                              //       } else {
-                              //         if (!(english
-                              //             .hasMatch(_socialmedialink1.text))) {
-                              //           return "only english is allowed";
-                              //         } else {
-                              //           if (!(idRegEx
-                              //               .hasMatch(_socialmedialink1.text))) {
-                              //             return 'Please only number allowed ';
-                              //           } else {
-                              //             if (!(countRegEx10.hasMatch(
-                              //                 _socialmedialink1.text))) {
-                              //               return 'Please number must be only 10 numbers';
-                              //             }
-                              //           }
-                              //         }
-                              //       }
-                              //     }),
-                              //   ),
+                            
+                          
                               if (social != null && social != "None")
                                 TextFormField(
                                     controller: _socialmedialink2,
@@ -1051,10 +809,7 @@ class _studentsignupState extends State<studentsignup> {
                                                   // .doc(docsforcollage)
                                                   .collection("department")
                                                   .doc(docfordepatment),
-                                          // 'college': FirebaseFirestore.instance
-                                          //     .collection("collage")
-                                          //     .doc(docsforcollage),
-                                          // 'projectCategory': category,
+                                         
                                           'projectname': GPtitle,
                                           'graduationDate': GPdate,
                                           'socialmedia': socialmedia,
@@ -1141,13 +896,7 @@ class _studentsignupState extends State<studentsignup> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Text(
-                      //   "Oh snap!",
-                      //   style: TextStyle(
-                      //     color: Colors.white,
-                      //     fontSize: 12,
-                      //   ),
-                      // ),
+                    
                       Text(
                         msg,
                         style: TextStyle(

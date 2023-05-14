@@ -63,11 +63,7 @@ class _inneresetState extends State<innereset> {
               SizedBox(
                 height: 50,
               ),
-              // Image(
-              //   image: AssetImage('assets/images/forgot-password.png'),
-              //   width: 180,
-              //   height: 180,
-              // ),
+             
               SizedBox(
                 height: 40,
               ),
@@ -124,23 +120,7 @@ class _inneresetState extends State<innereset> {
                         SizedBox(
                           height: 80,
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(20.0),
-                        //   child: Text(
-                        //     "We have sent you the reset link has been sent on this email:",
-                        //     style: TextStyle(
-                        //         fontFamily: 'main',
-                        //         fontSize: 16,
-                        //         color: Mycolors.mainColorBlack),
-                        //   ),
-                        // ),
-                        // Text(
-                        //   email,
-                        //   style: TextStyle(
-                        //       fontFamily: 'bold',
-                        //       fontSize: 16,
-                        //       color: Mycolors.mainColorBlack),
-                        // ),
+                      
                         SizedBox(
                           height: 20,
                         ),
@@ -182,34 +162,7 @@ class _inneresetState extends State<innereset> {
                             ],
                           ),
                         ),
-                        // ElevatedButton(
-                        //   style: ElevatedButton.styleFrom(
-                        //     textStyle:
-                        //         TextStyle(fontFamily: 'main', fontSize: 16),
-                        //     //shadowColor: Colors.blue[900],
-                        //     elevation: 0,
-                        //     backgroundColor: Mycolors.mainShadedColorBlue,
-                        //     minimumSize: Size(150, 50),
-                        //     shape: RoundedRectangleBorder(
-                        //       borderRadius:
-                        //           BorderRadius.circular(17), // <-- Radius
-                        //     ),
-                        //   ),
-                        //   onPressed: () async {
-                        //     try {
-                        //       await FirebaseAuth.instance
-                        //           .sendPasswordResetEmail(email: email);
-
-                        //       setState(() {
-                        //         ifsend = true;
-                        //       });
-                        //     } on FirebaseAuthException catch (e) {
-                        //       return;
-                        //     }
-                        //     print(email);
-                        //   },
-                        //   child: Text("Resend"),
-                        // ),
+                       
                       ],
                     )
                   : Column(
@@ -294,26 +247,5 @@ class _inneresetState extends State<innereset> {
     );
   }
 
-  // Widget buildprofileImage() => CircleAvatar(
-  //       radius: profileheight / 2,
-  //       backgroundColor: Mycolors.mainColorShadow,
-  //       backgroundImage: AssetImage('assets/images/forgot-password.png'),
-  //     );
-
-  // showSucessAlert() {
-  //   QuickAlert.show(
-  //     context: context,
-  //     type: QuickAlertType.success,
-  //     title: _emailcontrol.text,
-  //     text: "We have sent you the reset link on this email:\n ${email}",
-  //     onConfirmBtnTap: () {
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => facultyhome(0),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
+  
 }

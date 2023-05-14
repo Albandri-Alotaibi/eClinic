@@ -118,24 +118,14 @@ class _studentviewprofileState extends State<studentviewprofile> {
     return DateFormat('dd-MM-yyyy').format(datetostring);
   }
 
-  // getusername() async {
-  //   final snap = await FirebaseFirestore.instance
-  //       .collection('student')
-  //       .doc(userid)
-  //       .get();
-  //   fnDrawer = snap['firstname'];
-  //   lnDrawer = snap['lastname'];
-  // }
+
 
   genrateyear() {
     DateTime now = DateTime.now();
     nowyear = now.year;
     DateTime Dateoftoday = DateTime.now();
     nextyear = nowyear + 1;
-    //var pastyear = nowyear - 1;
-    // if (selctedyear == pastyear) {
-    //   years.add(pastyear.toString());
-    // }
+  
     print("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
     print(nextyear);
     years.add(nowyear.toString());
@@ -156,153 +146,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
     //2023-09-15 00:00:00.000
   }
 
-  // retrivegpcategory() async {
-  //   try {
-  //     await FirebaseFirestore.instance
-  //         .collection('gpcategory')
-  //         .get()
-  //         .then((querySnapshot) {
-  //       querySnapshot.docs.forEach((element) {
-  //         setState(() {
-  //           options.add(element['gpcategoryname']);
-  //         });
-  //       });
-  //     });
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
-
-  // retriveselectedcategory() async {
-  //   final snap = await FirebaseFirestore.instance
-  //       .collection('student')
-  //       .doc(userid)
-  //       .get();
-  //   List gpcategoryRef = snap["projectCategory"];
-  //   for (var i = 0; i < gpcategoryRef.length; i++) {
-  //     final DocumentSnapshot docRef = await gpcategoryRef[i].get();
-  //     setState(() {
-  //       categoryfromDB.add(docRef["gpcategoryname"]);
-  //     });
-  //   }
-  //   checklengthforcategory = categoryfromDB.length;
-  //   checkidcategory(categoryfromDB);
-  //   print(categoryfromDB);
-  // }
-
-  // checkidcategory(List<String?> categoryoption) async {
-  //   category.length = 0;
-  //   newselectgpcategory.clear();
-  //   try {
-  //     await FirebaseFirestore.instance
-  //         .collection('gpcategory')
-  //         .get()
-  //         .then((querySnapshot) {
-  //       querySnapshot.docs.forEach((element) {
-  //         setState(() {
-  //           for (var i = 0; i < categoryoption.length; i++) {
-  //             if (element['gpcategoryname'] == categoryoption[i]) {
-  //               final ref = FirebaseFirestore.instance
-  //                   .collection("gpcategory")
-  //                   .doc(element.id);
-  //               category.add(ref);
-  //               newselectgpcategory.add(element['gpcategoryname']);
-  //               print(category);
-  //             }
-  //           }
-  //         });
-  //       });
-  //     });
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
-
-  // editstudentarray(List spe) async {
-  //   final ref = FirebaseFirestore.instance.collection("student").doc(userid);
-  //   List f = [];
-  //   f.clear();
-  //   await FirebaseFirestore.instance
-  //       .collection('gpcategory')
-  //       .get()
-  //       .then((querySnapshot) {
-  //     // ignore: avoid_function_literals_in_foreach_calls
-  //     querySnapshot.docs.forEach((element) async {
-  //       for (var i = 0; i < category.length; i++) {
-  //         print(
-  //             "oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
-  //         print(spe);
-  //         ///// for add
-  //         if (element['gpcategoryname'] == spe[i]) {
-  //           f = element['student'];
-  //           print(f);
-  //           if (!(f.contains(ref))) {
-  //             f.add(ref);
-  //             FirebaseFirestore.instance
-  //                 .collection('gpcategory')
-  //                 .doc(element.id)
-  //                 .update({
-  //               'student': FieldValue.arrayUnion([ref]),
-  //             });
-  //           }
-  //         }
-  //         ////////for delete
-  //         if (!(spe.contains(element['gpcategoryname']))) {
-  //           f = element['student'];
-  //           print(f);
-  //           if ((f.contains(ref))) {
-  //             FirebaseFirestore.instance
-  //                 .collection('gpcategory')
-  //                 .doc(element.id)
-  //                 .update({
-  //               'student': FieldValue.arrayRemove([ref]),
-  //             });
-  //           }
-  //         }
-  //       }
-  //     });
-  //   });
-  // }
-
-  // retrivecollage() async {
-  //   try {
-  //     await FirebaseFirestore.instance
-  //         .collection('collage')
-  //         .get()
-  //         .then((querySnapshot) {
-  //       querySnapshot.docs.forEach((element) {
-  //         setState(() {
-  //           collage.add(element['collagename']);
-  //         });
-  //       });
-  //     });
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
-
-  // Future checkidc(String? collagename) async {
-  //   try {
-  //     await FirebaseFirestore.instance
-  //         .collection('collage')
-  //         .get()
-  //         .then((querySnapshot) {
-  //       querySnapshot.docs.forEach((element) {
-  //         setState(() {
-  //           if (collagename == element['collagename']) {
-  //             docsforcollage = element.id;
-  //           }
-  //         });
-  //       });
-  //     });
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
+ 
 
   retrivedepartment() async {
     try {
@@ -412,9 +256,7 @@ class _studentviewprofileState extends State<studentviewprofile> {
                         .doc(userid)
                         .get(),
                     builder: (context, snapshot) {
-                      // if (snapshot.connectionState == ConnectionState.waiting) {
-                      //   return Center(child: CircularProgressIndicator());
-                      // }
+                     
                       if (snapshot.hasData) {
                         print("snapshot");
                         print(snapshot);
@@ -687,56 +529,6 @@ class _studentviewprofileState extends State<studentviewprofile> {
         backgroundColor: Colors.grey.shade800,
         backgroundImage: AssetImage("assets/images/User1.png"),
       );
-  // showConfirmationDialog(BuildContext context) {
-  //   Widget dontCancelAppButton = ElevatedButton(
-  //     style: ElevatedButton.styleFrom(
-  //       textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-  //       shadowColor: Colors.blue[900],
-  //       elevation: 20,
-  //       backgroundColor: Mycolors.mainShadedColorBlue,
-  //       minimumSize: Size(60, 40),
-  //       shape: RoundedRectangleBorder(
-  //         borderRadius: BorderRadius.circular(10), // <-- Radius
-  //       ),
-  //     ),
-  //     child: Text("No"),
-  //     onPressed: () {
-  //       Navigator.of(context).pop();
-  //     },
-  //   );
-
-  //   Widget YesCancelAppButton = ElevatedButton(
-  //     style: ElevatedButton.styleFrom(
-  //       textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-  //       shadowColor: Colors.blue[900],
-  //       elevation: 20,
-  //       backgroundColor: Mycolors.mainShadedColorBlue,
-  //       minimumSize: Size(60, 40),
-  //       shape: RoundedRectangleBorder(
-  //         borderRadius: BorderRadius.circular(10), // <-- Radius
-  //       ),
-  //     ),
-  //     child: Text("Yes"),
-  //     onPressed: () {
-  //       FirebaseAuth.instance.signOut().then((value) => Navigator.push(
-  //           context, MaterialPageRoute(builder: (context) => studentlogin())));
-  //     },
-  //   );
-
-  //   AlertDialog alert = AlertDialog(
-  //     // title: Text("LogOut"),
-  //     content: Text("Are you sure you want to logout ?"),
-  //     actions: [
-  //       dontCancelAppButton,
-  //       YesCancelAppButton,
-  //     ],
-  //   );
-
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return alert;
-  //     },
-  //   );
-  // }
+  
+ 
 }

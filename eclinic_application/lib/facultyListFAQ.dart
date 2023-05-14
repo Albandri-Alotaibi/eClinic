@@ -40,13 +40,12 @@ class _facultyListFAQState extends State<facultyListFAQ> {
     userid = user!.uid;
     super.initState();
     retrivespeciality();
-    // initSpeciality();
-    //initSpeciality();
+  
     //get specialities for dropdown
     //get semesters for dropdown
     initSemester();
 
-    //initSpeciality1nnoooo();
+ 
   }
 
   bool ciempty = true;
@@ -76,50 +75,9 @@ class _facultyListFAQState extends State<facultyListFAQ> {
     });
   }
 
-  // Future initSpecialitynnoo() async {
-  //   Map<String, dynamic>? speciality;
-  //   CollectionReference cats =
-  //       FirebaseFirestore.instance.collection('facultyspeciality');
+ 
 
-  //   QuerySnapshot q = await cats.get(const GetOptions(source: Source.server));
-  //   //specialityList.clear();
-  //   specialityList = q.docs.map((doc) {
-  //     // for (var i = 0; i < specalityforfaculty.length; i++) {
-  //     //   // print(specalityforfaculty.length);
-  //     //   if (doc.id == specalityforfaculty[i]) {
-  //     speciality = doc.data() as Map<String, dynamic>?;
-  //     speciality!['id'] = doc.reference.id;
-  //     speciality!['ref'] = doc.reference;
-  //     //   print(
-  //     //       "////////////////////////specialityList//////////////////////////////////////");
-  //     //   print(speciality);
-  //     // }
-
-  //     // print(speciality);
-
-  //     //}
-  //     return speciality;
-  //   }).toList();
-  //   // Future.delayed(Duration(seconds: 1), () {
-  //   //   setState(() {});
-  //   // });
-  //   //add all Specialties to dropdown
-  //   specialityList.insert(
-  //       0, <String, dynamic>{"specialityname": "All Specialties", "id": "0"});
-  //   specialityDropdownValue = specialityList[0];
-  //   // print("99999999999999999999999999999999999999999999999");
-  //   specialityList.forEach((element) {
-  //     print(element?["id"]);
-  //     for (var i = 0; i < element!.length; i++) {
-  //       if (specalityforfaculty[i] == element["id"]) {
-  //         print("999999999999999999999yyyeesss99999999999999999999999999");
-  //       }
-  //     }
-  //   });
-  //   print(specalityforfaculty.length);
-  //   print(speciality!.length);
-  //   print(specialityList.length);
-  // }
+  
 
   Future initSpeciality() async {
     CollectionReference cats =
@@ -128,24 +86,7 @@ class _facultyListFAQState extends State<facultyListFAQ> {
 
     specialityList = q.docs.map((doc) {
       var speciality = doc.data() as Map<String, dynamic>;
-      // bool c = false;
-      // for (var i = 0; i < specalityforfaculty.length; i++) {
-      //   print(specalityforfaculty[i]);
-      //   // print("44444444444444444444444444444444444444444");
-      //   // print(speciality.entries);
-      //   if (speciality.containsValue(specalityforfaculty[i])) {
-      //     c = false;
-      //     // if (doc.id == specalityforfaculty[i]) {
-      //     speciality.removeWhere((key, value) => c);
-
-      //     speciality.forEach((key, value) {
-      //       if (speciality.containsValue("--")) {
-      //         c = false;
-      //         speciality.removeWhere((key, value) => c);
-      //       }
-      //     });
-      //   }
-      // }
+     
       speciality['id'] = doc.reference.id;
       speciality['ref'] = doc.reference;
 
@@ -171,65 +112,12 @@ class _facultyListFAQState extends State<facultyListFAQ> {
       }
     });
     specialityList.removeWhere((element) => toremoveid.contains(element));
-    // specialityList.forEach((element) {
-    //   // print("44444444444444444444444444444444444444444");
-    //   print(element?["id"]);
-
-    //   // print("44444444444444444444444444444444444444444");
-    //   // print(element['id']);
-    //   // print(specalityforfaculty);
-    //   if (!(specalityforfaculty.contains(element!['id']))) {
-    //     specialityList.remove(element);
-    //     print("444444444444444yyyessss44444444444444444444444444");
-    //     print(specialityList);
-    //   }
-    // });
-    //       specialityList.forEach((element) {
-
-    //     if ((specalityforfaculty.contains(element!['id']))) {
-
-    //     }
-    //   });
+   
     initCommonIssues();
   }
 
-  ///try
-  // Future initSpeciality1nnoooo() async {
-  //   QuerySnapshot<Object?> cats = FirebaseFirestore.instance
-  //       .collection('facultyspeciality')
-  //       .where("specialityname", whereIn: [specalityforfaculty]).get(
-  //           const GetOptions(source: Source.server)) as QuerySnapshot<Object?>;
-  //   //var c = cats.where("specialityname", whereIn: [specalityforfaculty]);
-  //   print("////////////////////////////////////////////");
-  //   //print(c.firestore.doc("Ai"));
-  //   //QuerySnapshot q = await cats.get(const GetOptions(source: Source.server));
+ 
 
-  //   specialityList = cats.docs.map((doc) {
-  //     var speciality = doc.data() as Map<String, dynamic>;
-
-  //     speciality['id'] = doc.reference.id;
-  //     speciality['ref'] = doc.reference;
-
-  //     return speciality;
-  //   }).toList();
-
-  //   //add all Specialties to dropdown
-  //   specialityList.insert(
-  //       0, <String, dynamic>{"specialityname": "All Specialties", "id": "0"});
-
-  //   specialityDropdownValue = specialityList[0];
-  // }
-
-//try
-  // gets() async {
-  //   var snap = await FirebaseFirestore.instance
-  //       .collection('facultyspeciality')
-  //       .where("specialityname", whereIn: [specalityforfaculty]).get();
-  //   print("//////////////////////////////////////");
-  //   print(snap.size);
-  //   print("////////////////44444//////////////////////");
-  //   print(specalityforfaculty);
-  // }
 
   Future initSemester() async {
     CollectionReference cats =
@@ -336,19 +224,7 @@ class _facultyListFAQState extends State<facultyListFAQ> {
         home: SafeArea(
           child: Scaffold(
               backgroundColor: Color.fromARGB(255, 255, 255, 255),
-              //show the app bar above
-              // appBar: AppBar(
-              //   title: const Text("Common Issues"),
-              //   leading: InkWell(
-              //     onTap: () {
-              //       Navigator.pop(context);
-              //     },
-              //     child: const Icon(
-              //       Icons.arrow_back,
-              //       color: Colors.white,
-              //     ),
-              //   ),
-              // ),
+             
               body: firstLoading
                   //show progress bar during dropdowns loading
                   ? const Center(
@@ -440,13 +316,7 @@ class _facultyListFAQState extends State<facultyListFAQ> {
                               ),
                               Expanded(
                                 child: Container(
-                                    // decoration: BoxDecoration(
-                                    //   borderRadius: BorderRadius.circular(12),
-                                    //   border: Border.all(
-                                    //       color: Mycolors.mainShadedColorBlue,
-                                    //       width: 1),
-                                    // ),
-                                    // padding: const EdgeInsets.all(7),
+                                   
 
                                     margin: const EdgeInsets.only(bottom: 8),
                                     child: DropdownButtonFormField<
@@ -509,60 +379,10 @@ class _facultyListFAQState extends State<facultyListFAQ> {
                               ),
                             ]),
                           ),
-                          // Row(children: [
-                          //   Expanded(
-                          //       child: ElevatedButton(
-                          //     onPressed: () => {initCommonIssues()},
-                          //     child: const Text('Search'),
-                          //   ))
-                          // ]),
+                          
                         ]),
-                        //--------------------------- end dropdowns
-                        // InkWell(
-                        //   onTap: () {
-                        //     Navigator.pushNamed(context, 'addcommonissue');
-                        //   },
-                        //   child: Container(
-                        //     margin: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                        //     child: Row(
-                        //       crossAxisAlignment: CrossAxisAlignment.start,
-                        //       children: [
-                        //         Expanded(
-                        //           child: Card(
-                        //             color: Mycolors.mainColorWhite,
-                        //             shape: RoundedRectangleBorder(
-                        //                 borderRadius: BorderRadius.circular(
-                        //                     17), // <-- Radius
-                        //                 side: BorderSide(
-                        //                     color:
-                        //                         Mycolors.mainShadedColorBlue)),
-                        //             shadowColor:
-                        //                 const Color.fromARGB(94, 114, 168, 243),
-                        //             child: Padding(
-                        //                 padding: const EdgeInsets.all(10),
-                        //                 child: ListTile(
-                        //                   title: Text("new common issue",
-                        //                       style: TextStyle(
-                        //                           color:
-                        //                               Mycolors.mainColorBlack,
-                        //                           fontSize: 18)),
-
-                        //                   textColor: Mycolors.mainColorBlack,
-                        //                   trailing: Icon(
-                        //                     Icons.add,
-                        //                     color: Mycolors.mainShadedColorBlue,
-                        //                   ),
-
-                        //                   // fontFamily: 'main',
-                        //                   // fontWeight: FontWeight.w600
-                        //                   // ),
-                        //                 )),
-                        //           ),
-                        //         )
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ),
+                       
+                       
                         //show message if no results and still loading or user didnt click search
                         noResults || secondLoading || !searchClicked
                             ? SizedBox(
@@ -673,9 +493,7 @@ class _facultyListFAQState extends State<facultyListFAQ> {
                         color: Color.fromARGB(255, 255, 255, 255),
                       ),
 
-                      // fontFamily: 'main',
-                      // fontWeight: FontWeight.w600
-                      // ),
+                  
                     )),
               ),
             )

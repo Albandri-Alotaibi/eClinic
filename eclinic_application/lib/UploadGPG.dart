@@ -71,29 +71,7 @@ class _UploadGPGState extends State<UploadGPG> {
     bool isshow = false;
   }
 
-// CheckCode2() async{
-//    print("222NewMethod*********-ppppppppppppppppppppppppp");
-//           print(endSearchForLink);
-//   final snap4 = await FirebaseFirestore.instance
-//             .collection("GPlibrary")
-//             .doc(id)
-//             .get();
 
-//         if (snap4.data()!.containsKey('CodeLink') == true) {
-//           CodeLink = snap4['CodeLink'];
-//           print("ppppppppppppppppppppppppp");
-//           print(CodeLink);
-//           setState(() {
-//             endSearchForLink = true;
-//           });
-//         print("NewMethod*********-ppppppppppppppppppppppppp");
-//           print(endSearchForLink);
-//           } else {
-//           setState(() {
-//             endSearchForLink = true;
-//           });
-//         }
-// }
   retrieveForAfterUploadView() async {
     final FirebaseAuth auth = await FirebaseAuth.instance;
     final User? user = await auth.currentUser;
@@ -249,9 +227,7 @@ class _UploadGPGState extends State<UploadGPG> {
   checkidcategory(List<String?> categoryoption) async {
     category.clear();
     gpcategoryname.clear();
-    // print(specialityoption);
-    // print(speciality.length);
-    // print(speciality);
+   
 
     try {
       await FirebaseFirestore.instance
@@ -394,33 +370,9 @@ class _UploadGPGState extends State<UploadGPG> {
           .then((querySnapshot) {
         querySnapshot.docs.forEach((element) {
           setState(() {
-            // DateTime now = DateTime.now();
-            // year = now.year;
-            // print(year);
-            // DateTime Dateoftoday = DateTime.now();
-
-            // String s = year.toString();
-            // print(s);
-            // String sn = element['semestername'];
-            // var startdate = element['startdate'];
-            // startdate.toString();
-            // semester.add(element['semestername']); //من عندي
+           
             semester.add(element.data());
-            // if (startdate != null) {
-            //   if ((sn.contains(s))) {
-            //     print(sn);
-            //     semester.add(element['semestername']);
-            //     print("ppppppppppppppppppppppppppppppppppppppp");
-            //     print(semester);
-            //   }
-
-            //   Timestamp t = element['enddate'];
-            //   DateTime enddate = t.toDate();
-
-            //   if (Dateoftoday.isAfter(enddate)) {
-            //     semester.remove(element['semestername']);
-            //   }
-            // }
+         
           });
         });
         print(semester);
@@ -458,25 +410,7 @@ class _UploadGPGState extends State<UploadGPG> {
     if ((AlreadyUploaded == false)) {
       return SafeArea(
           child: Scaffold(
-              // appBar: AppBar(
-              //   title: Text(
-              //     "GP upload",
-              //     style: TextStyle(
-              //         //  fontFamily: 'bold',
-              //         fontSize: 20,
-              //         color: Mycolors.mainColorBlack),
-              //   ),
-              //   primary: false,
-              //   centerTitle: true,
-              //   backgroundColor: Colors.white,
-              //   elevation: 0,
-              //   // leading: BackButton(
-              //   //   color: Colors.black,
-              //   //   onPressed: () {
-              //   //     Navigator.pushNamed(context, 'graduatelogin');
-              //   //   },
-              //   // ),
-              // ),
+             
               backgroundColor: Colors.white,
               body: SingleChildScrollView(
                   child: Center(
@@ -578,28 +512,7 @@ class _UploadGPGState extends State<UploadGPG> {
                             DropDownMultiSelect(
                               decoration: InputDecoration(
                                 hintText: "Choose a category",
-                                // enabledBorder: OutlineInputBorder(
-                                //   borderSide: BorderSide(
-                                //       color: isshow
-                                //           ? Color.fromARGB(255, 202, 54, 44)
-                                //           : Colors.grey),
-                                //   borderRadius: BorderRadius.circular(13),
-                                // ),
-                                // errorBorder: OutlineInputBorder(
-                                //   borderSide: BorderSide(
-                                //       color: isshow
-                                //           ? Color.fromARGB(255, 209, 57, 46)
-                                //           : Mycolors.mainShadedColorBlue),
-                                //   borderRadius: BorderRadius.circular(13),
-                                // ),
-                                // focusedBorder: OutlineInputBorder(
-                                //   borderSide: BorderSide(
-                                //       width: 2,
-                                //       color: isshow
-                                //           ? Color.fromARGB(255, 209, 57, 46)
-                                //           : Mycolors.mainShadedColorBlue),
-                                //   borderRadius: BorderRadius.circular(13),
-                                // ),
+                              
                                 border: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(13.0)),
@@ -765,19 +678,9 @@ class _UploadGPGState extends State<UploadGPG> {
                                       hintText:
                                           "Please add your GitHub repository link here",
 
-                                      ///*******وش فايدتها؟ */
+                                  
                                       labelText: 'GitHub repository link',
-                                      // labelStyle: TextStyle(
-                                      //     color: myFocusNode.hasFocus
-                                      //         ? Mycolors.mainShadedColorBlue
-                                      //         : Colors.black),
-                                      // focusedBorder: OutlineInputBorder(
-                                      //     borderRadius: BorderRadius.all(
-                                      //         Radius.circular(13.0)),
-                                      //     borderSide: BorderSide(
-                                      //         width: 2,
-                                      //         color: Mycolors
-                                      //             .mainShadedColorBlue)),
+                                     
                                       border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(13),
@@ -883,25 +786,7 @@ class _UploadGPGState extends State<UploadGPG> {
     } else if (AlreadyUploaded == true && endSearchForLink! == true) {
       return SafeArea(
         child: Scaffold(
-            // appBar: AppBar(
-            //   title: Text(
-            //     "GP upload",
-            //     style: TextStyle(
-            //         //  fontFamily: 'bold',
-            //         fontSize: 20,
-            //         color: Mycolors.mainColorBlack),
-            //   ),
-            //   primary: false,
-            //   centerTitle: true,
-            //   backgroundColor: Colors.white,
-            //   elevation: 0,
-            //   // leading: BackButton(
-            //   //   color: Colors.black,
-            //   //   onPressed: () {
-            //   //     Navigator.pushNamed(context, 'graduatelogin');
-            //   //   },
-            //   // ),
-            // ),
+         
             backgroundColor: Mycolors.BackgroundColor,
             body: Center(
               // width: 360,

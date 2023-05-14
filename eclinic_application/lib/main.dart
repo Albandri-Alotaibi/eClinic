@@ -92,8 +92,7 @@ class MyApp extends StatelessWidget {
                 inputDecorationTheme: InputDecorationTheme(
                     fillColor: Mycolors.mainShadedColorBlue),
 
-                //dialBackgroundColor: Mycolors.mainColorGreen,
-                //dayPeriodBorderSide: BorderSide(color: Colors.black),
+               
 
                 dayPeriodColor: MaterialStateColor.resolveWith((states) =>
                     states.contains(MaterialState.selected)
@@ -168,15 +167,7 @@ class MyApp extends StatelessWidget {
           if (snapshot.hasData &&
               (!snapshot.data!.isAnonymous) &&
               auth.currentUser != null) {
-            // if (auth.currentUser?.email?.contains("@student.ksu.edu.sa") ??
-            //     false) {
-            //   return studenthome(0);
-            // } else if (auth.currentUser?.email?.contains("@ksu.edu.sa") ??
-            //     false) {
-            //   return facultyhome(0);
-            // } else if (auth.currentUser?.email?.isNotEmpty ?? false) {
-            //   return graduatehome();
-            // }
+          
             if (TypeUser.type == 'graduate') {
               return graduatehome();
             } else if (TypeUser.type == 'student') {

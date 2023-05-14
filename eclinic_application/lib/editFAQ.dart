@@ -96,13 +96,7 @@ class _editFAQState extends State<editFAQ> {
     _problemController = TextEditingController(text: problem);
     _solutioncontroll = TextEditingController(text: solution);
 
-    // links = snap["links"];
-
-    // for (var j = 0; j < links.length; j++) {
-    //   links.add(links[j]);
-    //   print("neeeeeeeeeeewwwwwwwwwww");
-    //   print(links[j]);
-    // }
+ 
 
     if (title != null) {
       exist = true;
@@ -271,63 +265,14 @@ class _editFAQState extends State<editFAQ> {
 
                         return Column(
                           children: [
-                            // TextFormField(
-                            //   controller: _issuetitleconstroller,
-                            //   readOnly: true,
-                            //   decoration: InputDecoration(
-                            //       labelText: ' issue title :',
-                            //       // hintText: "Enter issue title",
-
-                            //       border: OutlineInputBorder(
-                            //           borderRadius: BorderRadius.circular(25),
-                            //           borderSide: const BorderSide(
-                            //             width: 0,
-                            //           ))),
-                            //   autovalidateMode:
-                            //       AutovalidateMode.onUserInteraction,
-                            // ),
+                        
                             SizedBox(
                               height: 8,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                // ElevatedButton(
-                                //   style: ElevatedButton.styleFrom(
-                                //     textStyle: TextStyle(
-                                //         fontFamily: 'main', fontSize: 16),
-                                //     //shadowColor: Colors.blue[900],
-                                //     elevation: 0,
-                                //     backgroundColor:
-                                //         Mycolors.mainShadedColorBlue,
-                                //     minimumSize: Size(150, 50),
-                                //     shape: RoundedRectangleBorder(
-                                //       borderRadius: BorderRadius.circular(
-                                //           17), // <-- Radius
-                                //     ),
-                                //   ),
-                                //   onPressed: (() async {
-                                //     final result = await FilePicker.platform
-                                //         .pickFiles(allowMultiple: true);
-                                //     if (result == null) return;
-                                //     setState(() {
-                                //       pickedFile = result.files.first;
-                                //       if (pickedFile != null) {
-                                //         filesurl?.addAll(result.files);
-
-                                //         // for (var i = 0; i < result.count; i++) {
-                                //         //    filesurl?.add(result.files as PlatformFile);
-                                //         // }
-                                //       }
-                                //       var exe = pickedFile!.extension;
-                                //       print("00000000000000000000");
-                                //       print(pickedFile!.path);
-                                //       print(pickedFile!.name);
-                                //       print(filesurl);
-                                //     });
-                                //   }),
-                                //   child: Text("upload file"),
-                                // ),
+                             
                                 SizedBox(
                                   width: 10,
                                 ),
@@ -382,27 +327,7 @@ class _editFAQState extends State<editFAQ> {
                                 SizedBox(
                                   width: 30,
                                 ),
-                                // ElevatedButton(
-                                //   style: ElevatedButton.styleFrom(
-                                //     textStyle: TextStyle(
-                                //         fontFamily: 'main', fontSize: 16),
-                                //     //shadowColor: Colors.blue[900],
-                                //     elevation: 0,
-                                //     backgroundColor:
-                                //         Mycolors.mainShadedColorBlue,
-                                //     minimumSize: Size(150, 50),
-                                //     shape: RoundedRectangleBorder(
-                                //       borderRadius: BorderRadius.circular(
-                                //           17), // <-- Radius
-                                //     ),
-                                //   ),
-                                //   onPressed: (() {
-                                //     _linkcontroll.text = "";
-                                //     _linknamecontroll.text = "";
-                                //     showConfirmationDialog(context);
-                                //   }),
-                                //   child: Text("add link"),
-                                // ),
+                               
                                 Container(
                                   padding: const EdgeInsets.only(bottom: 7),
                                   height: 40,
@@ -561,15 +486,7 @@ class _editFAQState extends State<editFAQ> {
                                   (index) => Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
-                                      // Text(
-                                      //   "More Resources",
-                                      //   style: TextStyle(
-                                      //       overflow: TextOverflow.ellipsis,
-                                      //       color: Mycolors.mainColorBlue,
-                                      //       fontFamily: 'bold',
-                                      //       fontSize: 17),
-                                      //   textAlign: TextAlign.start,
-                                      // ),
+                                    
                                       Align(
                                         alignment: Alignment.bottomLeft,
                                         child: Wrap(
@@ -715,157 +632,7 @@ class _editFAQState extends State<editFAQ> {
                             SizedBox(
                               height: 20,
                             ),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.center,
-                            //   children: [
-                            //     // ElevatedButton(
-                            //     //   style: ElevatedButton.styleFrom(
-                            //     //     textStyle: TextStyle(
-                            //     //         fontFamily: 'main', fontSize: 16),
-                            //     //     //shadowColor: Colors.blue[900],
-                            //     //     elevation: 0,
-                            //     //     backgroundColor:
-                            //     //         Mycolors.mainShadedColorBlue,
-                            //     //     minimumSize: Size(150, 50),
-                            //     //     shape: RoundedRectangleBorder(
-                            //     //       borderRadius: BorderRadius.circular(
-                            //     //           17), // <-- Radius
-                            //     //     ),
-                            //     //   ),
-                            //     //   onPressed: (() async {
-                            //     //     final result = await FilePicker.platform
-                            //     //         .pickFiles(allowMultiple: true);
-                            //     //     if (result == null) return;
-                            //     //     setState(() {
-                            //     //       pickedFile = result.files.first;
-                            //     //       if (pickedFile != null) {
-                            //     //         filesurl?.addAll(result.files);
-
-                            //     //         // for (var i = 0; i < result.count; i++) {
-                            //     //         //    filesurl?.add(result.files as PlatformFile);
-                            //     //         // }
-                            //     //       }
-                            //     //       var exe = pickedFile!.extension;
-                            //     //       print("00000000000000000000");
-                            //     //       print(pickedFile!.path);
-                            //     //       print(pickedFile!.name);
-                            //     //       print(filesurl);
-                            //     //     });
-                            //     //   }),
-                            //     //   child: Text("upload file"),
-                            //     // ),
-                            //     SizedBox(
-                            //       width: 10,
-                            //     ),
-                            //     Container(
-                            //       padding: const EdgeInsets.only(bottom: 7),
-                            //       height: 40,
-                            //       width: 135,
-                            //       child: FloatingActionButton.extended(
-                            //         shape: RoundedRectangleBorder(
-                            //           borderRadius: BorderRadius.circular(
-                            //               30), // <-- Radius
-                            //           side: BorderSide(
-                            //             width: 1,
-                            //             color: Mycolors.mainShadedColorBlue,
-                            //           ),
-                            //         ),
-                            //         splashColor: Mycolors.mainShadedColorBlue,
-                            //         elevation: 0,
-                            //         foregroundColor:
-                            //             Color.fromARGB(255, 255, 255, 255),
-                            //         label: Text(
-                            //           'Uplouad file',
-                            //         ), // <-- Text
-                            //         backgroundColor:
-                            //             Mycolors.mainShadedColorBlue,
-                            //         icon: Icon(
-                            //           // <-- Icon
-                            //           Icons.upload_outlined,
-                            //           size: 24.0,
-                            //         ),
-                            //         onPressed: (() async {
-                            //           final result = await FilePicker.platform
-                            //               .pickFiles(allowMultiple: true);
-                            //           if (result == null) return;
-                            //           setState(() {
-                            //             pickedFile = result.files.first;
-                            //             if (pickedFile != null) {
-                            //               filesurl?.addAll(result.files);
-
-                            //               // for (var i = 0; i < result.count; i++) {
-                            //               //    filesurl?.add(result.files as PlatformFile);
-                            //               // }
-                            //             }
-                            //             var exe = pickedFile!.extension;
-                            //             print("00000000000000000000");
-                            //             print(pickedFile!.path);
-                            //             print(pickedFile!.name);
-                            //             print(filesurl);
-                            //           });
-                            //         }),
-                            //       ),
-                            //     ),
-                            //     SizedBox(
-                            //       width: 10,
-                            //     ),
-                            //     // ElevatedButton(
-                            //     //   style: ElevatedButton.styleFrom(
-                            //     //     textStyle: TextStyle(
-                            //     //         fontFamily: 'main', fontSize: 16),
-                            //     //     //shadowColor: Colors.blue[900],
-                            //     //     elevation: 0,
-                            //     //     backgroundColor:
-                            //     //         Mycolors.mainShadedColorBlue,
-                            //     //     minimumSize: Size(150, 50),
-                            //     //     shape: RoundedRectangleBorder(
-                            //     //       borderRadius: BorderRadius.circular(
-                            //     //           17), // <-- Radius
-                            //     //     ),
-                            //     //   ),
-                            //     //   onPressed: (() {
-                            //     //     _linkcontroll.text = "";
-                            //     //     _linknamecontroll.text = "";
-                            //     //     showConfirmationDialog(context);
-                            //     //   }),
-                            //     //   child: Text("add link"),
-                            //     // ),
-                            //     Container(
-                            //       padding: const EdgeInsets.only(bottom: 7),
-                            //       height: 40,
-                            //       width: 135,
-                            //       child: FloatingActionButton.extended(
-                            //         shape: RoundedRectangleBorder(
-                            //           borderRadius: BorderRadius.circular(
-                            //               30), // <-- Radius
-                            //           side: BorderSide(
-                            //             width: 1,
-                            //             color: Mycolors.mainShadedColorBlue,
-                            //           ),
-                            //         ),
-                            //         splashColor: Mycolors.mainShadedColorBlue,
-                            //         elevation: 0,
-                            //         foregroundColor:
-                            //             Color.fromARGB(255, 255, 255, 255),
-                            //         label: Text(
-                            //           'Add link',
-                            //         ), // <-- Text
-                            //         backgroundColor:
-                            //             Mycolors.mainShadedColorBlue,
-                            //         icon: Icon(
-                            //           // <-- Icon
-                            //           Icons.link_outlined,
-                            //           size: 24.0,
-                            //         ),
-                            //         onPressed: (() {
-                            //           _linkcontroll.text = "";
-                            //           _linknamecontroll.text = "";
-                            //           showConfirmationDialog(context);
-                            //         }),
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
+                   
 
                             SizedBox(
                               height: 50,
@@ -896,22 +663,7 @@ class _editFAQState extends State<editFAQ> {
                   SizedBox(
                     height: 20,
                   ),
-                  // ElevatedButton(
-                  //   style: ElevatedButton.styleFrom(
-                  //     textStyle: TextStyle(fontFamily: 'main', fontSize: 16),
-                  //     shadowColor: Colors.blue[900],
-                  //     elevation: 16,
-                  //     backgroundColor: Mycolors.mainShadedColorBlue,
-                  //     minimumSize: Size(150, 50),
-                  //     shape: RoundedRectangleBorder(
-                  //       borderRadius: BorderRadius.circular(17), // <-- Radius
-                  //     ),
-                  //   ),
-                  //   onPressed: (() {
-                  //     ConfirmationDialogfordelete(context);
-                  //   }),
-                  //   child: Text("delete common issue"),
-                  // ),
+                
                 ]),
               ),
             )),
@@ -1164,69 +916,8 @@ class _editFAQState extends State<editFAQ> {
     );
   }
 
-  // ConfirmationDialogfordelete(BuildContext context) {
-  //   Widget dontCancelAppButton = ElevatedButton(
-  //     style: ElevatedButton.styleFrom(
-  //       textStyle: TextStyle(fontSize: 16),
-  //       //shadowColor: Colors.blue[900],
-  //       elevation: 0,
-  //       backgroundColor: Mycolors.mainShadedColorBlue,
-  //       minimumSize: Size(60, 40),
-  //       shape: RoundedRectangleBorder(
-  //         borderRadius: BorderRadius.circular(10), // <-- Radius
-  //       ),
-  //     ),
-  //     child: Text("No"),
-  //     onPressed: () {
-  //       Navigator.of(context).pop();
-  //     },
-  //   );
+  
 
-  //   Widget YesCancelAppButton = ElevatedButton(
-  //     style: ElevatedButton.styleFrom(
-  //       textStyle: TextStyle(fontSize: 16),
-  //       // shadowColor: Colors.blue[900],
-  //       elevation: 0,
-  //       backgroundColor: Mycolors.mainShadedColorBlue,
-  //       minimumSize: Size(60, 40),
-  //       shape: RoundedRectangleBorder(
-  //         borderRadius: BorderRadius.circular(10), // <-- Radius
-  //       ),
-  //     ),
-  //     child: Text("Yes"),
-  //     onPressed: () async {
-  //       await FirebaseFirestore.instance
-  //           .collection("commonissue")
-  //           .doc(widget.value)
-  //           .delete();
-  //       // Navigator.pushNamed(context, 'facultyListFAQ');
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => facultyhome(_selectedIndex),
-  //         ),
-  //       );
-  //       showInSnackBar(
-  //           context, "The  has been deleted successfully");
-  //     },
-  //   );
-
-  //   AlertDialog alert = AlertDialog(
-  //     // title: Text("LogOut"),
-  //     content: Text("Are you sure you want to delete the common issue ?"),
-  //     actions: [
-  //       dontCancelAppButton,
-  //       YesCancelAppButton,
-  //     ],
-  //   );
-
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return alert;
-  //     },
-  //   );
-  // }
 
   ConfirmationDialogforupdate(BuildContext context) {
     Widget dontCancelAppButton = ElevatedButton(
@@ -1289,27 +980,11 @@ class _editFAQState extends State<editFAQ> {
               'lastmodified': facultyRef,
             });
 
-            // Fluttertoast.showToast(
-            //   msg: " Your information has been updated successfully",
-            //   toastLength: Toast.LENGTH_SHORT,
-            //   gravity: ToastGravity.CENTER,
-            //   timeInSecForIosWeb: 2,
-            //   backgroundColor: Color.fromARGB(255, 127, 166, 233),
-            //   textColor: Color.fromARGB(255, 248, 249, 250),
-            //   fontSize: 18.0,
-            // );
+          
             showInSnackBar(context,
                 "The frequently asked question has been updated successfully");
           } on FirebaseAuthException catch (error) {
-            // Fluttertoast.showToast(
-            //   msg: "Something wronge",
-            //   toastLength: Toast.LENGTH_SHORT,
-            //   gravity: ToastGravity.CENTER,
-            //   timeInSecForIosWeb: 5,
-            //   backgroundColor: Color.fromARGB(255, 127, 166, 233),
-            //   textColor: Color.fromARGB(255, 252, 253, 255),
-            //   fontSize: 18.0,
-            // );
+         
             showInSnackBar(context, "Something wronge", onError: true);
           }
         }
@@ -1365,23 +1040,7 @@ class _editFAQState extends State<editFAQ> {
       ),
       child: Text("Yes"),
       onPressed: () {
-        // i = i - 1;
-        //  print(linkname1);
-        //كان فيه مشاكل بالانديكس وانحلت بالمعادله هذي
-        // i = i - 1;
-        // print("ppppppppppppppppp");
-        // print(i);
-        // // print(s);
-        // //عشان الاي تكون قيمتها 1 دايم مع ان مفروض انه انديكس زيرو لكنه متخلف
-        // if (i == 1) {
-        //   i = 0;
-        // }
-        // links.remove(links[i]);
-        // linkname.remove(linkname[i]);
-        // Future.delayed(Duration(seconds: 0), () {
-        //   setState(() {});
-        // });
-        // Navigator.of(context).pop();
+       
         links.remove(links[i]);
         linkname.remove(linkname[i]);
         Future.delayed(Duration(seconds: 0), () {
@@ -1439,8 +1098,7 @@ class _editFAQState extends State<editFAQ> {
       ),
       child: Text("Yes"),
       onPressed: () async {
-        // links.remove(links[i]);
-        // linkname.remove(linkname[i]);
+     
         print("/////////////////////////////////");
         print(i);
         filesurl?.remove(filesurl![i]);
@@ -1499,8 +1157,7 @@ class _editFAQState extends State<editFAQ> {
       ),
       child: Text("Yes"),
       onPressed: () async {
-        // links.remove(links[i]);
-        // linkname.remove(linkname[i]);
+       
         print("/////////////////////////////////");
         print(i);
         filsbefordownload.remove(filsbefordownload[i]);

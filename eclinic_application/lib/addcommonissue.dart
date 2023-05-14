@@ -128,40 +128,8 @@ class _addcommonissueState extends State<addcommonissue> {
     } else {
       exist = true;
     }
-    //   .then((querySnapshot) {
-    // querySnapshot.docs.forEach((element) {
-    //   print("llllllllllllllllllllllllllllllll");
-    //   print(element['issuecategory'].id);
-    //   print("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-    //   print(docforspeciality);
+    
 
-    //   if (element['issuecategory'].id == docforspeciality &&
-    //       title == element['issuetitle']) {
-    //     print("i get it");
-
-    //     setState(() {
-    //       exist = false;
-    //       return;
-    //     });
-    //   } else if (element['issuecategory'].id == docforspeciality &&
-    //       title != element['issuetitle'] &&
-    //       exist) {
-    //     exist = true;
-    //   }
-
-    //  else if (element['issuecategory'].id == docforspeciality &&
-    //     title != element['issuetitle']) {
-    //   print("i take it ");
-
-    //   exist = true;
-    // }
-
-    // if (element['issuecategory'].id != docforspeciality) {
-    //   print("");
-    //   exist = true;
-    // }
-    //   });
-    // });
   }
 
   checkids(String? spe) async {
@@ -189,9 +157,7 @@ class _addcommonissueState extends State<addcommonissue> {
     }
   }
 
-  // Future getFile() async {
-  //   File file = await FilePicker.platform.
-  // }
+ 
 
   void openfile(PlatformFile file) {
     OpenFile.open(file.path);
@@ -274,42 +240,6 @@ class _addcommonissueState extends State<addcommonissue> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  // ElevatedButton(
-                                  //   style: ElevatedButton.styleFrom(
-                                  //     textStyle: TextStyle(
-                                  //         fontFamily: 'main', fontSize: 16),
-                                  //     //shadowColor: Colors.blue[900],
-                                  //     elevation: 0,
-                                  //     backgroundColor:
-                                  //         Mycolors.mainShadedColorBlue,
-                                  //     minimumSize: Size(150, 50),
-                                  //     shape: RoundedRectangleBorder(
-                                  //       borderRadius: BorderRadius.circular(
-                                  //           17), // <-- Radius
-                                  //     ),
-                                  //   ),
-                                  //   onPressed: (() async {
-                                  //     final result = await FilePicker.platform
-                                  //         .pickFiles(allowMultiple: true);
-                                  //     if (result == null) return;
-                                  //     setState(() {
-                                  //       pickedFile = result.files.first;
-                                  //       if (pickedFile != null) {
-                                  //         filesurl?.addAll(result.files);
-
-                                  //         // for (var i = 0; i < result.count; i++) {
-                                  //         //    filesurl?.add(result.files as PlatformFile);
-                                  //         // }
-                                  //       }
-                                  //       var exe = pickedFile!.extension;
-                                  //       print("00000000000000000000");
-                                  //       print(pickedFile!.path);
-                                  //       print(pickedFile!.name);
-                                  //       print(filesurl);
-                                  //     });
-                                  //   }),
-                                  //   child: Text("upload file"),
-                                  // ),
                                   SizedBox(
                                     width: 10,
                                   ),
@@ -349,9 +279,7 @@ class _addcommonissueState extends State<addcommonissue> {
                                           if (pickedFile != null) {
                                             filesurl?.addAll(result.files);
 
-                                            // for (var i = 0; i < result.count; i++) {
-                                            //    filesurl?.add(result.files as PlatformFile);
-                                            // }
+                                          
                                           }
                                           var exe = pickedFile!.extension;
                                           print("00000000000000000000");
@@ -359,35 +287,14 @@ class _addcommonissueState extends State<addcommonissue> {
                                           print(pickedFile!.name);
                                           print(filesurl);
                                         });
-                                        // final file = result.filesurl.first;
-                                        //openfile(pickedFile!);
+                                       
                                       }),
                                     ),
                                   ),
                                   SizedBox(
                                     width: 30,
                                   ),
-                                  // ElevatedButton(
-                                  //   style: ElevatedButton.styleFrom(
-                                  //     textStyle: TextStyle(
-                                  //         fontFamily: 'main', fontSize: 16),
-                                  //     //shadowColor: Colors.blue[900],
-                                  //     elevation: 0,
-                                  //     backgroundColor:
-                                  //         Mycolors.mainShadedColorBlue,
-                                  //     minimumSize: Size(150, 50),
-                                  //     shape: RoundedRectangleBorder(
-                                  //       borderRadius: BorderRadius.circular(
-                                  //           17), // <-- Radius
-                                  //     ),
-                                  //   ),
-                                  //   onPressed: (() {
-                                  //     _linkcontroll.text = "";
-                                  //     _linknamecontroll.text = "";
-                                  //     showConfirmationDialog(context);
-                                  //   }),
-                                  //   child: Text("add link"),
-                                  // ),
+                            
                                   Container(
                                     padding: const EdgeInsets.only(bottom: 7),
                                     height: 40,
@@ -670,14 +577,7 @@ class _addcommonissueState extends State<addcommonissue> {
                                                 recognizer:
                                                     TapGestureRecognizer()
                                                       ..onTap = () async {
-                                                        // var url = links[i];
-                                                        // // ignore: deprecated_member_use
-                                                        // if (await canLaunch(url)) {
-                                                        //   // ignore: deprecated_member_use
-                                                        //   launch(url);
-                                                        // } else {
-                                                        //   throw "Cannot load url";
-                                                        // }
+                                                       
                                                         launch(links[i]);
                                                       })
                                           ]),
@@ -698,38 +598,7 @@ class _addcommonissueState extends State<addcommonissue> {
                                   ),
                                 ),
 
-                              // if (pickedFile != null)
-                              //   Container(
-                              //     height: 170,
-                              //     width: 380,
-                              //     child: Card(
-                              //       //Mycolors.mainShadedColorBlue
-                              //       color: Color.fromARGB(171, 204, 204, 210),
-                              //       shape: RoundedRectangleBorder(
-                              //         borderRadius:
-                              //             BorderRadius.circular(30), // <-- Radius
-                              //       ),
-                              //       shadowColor: Color.fromARGB(171, 212, 212, 240),
-                              //       elevation: 40,
-                              //       child: Padding(
-                              //           padding: const EdgeInsets.all(40),
-                              //           child: new GestureDetector(
-                              //             child: Center(
-                              //                 child: Text(pickedFile!.name,
-                              //                     style: TextStyle(
-                              //                         decoration:
-                              //                             TextDecoration.underline,
-                              //                         color: Mycolors.mainShadedColorBlue,
-                              //                         fontFamily: 'main',
-                              //                         fontSize: 20),
-                              //                     textAlign: TextAlign.center)),
-                              //             onTap: () {
-                              //               //print("Container clicked");
-                              //               openfile(pickedFile!);
-                              //             },
-                              //           )),
-                              //     ),
-                              //   ),
+                             
                               if (filesurl!.length > 0)
                                 const Divider(
                                   color: Colors.grey,
@@ -790,70 +659,7 @@ class _addcommonissueState extends State<addcommonissue> {
                               SizedBox(
                                 height: 8,
                               ),
-                              // Row(
-                              //   mainAxisAlignment: MainAxisAlignment.center,
-                              //   children: [
-                              //     ElevatedButton(
-                              //       style: ElevatedButton.styleFrom(
-                              //         textStyle: TextStyle(
-                              //             fontFamily: 'main', fontSize: 16),
-                              //         //shadowColor: Colors.blue[900],
-                              //         elevation: 0,
-                              //         backgroundColor:
-                              //             Mycolors.mainShadedColorBlue,
-                              //         minimumSize: Size(150, 50),
-                              //         shape: RoundedRectangleBorder(
-                              //           borderRadius: BorderRadius.circular(
-                              //               17), // <-- Radius
-                              //         ),
-                              //       ),
-                              //       onPressed: (() async {
-                              //         final result = await FilePicker.platform
-                              //             .pickFiles(allowMultiple: true);
-                              //         if (result == null) return;
-                              //         setState(() {
-                              //           pickedFile = result.files.first;
-                              //           if (pickedFile != null) {
-                              //             filesurl?.addAll(result.files);
-
-                              //             // for (var i = 0; i < result.count; i++) {
-                              //             //    filesurl?.add(result.files as PlatformFile);
-                              //             // }
-                              //           }
-                              //           var exe = pickedFile!.extension;
-                              //           print("00000000000000000000");
-                              //           print(pickedFile!.path);
-                              //           print(pickedFile!.name);
-                              //           print(filesurl);
-                              //         });
-                              //         // final file = result.filesurl.first;
-                              //         //openfile(pickedFile!);
-                              //       }),
-                              //       child: Text("upload file "),
-                              //     ),
-                              //     ElevatedButton(
-                              //       style: ElevatedButton.styleFrom(
-                              //         textStyle: TextStyle(
-                              //             fontFamily: 'main', fontSize: 16),
-                              //         //shadowColor: Colors.blue[900],
-                              //         elevation: 0,
-                              //         backgroundColor:
-                              //             Mycolors.mainShadedColorBlue,
-                              //         minimumSize: Size(150, 50),
-                              //         shape: RoundedRectangleBorder(
-                              //           borderRadius: BorderRadius.circular(
-                              //               17), // <-- Radius
-                              //         ),
-                              //       ),
-                              //       onPressed: (() {
-                              //         _linkcontroll.text = "";
-                              //         _linknamecontroll.text = "";
-                              //         showConfirmationDialog(context);
-                              //       }),
-                              //       child: Text("add link"),
-                              //     ),
-                              //   ],
-                              // ),
+                             
                               SizedBox(
                                 height: 8,
                               ),
